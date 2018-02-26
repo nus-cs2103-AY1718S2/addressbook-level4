@@ -52,6 +52,7 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
 
 
+    //Testing
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");

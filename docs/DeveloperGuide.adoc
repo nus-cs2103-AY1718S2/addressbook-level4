@@ -806,29 +806,53 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |add tag |categorize people
+
+|`* * *` |user |find people by tag | find people with similar tag
+
+|`* * *` |user |add Linkedin and Github link | view pople's profile
+
+|`* * *` |user |submit feedback to developer | receive a better version in the future
+
+|`* * *` |user |have a calendar and add appointment on it| arrange appointment with people
+
+|`* * *` |user |auto send mail to people after arranging appointment| minimize my time to arrange meeting
+
+|`* * *` |user |find anything by characters|reduce time finding someone
+
+|`* * *` |user |have a log| view my past actions
+
+|`* * *` |user |filter my log| view specific past actions
+
+|`* * *` |user |delete my log| save space and secure information
+
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*` |user |add tag |categorize people
+|`* *` |user | add birthday of my contacts |wish them
 
-|`*` |user |find people by tag | find people with similar tag
+|`* *` |user | autofill command| save time
 
-|`*` |user |add Linkedin and Github link | view people's profile
+|`* *` |user | add logic statement into find command| find and filter more effectively
 
-|`*` |user |submit feedback to developer | receive a better version in the future
+|`* *` |user | add notes| keep long information of people
 
-|`*` |user |have a calendar and add appointment on it| arrange appointment with people
+|`* *` |user | have a list of frequently used contact| easily contact them
 
-|`*` |user |auto send mail to people after arranging appointment| minimize my time to arrange meeting
+|`* *` |user | have a login system| protect my information
 
-|`*` |user |find anything by characters|reduce time finding someone
+|`* *` |user | store picture of my contacts| recognize them easily
 
-|`*` |user |have a log| view my past actions
+|`*` |user | be connected with google drive| store people's CV
 
-|`*` |user |filter my log| view specific past actions
+|`*` |user | rate person| give feedback to them
 
-|`*` |user |delete my log| save space and secure information
+|`*` |user | store the date of last contact with a person| keep my contact more effectively
+
 |=======================================================================
 
 [appendix]

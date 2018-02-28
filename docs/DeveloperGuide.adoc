@@ -819,14 +819,14 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete contact
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list contacts
+2.  AddressBook shows a list of contacts
+3.  User requests to delete a specific contact in the list
+4.  AddressBook deletes the contact
 +
 Use case ends.
 
@@ -844,7 +844,51 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+== Use case: Filter log
+
+*MSS*
+
+1. User request to view log
+2. AddressBook shows the log list to user
+3. User request to filter the log with specific keywords
+4. AddressBook shows the log list with filtered results
+
+*Extensions*
+
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The filter conditions are invalid
++
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+== Use case: Auto-fill command
+
+*MSS*
+
+1. User enters command word partially in the command line
+2. User request for auto-fill of command.
+3. AddressBook completes the command word for the user.
+
+*Extensions*
+
+
+* 3a. The partial word does not match any of the commands known.
++
+Use case ends.
+
+* 3b. There are multiple commands matching the partial command word.
++
+** 3b1. AddressBook shows the list of commands matching the partial command word.
++
+** 3b2. User enters more letters to the command word.
++
+Use case resumes at step 2.
+
 
 [appendix]
 == Non Functional Requirements

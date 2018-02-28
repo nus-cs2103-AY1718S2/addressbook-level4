@@ -10,10 +10,12 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
-
-import javax.swing.text.html.Option;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -153,12 +155,16 @@ public class ParserUtil {
         }
         return new ExpectedGraduationYear(trimmedExpectedGraduationYear);
     }
-
+    /**
+     * Parses a {@code Optional<String> expectedGraduationYear}
+     * into an {@code Optional<ExpectedGraduationYear>} if {@code expectedGraduationYear} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
     public static Optional<ExpectedGraduationYear> parseExpectedGraduationYear(Optional<String> expectedGraduationYear)
             throws IllegalValueException {
         requireNonNull(expectedGraduationYear);
-        return expectedGraduationYear.isPresent() ? Optional.of(parseExpectedGraduationYear(expectedGraduationYear.get()))
-                                                  : Optional.empty();
+        return expectedGraduationYear.isPresent() ? Optional.of(parseExpectedGraduationYear(
+                expectedGraduationYear.get())) : Optional.empty();
     }
 
     /**

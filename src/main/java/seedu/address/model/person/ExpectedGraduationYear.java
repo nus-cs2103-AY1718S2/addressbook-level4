@@ -2,7 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-
+/**
+ * Represents a Person's expectedGraduationYear in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidExpectedGraduationYear(String)}
+ */
 public class ExpectedGraduationYear {
     public static final String MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS =
             "Expected graduation year can only contain numbers, and should be between 2017 to 2025.";
@@ -18,7 +21,8 @@ public class ExpectedGraduationYear {
      */
     public ExpectedGraduationYear(String expectedGraduationYear) {
         requireNonNull(expectedGraduationYear);
-        checkArgument(isValidExpectedGraduationYear(expectedGraduationYear), MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS);
+        checkArgument(isValidExpectedGraduationYear(expectedGraduationYear),
+                MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS);
         this.value = expectedGraduationYear;
     }
 

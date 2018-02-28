@@ -780,7 +780,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target users:* 
+*Target users:*
 
 The application is targeted towards Human Resources Managers at SMEs and start-ups. HR managers have a lot of contacts to manage which include current employees, customers, potential employees, potential customers, investors and many others. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
 

@@ -809,9 +809,27 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
 
-_{More to be added}_
+|`*` |user |add tag |categorize people
+
+|`*` |user |find people by tag | find people with similar tag
+
+|`*` |user |add Linkedin and Github link | view people's profile
+
+|`*` |user |submit feedback to developer | receive a better version in the future
+
+|`*` |user |have a calendar and add appointment on it| arrange appointment with people
+
+|`*` |user |auto send mail to people after arranging appointment| minimize my time to arrange meeting
+
+|`*` |user |find anything by characters|reduce time finding someone
+
+|`*` |user |have a log| view my past actions
+
+|`*` |user |filter my log| view specific past actions
+
+|`*` |user |delete my log| save space and secure information
+|=======================================================================
 
 [appendix]
 == Use Cases

@@ -10,11 +10,10 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
+
+import javax.swing.text.html.Option;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -137,6 +136,29 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String expectedGraduationYear} into an {@code ExpectedGraduationYear}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code email} is invalid.
+     */
+    public static ExpectedGraduationYear parseExpectedGraduationYear(String expectedGraduationYear)
+            throws IllegalValueException {
+        requireNonNull(expectedGraduationYear);
+        String trimmedExpectedGraduationYear = expectedGraduationYear.trim();
+        if (!ExpectedGraduationYear.isValidExpectedGraduationYear(trimmedExpectedGraduationYear)) {
+            throw new IllegalValueException(ExpectedGraduationYear.MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS);
+        }
+        return new ExpectedGraduationYear(trimmedExpectedGraduationYear);
+    }
+
+    public static Optional<ExpectedGraduationYear> parseExpectedGraduationYear(Optional<String> expectedGraduationYear)
+            throws IllegalValueException {
+        requireNonNull(expectedGraduationYear);
+        return expectedGraduationYear.isPresent() ? Optional.of(parseExpectedGraduationYear(expectedGraduationYear.get()))
+                                                  : Optional.empty();
     }
 
     /**

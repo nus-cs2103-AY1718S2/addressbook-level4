@@ -780,15 +780,18 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target users:* 
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+The application is targeted towards Human Resources Managers at SMEs and start-ups. HR managers have a lot of contacts to manage which include current employees, customers, potential employees, potential customers, investors and many others. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*User Profile*:
+
+* HR managers who have a significant number of contacts to manage
+* Start-up employee who is new to HR management
+* HR managers who prefer desktop apps
+* HR managers who are good at typing and hence prefer CLI apps
+
+*Value proposition*: An ideal solution for small teams and business professionals who need a simple solution to manage their contacts and help them with day-to-day business activities.
 
 [appendix]
 == User Stories

@@ -1,6 +1,10 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +18,8 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+
+import javax.lang.model.element.Element;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -55,9 +61,27 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            keyEvent.consume();
+            
+            autoFillCommand(commandTextField.getText());
+            break;
         default:
             // let JavaFx handle the keypress
         }
+    }
+
+    private void autoFillCommand(String commandText) {
+        String list[] = {"add", "find", "clear", "delete", "edit", "exit", "help", "history", 
+                "list", "redo", "select", "undo"};
+
+        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(list));
+
+        List<String> ans = arrayList.stream().filter(u -> u.startsWith(commandText))
+                .collect(Collectors.toList());
+        
+        replaceText(ans.get(0));
+        
     }
 
     /**

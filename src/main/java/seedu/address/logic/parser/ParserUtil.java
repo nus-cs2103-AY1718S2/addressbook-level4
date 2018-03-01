@@ -144,7 +144,7 @@ public class ParserUtil {
      * Parses a {@code String expectedGraduationYear} into an {@code ExpectedGraduationYear}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if given {@code email} is invalid.
+     * @throws IllegalValueException if given {@code expectedGraduationYear} is invalid.
      */
     public static ExpectedGraduationYear parseExpectedGraduationYear(String expectedGraduationYear)
             throws IllegalValueException {

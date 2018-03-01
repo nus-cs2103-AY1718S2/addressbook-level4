@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
      */
     public FilterCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_EXPECTED_GRADUATION_YEAR);//PREFIX_TAG temporarily removed
+                ArgumentTokenizer.tokenize(args, PREFIX_EXPECTED_GRADUATION_YEAR); //PREFIX_TAG temporarily removed
 
         if (!arePrefixesPresent(argMultimap, PREFIX_EXPECTED_GRADUATION_YEAR)
                 || !argMultimap.getPreamble().isEmpty()) {

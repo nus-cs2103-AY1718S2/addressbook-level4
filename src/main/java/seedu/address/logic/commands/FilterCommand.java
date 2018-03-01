@@ -16,7 +16,7 @@ public class FilterCommand extends Command {
             + "Display all persons with expected graduation year before the input keyword\n"
             + "Parameters: "
             + "[" + PREFIX_EXPECTED_GRADUATION_YEAR + "EXPECTED GRADUATION YEAR] "
-            + "Example: " + COMMAND_WORD
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_EXPECTED_GRADUATION_YEAR + "2020 ";
 
     private final Predicate<Person> predicate;

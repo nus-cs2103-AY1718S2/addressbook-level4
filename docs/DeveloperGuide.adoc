@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103JAN2018-W10-B4/addressbook-level4/blob/master
+:repoURL: https://github.com/CS2103JAN2018-W10-B4/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -794,7 +794,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * is reasonably tech savvy and can type fast
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: 
+*Value proposition*:
 
 * A comprehensive, reliable and convenient address book for insurance agents built on a simple belief -- efficiency and elegance.
 
@@ -908,7 +908,7 @@ Use case resumes at step 2.
 
 1.  User requests to undo the previous action taken.
 2.  AddressBook undo the the action.
-+ 
++
 Use case ends.
 
 
@@ -925,7 +925,7 @@ Use case ends.
 
 1.  User requests to find person and enters any keywords in the name of the person.
 2.  AddressBook returns the person requested.
-+ 
++
 Use case ends.
 
 
@@ -956,7 +956,7 @@ Use case ends.
 5.  User confirms deletion.
 6.  AddressBook deletes all contact created before the cut off date.
 7.  AddressBook shows success message.
-+ 
++
 Use case ends.
 
 

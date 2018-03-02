@@ -36,7 +36,12 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
 
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }
-
+    
+    public void enterCommand(String command) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(command));
+    }
+    
     /**
      * Returns the list of style classes present in the command box.
      */

@@ -41,7 +41,7 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_PHONE + " "
             + PREFIX_EMAIL + " "
             + PREFIX_ADDRESS + " "
-            + PREFIX_TAG + " "; 
+            + PREFIX_TAG; 
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "

@@ -26,9 +26,11 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 public class CommandList {
 
     /* Prefix definitions */
-    public static final ArrayList<String> commandList = new ArrayList<String>();
+    public final ArrayList<String> commandList = new ArrayList<String>();
     
     public CommandList() {
+        
+        //add all commands to the list lexicographically
         commandList.add(AddCommand.COMMAND_WORD);
         commandList.add(ClearCommand.COMMAND_WORD);
         commandList.add(ClearCommand.COMMAND_WORD);
@@ -43,10 +45,11 @@ public class CommandList {
         commandList.add(SelectCommand.COMMAND_WORD);
         commandList.add(UndoCommand.COMMAND_WORD);
     }
-    
-    public String getSyntax(String commandWord) {
 
-        switch (commandWord) {
+
+    public String getSyntax(String matchedCommandWord) {
+
+        switch (matchedCommandWord) {
 
             case AddCommand.COMMAND_WORD:
                 return AddCommand.COMMAND_SYNTAX;
@@ -54,7 +57,7 @@ public class CommandList {
             case EditCommand.COMMAND_WORD:
                 return EditCommand.COMMAND_SYNTAX;
             
-            default: return commandWord;
+            default: return matchedCommandWord;
         }
     }
 }

@@ -65,26 +65,25 @@ public class CommandBox extends UiPart<Region> {
         case TAB:
             keyEvent.consume();
             autoCompleteCommand(commandTextField.getText());
-            
             break;
         default:
             // let JavaFx handle the keypress
         }
     }
 
-    private void autoCompleteCommand(String commandText) {
+    private void autoCompleteCommand(String text) {
         
         CommandList commandListObj = new CommandList();
         
-        List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(commandText))
+        List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(text))
                 .collect(Collectors.toList());
         
-        String textToDisplay = commandListObj.getSyntax(matchedCommands.get(0));
-        
-        
-        
-        replaceText(textToDisplay);
-        commandTextField.positionCaret(matchedCommands.get(0).length() + 1);
+        if(matchedCommands.size() > 0) {
+            String textToDisplay = commandListObj.getSyntax(matchedCommands.get(0));
+
+            replaceText(textToDisplay);
+            commandTextField.positionCaret(matchedCommands.get(0).length() + 1);
+        }
     }
 
     /**

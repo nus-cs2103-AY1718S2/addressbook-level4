@@ -71,6 +71,10 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    /**
+     * Auto-completes the partial command {@code text} entered with the first command matched
+     * in the lexicographically sorted command list
+     */
     private void autoCompleteCommand(String text) {
         
         CommandList commandListObj = new CommandList();

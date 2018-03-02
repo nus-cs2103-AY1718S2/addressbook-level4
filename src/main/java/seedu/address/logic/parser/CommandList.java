@@ -46,7 +46,10 @@ public class CommandList {
         commandList.add(UndoCommand.COMMAND_WORD);
     }
 
-
+    /**
+     * Returns the added cli-syntax(if needed) {@code String} for the 
+     * auto-completed command {@code matchedCommandWord}
+     */
     public String getSyntax(String matchedCommandWord) {
 
         switch (matchedCommandWord) {

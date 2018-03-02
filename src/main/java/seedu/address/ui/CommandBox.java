@@ -17,6 +17,7 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.CommandList;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 import javax.lang.model.element.Element;
@@ -63,25 +64,27 @@ public class CommandBox extends UiPart<Region> {
             break;
         case TAB:
             keyEvent.consume();
+            autoCompleteCommand(commandTextField.getText());
             
-            autoFillCommand(commandTextField.getText());
             break;
         default:
             // let JavaFx handle the keypress
         }
     }
 
-    private void autoFillCommand(String commandText) {
-        String list[] = {"add", "find", "clear", "delete", "edit", "exit", "help", "history", 
-                "list", "redo", "select", "undo"};
-
-        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(list));
-
-        List<String> ans = arrayList.stream().filter(u -> u.startsWith(commandText))
+    private void autoCompleteCommand(String commandText) {
+        
+        CommandList commandListObj = new CommandList();
+        
+        List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(commandText))
                 .collect(Collectors.toList());
         
-        replaceText(ans.get(0));
+        String textToDisplay = commandListObj.getSyntax(matchedCommands.get(0));
         
+        
+        
+        replaceText(textToDisplay);
+        commandTextField.positionCaret(matchedCommands.get(0).length() + 1);
     }
 
     /**

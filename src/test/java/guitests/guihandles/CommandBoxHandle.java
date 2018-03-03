@@ -36,7 +36,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
 
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }
-    
+
     /**
      * Enters the given command in the Command Box, not pressing enter
      */

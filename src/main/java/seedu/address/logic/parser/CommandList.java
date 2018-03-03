@@ -47,7 +47,7 @@ public class CommandList {
      */
     public String getSyntax(String matchedCommandWord) {
 
-        switch (matchedCommandWord) { 
+        switch (matchedCommandWord) {
 
         case AddCommand.COMMAND_WORD:
             return AddCommand.COMMAND_SYNTAX;

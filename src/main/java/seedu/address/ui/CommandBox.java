@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -19,8 +17,6 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CommandList;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import javax.lang.model.element.Element;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -82,7 +78,7 @@ public class CommandBox extends UiPart<Region> {
         List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(text))
                 .collect(Collectors.toList());
 
-        if(matchedCommands.size() > 0) {
+        if (matchedCommands.size() > 0) {
             String textToDisplay = commandListObj.getSyntax(matchedCommands.get(0));
 
             replaceText(textToDisplay);

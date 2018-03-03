@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -13,12 +12,8 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 /**
  * Contains the list of commands
@@ -60,7 +55,8 @@ public class CommandList {
             case EditCommand.COMMAND_WORD:
                 return EditCommand.COMMAND_SYNTAX;
 
-            default: return matchedCommandWord;
+            default:
+                return matchedCommandWord;
         }
     }
 }

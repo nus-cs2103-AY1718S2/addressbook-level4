@@ -47,16 +47,16 @@ public class CommandList {
      */
     public String getSyntax(String matchedCommandWord) {
 
-        switch (matchedCommandWord) {
+        switch (matchedCommandWord) { 
 
-            case AddCommand.COMMAND_WORD:
-                return AddCommand.COMMAND_SYNTAX;
+        case AddCommand.COMMAND_WORD:
+            return AddCommand.COMMAND_SYNTAX;
 
-            case EditCommand.COMMAND_WORD:
-                return EditCommand.COMMAND_SYNTAX;
+        case EditCommand.COMMAND_WORD:
+            return EditCommand.COMMAND_SYNTAX;
 
-            default:
-                return matchedCommandWord;
+        default:
+            return matchedCommandWord;
         }
     }
 }

@@ -38,7 +38,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
     
     /**
-     * Enters the given command in the Command Box
+     * Enters the given command in the Command Box, not pressing enter
      */
     public void enterCommand(String command) {
         click();

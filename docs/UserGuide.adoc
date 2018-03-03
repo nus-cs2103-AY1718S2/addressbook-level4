@@ -56,6 +56,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+====
+*Auto-complete feature*
+
+* After typing partial command, press TAB for the command to be auto-completed. For e.g typing 'a' and pressing TAB will give the entire syntax for 'add' command.
+* The first lexicographically matched command is returned.
+====
+
 === Viewing help : `help`
 
 Format: `help`

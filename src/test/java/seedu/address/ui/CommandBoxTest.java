@@ -11,6 +11,8 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -20,8 +22,6 @@ import seedu.address.model.ModelManager;
 public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
-    private static final String AUTO_COMPLETED_ADD_COMMAND = "add n/ p/ e/ a/ t/";
-    private static final String AUTO_COMPLETED_EDIT_COMMAND = "edit [index] n/ p/ e/ a/ t/";
     private static final String COMMAND_THAT_FAILS = "invalid command";
 
     private ArrayList<String> defaultStyleOfCommandBox;
@@ -133,11 +133,11 @@ public class CommandBoxTest extends GuiUnitTest {
     public void handleKeyPress_TAB() {
         
         // no entry
-        assertInputHistory(KeyCode.TAB, AUTO_COMPLETED_ADD_COMMAND);
+        assertInputHistory(KeyCode.TAB, AddCommand.COMMAND_SYNTAX);
         
         // partial input
         commandBoxHandle.enterCommand("e");
-        assertInputHistory(KeyCode.TAB, AUTO_COMPLETED_EDIT_COMMAND);
+        assertInputHistory(KeyCode.TAB, EditCommand.COMMAND_SYNTAX);
         commandBoxHandle.enterCommand("ex");
         assertInputHistory(KeyCode.TAB, ExitCommand.COMMAND_WORD);
         commandBoxHandle.enterCommand("h");

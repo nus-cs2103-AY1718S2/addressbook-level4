@@ -76,12 +76,12 @@ public class CommandBox extends UiPart<Region> {
      * in the lexicographically sorted command list
      */
     private void autoCompleteCommand(String text) {
-        
+
         CommandList commandListObj = new CommandList();
-        
+
         List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(text))
                 .collect(Collectors.toList());
-        
+
         if(matchedCommands.size() > 0) {
             String textToDisplay = commandListObj.getSyntax(matchedCommands.get(0));
 

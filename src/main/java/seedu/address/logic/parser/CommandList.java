@@ -27,9 +27,9 @@ public class CommandList {
 
     /* Prefix definitions */
     public final ArrayList<String> commandList = new ArrayList<String>();
-    
+
     public CommandList() {
-        
+
         //add all commands to the list lexicographically
         commandList.add(AddCommand.COMMAND_WORD);
         commandList.add(ClearCommand.COMMAND_WORD);
@@ -47,7 +47,7 @@ public class CommandList {
     }
 
     /**
-     * Returns the added cli-syntax(if needed) {@code String} for the 
+     * Returns the added cli-syntax(if needed) {@code String} for the
      * auto-completed command {@code matchedCommandWord}
      */
     public String getSyntax(String matchedCommandWord) {
@@ -59,7 +59,7 @@ public class CommandList {
 
             case EditCommand.COMMAND_WORD:
                 return EditCommand.COMMAND_SYNTAX;
-            
+
             default: return matchedCommandWord;
         }
     }

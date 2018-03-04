@@ -780,15 +780,18 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target users:*
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+The application is targeted towards Human Resources Managers at SMEs and start-ups. HR managers have a lot of contacts to manage which include current employees, customers, potential employees, potential customers, investors and many others. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*User Profile*:
+
+* HR managers who have a significant number of contacts to manage
+* Start-up employee who is new to HR management
+* HR managers who prefer desktop apps
+* HR managers who are good at typing and hence prefer CLI apps
+
+*Value proposition*: An ideal solution for small teams and business professionals who need a simple solution to manage their contacts and help them with day-to-day business activities.
 
 [appendix]
 == User Stories
@@ -806,12 +809,54 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |add tag |categorize people
+
+|`* * *` |user |find people by tag | find people with similar tag
+
+|`* * *` |user |add Linkedin and Github link | view pople's profile
+
+|`* * *` |user |submit feedback to developer | receive a better version in the future
+
+|`* * *` |user |have a calendar and add appointment on it| arrange appointment with people
+
+|`* * *` |user |auto send mail to people after arranging appointment| minimize my time to arrange meeting
+
+|`* * *` |user |find anything by characters|reduce time finding someone
+
+|`* * *` |user |have a log| view my past actions
+
+|`* * *` |user |filter my log| view specific past actions
+
+|`* * *` |user |delete my log| save space and secure information
+
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
 
-_{More to be added}_
+|`* *` |user | add birthday of my contacts |wish them
+
+|`* *` |user | autofill command| save time
+
+|`* *` |user | add logic statement into find command| find and filter more effectively
+
+|`* *` |user | add notes| keep long information of people
+
+|`* *` |user | have a list of frequently used contact| easily contact them
+
+|`* *` |user | have a login system| protect my information
+
+|`* *` |user | store picture of my contacts| recognize them easily
+
+|`*` |user | be connected with google drive| store people's CV
+
+|`*` |user | rate person| give feedback to them
+
+|`*` |user | store the date of last contact with a person| keep my contact more effectively
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -819,14 +864,14 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete contact
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list contacts
+2.  AddressBook shows a list of contacts
+3.  User requests to delete a specific contact in the list
+4.  AddressBook deletes the contact
 +
 Use case ends.
 
@@ -844,7 +889,51 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+== Use case: Filter log
+
+*MSS*
+
+1. User request to view log
+2. AddressBook shows the log list to user
+3. User request to filter the log with specific keywords
+4. AddressBook shows the log list with filtered results
+
+*Extensions*
+
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The filter conditions are invalid
++
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+== Use case: Auto-fill command
+
+*MSS*
+
+1. User enters command word partially in the command line
+2. User request for auto-fill of command.
+3. AddressBook completes the command word for the user.
+
+*Extensions*
+
+
+* 3a. The partial word does not match any of the commands known.
++
+Use case ends.
+
+* 3b. There are multiple commands matching the partial command word.
++
+** 3b1. AddressBook shows the list of commands matching the partial command word.
++
+** 3b2. User enters more letters to the command word.
++
+Use case resumes at step 2.
+
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +941,13 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  The commands and what they do must be clear to the user.
+.  The address book should be able to export to other computers.
+.  Should take less than 5 seconds to respond to each command on any <<mainstream-os,mainstream OS>>.
+.  The user interface's font type and font size should be readable by user.
+.  Should be backwards compatible with older version of the software.
+.  Should receive feedback after executing commands.
+.  Should have correct error handling and not crash from unexpected behavior.
 
 [appendix]
 == Glossary

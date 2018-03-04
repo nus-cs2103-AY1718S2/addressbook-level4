@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W14-B3/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -782,13 +782,13 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* campus recruiters that have a need to manage a significant number of student contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: offers a open source solution to recruit management and manage contacts faster than a typical mouse/GUI driven app.
 
 [appendix]
 == User Stories
@@ -806,12 +806,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by some characters |locate details of persons without having to remember his/her full name
+
+|`* * *` |user |filter a person by field |locate details of persons in a more optimized view
+
+|`* * *` |user |add a profile picture |recognize the person easily
+
+|`* * *` |user |add a resume |view the competency of the person
+
+|`* * *` |user |add a remark |update additional information about the person
+
+|`* * *` |user |add a rating |update the competency of the person after an interview
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -844,7 +854,176 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a new person in the list
+2.  AddressBook adds the new person into the address book.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The command is invalid
++
+Use case ends.
+
+=== Use case: Find person by name
+
+*MSS*
+
+1.  User enters the command with the keyword as the name
+2.  AddressBook shows the list of persons with the keyword
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The keyword is not found in the list of persons
++
+Use case ends.
+
+=== Use case: Find person by some letters
+
+*MSS*
+
+1.  User enters the command with the some letters as the name
+2.  AddressBook shows the list of persons with fields containing the letters
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no such letter found in the list of persons.
++
+Use case ends.
+
+=== Use case: Filter a person by field
+
+*MSS*
+
+1.  User requests to filter a list of persons that matches the filter
+2.  AddressBook shows the list of persons that matches the filter
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The filter condition is invalid
++
+Use case ends.
+
+=== Use case: Add resume
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a resume to the person in the list
+4.  AddressBook adds a resume to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add profile picture
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a profile picture to a specific person in the list
+4.  AddressBook adds a profile picture to the person in the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given path to the image is invalid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add rating
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a rating to the specific person in the list
+4.  AddressBook adds a rating to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add remark
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a remark to the person in the list
+4.  AddressBook adds a remark to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +1031,10 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should follow Java coding standards/styles.
+.  Should work on both 32-bit and 64-bit environments.
+.  Should work without access to the internet.
+.  Should work without external software.
 
 [appendix]
 == Glossary

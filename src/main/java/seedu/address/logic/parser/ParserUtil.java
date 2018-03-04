@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -137,6 +138,33 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String expectedGraduationYear} into an {@code ExpectedGraduationYear}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code expectedGraduationYear} is invalid.
+     */
+    public static ExpectedGraduationYear parseExpectedGraduationYear(String expectedGraduationYear)
+            throws IllegalValueException {
+        requireNonNull(expectedGraduationYear);
+        String trimmedExpectedGraduationYear = expectedGraduationYear.trim();
+        if (!ExpectedGraduationYear.isValidExpectedGraduationYear(trimmedExpectedGraduationYear)) {
+            throw new IllegalValueException(ExpectedGraduationYear.MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS);
+        }
+        return new ExpectedGraduationYear(trimmedExpectedGraduationYear);
+    }
+    /**
+     * Parses a {@code Optional<String> expectedGraduationYear}
+     * into an {@code Optional<ExpectedGraduationYear>} if {@code expectedGraduationYear} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ExpectedGraduationYear> parseExpectedGraduationYear(Optional<String> expectedGraduationYear)
+            throws IllegalValueException {
+        requireNonNull(expectedGraduationYear);
+        return expectedGraduationYear.isPresent() ? Optional.of(parseExpectedGraduationYear(
+                expectedGraduationYear.get())) : Optional.empty();
     }
 
     /**

@@ -19,18 +19,21 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final ExpectedGraduationYear expectedGraduationYear;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  ExpectedGraduationYear expectedGraduationYear, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, expectedGraduationYear, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.expectedGraduationYear = expectedGraduationYear;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -49,6 +52,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public ExpectedGraduationYear getExpectedGraduationYear() {
+        return expectedGraduationYear;
     }
 
     /**
@@ -73,13 +80,14 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, expectedGraduationYear, tags);
     }
 
     @Override
@@ -92,6 +100,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Expected graudation year: ")
+                .append(getExpectedGraduationYear())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

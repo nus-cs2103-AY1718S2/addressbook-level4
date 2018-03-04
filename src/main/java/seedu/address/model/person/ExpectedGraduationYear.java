@@ -15,9 +15,9 @@ public class ExpectedGraduationYear {
     public final String value;
 
     /**
-     * Constructs a {@code Phone}.
+     * Constructs a {@code expectedGraduationYear}.
      *
-     * @param expectedGraduationYear A valid phone number.
+     * @param expectedGraduationYear A valid expectedGraduationYear.
      */
     public ExpectedGraduationYear(String expectedGraduationYear) {
         requireNonNull(expectedGraduationYear);
@@ -27,7 +27,7 @@ public class ExpectedGraduationYear {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid expectedGraduationYear.
      */
     public static boolean isValidExpectedGraduationYear(String test) {
         return test.matches(EXPECTED_GRADUATION_YEAR_VALIDATION_REGEX) && isInValidRange(test);

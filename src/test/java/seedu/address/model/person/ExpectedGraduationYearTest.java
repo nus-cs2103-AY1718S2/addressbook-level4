@@ -25,7 +25,7 @@ public class ExpectedGraduationYearTest {
         Assert.assertThrows(NullPointerException.class, () ->
                 ExpectedGraduationYear.isValidExpectedGraduationYear(null));
 
-        // invalid phone numbers
+        // invalid expectedGraduationYear
         assertFalse(ExpectedGraduationYear.isValidExpectedGraduationYear("")); // empty string
         assertFalse(ExpectedGraduationYear.isValidExpectedGraduationYear(" ")); // spaces only
         assertFalse(ExpectedGraduationYear.isValidExpectedGraduationYear("91")); // less than 4 numbers
@@ -33,8 +33,8 @@ public class ExpectedGraduationYearTest {
         assertFalse(ExpectedGraduationYear.isValidExpectedGraduationYear("-2018")); // negative symbol before digits
         assertFalse(ExpectedGraduationYear.isValidExpectedGraduationYear("201 8")); // spaces within digits
         assertFalse(ExpectedGraduationYear.isValidExpectedGraduationYear("2018.5")); // year and month
-        // valid phone numbers
-        assertTrue(ExpectedGraduationYear.isValidExpectedGraduationYear("2018")); // exactly 3 numbers
+        // valid expectedGraduationYear
+        assertTrue(ExpectedGraduationYear.isValidExpectedGraduationYear("2018"));
         assertTrue(ExpectedGraduationYear.isValidExpectedGraduationYear("2025"));
     }
 }

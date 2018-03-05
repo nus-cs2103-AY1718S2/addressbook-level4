@@ -49,14 +49,7 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
 
-        //Solution below adopted from https://assylias.wordpress.com/2013/12/08/383/ and
-        //https://www.javaworld.com/article/2074537/core-java/tostring--
-        //hexadecimal-representation-of-identity-hash-codes.html
-        for (Tag tag : person.getTags()) {
-            Label newLabel = new Label(tag.tagName);
-            newLabel.setStyle("-fx-background-color: #" + Integer.toHexString(tag.tagName.hashCode()));
-            tags.getChildren().add(newLabel);
-        }
+        initTagLabels(person);
     }
 
     @Override
@@ -75,5 +68,24 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * create tag labels for person, change tag color based on the hex string
+     * @param person
+     */
+    private void initTagLabels(Person person) {
+        //Solution below adopted from https://assylias.wordpress.com/2013/12/08/383/ and
+        //https://www.javaworld.com/article/2074537/core-java/tostring--
+        //hexadecimal-representation-of-identity-hash-codes.html
+        for (Tag tag : person.getTags()) {
+            Label newLabel = new Label(tag.tagName);
+            newLabel.setStyle("-fx-background-color: #" + convertHashCodeToHexString(tag.tagName));
+            tags.getChildren().add(newLabel);
+        }
+    }
+
+    private static String convertHashCodeToHexString(String tagName) {
+        return Integer.toHexString(tagName.hashCode());
     }
 }

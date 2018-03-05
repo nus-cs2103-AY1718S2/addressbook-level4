@@ -79,7 +79,7 @@ public class GuiTestAssert {
 
         default :
             fail(tagName + " does not have a color assigned.");
-            return("");
+            return(""); 
         }
     }
 

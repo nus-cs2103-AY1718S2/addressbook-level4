@@ -75,11 +75,11 @@ public class GuiTestAssert {
             return "teal";
 
         case "husband":
-            return"olive";
+            return "olive";
 
         default :
             fail(tagName + " does not have a color assigned.");
-            return(""); 
+            return (""); 
         }
     }
 

@@ -50,7 +50,8 @@ public class TypicalPersons {
             .withEmail("anna@example.com").withAddress("4th street")
             .withExpectedGraduationYear("2022").build();
     public static final Person ALICE_WITHOUT_TAG = new PersonBuilder(ALICE).withTags().build();
-    public static final Person BENSON_WITH_FRIENDS_TAG_REMOVED = new PersonBuilder(BENSON).withTags("owesMoney").build();
+    public static final Person BENSON_WITH_FRIENDS_TAG_REMOVED = new PersonBuilder(BENSON)
+            .withTags("owesMoney").build();
     public static final Person CARL_WITHOUT_TAG = new PersonBuilder(CARL).withTags().build();
 
     // Manually added

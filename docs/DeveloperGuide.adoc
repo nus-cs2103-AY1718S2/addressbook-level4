@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-T09-B3/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B3`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -782,13 +782,23 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+* is taking CS2103/CS2103T in NUS
+* wants to keep track on his/her learning progress
+* is willing to have good team management
 * has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+* prefers desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: 
+
+* never miss LOs hidden in the nested collapsible list
+* keep track of your own progress on a week by week basis
+* keep track of your teammates' completion of TO-DO list and learning progress (providing proof for peer evaluation)
+* view the teammates' weekly plan in phase B (to know the upcoming updates even before they send any pull requests to github repo)
+* save your answers for the exercises (as proof of completion and for future revision)
+* easily search for information based on key words (which is hard to achieve in the module website with nested collapsible lists)
 
 [appendix]
 == User Stories
@@ -800,11 +810,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |new user |register and account with NUS net ID |join the module community
+
+|`* * *` |new user |fill in my full name and phone number |provide necessary information for the platform maintenance
+
+|`* * *` |new user |fill in optional fiels such as faculty, year of study etc |help my classmates know be better
+
+|`* * *` |user |add contacts |have more classmates to communicate with
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a person by NUS NET ID |locate details of persons without having to go through the entire list
+
+|`* * *` |user |search information in our module website based on keywords |nevigate and find the information I need quickly
+
+|`* * *` |user |view my TO-DO list |know all the my tasks easily
+
+|`* * *` |user |tick an item in the TO-DO list upon completion |focus on the tasks I have not done 
+
+|`* * *` |user |save my answers of the exercises |show to tutor as proof of my learning outcome and revise before exams
+
+|`* * *` |user |update information of certain field(s) |keep my information up-to-date
+
+|`* * *` |user |see the timeline showing the learning progress of me and my teammates |make sure everyone is on track
+
+|`* * *` |user |see the weekly plan of my teammates (phase B) |to know the upcoming updates even before they send any pull requests to github repo
+
+|`* * *` |user |post my weekly plan (phase B) |to inform my teammates of upcoming updates even before I send any pull requests to github repo
+
+|`* *` |user |upload a profile picture |help others to recognize me
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 

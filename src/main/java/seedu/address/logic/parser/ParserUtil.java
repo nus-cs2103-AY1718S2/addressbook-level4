@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -137,6 +138,30 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String income} into an {@code income}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code income} is invalid.
+     */
+    public static Income parseIncome(String income) throws IllegalValueException {
+        requireNonNull(income);
+        Float trimmedIncome = Float.parseFloat(income.trim());
+        if (!Income.isValidIncome(trimmedIncome)) {
+            throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
+        }
+        return new Income(trimmedIncome);
+    }
+
+    /**
+     * Parses a {@code Optional<String> income} into an {@code Optional<income>} if {@code income} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Income> parseIncome(Optional<String> income) throws IllegalValueException {
+        requireNonNull(income);
+        return income.isPresent() ? Optional.of(parseIncome(income.get())) : Optional.empty();
     }
 
     /**

@@ -12,7 +12,7 @@ import java.util.Locale;
  * Guarantees: immutable; is valid as declare in {@link #isValidIncome(float)}}
  */
 public class Income {
-    public static final String MESSAGE_INCOME_CONSTRAITS =
+    public static final String MESSAGE_INCOME_CONSTRAINTS =
             "Person income must be positive numerical numbers, floating point value";
 
     public final float income;
@@ -22,12 +22,12 @@ public class Income {
      */
     public Income(float income) {
         requireNonNull(income);
-        checkArgument(this.isValidIncome(income), this.MESSAGE_INCOME_CONSTRAITS);
+        checkArgument(this.isValidIncome(income), this.MESSAGE_INCOME_CONSTRAINTS);
         this.income = income;
     }
 
 
-    private static boolean isValidIncome(float income) {
+    public static boolean isValidIncome(float income) {
         return (income >= 0);
     }
 

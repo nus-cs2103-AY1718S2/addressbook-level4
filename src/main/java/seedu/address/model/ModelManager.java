@@ -78,7 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+        this.indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================

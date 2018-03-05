@@ -49,6 +49,9 @@ public class TypicalPersons {
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
             .withExpectedGraduationYear("2022").build();
+    public static final Person ALICE_WITHOUT_TAG = new PersonBuilder(ALICE).withTags().build();
+    public static final Person BENSON_WITH_FRIENDS_TAG_REMOVED = new PersonBuilder(BENSON).withTags("owesMoney").build();
+    public static final Person CARL_WITHOUT_TAG = new PersonBuilder(CARL).withTags().build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")

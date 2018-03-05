@@ -1,10 +1,15 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.ALICE_WITHOUT_TAG;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.BENSON_WITH_FRIENDS_TAG_REMOVED;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.CARL_WITHOUT_TAG;
 
 import java.util.Arrays;
 
@@ -13,7 +18,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.TypicalPersons;
 
 public class ModelManagerTest {
     @Rule
@@ -61,5 +69,28 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
+
+    @Test
+    public void deleteTag_tagNotFound_throwsTagNotFoundException() throws Exception {
+        AddressBook addressBook = TypicalPersons.getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        thrown.expect(TagNotFoundException.class);
+        modelManager.deleteTag(new Tag("family"));
+    }
+
+    @Test
+    public void deleteTag_tagIsFound_tagsDeleted() throws Exception {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+                .withPerson(CARL).build();
+        UserPrefs userPrefs = new UserPrefs();
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(ALICE_WITHOUT_TAG)
+                .withPerson(BENSON_WITH_FRIENDS_TAG_REMOVED).withPerson(CARL_WITHOUT_TAG).build();
+
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.deleteTag(new Tag("friends"));
+        assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
     }
 }

@@ -27,7 +27,8 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
 
-        expectedCard.getTags().forEach(tag -> assertEquals(expectedCard.getTagsColour(tag), actualCard.getTagsColour(tag)));
+        expectedCard.getTags().forEach(tag ->
+            assertEquals(expectedCard.getTagsColour(tag), actualCard.getTagsColour(tag)));
     }
 
     /**
@@ -45,7 +46,12 @@ public class GuiTestAssert {
 
     }
 
-    private static void assertTagEquals(Person expectedPerson, PersonCardHandle actualCard){
+    /**
+     * Checks if the tag colour matches the correct tag colour for {@code tagName}
+     * @param expectedPerson
+     * @param actualCard
+     */
+    private static void assertTagEquals(Person expectedPerson, PersonCardHandle actualCard) {
         List<String> expectedTags = expectedPerson.getTags().stream()
                 .map(tag -> tag.tagName).collect(Collectors.toList());
         assertEquals(expectedTags, actualCard.getTags());
@@ -54,29 +60,27 @@ public class GuiTestAssert {
                         actualCard.getTagsColour(tag)));
     }
 
-    private static String getTagColourFor(String tagName){
-        switch(tagName){
+    private static String getTagColourFor(String tagName) {
+        switch(tagName) {
 
-            case "friends":
-                return "cyan";
+        case "friends":
+            return "cyan";
 
-            case "colleages":
-            case "neighbours":
-                return "blue";
+        case "colleages":
+        case "neighbours":
+            return "blue";
 
-            case "classmates":
-            case "owesMoney":
-                return "teal";
+        case "classmates":
+        case "owesMoney":
+            return "teal";
 
-            case "husband":
-                return"olive";
+        case "husband":
+            return"olive";
 
-            default :
-                fail(tagName + " does not have a color assigned.");
-                return("");
+        default :
+            fail(tagName + " does not have a color assigned.");
+            return("");
         }
-
-
     }
 
     /**

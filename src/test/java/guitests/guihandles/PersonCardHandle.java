@@ -69,7 +69,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getTagsColour(String tag){
+    public List<String> getTagsColour(String tag) {
         return tagLabels
                 .stream()
                 .filter(label -> label.getText().equals(tag))

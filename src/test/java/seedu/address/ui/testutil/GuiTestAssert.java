@@ -66,7 +66,7 @@ public class GuiTestAssert {
         case "friends":
             return "cyan";
 
-        case "colleages":
+        case "colleagues":
         case "neighbours":
             return "blue";
 

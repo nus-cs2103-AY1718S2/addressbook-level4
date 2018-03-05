@@ -5,7 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -47,7 +49,14 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        //Solution below adopted from https://assylias.wordpress.com/2013/12/08/383/ and
+        //https://www.javaworld.com/article/2074537/core-java/tostring--hexadecimal-representation-of-identity-hash-codes.html
+        for (Tag tag : person.getTags()){
+            Label newLabel = new Label(tag.tagName);
+            newLabel.setStyle("-fx-background-color: #" + Integer.toHexString(tag.tagName.hashCode()));
+            tags.getChildren().add(newLabel);
+        }
     }
 
     @Override

@@ -50,8 +50,9 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
 
         //Solution below adopted from https://assylias.wordpress.com/2013/12/08/383/ and
-        //https://www.javaworld.com/article/2074537/core-java/tostring--hexadecimal-representation-of-identity-hash-codes.html
-        for (Tag tag : person.getTags()){
+        //https://www.javaworld.com/article/2074537/core-java/tostring--
+        //hexadecimal-representation-of-identity-hash-codes.html
+        for (Tag tag : person.getTags()) {
             Label newLabel = new Label(tag.tagName);
             newLabel.setStyle("-fx-background-color: #" + Integer.toHexString(tag.tagName.hashCode()));
             tags.getChildren().add(newLabel);

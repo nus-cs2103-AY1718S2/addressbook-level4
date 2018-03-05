@@ -1,7 +1,9 @@
 package seedu.address.ui.testutil;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,8 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
+
+        expectedCard.getTags().forEach(tag -> assertEquals(expectedCard.getTagsColour(tag), actualCard.getTagsColour(tag)));
     }
 
     /**
@@ -36,6 +40,43 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+
+        assertTagEquals(expectedPerson, actualCard);
+
+    }
+
+    private static void assertTagEquals(Person expectedPerson, PersonCardHandle actualCard){
+        List<String> expectedTags = expectedPerson.getTags().stream()
+                .map(tag -> tag.tagName).collect(Collectors.toList());
+        assertEquals(expectedTags, actualCard.getTags());
+        expectedTags.forEach(tag ->
+                assertEquals(Arrays.asList("label", getTagColourFor(tag)),
+                        actualCard.getTagsColour(tag)));
+    }
+
+    private static String getTagColourFor(String tagName){
+        switch(tagName){
+
+            case "friends":
+                return "cyan";
+
+            case "colleages":
+            case "neighbours":
+                return "blue";
+
+            case "classmates":
+            case "owesMoney":
+                return "teal";
+
+            case "husband":
+                return"olive";
+
+            default :
+                fail(tagName + " does not have a color assigned.");
+                return("");
+        }
+
+
     }
 
     /**

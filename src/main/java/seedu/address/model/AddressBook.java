@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -165,6 +164,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             for (Person person: persons) {
                 removeTagFromEachPerson(person, tag);
             }
+            removeUnusedTags();
         } else {
             throw new TagNotFoundException();
         }
@@ -186,6 +186,17 @@ public class AddressBook implements ReadOnlyAddressBook {
                 throw new AssertionError("The target person cannot be missing.");
             }
         }
+    }
+
+    /**
+     * Removes unreferenced tags from {@code tags}.
+     */
+    public void removeUnusedTags() {
+        Set<Tag> referencedTags = new HashSet<>();
+        for (Person person: persons) {
+            person.getTags().forEach(tag -> referencedTags.add(tag));
+        }
+        tags.setTags(referencedTags);
     }
 
     //// util methods

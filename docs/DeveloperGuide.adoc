@@ -810,15 +810,29 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |filter a person by field |locate details of persons in a more optimized view
 
-|`* * *` |user |add a profile picture |recognize the person easily
+|`* * *` |user |add a profile photo |recognize the person easily
+
+|`* * *` |user |add an expected graduation year |easier for recruiter to decide whether to hire the student
+
+|`* * *` |user |schedule interview dates |decide whether to hire the student
+
+|`* * *` |user |rate students |decide whether to hire the student
 
 |`* * *` |user |add a resume |view the competency of the person
+
+|`* * *` |user |massively tag students |make the tag for interview/rejection easier
 
 |`* * *` |user |add a remark |update additional information about the person
 
 |`* * *` |user |add a rating |update the competency of the person after an interview
 
+|`* *` |user |rank performance of students |decide whether to hire the student
+
+|`* *` |user |send out offer/rejection email massively |make recruitment easier
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`*` |user |visualise performance by radar graph|easier to understand students' performance
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================

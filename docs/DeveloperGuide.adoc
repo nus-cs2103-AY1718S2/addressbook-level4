@@ -819,30 +819,182 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add Event
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add an event by entering information
+2.  AddressBook adds the event
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. Event clashes with an existing event.
++
+[none]
+** 2a1. AddressBook notifies user and asks for confirmation.
+** 2a2. User enters confirmation.
++
+Use case resumes from 2.
+
+[discrete]
+=== Use case: Delete Event
+
+*MSS*
+
+1.  User requests to delete an event by delete command line
+2.  AddressBook shows all event, listed by index
+3.  User types in which index to delete
+4.  Addressbook deletes the event
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+*Extensions*
+
+[none]
+* 2a. Addressbook is empty.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 2a1. AddressBook notifies user that AddressBook is empty.
 +
-Use case resumes at step 2.
+Use case ends.
+
+* 3a. Index given is invalid.
++
+[none]
+** 3a1. AddressBook notifies user that the index was invalid.
++
+Use case resumes from 3.
+
+[discrete]
+=== Use case: Edit Event
+
+*MSS*
+
+1.  User requests to edit an event
+2.  AddressBook shows all event, listed by index
+3.  User types in which index to edit
+4.  User types in the information they want to edit
+5.  AddressBook overwrites the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook is empty.
++
+[none]
+** 2a1. AddressBook notifies user that AddressBook is empty.
++
+Use case ends.
+
+* 3a. Index given is invalid.
++
+[none]
+** 3a1. AddressBook notifies user that the index was invalid.
++
+Use case resumes from 3.
+
+[discrete]
+=== Use case: Search by tag
+
+*MSS*
+
+1.  User requests to search events by entering one or multiple tags
+2.  AddressBook lists the events that have one or more of the given tags
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook is empty.
++
+[none]
+** 2a1. AddressBook notifies user that AddressBook is empty.
++
+Use case ends.
+
+* 3a. No tags were found.
++
+[none]
+** 3a1. AddressBook notifies user that no events were found with the given tags.
++
+Use case ends.
+
+[discrete]
+=== Use case: List events by date/month/year
+
+*MSS*
+
+1.  User requests to list events by entering desired date/month/year of the year
+2.  AddressBook lists the events that fall within that date/month/year for the current year
++
+Use case ends.
+
+[discrete]
+=== Use case: Location of Event
+
+*MSS*
+
+1.  User requests for location of event
+2.  AddressBook searches location of event via google map
+3.  AddressBook shows page of google map with located event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook is empty.
++
+[none]
+** 2a1. AddressBook notifies user that AddressBook is empty.
++
+Use case ends.
+
+* 3a. Event is not found in AddressBook.
++
+[none]
+** 3a1. AddressBook is unable to find event.
+** 3a2. AddressBook notifies user that event is not found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests to see all commands
+2.  Addressbook shows all commands, sorted by name
+3.  User types in which command they want to view
+4.  Addressbook shows the manual of that command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Command name given is invalid.
++
+[none]
+** 2a1. AddressBook notifies user that the command was invalid.
++
+Use case resumes from 3.
+
+[discrete]
+=== Use case: Copy Previous Command
+
+*MSS*
+
+1.  User enters keystroke to navigate to previously entered command
+2.  AddressBook copies the previous command into the input field
++
+Use case ends.
 
 _{More to be added}_
 

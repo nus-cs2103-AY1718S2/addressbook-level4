@@ -21,6 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String RECORD_NUMBER_STATUS = "%d person(s) in total";
 
     /**
      * Used to generate time stamps.
@@ -82,7 +83,7 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     private void setRecordNumberStatus(int recordNumber) {
-        Platform.runLater(() -> this.recordNumberStatus.setText(recordNumber + " person(s) in total"));
+        Platform.runLater(() -> this.recordNumberStatus.setText(String.format(RECORD_NUMBER_STATUS, recordNumber)));
     }
 
     @Subscribe

@@ -860,9 +860,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find an available venue
-2.  AddressBook prompts user to input a location
-3.  User requests venues near this specific location
-4.  AddressBook prints out a list of available locations near the specified location
+2.  AddressBook prompts user to input a faculty
+3.  User requests venues near this faculty
+4.  AddressBook prints out a list of available venues near the specified faculty
 +
 Use case ends.
 
@@ -872,7 +872,7 @@ Use case ends.
 * 2a. No location is available
 +
 [none]
-** 3a1. AddressBook displays the empty result
+** 2a1. AddressBook displays the empty result
 +
 Use case resumes at step 2
 

@@ -44,7 +44,6 @@ public class GuiTestAssert {
             List<String> expectedClasses = expectedPerson.getTags().stream().map(tag -> tag.tagName)
                 .collect(Collectors.toList());
             assertEquals(getTagColor(expectedClasses.get(0)), tagColor);
-            
         }
     }
 
@@ -80,7 +79,7 @@ public class GuiTestAssert {
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
     }
-    
+
     public static String getTagColor(String tagName) {
         switch(tagName) {
             case "friends":

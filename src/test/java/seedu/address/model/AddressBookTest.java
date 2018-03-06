@@ -90,8 +90,9 @@ public class AddressBookTest {
     public void removeTag_tagNotInUsed_addressBookUnchanged() throws Exception {
         addressBookWithAmyAndBob.removeTag(new Tag(VALID_TAG_UNUSED));
         AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
-                assertEquals(expectedAddressBook, addressBookWithAmyAndBob);
-        }
+
+        assertEquals(expectedAddressBook, addressBookWithAmyAndBob);
+    }
 
     @Test
     public void removeTag_tagUsedByMultiplePersons_tagRemoved() throws Exception {

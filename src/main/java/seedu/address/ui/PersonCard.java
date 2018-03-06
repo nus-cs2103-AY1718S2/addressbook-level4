@@ -6,6 +6,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -47,7 +48,8 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        initTagLabels(person);
     }
 
     @Override
@@ -66,5 +68,24 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * create tag labels for person, change tag color based on the hex string
+     * @param person
+     */
+    private void initTagLabels(Person person) {
+        //Solution below adopted from https://assylias.wordpress.com/2013/12/08/383/ and
+        //https://www.javaworld.com/article/2074537/core-java/tostring--
+        //hexadecimal-representation-of-identity-hash-codes.html
+        for (Tag tag : person.getTags()) {
+            Label newLabel = new Label(tag.tagName);
+            newLabel.setStyle("-fx-background-color: #" + convertHashCodeToHexString(tag.tagName));
+            tags.getChildren().add(newLabel);
+        }
+    }
+
+    private static String convertHashCodeToHexString(String tagName) {
+        return Integer.toHexString(tagName.hashCode());
     }
 }

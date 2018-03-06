@@ -791,7 +791,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: 
+*Value proposition*:
 
 * never miss LOs hidden in the nested collapsible list
 * keep track of your own progress on a week by week basis
@@ -826,7 +826,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |view my TO-DO list |know all the my tasks easily
 
-|`* * *` |user |tick an item in the TO-DO list upon completion |focus on the tasks I have not done 
+|`* * *` |user |tick an item in the TO-DO list upon completion |focus on the tasks I have not done
 
 |`* * *` |user |save my answers of the exercises |show to tutor as proof of my learning outcome and revise before exams
 

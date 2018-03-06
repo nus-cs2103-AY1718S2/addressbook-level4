@@ -11,7 +11,7 @@ import seedu.address.ui.TaskCard;
  * Provides a handle for {@code TaskListPanel} containing the list of {@code TaskCard}.
  */
 public class PersonListPanelHandle extends NodeHandle<ListView<TaskCard>> {
-    public static final String PERSON_LIST_VIEW_ID = "#personListView";
+    public static final String PERSON_LIST_VIEW_ID = "#taskListView";
 
     private Optional<TaskCard> lastRememberedSelectedPersonCard;
 

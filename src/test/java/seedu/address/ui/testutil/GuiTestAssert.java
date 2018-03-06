@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 
 /**
@@ -36,6 +37,12 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+        
+        if (!actualCard.getTagLabels().isEmpty()) {
+            ObservableList<String> classes = actualCard.getTagLabels().get(0).getStyleClass();
+            String tagColor = classes.toString().split("\\s+")[1];
+            assertEquals("green", tagColor);   
+        }
     }
 
     /**

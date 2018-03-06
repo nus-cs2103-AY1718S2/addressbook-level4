@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W13-B3/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -780,15 +780,19 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
+*Target user*: University students
+
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of assignments and events
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: The user will have all their assignment and event
+tasks in one app. This creates convenience for the user. The CLI also makes it
+faster than a typical mouse/GUI-driven app
 
 [appendix]
 == User Stories
@@ -963,8 +967,12 @@ _{More to be added}_
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 500 assignments and 500 events without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should respond within two seconds when the user enters a command.
+.  The system CLI commands should be easy to remember for the average English speaker.
+.  A novice user should be able to understand how to use the system in a short period of time.
+.  The notification feature should not be deemed too annoying for the user.
 
 _{More to be added}_
 

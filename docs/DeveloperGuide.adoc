@@ -776,7 +776,7 @@ _{More to be added}_
 
 [discrete]
 
-=== Use case: Add assgniment
+=== Use case: Add assgnment
 
 *MSS*
 

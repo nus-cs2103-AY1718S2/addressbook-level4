@@ -68,4 +68,15 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
+
+    //@@author yamgent-reused
+    //Reused from https://github.com/se-edu/addressbook-level4/pull/798/files
+    public List<String> getTagColors(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
+    }
 }

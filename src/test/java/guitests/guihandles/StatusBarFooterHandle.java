@@ -12,18 +12,22 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
+    private static final String NUMBER_OF_PEOPLE_ID = "#numberOfPeopleStatus";
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
+    private final StatusBar numberOfPeopleNode;
 
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
+    private String lastRememberedNumberOfPeople;
 
     public StatusBarFooterHandle(Node statusBarFooterNode) {
         super(statusBarFooterNode);
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
+        this.numberOfPeopleNode = getChildNode(NUMBER_OF_PEOPLE_ID);
     }
 
     /**
@@ -38,6 +42,13 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      */
     public String getSaveLocation() {
         return saveLocationNode.getText();
+    }
+
+    /**
+     * Returns the text of the 'number of people' portion of the status bar.
+     */
+    public String getNumberOfPeople() {
+        return numberOfPeopleNode.getText();
     }
 
     /**
@@ -62,11 +73,27 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         lastRememberedSaveLocation = getSaveLocation();
     }
 
+
     /**
      * Returns true if the current content of the 'save location' is different from the value remembered by the most
      * recent {@code rememberSaveLocation()} call.
      */
     public boolean isSaveLocationChanged() {
         return !lastRememberedSaveLocation.equals(getSaveLocation());
+    }
+
+    /**
+     * Remembers the content of the 'number of people' portion of the status bar.
+     */
+    public void rememberNumberOfPeople() {
+        lastRememberedNumberOfPeople = getNumberOfPeople();
+    }
+
+    /**
+     * Returns true if the current content of the 'number of people' is different from the value remembered by the most
+     * recent {@code rememberNumberOfPeople()} call.
+     */
+    public boolean isNumberOfPeopleChanged() {
+        return !lastRememberedNumberOfPeople.equals(getNumberOfPeople());
     }
 }

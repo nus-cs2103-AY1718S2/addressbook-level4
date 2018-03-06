@@ -172,11 +172,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     */
     private void removeTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
         Set<Tag> newTags = new HashSet<>(person.getTags());
-            if (!newTags.remove(tag)) {
-                return;
-            }
-            Person newPerson =
-                    new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), newTags);
+        if (!newTags.remove(tag)) {
+            return;
+        }
+        Person newPerson =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), newTags);
         try {
             updatePerson(person, newPerson);
         } catch (DuplicatePersonException dpe) {

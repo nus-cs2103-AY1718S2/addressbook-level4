@@ -27,7 +27,7 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
-    /** Adds the given person */
+    /** Removes the given tag from addressbook and all persons */
     void removeTag(Tag tag);
 
     /**

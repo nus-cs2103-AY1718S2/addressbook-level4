@@ -971,11 +971,38 @@ _{More to be added}_
 [appendix]
 == Glossary
 
+[[assignments]] Assignments::
+A particular task or duty assigned by in this case a professor.
+
+[[completed]] Completed::
+An assignment or event that has finished.
+
+[[deadline]] Deadline::
+The date and time by which an event will happen or an assignment is due.
+
+[[duration]] Duration::
+The amount of time left to complete an assignment or prepare for an event.
+
+[[events]] Events::
+A thing that will occur in a certain place at a particular interval of time.
+
+[[location]] Location::
+The place where the event will occur.
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
+
+[[overdue]] Overdue::
+An assignment that has not been completed past the deadline.
+
+[[things-to-bring]] Things to bring::
+Things to be brought for an event that is going to happen.
+
+[[urgent]] Urgent::
+An assignment due or event that will happen within the next 24 hours.
 
 [appendix]
 == Product Survey

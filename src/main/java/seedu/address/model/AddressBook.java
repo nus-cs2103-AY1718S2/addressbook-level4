@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -152,6 +153,50 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    /**
+     * Removes {@code tag} from this {@code AddressBook}.
+     * @throws TagNotFoundException if the {@code tag} is not in this {@code AddressBook}.
+     */
+    public void removeTag(Tag tag) throws TagNotFoundException {
+        if (tags.contains(tag)) {
+            for (Person person: persons) {
+                removeTagFromEachPerson(person, tag);
+            }
+            removeUnusedTags();
+        } else {
+            throw new TagNotFoundException();
+        }
+    }
+
+    /**
+     * Removes {@code tag} from this {@code person} if the person has that tag.
+     */
+    private void removeTagFromEachPerson(Person person, Tag tag) {
+        Set<Tag> editedTags = new HashSet<>(person.getTags());
+        if (editedTags.remove(tag)) {
+            Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
+                    person.getAddress(), person.getExpectedGraduationYear(), editedTags);
+            try {
+                updatePerson(person, editedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new AssertionError("Deleting a tag should not result in duplicate persons.");
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing.");
+            }
+        }
+    }
+
+    /**
+     * Removes unreferenced tags from {@code tags}.
+     */
+    public void removeUnusedTags() {
+        Set<Tag> referencedTags = new HashSet<>();
+        for (Person person: persons) {
+            person.getTags().forEach(tag -> referencedTags.add(tag));
+        }
+        tags.setTags(referencedTags);
     }
 
     //// util methods

@@ -37,7 +37,7 @@ public class TaskListPanel extends UiPart<Region> {
         ObservableList<TaskCard> mappedList = EasyBind.map(
                 personList, (person) -> new TaskCard(person, personList.indexOf(person) + 1));
         taskListView.setItems(mappedList);
-        taskListView.setCellFactory(listView -> new PersonListViewCell());
+        taskListView.setCellFactory(listView -> new TaskListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -70,17 +70,17 @@ public class TaskListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code TaskCard}.
      */
-    class PersonListViewCell extends ListCell<TaskCard> {
+    class TaskListViewCell extends ListCell<TaskCard> {
 
         @Override
-        protected void updateItem(TaskCard person, boolean empty) {
-            super.updateItem(person, empty);
+        protected void updateItem(TaskCard task, boolean empty) {
+            super.updateItem(task, empty);
 
-            if (empty || person == null) {
+            if (empty || task == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(person.getRoot());
+                setGraphic(task.getRoot());
             }
         }
     }

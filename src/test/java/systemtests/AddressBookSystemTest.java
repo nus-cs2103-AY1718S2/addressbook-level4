@@ -192,6 +192,7 @@ public abstract class AddressBookSystemTest {
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
+        statusBarFooterHandle.rememberNumberOfPeople();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
@@ -260,7 +261,8 @@ public abstract class AddressBookSystemTest {
 
     /**
      * Asserts that only the sync status in the status bar was changed to the timing of
-     * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
+     * {@code ClockRule#getInjectedClock()}, while the save location and number of people
+     * remains the same.
      */
     protected void assertStatusBarUnchangedExceptSyncStatus() {
         StatusBarFooterHandle handle = getStatusBarFooter();
@@ -269,6 +271,21 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
         assertFalse(handle.isSaveLocationChanged());
         assertFalse(handle.isNumberOfPeopleChanged());
+    }
+
+    /**
+     * Asserts that only the sync status in the status bar was changed to the timing of
+     * {@code ClockRule#getInjectedClock()}, and the number of people was changed to
+     * the correct number of people while the save location remains the same.
+     */
+    protected void assertStatusBarChangedExceptSaveLocation() {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+        String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
+        String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
+        assertEquals(expectedSyncStatus, handle.getSyncStatus());
+        assertFalse(handle.isSaveLocationChanged());
+        assertEquals(String.format(NUMBER_OF_PEOPLE_STATUS, testApp.getModel().getAddressBook().getPersonList().size()),
+                handle.getNumberOfPeople());
     }
 
     /**

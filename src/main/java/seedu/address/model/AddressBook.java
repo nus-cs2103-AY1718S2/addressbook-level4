@@ -153,16 +153,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    public void removeTag(Tag t) throws UniqueTagList.DuplicateTagException, PersonNotFoundException, DuplicatePersonException {
+    /**
+     * Remove tag {@code t} from everyone in the Addressbook
+     * @throws UniqueTagList.DuplicateTagException
+     * @throws PersonNotFoundException
+     * @throws DuplicatePersonException
+     */
+    public void removeTag(Tag t)
+            throws UniqueTagList.DuplicateTagException, PersonNotFoundException, DuplicatePersonException {
         for (Person person: persons) {
 
             // cannot remove tag from initTagSet since initTagSet is unmodifiableSet
             Set<Tag> initTagSet = person.getTags();
             UniqueTagList afterRemovedTagSet = new UniqueTagList();
             for (Tag tag: initTagSet) {
-                if (!tag.equals(t)) afterRemovedTagSet.add(tag);
+                if (!tag.equals(t)) {
+                    afterRemovedTagSet.add(tag);
+                }
             }
-            updatePerson(person, new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), afterRemovedTagSet.toSet()));
+            updatePerson(person, new Person(person.getName(),
+                    person.getPhone(), person.getEmail(), person.getAddress(), afterRemovedTagSet.toSet()));
         }
         tags.remove(t);
     }

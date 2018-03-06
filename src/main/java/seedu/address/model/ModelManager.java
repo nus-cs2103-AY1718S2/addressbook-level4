@@ -84,7 +84,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag t) throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
+    public void deleteTag(Tag t)
+            throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
         addressBook.removeTag(t);
         indicateAddressBookChanged();
     }

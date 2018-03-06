@@ -32,6 +32,20 @@ public class TypicalPersons {
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends").build();
+    public static final Person JOHN = new PersonBuilder().withName("John Lee")
+            .withAddress("311, Clementi Ave 2, #02-28")
+            .withEmail("johnt@example.com").withPhone("98765438")
+            .withTags("owesMoney", "friends").build();
+    // Persons after remove a tag
+    public static final Person BENSON2 = new PersonBuilder().withName("Benson Meier")
+            .withAddress("311, Clementi Ave 2, #02-25")
+            .withEmail("johnd@example.com").withPhone("98765432")
+            .withTags("owesMoney").build();
+    public static final Person JOHN2 = new PersonBuilder().withName("John Lee")
+            .withAddress("311, Clementi Ave 2, #02-28")
+            .withEmail("johnt@example.com").withPhone("98765438")
+            .withTags("owesMoney").build();
+
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")

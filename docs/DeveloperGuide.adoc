@@ -849,9 +849,15 @@ _{More to be added}_
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Fastis should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  Fastis should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Fastis should usable without the need of a mouse.
+.  Fastis should be usable solely via a command line interface.
+.  Fastis should respond within 2 seconds.
+.  Fastis should have an easy to follow user guide.
+.  Fastis should open the help page when user enters an invalid entry.
+.  Fastis should be possible to fixed and debugged in the event of malfunction.
 
 _{More to be added}_
 
@@ -863,6 +869,10 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[event]] Event::
+a set of scheduled activity that user needs to attend at a specific time
+E.g.: Interviews, parties, CCAs, talks, coding challenges, assignments, etc
 
 [appendix]
 == Product Survey

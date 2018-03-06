@@ -48,6 +48,28 @@ public class ModelManagerTest {
     }
 
     @Test
+<<<<<<< HEAD
+=======
+    public void deleteTag_tagUsedByMultiplePersons_tagRemoved() throws Exception {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        UserPrefs userPrefs = new UserPrefs();
+
+        ModelManager testedModelManager = new ModelManager(addressBook, userPrefs);
+        testedModelManager.deleteTag(new Tag(VALID_TAG_FRIEND));
+
+        Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
+        Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(amyWithoutFriendTag)
+                .withPerson(bobWithoutFriendTag).build();
+
+        ModelManager originalModelManager = new ModelManager(expectedAddressBook, userPrefs);
+
+        assertEquals(originalModelManager, testedModelManager);
+    }
+
+
+    @Test
+>>>>>>> added tests for deleteTag(tag)
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();

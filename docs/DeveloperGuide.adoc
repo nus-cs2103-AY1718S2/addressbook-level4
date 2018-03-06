@@ -787,8 +787,10 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* need to keep track of interviews scheduled
+* want to evaluate students' performance after interviews to decide who to hire
 
-*Value proposition*: offers a open source solution to recruit management and manage contacts faster than a typical mouse/GUI driven app.
+*Value proposition*: offers an open source solution to the recruiting process, enables campus recruiters to find the best-fitting candidates easily and allows them to manage student contacts faster than a typical mouse/GUI driven app.
 
 [appendix]
 == User Stories
@@ -800,39 +802,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new student |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a student |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a student by name |locate details of students without having to go through the entire list
 
-|`* * *` |user |find a person by some characters |locate details of persons without having to remember his/her full name
+|`* * *` |user |find a student by some characters |locate details of students without having to remember his/her full name
 
-|`* * *` |user |filter a person by field |locate details of persons in a more optimized view
+|`* * *` |user |filter a student by field |locate details of students in a more optimized view
 
-|`* * *` |user |add a profile photo |recognize the person easily
+|`* * *` |user |add profile photo of a student |recognize the student easily
 
-|`* * *` |user |add an expected graduation year |easier for recruiter to decide whether to hire the student
+|`* * *` |user |add a student's expected graduation date |gauge how far along the student is in his/her degree
 
-|`* * *` |user |schedule interview dates |decide whether to hire the student
+|`* * *` |user |add a student's interview date |keep track of interviews scheduled
 
-|`* * *` |user |add a resume |view the competency of the person
+|`* * *` |user |add a student's resume |view the competency of the student
 
-|`* * *` |user |massively tag students |make the tag for interview/rejection easier
+|`* * *` |user |edit a student's status |indicate whether students are still being considered or rejected
 
-|`* * *` |user |add a remark |update additional information about the person
+|`* * *` |user |add a remark |update additional information about the student
 
-|`* * *` |user |add a rating |update the competency of the person after an interview
+|`* * *` |user |add a rating |evaluate the performance of the student after an interview
 
-|`* *` |user |rank performance of students |decide whether to hire the student
+|`* * *` |user |sort students according to their interview performance |decide on the best-fitting students
 
-|`* *` |user |send out offer/rejection email massively |make recruitment easier
+|`* * *` |user |add tags for students |categorise the students better
+
+|`* * *` |user |delete students with a particular tag |remove groups of student contacts that I no longer need
+
+|`* *` |user |view all interviews scheduled in a calendar |have a overview of all interviews arranged
+
+|`* *` |user |send mass emails to successful/unsuccessful candidates |make recruitment easier
+
+|`* *` |user |have syntax highlight for my commands |check my command easily and spot errors faster
+
+|`* *` |user |change colour scheme of the interface |customise it according to my preferences
+
+|`* *` |user who values efficiency |see a list of suggested commands when I key in the command |select the command I want without having to type out the entire command
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user |visualise performance by radar graph|easier to understand students' performance
+|`*` |user |visualise a student's performance using a radar graph|easily understand his/her performance
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |careless user |auto-correct typos in my command |save time checking the command manually
+
+|`*` |cautious user |encrypt student's data stored |ensure sensitive information will not leak out
+
+|`*` |user |send and receive emails within the application |save time switching between different applications
 |=======================================================================
 
 [appendix]

@@ -816,17 +816,56 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `TaskManager` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+
+=== Use case: Add assgnment
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add in new assignment
+2. User supplies the detail of assignment as format specified by the command
+3. The details of assignment is parsed and checked by the TaskManager
+4. TaskManager adds in the task.
+
+*Extensions*
+
+[none]
+*3a. The details of assignment does not match the format or invalid
++
+[none]
+** 3a1. TaskManager shows an error message.
++
+Use case ends
+
+=== Use case: Add events
+
+*MSS*
+
+1. User requests to add in new event
+2. User supplies the detail of event as format specified by the command
+3. The details of event is parsed and checked by the TaskManager
+4. TaskManager adds in the event.
+
+*Extensions*
+
+[none]
+*3a. The details of event does not match the format or invalid
++
+[none]
+** 3a1. TaskManager shows an error message.
++
+Use case ends
+
+=== Use case: Complete assignment
+
+*MSS*
+
+1. User requests to mark an assignment as completed
+2. TaskManager shows a list of uncompleted assignments.
+3. The user selects the task to be marked as completed by the index.
+4. TaskManager mark the selected assignment as completed/
 +
 Use case ends.
 
@@ -840,9 +879,31 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. TaskManager shows an error message.
 +
 Use case resumes at step 2.
+
+
+=== Use case: Show urgent assignment
+
+*MSS*
+
+1. User requests to show all assignments before a certain date.
+2. TaskManager shows a list of uncompleted assignments with deadline before the provided date.
++
+Use case ends.
+
+*Extensions*
+* 1a. The given date is invalid.
++
+[none]
+** 1a1. TaskManager shows an error message.
++
+Use case resumes at step 1.
+
+* 2a. The list is empty.
++
+Use case ends.
 
 _{More to be added}_
 

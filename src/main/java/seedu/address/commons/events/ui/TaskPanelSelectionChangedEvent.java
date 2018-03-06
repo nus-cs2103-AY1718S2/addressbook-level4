@@ -4,14 +4,14 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.TaskCard;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the Task List Panel
  */
-public class PersonPanelSelectionChangedEvent extends BaseEvent {
+public class TaskPanelSelectionChangedEvent extends BaseEvent {
 
 
     private final TaskCard newSelection;
 
-    public PersonPanelSelectionChangedEvent(TaskCard newSelection) {
+    public TaskPanelSelectionChangedEvent(TaskCard newSelection) {
         this.newSelection = newSelection;
     }
 

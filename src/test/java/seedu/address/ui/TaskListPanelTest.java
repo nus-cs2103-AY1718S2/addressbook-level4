@@ -17,7 +17,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.Person;
 
-public class PersonListPanelTest extends GuiUnitTest {
+public class TaskListPanelTest extends GuiUnitTest {
     private static final ObservableList<Person> TYPICAL_PERSONS =
             FXCollections.observableList(getTypicalPersons());
 
@@ -27,10 +27,10 @@ public class PersonListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS);
-        uiPartRule.setUiPart(personListPanel);
+        TaskListPanel taskListPanel = new TaskListPanel(TYPICAL_PERSONS);
+        uiPartRule.setUiPart(taskListPanel);
 
-        personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
+        personListPanelHandle = new PersonListPanelHandle(getChildNode(taskListPanel.getRoot(),
                 PersonListPanelHandle.PERSON_LIST_VIEW_ID));
     }
 

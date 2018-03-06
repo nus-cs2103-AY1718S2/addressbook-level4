@@ -8,7 +8,7 @@ import seedu.address.model.person.Person;
 import seedu.address.ui.TaskCard;
 
 /**
- * Provides a handle for {@code PersonListPanel} containing the list of {@code TaskCard}.
+ * Provides a handle for {@code TaskListPanel} containing the list of {@code TaskCard}.
  */
 public class PersonListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     public static final String PERSON_LIST_VIEW_ID = "#personListView";

@@ -824,13 +824,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a remark |update additional information about the student
 
-|`* * *` |user |add a rating |evaluate the performance of the student after an interview
+|`* * *` |user |add a <<rating,rating>> |evaluate the performance of the student after an interview
 
 |`* * *` |user |sort students according to their interview performance |decide on the best-fitting students
 
 |`* * *` |user |add tags for students |categorise the students better
 
 |`* * *` |user |delete students with a particular tag |remove groups of student contacts that I no longer need
+
+|`* * *` |user |undo my previous command |Restore the data to its previous state before the command was executed
+
+|`* * *` |user |redo the previously undone command |Reverse the most recent undo command
 
 |`* *` |user |view all interviews scheduled in a calendar |have a overview of all interviews arranged
 
@@ -1057,6 +1061,31 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Add interview date
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add an interview date to the person in the list
+4.  AddressBook adds an interview date to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 [appendix]
 == Non Functional Requirements
 
@@ -1076,6 +1105,9 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[rating]] Rating::
+A score given to a student by interviewers based on areas such as technical competency, leadership quality, communication skills and ability to work well in a team
 
 [appendix]
 == Product Survey

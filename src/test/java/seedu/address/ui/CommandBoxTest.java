@@ -11,6 +11,10 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -123,6 +127,25 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.run(thirdCommand);
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
+    }
+
+    @Test
+    public void handleKeyPressTab() {
+
+        // no entry
+        assertInputHistory(KeyCode.TAB, AddCommand.COMMAND_SYNTAX);
+
+        // partial input
+        commandBoxHandle.enterCommand("e");
+        assertInputHistory(KeyCode.TAB, EditCommand.COMMAND_SYNTAX);
+        commandBoxHandle.enterCommand("ex");
+        assertInputHistory(KeyCode.TAB, ExitCommand.COMMAND_WORD);
+        commandBoxHandle.enterCommand("h");
+        assertInputHistory(KeyCode.TAB, HelpCommand.COMMAND_WORD);
+
+        // unknown input
+        commandBoxHandle.enterCommand("q");
+        assertInputHistory(KeyCode.TAB, "q");
     }
 
     /**

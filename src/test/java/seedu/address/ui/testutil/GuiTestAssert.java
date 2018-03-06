@@ -37,11 +37,11 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
-        
+
         if (!actualCard.getTagLabels().isEmpty()) {
             ObservableList<String> classes = actualCard.getTagLabels().get(0).getStyleClass();
             String tagColor = classes.toString().split("\\s+")[1];
-            assertEquals("green", tagColor);   
+            assertEquals("green", tagColor);
         }
     }
 

@@ -23,9 +23,4 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate tags.
      */
     ObservableList<Tag> getTagList();
-
-    /**
-     * Removes the specified tag from everyone in the addressbook
-     */
-    void removeTag(Tag tag) throws UniqueTagList.DuplicateTagException, PersonNotFoundException, DuplicatePersonException;
 }

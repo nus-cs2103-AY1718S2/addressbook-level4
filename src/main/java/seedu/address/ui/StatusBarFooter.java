@@ -21,6 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String NUMBER_OF_PEOPLE_STATUS = "%d person(s) total";
 
     /**
      * Used to generate time stamps.
@@ -40,12 +41,15 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar numberOfPeopleStatus;
 
 
     public StatusBarFooter(String saveLocation, int numberOfPeople) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        setNumberOfPeople(numberOfPeople);
         registerAsAnEventHandler(this);
     }
 
@@ -69,6 +73,11 @@ public class StatusBarFooter extends UiPart<Region> {
 
     private void setSyncStatus(String status) {
         Platform.runLater(() -> this.syncStatus.setText(status));
+    }
+
+    private void setNumberOfPeople(int numberOfPeople) {
+        Platform.runLater(() -> this.numberOfPeopleStatus.setText(
+                String.format(NUMBER_OF_PEOPLE_STATUS, numberOfPeople)));
     }
 
     @Subscribe

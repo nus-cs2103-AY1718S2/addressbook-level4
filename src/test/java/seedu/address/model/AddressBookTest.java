@@ -1,7 +1,13 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NOTUSED;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -16,8 +22,12 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
+
 
 public class AddressBookTest {
 
@@ -67,6 +77,41 @@ public class AddressBookTest {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
     }
+
+    @Test
+    public void updatePerson_personAndTagsListUpdated() throws Exception {
+        AddressBook addressBookChangedtoAmy = new AddressBookBuilder().withPerson(BOB).build();
+        addressBookChangedtoAmy.updatePerson(BOB, AMY);
+
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(AMY).build();
+
+        assertEquals(expectedAddressBook, addressBookChangedtoAmy);
+    }
+
+    @Test
+    public void removeTag_nonExistentTag_addressBookUnchanged() throws Exception {
+        AddressBook addressBookWithBob = new AddressBookBuilder().withPerson(BOB).build();
+        addressBookWithBob.removeTag(new Tag(VALID_TAG_NOTUSED));
+
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).build();
+
+        assertEquals(expectedAddressBook, addressBookWithBob);
+    }
+
+    @Test
+    public void removeTag_severalContactsWithTag_tagRemoved() throws Exception {
+        AddressBook addressBookWithAmyAndBob = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        addressBookWithAmyAndBob.removeTag(new Tag(VALID_TAG_FRIEND));
+
+        Person amyNoFriendTag = new PersonBuilder(AMY).withTags().build();
+        Person bobNoFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(amyNoFriendTag)
+                .withPerson(bobNoFriendTag).build();
+
+        assertEquals(expectedAddressBook, addressBookWithAmyAndBob);
+    }
+
 
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.

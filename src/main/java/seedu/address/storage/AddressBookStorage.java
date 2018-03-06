@@ -42,7 +42,7 @@ public interface AddressBookStorage {
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
     /**
-     * Saves the given {@link ReadOnlyAddressBook} to the a backup location.
+     * Saves the given {@link ReadOnlyAddressBook} to a backup location.
      */
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 }

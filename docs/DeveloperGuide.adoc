@@ -816,7 +816,7 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Organizer` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete task
@@ -824,9 +824,9 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list tasks
-2.  TaskBook shows a list of tasks
+2.  Organizer shows a list of tasks
 3.  User requests to delete a specific task in the list
-4.  TaskBook deletes the task
+4.  Organizer deletes the task
 +
 Use case ends.
 
@@ -840,7 +840,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. TaskBook shows an error message.
+** 3a1. Organizer shows an error message.
 +
 Use case resumes at step 2.
 

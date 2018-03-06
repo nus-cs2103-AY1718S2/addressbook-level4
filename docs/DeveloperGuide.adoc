@@ -785,7 +785,7 @@ _{More to be added}_
 3. The details of assignment is parsed and checked by the TaskManager
 4. TaskManager adds in the task.
 
-*Extentions*
+*Extensions*
 
 [none]
 *3a. The details of assignment does not match the format or invalid
@@ -804,7 +804,7 @@ Use case ends
 3. The details of event is parsed and checked by the TaskManager
 4. TaskManager adds in the event.
 
-*Extentions*
+*Extensions*
 
 [none]
 *3a. The details of event does not match the format or invalid
@@ -849,7 +849,7 @@ Use case resumes at step 2.
 +
 Use case ends.
 
-*Extentions*
+*Extensions*
 * 1a. The given date is invalid.
 +
 [none]

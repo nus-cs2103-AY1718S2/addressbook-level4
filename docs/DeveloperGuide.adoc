@@ -789,7 +789,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: improve the planning process for scheduling time slots
+*Value proposition*: improve the planning process for scheduling time slots for all tutees
 
 [appendix]
 == User Stories
@@ -801,15 +801,29 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new student |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a student |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a student by name |locate details of students without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |find a student by subject |locate details of students of a certain subject
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |view timetable of lessons by week |easily view my schedule
+
+|`* * *` |user |add a lesson for a student |
+
+|`* * *` |user |delete a lesson for a student |remove lessons that the student cancels
+
+|`* * *` |user |edit a lesson for a student |keep track of timing changes
+
+|`* * *` |user with a filled timetable |check free slot |easily find a free timeslot to allocate to students
+
+|`* * *` |user with a filled timetable |sync with cloud storage calenders |easily sync my timetable to my schedule
+
+|`* *` |user |view hours spent teaching |see how much money I should collect
+
+|`*` |user with many students in the address book |sort students by name |locate a student easily
 |=======================================================================
 
 _{More to be added}_
@@ -817,17 +831,17 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Scheduler` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list students
+2.  Scheduler shows a list of students
+3.  User requests to delete a specific student in the list
+4.  Scheduler deletes the student
 +
 Use case ends.
 
@@ -845,14 +859,46 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Delete student
+
+*MSS*
+
+1.  User requests to add a lesson
+2.  Scheduler shows a list of free slots
+3.  User requests to add a lesson to a slot
+4.  Scheduler adds that lesson to that slot
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The timetable is empty.
++
+Use case ends.
+[none]
+* 2b. The timetable is full.
++
+** 3b1. Scheduler shows an error message.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Scheduler shows an error message.
++
+Use case resumes at step 2.
+
 _{More to be added}_
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should receive feedback after executing commands.
+.  Should have correct error handling and not crash from unexpected behavior.
 
 _{More to be added}_
 
@@ -862,8 +908,8 @@ _{More to be added}_
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+[[timetable]] Timetable::
+A weekly timetable that shows status of all timeslots in one hour divisions
 
 [appendix]
 == Product Survey

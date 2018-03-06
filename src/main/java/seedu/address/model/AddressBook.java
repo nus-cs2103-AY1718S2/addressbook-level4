@@ -153,6 +153,36 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    /**
+     * Remove {@code tag} from {@code person}
+     */
+    private void removeTagFromPerson (Tag tag, Person person) throws PersonNotFoundException {
+        Set<Tag> personTags = new HashSet<>(person.getTags());
+
+        if (personTags.remove(tag)) {
+            Person updatedPerson = new Person(person.getName(), person.getPhone(),
+                    person.getEmail(), person.getAddress(), personTags);
+            try {
+                updatePerson(person, updatedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new PersonNotFoundException();
+            }
+        }
+    }
+
+    /**
+     * Loops through all persons in this {@code AddressBook} and removes {@code tag}.
+     */
+    public void removeTag(Tag tag) {
+        for (Person person: persons) {
+            try {
+                removeTagFromPerson(tag, person);
+            } catch (PersonNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     //// util methods
 
     @Override

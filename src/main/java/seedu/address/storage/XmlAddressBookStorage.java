@@ -23,6 +23,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     private String filePath;
 
+    private static final String BACKUP_FILE_EXTENSION = ".bak";
+
     public XmlAddressBookStorage(String filePath) {
         this.filePath = filePath;
     }
@@ -64,6 +66,19 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, getDestinationPath());
+    }
+
+    /**
+     *
+     * @return destination filePath of backup file.
+     */
+    private String getDestinationPath() {
+        return filePath + BACKUP_FILE_EXTENSION;
     }
 
     /**

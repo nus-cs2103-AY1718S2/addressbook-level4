@@ -861,9 +861,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |play music fromn address book |So that I can listen to music i want
 
 |`*` |user |play videos from youtube |So that I can watch videos i want
-|=======================================================================
 
-_{More to be added}_
+|=======================================================================
 
 [appendix]
 == Use Cases

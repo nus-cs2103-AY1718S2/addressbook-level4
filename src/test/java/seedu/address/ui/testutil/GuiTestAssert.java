@@ -41,7 +41,10 @@ public class GuiTestAssert {
         if (!actualCard.getTagLabels().isEmpty()) {
             ObservableList<String> classes = actualCard.getTagLabels().get(0).getStyleClass();
             String tagColor = classes.toString().split("\\s+")[1];
-            assertEquals("green", tagColor);
+            List<String> expectedClasses = expectedPerson.getTags().stream().map(tag -> tag.tagName)
+                .collect(Collectors.toList());
+            assertEquals(getTagColor(expectedClasses.get(0)), tagColor);
+            
         }
     }
 
@@ -76,5 +79,19 @@ public class GuiTestAssert {
      */
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
+    }
+    
+    public static String getTagColor(String tagName) {
+        switch(tagName) {
+            case "friends":
+                return "green";
+            case "colleagues":
+            case "neighbours":
+                return "blue";
+            case "family":
+            case "owesMoney":
+                return "red";
+        }
+        return null;
     }
 }

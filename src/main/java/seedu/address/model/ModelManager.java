@@ -86,7 +86,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Removes {@code tag} from all Persons
      */
-    public void deleteTag(Tag tag){
+    public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
     }
 

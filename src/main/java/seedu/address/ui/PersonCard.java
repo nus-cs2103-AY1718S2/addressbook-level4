@@ -49,9 +49,32 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label label = new Label(tag.tagName);
+            label.getStyleClass().add(getTagColor(tag.tagName));
+            tags.getChildren().add(label);
+        });
     }
 
+    /**
+     * Get a deterministic tag color based off tag's name value.
+     */
+    private String getTagColor(String tagName) {
+        int index = getValueOfString(tagName) % TAG_COLORS.length;
+        return TAG_COLORS[index];
+    }
+
+    /**
+     * Adds each letter of given string into an integer.
+     */
+    private int getValueOfString(String tagName) {
+        int sum = 0;
+        for (char c : tagName.toCharArray()) {
+            sum += c;
+        }
+        return sum;
+    }
+    
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

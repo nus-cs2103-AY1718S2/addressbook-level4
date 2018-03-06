@@ -38,6 +38,14 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Enters the given command in the Command Box, not pressing enter
+     */
+    public void enterCommand(String command) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(command));
+    }
+
+    /**
      * Returns the list of style classes present in the command box.
      */
     public ObservableList<String> getStyleClass() {

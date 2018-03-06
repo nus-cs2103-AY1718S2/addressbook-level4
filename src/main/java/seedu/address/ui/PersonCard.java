@@ -14,7 +14,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static final String[] TAG_COLOR_STYLES =
-                    { "teal", "red", "green", "blue", "orange", "brown",
+           { "teal", "red", "green", "blue", "orange", "brown",
                       "yellow", "pink", "lightgreen", "grey", "purple"};
 
     /**

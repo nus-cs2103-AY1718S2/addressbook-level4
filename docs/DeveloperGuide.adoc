@@ -816,8 +816,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |schedule interview dates |decide whether to hire the student
 
-|`* * *` |user |rate students |decide whether to hire the student
-
 |`* * *` |user |add a resume |view the competency of the person
 
 |`* * *` |user |massively tag students |make the tag for interview/rejection easier

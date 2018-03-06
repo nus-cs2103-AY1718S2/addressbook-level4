@@ -10,28 +10,29 @@ import seedu.address.ui.TaskCard;
 /**
  * Provides a handle for {@code TaskListPanel} containing the list of {@code TaskCard}.
  */
-public class PersonListPanelHandle extends NodeHandle<ListView<TaskCard>> {
+public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     public static final String PERSON_LIST_VIEW_ID = "#taskListView";
 
-    private Optional<TaskCard> lastRememberedSelectedPersonCard;
+    private Optional<TaskCard> lastRememberedSelectedTaskCard;
 
-    public PersonListPanelHandle(ListView<TaskCard> personListPanelNode) {
-        super(personListPanelNode);
+    public TaskListPanelHandle(ListView<TaskCard> taskListPanelNode) {
+        super(taskListPanelNode);
     }
 
     /**
      * Returns a handle to the selected {@code TaskCardHandle}.
      * A maximum of 1 item can be selected at any time.
+     *
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
     public TaskCardHandle getHandleToSelectedCard() {
-        List<TaskCard> personList = getRootNode().getSelectionModel().getSelectedItems();
+        List<TaskCard> taskList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (personList.size() != 1) {
-            throw new AssertionError("Person list size expected 1.");
+        if (taskList.size() != 1) {
+            throw new AssertionError("Task list size expected 1.");
         }
 
-        return new TaskCardHandle(personList.get(0).getRoot());
+        return new TaskCardHandle(taskList.get(0).getRoot());
     }
 
     /**
@@ -62,7 +63,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<TaskCard>> {
         Optional<TaskCard> matchingCard = cards.stream().filter(card -> card.person.equals(person)).findFirst();
 
         if (!matchingCard.isPresent()) {
-            throw new IllegalArgumentException("Person does not exist.");
+            throw new IllegalArgumentException("Task does not exist.");
         }
 
         guiRobot.interact(() -> {
@@ -75,14 +76,14 @@ public class PersonListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     /**
      * Returns the person card handle of a person associated with the {@code index} in the list.
      */
-    public TaskCardHandle getPersonCardHandle(int index) {
-        return getPersonCardHandle(getRootNode().getItems().get(index).person);
+    public TaskCardHandle getTaskCardHandle(int index) {
+        return getTaskCardHandle(getRootNode().getItems().get(index).person);
     }
 
     /**
      * Returns the {@code TaskCardHandle} of the specified {@code person} in the list.
      */
-    public TaskCardHandle getPersonCardHandle(Person person) {
+    public TaskCardHandle getTaskCardHandle(Person person) {
         Optional<TaskCardHandle> handle = getRootNode().getItems().stream()
                 .filter(card -> card.person.equals(person))
                 .map(card -> new TaskCardHandle(card.getRoot()))
@@ -100,28 +101,28 @@ public class PersonListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     /**
      * Remembers the selected {@code TaskCard} in the list.
      */
-    public void rememberSelectedPersonCard() {
+    public void rememberSelectedTaskCard() {
         List<TaskCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            lastRememberedSelectedPersonCard = Optional.empty();
+            lastRememberedSelectedTaskCard = Optional.empty();
         } else {
-            lastRememberedSelectedPersonCard = Optional.of(selectedItems.get(0));
+            lastRememberedSelectedTaskCard = Optional.of(selectedItems.get(0));
         }
     }
 
     /**
      * Returns true if the selected {@code TaskCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedPersonCard()} call.
+     * {@code rememberSelectedTaskCard()} call.
      */
-    public boolean isSelectedPersonCardChanged() {
+    public boolean isSelectedTaskCardChanged() {
         List<TaskCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            return lastRememberedSelectedPersonCard.isPresent();
+            return lastRememberedSelectedTaskCard.isPresent();
         } else {
-            return !lastRememberedSelectedPersonCard.isPresent()
-                    || !lastRememberedSelectedPersonCard.get().equals(selectedItems.get(0));
+            return !lastRememberedSelectedTaskCard.isPresent()
+                    || !lastRememberedSelectedTaskCard.get().equals(selectedItems.get(0));
         }
     }
 

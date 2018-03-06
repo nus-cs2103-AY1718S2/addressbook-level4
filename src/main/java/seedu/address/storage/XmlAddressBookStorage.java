@@ -83,14 +83,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, getDestinationPath());
+        saveAddressBook(addressBook, getDestinationPath(filePath));
     }
 
     /**
      *
      * @return destination filePath of backup file.
      */
-    private String getDestinationPath() {
-        return filePath + BACKUP_FILE_EXTENSION;
+    private String getDestinationPath(String filePath) {
+        return (filePath == null) ? null : filePath + BACKUP_FILE_EXTENSION;
     }
 }

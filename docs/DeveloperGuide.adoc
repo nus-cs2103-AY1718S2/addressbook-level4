@@ -800,18 +800,71 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add events that i have |So that I can keep track of the upcoming events
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add tags to event|So that i can organise my events as I see fit
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add the link which leads to coding challenge|So that I can open the coding challenge from the application
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |delete events that aren't important anymore|So that I can better manage events
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |edit an existing event|So that I can change details of an event after adding them
+
+|`* * *` |user |have upcoming events shown in a calendar|So that I can have the summary of upcoming events in a quick glance
+
+|`* * *` |user using CLI |press up buttom to copy the previous command|So that I know what type of event it is and i know what to wear on that day
+
+|`* * *` |forgetful user |search events by its title|So that I can get details of a particular event
+
+|`* * *` |user |search my events by day/week/month|So that I can get an overview of all events in that period
+
+|`* * *` |user |sort coding challenge based on time and date|So that I see all the coding challenges i have to do in a day
+
+|`* * *` |new user |view the manuals of a command |I can learn about different commands
+
+|`* * *` |user |add contacts of those members|So that I can contact them regarding events
+
+|`* * *` |user |add info of the memebers involved in events|So that I know who I would need to talk to
+
+|`* * *` |user |add members to events|So that I know who to look for regarding events
+
+|`* * *` |user |be reminded of today's events on the front page of the application|So that I am able to know the upcoming events without having to type the command line
+
+|`* *` |user |compare two different calendars |So that I can be notified if two schedule clashes
+
+|`* *` |user |export to .icl |So that i can export/share my calendar on other devices
+
+|`* *` |user |have a reminder|So that i can be reminded of impending events
+
+|`* *` |user |highlight overdue tasks|So that i can prioritise those first
+
+|`* *` |user |import .icl|So that I do not have to input events one by one
+
+|`* *` |user |mark a task as completed|So that completed tasks can be automatically hidden
+
+|`* *` |user |search the location of the event|So that I know how to get there
+
+|`* *` |user |show free/unscheduled time|So that I know when i can schedule for another event
+
+|`* *` |user |use a shorter version of a command|So that I can type faster
+
+|`*` |user |add facebook events into Address Book using Facebook|So that I can conveniently sync with Facebook regarding eventss I am attending
+
+|`*` |user |can see weather forecast of the event|So that I can decide whether to delete certain outdoor events I am attending
+
+|`*` |user |change colour scheme |So that I can feel more personalised
+
+|`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the ,mmap while driving
+
+|`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related
+
+|`*` |user |play music fromn address book |So that I can listen to music i want
+
+|`*` |user |play videos from youtube |So that I can watch videos i want
+
 |=======================================================================
 
-_{More to be added}_
+
 
 [appendix]
 == Use Cases

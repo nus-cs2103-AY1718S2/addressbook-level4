@@ -852,7 +852,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |can see weather forecast of the event | So that I can decide whether to delete certain outdoor events I am attending
 
-|`*` |user | change colour scheme | So that I cab feel more personalised
+|`*` |user | change colour scheme | So that I can feel more personalised
 
 |`*` |user | find the road that dtravels the shortest distance to the location of event| So that I can rely on the ,mmap while driving
 

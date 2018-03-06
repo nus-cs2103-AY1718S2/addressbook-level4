@@ -82,15 +82,16 @@ public class GuiTestAssert {
 
     public static String getTagColor(String tagName) {
         switch(tagName) {
-            case "friends":
-                return "green";
-            case "colleagues":
-            case "neighbours":
-                return "blue";
-            case "family":
-            case "owesMoney":
-                return "red";
+        case "friends":
+            return "green";
+        case "colleagues":
+        case "neighbours":
+            return "blue";
+        case "family":
+        case "owesMoney":
+            return "red";
+        default:
+            return null;
         }
-        return null;
     }
 }

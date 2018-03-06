@@ -176,7 +176,9 @@ public class AddressBook implements ReadOnlyAddressBook {
                     person.getPhone(), person.getEmail(), person.getAddress(), afterRemovedTagSet.toSet()));
         }
         tags.remove(t);
-    }/// util methods
+    }
+
+    /// util methods
 
     @Override
     public String toString() {

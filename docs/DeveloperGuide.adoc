@@ -787,8 +787,10 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* is a student in National University of Singapore
+* has many friends in the same course
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: share useful information with their friends who are taking the same modules and find a common studying time
 
 [appendix]
 == User Stories
@@ -904,6 +906,9 @@ _{More to be added}_
 .  Color Scheme must be pleasing to the eyes.
 .  User guide must be clear and concise.
 .  Basic features must be intuitive to use.
+.  Should respond to user within 3 seconds.
+.  Should work in both 32-bit and 64-bit environments.
+.  Should be usable by a new user who has not used command line interface before.
 
 _{More to be added}_
 

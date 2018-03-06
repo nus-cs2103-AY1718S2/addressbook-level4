@@ -123,4 +123,5 @@ public class GuiTestAssert {
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
     }
+    
 }

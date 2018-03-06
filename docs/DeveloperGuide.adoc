@@ -854,6 +854,44 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Find venue
+
+*MSS*
+
+1.  User requests to find an available venue
+2.  AddressBook prompts user to input a location
+3.  User requests venues near this specific location
+4.  AddressBook prints out a list of available locations near the specified location
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No location is available
++
+[none]
+** 3a1. AddressBook displays the empty result
++
+Use case resumes at step 2
+
+* 3a. The given location is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. AddressBook cannot retrieve the information online
++
+[none]
+** 4a1. AddressBook shows an error message
+** 4a2. AddressBook attempts to reconnect
+** 4a3. If problem persists, AddressBook directs User to troubleshooting
++
+Use case ends
+
 _{More to be added}_
 
 [appendix]

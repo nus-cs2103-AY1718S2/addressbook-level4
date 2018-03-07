@@ -913,14 +913,14 @@ Use case resumes at step 2.
 Use case ends.
 
 [discrete]
-=== Use case: Retrieve information of a particular owner
+=== Use case: Retrieve information of a particular owner (contact details, pets owned by him/her, and appointments made)
 
 *MSS*
 
 1.  User requests to find an owner named "Mavis"
 2.  AddressBook shows a list of owners with "Mavis" as part of their name
 3.  User requests to view information of a specific owner
-4.  AddressBook shows the information about the owner (contact details and pets owned by him/her)
+4.  AddressBook shows information about the owner 
 +
 Use case ends.
 

@@ -50,6 +50,7 @@ public class ModelManagerTest {
     @Test
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     public void deleteTag_tagUsedByMultiplePersons_tagRemoved() throws Exception {
         AddressBook addressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
@@ -73,6 +74,8 @@ public class ModelManagerTest {
 >>>>>>> added tests for deleteTag(tag)
 =======
 >>>>>>> minor fixes syntax errors
+=======
+>>>>>>> c4be27f061e641f225f1cc82c04742bad612f7b3
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();

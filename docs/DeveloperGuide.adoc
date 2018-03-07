@@ -872,8 +872,11 @@ _{More to be added}_
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+[[health-profile]] Health Profile::
+A record which stores allergies and chronic conditions of the patient
+
+[[medical-records]] Medical Records::
+Documentation of all consultations and treatments
 
 [appendix]
 == Product Survey

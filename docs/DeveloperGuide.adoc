@@ -984,6 +984,18 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
+[[GUI]] GUI::
+Graphical User Interface
+
+[[sequence-diagram]] Sequence Diagram::
+A sequence diagram shows object interactions shown in time sequence.
+
+[[Build-Automation]] Build Automation::
+Build automation is the process of automating the creation of a software build and the associated processes including: compiling computer source code into binary code, packaging binary code, and running automated tests.
+
+[[Gradle]] Gradle::
+Gradle is an open-source build automation system.
+
 [appendix]
 == Product Survey
 

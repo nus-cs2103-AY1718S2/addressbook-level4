@@ -820,7 +820,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a student's resume |view the competency of the student
 
-|`* * *` |user |edit a student's status |indicate whether students are still being considered or rejected
+|`* * *` |user |edit a student's <<status,status>> |indicate whether students are still being considered or rejected
 
 |`* * *` |user |add a remark |update additional information about the student
 
@@ -1108,6 +1108,9 @@ A contact detail that is not meant to be shared with others
 
 [[rating]] Rating::
 A score given to a student by interviewers based on areas such as technical competency, leadership quality, communication skills and ability to work well in a team
+
+[[status]] Status::
+Indicates a student's current state within your hiring process - new, in-review, interview, offered, rejected or withdrawn
 
 [appendix]
 == Product Survey

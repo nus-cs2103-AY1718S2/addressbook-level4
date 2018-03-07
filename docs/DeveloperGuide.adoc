@@ -806,12 +806,71 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |keep an offline back up |download and access a local copy of the application data
+
+|`* * *` |lazy user |use short-forms for commands |execute commands more quickly
+
+|`* * *` |task-oriented user |implement meetings or deadlines for contacts |keep track of tasks to do for the contacts
+
+|`* * *` |organized user |delete multiple contacts at a time |remove the contacts I no longer need quickly
+
+|`* * *` |user with many contacts |remove a specific tag |all contacts with that tag will have the tag removed instead of removing the tag from from every one of them
+
+|`* * *` |user with many contacts |find contacts based on the group they are in |see all contacts belonging to a certain group
+
+|`* * *` |user with many contacts |sort the contacts by last contacted time |find contacts I corresponded with recently
+
+|`* * *` |salesperson |view a list of current orders| keep track of which customers I might need to contact at that point in time
+
+|`* * *` |salesperson |see a list of current customers |view necessary information about current customers more quickly
+
+|`* * *` |salesperson |send promotions to a group of contacts |ensure my differentiated marketing strategies work
+
+|`* * *` |salesperson |add a list of preferences to contact |know what my customers are interested in
+
+|`* * *` |salesperson |edit contact’s preferences |update my customers' changing interests
+
+|`* * *` |salesperson |see the top preference among all contacts |know what products I should focus on
+
+|`* * *` |salesperson |edit specific details of contacts |update my customers' information more conveniently
+
+|`* * *` |salesperson |see top contacts |divide my attention among my customers as needed
+
+|`* *` |salesperson |export contacts |share my customers' public details with concerned businesses
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user who prefers visual imagery |use a calendar to know if there are any meetings or deadlines |clearer view on how to prioritise my work
 
-_{More to be added}_
+|`* *` |user |access and change my preferred Email Service provider within the AddressBook |look at my emails and my contacts at the same time
+
+|`* *` |user with many contacts |synchronise the AddressBook with Google Contacts |save time importing contacts from Google Contacts
+
+|`* *` |user who is fast at typing |copy a contact's email to the clipboard without using a mouse |save time in emailing a contact
+
+|`* *` |lazy user |add contact details in any order |don't need to remember the order to enter the details
+
+|`* *` |lazy user |auto-completion of commands |execute commands quickly
+
+|`* *` |user |add notes to a contact |have a clearer description about the contact
+
+|`* *` |user |group contacts using tags |categorize my customers as needed
+
+|`* *` |user |change the theme and font of the application |personalize my AddressBook
+
+|`* *` |salesperson |see contact statistics |more informed about my customer demographic
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |sort the list of contacts in alphabetical order |easily find contacts whose names I could not remember
+
+|`*` |user |export contacts in different formats |share contacts to other software
+
+|`*` |user who likes personalising contacts |add profile photos to each contact |recognise the customer easily based on their photo
+
+|`*` |user |see a list of tags |don't need to remember all existing tags
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -861,8 +920,38 @@ _{More to be added}_
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
+[[contacts]] Contacts::
+People whose details are present in my address book
+
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[tags]] Tags::
+A label attached to a person's contact information for the purpose of grouping or give more details about that person
+
+[[tasks]] Tasks::
+A deadline, reminder, or a general note that can be added to keep track of things needed to be done
+
+[[mss]] MSS::
+Represents the most straightforward interaction between System and User where nothing goes wrong, in a use case
+
+[[extenstions]] Extensions::
+Represents interactions between System and User where something might have gone wrong
+
+[[profile-photo]] Profile Photo::
+A photograph attached to a certain contact to represent the person
+
+[[backup-file]] Backup File::
+An XML data file that stores all data in the application in a local copy on my computer
+
+[[java-fx]] Java FX::
+A software platform that contains a set of packages for graphics that enables developers to develop rich cross-platform applications
+
+[[travis]] Travis::
+A hosted, distributed continuous integration service used to build and test software projects hosted at GitHub on a Linux virtual machine
+
+[[appveyor]] AppVeyor::
+A hosted, distributed continuous integration service used to build and test software projects hosted at GitHub on a Windows virtual machine
 
 [appendix]
 == Product Survey

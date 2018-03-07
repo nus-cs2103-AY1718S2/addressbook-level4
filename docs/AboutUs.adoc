@@ -3,7 +3,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-Biblotek was developed by https://github.com/CS2103JAN2018-F14-B4[Team F14-B4]. +
+Bibliotek was developed by https://github.com/CS2103JAN2018-F14-B4[Team F14-B4]. +
 {empty} +
 We developed this project as part of our Software Engineering Module, CS2103T. +
 {empty} +

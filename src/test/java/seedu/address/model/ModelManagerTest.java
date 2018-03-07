@@ -48,34 +48,6 @@ public class ModelManagerTest {
     }
 
     @Test
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    public void deleteTag_tagUsedByMultiplePersons_tagRemoved() throws Exception {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
-        UserPrefs userPrefs = new UserPrefs();
-
-        ModelManager testedModelManager = new ModelManager(addressBook, userPrefs);
-        testedModelManager.deleteTag(new Tag(VALID_TAG_FRIEND));
-
-        Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
-        Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(amyWithoutFriendTag)
-                .withPerson(bobWithoutFriendTag).build();
-
-        ModelManager originalModelManager = new ModelManager(expectedAddressBook, userPrefs);
-
-        assertEquals(originalModelManager, testedModelManager);
-    }
-
-
-    @Test
->>>>>>> added tests for deleteTag(tag)
-=======
->>>>>>> minor fixes syntax errors
-=======
->>>>>>> c4be27f061e641f225f1cc82c04742bad612f7b3
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
@@ -103,12 +75,12 @@ public class ModelManagerTest {
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
-        // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+       // resets modelManager to initial state for upcoming tests
+       modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        // different userPrefs -> returns true
-        UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+       // different userPrefs -> returns true
+       UserPrefs differentUserPrefs = new UserPrefs();
+       differentUserPrefs.setAddressBookName("differentName");
+       assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
     }
 }

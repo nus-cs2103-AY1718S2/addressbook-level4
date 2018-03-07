@@ -847,6 +847,41 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Update pet owner's contact information 
+
+*MSS*
+
+1.  User requests to find a patient with the name "Joseph"
+2.  AddressBook shows a list of patients with the name "Joseph"
+3.  User requests to view contact information of a specific patient
+4.  AddressBook shows the patient's owner's contact information
+5.  User requests to modify the patient's owner's contact information
+6.  AddressBook shows the patient's updated contact information
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given command is invalid.
++
+[none]
+** 5a1. AddressBook shows the correct command usage to edit patient's information.
++
+Use case resumes at step 2.
+
 _{More to be added}_
 
 [appendix]

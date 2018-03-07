@@ -16,7 +16,12 @@ endif::[]
 By: `Team F11-B4`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
-Delivery is targeted at restaurants, especially the small ones,  which want to have a system to keep track customers’ orders of delivery.
+Delivery is targeted at restaurants, especially the small ones, which want to have a system to keep track customers’ orders of delivery.
+
+A restaurant can have hundreds of orders a day and it’s quite troublesome for the restaurant to manually keep track all customer information, including their names, contact numbers, addresses, orders and expected time of delivery etc.
+
+Hence they need a software to store all personal information and order information in an organised manner.
+
 Delivery is for those who *prefer to use a desktop app for managing orders*. More importantly, Delivery is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Delivery can manage the orders faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start

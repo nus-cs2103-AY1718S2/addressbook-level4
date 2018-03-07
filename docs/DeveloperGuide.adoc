@@ -879,21 +879,56 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use cases: Add a to-do
+=== Use case: Add a to-do
 
 *MSS*
 
 1.  User requests to view tasks in a specific week
 2.  AddressBook shows tasks in the specified week
-3.  User requests to add a new task in that week
+3.  User requests to add a new task in a specific week
 4.  AddressBook adds a new task to the existing list
 +
 Use case ends.
 
 *Extensions*
 
-[none]
 * 1a. Specified week does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Mark a to-do as complete
+
+*MSS*
+
+1.  User requests to view tasks in a specific week
+2.  AddressBook shows tasks in the specified week
+3.  User requests to complete a task in a specific week
+4.  AddressBook marks specified task as complete
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified week does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 2a. The tasks list is empty.
++
+Use case resumes at step 2.
+
+* 3a. The specified task does not exist
++
+[none]
+** 3a1. AddressBook shows an error message.
 +
 Use case ends.
 

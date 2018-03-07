@@ -58,7 +58,7 @@ public class ModelManagerTest {
         AddressBook expecetedAddressBook = new AddressBookBuilder().withPerson(expectedBob).withPerson(expectedAmy).build();
 
         ModelManager expectedModelManager = new ModelManager(expecetedAddressBook, userPrefs);
-        assertEquals( new ModelManager(expecetedAddressBook, userPrefs),modelManager);
+        assertEquals( expectedModelManager, modelManager);
 
     }
     @Test

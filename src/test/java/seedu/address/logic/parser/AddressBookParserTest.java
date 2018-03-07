@@ -142,6 +142,7 @@ public class AddressBookParserTest {
         }
     }
 
+    @Test
     public void parseCommand_historyAlias() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS + " 3") instanceof HistoryCommand);

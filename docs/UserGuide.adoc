@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ContactSails - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B1`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 

@@ -848,9 +848,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user who prefers visual imagery |use a calendar to know if there are any meetings or deadlines |clearer view on how to prioritise my work
 
-|`* *` |user |access and change my preferred Email Service provider within the AddressBook |look at my emails and my contacts at the same time
+|`* *` |user |access and change my preferred Email Service provider within the ContactSails |look at my emails and my contacts at the same time
 
-|`* *` |user with many contacts |synchronise the AddressBook with Google Contacts |save time importing contacts from Google Contacts
+|`* *` |user with many contacts |synchronise the ContactSails with Google Contacts |save time importing contacts from Google Contacts
 
 |`* *` |user who is fast at typing |copy a contact's email to the clipboard without using a mouse |save time in emailing a contact
 
@@ -889,9 +889,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ContactSails shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  ContactSails deletes the person
 +
 Use case ends.
 
@@ -906,7 +906,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ContactSails shows an error message.
 +
 Use case resumes at step 2.
 
@@ -916,7 +916,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.	User requests to add specific person
-2.	AddressBook adds the person
+2.	ContactSails adds the person
 +
 Use case ends.
 
@@ -926,7 +926,7 @@ Use case ends.
 * 1a. User enters invalid format for the Add feature
 +
 [none]
-** 1a1. AddressBook shows an error message
+** 1a1. ContactSails shows an error message
 +
 Use case ends.
 
@@ -936,7 +936,7 @@ Use case ends.
 *MSS*
 
 1.  User requests for current customers
-2.  AddressBook finds and displays a list of the list of customers whose orders are currently being fulfilled by user
+2.  ContactSails finds and displays a list of the list of customers whose orders are currently being fulfilled by user
 +
 Use case ends.
 
@@ -946,7 +946,7 @@ Use case ends.
 * 2a. The list is empty as there are no current orders
 +
 [none]
-** 2a1. AddressBook shows an error message
+** 2a1. ContactSails shows an error message
 +
 Use case ends.
 
@@ -956,9 +956,9 @@ Use case ends.
 *MSS*
 
 1.  User selects contact to edit from the current list of contacts
-2.  AddressBook shows the selected contact
+2.  ContactSails shows the selected contact
 3.  User requests to edit a certain field of the contact
-4.  AddressBook updates the contact details and shows contact details after the changes made
+4.  ContactSails updates the contact details and shows contact details after the changes made
 +
 Use case ends.
 
@@ -968,7 +968,7 @@ Use case ends.
 * 1a. User selects invalid contact
 +
 [none]
-** 1a1. AddressBook shows an error message
+** 1a1. ContactSails shows an error message
 +
 Use case ends.
 
@@ -976,7 +976,7 @@ Use case ends.
 * 2a. User selects invalid field to edit
 +
 [none]
-** 2a1. AddressBook shows an error message
+** 2a1. ContactSails shows an error message
 +
 Use case resumes at step 2.
 
@@ -986,9 +986,9 @@ Use case resumes at step 2.
 *MSS*
 
 1. User requests to list persons
-2. AddressBook shows a list of persons
+2. ContactSails shows a list of persons
 3. User requests to add notes to specific person in the list
-4. AddressBook adds notes to the specified person
+4. ContactSails adds notes to the specified person
 +
 Use case ends.
 
@@ -1003,7 +1003,7 @@ Use case ends.
 * 3a. The given index is invalid
 +
 [none]
-** 3a1. AddressBook shows an error message
+** 3a1. ContactSails shows an error message
 +
 Use case resumes at step 2.
 
@@ -1013,9 +1013,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User selects contact to add a task for
-2.  AddressBook prompts user to enter the task details
+2.  ContactSails prompts user to enter the task details
 3.  User enters task description and task deadline
-4.  AddressBook adds task to specified contact and shows a success message.
+4.  ContactSails adds task to specified contact and shows a success message.
 +
 Use case ends.
 
@@ -1025,7 +1025,7 @@ Use case ends.
 * 1a. User selects invalid contact
 +
 [none]
-** 1a1. AddressBook shows an error message
+** 1a1. ContactSails shows an error message
 +
 Use case ends.
 
@@ -1033,7 +1033,7 @@ Use case ends.
 * 3a. User enters invalid task details
 +
 [none]
-** 3a1. AddressBook shows en error message
+** 3a1. ContactSails shows en error message
 +
 Use case resumes at step 2.
 
@@ -1043,7 +1043,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.	User requests to find persons with specific names
-2.	AddressBook shows list of persons with specified names
+2.	ContactSails shows list of persons with specified names
 +
 Use case ends.
 
@@ -1053,14 +1053,14 @@ Use case ends.
 * 1a. User does not specify any name
 +
 [none]
-** 1a1. AddressBook shows an error message
+** 1a1. ContactSails shows an error message
 +
 Use case ends.
 
 [none]
-* 1b. AddressBook does not have any names specified by user
+* 1b. ContactSails does not have any names specified by user
 +
-** 1b1. AddressBook shows empty list
+** 1b1. ContactSails shows empty list
 +
 Use case ends.
 
@@ -1070,7 +1070,7 @@ Use case ends.
 *MSS*
 
 1.	User requests to find persons with specific tags
-2.	AddressBook shows list of persons with specified tags
+2.	ContactSails shows list of persons with specified tags
 +
 Use case ends.
 
@@ -1080,15 +1080,15 @@ Use case ends.
 * 1a. User does not specify any tag
 +
 [none]
-** 1a1. AddressBook shows an error message
+** 1a1. ContactSails shows an error message
 +
 Use case ends.
 
 [none]
-* 1b. AddressBook does not have any tags specified by user
+* 1b. ContactSails does not have any tags specified by user
 +
 [none]
-** 1b1. AddressBook shows empty list
+** 1b1. ContactSails shows empty list
 +
 Use case ends.
 
@@ -1098,9 +1098,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to remove a tag
-2.  AddressBook shows a list of all the tags used in the application
+2.  ContactSails shows a list of all the tags used in the application
 3.  User enters the tag they want to remove
-4.  AddressBook removes the specific tag from all contacts who have this tag assigned to them
+4.  ContactSails removes the specific tag from all contacts who have this tag assigned to them
 +
 Use case ends.
 
@@ -1110,7 +1110,7 @@ Use case ends.
 * 2a. There are no tags
 +
 [none]
-** 2a1. AddressBook shows an error message
+** 2a1. ContactSails shows an error message
 +
 Use case ends.
 
@@ -1118,7 +1118,7 @@ Use case ends.
 * 3a. User enters invalid tag
 +
 [none]
-** 3a1. AddressBook shows an error message
+** 3a1. ContactSails shows an error message
 +
 Use case resumes at step 2.
 
@@ -1128,11 +1128,11 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User selects contacts to export from the current list of contacts
-2.  AddressBook stores the selection and processes the contacts to export
+2.  ContactSails stores the selection and processes the contacts to export
 3.  User requests to create a file containing the selected contacts
-4.  AddressBook creates the file and prompts for save location of file
+4.  ContactSails creates the file and prompts for save location of file
 5.  User specifies location of file to be saved
-6.  AddressBook saves the file and shows a success message
+6.  ContactSails saves the file and shows a success message
 +
 Use case ends.
 
@@ -1142,7 +1142,7 @@ Use case ends.
 * 1a. User does not select any contact
 +
 [none]
-** 1a1. AddressBook shows an error message
+** 1a1. ContactSails shows an error message
 +
 Use case ends.
 
@@ -1150,23 +1150,23 @@ Use case ends.
 * 1b. User makes an invalid selection
 +
 [none]
-** 1b1. AddressBook shows an error message
+** 1b1. ContactSails shows an error message
 +
 Use case ends.
 
 [none]
-* 4a. AddressBook is unable to create the file with selected contacts
+* 4a. ContactSails is unable to create the file with selected contacts
 +
 [none]
-** 4a1. AddressBook shows an error message
+** 4a1. ContactSails shows an error message
 +
 Use case resumes at step 1.
 
 [none]
-* 6a. AddressBook is unable to save the file in the specified location
+* 6a. ContactSails is unable to save the file in the specified location
 +
 [none]
-** 6a1. AddressBook shows an error message
+** 6a1. ContactSails shows an error message
 +
 Use case resumes at step 5.
 
@@ -1174,7 +1174,7 @@ Use case resumes at step 5.
 * *a. User cancels the operation at any time
 +
 [none]
-** *a1. AddressBook shows an error message.
+** *a1. ContactSails shows an error message.
 +
 Use case ends.
 
@@ -1184,27 +1184,27 @@ Use case ends.
 *MSS*
 
 1.  User requests to create a backup file containing all the data stored in the application
-2.  AddressBook creates the file and adds all the application data
+2.  ContactSails creates the file and adds all the application data
 3.  User specifies location of file to be saved
-4.  AddressBook saves the file in the location specified and shows a success message
+4.  ContactSails saves the file in the location specified and shows a success message
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is unable to create the file
+* 2a. ContactSails is unable to create the file
 +
 [none]
-** 2a1. AddressBook shows an error message
+** 2a1. ContactSails shows an error message
 +
 Use case ends.
 
 [none]
-* 4a. AddressBook is unable to save the file in the specified location
+* 4a. ContactSails is unable to save the file in the specified location
 +
 [none]
-** 4a1. AddressBook shows an error message
+** 4a1. ContactSails shows an error message
 +
 Use case resumes at step 3.
 
@@ -1214,17 +1214,17 @@ Use case resumes at step 3.
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  The AddressBook should be usable even for users without experience in social media marketing.
-.  As AddressBook is modified from an open-source software, users should be able to download it for free.
-.  AddressBook should continue to run normally even when problems occur during execution.
-.  In case AddressBook has crashed, changes made to it during those sessions should not be lost.
-.  Size of AddressBook should not exceed 100 MB even with many contacts stored in it.
-.  AddressBook should take up to 2 seconds to execute any command except for commands that are reliant on internet connectivity.
-.  AddressBook can still work even if there is limited internet connectivity when executed command opens websites.
-.  Users can use AddressBook without requiring an installer.
-.  Data of AddressBook should be stored locally and in a human editable text file.
-.  Data of AddressBook should be able to be encrypted such that only the user can see it when text file containing the data is directly accessed.
-.  AddressBook should not be required to print any detailed reports of contacts.
+.  The ContactSails should be usable even for users without experience in social media marketing.
+.  As ContactSails is modified from an open-source software, users should be able to download it for free.
+.  ContactSails should continue to run normally even when problems occur during execution.
+.  In case ContactSails has crashed, changes made to it during those sessions should not be lost.
+.  Size of ContactSails should not exceed 100 MB even with many contacts stored in it.
+.  ContactSails should take up to 2 seconds to execute any command except for commands that are reliant on internet connectivity.
+.  ContactSails can still work even if there is limited internet connectivity when executed command opens websites.
+.  Users can use ContactSails without requiring an installer.
+.  Data of ContactSails should be stored locally and in a human editable text file.
+.  Data of ContactSails should be able to be encrypted such that only the user can see it when text file containing the data is directly accessed.
+.  ContactSails should not be required to print any detailed reports of contacts.
 
 [appendix]
 == Glossary

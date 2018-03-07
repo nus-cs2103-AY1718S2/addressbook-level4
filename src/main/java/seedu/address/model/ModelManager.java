@@ -11,10 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.commons.events.model.OrganizerChangedEvent;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -23,79 +23,79 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
-    private final FilteredList<Person> filteredPersons;
+    private final Organizer organizer;
+    private final FilteredList<Task> filteredTasks;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given organizer and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyOrganizer addressBook, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.organizer = new Organizer(addressBook);
+        filteredTasks = new FilteredList<>(this.organizer.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new Organizer(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
+    public void resetData(ReadOnlyOrganizer newData) {
+        organizer.resetData(newData);
         indicateAddressBookChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public ReadOnlyOrganizer getOrganizer() {
+        return organizer;
     }
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+        raise(new OrganizerChangedEvent(organizer));
     }
 
     @Override
-    public synchronized void deletePerson(Person target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
+    public synchronized void deletePerson(Task target) throws TaskNotFoundException {
+        organizer.removePerson(target);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
+    public synchronized void addPerson(Task task) throws DuplicateTaskException {
+        organizer.addPerson(task);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
+    public void updatePerson(Task target, Task editedTask)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireAllNonNull(target, editedTask);
 
-        addressBook.updatePerson(target, editedPerson);
+        organizer.updatePerson(target, editedTask);
         indicateAddressBookChanged();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Task List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@code Task} backed by the internal list of
+     * {@code organizer}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<Task> getFilteredPersonList() {
+        return FXCollections.unmodifiableObservableList(filteredTasks);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredPersonList(Predicate<Task> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredTasks.setPredicate(predicate);
     }
 
     @Override
@@ -112,8 +112,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+        return organizer.equals(other.organizer)
+                && filteredTasks.equals(other.filteredTasks);
     }
 
 }

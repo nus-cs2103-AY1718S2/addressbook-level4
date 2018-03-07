@@ -26,13 +26,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalTasks.ALICE;
+import static seedu.address.testutil.TypicalTasks.AMY;
+import static seedu.address.testutil.TypicalTasks.BOB;
+import static seedu.address.testutil.TypicalTasks.CARL;
+import static seedu.address.testutil.TypicalTasks.HOON;
+import static seedu.address.testutil.TypicalTasks.IDA;
+import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -42,17 +42,17 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.model.task.Address;
+import seedu.address.model.task.Email;
+import seedu.address.model.task.Name;
+import seedu.address.model.task.Phone;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.testutil.TaskBuilder;
+import seedu.address.testutil.TaskUtil;
 
-public class AddCommandSystemTest extends AddressBookSystemTest {
+public class AddCommandSystemTest extends OrganizerSystemTest {
 
     @Test
     public void add() throws Exception {
@@ -60,10 +60,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a task without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        Person toAdd = AMY;
+        Task toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
@@ -79,29 +79,29 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a person with all fields same as another person in the address book except name -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        /* Case: add a task with all fields same as another task in the address book except name -> added */
+        toAdd = new TaskBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except phone -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
+        /* Case: add a task with all fields same as another task in the address book except phone -> added */
+        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except email -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
+        /* Case: add a task with all fields same as another task in the address book except email -> added */
+        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except address -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        /* Case: add a task with all fields same as another task in the address book except address -> added */
+        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
                 + TAG_DESC_FRIEND;
@@ -111,38 +111,38 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         deleteAllPersons();
         assertCommandSuccess(ALICE);
 
-        /* Case: add a person with tags, command with parameters in random order -> added */
+        /* Case: add a task with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
                 + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person, missing tags -> added */
+        /* Case: add a task, missing tags -> added */
         assertCommandSuccess(HOON);
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
-        /* Case: filters the person list before adding -> added */
+        /* Case: filters the task list before adding -> added */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(IDA);
 
-        /* ------------------------ Perform add operation while a person card is selected --------------------------- */
+        /* ------------------------ Perform add operation while a task card is selected --------------------------- */
 
-        /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
+        /* Case: selects first card in the task list, add a task -> added, card selection remains unchanged */
         selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(CARL);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
-        /* Case: add a duplicate person -> rejected */
-        command = PersonUtil.getAddCommand(HOON);
+        /* Case: add a duplicate task -> rejected */
+        command = TaskUtil.getAddCommand(HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
-        /* Case: add a duplicate person except with different tags -> rejected */
-        // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
+        /* Case: add a duplicate task except with different tags -> rejected */
+        // "friends" is an existing tag used in the default model, see TypicalTasks#ALICE
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
-        // AddressBook#addPerson(Person)
-        command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
+        // Organizer#addPerson(Task)
+        command = TaskUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: missing name -> rejected */
@@ -162,7 +162,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "adds " + PersonUtil.getPersonDetails(toAdd);
+        command = "adds " + TaskUtil.getPersonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
@@ -198,25 +198,25 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * 5. Browser url and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      *
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(Person toAdd) {
-        assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
+    private void assertCommandSuccess(Task toAdd) {
+        assertCommandSuccess(TaskUtil.getAddCommand(toAdd), toAdd);
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(Person)}. Executes {@code command}
+     * Performs the same verification as {@code assertCommandSuccess(Task)}. Executes {@code command}
      * instead.
      *
-     * @see AddCommandSystemTest#assertCommandSuccess(Person)
+     * @see AddCommandSystemTest#assertCommandSuccess(Task)
      */
-    private void assertCommandSuccess(String command, Person toAdd) {
+    private void assertCommandSuccess(String command, Task toAdd) {
         Model expectedModel = getModel();
         try {
             expectedModel.addPerson(toAdd);
-        } catch (DuplicatePersonException dpe) {
+        } catch (DuplicateTaskException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
@@ -225,13 +225,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Person)} except asserts that
+     * Performs the same verification as {@code assertCommandSuccess(String, Task)} except asserts that
      * the,<br>
      * 1. Result display box displays {@code expectedResultMessage}.<br>
      * 2. {@code Model}, {@code Storage} and {@code TaskListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
      *
-     * @see AddCommandSystemTest#assertCommandSuccess(String, Person)
+     * @see AddCommandSystemTest#assertCommandSuccess(String, Task)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
@@ -249,9 +249,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * 4. {@code Model}, {@code Storage} and {@code TaskListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      *
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

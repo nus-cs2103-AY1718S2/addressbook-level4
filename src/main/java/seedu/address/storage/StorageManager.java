@@ -8,25 +8,25 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.OrganizerChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyOrganizer;
 import seedu.address.model.UserPrefs;
 
 /**
- * Manages storage of AddressBook data in local storage.
+ * Manages storage of Organizer data in local storage.
  */
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
+    private OrganizerStorage organizerStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(OrganizerStorage organizerStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.addressBookStorage = addressBookStorage;
+        this.organizerStorage = organizerStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -48,39 +48,39 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
 
-    // ================ AddressBook methods ==============================
+    // ================ Organizer methods ==============================
 
     @Override
     public String getAddressBookFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+        return organizerStorage.getAddressBookFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(addressBookStorage.getAddressBookFilePath());
+    public Optional<ReadOnlyOrganizer> readAddressBook() throws DataConversionException, IOException {
+        return readAddressBook(organizerStorage.getAddressBookFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyOrganizer> readAddressBook(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
+        return organizerStorage.readAddressBook(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
+    public void saveAddressBook(ReadOnlyOrganizer addressBook) throws IOException {
+        saveAddressBook(addressBook, organizerStorage.getAddressBookFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+    public void saveAddressBook(ReadOnlyOrganizer addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveAddressBook(addressBook, filePath);
+        organizerStorage.saveAddressBook(addressBook, filePath);
     }
 
 
     @Override
     @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+    public void handleAddressBookChangedEvent(OrganizerChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);

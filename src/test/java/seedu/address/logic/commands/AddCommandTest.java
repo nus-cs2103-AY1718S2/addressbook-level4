@@ -18,13 +18,13 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.Organizer;
+import seedu.address.model.ReadOnlyOrganizer;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.address.testutil.TaskBuilder;
 
 public class AddCommandTest {
 
@@ -40,29 +40,29 @@ public class AddCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+        Task validTask = new TaskBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddCommandForPerson(validTask, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validTask), modelStub.personsAdded);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+        Task validTask = new TaskBuilder().build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddCommandForPerson(validTask, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Task alice = new TaskBuilder().withName("Alice").build();
+        Task bob = new TaskBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -79,15 +79,15 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different task -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddCommand with the details of the given task.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand getAddCommandForPerson(Task task, Model model) {
+        AddCommand command = new AddCommand(task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -97,74 +97,74 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
+        public void addPerson(Task task) throws DuplicateTaskException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyOrganizer newData) {
             fail("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
+        public ReadOnlyOrganizer getOrganizer() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
+        public void deletePerson(Task target) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePerson(Task target, Task editedTask)
+                throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Task> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<Task> predicate) {
             fail("This method should not be called.");
         }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicateTaskException when trying to add a task.
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addPerson(Task task) throws DuplicateTaskException {
+            throw new DuplicateTaskException();
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyOrganizer getOrganizer() {
+            return new Organizer();
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the task being added.
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+        final ArrayList<Task> personsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addPerson(Task task) throws DuplicateTaskException {
+            requireNonNull(task);
+            personsAdded.add(task);
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyOrganizer getOrganizer() {
+            return new Organizer();
         }
     }
 

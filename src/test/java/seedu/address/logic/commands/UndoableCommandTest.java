@@ -5,7 +5,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalTasks.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -13,8 +13,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -47,7 +47,7 @@ public class UndoableCommandTest {
     }
 
     /**
-     * Deletes the first person in the model's filtered list.
+     * Deletes the first task in the model's filtered list.
      */
     class DummyCommand extends UndoableCommand {
         DummyCommand(Model model) {
@@ -56,11 +56,11 @@ public class UndoableCommandTest {
 
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
-            Person personToDelete = model.getFilteredPersonList().get(0);
+            Task taskToDelete = model.getFilteredPersonList().get(0);
             try {
-                model.deletePerson(personToDelete);
-            } catch (PersonNotFoundException pnfe) {
-                fail("Impossible: personToDelete was retrieved from model.");
+                model.deletePerson(taskToDelete);
+            } catch (TaskNotFoundException pnfe) {
+                fail("Impossible: taskToDelete was retrieved from model.");
             }
             return new CommandResult("");
         }

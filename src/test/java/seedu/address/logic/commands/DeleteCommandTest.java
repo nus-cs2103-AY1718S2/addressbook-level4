@@ -10,7 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalTasks.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
+import seedu.address.model.task.Task;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -33,13 +33,13 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Task taskToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, taskToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        ModelManager expectedModel = new ModelManager(model.getOrganizer(), new UserPrefs());
+        expectedModel.deletePerson(taskToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
@@ -56,13 +56,13 @@ public class DeleteCommandTest {
     public void execute_validIndexFilteredList_success() throws Exception {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Task taskToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, taskToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        Model expectedModel = new ModelManager(model.getOrganizer(), new UserPrefs());
+        expectedModel.deletePerson(taskToDelete);
         showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -74,7 +74,7 @@ public class DeleteCommandTest {
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getOrganizer().getPersonList().size());
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
@@ -86,19 +86,19 @@ public class DeleteCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Task taskToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getOrganizer(), new UserPrefs());
 
-        // delete -> first person deleted
+        // delete -> first task deleted
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
+        // undo -> reverts addressbook back to previous state and filtered task list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // redo -> same first person deleted again
-        expectedModel.deletePerson(personToDelete);
+        // redo -> same first task deleted again
+        expectedModel.deletePerson(taskToDelete);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -119,11 +119,11 @@ public class DeleteCommandTest {
     }
 
     /**
-     * 1. Deletes a {@code Person} from a filtered list.
+     * 1. Deletes a {@code Task} from a filtered list.
      * 2. Undo the deletion.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted person in the
+     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted task in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the person object regardless of indexing.
+     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the task object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
@@ -131,20 +131,20 @@ public class DeleteCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getOrganizer(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // delete -> deletes second person in unfiltered person list / first person in filtered person list
+        Task taskToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        // delete -> deletes second task in unfiltered task list / first task in filtered task list
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
+        // undo -> reverts addressbook back to previous state and filtered task list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        expectedModel.deletePerson(personToDelete);
-        assertNotEquals(personToDelete, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        // redo -> deletes same second person in unfiltered person list
+        expectedModel.deletePerson(taskToDelete);
+        assertNotEquals(taskToDelete, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        // redo -> deletes same second task in unfiltered task list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -170,7 +170,7 @@ public class DeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different task -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 

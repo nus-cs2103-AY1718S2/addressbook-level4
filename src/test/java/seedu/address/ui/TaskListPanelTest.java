@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.address.testutil.TypicalTasks.getTypicalPersons;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
@@ -15,10 +15,10 @@ import guitests.guihandles.TaskListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.person.Person;
+import seedu.address.model.task.Task;
 
 public class TaskListPanelTest extends GuiUnitTest {
-    private static final ObservableList<Person> TYPICAL_PERSONS =
+    private static final ObservableList<Task> TYPICAL_TASKS =
             FXCollections.observableList(getTypicalPersons());
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
@@ -27,7 +27,7 @@ public class TaskListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        TaskListPanel taskListPanel = new TaskListPanel(TYPICAL_PERSONS);
+        TaskListPanel taskListPanel = new TaskListPanel(TYPICAL_TASKS);
         uiPartRule.setUiPart(taskListPanel);
 
         taskListPanelHandle = new TaskListPanelHandle(getChildNode(taskListPanel.getRoot(),
@@ -36,12 +36,12 @@ public class TaskListPanelTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
-            taskListPanelHandle.navigateToCard(TYPICAL_PERSONS.get(i));
-            Person expectedPerson = TYPICAL_PERSONS.get(i);
+        for (int i = 0; i < TYPICAL_TASKS.size(); i++) {
+            taskListPanelHandle.navigateToCard(TYPICAL_TASKS.get(i));
+            Task expectedTask = TYPICAL_TASKS.get(i);
             TaskCardHandle actualCard = taskListPanelHandle.getTaskCardHandle(i);
 
-            assertCardDisplaysPerson(expectedPerson, actualCard);
+            assertCardDisplaysPerson(expectedTask, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }

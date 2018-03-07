@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.person.Person;
+import seedu.address.model.task.Task;
 import seedu.address.ui.TaskCard;
 
 /**
@@ -56,11 +56,11 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     }
 
     /**
-     * Navigates the listview to display and select the person.
+     * Navigates the listview to display and select the task.
      */
-    public void navigateToCard(Person person) {
+    public void navigateToCard(Task task) {
         List<TaskCard> cards = getRootNode().getItems();
-        Optional<TaskCard> matchingCard = cards.stream().filter(card -> card.person.equals(person)).findFirst();
+        Optional<TaskCard> matchingCard = cards.stream().filter(card -> card.task.equals(task)).findFirst();
 
         if (!matchingCard.isPresent()) {
             throw new IllegalArgumentException("Task does not exist.");
@@ -74,21 +74,21 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     }
 
     /**
-     * Returns the person card handle of a person associated with the {@code index} in the list.
+     * Returns the task card handle of a task associated with the {@code index} in the list.
      */
     public TaskCardHandle getTaskCardHandle(int index) {
-        return getTaskCardHandle(getRootNode().getItems().get(index).person);
+        return getTaskCardHandle(getRootNode().getItems().get(index).task);
     }
 
     /**
-     * Returns the {@code TaskCardHandle} of the specified {@code person} in the list.
+     * Returns the {@code TaskCardHandle} of the specified {@code task} in the list.
      */
-    public TaskCardHandle getTaskCardHandle(Person person) {
+    public TaskCardHandle getTaskCardHandle(Task task) {
         Optional<TaskCardHandle> handle = getRootNode().getItems().stream()
-                .filter(card -> card.person.equals(person))
+                .filter(card -> card.task.equals(task))
                 .map(card -> new TaskCardHandle(card.getRoot()))
                 .findFirst();
-        return handle.orElseThrow(() -> new IllegalArgumentException("Person does not exist."));
+        return handle.orElseThrow(() -> new IllegalArgumentException("Task does not exist."));
     }
 
     /**

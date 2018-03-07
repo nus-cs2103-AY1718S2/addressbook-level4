@@ -3,46 +3,46 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Task> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyOrganizer newData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the Organizer */
+    ReadOnlyOrganizer getOrganizer();
 
-    /** Deletes the given person. */
-    void deletePerson(Person target) throws PersonNotFoundException;
+    /** Deletes the given task. */
+    void deletePerson(Task target) throws TaskNotFoundException;
 
-    /** Adds the given person */
-    void addPerson(Person person) throws DuplicatePersonException;
+    /** Adds the given task */
+    void addPerson(Task task) throws DuplicateTaskException;
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given task {@code target} with {@code editedTask}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateTaskException if updating the task's details causes the task to be equivalent to
+     *      another existing task in the list.
+     * @throws TaskNotFoundException if {@code target} could not be found in the list.
      */
-    void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+    void updatePerson(Task target, Task editedTask)
+            throws DuplicateTaskException, TaskNotFoundException;
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered task list */
+    ObservableList<Task> getFilteredPersonList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered task list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredPersonList(Predicate<Task> predicate);
 
 }

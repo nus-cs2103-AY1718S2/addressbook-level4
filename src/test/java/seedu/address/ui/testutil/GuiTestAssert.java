@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TaskCardHandle;
 import guitests.guihandles.TaskListPanelHandle;
-import seedu.address.model.person.Person;
+import seedu.address.model.task.Task;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -27,33 +27,33 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
      */
-    public static void assertCardDisplaysPerson(Person expectedPerson, TaskCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+    public static void assertCardDisplaysPerson(Task expectedTask, TaskCardHandle actualCard) {
+        assertEquals(expectedTask.getName().fullName, actualCard.getName());
+        assertEquals(expectedTask.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedTask.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedTask.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedTask.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 
     /**
-     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(TaskListPanelHandle taskListPanelHandle, Person... persons) {
-        for (int i = 0; i < persons.length; i++) {
-            assertCardDisplaysPerson(persons[i], taskListPanelHandle.getTaskCardHandle(i));
+    public static void assertListMatching(TaskListPanelHandle taskListPanelHandle, Task... tasks) {
+        for (int i = 0; i < tasks.length; i++) {
+            assertCardDisplaysPerson(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
         }
     }
 
     /**
-     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(TaskListPanelHandle taskListPanelHandle, List<Person> persons) {
-        assertListMatching(taskListPanelHandle, persons.toArray(new Person[0]));
+    public static void assertListMatching(TaskListPanelHandle taskListPanelHandle, List<Task> tasks) {
+        assertListMatching(taskListPanelHandle, tasks.toArray(new Task[0]));
     }
 
     /**

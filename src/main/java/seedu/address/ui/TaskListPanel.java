@@ -15,7 +15,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
-import seedu.address.model.person.Person;
+import seedu.address.model.task.Task;
 
 /**
  * Panel containing the list of persons.
@@ -27,15 +27,15 @@ public class TaskListPanel extends UiPart<Region> {
     @FXML
     private ListView<TaskCard> taskListView;
 
-    public TaskListPanel(ObservableList<Person> personList) {
+    public TaskListPanel(ObservableList<Task> taskList) {
         super(FXML);
-        setConnections(personList);
+        setConnections(taskList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Person> personList) {
+    private void setConnections(ObservableList<Task> taskList) {
         ObservableList<TaskCard> mappedList = EasyBind.map(
-                personList, (person) -> new TaskCard(person, personList.indexOf(person) + 1));
+                taskList, (person) -> new TaskCard(person, taskList.indexOf(person) + 1));
         taskListView.setItems(mappedList);
         taskListView.setCellFactory(listView -> new TaskListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -45,7 +45,7 @@ public class TaskListPanel extends UiPart<Region> {
         taskListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in task list panel changed to : '" + newValue + "'");
                         raise(new TaskPanelSelectionChangedEvent(newValue));
                     }
                 });

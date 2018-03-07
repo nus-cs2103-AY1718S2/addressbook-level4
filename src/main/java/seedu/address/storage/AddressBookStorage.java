@@ -44,7 +44,6 @@ public interface AddressBookStorage {
     /**
      * Saves the given (@link ReadOnlyAddressBook) to a offline backup file
      * @param addressBook cannot be null
-     * @param filePath cannot be null
      * @throws IOException
      */
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;

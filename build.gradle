@@ -21,6 +21,7 @@ mainClassName = 'seedu.address.MainApp'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
+
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -54,6 +55,10 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
     testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-calendar:v3-rev296-1.23.0'
 }
 
 shadowJar {

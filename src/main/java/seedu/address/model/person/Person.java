@@ -59,6 +59,13 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    /**
+     * Removes given tag if found in tag set.
+     */
+    public void removeTag(Tag tagToRemove) {
+        tags.remove(tagToRemove);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

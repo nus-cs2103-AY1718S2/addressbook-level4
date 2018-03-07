@@ -32,6 +32,10 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.contains(toCheck);
     }
 
+    public ObservableList<Person> getInternalList() {
+        return internalList;
+    }
+
     /**
      * Adds a person to the list.
      *

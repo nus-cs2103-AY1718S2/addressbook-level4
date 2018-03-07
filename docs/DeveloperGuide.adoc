@@ -791,13 +791,13 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: 
+*Value proposition*:
 
 * never miss LOs hidden in the nested collapsible list
 * keep track of your own progress on a week by week basis
-* keep track of your teammates' completion of TO-DO list and learning progress (providing proof for peer evaluation)
+* keep track of your teammates' completion of TO-DO list(at most 20 tasks per day) and learning progress (providing proof for peer evaluation)
 * view the teammates' weekly plan in phase B (to know the upcoming updates even before they send any pull requests to github repo)
-* save your answers for the exercises (as proof of completion and for future revision)
+* save your answers(no more than 200 words) for the exercises (as proof of completion and for future revision)
 * easily search for information based on key words (which is hard to achieve in the module website with nested collapsible lists)
 
 [appendix]
@@ -812,7 +812,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |new user |register and account with NUS net ID |join the module community
 
-|`* * *` |new user |fill in my full name and phone number |provide necessary information for the platform maintenance
+|`* * *` |new user |fill in my full name and phone number (strictly 8 numbers) |provide necessary information for the platform maintenance
 
 |`* * *` |new user |fill in optional fiels such as faculty, year of study etc |help my classmates know be better
 
@@ -826,7 +826,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |view my TO-DO list |know all the my tasks easily
 
-|`* * *` |user |tick an item in the TO-DO list upon completion |focus on the tasks I have not done 
+|`* * *` |user |tick an item in the TO-DO list upon completion |focus on the tasks I have not done
 
 |`* * *` |user |save my answers of the exercises |show to tutor as proof of my learning outcome and revise before exams
 
@@ -838,7 +838,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |post my weekly plan (phase B) |to inform my teammates of upcoming updates even before I send any pull requests to github repo
 
-|`* *` |user |upload a profile picture |help others to recognize me
+|`* *` |user |upload a profile picture (not larger than 3MB) |help others to recognize me
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 

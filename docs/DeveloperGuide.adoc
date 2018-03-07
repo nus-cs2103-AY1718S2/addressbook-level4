@@ -800,11 +800,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |user |schedule meetings with my clients |remember when I am supposed to meet them
+
+|`* * *` |user |tag clients with important info like the products they are interested in | so that I can list and group together related clients quickly.
+
+|`* * *` |user |log notes specific to each client |so that I can recall the information when I need it
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* *` |user |set the timezone for each contact |meet or call them at an appropriate time
+
+|`* *` |user |archive certain contacts |useless or expired contacts won't clutter up the program but I can still find them when I need to
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 

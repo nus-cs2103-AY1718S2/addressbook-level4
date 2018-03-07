@@ -61,7 +61,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a task: `add`
+=== Adding a task: `add` or `a`
 
 Adds a person to the Organizer +
 Format: `add n/TASK_NAME p/PRIORITY_LEVEL d/DEADLINE [t/TAG]…​`
@@ -74,13 +74,13 @@ Examples:
 * `add n/CS2103T Developer Guide p/10 d/2018-03-02`
 * `add n/CS2101 Script p/8 d/2018-03-05 t/CS2101`
 
-=== Listing all tasks : `list`
+=== Listing all tasks : `list` or `l`
 
 Shows a list of all tasks in the Organizer. +
 
 Format: `list`
 
-=== Editing a task : `edit`
+=== Editing a task : `edit` or `e`
 
 Edits an existing task in the Organizer. +
 Format: `edit INDEX [n/TASK_NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [t/TAG]…​`
@@ -100,7 +100,7 @@ Edits the priority level and deadline of the 1st task to be `9` and `2018-12-30`
 * `edit 2 n/CS2101 Final Assignment t/` +
 Edits the name of the 2nd task to be `CS2101 Final Assignment` and clears all existing tags.
 
-=== Locating tasks by name: `find`
+=== Locating tasks by name: `find` or `f`
 
 Finds tasks whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -120,7 +120,7 @@ Returns `developer` and `Developer Guide`
 * find `CS2101 Developer User` +
 Returns any task having names `CS2101`, `Developer`, or `User`
 
-=== Deleting a task : `delete`
+=== Deleting a task : `delete` or `d`
 
 Deletes the specified task from the Organizer. +
 Format: `delete INDEX`
@@ -140,7 +140,7 @@ Deletes the 2nd task in the Organizer.
 `delete 1` +
 Deletes the 1st task in the results of the `find` command.
 
-=== Selecting a task : `select`
+=== Selecting a task : `select` or `s`
 
 Selects the task identified by the index number used in the last task listing. +
 Format: `select INDEX`
@@ -220,7 +220,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` or `c`
 
 Clears all entries from the Organizer. +
 Format: `clear`

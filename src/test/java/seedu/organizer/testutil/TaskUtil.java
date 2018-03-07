@@ -22,6 +22,13 @@ public class TaskUtil {
     }
 
     /**
+     * Returns an add command string for adding the {@code task} using alias.
+     */
+    public static String getAddCommandAlias(Task task) {
+        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(task);
+    }
+
+    /**
      * Returns the part of command string for the given {@code task}'s details.
      */
     public static String getPersonDetails(Task task) {

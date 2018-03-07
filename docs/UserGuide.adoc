@@ -262,7 +262,8 @@ e.g. `find James Jake`
 * *List* : `list` or `ls`
 * *Help* : `help` or `h`
 * *Select* : `select INDEX` or `s INDEX` +
-e.g.`select 2` or `s 2`
+e.g.`select 2` +
+`s 2`
 * *History* : `history` or `his`
 * *Undo* : `undo` or `ud`
 * *Redo* : `redo` or `rd`

@@ -896,6 +896,7 @@ Use case ends.
 +
 Use case ends.
 
+[none]
 * 3a. The given index is invalid.
 +
 [none]
@@ -903,7 +904,303 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.	User requests to add specific person
+2.	AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User enters invalid format for the Add feature
++
+[none]
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+[discrete]
+=== Use case: List current customers
+
+*MSS*
+
+1.  User requests for current customers
+2.  AddressBook finds and displays a list of the list of customers whose orders are currently being fulfilled by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty as there are no current orders
++
+[none]
+** 2a1. AddressBook shows an error message
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit specific details of contacts
+
+*MSS*
+
+1.  User selects contact to edit from the current list of contacts
+2.  AddressBook shows the selected contact
+3.  User requests to edit a certain field of the contact
+4.  AddressBook updates the contact details and shows contact details after the changes made
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User selects invalid contact
++
+[none]
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+[none]
+* 2a. User selects invalid field to edit
++
+[none]
+** 2a1. AddressBook shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add notes to contacts
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to add notes to specific person in the list
+4. AddressBook adds notes to the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[none]
+* 3a. The given index is invalid
++
+[none]
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add contact specific tasks
+
+*MSS*
+
+1.  User selects contact to add a task for
+2.  AddressBook prompts user to enter the task details
+3.  User enters task description and task deadline
+4.  AddressBook adds task to specified contact and shows a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User selects invalid contact
++
+[none]
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+[none]
+* 3a. User enters invalid task details
++
+[none]
+** 3a1. AddressBook shows en error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find persons by name
+
+*MSS*
+
+1.	User requests to find persons with specific names
+2.	AddressBook shows list of persons with specified names
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User does not specify any name
++
+[none]
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+[none]
+* 1b. AddressBook does not have any names specified by user
++
+** 1b1. AddressBook shows empty list
++
+Use case ends.
+
+[discrete]
+=== Use case: Find persons by tags
+
+*MSS*
+
+1.	User requests to find persons with specific tags
+2.	AddressBook shows list of persons with specified tags
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User does not specify any tag
++
+[none]
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+[none]
+* 1b. AddressBook does not have any tags specified by user
++
+[none]
+** 1b1. AddressBook shows empty list
++
+Use case ends.
+
+[discrete]
+=== Use case: Remove specific tag
+
+*MSS*
+
+1.  User requests to remove a tag
+2.  AddressBook shows a list of all the tags used in the application
+3.  User enters the tag they want to remove
+4.  AddressBook removes the specific tag from all contacts who have this tag assigned to them
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no tags
++
+[none]
+** 2a1. AddressBook shows an error message
++
+Use case ends.
+
+[none]
+* 3a. User enters invalid tag
++
+[none]
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Export contacts
+
+*MSS*
+
+1.  User selects contacts to export from the current list of contacts
+2.  AddressBook stores the selection and processes the contacts to export
+3.  User requests to create a file containing the selected contacts
+4.  AddressBook creates the file and prompts for save location of file
+5.  User specifies location of file to be saved
+6.  AddressBook saves the file and shows a success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User does not select any contact
++
+[none]
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+[none]
+* 1b. User makes an invalid selection
++
+[none]
+** 1b1. AddressBook shows an error message
++
+Use case ends.
+
+[none]
+* 4a. AddressBook is unable to create the file with selected contacts
++
+[none]
+** 4a1. AddressBook shows an error message
++
+Use case resumes at step 1.
+
+[none]
+* 6a. AddressBook is unable to save the file in the specified location
++
+[none]
+** 6a1. AddressBook shows an error message
++
+Use case resumes at step 5.
+
+[none]
+* *a. User cancels the operation at any time
++
+[none]
+** *a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Store a local backup of contacts
+
+*MSS*
+
+1.  User requests to create a backup file containing all the data stored in the application
+2.  AddressBook creates the file and adds all the application data
+3.  User specifies location of file to be saved
+4.  AddressBook saves the file in the location specified and shows a success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook is unable to create the file
++
+[none]
+** 2a1. AddressBook shows an error message
++
+Use case ends.
+
+[none]
+* 4a. AddressBook is unable to save the file in the specified location
++
+[none]
+** 4a1. AddressBook shows an error message
++
+Use case resumes at step 3.
 
 [appendix]
 == Non Functional Requirements

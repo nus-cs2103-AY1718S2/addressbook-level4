@@ -831,7 +831,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add contacts of those members|So that I can contact them regarding events
 
-|`* * *` |user |add info of the memebers involved in events|So that I know who I would need to talk to
+|`* * *` |user |add info of the members involved in events|So that I know who I would need to talk to
 
 |`* * *` |user |add members to events|So that I know who to look for regarding events
 
@@ -855,19 +855,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |use a shorter version of a command|So that I can type faster
 
-|`*` |user |add facebook events into Address Book using Facebook|So that I can conveniently sync with Facebook regarding eventss I am attending
+|`*` |user |add facebook events into Address Book using Facebook|So that I can conveniently sync with Facebook regarding events I am attending
 
 |`*` |user |can see weather forecast of the event|So that I can decide whether to delete certain outdoor events I am attending
 
 |`*` |user |change colour scheme |So that I can feel more personalised
 
-|`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the ,mmap while driving
+|`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the ,map while driving
 
 |`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related
 
-|`*` |user |play music fromn address book |So that I can listen to music i want
+|`*` |user |play music from address book |So that I can listen to music i want
 
-|`*` |user |play videos from youtube |So that I can watch videos i want
+|`*` |user |play videos from Youtube |So that I can watch videos i want
 
 |=======================================================================
 

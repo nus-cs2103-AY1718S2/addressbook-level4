@@ -920,7 +920,7 @@ Use case ends.
 1.  User requests to find an owner named "Mavis"
 2.  AddressBook shows a list of owners with "Mavis" as part of their name
 3.  User requests to view information of a specific owner
-4.  AddressBook shows information about the owner 
+4.  AddressBook shows information about the owner
 +
 Use case ends.
 

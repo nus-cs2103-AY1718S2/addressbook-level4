@@ -37,11 +37,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         return readAddressBook(filePath);
     }
 
-    @Override
-    public Optional<ReadOnlyAddressBook> readAddressBookBackup() throws DataConversionException, IOException {
-        return readAddressBook(filePath + ".backup");
-    }
-
     /**
      * Similar to {@link #readAddressBook()}
      * @param filePath location of the data. Cannot be null
@@ -66,27 +61,37 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             throw new DataConversionException(ive);
         }
     }
+
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws DataConversionException, IOException {
-        if (Objects.isNull(filePath))
+    public Optional<ReadOnlyAddressBook> readAddressBookBackup() throws DataConversionException, IOException {
+        return readAddressBook(filePath + ".backup");
+    }
+
+    @Override
+    public Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws DataConversionException,
+                                                                                       IOException {
+        if (Objects.isNull(filePath)) {
             throw new NullPointerException();
-        else
+        } else {
             return readAddressBook(filePath + ".backup");
+        }
     }
 
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        if (Objects.isNull(filePath))
+        if (Objects.isNull(filePath)) {
             throw new NullPointerException();
-        else
+        } else {
             saveAddressBook(addressBook, filePath + ".backup");
+        }
     }
 
     public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
-        if (Objects.isNull(filePath))
+        if (Objects.isNull(filePath)) {
             throw new NullPointerException();
-        else
+        } else {
             saveAddressBook(addressBook, filePath + ".backup");
+        }
     }
 
     @Override

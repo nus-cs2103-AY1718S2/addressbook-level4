@@ -23,13 +23,17 @@ public interface AddressBookStorage {
      * @throws IOException if there was any problem when reading from the storage.
      */
     Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
-    Optional<ReadOnlyAddressBook> readAddressBookBackup() throws DataConversionException, IOException;
 
     /**
      * @see #getAddressBookFilePath()
      */
     Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyAddressBook> readAddressBookBackup() throws DataConversionException, IOException;
+    /**
+     * @see #getAddressBookFilePath()
+     */
     Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws DataConversionException, IOException;
+
 
     /**
      * Saves the given {@link ReadOnlyAddressBook} to the storage.

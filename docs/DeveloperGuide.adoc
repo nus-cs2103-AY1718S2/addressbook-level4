@@ -798,17 +798,36 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |user |add a new person |
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |new user |view instructions for commands | get familiar with CLI
+|`* * *` |user |retrieve a particular customer’s information | know whether he/she is a regular customer
+|`* * *` |user |check the current status of a particular customer’s order | answer the customer’s query
+|`* * *` |user |record down the customer’s order easily |
+|`* * *` |user |check how much the customer spend | decide whether should give him/her a promotional price
+|`* * *` |user |know how many regular customers the restaurant has per day | can know how much ingredients should be prepared
+|`* * *` |user |know next order to be delivered | send delivery courier to the right place in time
+|`* * *` |user |remove an order | complete an order when it’s delivered
+|`* * *` |user |check how many orders are still yet to be delivered | speed up preparation
+|`* * *` |user |cancel an order | no longer need to prepare for that order
+|`* * *` |user |edit the order |
+|`* * *` |user |know whether the courier spoil the order |reorder for the customer
+|`* * *` |user |know how many orders need to be completed for a day in the future|
+|`* * *` |user |update the customer’s delivering address and personal phone number|
+|`* * *` |user |know whether the customer has exact amount of cash | prepare the change in advance
+|`* * *` |user |know whether the customer has additional requirements|
+|`* *` |user |get feedback rating from the customer |improve the service next time
+|`* *` |user |see the address of current order in the map|
+|`* *` |user |check customer's ratings | decide whether should take the order
+|`* *` |user |check revenue and cost of the day | calculate profit
+|`* *` |user |know which dishes are more favoured by customers | adjust the menu accordingly
+|`* *` |user |know the maximum number of orders during the peak hour |know how many delivery couriers should be employed
+|`* *` |user |know the peak hours everyday| facilitate manpower
+|`* *` |user |retrieve personal information from historical data if the customer has placed an order before |
+|`* *` |user |know the customer’s frequently-order dishes |create a specialised menu for him/her
+|`* *` |user |know when the customer ordered for his/her first time| send gifts for anniversary
+|`*` |user |see the orders with addresses close to one another |deliver their orders together
+|`*` |user |see the optimal route the courier can take | assign several orders to a courier so that he can deliver them all within one trip
+|`*` |user |know the weather condition of an region | inform the customer earlier if the delivery cannot reach destination in time
+|`*` |user |know the traffic conditions of the region near the customer’s place |inform the customer earlier if the delivery cannot reach destination in time
 |=======================================================================
 
 _{More to be added}_

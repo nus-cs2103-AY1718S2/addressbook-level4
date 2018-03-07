@@ -5,6 +5,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -95,6 +97,17 @@ public class Person {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    public List<String> toStringList(){
+        final List<String> result = new ArrayList<>();
+        result.add(getName().toString());
+        result.add(getAddress().toString());
+        result.add(getEmail().toString());
+        result.add(getPhone().toString());
+        result.add(getTags().toString());
+        return result;
+
     }
 
 }

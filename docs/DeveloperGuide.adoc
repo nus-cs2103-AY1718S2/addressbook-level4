@@ -819,14 +819,14 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: View full details of an appointment
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list appointments
+2.  AddressBook shows a list of appointments for the current month
+3.  User requests to view a specific appointment in the list
+4.  AddressBook shows the full details of the specified appointment
 +
 Use case ends.
 
@@ -837,6 +837,9 @@ Use case ends.
 +
 Use case ends.
 
+* 2b. To retrieve a list of all upcoming appointments, use the command "list -a appointments" 
++
+[none]
 * 3a. The given index is invalid.
 +
 [none]

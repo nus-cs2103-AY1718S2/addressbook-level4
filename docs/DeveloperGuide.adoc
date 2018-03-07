@@ -782,13 +782,19 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* promotes and sells products or services through social media
+* works in a small company or runs his/her own business
+* has limited applications to support their marketing strategies
+* has a need to manage a large number of contacts
+* has many contacts spread across many social media platforms such as Facebook, Youtube, Twitter
+* has many contacts with volatile details
+* has many contacts that can be grouped together based on type of products purchased by contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: consolidation platform for all contacts from different platforms for users to communicate with customers more easily, analyse and apply their marketing strategies more effectively and efficiently.
 
 [appendix]
 == User Stories
@@ -1208,8 +1214,17 @@ Use case resumes at step 3.
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  The AddressBook should be usable even for users without experience in social media marketing.
+.  As AddressBook is modified from an open-source software, users should be able to download it for free.
+.  AddressBook should continue to run normally even when problems occur during execution.
+.  In case AddressBook has crashed, changes made to it during those sessions should not be lost.
+.  Size of AddressBook should not exceed 100 MB even with many contacts stored in it.
+.  AddressBook should take up to 2 seconds to execute any command except for commands that are reliant on internet connectivity.
+.  AddressBook can still work even if there is limited internet connectivity when executed command opens websites.
+.  Users can use AddressBook without requiring an installer.
+.  Data of AddressBook should be stored locally and in a human editable text file.
+.  Data of AddressBook should be able to be encrypted such that only the user can see it when text file containing the data is directly accessed.
+.  AddressBook should not be required to print any detailed reports of contacts.
 
 [appendix]
 == Glossary

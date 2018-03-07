@@ -780,15 +780,22 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: Computing Students
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Have a number of events to keep track of:
+** Talks
+** Career Fairs
+** Interviewws
+** Consultations
+** etc.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+* Prefer desktop apps over other types
+* Can type fast
+* (Many) prefers typing over mouse input
+* Are reasonably comfortable using CLI apps
+
+*Value proposition*: Help students manage the humongous amount of events that they might have
+
 
 [appendix]
 == User Stories

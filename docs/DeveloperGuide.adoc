@@ -800,15 +800,59 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |search for books |find new books to read
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add books |keep track of what to read and what have been read
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |view a listing of my books |decide what to read next
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |view a single book |obtain more information about it
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |delete books |remove books I no longer want to read
+
+|`* * *` |user |mark a book as read |keep track of what to read and what have been read
+
+|`* * *` |user |change the priority of a book |keep track of what to read and what have been read
+
+|`* * *` |user |filter books by title, author, tag, priority, etc. |easily find my books
+
+|`* * *` |user |sort books by title, author, tag, priority, etc. |easily find my books
+
+|`* *` |user |view the books I recently looked at |reconsider my choices
+
+|`* *` |user |undo my commands |change my mind
+
+|`* *` |user |redo my undone commands |change my mind twice
+
+|`* *` |user |view book reviews |decide on suitability of book
+
+|`* *` |user |rate books |give recommendations to others
+
+|`* *` |user |search the library catalogue |check for availability of the book
+
+|`* *` |user |add books to my watchlist |get updated on the availability of the book in the library
+
+|`* *` |user |order books from online services |get access to them
+
+|`* *` |power user |use aliases in place of full commands |reduce the amount of typing needed
+
+|`* *` |user |view hints when typing commands |recall the syntax of the command
+
+|`* *` |user |add and open eBook files |easily open and read my eBooks
+
+|`* *` |user |obtain recommendations |get exposure to more books
+
+|`*` |user |add book reviews |share with others my thoughts
+
+|`*` |user |open eBooks in the App |easily read my eBooks
+
+|`*` |user |import list of books from online services |easily populate my collection of books
+
+|`*` |user |change the theme of the App |choose a theme I prefer
+
+|`*` |user |change the font size of the App |make the text easier on my eyes
+
+|`*` |user |encrypt my data using a password |keep my data secure
 |=======================================================================
 
 _{More to be added}_

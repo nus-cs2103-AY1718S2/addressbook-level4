@@ -850,8 +850,12 @@ _{More to be added}_
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should work with a large number of, which is more than 1000, contacts.
+.  Should respond quickly after any action, which is less than 2 seconds.
+.  Should store its data in plain text so that data can be manually accessed if required.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  All actions should be performable using only the keyboard.
+
 
 _{More to be added}_
 
@@ -863,6 +867,15 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[archive]] Archive::
+The list of contacts that are no longer in use
+
+[[client]] Client::
+A potential customer, someone the user is in contact with for the purposes of business
+
+[[notes]] Notes::
+Some plain text information associated with a contact that the user wants to remember
 
 [appendix]
 == Product Survey

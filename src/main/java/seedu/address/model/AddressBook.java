@@ -192,11 +192,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         Set<Tag> newTags = person.getTags();
         boolean isPersonTagged = newTags.remove(tag);
 
-        if(!isPersonTagged) {
+        if (!isPersonTagged) {
             return;
         }
 
-        Person newPerson = new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), newTags);
+        Person newPerson = new Person(person.getName(), person.getPhone(),
+                person.getEmail(), person.getAddress(), newTags);
 
         try {
             updatePerson(person, newPerson);

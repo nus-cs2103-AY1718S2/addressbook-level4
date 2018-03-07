@@ -852,12 +852,12 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to find a patient with the name "Joseph"
-2.  AddressBook shows a list of patients with the name "Joseph"
-3.  User requests to view contact information of a specific patient
-4.  AddressBook shows the patient's owner's contact information
-5.  User requests to modify the patient's owner's contact information
-6.  AddressBook shows the patient's updated contact information
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests to view contact information of a specific pet patient
+4.  AddressBook shows the pet patient's owner's contact information
+5.  User requests to modify the pet patient's owner's contact information
+6.  AddressBook shows the pet patient's updated contact information
 +
 Use case ends.
 
@@ -878,19 +878,19 @@ Use case resumes at step 2.
 * 5a. The given command is invalid.
 +
 [none]
-** 5a1. AddressBook shows the correct command usage to edit patient's information.
+** 5a1. AddressBook shows the correct command usage to edit pet patient's information.
 +
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Retrieve medical history of a patient
+=== Use case: Retrieve medical history of a pet patient
 
 *MSS*
 
-1.  User requests to find a patient with the name "Joseph"
-2.  AddressBook shows a list of patients with the name "Joseph"
-3.  User requests to view medical history of a specific patient
-4.  AddressBook shows the patient's medical history
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests to view medical history of a specific pet patient
+4.  AddressBook shows the pet patient's medical history
 +
 Use case ends.
 
@@ -913,7 +913,7 @@ Use case resumes at step 2.
 Use case ends.
 
 [discrete]
-=== Use case: Retrieve information of a particular owner (contact details, pets owned by him/her, and appointments made)
+=== Use case: Retrieve information of a particular owner (contact details, pet patients owned by him/her, and appointments made)
 
 *MSS*
 
@@ -939,13 +939,13 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Generate a pdf report of a patient's medical history and owner's contact information (for transfer to another vet clinic)
+=== Use case: Generate a pdf report of a pet patient's medical history and owner's contact information (for transfer to another vet clinic)
 
 *MSS*
 
-1.  User requests to find a patient with the name "Joseph"
-2.  AddressBook shows a list of patients with the name "Joseph"
-3.  User requests for a pdf report of a specific patient on the list
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests for a pdf report of a specific pet patient on the list
 4.  AddressBook generates a pdf report for the user
 +
 Use case ends.

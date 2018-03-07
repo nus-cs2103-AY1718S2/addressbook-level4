@@ -932,6 +932,38 @@ Use case resumes at step 2.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Answer a question and save
+
+*MSS*
+
+1.  User requests to view a specific week
+2.  AddressBook shows content of the specified week
+3.  User requests to key in and save an answer to a question
+4.  AddressBook takes in input and saves
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified week does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 2a. There is no content to be shown.
++
+Use case ends.
+
+* 3a. The question index does not exist.
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 _{More to be added}_
 
 [appendix]

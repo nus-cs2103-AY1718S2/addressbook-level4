@@ -36,6 +36,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         return readAddressBook(filePath);
     }
 
+    @Override
+    public Optional<ReadOnlyAddressBook> readAddressBookBackup() throws DataConversionException, IOException {
+        return readAddressBook(filePath + ".backup");
+    }
+
     /**
      * Similar to {@link #readAddressBook()}
      * @param filePath location of the data. Cannot be null
@@ -59,6 +64,10 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
         }
+    }
+    @Override
+    public Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws DataConversionException, IOException {
+        return readAddressBook(filePath + ".backup");
     }
 
     @Override

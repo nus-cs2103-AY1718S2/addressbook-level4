@@ -964,6 +964,32 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Generate a pdf report of a particular owner's full information e.g. contact details, list of pet patients under this owner and their medical histories (for transfer to another vet clinic)
+
+*MSS*
+
+1.  User requests to find an owner with the name "Mavis"
+2.  AddressBook shows a list of owners with the name "Mavis"
+3.  User requests for a pdf report of a specific owner on the list
+4.  AddressBook generates a pdf report for the user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 _{More to be added}_
 
 [appendix]

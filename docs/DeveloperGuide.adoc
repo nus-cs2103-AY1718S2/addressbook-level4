@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Sell IT - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -782,13 +782,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* Salesperson targeting clients from multiple countries.
+* has a need to manage a significant number of clients
 * prefer desktop apps over other types
-* can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: A client management application that includes contact management and calendar, and note-taking and supports multiple time-zones
+
 
 [appendix]
 == User Stories
@@ -819,14 +820,14 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add category to person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User searches for a specific client
+2.  AddressBook shows a list of users matching query
+3.  User puts the contact into the desired category (a user can have many).
+4.  System updates contact to reflect new category.
 +
 Use case ends.
 
@@ -836,15 +837,39 @@ Use case ends.
 * 2a. The list is empty.
 +
 Use case ends.
-
-* 3a. The given index is invalid.
+* 2a1. The contact is not found.
 +
-[none]
+Use case resumes at step 1.
+* 3a. The category does not exist.
++
+User creates a new category.
+Use case resumes at step 3.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Archive inactive contacts.
+
+*MSS*
+
+1.  System puts users in the inactive category if contact had no activity for a specified period of time.
+2.  User filters contacts to show those in the inactive category.
+3.  System displays users which are in the inactive category.
+4.  User selects which contacts to archive.
+5.  System moves archived contacts into the archived category.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No users are in the inactive category.
++
+Use case ends.
+* 4a. The user does not select any contacts.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements

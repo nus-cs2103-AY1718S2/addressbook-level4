@@ -39,7 +39,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -98,9 +99,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncWithMasterTagList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
@@ -115,9 +115,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
-     *  list.
+     * Updates the master tag list to include tags in {@code person} that are not in the list.
+     *
+     * @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     * list.
      */
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
@@ -137,6 +138,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
+     *
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
@@ -157,7 +159,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
@@ -183,5 +185,53 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
+    }
+
+    /**
+     * Removes {@code tag} from all {@code persons} in the {@code AddressBook} and from the {@code AddressBook}.
+     */
+    public void removeTag(Tag tag) {
+        try {
+            for (Person person : persons) {
+                removeTagFromPerson(tag, person);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: original person is not found from the address book.");
+        }
+
+        removeTagFromAddressBook(tag);
+
+    }
+
+    /**
+     * Removes {@code tag} from the {@code AddressBook}.
+     */
+    private void removeTagFromAddressBook(Tag tag) {
+        Set<Tag> editedTagList = tags.toSet();
+        if (editedTagList.contains(tag)) {
+            editedTagList.remove(tag);
+            tags.setTags(editedTagList);
+        }
+    }
+
+    /**
+     * Removes {@code tag} from all {@code persons} in the {@code AddressBook}.
+     */
+    private void removeTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
+        Set<Tag> tagList = new HashSet<>(person.getTags());
+
+        //Terminate if tag is not is tagList
+        if (!tagList.remove(tag)) {
+            return;
+        }
+        Person updatedPerson = new Person(person.getName(), person.getPhone(),
+                person.getEmail(), person.getAddress(), tagList);
+
+        try {
+            updatePerson(person, updatedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
+        }
     }
 }

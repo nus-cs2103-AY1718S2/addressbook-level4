@@ -802,7 +802,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new student |
+|`* * *` |user |add a new student |manage details of students, schedule interviews and track job offers.
 
 |`* * *` |user |delete a student |remove entries that I no longer need
 
@@ -810,7 +810,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a student by some characters |locate details of students without having to remember his/her full name
 
-|`* * *` |user |filter a student by field |locate details of students in a more optimized view
+|`* * *` |user |filter a student by <<fields,fields>> |locate details of students in a more optimized view
 
 |`* * *` |user |add profile photo of a student |recognize the student easily
 
@@ -1110,7 +1110,10 @@ A contact detail that is not meant to be shared with others
 A score given to a student by interviewers based on areas such as technical competency, leadership quality, communication skills and ability to work well in a team
 
 [[status]] Status::
-Indicates a student's current state within your hiring process - new, in-review, interview, offered, rejected or withdrawn
+Indicates a student's current state within the hiring process - new, in-review, interview, offered, rejected or withdrawn
+
+[[fields]] Fields::
+Refer to the student's attributes, including name, phone, address, email, expected graduation year, GPA, interview date, university, major, position applied, profile photo, salutation, status, rating and remark. Some of these fields are mandatory while optional fields can be updated later.
 
 [appendix]
 == Product Survey

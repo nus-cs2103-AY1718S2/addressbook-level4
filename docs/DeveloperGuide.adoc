@@ -939,7 +939,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Generate a pdf report of a pet patient's medical history and owner's contact information (for transfer to another vet clinic)
+=== Use case: Generate a pdf report of a pet patient's medical history and owner's contact information
 
 *MSS*
 
@@ -965,8 +965,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Generate a pdf report of a particular owner's full information e.g. contact details, list of pet patients under this owner and their medical histories (for transfer to another vet clinic)
-
+=== Use case: Generate a pdf report of a particular owner's full information e.g. contact details, list of pet patients under this owner and their medical histories
 *MSS*
 
 1.  User requests to find an owner with the name "Mavis"

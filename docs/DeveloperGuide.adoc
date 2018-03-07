@@ -819,32 +819,129 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Update record of patient's visit
+
+Precondition: User is logged in, the patient exists in the system
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to update patient’s record of visit
+2.  User inputs NRIC of patient, date and time of visit and additional remarks
+3.  IMDB shows a success message
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The patient does not exist
++
+[none]
+** 2a1. IMDB detects that the patient does not exist.
+** 2a2. IMDB shows an error message.
+** 2a3. IMDB requests for user to input NRIC of patient.
+** 2a4. User inputs NRIC of patient
+** Steps 2a1-2a4 are repeated until the patient exists
++
+Use case resumes from step 3
+
+=== Use case: Login to access the system
+
+*MSS*
+
+1.  User requests to login to system
+2.  IMDB requests user to input username and password
+3.  User inputs username and password
+4.  IMDB shows a success message
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+*Extensions*
+
+[none]
+* 3a. Username and password do not match.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. IMDB shows an error message.
+** 3a2. IMDB requests user to input username and password
+** 3a3. User inputs username and password
+** Steps 3a1-3a3 are repeated until username and password match
 +
-Use case resumes at step 2.
+Use case resumes at step 4.
 
-_{More to be added}_
+=== Use case: Update patient details
+
+Preconditions: User is logged in, the patient is exist in the system
+
+*MSS*
+
+1.  User requests to update patient details
+2.  IMDB requests user to input NRIC of the patient and details that need to be edited
+3.  User inputs NRIC and patient detail that need to be edited
+4.  IMDB shows a success message and display the patient details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Patient cannot be found in the system.
++
+[none]
+** 3a1. IMDB shows an error message.
+** 3a2. IMDB requests user to input NRIC and patient detail that need to be edited
+** 3a3. User inputs NRIC and patient detail that need to be edited
+** Steps 3a1-3a3 are repeated until the inputs are valid
++
+Use case resumes from step 4.
+[none]
+* 3b. Input format is incorrect.
++
+[none]
+** 3b1. IMDB shows an error message.
+** 3b2. IMDB requests user to input NRIC and patient detail that need to be edited
+** 3b3. User inputs NRIC and patient detail that need to be edited
+** Steps 3b1-3b3 are repeated until the inputs are valid.
++
+Use case resumes from step 4.
+
+=== Use case: Record health profile of the patient
+
+Preconditions: User is logged in, the patient is exist in the system
+
+*MSS*
+
+1.  User request to view health profile of the patient
+2.  IMDB request user to input NRIC of patient
+3.  User inputs NRIC of patient
+4.  IMDB display health profile of the patient
+5.  User inputs details that need to be updated in health profile of the patient
+6.  IMDB shows a success message and display the patient details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Patient cannot be found in the system.
++
+[none]
+** 3a1. IMDB shows an error message.
+** 3a2. IMDB requests user to input NRIC
+** 3a3. User inputs NRIC
+** Steps 3a1-3a3 are repeated until the inputs are valid
++
+Use case resumes from step 4.
+[none]
+* 5a. Input format is incorrect.
++
+[none]
+** 5a1. IMDB shows an error message.
+** 5a2. IMDB requests user to input details that need to be edited
+** 5a3. User inputs details that need to be edited
+** Steps 5a1-5a3 are repeated until the inputs are valid.
++
+Use case resumes from step 6.
 
 [appendix]
 == Non Functional Requirements

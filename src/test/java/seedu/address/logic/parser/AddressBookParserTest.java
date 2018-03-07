@@ -140,6 +140,19 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_historyAlias() throws Exception {
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS + " 3") instanceof HistoryCommand);
+
+        try {
+            parser.parseCommand("histories");
+            fail("The expected ParseException was not thrown.");
+        } catch (ParseException pe) {
+            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
+        }
+    }
+
+    @Test
     public void parseCommand_history() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD) instanceof HistoryCommand);
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3") instanceof HistoryCommand);

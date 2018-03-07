@@ -828,8 +828,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user | see which contacts owe me money
 |`* *` |user | see to which of my contacts do I owe money
 |`* *` |user | see for which items do I owe a contact / a contact owes me
+|`* *` |user | split a bill evenly among multiple people 
+|`* *` |user | calculator function in the app that allows you to calculate charges
+|`* ` |user | split a bill unevenly among multiple people
+|`* ` |user | get notified when I get charged a new amount
 |`* ` |user | select the currency that I am owed
 |`* ` |user | convert my balance into a different currency
+|`* ` |user | send reminder to the person who owes me money 
 |`*` |user | calculate the amount I am owed with an applied interest rate
 _{More to be added}_
 

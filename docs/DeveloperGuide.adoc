@@ -787,7 +787,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers being on desktop rather than on mobile
 * generally comfortable with typing on CLI applications without clicking
 * is a veterinarian or assistant from a vet clinic in Singapore
-* has to manage a significant number of  <<patients,patients>> 
+* has to manage a significant number of <<patients,patients>>
 * requires the information kept to generally be non-volatile
 * needs to search through amounts of data for information
 

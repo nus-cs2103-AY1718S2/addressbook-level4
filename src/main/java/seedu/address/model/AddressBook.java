@@ -16,6 +16,7 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagMap;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
@@ -26,6 +27,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final TagMap tagMap;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +39,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        tagMap = new TagMap();
     }
 
     public AddressBook() {}
@@ -131,8 +134,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
+        Person correctPerson = new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+
+        // Map person to all relevant tags
+        correctTagReferences.forEach((tag -> tagMap.add(tag, correctPerson)));
+
+        return correctPerson;
     }
 
     /**
@@ -170,6 +178,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
+
+    @Override
+    public ObservableList<Person> filter(Tag tag) { return tagMap.filter(tag); }
 
     @Override
     public boolean equals(Object other) {

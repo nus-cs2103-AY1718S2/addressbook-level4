@@ -820,13 +820,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list out appointments for today |prepare for the work
 
-|`* * *` |user |list out patients of a specific species |contact then for blood donation
+|`* * *` |user |list out patients of a specific species |contact them for blood donation
 
 |`* * *` |user |log in with passwords |protect my patients' information
 
 |`* * *` |user |reschedule an appointment |make time for emergency situations
 
-|`* * *` |user |search for owner |which patient animal belongs to that person
+|`* * *` |user |search by owner |retrieve a list of pet patients under a particular owner
 
 |`* * *` |user |create owner profiles |
 
@@ -840,7 +840,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |update status of patient (living, deceased) |know the number of pets I am managing now
 
-|`* *` |user |check who is my assistance for the day/particular patient |brief them in advance
+|`* *` |user |check who is my assistant for the day/particular patient |brief them in advance
 
 |`* *` |user |have reminders sms sent to pet owners automatically 2 days before appointment|
 

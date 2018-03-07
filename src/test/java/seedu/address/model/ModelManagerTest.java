@@ -1,29 +1,18 @@
 package seedu.address.model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-
-
-import java.util.Arrays;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
-import seedu.address.testutil.PersonBuilder;
+
+import java.util.Arrays;
+
+import static org.junit.Assert.*;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.testutil.TypicalPersons.*;
 
 public class ModelManagerTest {
     @Rule
@@ -75,12 +64,12 @@ public class ModelManagerTest {
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
-       // resets modelManager to initial state for upcoming tests
-       modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        // resets modelManager to initial state for upcoming tests
+        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-       // different userPrefs -> returns true
-       UserPrefs differentUserPrefs = new UserPrefs();
-       differentUserPrefs.setAddressBookName("differentName");
-       assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+        // different userPrefs -> returns true
+        UserPrefs differentUserPrefs = new UserPrefs();
+        differentUserPrefs.setAddressBookName("differentName");
+        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
     }
 }

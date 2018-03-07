@@ -5,24 +5,20 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>AddressBook Level 4 - Developer Guide</title>
+<title>Infinity Book - Developer Guide</title>
 <link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>AddressBook Level 4 - Developer Guide</h1>
+<h1>Infinity Book - Developer Guide</h1>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>     </p>
-</div>
-<div class="paragraph">
-<p>Licence: <code>MIT</code>
-By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
+<p>By: <code>Team JACKHA (W11-B3)</code>      Since: <code>Mar 2018</code>      Licence: <code>MIT</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -1902,29 +1898,24 @@ for <code>RemarkCommandParser</code>.</p>
 <h2 id="product-scope"><a class="link" href="#product-scope">Appendix B: Product Scope</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Target user profile</strong>:</p>
+<p><strong>Target user profile</strong>:
+Tech recruiters who have the need for finding and acquiring skilled Computing students for tech companies.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>has a need to manage a significant number of contacts</p>
+<p>manage a significant number of student contacts</p>
 </li>
 <li>
-<p>prefer desktop apps over other types</p>
+<p>store student&#8217;s basic information, contacts, expected graduation year, familiar frameworks, languages.</p>
 </li>
 <li>
-<p>can type fast</p>
+<p>find students whose skill set is suitable for available positions</p>
 </li>
 <li>
-<p>prefers typing over mouse input</p>
-</li>
-<li>
-<p>is reasonably comfortable using CLI apps</p>
+<p>Keep track of student’s past interactions with the company: internship, coding challenges, interview,&#8230;&#8203;</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p><strong>Value proposition</strong>: manage contacts faster than a typical mouse/GUI driven app</p>
 </div>
 </div>
 </div>
@@ -1985,6 +1976,138 @@ for <code>RemarkCommandParser</code>.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sort persons by name</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">locate a person easily</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who wants to record notes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a note entry for a person</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">record more information about the person</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who uses many applications</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">export search result to CSV/JSON</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">import them into other applications</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with many contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set profile pictures for contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">identify and remember them</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">new user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see usage instructions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">refer to instructions when I forget how to use the App</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">read all notes about a contact</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remember my past interactions and research about the contact</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user concerned about confidentiality</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set a password for the AddressBook</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">My address book will be secure</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with multiple address books</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">export my contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">import into another address book application</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with multiple devices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">back up my address book in the cloud</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data is accessible from other devices</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with frequently changing contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete a person</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to remove irrelevant data from address book</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with frequently changing contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clear the entire address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to start with new candidates when required</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user interested in a contact&#8217;s skills</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get the technical skills of a candidate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to find suitable candidates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user interested in specific skills</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">search candidates by skill</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to find suitable candidates easily</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who is recruiting</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">search by graduation year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to find suitable full/part time candidates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user interested in checking projects</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">access contacts' Github repositories</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">easily view and evaluate projects</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who frequently emails contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">open an email link to the contact directly</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">quickly email candidates with copying their addresses</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who types many commands</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get autocomplete suggestion</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">quickly complete command</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who saves many resumes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">open candidates' resumes from commandline</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to quickly view their profiles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with multiple address books</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">export my contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">import into another address book application</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who views contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list frequently viewed candidates</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to select the most probable candidates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User with interest in recruitment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view candidates' LinkedIn profiles from commandline</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to know about their work profiles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view my search history</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to keep track of my previous searches</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete a tag from address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to remove tags I am no longer interested in</p></td>
 </tr>
 </tbody>
 </table>
@@ -2241,7 +2364,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-07 02:10:23 UTC
+Last updated 2018-03-07 02:13:45 UTC
 </div>
 </div>
 </body>

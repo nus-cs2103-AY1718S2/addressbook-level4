@@ -68,7 +68,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void backupAddressBook_TypicalAddressBook() throws Exception {
+    public void backupAddressBook_typicalAddressBook() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link XmlAddressBookStorage} class.

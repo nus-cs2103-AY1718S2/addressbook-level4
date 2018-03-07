@@ -22,7 +22,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://calendar.google.com/calendar/embed?src=8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com&ctz=Asia%2FSingapore";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -42,7 +42,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+        loadPage(SEARCH_PAGE_URL /*+ person.getName().fullName*/);
     }
 
     public void loadPage(String url) {

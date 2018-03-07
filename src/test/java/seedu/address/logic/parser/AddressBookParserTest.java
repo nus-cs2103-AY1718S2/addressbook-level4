@@ -42,7 +42,7 @@ public class AddressBookParserTest {
     private final AddressBookParser parser = new AddressBookParser();
 
     @Test
-    public void parseCommand_a() throws Exception {
+    public void parseCommand_addAlias() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandAlias(person));
         assertEquals(new AddCommand(person), command);

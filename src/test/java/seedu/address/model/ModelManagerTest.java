@@ -36,21 +36,21 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void deleteTag_nonExistent_modelUnchanged() throws Exception{
+    public void deleteTag_nonExistent_modelUnchanged() throws Exception {
         AddressBook addressBook = new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
         UserPrefs userPrefs = new UserPrefs();
 
-        ModelManager modelManager = new ModelManager(addressBook,userPrefs);
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         modelManager.removeTag(new Tag(VALID_TAG_UNUSED));
-        assertEquals(new ModelManager(addressBook, userPrefs),modelManager);
+        assertEquals(new ModelManager(addressBook, userPrefs), modelManager);
     }
 
     @Test
-    public void deleteTag_tagUsedByMultiplePersons_tagRemoved() throws Exception{
+    public void deleteTag_tagUsedByMultiplePersons_tagRemoved() throws Exception {
         AddressBook addressBook = new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
         UserPrefs userPrefs = new UserPrefs();
 
-        ModelManager modelManager = new ModelManager(addressBook,userPrefs);
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         modelManager.removeTag(new Tag(VALID_TAG_FRIEND));
 
         Person expectedAmy = new PersonBuilder(AMY).withTags().build();
@@ -58,9 +58,10 @@ public class ModelManagerTest {
         AddressBook expecetedAddressBook = new AddressBookBuilder().withPerson(expectedBob).withPerson(expectedAmy).build();
 
         ModelManager expectedModelManager = new ModelManager(expecetedAddressBook, userPrefs);
-        assertEquals( expectedModelManager, modelManager);
+        assertEquals(expectedModelManager, modelManager);
 
     }
+
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

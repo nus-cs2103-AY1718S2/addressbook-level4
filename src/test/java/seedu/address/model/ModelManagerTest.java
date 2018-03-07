@@ -55,7 +55,8 @@ public class ModelManagerTest {
 
         Person expectedAmy = new PersonBuilder(AMY).withTags().build();
         Person expectedBob = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        AddressBook expecetedAddressBook = new AddressBookBuilder().withPerson(expectedBob).withPerson(expectedAmy).build();
+        AddressBook expecetedAddressBook = new AddressBookBuilder()
+                .withPerson(expectedBob).withPerson(expectedAmy).build();
 
         ModelManager expectedModelManager = new ModelManager(expecetedAddressBook, userPrefs);
         assertEquals(expectedModelManager, modelManager);

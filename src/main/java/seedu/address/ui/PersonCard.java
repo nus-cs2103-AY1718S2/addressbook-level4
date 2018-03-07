@@ -13,6 +13,8 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    //@@author WyinKok-reused
+    //Reused from https://github.com/se-edu/addressbook-level4/pull/798 with minor modifications
     private static final String[] TAG_COLORS =
             {"yellow", "red", "orange", "pink", "purple", "blue",
             "teal", "green", "white"};

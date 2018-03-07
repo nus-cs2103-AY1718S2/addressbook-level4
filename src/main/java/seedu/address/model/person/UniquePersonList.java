@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
@@ -118,12 +117,12 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Sorts existing persons
      */
-    public void sort(){
+    public void sort() {
         Collections.sort(internalList, new Comparator<Person>() {
             public int compare(Person p1, Person p2) {
                 int num = p1.getName().toString().compareTo(p2.getName().toString());
                 return num;
-             }
+            }
         });
     }
 

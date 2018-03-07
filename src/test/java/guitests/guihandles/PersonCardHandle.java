@@ -66,6 +66,15 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return tagLabels
                 .stream()
                 .map(Label::getText)
-                .collect(Collectors.toList());
+              .collect(Collectors.toList());
+    }
+
+    public List<String> getTagStyleClasses(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Tag does not exist."));
     }
 }

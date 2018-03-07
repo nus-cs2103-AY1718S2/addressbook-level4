@@ -1,25 +1,25 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
-import static seedu.address.testutil.TestUtil.getLastIndex;
-import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
+import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.organizer.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
+import static seedu.organizer.testutil.TestUtil.getLastIndex;
+import static seedu.organizer.testutil.TestUtil.getMidIndex;
+import static seedu.organizer.testutil.TestUtil.getPerson;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.task.Task;
-import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.commons.core.Messages;
+import seedu.organizer.commons.core.index.Index;
+import seedu.organizer.logic.commands.DeleteCommand;
+import seedu.organizer.logic.commands.RedoCommand;
+import seedu.organizer.logic.commands.UndoCommand;
+import seedu.organizer.model.Model;
+import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 
 public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
@@ -59,13 +59,13 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered task list, delete index within bounds of address book and task list -> deleted */
+        /* Case: filtered task list, delete index within bounds of organizer book and task list -> deleted */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         Index index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered task list, delete index within bounds of address book but out of bounds of task list
+        /* Case: filtered task list, delete index within bounds of organizer book but out of bounds of task list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
@@ -113,7 +113,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
     }
 
     /**
-     * Removes the {@code Task} at the specified {@code index} in {@code model}'s address book.
+     * Removes the {@code Task} at the specified {@code index} in {@code model}'s organizer book.
      *
      * @return the removed task
      */

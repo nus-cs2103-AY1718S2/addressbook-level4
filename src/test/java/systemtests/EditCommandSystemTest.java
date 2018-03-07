@@ -2,52 +2,52 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalTasks.AMY;
-import static seedu.address.testutil.TypicalTasks.BOB;
-import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
+import static seedu.organizer.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static seedu.organizer.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.organizer.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.organizer.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static seedu.organizer.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.organizer.testutil.TypicalTasks.AMY;
+import static seedu.organizer.testutil.TypicalTasks.BOB;
+import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.task.Address;
-import seedu.address.model.task.Email;
-import seedu.address.model.task.Name;
-import seedu.address.model.task.Phone;
-import seedu.address.model.task.Task;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
-import seedu.address.model.task.exceptions.TaskNotFoundException;
-import seedu.address.testutil.TaskBuilder;
-import seedu.address.testutil.TaskUtil;
+import seedu.organizer.commons.core.Messages;
+import seedu.organizer.commons.core.index.Index;
+import seedu.organizer.logic.commands.EditCommand;
+import seedu.organizer.logic.commands.RedoCommand;
+import seedu.organizer.logic.commands.UndoCommand;
+import seedu.organizer.model.Model;
+import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.Address;
+import seedu.organizer.model.task.Email;
+import seedu.organizer.model.task.Name;
+import seedu.organizer.model.task.Phone;
+import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.testutil.TaskBuilder;
+import seedu.organizer.testutil.TaskUtil;
 
 public class EditCommandSystemTest extends OrganizerSystemTest {
 
@@ -99,7 +99,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered task list, edit index within bounds of address book and task list -> edited */
+        /* Case: filtered task list, edit index within bounds of organizer book and task list -> edited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
@@ -108,7 +108,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         editedTask = new TaskBuilder(taskToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedTask);
 
-        /* Case: filtered task list, edit index within bounds of address book but out of bounds of task list
+        /* Case: filtered task list, edit index within bounds of organizer book but out of bounds of task list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
@@ -165,7 +165,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC,
                 Email.MESSAGE_EMAIL_CONSTRAINTS);
 
-        /* Case: invalid address -> rejected */
+        /* Case: invalid organizer -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC,
                 Address.MESSAGE_ADDRESS_CONSTRAINTS);
 

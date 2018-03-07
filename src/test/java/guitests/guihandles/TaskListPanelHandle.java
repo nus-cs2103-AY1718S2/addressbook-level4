@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.task.Task;
-import seedu.address.ui.TaskCard;
+import seedu.organizer.model.task.Task;
+import seedu.organizer.ui.TaskCard;
 
 /**
  * Provides a handle for {@code TaskListPanel} containing the list of {@code TaskCard}.

@@ -782,13 +782,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* private clinics that have multiple branches
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: resolve the issue of possible medical negligence due to failure to take pre-existing medical conditions into account, and also make the practitioners' lives much more easier by knowing patients' records from a glance
 
 [appendix]
 == User Stories
@@ -797,18 +793,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|Priority |As a ... |I want to ... |So that...
+|`* * *` |medical staff |filter the details that I want to see |easy access to information I need
 
-|`* * *` |user |add a new person |
+|`* * *` |doctor |record health profile (chronic conditions and allergies) of the patient|
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |medical staff |keep records of each visit of the patient |symptoms/condition of patient can be analysed and monitored
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |medical staff |ensure that all patient's records are secure with a login system |patients know that their medical information is kept confidential
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* *` |medical staff |update patient details such as phone number |I can contact the patient
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |medical staff |search for patient's schedule and add new medical appointment |the patient can be directed to the correct doctor at the right time
+
+|`* *` |medical staff |key in patient specific instructions/remarks that do not fit into details |patient specific information can be recorded
+
+|`* *` |doctor |print out a formatted medical record |it can be easily show to the patient when explaining their condition
 |=======================================================================
 
 _{More to be added}_
@@ -819,39 +819,150 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Update record of patient's visit
+
+Precondition: User is logged in, the patient exists in the system
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to update patient’s record of visit
+2.  User inputs NRIC of patient, date and time of visit and additional remarks
+3.  IMDB shows a success message
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The patient does not exist
++
+[none]
+** 2a1. IMDB detects that the patient does not exist.
+** 2a2. IMDB shows an error message.
+** 2a3. IMDB requests for user to input NRIC of patient.
+** 2a4. User inputs NRIC of patient
+** Steps 2a1-2a4 are repeated until the patient exists
++
+Use case resumes from step 3
+
+[discrete]
+=== Use case: Login to access the system
+
+*MSS*
+
+1.  User requests to login to system
+2.  IMDB requests user to input username and password
+3.  User inputs username and password
+4.  IMDB shows a success message
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+*Extensions*
+
+[none]
+* 3a. Username and password do not match.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. IMDB shows an error message.
+** 3a2. IMDB requests user to input username and password
+** 3a3. User inputs username and password
+** Steps 3a1-3a3 are repeated until username and password match
 +
-Use case resumes at step 2.
+Use case resumes at step 4.
 
-_{More to be added}_
+[discrete]
+=== Use case: Update patient details
+
+Preconditions: User is logged in, the patient is exist in the system
+
+*MSS*
+
+1.  User requests to update patient details
+2.  IMDB requests user to input NRIC of the patient and details that need to be edited
+3.  User inputs NRIC and patient detail that need to be edited
+4.  IMDB shows a success message and display the patient details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Patient cannot be found in the system.
++
+[none]
+** 3a1. IMDB shows an error message.
+** 3a2. IMDB requests user to input NRIC and patient detail that need to be edited
+** 3a3. User inputs NRIC and patient detail that need to be edited
+** Steps 3a1-3a3 are repeated until the inputs are valid
++
+Use case resumes from step 4.
+[none]
+* 3b. Input format is incorrect.
++
+[none]
+** 3b1. IMDB shows an error message.
+** 3b2. IMDB requests user to input NRIC and patient detail that need to be edited
+** 3b3. User inputs NRIC and patient detail that need to be edited
+** Steps 3b1-3b3 are repeated until the inputs are valid.
++
+Use case resumes from step 4.
+
+[discrete]
+=== Use case: Record health profile of the patient
+
+Preconditions: User is logged in, the patient is exist in the system
+
+*MSS*
+
+1.  User request to view health profile of the patient
+2.  IMDB request user to input NRIC of patient
+3.  User inputs NRIC of patient
+4.  IMDB display health profile of the patient
+5.  User inputs details that need to be updated in health profile of the patient
+6.  IMDB shows a success message and display the patient details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Patient cannot be found in the system.
++
+[none]
+** 3a1. IMDB shows an error message.
+** 3a2. IMDB requests user to input NRIC
+** 3a3. User inputs NRIC
+** Steps 3a1-3a3 are repeated until the inputs are valid
++
+Use case resumes from step 4.
+[none]
+* 5a. Input format is incorrect.
++
+[none]
+** 5a1. IMDB shows an error message.
+** 5a2. IMDB requests user to input details that need to be edited
+** 5a3. User inputs details that need to be edited
+** Steps 5a1-5a3 are repeated until the inputs are valid.
++
+Use case resumes from step 6.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  UI should be simple and easy to navigate.
+.  Queries should be processed within 3 seconds.
+.  Commands should be intuitive and simple.
+.  System should be secure.
+.  System should only be accessed by medical staff and doctor
+.  All records are stored in a centralised database
+.  The data stored in the database must be compatible with previous versions of the database
+.  Database must not be used to store personal information that has no medical purpose
+.  Database should be able to exported
+.  Should work on both 32 and 64 bit platforms
+.  Should handle errors gracefully and give helpful error messages
+.  Should be operable by a non-technical user without much difficulty
+.  Should be able to work in offline mode in case of emergencies
 
 _{More to be added}_
 
@@ -861,8 +972,11 @@ _{More to be added}_
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+[[health-profile]] Health Profile::
+A record which stores allergies and chronic conditions of the patient
+
+[[medical-records]] Medical Records::
+Documentation of all consultations and treatments
 
 [appendix]
 == Product Survey

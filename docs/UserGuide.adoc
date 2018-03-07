@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Delivery - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,11 +13,11 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B4`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
-
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Delivery is targeted at restaurants, especially the small ones,  which want to have a system to keep track customers’ orders of delivery.
+Delivery is for those who *prefer to use a desktop app for managing orders*. More importantly, Delivery is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Delivery can manage the orders faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,8 +27,8 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `delivery.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for the database of customers' personal particulars.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,9 +37,9 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all orders
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` o/chicken rice : adds an order of chicken rice from customer `John Doe` to the queue.
+* **`delete`**`3` : deletes the 3rd order shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.

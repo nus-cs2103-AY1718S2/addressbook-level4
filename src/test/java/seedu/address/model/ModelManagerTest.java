@@ -58,7 +58,7 @@ public class ModelManagerTest {
         Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
         Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         AddressBook addressBookAfterChange =
-                new AddressBookBuilder.withPerson(amyWithoutFriendTag).withPerson(bobWithoutFriendTag).build();
+                new AddressBookBuilder().withPerson(amyWithoutFriendTag).withPerson(bobWithoutFriendTag).build();
         ModelManager modelManagerAfterChange = new ModelManager(addressBookAfterChange, userPrefs);
 
         assertTrue(modelManager.equals(modelManagerAfterChange));

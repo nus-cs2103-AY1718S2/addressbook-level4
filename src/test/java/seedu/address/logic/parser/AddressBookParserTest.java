@@ -29,7 +29,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ContainKeywordsPredicate;
+import seedu.address.model.person.FieldContainKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -86,7 +86,7 @@ public class AddressBookParserTest {
                         + nameKeywords.stream().collect(Collectors.joining(" n/"))
                         + " t/"
                         + tagKeywords.stream().collect(Collectors.joining(" t/")));
-        assertEquals(new FindCommand(new ContainKeywordsPredicate(nameKeywords, tagKeywords)), command);
+        assertEquals(new FindCommand(new FieldContainKeywordsPredicate(nameKeywords, tagKeywords)), command);
     }
 
     @Test

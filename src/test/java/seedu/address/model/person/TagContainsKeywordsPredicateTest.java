@@ -40,13 +40,13 @@ public class TagContainsKeywordsPredicateTest {
 
     @Test
     public void test_tagContainsKeywords_returnsTrue() {
-        // Zero keywords
+        // Zero keyword
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
         assertTrue(predicate.test(new PersonBuilder().withTags("Friends").build()));
 
         // One keyword
         predicate = new TagContainsKeywordsPredicate(Collections.singletonList("Friends"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Friends").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Friends", "Family").build()));
 
         // Multiple keywords
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("Friends", "Colleagues"));

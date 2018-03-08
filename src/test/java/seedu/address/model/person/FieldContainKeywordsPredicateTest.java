@@ -47,32 +47,32 @@ public class FieldContainKeywordsPredicateTest {
         // Both zero keyword
         FieldContainKeywordsPredicate predicate = new FieldContainKeywordsPredicate(
                 Collections.emptyList(), Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
 
         // Both one keyword
         predicate = new FieldContainKeywordsPredicate(
                 Collections.singletonList("Alice"), Collections.singletonList("Friends"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
 
         // Name one keyword
         predicate = new FieldContainKeywordsPredicate(
-                Collections.singletonList("Alice"), Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends").build()));
+                Collections.singletonList("Alice Bob"), Collections.emptyList());
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
 
         // Tag one keyword
         predicate = new FieldContainKeywordsPredicate(
-                Collections.emptyList(), Collections.singletonList("Friends"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends").build()));
+                Collections.emptyList(), Collections.singletonList("Friends Family"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
 
         // Both multiple keywords, but only one matches
         predicate = new FieldContainKeywordsPredicate(
                 Arrays.asList("Alice", "Carol"), Arrays.asList("Friends", "Enemy"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
 
         // Both mixed-case keyword
         predicate = new FieldContainKeywordsPredicate(
                 Collections.singletonList("aLIce"), Collections.singletonList("fRIeNDs"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
     }
 
     @Test

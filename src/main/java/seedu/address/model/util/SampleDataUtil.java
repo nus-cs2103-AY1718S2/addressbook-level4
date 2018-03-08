@@ -1,10 +1,20 @@
 package seedu.address.model.util;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.AddressBook;
+import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyBookShelf;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Title;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -14,9 +24,66 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code BookShelf} with sample data.
  */
 public class SampleDataUtil {
+
+    public static Book[] getSampleBooks() {
+        return new Book[]{
+            new Book(Collections.singleton(new Author("Andy Weir")), new Title("Artemis"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction")),
+                new Description("This is Artemis.")),
+            new Book(Collections.singleton(new Author("Sylvain Neuvel")), new Title("Waking Gods"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction")),
+                new Description("This is Waking Gods.")),
+            new Book(Collections.singleton(new Author("James S. A. Corey")), new Title("Babylon's Ashes"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
+                    new Category("Space Opera")),
+                new Description("This is Babylon's Ashes.")),
+            new Book(Collections.singleton(new Author("John Scalzi")), new Title("The Collapsing Empire"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
+                    new Category("Space Opera")),
+                new Description("This is The Collapsing Empire."))
+        };
+    }
+
+    public static ReadOnlyBookShelf getSampleBookShelf() {
+        try {
+            BookShelf sampleBookShelf = new BookShelf();
+            for (Book sampleBook : getSampleBooks()) {
+                sampleBookShelf.addBook(sampleBook);
+            }
+            return sampleBookShelf;
+        } catch (DuplicateBookException e) {
+            throw new AssertionError("sample data cannot contain duplicate books", e);
+        }
+    }
+
+    /**
+     * Returns an author set containing the list of strings given.
+     */
+    public static Set<Author> getAuthorSet(String... strings) {
+        HashSet<Author> authors = new HashSet<>();
+        for (String s : strings) {
+            authors.add(new Author(s));
+        }
+
+        return authors;
+    }
+
+    /**
+     * Returns a category set containing the list of strings given.
+     */
+    public static Set<Category> getCategorySet(String... strings) {
+        HashSet<Category> categories = new HashSet<>();
+        for (String s : strings) {
+            categories.add(new Category(s));
+        }
+
+        return categories;
+    }
+
+    @Deprecated
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
@@ -40,6 +107,7 @@ public class SampleDataUtil {
         };
     }
 
+    @Deprecated
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
@@ -55,6 +123,7 @@ public class SampleDataUtil {
     /**
      * Returns a tag set containing the list of strings given.
      */
+    @Deprecated
     public static Set<Tag> getTagSet(String... strings) {
         HashSet<Tag> tags = new HashSet<>();
         for (String s : strings) {

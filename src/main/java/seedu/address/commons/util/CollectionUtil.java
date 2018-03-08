@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -47,5 +48,15 @@ public class CollectionUtil {
             }
         }
         return true;
+    }
+
+    /**
+     * Returns a new {@link Set} containing all the specified items.
+     */
+    @SafeVarargs
+    public static <T> Set<T> toSet(T... items) {
+        HashSet<T> set = new HashSet<>();
+        Collections.addAll(set, items);
+        return set;
     }
 }

@@ -14,6 +14,7 @@ import seedu.address.model.util.SampleDataUtil;
 /**
  * A utility class to help with building Person objects.
  */
+@Deprecated
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";

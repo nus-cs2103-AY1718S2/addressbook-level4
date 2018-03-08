@@ -20,6 +20,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see Person#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
+@Deprecated
 public class UniquePersonList implements Iterable<Person> {
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();

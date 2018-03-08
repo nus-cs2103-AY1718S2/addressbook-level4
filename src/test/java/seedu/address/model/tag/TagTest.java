@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
+@Deprecated
 public class TagTest {
 
     @Test

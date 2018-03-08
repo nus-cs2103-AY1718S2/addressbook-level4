@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -13,56 +13,53 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
 /**
- * A list of tags that enforces no nulls and uniqueness between its elements.
+ * A list of items that enforces no nulls and uniqueness between its elements.
  *
  * Supports minimal set of list operations for the app's features.
- *
- * @see Tag#equals(Object)
  */
-@Deprecated
-public class UniqueTagList implements Iterable<Tag> {
+public class UniqueList<T> implements Iterable<T> {
 
-    private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
+    protected final ObservableList<T> internalList = FXCollections.observableArrayList();
 
     /**
-     * Constructs empty TagList.
+     * Constructs empty UniqueList.
      */
-    public UniqueTagList() {}
+    public UniqueList() {}
 
     /**
-     * Creates a UniqueTagList using given tags.
+     * Creates a UniqueList using given set.
      * Enforces no nulls.
      */
-    public UniqueTagList(Set<Tag> tags) {
-        requireAllNonNull(tags);
-        internalList.addAll(tags);
+    public UniqueList(Set<T> items) {
+        requireAllNonNull(items);
+        internalList.addAll(items);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Returns all tags in this list as a Set.
+     * Returns all items in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
-    public Set<Tag> toSet() {
+    public Set<T> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new HashSet<>(internalList);
     }
 
     /**
-     * Replaces the Tags in this list with those in the argument tag list.
+     * Replaces the items in this list with those in the argument list.
      */
-    public void setTags(Set<Tag> tags) {
-        requireAllNonNull(tags);
-        internalList.setAll(tags);
+    public void setItems(Set<T> items) {
+        requireAllNonNull(items);
+        internalList.setAll(items);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Ensures every tag in the argument list exists in this object.
+     * Ensures every item in the argument list exists in this object.
      */
-    public void mergeFrom(UniqueTagList from) {
-        final Set<Tag> alreadyInside = this.toSet();
+    public void mergeFrom(UniqueList<T> from) {
+        final Set<T> alreadyInside = this.toSet();
         from.internalList.stream()
                 .filter(tag -> !alreadyInside.contains(tag))
                 .forEach(internalList::add);
@@ -71,22 +68,22 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     /**
-     * Returns true if the list contains an equivalent Tag as the given argument.
+     * Returns true if the list contains an equivalent item as the given argument.
      */
-    public boolean contains(Tag toCheck) {
+    public boolean contains(T toCheck) {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
 
     /**
-     * Adds a Tag to the list.
+     * Adds an item to the list.
      *
-     * @throws DuplicateTagException if the Tag to add is a duplicate of an existing Tag in the list.
+     * @throws DuplicateItemException if the item to add is a duplicate of an existing item in the list.
      */
-    public void add(Tag toAdd) throws DuplicateTagException {
+    public void add(T toAdd) throws DuplicateDataException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicateTagException();
+            throw new DuplicateItemException();
         }
         internalList.add(toAdd);
 
@@ -94,7 +91,7 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     @Override
-    public Iterator<Tag> iterator() {
+    public Iterator<T> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.iterator();
     }
@@ -102,7 +99,7 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Tag> asObservableList() {
+    public ObservableList<T> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return FXCollections.unmodifiableObservableList(internalList);
     }
@@ -111,15 +108,15 @@ public class UniqueTagList implements Iterable<Tag> {
     public boolean equals(Object other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         return other == this // short circuit if same object
-                || (other instanceof UniqueTagList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueTagList) other).internalList));
+                || (other instanceof UniqueList // instanceof handles nulls
+                && this.internalList.equals(((UniqueList) other).internalList));
     }
 
     /**
      * Returns true if the element in this list is equal to the elements in {@code other}.
      * The elements do not have to be in the same order.
      */
-    public boolean equalsOrderInsensitive(UniqueTagList other) {
+    public boolean equalsOrderInsensitive(UniqueList<T> other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
@@ -134,9 +131,9 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
-    public static class DuplicateTagException extends DuplicateDataException {
-        protected DuplicateTagException() {
-            super("Operation would result in duplicate tags");
+    public static class DuplicateItemException extends DuplicateDataException {
+        protected DuplicateItemException() {
+            super("Operation would result in duplicate items");
         }
     }
 

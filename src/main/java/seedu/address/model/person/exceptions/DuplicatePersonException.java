@@ -5,6 +5,7 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 /**
  * Signals that the operation will result in duplicate Person objects.
  */
+@Deprecated
 public class DuplicatePersonException extends DuplicateDataException {
     public DuplicatePersonException() {
         super("Operation would result in duplicate persons");

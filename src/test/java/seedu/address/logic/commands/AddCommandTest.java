@@ -21,6 +21,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyBookShelf;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -97,12 +101,51 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
+        public void resetData(ReadOnlyBookShelf newData) {
             fail("This method should not be called.");
         }
 
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyBookShelf getBookShelf() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deleteBook(Book target) throws BookNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addBook(Book book) throws DuplicateBookException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateBook(Book target, Book editedBook) throws BookNotFoundException, DuplicateBookException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Book> getFilteredBookList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredBookList(Predicate<Book> predicate) {
+            fail("This method should not be called.");
+        }
+
+        //// deprecated
+
+        @Override
+        public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
 

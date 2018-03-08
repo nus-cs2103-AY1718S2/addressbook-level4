@@ -1019,9 +1019,15 @@ _{More to be added}_
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to work offline
+.  Should be able to hold up to 1000 orders in working queue and 5000 persons in historical database
+.  Should be able to remain open for a long period of time while not taking up more than 100MB of RAM
+.  Should cater to both IT proficient people and those who are new to Command Line Interface
+.  Should work on both 32-bit and 64-bit environments.
+.  Should support English system
+.  Should be able to retain information in event of crash or force shutdown.
+.  Should respond to user command within 2 seconds.
+.  View should fit the screen of any computer screen size.
 
 _{More to be added}_
 

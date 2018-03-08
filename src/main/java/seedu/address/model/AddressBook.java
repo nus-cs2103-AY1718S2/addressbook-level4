@@ -153,6 +153,32 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    /**
+     * Removes {@code tag} from all person with that tag this {@code AddressBook}.
+     * catches PersonNotFoundException if {@code currPerson} is not found in this {@code AddressBook}.
+     */
+    public void removeTag(Tag tag) {
+        try {
+            for (Person currPerson : persons) {
+                Set<Tag> tagListCurr = new HashSet<>(currPerson.getTags()); //gets all the tags from a person
+
+                if (tagListCurr.remove(tag)) {
+                    Person updatedPerson = new Person(currPerson.getName(), currPerson.getPhone(),
+                            currPerson.getEmail(), currPerson.getAddress(), tagListCurr);
+
+                    try {
+                        updatePerson(currPerson, updatedPerson);
+                    } catch (DuplicatePersonException dpe) {
+                        throw new AssertionError("Modifying a person's tags only should not result in a duplicate."
+                                + "See Person#equals(Object).");
+                    }
+                }
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: original person is obtained from the address book.");
+        }
+    }
+
     //// util methods
 
     @Override

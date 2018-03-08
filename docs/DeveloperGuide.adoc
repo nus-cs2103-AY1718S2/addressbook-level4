@@ -868,7 +868,7 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list all books in his reading list.
-2.  Bibliotek shows a list the books.
+2.  Bibliotek shows a list of the books.
 +
 Use case ends.
 
@@ -908,6 +908,91 @@ Use case ends.
 ** 2b1. Bibliotek shows an error message.
 +
 Use case ends.
+
+[discrete]
+=== Use case: UC3 - View a specific book
+
+*MSS*
+
+1. User obtains a list of books by listing (<<Use case: UC1 - View my reading list, *UC1*>>)
+                                            or searching (<<Use case: UC2 - Search for books,*UC2*>>).
+2. User requests to view more information on a specific book in the list.
+3. Bibliotek shows detailed information of the book.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User does not find the intended book in the list.
++
+Use case restarts from step 1.
+
+* 2b. User gives an invalid index.
++
+[none]
+** 2b1. Bibliotek shows an error message.
++
+Use case resumes at step 2.
+
+* 3a. Bibliotek cannot fetch the details of the book within 5s.
++
+[none]
+** 3a1. Bibliotek shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: UC4 - Add a book to my reading list
+
+*MSS*
+
+1. User obtains a list of books by listing (<<Use case: UC1 - View my reading list, *UC1*>>)
+                                            or searching (<<Use case: UC2 - Search for books,*UC2*>>).
+2. User requests to add a specific book from the list to his reading list.
+3. Bibliotek adds the book to the user's reading list.
+4. Bibliotek shows a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User gives an invalid index.
++
+[none]
+** 2a1. Bibliotek shows an error message.
++
+Use case resume at step 2.
+
+* 2b. The book is already in user's reading list.
++
+[none]
+** 2b1. Bibliotek tells user that the book is already in his reading list.
++
+Use case ends.
+
+[discrete]
+=== Use case: UC5 - Rate a book
+
+*MSS*
+
+1. User obtains a list of books by listing (<<Use case: UC1 - View my reading list, *UC1*>>)
+ or searching (<<Use case: UC2 - Search for books,*UC2*>>).
+2. User requests to give a rating to a specific book in the list.
+3. Bibliotek shows a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given rating is out of range.
++
+[none]
+** 2a1. Bibliotek says that the rating is invalid and asks user to try again.
++
+Use case resumes at step 2
 
 _{More to be added}_
 

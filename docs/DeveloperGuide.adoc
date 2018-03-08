@@ -819,14 +819,14 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete student
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list students
+2.  AddressBook shows a list of students
+3.  User requests to delete a specific student in the list
+4.  AddressBook deletes the student and all related entries (if any)
 +
 Use case ends.
 
@@ -843,6 +843,84 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find a student by name
+
+*MSS*
+
+1.  User requests to find a student by name
+2.  AddressBook shows a list of students that match the search query
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add event to schedule
+
+*MSS*
+
+1.  User requests to add an event to a day
+2.  AddressBook shows the current schedule for the day
+3.  User requests to add the event to a timeslot for that day
+4.  AddressBook confirms the addition to the timeslot
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The schedule for the day is full.
++
+[none]
+** 2a1. AddressBook will display an error message.
++
+Use case ends.
+* 3a. User tries to add it to a non-empty timeslot
+[none]
+** 3a1. AddressBook will display an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit lesson for a student
+
+*MSS*
+
+1.  User requests to edit lesson for a student.
+2.  AddressBook shows the current lessons for a student in a list.
+3.  User enters the index of lesson to edit.
+4.  AddressBook prompts the user to enter the new entry.
+5.  User inputs the new entry.
+6.  AddressBook confirms with user on the edit.
+7.  User confirms.
+8.  AddressBook replaces the old entry with the new entry.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no lessons for the student.
++
+Use case ends.
+* 3a. User enters an invalid index
+[none]
+** 3a1. AddressBook will display an error message.
++
+Use case resumes at step 3.
+
+* 5a. User does not enter a valid lesson entry
+[none]
+** 5a1. AddressBook will display an error message.
++
+User case resumes at step 5.
 
 _{More to be added}_
 

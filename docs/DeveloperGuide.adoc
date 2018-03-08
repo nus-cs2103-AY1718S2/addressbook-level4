@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-T09-B4/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -781,7 +781,13 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 == Product Scope
 
 *Target user profile*:
-
+* Freshie Couples/Students in NUS School of Computing
+* - Time Table Sync to NUS Mods in order to find common breaks
+* - Notify on important dates
+* - Journal diary on the meeting
+* - Campus direction shortcuts for new students and when it rains
+* - Couples having diet issues
+* - Location on where to eat
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
@@ -789,6 +795,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * is reasonably comfortable using CLI apps
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Our team visions to help new students to not get lost in their first day of school or when it rains. Because right now, there is no proper channel that helps them to solve this problem.
+*Our team visions to help new students to help them find a place to eat because they don’t know the nearest food centre they can eat at.
+*Our team visions to help students to find common breaks so they can form a meetup session easily
+*Our team visions to help students to jote down journals that happen on the meetup session so that everything is well stored together
+*Our team visions to help NUS couple to solve problem that they faced out of all the hectic workload in NUS which always leads to a disastrous break up.
 
 [appendix]
 == User Stories
@@ -804,11 +815,29 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |As a couple (student) user| I can schedule for Add/Delete/view timetable with my partner.
+
+|`* * *` |As a couple (student) user |I can create Journal to add/view/delete|keep track on life couple event
+
+|`* * *` |As a new student user| I can search for campus shortcuts| So wont get lost or drenched from rain
+
+|`* * *` |As a couple (student) user| I can calculate my diet of how many calories i have burnt
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*`| As a couple (student) user| I can receive birthday notification
+
+|`*`| As a couple (student) user| I can view my calendar|
+
+|`*`| As a couple (student) user| I can view my journal|
+
+|`*`| As a user who likes to customize thing| i can change the theme or customize text color|
+
+
 |=======================================================================
 
 _{More to be added}_
@@ -844,6 +873,47 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Add Timetable to Person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User request to add a shortened NUSMODS url to a specific person in the list.
+4.  AddressBook adds the url to the person in the list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The specified person already has a timetable
++
+[none]
+** 3b1. AddressBook prompts user to override existing timetable.
+** 3b2. User confirms change.
++
+Use case resumes at step 4.
+
+* 3c. The given url is invalid.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 _{More to be added}_
 
 [appendix]
@@ -852,11 +922,17 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be usable by a novice after reading the <<UserGuide#, User Guide>>.
+.  Should be able to handle any invalid inputs.
+.  Commands used should be intuitive and comprehensible.
+.  Should respond within 2 seconds.
+.  Should be able to work on both 32-bit and 64-bit environments.
 
 _{More to be added}_
 
 [appendix]
 == Glossary
+* Product survey, pros - able to gather feedback from couples from SOC for better enhancement cons- to get real consistent feedback as couples behave differently and expose differently
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X

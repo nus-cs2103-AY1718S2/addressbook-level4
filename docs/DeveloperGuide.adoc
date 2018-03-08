@@ -894,7 +894,13 @@ _{More to be added}_
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should work on both 32-bit and 64-bit environments.
+.  Should come with automated unit tests and open source code.
+.  Should come with a user guide and a developer guide.
+.  Should favor <<dos-style-commands,DOS style commands>> over Unix-style commands.
+.  Should be able to hold up to 1000 books without a noticeable sluggishness in performance for typical usage.
+.  Should respond to user commands within 50ms if no external API calls are required. Otherwise, respond within 5s.
+.  Should be intuitive such that a new user can learn to search and add books within 10 minutes.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 _{More to be added}_
@@ -904,6 +910,9 @@ _{More to be added}_
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
+
+[[dos-style-commands]] DOS style commands::
+The use of backslashes '/' to indicate command parameters
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others

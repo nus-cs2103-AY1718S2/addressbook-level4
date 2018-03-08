@@ -9,10 +9,10 @@ import seedu.address.model.tag.Tag;
 /**
  * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<Person> {
+public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public PersonContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -22,6 +22,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
 
         String stringOfTags = getStringOfTags(person);
 
+        //Consider optimizing code by accessing stream once. May not be so pertinent since keywords is a short stream.
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
                 ||
@@ -46,8 +47,8 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof PersonContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((PersonContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }

@@ -239,6 +239,22 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+=== Creating user accounts to manage usage `[coming in v2.0]`
+
+Create user accounts and log in to the application using assigned credentials. Usernames will be reflected for changes made in the application.
+
+=== Set user permissions `[coming in v2.0]`
+
+The assigned administrator of the application (e.g. Veterinarian) can set user permissions for clinic staffs. +
+Examples:+
+Vet assistants can add new pet patients and their owners to the application, but cannot delete any pet patient or owner from the application. +
+Vet assistants can view medical histories of pet patients but not modify them.
+
+=== Support multi-users `[coming in v2.0]`
+
+The application can be used concurrently on different systems and the data will be synced over an internet connection. This allow Veterinarians
+and their assistants to access the address book simultaneously in different rooms.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

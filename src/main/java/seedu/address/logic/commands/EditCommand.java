@@ -108,7 +108,7 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Income updatedIncome = new Income(20000);
+        Income updatedIncome = new Income(20000.0);
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedIncome);
     }

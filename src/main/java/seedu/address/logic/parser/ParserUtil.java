@@ -141,14 +141,14 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String income} into an {@code income}.
+     * Parses a {@code String value} into an {@code value}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code income} is invalid.
+     * @throws IllegalValueException if the given {@code value} is invalid.
      */
     public static Income parseIncome(String income) throws IllegalValueException {
         requireNonNull(income);
-        Float trimmedIncome = Float.parseFloat(income.trim());
+        Double trimmedIncome = Double.parseDouble(income.trim());
         if (!Income.isValidIncome(trimmedIncome)) {
             throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
         }
@@ -156,7 +156,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> income} into an {@code Optional<income>} if {@code income} is present.
+     * Parses a {@code Optional<String> value} into an {@code Optional<value>} if {@code value} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Income> parseIncome(Optional<String> income) throws IllegalValueException {

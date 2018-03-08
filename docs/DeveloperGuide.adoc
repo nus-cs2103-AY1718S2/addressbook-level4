@@ -820,7 +820,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |driver |have users automatically downloaded from a central database |avoid having to add users one by one myself
 
-|`*` |driver |get traffic updates |follow my schedule 
+|`*` |driver |get traffic updates |follow my schedule
 |=======================================================================
 
 _{More to be added}_
@@ -867,28 +867,22 @@ Use case resumes at step 2.
 3. User clicks on the customer’s address
 4. Address book open the itinerary to the customer’s address on Google Maps
 5. User can drive to the customer’s location
-
 +
 Use case ends.
-
 
 [discrete]
 === Use case: Mapping the route for the day
 
-
 *MSS*
 
 1. User filters the database by date of delivery
-2. Selects all addresses 
+2. Selects all addresses
 3. Runs the “map” command on the selected addresses
 4. Obtains a mapped out route for the day
 5. Obtains an ideal time to begin the route
-6. User can start the delivery 
-
-
+6. User can start the delivery
 +
 Use case ends.
-
 
 _{More to be added}_
 

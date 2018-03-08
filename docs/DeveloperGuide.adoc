@@ -908,6 +908,39 @@ Use case ends.
 ** 2b1. Bibliotek shows an error message.
 +
 Use case ends.
+[discrete]
+=== Use case: UC3 - View a specific book
+
+*MSS*
+
+1.  User performs a search with some constraints (title, author, etc.).
+2.  Bibliotek lists books satisfying all the constraints.
+3. Bibliotek shows detailed information of the book.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User does not find the intended book in the list.
+*** Use case restarts form step 1.
++
+Use case ends.
+
+* 2b. User gives an invalid index.
++
+[none]
+** 2b1. Bibliotek shows an error message.
+*** Use case resumes at step 2.
++
+Use case ends.
+
+* 3a. Bibliotek cannot fetch the details of the book within 5s.
++
+[none]
+** 3a1. Bibliotek shows an error message.
++
+Use case ends.
 
 _{More to be added}_
 

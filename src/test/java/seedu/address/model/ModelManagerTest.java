@@ -44,7 +44,7 @@ public class ModelManagerTest {
         modelManager.deleteTag(new Tag(VALID_TAG_UNUSED));
 
         //unused tag removed, should remain the same
-        assertsTrue(modelManager.equals(modelManagerCopy));
+        assertTrue(modelManager.equals(modelManagerCopy));
     }
 
     @Test
@@ -55,13 +55,13 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         modelManager.deleteTag(new Tag(VALID_TAG_FRIEND));
 
-        Person amyWoFriendTag = new PersonBuilder(AMY).withTags().build();
-        Person bobWoFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        AddressBook addressBookAfterChange = new AddressBookBuilder.withPerson(amyWoFriendTag)
-                .withPerson(bobWoFriendTag).build();
+        Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
+        Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        AddressBook addressBookAfterChange =
+                new AddressBookBuilder.withPerson(amyWithoutFriendTag).withPerson(bobWithoutFriendTag).build();
         ModelManager modelManagerAfterChange = new ModelManager(addressBookAfterChange, userPrefs);
 
-        assertsTrue(modelManager.equals(modelManagerAfterChange));
+        assertTrue(modelManager.equals(modelManagerAfterChange));
     }
 
     @Test

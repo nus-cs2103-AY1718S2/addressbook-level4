@@ -85,12 +85,12 @@ public class AddressBookTest {
         AddressBook addressBookAB = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
         addressBookAB.removeTag(new Tag(VALID_TAG_FRIEND));
 
-        Person amyWoFriendTag = new PersonBuilder(AMY).withTags().build();
-        Person bobWoFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        AddressBook addressBookAfterChange = new AddressBookBuilder.withPerson(amyWoFriendTag)
-                .withPerson(bobWoFriendTag).build();
+        Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
+        Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        AddressBook addressBookAfterChange =
+                new AddressBookBuilder.withPerson(amyWithoutFriendTag).withPerson(bobWithoutFriendTag).build();
 
-        assertEquals(expectedAddressBook, addressBookWithBobAndAmy);
+        assertEquals(addressBookAfterChange, addressBookAB);
     }
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {

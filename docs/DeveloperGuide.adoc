@@ -908,6 +908,7 @@ Use case ends.
 ** 2b1. Bibliotek shows an error message.
 +
 Use case ends.
+
 [discrete]
 === Use case: UC3 - View a specific book
 
@@ -939,6 +940,63 @@ Use case ends.
 +
 [none]
 ** 3a1. Bibliotek shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: UC4 - Add a book to my reading list
+
+*MSS*
+
+1. User obtains a list of books by listing (UC1) or searching (UC2).
+2. User requests to add a specific book from the list to his reading list.
+3. Bibliotek adds the book to the user's reading list.
+4. Bibliotek shows a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User gives an invalid index.
++
+[none]
+** 2a1. Bibliotek shows an error message.
+*** Use case restarts form step 2.
++
+Use case ends.
+
+* 2b. The book is already in user's reading list.
++
+[none]
+** 2b1. Bibliotek tells user that the book is already in his reading list.
++
+Use case ends.
+
+[discrete]
+=== Use case: UC5 - Rate a book
+
+*MSS*
+
+1. User obtains a list of books by listing (UC1) or searching (UC2).
+2. User requests to give a rating to a specific book in the list.
+3. Bibliotek shows a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1. The book name cannot find in the Bibliotek
+*** Bibliotek says the book doesn’t exist or wrong book name and ask user to try again
++
+Use case ends.
+
+* 2a. The given rating is out of range.
++
+[none]
+** 2a1. Bibliotek says that the rating is invalid and asks user to try again.
+*** Use case resumes at step 2.
 +
 Use case ends.
 

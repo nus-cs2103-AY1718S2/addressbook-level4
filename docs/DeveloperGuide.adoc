@@ -882,6 +882,33 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
+=== Use case: UC2 - Search for books
+
+*MSS*
+
+1.  User performs a search with some constraints (title, author, etc.).
+2.  Bibliotek lists books satisfying all the constraints.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Bibliotek doesn’t find any books satisfying all the constraints.
++
+[none]
+** 2a1. Bibliotek shows an empty list.
++
+Use case ends.
+
+* 2b. Bibliotek cannot fetch the list of books within 5s.
++
+[none]
+** 2b1. Bibliotek shows an error message.
++
+Use case ends.
+
 _{More to be added}_
 
 [appendix]

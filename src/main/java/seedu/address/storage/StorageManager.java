@@ -78,7 +78,7 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOException{
+    public void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         addressBookStorage.backUpAddressBook(addressBook);
     }
 

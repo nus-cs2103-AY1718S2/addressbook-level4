@@ -792,7 +792,7 @@ Hence they need a software to store all personal information and order informati
 * receives orders of food via phone (hotline)
 * knows how to use CLI and prefer typing over using mouse
 
-*Value proposition*: help restaurants maintain all the information of customers and a queue for delivery services
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 
 [appendix]
 == User Stories

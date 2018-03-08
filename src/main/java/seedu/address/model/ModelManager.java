@@ -91,14 +91,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteBook(Book target) throws BookNotFoundException {
         bookShelf.removeBook(target);
-        indicateAddressBookChanged();
+        indicateBookShelfChanged();
     }
 
     @Override
     public void addBook(Book book) throws DuplicateBookException {
         bookShelf.addBook(book);
         updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
-        indicateAddressBookChanged();
+        indicateBookShelfChanged();
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedBook);
 
         bookShelf.updateBook(target, editedBook);
-        indicateAddressBookChanged();
+        indicateBookShelfChanged();
     }
 
     //=========== Filtered Book List Accessors =============================================================

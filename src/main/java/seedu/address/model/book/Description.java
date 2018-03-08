@@ -13,7 +13,7 @@ public class Description {
     /**
      * Constructs a {@code Description}.
      *
-     * @param description A valid description.
+     * @param description A book description.
      */
     public Description(String description) {
         requireNonNull(description);

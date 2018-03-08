@@ -3,11 +3,9 @@ package seedu.address.model.book;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.Collection;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import seedu.address.model.UniqueList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
@@ -16,17 +14,7 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
  *
  * Supports a minimal set of list operations.
  */
-public class UniqueBookList implements Iterable<Book> {
-
-    private final ObservableList<Book> internalList = FXCollections.observableArrayList();
-
-    /**
-     * Returns true if the list contains an equivalent book as the given argument.
-     */
-    public boolean contains(Book toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
+public class UniqueBookList extends UniqueList<Book> {
 
     /**
      * Adds a book to the list.
@@ -77,29 +65,13 @@ public class UniqueBookList implements Iterable<Book> {
         return bookFoundAndDeleted;
     }
 
-    public void setBooks(UniqueBookList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setBooks(List<Book> books) throws DuplicateBookException {
+    public void setBooks(Collection<Book> books) throws DuplicateBookException {
         requireAllNonNull(books);
         final UniqueBookList replacement = new UniqueBookList();
         for (final Book book : books) {
             replacement.add(book);
         }
-        setBooks(replacement);
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<Book> asObservableList() {
-        return FXCollections.unmodifiableObservableList(internalList);
-    }
-
-    @Override
-    public Iterator<Book> iterator() {
-        return internalList.iterator();
+        setItems(replacement.toSet());
     }
 
     @Override
@@ -109,8 +81,4 @@ public class UniqueBookList implements Iterable<Book> {
                 && this.internalList.equals(((UniqueBookList) other).internalList));
     }
 
-    @Override
-    public int hashCode() {
-        return internalList.hashCode();
-    }
 }

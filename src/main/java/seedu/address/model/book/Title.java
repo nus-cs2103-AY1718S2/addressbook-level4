@@ -13,7 +13,7 @@ public class Title {
     /**
      * Constructs a {@code Title}.
      *
-     * @param title A valid title.
+     * @param title A book title.
      */
     public Title(String title) {
         requireNonNull(title);

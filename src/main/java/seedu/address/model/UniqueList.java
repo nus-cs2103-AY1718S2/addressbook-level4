@@ -11,18 +11,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.tag.Tag;
 
 /**
  * A list of items that enforces no nulls and uniqueness between its elements.
  *
  * Supports minimal set of list operations for the app's features.
- *
- * @see Tag#equals(Object)
  */
 public class UniqueList<T> implements Iterable<T> {
 
-    private final ObservableList<T> internalList = FXCollections.observableArrayList();
+    protected final ObservableList<T> internalList = FXCollections.observableArrayList();
 
     /**
      * Constructs empty UniqueList.
@@ -33,9 +30,9 @@ public class UniqueList<T> implements Iterable<T> {
      * Creates a UniqueList using given set.
      * Enforces no nulls.
      */
-    public UniqueList(Set<T> tags) {
-        requireAllNonNull(tags);
-        internalList.addAll(tags);
+    public UniqueList(Set<T> items) {
+        requireAllNonNull(items);
+        internalList.addAll(items);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
@@ -52,9 +49,9 @@ public class UniqueList<T> implements Iterable<T> {
     /**
      * Replaces the items in this list with those in the argument list.
      */
-    public void setTags(Set<T> tags) {
-        requireAllNonNull(tags);
-        internalList.setAll(tags);
+    public void setItems(Set<T> items) {
+        requireAllNonNull(items);
+        internalList.setAll(items);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
@@ -83,7 +80,7 @@ public class UniqueList<T> implements Iterable<T> {
      *
      * @throws DuplicateItemException if the item to add is a duplicate of an existing item in the list.
      */
-    public void add(T toAdd) throws DuplicateItemException {
+    public void add(T toAdd) throws DuplicateDataException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateItemException();

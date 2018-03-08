@@ -13,7 +13,7 @@ public class Author {
     /**
      * Constructs a {@code Author}.
      *
-     * @param fullName A valid author name.
+     * @param fullName An author name.
      */
     public Author(String fullName) {
         requireNonNull(fullName);

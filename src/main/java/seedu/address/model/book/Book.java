@@ -79,10 +79,10 @@ public class Book {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getTitle())
-                .append(" Author: ");
-        getAuthors().forEach(builder::append);
+                .append(" - Authors: ");
+        getAuthors().forEach(author -> builder.append("[").append(author).append("]"));
         builder.append(" Categories: ");
-        getCategories().forEach(builder::append);
+        getCategories().forEach(category -> builder.append("[").append(category).append("]"));
         return builder.toString();
     }
 

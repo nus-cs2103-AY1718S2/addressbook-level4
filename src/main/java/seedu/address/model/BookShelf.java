@@ -2,7 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 import javafx.collections.ObservableList;
@@ -33,7 +33,7 @@ public class BookShelf implements ReadOnlyBookShelf {
 
     //// list overwrite operations
 
-    public void setBooks(List<Book> books) throws DuplicateBookException {
+    public void setBooks(Collection<Book> books) throws DuplicateBookException {
         this.books.setBooks(books);
     }
 
@@ -50,7 +50,7 @@ public class BookShelf implements ReadOnlyBookShelf {
         }
     }
 
-    //// person-level operations
+    //// book-level operations
 
     /**
      * Adds a book to the book shelf.
@@ -104,7 +104,7 @@ public class BookShelf implements ReadOnlyBookShelf {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
             || (other instanceof BookShelf // instanceof handles nulls
-            && this.books.equals(((BookShelf) other).books));
+            && this.books.equalsOrderInsensitive(((BookShelf) other).books));
     }
 
     @Override

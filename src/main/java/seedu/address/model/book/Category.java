@@ -13,7 +13,7 @@ public class Category {
     /**
      * Constructs a {@code Category}.
      *
-     * @param category A valid category.
+     * @param category A book category.
      */
     public Category(String category) {
         requireNonNull(category);

@@ -156,6 +156,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes {@code tag} from all person with that tag this {@code AddressBook}.
      * catches PersonNotFoundException if {@code currPerson} is not found in this {@code AddressBook}.
+     * catches DuplicatePersonException if there is a duplicate person created in this {@code AddressBook}.
      */
     public void removeTag(Tag tag) {
         try {

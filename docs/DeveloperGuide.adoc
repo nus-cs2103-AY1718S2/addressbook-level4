@@ -786,11 +786,11 @@ Hence they need a software to store all personal information and order informati
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* owns a small-medium restaurant which provides delivery services/ big restaurants
+* wants to have a database system for orders of deliveries from their customers
+* not currently cooperating with delivery apps
+* receives orders of food via phone (hotline)
+* knows how to use CLI and prefer typing over using mouse
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 

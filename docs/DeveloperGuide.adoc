@@ -779,16 +779,23 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == Product Scope
+Delivery is targeted at restaurants, especially the small ones,  which want to have a system to keep track customers’ orders of delivery.
+
+A restaurant can have hundreds of orders a day and it’s quite troublesome for the restaurant to manually keep track all customer information, including their names, contact numbers, addresses, orders and expected time of delivery etc.
+
+Hence they need a software to store all personal information and order information in an organised manner.
+
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Owns a small-medium restaurant which provides delivery services/ big restaurants
+* Wants to have a database system for orders of deliveries from their customers
+* Not currently cooperating with delivery apps
+* Receives orders of food via phone (hotline)
+* Knows how to use CLI and prefer typing over using mouse
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+
+*Value proposition*: Help restaurants maintain all the information of customers and a queue for delivery services
 
 [appendix]
 == User Stories

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bookshelf>
+    <!-- Valid Person -->
+    <books>
+        <title>Title</title>
+        <description>Description</description>
+    </books>
+    <!-- Book with invalid title field -->
+    <books>
+        <description>Description2</description>
+    </books>
+</bookshelf>

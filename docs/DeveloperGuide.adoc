@@ -14,6 +14,8 @@ endif::[]
 
 By: `Team T09-B1`      Since: `Mar 2018`      Licence: `MIT`
 
+
+
 == Setting up
 
 === Prerequisites
@@ -782,6 +784,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+* is preferably in the education line of work
+* has a need to be in contact with students, and has a need for further information regarding students
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast

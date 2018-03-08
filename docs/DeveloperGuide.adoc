@@ -871,7 +871,7 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Delivery` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -898,6 +898,121 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+=== Use case: Add an order
+
+**MSS**
+
+1.  User request to add an order
+2.  Delivery adds the offer to the current queue
+3.  Delivery shows a list of all current orders
++
+Use case ends
+
+**Extensions**
+
+* 1a. The input phone number is invalid
++
+[none]
+** 1a1. Delivery shows an error message indicating the correct phone number format
++
+Use case ends
+
+* 1b. The input address cannot be found
++
+[none]
+** 1b1. Delivery shows an error message indicating the current address is invalid
++
+Use case ends
+
+* 1c. The food ordered is sold out / not available
++
+[none]
+** 1c1. Delivery shows an error message indicating the food order cannot be placed successfully
++
+Use case ends
+
+=== Use case: Add an order with priority
+
+**MSS**
+
+1.  User request to add an order (prioritised)
+2.  Delivery decides what is the priority
+3.  Delivery adds the offer to the current queue (cut queue)
+4.  Delivery shows a list of all current orders
++
+Use case ends
+
+=== Use case: delete an order
+
+**MSS**
+
+1.  User request to delete an order
+2.  Check the status of the order e.g. unprepared, preparing or delivering
+3.  Delivery deletes the offer from the queue containing the order
+4.  Delivery shows a list of all current orders
++
+Use case ends
+
+**Extensions**
+
+* 1a. The food ordered is prepared
++
+[none]
+** 1a1. Delivery shows an message indicating the customer should be charged for the price of the food ordered
+
+* 1b. The food ordered is delivering
++
+[none]
+** 1b1. Delivery shows an message indicating the customer should be charged for the price of the food ordered and the delivery fee
++
+Use case ends
+
+=== Use case: query a specific time
+
+**MSS**
+
+1.  User request to query a specific time
+2.  Delivery shows a list of all orders at that time
++
+Use case ends
+
+=== Use case: query a specific location
+
+**MSS**
+
+1.  User request to query a specific location
+2.  Delivery shows a list of all orders that are going the location
++
+Use case ends
+
+=== Use case: query a customer
+
+**MSS**
+
+1.  User request to query a specific customer
+2.  Delivery shows a list of information of the customer
++
+Use case ends
+
+=== Use case: query revenue
+
+**MSS**
+
+1.  User request to query revenue of a day
+2.  Delivery shows the revenue
++
+Use case ends
+
+**Extensions**
+
+* 1a. The day is sometime in the future
++
+[none]
+** 1a1. Delivery shows an message indicating that feature cannot be used on future time.
++
+Use case ends
+
 
 _{More to be added}_
 

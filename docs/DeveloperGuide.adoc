@@ -782,13 +782,13 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to catalogue a significant number of books
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage books faster than a typical mouse/GUI driven app
 
 [appendix]
 == User Stories
@@ -860,17 +860,15 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `Bibliotek` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: UC1 - View my reading list
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list all books in his reading list.
+2.  Bibliotek shows a list the books.
 +
 Use case ends.
 
@@ -879,14 +877,37 @@ Use case ends.
 [none]
 * 2a. The list is empty.
 +
+[none]
+** 2a1. Bibliotek shows an empty list.
++
 Use case ends.
 
-* 3a. The given index is invalid.
+[discrete]
+=== Use case: UC2 - Search for books
+
+*MSS*
+
+1.  User performs a search with some constraints (title, author, etc.).
+2.  Bibliotek lists books satisfying all the constraints.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Bibliotek doesn’t find any books satisfying all the constraints.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 2a1. Bibliotek shows an empty list.
 +
-Use case resumes at step 2.
+Use case ends.
+
+* 2b. Bibliotek cannot fetch the list of books within 5s.
++
+[none]
+** 2b1. Bibliotek shows an error message.
++
+Use case ends.
 
 _{More to be added}_
 
@@ -894,7 +915,13 @@ _{More to be added}_
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should work on both 32-bit and 64-bit environments.
+.  Should come with automated unit tests and open source code.
+.  Should come with a user guide and a developer guide.
+.  Should favor <<dos-style-commands,DOS style commands>> over Unix-style commands.
+.  Should be able to hold up to 1000 books without a noticeable sluggishness in performance for typical usage.
+.  Should respond to user commands within 50ms if no external API calls are required. Otherwise, respond within 5s.
+.  Should be intuitive such that a new user can learn to search and add books within 10 minutes.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 _{More to be added}_
@@ -904,6 +931,9 @@ _{More to be added}_
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
+
+[[dos-style-commands]] DOS style commands::
+The use of backslashes '/' to indicate command parameters
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others

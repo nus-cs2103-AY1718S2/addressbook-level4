@@ -2,7 +2,7 @@
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-T16-B2/main[image:https://travis-ci.org/CS2103JAN2018-T16-B2/main.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/ngshikang/main[image:https://ci.appveyor.com/api/projects/status/3tnphvyg6q1lydd3?svg=true[Build status]]
+https://ci.appveyor.com/project/ngshikang/main-mxx9w[image:https://ci.appveyor.com/api/projects/status/rg7h02nd59k71f38?svg=true[Build status]]
 [https://coveralls.io/github/CS2103JAN2018-T16-B2/main?branch=master[image:https://coveralls.io/repos/github/CS2103JAN2018-T16-B2/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]

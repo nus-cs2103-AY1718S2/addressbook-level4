@@ -780,10 +780,6 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-Delivery is targeted at restaurants, especially the small ones,  which want to have a system to keep track customers¡¯ orders of delivery.
-A restaurant can have hundreds of orders a day and it¡¯s quite troublesome for the restaurant to manually keep track all customer information, including their names, contact numbers, addresses, orders and expected time of delivery etc.
-Hence they need a software to store all personal information and order information in an organised manner.
-
 *Target user profile*:
 
 * has a need to manage a significant number of contacts

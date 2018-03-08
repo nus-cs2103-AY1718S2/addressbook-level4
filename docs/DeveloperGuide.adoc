@@ -914,8 +914,9 @@ Use case ends.
 
 *MSS*
 
-1.  User performs a search with some constraints (title, author, etc.).
-2.  Bibliotek lists books satisfying all the constraints.
+1. User obtains a list of books by listing (<<Use case: UC1 - View my reading list, *UC1*>>)
+                                            or searching (<<Use case: UC2 - Search for books,*UC2*>>).
+2. User requests to view more information on a specific book in the list.
 3. Bibliotek shows detailed information of the book.
 +
 Use case ends.
@@ -925,7 +926,7 @@ Use case ends.
 [none]
 * 2a. User does not find the intended book in the list.
 +
-Use case restarts form step 1.
+Use case restarts from step 1.
 
 * 2b. User gives an invalid index.
 +
@@ -946,7 +947,8 @@ Use case ends.
 
 *MSS*
 
-1. User obtains a list of books by listing (UC1) or searching (UC2).
+1. User obtains a list of books by listing (<<Use case: UC1 - View my reading list, *UC1*>>)
+                                            or searching (<<Use case: UC2 - Search for books,*UC2*>>).
 2. User requests to add a specific book from the list to his reading list.
 3. Bibliotek adds the book to the user's reading list.
 4. Bibliotek shows a success message.
@@ -961,7 +963,7 @@ Use case ends.
 [none]
 ** 2a1. Bibliotek shows an error message.
 +
-Use case restarts form step 2.
+Use case resume at step 2.
 
 * 2b. The book is already in user's reading list.
 +
@@ -975,7 +977,8 @@ Use case ends.
 
 *MSS*
 
-1. User obtains a list of books by listing (UC1) or searching (UC2).
+1. User obtains a list of books by listing (<<Use case: UC1 - View my reading list, *UC1*>>)
+ or searching (<<Use case: UC2 - Search for books,*UC2*>>).
 2. User requests to give a rating to a specific book in the list.
 3. Bibliotek shows a success message.
 +
@@ -984,11 +987,6 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1. The book name cannot find in the Bibliotek
-*** Bibliotek says the book doesn’t exist or wrong book name and ask user to try again
-+
-Use case ends.
-
 * 2a. The given rating is out of range.
 +
 [none]

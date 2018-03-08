@@ -11,6 +11,7 @@ import seedu.address.model.tag.Tag;
  * Example usage: <br>
  *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
  */
+@Deprecated
 public class AddressBookBuilder {
 
     private AddressBook addressBook;

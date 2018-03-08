@@ -6,6 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.tag.UniqueTagList;
 
+@Deprecated
 public class UniqueTagListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

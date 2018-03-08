@@ -22,6 +22,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
+@Deprecated
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")

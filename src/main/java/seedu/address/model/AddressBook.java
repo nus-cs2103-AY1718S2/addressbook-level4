@@ -22,6 +22,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
+@Deprecated
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;

@@ -7,6 +7,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Person's email in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
+@Deprecated
 public class Email {
 
     private static  final String SPECIAL_CHARACTERS = "!#$%&'*+/=?`{|}~^.-";

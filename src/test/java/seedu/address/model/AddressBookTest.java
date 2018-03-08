@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
+@Deprecated
 public class AddressBookTest {
 
     @Rule

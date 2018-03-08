@@ -7,6 +7,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Unmodifiable view of an address book
  */
+@Deprecated
 public interface ReadOnlyAddressBook {
 
     /**

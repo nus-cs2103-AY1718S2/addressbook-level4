@@ -19,6 +19,7 @@ import seedu.address.commons.util.CollectionUtil;
  *
  * @see Tag#equals(Object)
  */
+@Deprecated
 public class UniqueTagList implements Iterable<Tag> {
 
     private final ObservableList<Tag> internalList = FXCollections.observableArrayList();

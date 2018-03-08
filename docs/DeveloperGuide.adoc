@@ -819,14 +819,45 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: View full details of an appointment
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list appointments
+2.  AddressBook shows a list of appointments for the current month
+3.  User requests to view a specific appointment in the list
+4.  AddressBook shows the full details of the specified appointment
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 2b. To retrieve a list of all upcoming appointments, use the command "list -a appointments"
++
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Update pet owner's contact information
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests to view contact information of a specific pet patient
+4.  AddressBook shows the pet patient's owner's contact information
+5.  User requests to modify the pet patient's owner's contact information
+6.  AddressBook shows the pet patient's updated contact information
 +
 Use case ends.
 
@@ -841,6 +872,153 @@ Use case ends.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given command is invalid.
++
+[none]
+** 5a1. AddressBook shows the correct command usage to edit pet patient's information.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Retrieve medical history of a pet patient
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests to view medical history of a specific pet patient
+4.  AddressBook shows the pet patient's medical history
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. No medical history (empty).
++
+Use case ends.
+
+[discrete]
+=== Use case: Retrieve information of a particular owner (contact details, pet patients owned by him/her, and appointments made)
+
+*MSS*
+
+1.  User requests to find an owner named "Mavis"
+2.  AddressBook shows a list of owners with "Mavis" as part of their name
+3.  User requests to view information of a specific owner
+4.  AddressBook shows information about the owner
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Generate a pdf report of a pet patient's medical history and owner's contact information
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests for a pdf report of a specific pet patient on the list
+4.  AddressBook generates a pdf report for the user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Generate a pdf report of a particular owner's full information e.g. contact details, list of pet patients under this owner and their medical histories
+*MSS*
+
+1.  User requests to find an owner with the name "Mavis"
+2.  AddressBook shows a list of owners with the name "Mavis"
+3.  User requests for a pdf report of a specific owner on the list
+4.  AddressBook generates a pdf report for the user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add tag(s) to a pet owner
+
+*MSS*
+
+1.  User requests to find an owner with the name "Mavis"
+2.  AddressBook shows a list of owners with the name "Mavis"
+3.  User requests to add tags to a specific owner on the list
+4.  AddressBook shows updated owner information
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given tag(s) is/are invalid.
++
+[none]
+** 3b1. AddressBook shows a list of valid tags.
 +
 Use case resumes at step 2.
 

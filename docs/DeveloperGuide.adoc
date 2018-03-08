@@ -1034,11 +1034,21 @@ _{More to be added}_
 [appendix]
 == Glossary
 
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+[[personal-information]]Personal information::
+Personal information refers to the personal particulars of a customer, including his/her name, contact number, address and email address.
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+
+[[meal-order]] : Meal order information::
+Meal order information refers to which dishes are ordered, what time it is ordered, what time it should be delivered, the total money of the dishes
+
+
+[[gui]] GUI::
+GUI stands for Graphical User Interface. It is a type of user interface that allows user to interact with the software through graphical icons and visualisation.
+
+
+[[cli]]CLI::
+CLI stands for Command-line interface. It is a way for the user to give commands to the computer program in the form of successive lines of text
+
 
 [appendix]
 == Product Survey

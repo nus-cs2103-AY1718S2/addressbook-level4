@@ -119,7 +119,7 @@ public class UniqueList<T> implements Iterable<T> {
      * Returns true if the element in this list is equal to the elements in {@code other}.
      * The elements do not have to be in the same order.
      */
-    public boolean equalsOrderInsensitive(UniqueList other) {
+    public boolean equalsOrderInsensitive(UniqueList<T> other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));

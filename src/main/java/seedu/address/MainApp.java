@@ -50,7 +50,6 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-    // testing
 
 
     @Override

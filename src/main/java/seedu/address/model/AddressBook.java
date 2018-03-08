@@ -122,6 +122,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      *  list.
      */
+
+    //@@author {clarissayong}
+
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);
@@ -138,7 +141,13 @@ public class AddressBook implements ReadOnlyAddressBook {
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
 
         // Map person to all relevant tags
-        correctTagReferences.forEach((tag -> tagMap.add(tag, correctPerson)));
+        correctTagReferences.forEach((tag -> {
+            try {
+                tagMap.add(tag, correctPerson);
+            } catch (DuplicatePersonException e) {
+
+            }
+        }));
 
         return correctPerson;
     }
@@ -179,6 +188,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author {clarissayong}
     @Override
     public ObservableList<Person> filter(Tag tag) { return tagMap.filter(tag); }
 

@@ -45,4 +45,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //@@author {clarissayong}
+
+    /** Sets a list as the filtered persons list */
+
+    void setFilteredPersonList(ObservableList<Person> list);
+
 }

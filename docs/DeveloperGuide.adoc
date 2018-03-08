@@ -891,8 +891,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-_{More to be added}_
-
 [appendix]
 == Use Cases
 
@@ -924,7 +922,203 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Add Calendar Event
+
+*MSS*
+
+1.  User attempts to add calendar event.
+2.  AddressBook updates calendar events and updates the main window to show the events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User formats the command incorrectly.
++
+[none]
+** 1a1. AddressBook notifies user of incorrect syntax.
++
+Use case ends.
+
+[discrete]
+=== Use case: View Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook retrieves calendar events and updates the main window to show the events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook retrieves calendar events and updates the main window to show the events.
+3.  User selects calendar event to edit.
+4.  AddressBook returns calendar event info as editable string.
+5.  User edits information and confirms action.
+6.  AddressBook saves changes and refreshes the main window.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook retrieves calendar events and updates the main window to show the events.
+3.  User selects calendar event to delete.
+4.  AddressBook asks for user confirmation.
+5.  User confirms action.
+6.  AddressBook deletes calendar event and refreshes the main window.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+* 3a. User selects invalid index.
++
+[none]
+** 3a1. AddressBook notifies user that they have selected an incorrect index.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Show Error Log
+
+*MSS*
+
+1.  User presses ‘View’ menu option and requests to see error log.
+2.  AddressBook retrieves error log and displays it in a new window.
+
+*Extensions*
+
+[none]
+* 1a. There is no error log.
++
+[none]
+** 1a1. AddressBook notifies user that there is no error log.
++
+Use case ends.
+
+[discrete]
+=== Use case: Switch Views of Features
+
+*MSS*
+
+1.  User requests to change view (between calendar, details, daily schedule)
+2.  AddressBook updates main window to show specified feature
++
+Use case ends.
+
+[discrete]
+=== Use case: View Daily Schedule
+
+*MSS*
+
+1.  User requests to view daily schedule for specified date.
+2.  AddressBook retrieves calendar events for the specified date.
+3.  AddressBook retrieves addresses of specified contacts to be visited on specified day.
+4.  AddressBook requests for Google navigation between specified addresses.
+5.  AddressBook updates main window to show the listed events with suggested navigation.
+6.  User receives automatically generated daily schedule.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Specified date is invalid
++
+[none]
+** 1a1. AddressBook notifies user of invalid date
++
+Use case ends.
+
+* 2a. Specified date has no calendar events.
++
+[none]
+** 2a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+[discrete]
+=== Use case: User Login
+
+*MSS*
+1.  User enters username
+2.  AddressBook requests for password
+3.  User enters password
+4.  AddressBook allows access to UI
+
+*Extensions*
+
+[none]
+* 1a. AddressBook detects invalid username
++
+[none]
+** 1a1. AddressBook displays “invalid username” and request for username followed by Step 1
++
+Use case resumes at step 1.
+
+*3a. AddressBook detects invalid password
++
+[none]
+** 3a1. AddressBook displays “invalid password” and request for username followed by Step 1
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: User Logout
+
+*MSS*
+1.  User attempts to logout
+2.  AddressBook prompts for confirmation to logout
+3.  User confirms
+4.  AddressBook logs the user out
+
+[discrete]
+=== Use case: Export AddressBook
+
+*MSS*
+1.  User attempts to export AddressBook
+2.  AddressBook prompts for directory to export the file
+3.  User enters directory
+4.  Address prompts for confirmation
+5.  User confirms
+6.  AddressBook exports storage file into specified directory
+
+
 
 [appendix]
 == Non Functional Requirements
@@ -932,8 +1126,22 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should come with automated unit tests and open source code.
+.  Should preserve user data when the program is restarted or updated.
+.  Should still retain basic functionality even when not connected to the internet.
+.  Should support both 32-bit and 64-bit operating systems.
+.  Should not be graphically intensive for maximum compatibility.
+.  Should be backward compatible with previous versions of AddressBook.
+.  Should have all features and commands documented.
+.  Should be easily usable by an infrequent computer user.
+.  Should gracefully handle incorrect user input and return friendly error messages to the user.
+.  Should be easy to setup and install for an infrequent computer user.
+.  Should not unnecessarily collect data about a user.
+.  Should sanitize sensitive user data before logging.
+.  Should not allow non-users to access storage file
+.  Should not allow non-users to read storage file
+.  Should not exit the program without encrypting the storage file
+.  Should not hang
 
 [appendix]
 == Glossary
@@ -943,6 +1151,15 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[infrequent-computer-user]] Infrequent computer user::
+A user who does not use a computer regularly (only a couple times a week)
+
+[[events]] Events::
+A pre-planned visit by the social worker to check on beneficiary
+
+[[daily-schedule]] Daily schedule::
+A list of events of a specified date with navigation details
 
 [appendix]
 == Product Survey

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalBooks.ARTEMIS;
 import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
-import static seedu.address.testutil.TypicalBooks.COLLAPSING_EMPIRE;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
 import java.io.IOException;

@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.book.Author;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Title;
 import seedu.address.testutil.Assert;

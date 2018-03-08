@@ -782,11 +782,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* tech-savvy individual
+* tech-savvy veterinary practioners
 * can type relatively fast while maintaining accuracy
-* prefers being on desktop rather than on mobile
-* generally comfortable with typing on CLI applications without clicking
-* is a veterinarian or assistant from a vet clinic in Singapore
+* requires using the desktop in the workplace
+* requires CLI applications for efficiency
+* provide veterinary services to domestic animals in Singapore
 * has to manage a significant number of <<patients,patients>>
 * requires the information kept to generally be non-volatile
 * needs to search through amounts of data for information

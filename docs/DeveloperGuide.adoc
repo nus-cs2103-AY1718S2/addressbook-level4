@@ -1015,10 +1015,10 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-* 3a. The given tag(s) is/are invalid.
+* 3b. The given tag(s) is/are invalid.
 +
 [none]
-** 3a1. AddressBook shows a list of valid tags.
+** 3b1. AddressBook shows a list of valid tags.
 +
 Use case resumes at step 2.
 

@@ -248,7 +248,9 @@ Create user accounts and log in to the application using assigned credentials. U
 The assigned administrator of the application (e.g. Veterinarian) can set user permissions for clinic staffs. +
 
 Examples:
-* Vet assistants can add new pet patients and their owners to the application, but cannot delete any pet patient or owner from the application. +
+
+* Vet assistants can add new pet patients and their owners to the application, but cannot delete any pet patient or owner from the application.
+
 * Vet assistants can view medical histories of pet patients but not modify them.
 
 === Support multi-users `[coming in v2.0]`

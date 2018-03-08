@@ -71,26 +71,26 @@ public class AddressBookTest {
 
     @Test
     public void removeUnusedTag_addressBookUnchanged() throws Exception {
-        AddressBook addressBookAB = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
-        addressBookAB.removeTag(new Tag(VALID_TAG_UNUSED));
+        AddressBook addressBookAmyBob = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        addressBookAmyBob.removeTag(new Tag(VALID_TAG_UNUSED));
 
         AddressBook addressBookExpected = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
 
         //should be equal as unused tag removed
-        assertEquals(addressBookExpected, addressBookAB);
+        assertEquals(addressBookExpected, addressBookAmyBob);
     }
 
     @Test
     public void removeTag_multiplePersons_addressBookChanged() throws Exception {
-        AddressBook addressBookAB = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
-        addressBookAB.removeTag(new Tag(VALID_TAG_FRIEND));
+        AddressBook addressBookAmyBob = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        addressBookAmyBob.removeTag(new Tag(VALID_TAG_FRIEND));
 
         Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
         Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         AddressBook addressBookAfterChange =
                 new AddressBookBuilder().withPerson(amyWithoutFriendTag).withPerson(bobWithoutFriendTag).build();
 
-        assertEquals(addressBookAfterChange, addressBookAB);
+        assertEquals(addressBookAfterChange, addressBookAmyBob);
     }
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {

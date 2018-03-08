@@ -12,14 +12,12 @@ import org.junit.rules.TemporaryFolder;
 
 import javafx.fxml.FXML;
 import seedu.address.MainApp;
-import seedu.address.testutil.Assert;
 
 public class UiPartTest {
 
     private static final String MISSING_FILE_PATH = "UiPartTest/missingFile.fxml";
     private static final String INVALID_FILE_PATH = "UiPartTest/invalidFile.fxml";
     private static final String VALID_FILE_PATH = "UiPartTest/validFile.fxml";
-    private static final String VALID_FILE_WITH_FX_ROOT_PATH = "UiPartTest/validFileWithFxRoot.fxml";
     private static final TestFxmlObject VALID_FILE_ROOT = new TestFxmlObject("Hello World!");
 
     @Rule
@@ -30,22 +28,22 @@ public class UiPartTest {
 
     @Test
     public void constructor_nullFileUrl_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new TestUiPart<Object>((URL) null));
-        Assert.assertThrows(NullPointerException.class, () -> new TestUiPart<Object>((URL) null, new Object()));
+        thrown.expect(NullPointerException.class);
+        new TestUiPart<Object>((URL) null);
     }
 
     @Test
     public void constructor_missingFileUrl_throwsAssertionError() throws Exception {
         URL missingFileUrl = new URL(testFolder.getRoot().toURI().toURL(), MISSING_FILE_PATH);
-        Assert.assertThrows(AssertionError.class, () -> new TestUiPart<Object>(missingFileUrl));
-        Assert.assertThrows(AssertionError.class, () -> new TestUiPart<Object>(missingFileUrl, new Object()));
+        thrown.expect(AssertionError.class);
+        new TestUiPart<Object>(missingFileUrl);
     }
 
     @Test
     public void constructor_invalidFileUrl_throwsAssertionError() {
         URL invalidFileUrl = getTestFileUrl(INVALID_FILE_PATH);
-        Assert.assertThrows(AssertionError.class, () -> new TestUiPart<Object>(invalidFileUrl));
-        Assert.assertThrows(AssertionError.class, () -> new TestUiPart<Object>(invalidFileUrl, new Object()));
+        thrown.expect(AssertionError.class);
+        new TestUiPart<Object>(invalidFileUrl);
     }
 
     @Test
@@ -55,28 +53,21 @@ public class UiPartTest {
     }
 
     @Test
-    public void constructor_validFileWithFxRootUrl_loadsFile() {
-        URL validFileUrl = getTestFileUrl(VALID_FILE_WITH_FX_ROOT_PATH);
-        TestFxmlObject root = new TestFxmlObject();
-        assertEquals(VALID_FILE_ROOT, new TestUiPart<TestFxmlObject>(validFileUrl, root).getRoot());
-    }
-
-    @Test
     public void constructor_nullFileName_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new TestUiPart<Object>((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> new TestUiPart<Object>((String) null, new Object()));
+        thrown.expect(NullPointerException.class);
+        new TestUiPart<Object>((String) null);
     }
 
     @Test
     public void constructor_missingFileName_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new TestUiPart<Object>(MISSING_FILE_PATH));
-        Assert.assertThrows(NullPointerException.class, () -> new TestUiPart<Object>(MISSING_FILE_PATH, new Object()));
+        thrown.expect(NullPointerException.class);
+        new TestUiPart<Object>(MISSING_FILE_PATH);
     }
 
     @Test
     public void constructor_invalidFileName_throwsAssertionError() {
-        Assert.assertThrows(AssertionError.class, () -> new TestUiPart<Object>(INVALID_FILE_PATH));
-        Assert.assertThrows(AssertionError.class, () -> new TestUiPart<Object>(INVALID_FILE_PATH, new Object()));
+        thrown.expect(AssertionError.class);
+        new TestUiPart<Object>(INVALID_FILE_PATH);
     }
 
     private URL getTestFileUrl(String testFilePath) {
@@ -94,14 +85,6 @@ public class UiPartTest {
 
         @FXML
         private TestFxmlObject validFileRoot; // Check that @FXML annotations work
-
-        TestUiPart(URL fxmlFileUrl, T root) {
-            super(fxmlFileUrl, root);
-        }
-
-        TestUiPart(String fxmlFileName, T root) {
-            super(fxmlFileName, root);
-        }
 
         TestUiPart(URL fxmlFileUrl) {
             super(fxmlFileUrl);

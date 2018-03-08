@@ -60,7 +60,7 @@ public abstract class AddressBookSystemTest {
 
     @BeforeClass
     public static void setupBeforeClass() {
-        SystemTestSetupHelper.initialize();
+        SystemTestSetupHelper.initializeStage();
     }
 
     @Before

@@ -924,17 +924,15 @@ Use case ends.
 
 [none]
 * 2a. User does not find the intended book in the list.
-*** Use case restarts form step 1.
 +
-Use case ends.
+Use case restarts form step 1.
 
 * 2b. User gives an invalid index.
 +
 [none]
 ** 2b1. Bibliotek shows an error message.
-*** Use case resumes at step 2.
 +
-Use case ends.
+Use case resumes at step 2.
 
 * 3a. Bibliotek cannot fetch the details of the book within 5s.
 +
@@ -962,9 +960,8 @@ Use case ends.
 +
 [none]
 ** 2a1. Bibliotek shows an error message.
-*** Use case restarts form step 2.
 +
-Use case ends.
+Use case restarts form step 2.
 
 * 2b. The book is already in user's reading list.
 +
@@ -996,9 +993,8 @@ Use case ends.
 +
 [none]
 ** 2a1. Bibliotek says that the rating is invalid and asks user to try again.
-*** Use case resumes at step 2.
 +
-Use case ends.
+Use case resumes at step 2
 
 _{More to be added}_
 

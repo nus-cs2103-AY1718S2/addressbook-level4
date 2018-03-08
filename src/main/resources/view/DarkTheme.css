@@ -349,3 +349,27 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#tags .red {
+    -fx-background-color: #fc6d5f;
+}
+
+#tags .orange {
+    -fx-background-color: #ff9e2b;
+}
+
+#tags .yellow {
+    -fx-background-color: #ffc225;
+}
+
+#tags .green {
+    -fx-background-color: #31b282;
+}
+
+#tags .blue {
+    -fx-background-color: #00b7ee;
+}
+
+#tags .purple {
+    -fx-background-color: #8064a7;
+}

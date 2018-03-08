@@ -820,9 +820,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list out appointments for today |prepare for the work
 
-|`* * *` |user |list out patients of a specific species |contact them for blood donation
+|`* * *` |user |list out patients of a specific species and their owners' contact information |contact them for blood donation
 
-|`* * *` |user |log in with passwords |protect my patients' information
+|`* * *` |user |log in with passwords |protect my patients' and their respective owners' information
 
 |`* * *` |user |reschedule an appointment |make time for emergency situations
 
@@ -850,7 +850,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |transfer a patient from my clinic to another in case of emergency|
 
-|`* *` |user |manage the "rooms" in hospital |make space for new hospitalized patient
+|`* *` |user |manage the "rooms" in hospital |make space for newly hospitalized patient
 
 |`*` |user with many patients in the address book |sort patients by name |locate a patient easily
 |=======================================================================

@@ -864,6 +864,33 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
+[[personal-trainer]] Personal trainer::
+Target audience
+
+[[trainer]] Trainer::
+Same as above
+
+[[client]] Client::
+Indirect target audience, due the the fact the employer-employee relationship between them and trainers
+
+[[track]] Track::
+Understanding the fitness(e.g. weight loss/gain, calories, protein) progress of the clients
+
+[[meal-plans]] Meal plan::
+A combination of dietary information that should be followed
+
+[[training]] Training::
+A period of time when client is working out
+
+[[session]] Session::
+Same as above
+
+[[appointment]] Appointment::
+Same as above
+
+[[goals]] Goals::
+A combination of desirable attributes that clients want to achieve
+
 [appendix]
 == Product Survey
 

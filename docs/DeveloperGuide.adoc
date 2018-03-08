@@ -849,9 +849,16 @@ _{More to be added}_
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should work on any <<mainstream-os, mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  A user (vet or vet assistant) with above average typing speed for regular English text (i.e. not code, not system administrative commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should be accessible, even without any Internet connection (or with poor Internet connection).
+.  The system should be able to hold the information of at least 1000 patients (pets) and their respective owners without noticeable sluggishness in performance for typical usage.
+.  The system should be stable (runs without crashing, even for extended hours) and responsive (with a maximum lag of 2 seconds) due to the possibility of patient emergencies.
+.  The system should be reliable and accurate (i.e. information keyed in is guaranteed to be saved, information retrieved is guaranteed to be accurate based on what was keyed in previously).
+.  The system must have sufficient security (such as password protection / encrypted storage file) to protect the confidentiality of the patients (pets) and their respective owners. This is also to ensure compliance with PDPA.
+.  Patient's and owner's information should be easily and accurately backed up, with zero errors in the information.
+.  Restoring patient's and their respective owner's information should be an easy process.
+.  The system should have sufficient commands / functions to ensure that information can be maintained and managed easily. Basic operations such as add, delete, find, update must be included for patients and their respective owners.
 
 _{More to be added}_
 

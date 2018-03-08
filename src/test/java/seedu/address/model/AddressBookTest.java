@@ -1,7 +1,12 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -18,6 +23,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
 
@@ -62,6 +69,29 @@ public class AddressBookTest {
         addressBook.getPersonList().remove(0);
     }
 
+    @Test
+    public void removeUnusedTag_addressBookUnchanged() throws Exception {
+        AddressBook addressBookAB = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        addressBookAB.removeTag(new Tag(VALID_TAG_UNUSED));
+
+        AddressBook addressBookExpected = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+
+        //should be equal as unused tag removed
+        assertEquals(addressBookExpected, addressBookAB);
+    }
+
+    @Test
+    public void removeTag_multiplePersons_addressBookChanged() throws Exception {
+        AddressBook addressBookAB = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        addressBookAB.removeTag(new Tag(VALID_TAG_FRIEND));
+
+        Person amyWoFriendTag = new PersonBuilder(AMY).withTags().build();
+        Person bobWoFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        AddressBook addressBookAfterChange = new AddressBookBuilder.withPerson(amyWoFriendTag)
+                .withPerson(bobWoFriendTag).build();
+
+        assertEquals(expectedAddressBook, addressBookWithBobAndAmy);
+    }
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);

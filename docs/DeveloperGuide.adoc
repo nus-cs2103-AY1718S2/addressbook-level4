@@ -868,7 +868,7 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list all books in his reading list.
-2.  Bibliotek shows a list the books.
+2.  Bibliotek shows a list of the books.
 +
 Use case ends.
 

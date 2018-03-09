@@ -5,6 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
@@ -69,4 +72,12 @@ public class PersonCardTest extends GuiUnitTest {
         // verify person details are displayed correctly
         assertCardDisplaysPerson(expectedPerson, personCardHandle);
     }
+
+    private static void assertTagsEqual(Person expectedPerson, PersonCardHandle actualCard) {
+        List<String> expectedTags = expectedPerson.getTags().stream()
+                .map(tag -> tag.tagName).collect(Collectors.toList());
+        assertEquals(expectedTags, actualCard.getTags());
+    }
+
+
 }

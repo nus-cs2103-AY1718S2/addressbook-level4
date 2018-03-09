@@ -31,8 +31,6 @@ import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 

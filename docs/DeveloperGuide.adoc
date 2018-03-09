@@ -1,7 +1,6 @@
 = Bibliotek - Developer Guide
-:toc:
-:toc-title:
-:toc-placement: preamble
+:toc: left
+:toc-title: Table of Contents
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets

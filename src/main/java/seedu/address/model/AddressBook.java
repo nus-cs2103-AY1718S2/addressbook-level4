@@ -61,22 +61,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Lists all the current tags that are used.
-     * @return a continuous String of tags in UniqueTagList separated by a nextline between each tag.
-     */
-    public String listTags() {
-        String tagString = "";
-
-        Iterator it = tags.iterator();
-        while (it.hasNext()) {
-            Tag nextTag = (Tag) it.next();
-            tagString += (nextTag.toString() + "\n");
-        }
-
-        return tagString;
-    }
-
-    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {

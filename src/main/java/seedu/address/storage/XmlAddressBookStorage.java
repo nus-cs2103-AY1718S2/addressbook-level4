@@ -17,6 +17,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
  */
+@Deprecated
 public class XmlAddressBookStorage implements AddressBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
@@ -52,7 +53,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             return Optional.empty();
         }
 
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadAbDataFromSaveFile(new File(filePath));
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
@@ -76,7 +77,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+        XmlFileStorage.saveAbDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
 }

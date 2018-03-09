@@ -14,6 +14,7 @@ import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.testutil.TypicalPersons;
 
+@Deprecated
 public class XmlSerializableAddressBookTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableAddressBookTest/");

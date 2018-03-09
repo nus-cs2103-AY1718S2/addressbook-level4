@@ -19,6 +19,7 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly version of the Person.
  */
+@Deprecated
 public class XmlAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";

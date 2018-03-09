@@ -9,6 +9,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 /**
  * Represents a storage for {@link seedu.address.model.AddressBook}.
  */
+@Deprecated
 public interface AddressBookStorage {
 
     /**

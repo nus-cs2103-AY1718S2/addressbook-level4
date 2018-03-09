@@ -81,6 +81,4 @@ public class PersonCardTest extends GuiUnitTest {
                 .map(tag -> tag.tagName).collect(Collectors.toList());
         assertEquals(expectedTags, personCard.getTags());
     }
-
-
 }

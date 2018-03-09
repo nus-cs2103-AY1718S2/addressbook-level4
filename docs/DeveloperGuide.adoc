@@ -853,7 +853,7 @@ Use case resumes at step 2.
 2.  User requests to list persons
 3.  AddressBook shows a list of persons with the filter applied
 4.  User requests to see the page of a specific person in the list
-5.  AddressBook shows the page of the specified platform.
+5.  AddressBook shows the page of the specified platform
 +
 Use case ends.
 

@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +15,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.Person;
 
+@Deprecated
 public class PersonListPanelTest extends GuiUnitTest {
     private static final ObservableList<Person> TYPICAL_PERSONS =
             FXCollections.observableList(getTypicalPersons());
@@ -41,7 +40,6 @@ public class PersonListPanelTest extends GuiUnitTest {
             Person expectedPerson = TYPICAL_PERSONS.get(i);
             PersonCardHandle actualCard = personListPanelHandle.getPersonCardHandle(i);
 
-            assertCardDisplaysPerson(expectedPerson, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }
@@ -53,6 +51,5 @@ public class PersonListPanelTest extends GuiUnitTest {
 
         PersonCardHandle expectedCard = personListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
         PersonCardHandle selectedCard = personListPanelHandle.getHandleToSelectedCard();
-        assertCardEquals(expectedCard, selectedCard);
     }
 }

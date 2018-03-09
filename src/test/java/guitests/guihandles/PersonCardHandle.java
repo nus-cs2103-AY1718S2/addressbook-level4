@@ -10,6 +10,7 @@ import javafx.scene.layout.Region;
 /**
  * Provides a handle to a person card in the person list panel.
  */
+@Deprecated
 public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";

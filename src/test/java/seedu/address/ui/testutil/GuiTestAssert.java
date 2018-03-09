@@ -29,10 +29,10 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysBook(Book expectedBook, BookCardHandle actualCard) {
         assertEquals(expectedBook.getTitle().title, actualCard.getTitle());
-        assertEquals(expectedBook.getAuthors().stream().map(author -> author.fullName).collect(Collectors.toList()),
-                actualCard.getAuthors());
-        assertEquals(expectedBook.getCategories().stream().map(category -> category.category).collect(Collectors.toList()),
-                actualCard.getCategories());
+        assertEquals(expectedBook.getAuthors().stream().map(author -> author.fullName)
+                        .collect(Collectors.toList()), actualCard.getAuthors());
+        assertEquals(expectedBook.getCategories().stream().map(category -> category.category)
+                        .collect(Collectors.toList()), actualCard.getCategories());
     }
 
     /**

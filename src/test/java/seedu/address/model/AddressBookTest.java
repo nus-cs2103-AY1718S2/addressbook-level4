@@ -89,7 +89,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void removeTag_TagFoundOnMultiplePersons_tagRemoved() {
+    public void removeTag_tagFoundOnMultiplePersons_tagRemoved() {
         AddressBook testCase = new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
         try {
             testCase.removeTag(new Tag(VALID_TAG_FRIEND));

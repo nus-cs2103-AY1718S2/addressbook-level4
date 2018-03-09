@@ -7,11 +7,11 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class NewResultAvailableEvent extends BaseEvent {
 
-    public final boolean isFailed;
+    public final boolean hasError;
     public final String message;
 
-    public NewResultAvailableEvent(String message, boolean isFailed) {
-        this.isFailed = isFailed;
+    public NewResultAvailableEvent(String message, boolean hasError) {
+        this.hasError = hasError;
         this.message = message;
     }
 

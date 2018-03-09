@@ -39,8 +39,8 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
 
-        if (event.isFailed) {
-            setStyleToIndicateCommandFailure();
+        if (event.hasError) {
+            setStyleToIndicateResultError();
         } else {
             setStyleToDefault();
         }
@@ -54,9 +54,9 @@ public class ResultDisplay extends UiPart<Region> {
     }
 
     /**
-     * Sets the result display style to indicate that a command is failed.
+     * Sets the result display style to indicate that a result has an error.
      */
-    private void setStyleToIndicateCommandFailure() {
+    private void setStyleToIndicateResultError() {
         ObservableList<String> styleClass = resultDisplay.getStyleClass();
 
         if (styleClass.contains(ERROR_STYLE_CLASS)) {

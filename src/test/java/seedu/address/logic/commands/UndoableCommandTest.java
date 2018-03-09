@@ -5,7 +5,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstBook;
 import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class UndoableCommandTest {
         deleteFirstBook(expectedModel);
         assertEquals(expectedModel, model);
 
-        showBookAtIndex(model, INDEX_FIRST_PERSON);
+        showBookAtIndex(model, INDEX_FIRST_BOOK);
 
         // undo() should cause the model's filtered list to show all books
         dummyCommand.undo();
@@ -38,7 +38,7 @@ public class UndoableCommandTest {
 
     @Test
     public void redo() {
-        showBookAtIndex(model, INDEX_FIRST_PERSON);
+        showBookAtIndex(model, INDEX_FIRST_BOOK);
 
         // redo() should cause the model's filtered list to show all books
         dummyCommand.redo();

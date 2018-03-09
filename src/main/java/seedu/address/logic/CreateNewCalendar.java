@@ -31,6 +31,10 @@ import seedu.address.ui.BrowserPanel;
  */
 public class CreateNewCalendar {
 
+
+    /** Application name. */
+    private static final String APPLICATION_NAME = "Employees Tracker";
+
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
             System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
@@ -100,6 +104,7 @@ public class CreateNewCalendar {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
                 .build();
     }
 

@@ -71,6 +71,9 @@ public class TestAddEventCommand extends Command {
     private static final List<String> SCOPES =
             Arrays.asList(CalendarScopes.CALENDAR);
 
+    /** Application name. */
+    private static final String APPLICATION_NAME = "Employees Tracker";
+
     static {
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -137,6 +140,7 @@ public class TestAddEventCommand extends Command {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
                 .build();
     }
 

@@ -120,12 +120,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);
 
-        /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
-
-        /* Case: filters the person list before adding -> added */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(IDA);
-
         /* ------------------------ Perform add operation while a person card is selected --------------------------- */
 
         /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */

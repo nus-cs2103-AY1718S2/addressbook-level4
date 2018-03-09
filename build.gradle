@@ -170,7 +170,7 @@ asciidoctor {
                'source-highlighter': 'coderay',
                icons: 'font',
                experimental: true,
-               sectlinks: true,
+               sectAnchors: true,
                idprefix: '',  // for compatibility with GitHub preview
                idseparator: '-'
 }

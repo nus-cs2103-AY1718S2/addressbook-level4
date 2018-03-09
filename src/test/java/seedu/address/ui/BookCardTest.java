@@ -41,7 +41,7 @@ public class BookCardTest extends GuiUnitTest {
         assertTrue(bookCard.equals(bookCard));
 
         // null -> returns false
-        assertFalse(bookCard.equals(null));
+        assertFalse(bookCard == null);
 
         // different types -> returns false
         assertFalse(bookCard.equals(0));

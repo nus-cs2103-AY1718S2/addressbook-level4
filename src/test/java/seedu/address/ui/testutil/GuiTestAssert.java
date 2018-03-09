@@ -26,7 +26,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
 
         expectedCard.getTags().forEach(tag ->
-        assertEquals(expectedCard.getTagStyles(tag), actualCard.getTagStyles(tag)));
+            assertEquals(expectedCard.getTagStyles(tag), actualCard.getTagStyles(tag)));
     }
 
     /**

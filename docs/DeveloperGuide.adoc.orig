@@ -846,19 +846,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |counselor |check what prisoners' crimes |understand my patients better
 
-|=======================================================================
-
 _{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` (AB) unless specified otherwise)
+(For all use cases below, the *System* is the `AddressBook` unless specified otherwise)
 
 [discrete]
-=== Use case: Add a prisoner
-Actor: police officer (PO)
+<<<<<<< HEAD
+=== Use case: Delete person
+Actor: user
 
+=======
+=== Use case: Add a prisoner
+(User is the "Police Officer".)
+>>>>>>> master
 *MSS*
 
 1.  PO requests to add prisoner
@@ -868,7 +871,7 @@ Actor: police officer (PO)
 5.  PO requests to view a specific cell’s prisoner’s details
 6.  AB shows details of prisoner in cell
 7.  PO requests to add a prisoner to a specific cell
-8.  AB adds prisoner to cell
+8.   AB adds prisoner to cell
 +
 Use case ends.
 
@@ -905,15 +908,15 @@ Use case resumes at step 6.
 
 [discrete]
 === Use case: Assign prisoner to a cell
-Actor: police officer (PO)
+Actor: police officer
 
 *MSS*
 
-1.  PO selects a prisoner
-2.  PO requests a list of available cells with room available
-3.  AB shows a list of available cells
-4.  PO requests to add prisoner to vacant cell
-5.  AB updates prisoner status and cell status
+1.  Police officer selects a prisoner
+2.  Police officer requests a list of available cells with room available
+3.  AddressBook shows a list of available cells
+4.  Police officer requests to add prisoner to vacant cell
+5.  AddressBook updates prisoner status and cell status
 +
 Use case ends.
 
@@ -927,29 +930,9 @@ Use case ends.
 * 3a. Prisoner is already assigned to a cell.
 +
 [none]
-** 3a1. AB removes cell tag from prisoner status and removes prisoner from cell status
+** 3a1. AddressBook removes cell tag from prisoner status and removes prisoner from cell status
 +
 Use case resumes at step 2.
-[discrete]
-=== Use case: Get the list of prisoners in a certain cell
-Actor: police officer (PO)
-
-*MSS*
-
-1.  PO requests a list of cells
-2.  AB shows the list of cells
-3.  PO requests to view the list of prisoners assigned to a specific cell
-4.  AB shows a list of of prisoners assigned to the cell
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 3a. PO does not have access rights to view the details of the requested cell
-+
-Use case ends.
-
 
 _{More to be added}_
 
@@ -959,10 +942,13 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+<<<<<<< HEAD
 .  Should work for 32-bit and 64-bit environments
 .  System should respond within 2 seconds
+=======
 .  Should have different levels of access for users of different ranks.
 .  Should have a backup copy at all times in case a user accidentally deletes any information.
+>>>>>>> master
 
 _{More to be added}_
 

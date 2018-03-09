@@ -190,6 +190,7 @@ public abstract class AddressBookSystemTest {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
+        statusBarFooterHandle.rememberNumberOfPeople();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
     }
@@ -253,6 +254,7 @@ public abstract class AddressBookSystemTest {
     protected void assertStatusBarUnchanged() {
         StatusBarFooterHandle handle = getStatusBarFooter();
         assertFalse(handle.isSaveLocationChanged());
+        assertFalse(handle.isNumberOfPeopleChanged());
         assertFalse(handle.isSyncStatusChanged());
     }
 
@@ -265,6 +267,21 @@ public abstract class AddressBookSystemTest {
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
+        assertFalse(handle.isNumberOfPeopleChanged());
+        assertFalse(handle.isSaveLocationChanged());
+    }
+
+    /**
+     * Asserts that the total number of people and sync status in the status bar was changed to the timing of
+     * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
+     */
+    protected void assertStatusBarChangedExceptSaveLocation(int expectedNumberOfPeople) {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+        String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
+        String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
+        String expectedNumberOfPeopleStatus = expectedNumberOfPeople + " person(s) total.";
+        assertEquals(expectedSyncStatus, handle.getSyncStatus());
+        assertEquals(expectedNumberOfPeopleStatus, handle.getNumberOfPeopleStatus());
         assertFalse(handle.isSaveLocationChanged());
     }
 
@@ -279,6 +296,8 @@ public abstract class AddressBookSystemTest {
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+            assertEquals(testApp.getModel().getAddressBook().getPersonList().size() + " person(s) total.",
+                    getStatusBarFooter().getNumberOfPeopleStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }

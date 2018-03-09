@@ -31,7 +31,6 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                 ||
                 keywords.stream()
                         .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
-
     }
 
     private String getStringOfTags(Person person) {

@@ -12,6 +12,7 @@ import seedu.address.model.person.Person;
 /**
  * A utility class for Person.
  */
+@Deprecated
 public class PersonUtil {
 
     /**

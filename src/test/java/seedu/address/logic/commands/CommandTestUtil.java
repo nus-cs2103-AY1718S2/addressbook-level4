@@ -4,10 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,17 +21,33 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
+
+    public static final String VALID_TITLE_ONE = "Freakonomics";
+    public static final String VALID_TITLE_TWO = "Nudge";
+    public static final String VALID_AUTHOR_ONE = "Stephen J. Dubner";
+    public static final String VALID_AUTHOR_TWO = "Steven Levitt";
+    public static final String VALID_AUTHOR_THREE = "Cass Sunstein";
+    public static final String VALID_AUTHOR_FOUR = "Richard Thaler";
+    public static final String VALID_CATEGORY_ONE = "Psychology";
+    public static final String VALID_CATEGORY_TWO = "Economics";
+    public static final String VALID_CATEGORY_THREE = "Science Fiction";
+    public static final String VALID_CATEGORY_FOUR = "Fiction";
+    public static final String VALID_DESCRIPTION_ONE = "Which is more dangerous, "
+            + "a gun or a swimming pool?";
+    public static final String VALID_DESCRIPTION_TWO = "Nudge is about how we make "
+            + "choices and how we can make better ones.";
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
@@ -39,6 +59,19 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+
+    public static final String TITLE_DESC_ONE = " " + PREFIX_TITLE + VALID_TITLE_ONE;
+    public static final String TITLE_DESC_TWO = " " + PREFIX_TITLE + VALID_TITLE_TWO;
+    public static final String AUTHOR_DESC_ONE = " " + PREFIX_AUTHOR + VALID_AUTHOR_ONE;
+    public static final String AUTHOR_DESC_TWO = " " + PREFIX_AUTHOR + VALID_AUTHOR_TWO;
+    public static final String AUTHOR_DESC_THREE = " " + PREFIX_AUTHOR + VALID_AUTHOR_THREE;
+    public static final String AUTHOR_DESC_FOUR = " " + PREFIX_AUTHOR + VALID_AUTHOR_FOUR;
+    public static final String CATEGORY_DESC_ONE = " " + PREFIX_CATEGORY + VALID_CATEGORY_ONE;
+    public static final String CATEGORY_DESC_TWO = " " + PREFIX_CATEGORY + VALID_CATEGORY_TWO;
+    public static final String CATEGORY_DESC_THREE = " " + PREFIX_CATEGORY + VALID_CATEGORY_THREE;
+    public static final String CATEGORY_DESC_FOUR = " " + PREFIX_CATEGORY + VALID_CATEGORY_FOUR;
+    public static final String DESCRIPTION_DESC_ONE = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_ONE;
+    public static final String DESCRIPTION_DESC_TWO = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_TWO;
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -60,25 +93,13 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
-
-    static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-    }
-
     /**
      * Executes the given {@code command}, confirms that <br>
      * - the result message matches {@code expectedMessage} <br>
      * - the {@code actualModel} matches {@code expectedModel}
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
+                                            Model expectedModel) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);
@@ -92,21 +113,46 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the book shelf and the filtered book list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        BookShelf expectedBookShelf = new BookShelf(actualModel.getBookShelf());
+        List<Book> expectedFilteredList = new ArrayList<>(actualModel.getFilteredBookList());
 
         try {
             command.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedBookShelf, actualModel.getBookShelf());
+            assertEquals(expectedFilteredList, actualModel.getFilteredBookList());
+        }
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the book at the given {@code targetIndex} in the
+     * {@code model}'s book shelf.
+     */
+    public static void showBookAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredBookList().size());
+
+        Book book = model.getFilteredBookList().get(targetIndex.getZeroBased());
+        model.updateFilteredBookList(thisBook -> thisBook.equals(book));
+
+        assertEquals(1, model.getFilteredBookList().size());
+    }
+
+    /**
+     * Deletes the first book in {@code model}'s filtered list from {@code model}'s book shelf.
+     */
+    public static void deleteFirstBook(Model model) {
+        Book firstBook = model.getFilteredBookList().get(0);
+        try {
+            model.deleteBook(firstBook);
+        } catch (BookNotFoundException pnfe) {
+            throw new AssertionError("Book in filtered list must exist in model.", pnfe);
         }
     }
 
@@ -114,6 +160,7 @@ public class CommandTestUtil {
      * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
+    @Deprecated
     public static void showPersonAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
 
@@ -127,6 +174,7 @@ public class CommandTestUtil {
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
+    @Deprecated
     public static void deleteFirstPerson(Model model) {
         Person firstPerson = model.getFilteredPersonList().get(0);
         try {

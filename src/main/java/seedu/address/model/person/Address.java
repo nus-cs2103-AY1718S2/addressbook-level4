@@ -55,10 +55,10 @@ public class Address {
         return value.hashCode();
     }
 
-    public String urlstyle(){
-        String modified = value.replaceAll(" " ,"+");
-
-    return modified;
+    //returns the url form of the address
+    public String urlstyle() {
+        String modified = value.replaceAll(" " , "+");
+        return modified;
     }
 
 }

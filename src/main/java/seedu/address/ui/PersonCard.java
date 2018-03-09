@@ -16,8 +16,8 @@ public class PersonCard extends UiPart<Region> {
     //@@author WyinKok-reused
     //Reused from https://github.com/se-edu/addressbook-level4/pull/798 with minor modifications
     private static final String[] TAG_COLORS =
-            {"yellow", "red", "orange", "pink", "purple", "blue",
-            "teal", "green", "white"};
+        {"yellow", "red", "orange", "pink", "purple", "blue",
+        "teal", "green", "white"};
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -72,7 +72,7 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
 
-        tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
+            tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
     }

@@ -349,3 +349,33 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#tags .label.red {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+}
+
+#tags .label.blue {
+    -fx-text-fill: black;
+    -fx-background-color: lightblue;
+}
+
+#tags .label.yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .label.grey {
+    -fx-text-fill: black;
+    -fx-background-color: grey;
+}
+
+#tags .label.burlywood {
+    -fx-text-fill: black;
+    -fx-background-color: burlywood;
+}
+
+#tags .label.plum {
+    -fx-text-fill: white;
+    -fx-background-color: plum;
+}

@@ -21,6 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String ITEM_COUNT_STATUS = "%d item(s) total";
 
     /**
      * Used to generate time stamps.
@@ -40,11 +41,14 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar itemCountStatus;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(int numItems, String saveLocation) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
+        setItemCountStatus(numItems);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
     }
@@ -67,6 +71,10 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.saveLocationStatus.setText(location));
     }
 
+    private void setItemCountStatus(int numItems) {
+        Platform.runLater(() -> this.itemCountStatus.setText(String.format(ITEM_COUNT_STATUS, numItems)));
+    }
+
     private void setSyncStatus(String status) {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
@@ -77,5 +85,6 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setItemCountStatus(abce.data.getPersonList().size());
     }
 }

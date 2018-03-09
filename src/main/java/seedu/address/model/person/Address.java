@@ -55,7 +55,8 @@ public class Address {
         return value.hashCode();
     }
 
-    /*returns the url form of the address
+    /**
+     * returns the url form of the address
     */
     public String urlstyle() {
         String modified = value.replaceAll(" " , "+");

@@ -22,7 +22,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "[" + category + "] ";
+        return category;
     }
 
     @Override

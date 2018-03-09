@@ -342,10 +342,63 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+    -fx-text-fill: #000000;
+    -fx-background-color: #FFFFFF;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+/* @@author guekling-reused */
+/* Reused from https://github.com/se-edu/addressbook-level4/pull/798/files with minor modifications */
+
+#tags .blue {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #0000FF;
+}
+
+#tags .brown {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #A52A2A;
+}
+
+#tags .gray {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #808080;
+}
+
+#tags .green {
+    -fx-text-fill: #000000;
+    -fx-background-color: #008000;
+}
+
+#tags .maroon {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #800000;
+}
+
+#tags .orange {
+    -fx-text-fill: #000000;
+    -fx-background-color: #FFA500;
+}
+
+#tags .pink {
+    -fx-text-fill: #000000;
+    -fx-background-color: #FFC0CB;
+}
+
+#tags .purple {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #800080;
+}
+
+#tags .red {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #FF0000;
+}
+
+#tags .yellow {
+    -fx-text-fill: #000000;
+    -fx-background-color: #FFFF00;
 }

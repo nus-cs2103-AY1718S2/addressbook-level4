@@ -68,4 +68,15 @@ public class TaskCardHandle extends NodeHandle<Node> {
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
+
+    // @@author guekling-reused
+    // Reused from https://github.com/se-edu/addressbook-level4/pull/798/files with minor modifications
+    public List<String> getTagStyleClasses(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
+    }
 }

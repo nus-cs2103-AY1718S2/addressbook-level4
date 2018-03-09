@@ -40,8 +40,8 @@ public class BookCard extends UiPart<Region> {
         this.book = book;
         id.setText(displayedIndex + ". ");
         title.setText(book.getTitle().title);
-        book.getAuthors().forEach(author -> authors.getChildren().add(new Label(author.fullName)));
-        book.getCategories().forEach(category -> categories.getChildren().add(new Label(category.category)));
+        book.getAuthors().forEach(author -> authors.getChildren().add(new Label(author.fullName + "; ")));
+        book.getCategories().forEach(category -> categories.getChildren().add(new Label(category.toString())));
     }
 
     @Override

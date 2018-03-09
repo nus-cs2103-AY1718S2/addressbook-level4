@@ -844,7 +844,59 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+
+=== Use case: Add person
+
+*MSS*
+
+1. User requests to add person
+2. AddressBook prompts for data input
+3. User inputs data for person to be added
+4. AddressBook adds the new person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Person of the same name is already in AddressBook
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add goal for person
+
+*MSS*
+
+1. User requests to add goal
+2. AddressBook prompts for data input
+3. User inputs person name and goal to be added
+4. AddressBook adds the new goal for the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 3b. The given goal is empty.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+
 
 [appendix]
 == Non Functional Requirements

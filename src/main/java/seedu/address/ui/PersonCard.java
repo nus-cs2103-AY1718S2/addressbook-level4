@@ -52,8 +52,8 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-                tagLabel.getStyleClass().add(TAG_COLOUR_STYLES[0]);
-                    tags.getChildren().add(tagLabel); });
+            tagLabel.getStyleClass().add(TAG_COLOUR_STYLES[0]);
+            tags.getChildren().add(tagLabel); });
     }
 
     /** to be implemented with more tag colours

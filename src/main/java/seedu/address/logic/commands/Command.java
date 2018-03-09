@@ -21,7 +21,7 @@ public abstract class Command {
      * @return summary message for books displayed
      */
     public static String getMessageForBookListShownSummary(int displaySize) {
-        return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
+        return String.format(Messages.MESSAGE_BOOKS_LISTED_OVERVIEW, displaySize);
     }
 
     /**

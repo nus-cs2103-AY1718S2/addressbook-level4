@@ -25,12 +25,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
         //Consider optimizing code by accessing stream once. May not be so pertinent since keywords is a short stream.
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
-                ||
-                keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(stringOfTags, keyword))
-                ||
-                keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+                || keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(stringOfTags, keyword))
+                || keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
     }
 
     private String getStringOfTags(Person person) {

@@ -73,10 +73,13 @@ public class PersonCardTest extends GuiUnitTest {
         assertCardDisplaysPerson(expectedPerson, personCardHandle);
     }
 
-    private static void assertTagsEqual(Person expectedPerson, PersonCardHandle actualCard) {
+    /**
+     * Asserts that {@code personCard} matches the tag details and color of {@code expectedPerson} correctly
+     */
+    private static void assertTagsMatching(Person expectedPerson, PersonCardHandle personCard) {
         List<String> expectedTags = expectedPerson.getTags().stream()
                 .map(tag -> tag.tagName).collect(Collectors.toList());
-        assertEquals(expectedTags, actualCard.getTags());
+        assertEquals(expectedTags, personCard.getTags());
     }
 
 

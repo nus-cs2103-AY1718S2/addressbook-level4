@@ -56,6 +56,7 @@ public class Address {
     }
 
     //returns the url form of the address
+    @Override
     public String urlstyle() {
         String modified = value.replaceAll(" " , "+");
         return modified;

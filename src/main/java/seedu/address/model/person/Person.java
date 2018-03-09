@@ -21,11 +21,12 @@ public class Person {
     private final Address address;
 
     private final UniqueTagList tags;
+    private final String calendarId;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String calendarId) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -33,6 +34,7 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.calendarId = calendarId;
     }
 
     public Name getName() {
@@ -50,6 +52,8 @@ public class Person {
     public Address getAddress() {
         return address;
     }
+
+    public String getCalendarId() { return calendarId; }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -95,6 +99,11 @@ public class Person {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    public String getPersonUrl() {
+        return "https://calendar.google.com/calendar/embed?src="
+                + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
     }
 
 }

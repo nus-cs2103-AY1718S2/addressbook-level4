@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -46,7 +47,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Person person = new Person(name, phone, email, address, tagList);
+            String calendarID = CreateNewCalendar.execute(name.fullName);
+            Person person = new Person(name, phone, email, address, tagList, calendarID);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Your TA - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F09-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 

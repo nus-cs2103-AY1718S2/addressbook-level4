@@ -239,6 +239,10 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+=== Getting the location of the student: `double-click`
+
+Double-click on any contact in your contacts list
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

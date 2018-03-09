@@ -68,7 +68,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         String tagString = "";
 
         Iterator it = tags.iterator();
-        while (it.hasNext()) { 
+        while (it.hasNext()) {
             Tag nextTag = (Tag) it.next();
             tagString += (nextTag.toString() + "\n");
         }

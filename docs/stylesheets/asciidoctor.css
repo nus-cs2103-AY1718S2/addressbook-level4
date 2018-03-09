@@ -212,10 +212,12 @@ p a > code:hover { color: #444444; }
 #header br + span.author { padding-left: 0; }
 #header br + span.author:before { content: ", "; }
 #toc { border-bottom: 1px dashed #cccccc; padding-top: 1.5em; padding-bottom: 1.25em; }
+#toc a { text-decoration: none; }
 #toc > ul { margin-left: 0.25em; }
 #toc ul.sectlevel0 > li > a { font-style: italic; }
 #toc ul.sectlevel0 ul.sectlevel1 { margin-left: 0; margin-top: 0.5em; margin-bottom: 0.5em; }
 #toc ul { list-style-type: none; }
+#toc li { margin-top: 0.3em; }
 #toctitle { color: #3c3d3f; }
 @media only screen and (min-width: 1280px) { body.toc2 { padding-left: 20em; }
     #toc.toc2 { position: fixed; width: 20em; left: 0; top: 0; border-right: 1px solid #cccccc; border-bottom: 0; z-index: 1000; padding: 1em; height: 100%; overflow: auto; }

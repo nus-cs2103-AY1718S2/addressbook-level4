@@ -34,6 +34,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    // Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
     @Test
     public void deleteUnusedTag_modelUnchanged() throws Exception {
         AddressBook addressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
@@ -47,6 +48,7 @@ public class ModelManagerTest {
         assertTrue(modelManager.equals(modelManagerCopy));
     }
 
+    // Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
     @Test
     public void deleteTag_multiplePersons_modelChanged() throws Exception {
         AddressBook addressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();

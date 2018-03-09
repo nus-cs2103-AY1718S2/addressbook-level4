@@ -69,6 +69,7 @@ public class AddressBookTest {
         addressBook.getPersonList().remove(0);
     }
 
+    // Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
     @Test
     public void removeUnusedTag_addressBookUnchanged() throws Exception {
         AddressBook addressBookAmyBob = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
@@ -80,6 +81,7 @@ public class AddressBookTest {
         assertEquals(addressBookExpected, addressBookAmyBob);
     }
 
+    // Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
     @Test
     public void removeTag_multiplePersons_addressBookChanged() throws Exception {
         AddressBook addressBookAmyBob = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
@@ -92,6 +94,7 @@ public class AddressBookTest {
 
         assertEquals(addressBookAfterChange, addressBookAmyBob);
     }
+
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);

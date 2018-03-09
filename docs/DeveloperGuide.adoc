@@ -849,11 +849,22 @@ _{More to be added}_
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should work on any mainstream OS as long as it has Java 1.8.0_60 or higher installed.
+.  Should be able to hold up to 150 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Works on both 32-bit and 64-bit machines
+.  Should respond within 1 second of query
+.  Should be intuitive and easy to use for a first-time user.
+.  Should be able to handle any sort of input, i.e. should recover from invalid input.
+.  Should have audience-focused user guides and developer guides.
+.  Should have command names that concisely describe their function.
+.  Should be an open-source project.
+.  Development be cost effective or free.
+.  App should be able to work offline.
+.  Should save and backup the state of the addressbook regularly.
+.  Current versions must be backward compatible with older versions to support undo.
+.  The user interface should be simple and minimise distractions so that user can continue with their work in a focused manner.
 
-_{More to be added}_
 
 [appendix]
 == Glossary

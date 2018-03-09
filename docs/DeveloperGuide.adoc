@@ -1,7 +1,6 @@
 = Bibliotek - Developer Guide
-:toc:
-:toc-title:
-:toc-placement: preamble
+:toc: left
+:toc-title: Table of Contents
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -795,7 +794,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="70%",cols="<18%,<18%,29%,34%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
@@ -1019,9 +1018,6 @@ Windows, Linux, Unix, OS-X
 
 [[dos-style-commands]] DOS style commands::
 The use of backslashes '/' to indicate command parameters
-
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
 
 [appendix]
 == Product Survey

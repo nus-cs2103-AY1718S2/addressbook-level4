@@ -3,7 +3,6 @@ package systemtests;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
@@ -33,7 +32,6 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.BookShelf;
@@ -145,15 +143,7 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
-     * Displays all books with any parts of their title matching {@code keyword} (case-insensitive).
-     */
-    protected void showBooksWithTitle(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assertTrue(getModel().getFilteredBookList().size() < getModel().getBookShelf().getBookList().size());
-    }
-
-    /**
-     * Selects the book at {@code index} of the displayed list.
+     * Selects the person at {@code index} of the displayed list.
      */
     protected void selectBook(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());

@@ -31,8 +31,6 @@ import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -120,12 +118,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);
 
-        /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
-
-        /* Case: filters the person list before adding -> added */
-        showBooksWithTitle(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(IDA);
-
         /* ------------------------ Perform add operation while a person card is selected --------------------------- */
 
         /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
@@ -136,14 +128,14 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: add a duplicate person -> rejected */
         command = PersonUtil.getAddCommand(HOON);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOK);
 
         /* Case: add a duplicate person except with different tags -> rejected */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
         // AddressBook#addPerson(Person)
         command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOK);
 
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;

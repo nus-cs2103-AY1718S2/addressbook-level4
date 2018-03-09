@@ -1019,9 +1019,6 @@ Windows, Linux, Unix, OS-X
 [[dos-style-commands]] DOS style commands::
 The use of backslashes '/' to indicate command parameters
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
-
 [appendix]
 == Product Survey
 

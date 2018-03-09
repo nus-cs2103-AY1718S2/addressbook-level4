@@ -33,7 +33,15 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "owesMoney" + "\n"
+            + "or\n"
+            +"Example: " + COMMANND_ALIAS + " "
+            + PREFIX_NAME + "Lee Hua "
+            + PREFIX_PHONE + "81227675 "
+            + PREFIX_EMAIL + "leehua@example.com "
+            + PREFIX_ADDRESS + "318, Simei Street 2, #05-05 "
+            + PREFIX_TAG + "friends "
+            + PREFIX_TAG + "lovesCat";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

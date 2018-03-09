@@ -15,6 +15,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -192,5 +193,29 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String resume} into an {@code Resume}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code resume} is invalid.
+     */
+    public static Resume parseResume(String resume) throws IllegalValueException {
+        requireNonNull(resume);
+        String trimmedResume = resume.trim();
+        if (!Resume.isValidResume(trimmedResume)) {
+            throw new IllegalValueException(Resume.MESSAGE_RESUME_CONSTRAINTS);
+        }
+        return new Resume(trimmedResume);
+    }
+
+    /**
+     * Parses a {@code Optional<String> resume} into an {@code Optional<Resume>} if {@code resume} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Resume> parseResume(Optional<String> resume) throws IllegalValueException {
+        requireNonNull(resume);
+        return resume.isPresent() ? Optional.of(parseResume(resume.get())) : Optional.empty();
     }
 }

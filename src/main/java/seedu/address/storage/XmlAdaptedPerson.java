@@ -15,6 +15,7 @@ import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,6 +35,8 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String expectedGraduationYear;
+    @XmlElement(required = true)
+    private String resume;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -48,12 +51,13 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
-                            List<XmlAdaptedTag> tagged) {
+                            String resume, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
+        this.resume = resume;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -70,6 +74,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         expectedGraduationYear = source.getExpectedGraduationYear().value;
+        resume = source.getResume().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -128,8 +133,16 @@ public class XmlAdaptedPerson {
         }
         final ExpectedGraduationYear expectedGraduationYear = new ExpectedGraduationYear(this.expectedGraduationYear);
 
+        if (this.resume == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Resume.class.getSimpleName()));
+        }
+        if (!Resume.isValidResume(this.resume)) {
+            throw new IllegalValueException(Resume.MESSAGE_RESUME_CONSTRAINTS);
+        }
+        final Resume resume = new Resume(this.resume);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, expectedGraduationYear, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, resume, tags);
     }
 
     @Override

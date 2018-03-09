@@ -1,0 +1,124 @@
+package seedu.address.model.person;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+/**
+ * Represents a Person's resume's file name in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidResume(String)}
+ */
+public class Resume {
+    public static final String MESSAGE_RESUME_CONSTRAINTS =
+            "Resume file should exists in the same directory as the jar programme, should be smaller than 1MB "
+                    + "and should be a valid PDF.";
+    private static final int ONEMEGABYTE = 1 * 1024 * 1024;
+    public final String value;
+
+    /**
+     * Constructs a {@code Resume}.
+     *
+     * @param fileName A valid fileName.
+     */
+    public Resume(String fileName) {
+        if (isNull(fileName)) {
+            this.value = null;
+        } else {
+            checkArgument(isValidResume(fileName), MESSAGE_RESUME_CONSTRAINTS);
+            this.value = fileName;
+        }
+    }
+
+    /**
+     * Returns true if a given string is a valid person phone number.
+     */
+    public static boolean isValidResume(String test) {
+        requireNonNull(test);
+        String userDir = System.getProperty("user.dir");
+        File resumeFile = new File(userDir + File.separator + test);
+        if (resumeFile.isDirectory()) {
+            return false;
+        } else if (!resumeFile.exists()) {
+            return false;
+        } else {
+            if (resumeFile.length() > ONEMEGABYTE) {
+                return false;
+            } else {
+                try {
+                    byte[] resumeBytes = Files.readAllBytes(resumeFile.toPath());
+                    return isPdf(resumeBytes);
+                } catch (IOException ioe) {
+                    return false;
+                }
+            }
+        }
+    }
+    /**
+     * Returns true if a given byte array is of pdf type.
+     */
+    private static boolean isPdf(byte[] data) {
+        if (data != null && data.length > 4
+                && data[0] == 0x25 && // %
+                data[1] == 0x50 && // P
+                data[2] == 0x44 && // D
+                data[3] == 0x46 && // F
+                data[4] == 0x2D) { // -
+            // version 1.3 file terminator
+            if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x33
+                    && data[data.length - 7] == 0x25 && // %
+                    data[data.length - 6] == 0x25 && // %
+                    data[data.length - 5] == 0x45 && // E
+                    data[data.length - 4] == 0x4F && // O
+                    data[data.length - 3] == 0x46 && // F
+                    data[data.length - 2] == 0x20 && // SPACE
+                    data[data.length - 1] == 0x0A) { // EOL
+                return true;
+            }
+            // version 1.4 file terminator
+            if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x34
+                    && data[data.length - 6] == 0x25 && // %
+                    data[data.length - 5] == 0x25 && // %
+                    data[data.length - 4] == 0x45 && // E
+                    data[data.length - 3] == 0x4F && // O
+                    data[data.length - 2] == 0x46 && // F
+                    data[data.length - 1] == 0x0A) { // EOL
+                return true;
+            }
+            // version 1.5 file terminator
+            if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x35
+                    && data[data.length - 6] == 0x25 && // %
+                    data[data.length - 5] == 0x25 && // %
+                    data[data.length - 4] == 0x45 && // E
+                    data[data.length - 3] == 0x4F && // O
+                    data[data.length - 2] == 0x46 && // F
+                    data[data.length - 1] == 0x0A) { // EOL
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Resume // instanceof handles nulls
+                && ((isNull(this.value) && isNull(((Resume) other).value)) //both value are null
+                    || this.value.equals(((Resume) other).value))); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+}

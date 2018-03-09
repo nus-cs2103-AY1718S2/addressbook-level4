@@ -122,7 +122,7 @@ public class FindAliasSystemTest extends AddressBookSystemTest {
 
         /* Case: find address of person in address book -> 3 persons found */
         command = FindCommand.COMMAND_ALIAS + " " + DANIEL.getAddress().value;
-        ModelHelper.setFilteredList(expectedModel, CARL,DANIEL,GEORGE);
+        ModelHelper.setFilteredList(expectedModel, CARL, DANIEL, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -135,7 +135,7 @@ public class FindAliasSystemTest extends AddressBookSystemTest {
         /* Case: find tags of person in address book -> 0 persons found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_ALIAS + " " + tags.get(0).tagName;
-        ModelHelper.setFilteredList(expectedModel, ALICE,CARL,DANIEL,ELLE,FIONA,GEORGE);
+        ModelHelper.setFilteredList(expectedModel, ALICE, CARL, DANIEL, ELLE, FIONA, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

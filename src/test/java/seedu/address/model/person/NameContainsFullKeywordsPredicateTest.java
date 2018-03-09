@@ -18,14 +18,17 @@ public class NameContainsFullKeywordsPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
         List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
-        NameContainsFullKeywordsPredicate firstPredicate = new NameContainsFullKeywordsPredicate(firstPredicateKeywordList);
-        NameContainsFullKeywordsPredicate secondPredicate = new NameContainsFullKeywordsPredicate(secondPredicateKeywordList);
+        NameContainsFullKeywordsPredicate firstPredicate = new
+                NameContainsFullKeywordsPredicate(firstPredicateKeywordList);
+        NameContainsFullKeywordsPredicate secondPredicate = new
+                NameContainsFullKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        NameContainsFullKeywordsPredicate firstPredicateCopy = new NameContainsFullKeywordsPredicate(firstPredicateKeywordList);
+        NameContainsFullKeywordsPredicate firstPredicateCopy = new
+                NameContainsFullKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -41,7 +44,8 @@ public class NameContainsFullKeywordsPredicateTest {
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
-        NameContainsFullKeywordsPredicate predicate = new NameContainsFullKeywordsPredicate(Collections.singletonList("Alice"));
+        NameContainsFullKeywordsPredicate predicate = new
+                NameContainsFullKeywordsPredicate(Collections.singletonList("Alice"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         // Multiple keywords

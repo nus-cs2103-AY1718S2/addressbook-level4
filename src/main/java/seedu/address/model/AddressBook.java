@@ -153,25 +153,30 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    private void removeTagParticular(Tag tag, Person currPerson) throws PersonNotFoundException {
-        Set<Tag> tagListCurr = new HashSet<>(currPerson.getTags()); //gets all the tags from a person
+    /**
+     * Removes {@code tag} from {@code person} with that tag this {@code AddressBook}.
+     * @throws PersonNotFoundException if {@code person} is not found in this {@code AddressBook}.
+     */
+    private void removeTagParticular(Tag tag, Person person) throws PersonNotFoundException {
+        Set<Tag> tagList = new HashSet<>(person.getTags()); //gets all the tags from a person
 
-        if (tagListCurr.remove(tag)) {
+        if (tagList.remove(tag)) {
             Person updatedPerson =
-                    new Person(currPerson.getName(), currPerson.getPhone(), currPerson.getEmail(), currPerson.getAddress(), tagListCurr);
+                    new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), tagList);
 
             try {
-                updatePerson(currPerson, updatedPerson);
+                updatePerson(person, updatedPerson);
             } catch (DuplicatePersonException dpe) {
                 throw new AssertionError("Modifying a person's tags only should not result in a duplicate."
                         + "See Person#equals(Object).");
             }
+        } else {
+            return;
         }
     }
+
     /**
      * Removes {@code tag} from all person with that tag this {@code AddressBook}.
-     * catches PersonNotFoundException if {@code currPerson} is not found in this {@code AddressBook}.
-     * catches DuplicatePersonException if there is a duplicate person created in this {@code AddressBook}.
      */
     public void removeTag(Tag tag) {
         try {
@@ -182,7 +187,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("Impossible: original person is obtained from the address book.");
         }
     }
-
 
     //// util methods
 

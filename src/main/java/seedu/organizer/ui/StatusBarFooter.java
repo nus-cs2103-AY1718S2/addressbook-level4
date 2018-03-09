@@ -21,6 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String TOTAL_TASKS_STATUS = "%d task(s) total";
 
     /**
      * Used to generate time stamps.
@@ -40,12 +41,14 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar totalPersonsStatus;
 
-
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int totalTasks) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        setTotalTasks(totalTasks);
         registerAsAnEventHandler(this);
     }
 
@@ -71,11 +74,18 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    //@@author guekling-reused
+    //Reused from https://github.com/se-edu/addressbook-level4/pull/803/files with minor modifications
+    private void setTotalTasks(int totalTasks) {
+        Platform.runLater(() -> this.totalPersonsStatus.setText(String.format(TOTAL_TASKS_STATUS, totalTasks)));
+    }
+    //@@author
     @Subscribe
-    public void handleAddressBookChangedEvent(OrganizerChangedEvent abce) {
+    public void handleAddressBookChangedEvent(OrganizerChangedEvent oce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
+        logger.info(LogsCenter.getEventHandlingLogMessage(oce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setTotalTasks(oce.data.getPersonList().size());
     }
 }

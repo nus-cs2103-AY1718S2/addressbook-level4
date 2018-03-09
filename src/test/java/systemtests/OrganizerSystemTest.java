@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.organizer.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.organizer.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.organizer.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.organizer.ui.StatusBarFooter.TOTAL_TASKS_STATUS;
 import static seedu.organizer.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.organizer.ui.testutil.GuiTestAssert.assertListMatching;
 
@@ -190,6 +191,7 @@ public abstract class OrganizerSystemTest {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
+        statusBarFooterHandle.rememberTotalTasksStatus();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedTaskCard();
     }
@@ -256,12 +258,14 @@ public abstract class OrganizerSystemTest {
     protected void assertStatusBarUnchanged() {
         StatusBarFooterHandle handle = getStatusBarFooter();
         assertFalse(handle.isSaveLocationChanged());
+        assertFalse(handle.isTotalTasksStatusChanged());
         assertFalse(handle.isSyncStatusChanged());
     }
 
     /**
      * Asserts that only the sync status in the status bar was changed to the timing of
-     * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
+     * {@code ClockRule#getInjectedClock()}, while the save location and the total task
+     + list remains the same.
      */
     protected void assertStatusBarUnchangedExceptSyncStatus() {
         StatusBarFooterHandle handle = getStatusBarFooter();
@@ -269,6 +273,7 @@ public abstract class OrganizerSystemTest {
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
         assertFalse(handle.isSaveLocationChanged());
+        assertFalse(handle.isTotalTasksStatusChanged());
     }
 
     /**
@@ -282,9 +287,29 @@ public abstract class OrganizerSystemTest {
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+            assertEquals(String.format(TOTAL_TASKS_STATUS, getModel().getOrganizer().getPersonList().size()),
+                getStatusBarFooter().getTotalTasksStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }
+    }
+
+    /**
+     * Asserts that the sync status in the status bar was changed to the timing of
+     * {@code ClockRule#getInjectedClock()}, and total tasks was changed to match the total
+     * number of persons in the address book, while the save location remains the same.
+     */
+    protected void assertStatusBarChangedExceptSaveLocation() {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+
+        String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
+        String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
+        assertEquals(expectedSyncStatus, handle.getSyncStatus());
+
+        final int totalTasks = testApp.getModel().getOrganizer().getPersonList().size();
+        assertEquals(String.format(TOTAL_TASKS_STATUS, totalTasks), handle.getTotalTasksStatus());
+
+        assertFalse(handle.isSaveLocationChanged());
     }
 
     /**

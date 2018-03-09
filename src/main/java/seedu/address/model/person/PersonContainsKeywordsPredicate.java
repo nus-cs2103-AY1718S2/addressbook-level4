@@ -22,7 +22,6 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
         String stringOfTags = getStringOfTags(person);
 
-        //Consider optimizing code by accessing stream once. May not be so pertinent since keywords is a short stream.
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
                 || keywords.stream()

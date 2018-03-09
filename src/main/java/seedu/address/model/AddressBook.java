@@ -189,7 +189,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeTagFromPerson(Tag tag, Person person) {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tag)) {
-            Person newPerson = new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), tagList);
+            Person newPerson = new Person(person.getName(), person.getPhone(),
+                    person.getEmail(), person.getAddress(), tagList);
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {

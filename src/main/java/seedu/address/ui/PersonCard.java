@@ -50,20 +50,20 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> { Label tagLabel = new Label(tag.tagName);
-                       tagLabel.getStyleClass().add(TAG_COLOUR_STYLES[0]);
-                       tags.getChildren().add(tagLabel); });
+            person.getTags().forEach(tag -> { Label tagLabel = new Label(tag.tagName);
+                tagLabel.getStyleClass().add(TAG_COLOUR_STYLES[0]);
+                    tags.getChildren().add(tagLabel); });
     }
 
     /** to be implemented with more tag colours
      *
     */
 
-//    private String getTagColourStyleFor(String tagName) {
-//
-//
-//        return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
-//    }
+    //    private String getTagColourStyleFor(String tagName) {
+    //
+    //
+    //        return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
+    //    }
 
     @Override
     public boolean equals(Object other) {

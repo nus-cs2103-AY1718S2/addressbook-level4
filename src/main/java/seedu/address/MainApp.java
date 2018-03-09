@@ -61,7 +61,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        BookShelfStorage bookShelfStorage = new XmlBookShelfStorage(userPrefs.getAddressBookFilePath());
+        BookShelfStorage bookShelfStorage = new XmlBookShelfStorage(userPrefs.getBookShelfFilePath());
         storage = new StorageManager(bookShelfStorage, userPrefsStorage);
 
         initLogging(config);

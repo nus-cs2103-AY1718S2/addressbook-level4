@@ -91,15 +91,9 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: select from empty address book -> rejected */
-<<<<<<< HEAD
         deleteAllBooks();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
-                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-=======
-        deleteAllPersons();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased(),
                 MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
->>>>>>> morph
     }
 
     /**
@@ -120,7 +114,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_BOOK_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        int preExecutionSelectedCardIndex = getBookListPanel().getSelectedCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);

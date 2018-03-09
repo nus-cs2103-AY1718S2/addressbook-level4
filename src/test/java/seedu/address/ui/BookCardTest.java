@@ -11,7 +11,6 @@ import guitests.guihandles.BookCardHandle;
 import seedu.address.model.book.Book;
 import seedu.address.testutil.BookBuilder;
 
-@Deprecated
 public class BookCardTest extends GuiUnitTest {
 
     @Test

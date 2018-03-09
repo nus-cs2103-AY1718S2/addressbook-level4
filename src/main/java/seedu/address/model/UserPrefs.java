@@ -10,8 +10,8 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String bookShelfFilePath = "data/bookshelf.xml";
+    private String bookShelfName = "MyBookShelf";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -29,20 +29,20 @@ public class UserPrefs {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
-    public String getAddressBookFilePath() {
-        return addressBookFilePath;
+    public String getBookShelfFilePath() {
+        return bookShelfFilePath;
     }
 
-    public void setAddressBookFilePath(String addressBookFilePath) {
-        this.addressBookFilePath = addressBookFilePath;
+    public void setBookShelfFilePath(String bookShelfFilePath) {
+        this.bookShelfFilePath = bookShelfFilePath;
     }
 
-    public String getAddressBookName() {
-        return addressBookName;
+    public String getBookShelfName() {
+        return bookShelfName;
     }
 
-    public void setAddressBookName(String addressBookName) {
-        this.addressBookName = addressBookName;
+    public void setBookShelfName(String bookShelfName) {
+        this.bookShelfName = bookShelfName;
     }
 
     @Override
@@ -57,21 +57,21 @@ public class UserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return Objects.equals(guiSettings, o.guiSettings)
-                && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(bookShelfFilePath, o.bookShelfFilePath)
+                && Objects.equals(bookShelfName, o.bookShelfName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, bookShelfFilePath, bookShelfName);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nLocal data file location : " + bookShelfFilePath);
+        sb.append("\nBookShelf name : " + bookShelfName);
         return sb.toString();
     }
 

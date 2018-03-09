@@ -65,13 +65,13 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
-        userPrefs.setAddressBookFilePath(saveFileLocation);
-        userPrefs.setAddressBookName(BOOK_SHELF_NAME);
+        userPrefs.setBookShelfFilePath(saveFileLocation);
+        userPrefs.setBookShelfName(BOOK_SHELF_NAME);
         return userPrefs;
     }
 
     /**
-     * Returns a defensive copy of the address book data stored inside the storage file.
+     * Returns a defensive copy of the book shelf data stored inside the storage file.
      */
     public BookShelf readStorageBookShelf() {
         try {

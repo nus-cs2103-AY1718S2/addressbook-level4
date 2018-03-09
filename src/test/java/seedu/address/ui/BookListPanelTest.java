@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalBooks.getTypicalBooks;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysBook;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
@@ -21,7 +21,7 @@ public class BookListPanelTest extends GuiUnitTest {
     private static final ObservableList<Book> TYPICAL_BOOKS =
             FXCollections.observableList(getTypicalBooks());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_BOOK);
 
     private BookListPanelHandle bookListPanelHandle;
 
@@ -51,7 +51,7 @@ public class BookListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        BookCardHandle expectedCard = bookListPanelHandle.getBookCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        BookCardHandle expectedCard = bookListPanelHandle.getBookCardHandle(INDEX_SECOND_BOOK.getZeroBased());
         BookCardHandle selectedCard = bookListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }

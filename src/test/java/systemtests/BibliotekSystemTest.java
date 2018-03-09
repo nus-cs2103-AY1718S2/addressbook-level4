@@ -143,7 +143,7 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
-     * Selects the person at {@code index} of the displayed list.
+     * Selects the book at {@code index} of the displayed list.
      */
     protected void selectBook(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());

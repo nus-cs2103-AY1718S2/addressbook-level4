@@ -32,6 +32,6 @@ public class FindCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof FindCommand // instanceof handles nulls
                 && this.personContainsKeyWordsPredicate.equals(((FindCommand) other).personContainsKeyWordsPredicate));
-                // state check
+        // state check
     }
 }

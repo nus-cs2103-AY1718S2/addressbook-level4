@@ -71,7 +71,7 @@ public class UniqueBookList extends UniqueList<Book> {
         for (final Book book : books) {
             replacement.add(book);
         }
-        setItems(replacement.toSet());
+        internalList.setAll(replacement.asObservableList());
     }
 
     @Override

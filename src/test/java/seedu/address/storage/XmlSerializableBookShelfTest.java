@@ -28,8 +28,8 @@ public class XmlSerializableBookShelfTest {
         XmlSerializableBookShelf dataFromFile = XmlUtil.getDataFromFile(TYPICAL_BOOKS_FILE,
                 XmlSerializableBookShelf.class);
         BookShelf addressBookFromFile = dataFromFile.toModelType();
-        BookShelf typicalPersonsBookShelf = TypicalBooks.getTypicalBookShelf();
-        assertEquals(addressBookFromFile, typicalPersonsBookShelf);
+        BookShelf typicalBookShelf = TypicalBooks.getTypicalBookShelf();
+        assertEquals(addressBookFromFile, typicalBookShelf);
     }
 
     @Test

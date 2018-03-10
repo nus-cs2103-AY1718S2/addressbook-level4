@@ -43,7 +43,11 @@ public class SampleDataUtil {
             new Book(Collections.singleton(new Author("John Scalzi")), new Title("The Collapsing Empire"),
                 CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
                     new Category("Space Opera")),
-                new Description("This is The Collapsing Empire."))
+                new Description("This is The Collapsing Empire.")),
+            new Book(Collections.singleton(new Author("Iain M. Banks")), new Title("Consider Phlebas"),
+                    CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
+                            new Category("Space Opera")),
+                    new Description("This is Consider Phlebas."))
         };
     }
 

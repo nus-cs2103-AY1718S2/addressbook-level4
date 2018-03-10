@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bookshelf>
+    <books>
+        <title>Artemis</title>
+        <description>This is Artemis.</description>
+        <authors>Andy Weir</authors>
+        <categories>Fiction</categories>
+        <githubUsername></githubUsername>
+        <street></street>
+        <postalCode></postalCode>
+        <city></city>
+    </books>
+    <books>
+        <title>Babylon's Ashes</title>
+        <description>This is Babylon's Ashes.</description>
+        <authors>James S. A. Corey</authors>
+        <categories>Fiction</categories>
+    </books>
+</bookshelf>

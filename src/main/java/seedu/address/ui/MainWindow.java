@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
@@ -38,6 +39,9 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    // The default starting theme that will be loaded on init
+    private String currentTheme = "view/DarkTheme.css";
 
     @FXML
     private StackPane browserPlaceholder;
@@ -69,6 +73,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        primaryStage.getScene().getStylesheets().add(this.currentTheme);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -193,5 +198,12 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        primaryStage.getScene().getStylesheets().removeAll(currentTheme);
+        primaryStage.getScene().getStylesheets().add(event.theme);
+        this.currentTheme = event.theme;
     }
 }

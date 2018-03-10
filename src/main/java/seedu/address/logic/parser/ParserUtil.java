@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -15,7 +17,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
-
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  * {@code ParserUtil} contains methods that take in {@code Optional} as parameters. However, it goes against Java's
@@ -164,5 +165,21 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String theme} into an {@code Integer}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code theme} is invalid.
+     */
+    public static Integer parseTheme(Optional<String> theme) throws IllegalValueException {
+        final String[] validThemeStrings = {"light", "dark"};
+        final ArrayList<String> validThemes = new ArrayList<String>(Arrays.asList(validThemeStrings));
+        requireNonNull(theme);
+        if (!validThemes.contains(theme.get())) {
+            throw new IllegalValueException("Theme must be either 'light' or 'dark'.");
+        }
+        return validThemes.indexOf(theme.get());
     }
 }

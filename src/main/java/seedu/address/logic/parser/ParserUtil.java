@@ -116,6 +116,12 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code String subject} into an {@code Subject}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code subject} is invalid.
+     */
     public static Subject parseSubject(String subject) throws IllegalValueException {
         requireNonNull(subject);
         String trimmedSubject = subject.trim();

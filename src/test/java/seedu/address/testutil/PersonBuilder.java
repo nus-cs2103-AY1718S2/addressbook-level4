@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -21,12 +22,14 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_FAVOURITE = "false";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private Favourite favourite;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -34,6 +37,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        favourite = new Favourite(DEFAULT_FAVOURITE);
     }
 
     /**
@@ -45,6 +49,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        favourite = personToCopy.getFavourite();
     }
 
     /**
@@ -87,8 +92,13 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder withFavourite(boolean val) {
+        this.favourite = new Favourite(val);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, tags, favourite);
     }
 
 }

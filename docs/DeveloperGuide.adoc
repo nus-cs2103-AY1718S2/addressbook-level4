@@ -807,11 +807,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |Student with group project |Add person with project group tag |I know which person belongs to which project groups
 
-|`* * *` |Student that is finished with a group project |Delete the group tag of a finished group project
+|`* * *` |Student that is finished with a group project |Delete the group tag of a finished group project| I will not see the group in the application anymore
 
-|`* * *` |Student who forget teammates’ information |I can find out more details of the person such as location, contact number
+|`* * *` |Student who forget teammates’ information |Find a person by name|I can find out more details of the person such as location, contact number
 
-|`* * *` |Student who made a mistake in recording a group tag |Edit a person’s group tag|I can change the group tag accordingly.
+|`* * *` |Student who made a mistake in recording a group tag |Edit a person’s group tag|I can change the group tag accordingly 
 
 |`* * *` |Student who recorded the wrong personal information |Edit a person|I can correct the details of the person
 

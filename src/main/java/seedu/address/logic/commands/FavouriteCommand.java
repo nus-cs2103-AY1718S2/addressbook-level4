@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -9,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Add a person to favourites
@@ -20,7 +23,7 @@ public class FavouriteCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SUCCESS = "Person added favourites: %1$s";
+    public static final String MESSAGE_SUCCESS = "Person added to favourites: %1$s";
 
     private static final Logger logger = LogsCenter.getLogger(JsonUtil.class); // To use during initial production of favourite feature
 
@@ -34,16 +37,24 @@ public class FavouriteCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        // TODO: implement this method
         logger.info("Executing favourite command in logic");
-        return null;
+
+        requireNonNull(personToFavourite);
+
+        try {
+            model.favouritePerson(personToFavourite);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, personToFavourite));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (targetIndex.getZeroBased() >= lastShownList.size() || targetIndex.getZeroBased() < 0) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 

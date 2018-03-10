@@ -19,7 +19,7 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
-    private final boolean isFavourite;
+    private final Favourite favourite;
 
     private final UniqueTagList tags;
 
@@ -34,7 +34,21 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.isFavourite = false; // Default value
+        this.favourite = new Favourite(false); // Default value
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Favourite fav) {
+        requireAllNonNull(name, phone, email, address, tags, fav);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.favourite = new Favourite(fav.isFav);
     }
 
     public Name getName() {
@@ -53,7 +67,7 @@ public class Person {
         return address;
     }
 
-    public boolean isFavourite() { return isFavourite; }
+    public boolean isFavourite() { return favourite.isFav; }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

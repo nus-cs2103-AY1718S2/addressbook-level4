@@ -1,5 +1,7 @@
 package seedu.address.model.util;
 
+import static java.util.Objects.isNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,17 +21,18 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
+    private static final String resumePath = "src/main/resources/resume/";
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"), new ExpectedGraduationYear("2018"), new Resume(null),
-                getTagSet("friends")),
+                new Address("Blk 30 Geylang Street 29, #06-40"), new ExpectedGraduationYear("2018"),
+                new Resume(formPathFromFileName("alex.pdf")), getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new ExpectedGraduationYear("2019"),
                 new Resume(null), getTagSet("colleagues", "friends")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new ExpectedGraduationYear("2020"),
-                new Resume(null), getTagSet("neighbours")),
+                new Resume(formPathFromFileName("char.pdf")), getTagSet("neighbours")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new ExpectedGraduationYear("2020"),
                 new Resume(null), getTagSet("family")),
@@ -64,6 +67,15 @@ public class SampleDataUtil {
         }
 
         return tags;
+    }
+    /**
+     * Forms the resume path from resume file name
+     */
+    private static String formPathFromFileName(String fileName) {
+        if (isNull(fileName)) {
+            return null;
+        }
+        return resumePath + fileName;
     }
 
 }

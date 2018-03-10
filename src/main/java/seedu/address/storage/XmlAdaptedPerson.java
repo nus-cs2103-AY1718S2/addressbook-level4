@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static java.util.Objects.isNull;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +27,7 @@ public class XmlAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
+    //compulsory fields
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -35,7 +38,8 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String expectedGraduationYear;
-    @XmlElement(required = true)
+    //optional fields
+    @XmlElement(nillable = true)
     private String resume;
 
     @XmlElement
@@ -133,10 +137,7 @@ public class XmlAdaptedPerson {
         }
         final ExpectedGraduationYear expectedGraduationYear = new ExpectedGraduationYear(this.expectedGraduationYear);
 
-        if (this.resume == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Resume.class.getSimpleName()));
-        }
-        if (!Resume.isValidResume(this.resume)) {
+        if (!isNull(this.resume) && !Resume.isValidResume(this.resume)) {
             throw new IllegalValueException(Resume.MESSAGE_RESUME_CONSTRAINTS);
         }
         final Resume resume = new Resume(this.resume);

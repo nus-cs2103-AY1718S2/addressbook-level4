@@ -41,17 +41,21 @@ public class Resume {
         String userDir = System.getProperty("user.dir");
         File resumeFile = new File(userDir + File.separator + test);
         if (resumeFile.isDirectory()) {
+            System.out.println("is a dir");
             return false;
         } else if (!resumeFile.exists()) {
+            System.out.println("does not exist");
             return false;
         } else {
             if (resumeFile.length() > ONEMEGABYTE) {
+                System.out.println("file too large");
                 return false;
             } else {
                 try {
                     byte[] resumeBytes = Files.readAllBytes(resumeFile.toPath());
                     return isPdf(resumeBytes);
                 } catch (IOException ioe) {
+                    System.out.println("ioe");
                     return false;
                 }
             }
@@ -74,8 +78,18 @@ public class Resume {
                     data[data.length - 5] == 0x45 && // E
                     data[data.length - 4] == 0x4F && // O
                     data[data.length - 3] == 0x46 && // F
-                    data[data.length - 2] == 0x20 && // SPACE
-                    data[data.length - 1] == 0x0A) { // EOL
+                    data[data.length - 2] == 0x20 && (// SPACE
+                    data[data.length - 1] == 0x0A || data[data.length - 1] == 0x0D)) { // EOL or CR
+                return true;
+            }
+            // version 1.3 file terminator
+            if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x33
+                    && data[data.length - 6] == 0x25 && // %
+                    data[data.length - 5] == 0x25 && // %
+                    data[data.length - 4] == 0x45 && // E
+                    data[data.length - 3] == 0x4F && // O
+                    data[data.length - 2] == 0x46 && (// F
+                    data[data.length - 1] == 0x0A || data[data.length - 1] == 0x0D)) { // EOL
                 return true;
             }
             // version 1.4 file terminator
@@ -84,8 +98,8 @@ public class Resume {
                     data[data.length - 5] == 0x25 && // %
                     data[data.length - 4] == 0x45 && // E
                     data[data.length - 3] == 0x4F && // O
-                    data[data.length - 2] == 0x46 && // F
-                    data[data.length - 1] == 0x0A) { // EOL
+                    data[data.length - 2] == 0x46 && (// F
+                    data[data.length - 1] == 0x0A || data[data.length - 1] == 0x0D)) { // EOL
                 return true;
             }
             // version 1.5 file terminator
@@ -94,11 +108,18 @@ public class Resume {
                     data[data.length - 5] == 0x25 && // %
                     data[data.length - 4] == 0x45 && // E
                     data[data.length - 3] == 0x4F && // O
-                    data[data.length - 2] == 0x46 && // F
-                    data[data.length - 1] == 0x0A) { // EOL
+                    data[data.length - 2] == 0x46 && (// F
+                    data[data.length - 1] == 0x0A || data[data.length - 1] == 0x0D)) { // EOL
                 return true;
             }
-
+            if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x35
+                    && data[data.length - 5] == 0x25 && // %
+                    data[data.length - 4] == 0x25 && // %
+                    data[data.length - 3] == 0x45 && // E
+                    data[data.length - 2] == 0x4F && // O
+                    data[data.length - 1] == 0x46) { // F
+                return true;
+            }
         }
         return false;
     }

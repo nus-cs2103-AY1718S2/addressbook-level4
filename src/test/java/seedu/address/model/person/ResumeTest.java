@@ -48,6 +48,13 @@ public class ResumeTest {
         assertTrue(Resume.isValidResume(formFilePath("1 2.pdf"))); // spaces within fileName
         assertTrue(Resume.isValidResume(formFilePath("valid.pdf")));
         assertTrue(Resume.isValidResume(formFilePath("validPdf")));
+        assertTrue(Resume.isValidResume(formFilePath("alice.pdf")));
+        assertTrue(Resume.isValidResume(formFilePath("benson.pdf")));
+        assertTrue(Resume.isValidResume(formFilePath("bob.pdf")));
+        assertTrue(Resume.isValidResume(formFilePath("daniel.pdf")));
+        assertTrue(Resume.isValidResume(formFilePath("george.pdf")));
+        assertTrue(Resume.isValidResume(formFilePath("hoon.pdf")));
+
     }
 
 }

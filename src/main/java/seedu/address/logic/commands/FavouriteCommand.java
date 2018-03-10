@@ -1,8 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -10,8 +12,15 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Favourite;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Add a person to favourites
@@ -24,12 +33,14 @@ public class FavouriteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Person added to favourites: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private static final Logger logger = LogsCenter.getLogger(JsonUtil.class); // To use during initial production of favourite feature
 
     private final Index targetIndex;
 
     private Person personToFavourite;
+    private Person editedPerson;
 
     public FavouriteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -39,12 +50,14 @@ public class FavouriteCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         logger.info("Executing favourite command in logic");
 
-        requireNonNull(personToFavourite);
+        requireAllNonNull(personToFavourite, editedPerson);
 
         try {
-            model.favouritePerson(personToFavourite);
+            model.updatePerson(personToFavourite, editedPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToFavourite));
@@ -59,7 +72,24 @@ public class FavouriteCommand extends UndoableCommand {
         }
 
         personToFavourite = lastShownList.get(targetIndex.getZeroBased());
+        editedPerson = createEditedPerson(personToFavourite);
 
-        logger.info("Person to favourite: " + personToFavourite.toString());
+        logger.info("New edited person: " + editedPerson);
+    }
+
+    /**
+     * Create and return a copy of the target {@Code Person} to favourite with its' Favourite attribute set to true.
+     */
+    private static Person createEditedPerson(Person target) {
+        assert target != null;
+
+        Name name = target.getName();
+        Phone phone = target.getPhone();
+        Email email = target.getEmail();
+        Address address = target.getAddress();
+        Set<Tag> tags = target.getTags();
+        Favourite fav = new Favourite(true);
+
+        return new Person(name, phone, email, address, tags, fav);
     }
 }

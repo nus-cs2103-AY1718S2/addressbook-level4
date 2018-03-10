@@ -21,6 +21,7 @@ import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.ReadOnlyOrganizer;
+import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
@@ -32,31 +33,31 @@ public class AddCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullTask_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+    public void execute_taskAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingTaskAdded modelStub = new ModelStubAcceptingTaskAdded();
         Task validTask = new TaskBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validTask, modelStub).execute();
+        CommandResult commandResult = getAddCommandForTask(validTask, modelStub).execute();
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validTask), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validTask), modelStub.tasksAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
+    public void execute_duplicateTask_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateTaskException();
         Task validTask = new TaskBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
 
-        getAddCommandForPerson(validTask, modelStub).execute();
+        getAddCommandForTask(validTask, modelStub).execute();
     }
 
     @Test
@@ -86,7 +87,7 @@ public class AddCommandTest {
     /**
      * Generates a new AddCommand with the details of the given task.
      */
-    private AddCommand getAddCommandForPerson(Task task, Model model) {
+    private AddCommand getAddCommandForTask(Task task, Model model) {
         AddCommand command = new AddCommand(task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
@@ -97,7 +98,7 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Task task) throws DuplicateTaskException {
+        public void addTask(Task task) throws DuplicateTaskException {
             fail("This method should not be called.");
         }
 
@@ -113,24 +114,29 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deletePerson(Task target) throws TaskNotFoundException {
+        public void deleteTask(Task target) throws TaskNotFoundException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void updatePerson(Task target, Task editedTask)
+        public void updateTask(Task target, Task editedTask)
                 throws DuplicateTaskException {
             fail("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Task> getFilteredPersonList() {
+        public ObservableList<Task> getFilteredTaskList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Task> predicate) {
+        public void updateFilteredTaskList(Predicate<Task> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }
     }
@@ -138,9 +144,9 @@ public class AddCommandTest {
     /**
      * A Model stub that always throw a DuplicateTaskException when trying to add a task.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateTaskException extends ModelStub {
         @Override
-        public void addPerson(Task task) throws DuplicateTaskException {
+        public void addTask(Task task) throws DuplicateTaskException {
             throw new DuplicateTaskException();
         }
 
@@ -153,13 +159,13 @@ public class AddCommandTest {
     /**
      * A Model stub that always accept the task being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Task> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingTaskAdded extends ModelStub {
+        final ArrayList<Task> tasksAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Task task) throws DuplicateTaskException {
+        public void addTask(Task task) throws DuplicateTaskException {
             requireNonNull(task);
-            personsAdded.add(task);
+            tasksAdded.add(task);
         }
 
         @Override

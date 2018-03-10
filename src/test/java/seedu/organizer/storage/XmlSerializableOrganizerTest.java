@@ -29,7 +29,7 @@ public class XmlSerializableOrganizerTest {
         XmlSerializableOrganizer dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
                 XmlSerializableOrganizer.class);
         Organizer organizerFromFile = dataFromFile.toModelType();
-        Organizer typicalPersonsOrganizer = TypicalTasks.getTypicalAddressBook();
+        Organizer typicalPersonsOrganizer = TypicalTasks.getTypicalOrganizer();
         assertEquals(organizerFromFile, typicalPersonsOrganizer);
     }
 

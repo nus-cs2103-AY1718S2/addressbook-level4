@@ -24,7 +24,7 @@ import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.organizer.testutil.TypicalTasks.AMY;
 import static seedu.organizer.testutil.TypicalTasks.BOB;
@@ -75,8 +75,8 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         /* Case: redo editing the last task in the list -> last task edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        model.updatePerson(
-                getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedTask);
+        model.updateTask(
+                getModel().getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased()), editedTask);
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a task with new values same as existing values -> edited */
@@ -87,7 +87,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
-        Task taskToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        Task taskToEdit = getModel().getFilteredTaskList().get(index.getZeroBased());
         editedTask = new TaskBuilder(taskToEdit).withTags(VALID_TAG_FRIEND).build();
         assertCommandSuccess(command, index, editedTask);
 
@@ -102,9 +102,9 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         /* Case: filtered task list, edit index within bounds of organizer book and task list -> edited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        assertTrue(index.getZeroBased() < getModel().getFilteredTaskList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
-        taskToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        taskToEdit = getModel().getFilteredTaskList().get(index.getZeroBased());
         editedTask = new TaskBuilder(taskToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedTask);
 
@@ -112,7 +112,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getOrganizer().getPersonList().size();
+        int invalidIndex = getModel().getOrganizer().getTaskList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -141,7 +141,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredPersonList().size() + 1;
+        invalidIndex = getModel().getFilteredTaskList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -175,9 +175,9 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: edit a task with new values same as another task's values -> rejected */
         executeCommand(TaskUtil.getAddCommand(BOB));
-        assertTrue(getModel().getOrganizer().getPersonList().contains(BOB));
+        assertTrue(getModel().getOrganizer().getTaskList().contains(BOB));
         index = INDEX_FIRST_PERSON;
-        assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
+        assertFalse(getModel().getFilteredTaskList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
@@ -212,9 +212,9 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
                                       Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {
-            expectedModel.updatePerson(
-                    expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()), editedTask);
-            expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            expectedModel.updateTask(
+                    expectedModel.getFilteredTaskList().get(toEdit.getZeroBased()), editedTask);
+            expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         } catch (DuplicateTaskException | TaskNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedTask is a duplicate in expectedModel, or it isn't found in the model.");
@@ -252,7 +252,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
         executeCommand(command);
-        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {

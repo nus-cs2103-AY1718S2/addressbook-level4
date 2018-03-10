@@ -35,20 +35,20 @@ public class TestUtil {
      * Returns the middle index of the task in the {@code model}'s task list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getOrganizer().getPersonList().size() / 2);
+        return Index.fromOneBased(model.getOrganizer().getTaskList().size() / 2);
     }
 
     /**
      * Returns the last index of the task in the {@code model}'s task list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getOrganizer().getPersonList().size());
+        return Index.fromOneBased(model.getOrganizer().getTaskList().size());
     }
 
     /**
      * Returns the task in the {@code model}'s task list at {@code index}.
      */
     public static Task getPerson(Model model, Index index) {
-        return model.getOrganizer().getPersonList().get(index.getZeroBased());
+        return model.getOrganizer().getTaskList().get(index.getZeroBased());
     }
 }

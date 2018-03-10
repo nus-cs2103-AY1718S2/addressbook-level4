@@ -1,7 +1,7 @@
 package seedu.organizer.logic.commands;
 
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.organizer.testutil.TypicalTasks.getTypicalAddressBook;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 

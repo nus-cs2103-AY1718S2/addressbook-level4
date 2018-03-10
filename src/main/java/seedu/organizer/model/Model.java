@@ -3,6 +3,7 @@ package seedu.organizer.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
@@ -12,7 +13,7 @@ import seedu.organizer.model.task.exceptions.TaskNotFoundException;
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Task> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Task> PREDICATE_SHOW_ALL_TASKS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyOrganizer newData);
@@ -21,10 +22,10 @@ public interface Model {
     ReadOnlyOrganizer getOrganizer();
 
     /** Deletes the given task. */
-    void deletePerson(Task target) throws TaskNotFoundException;
+    void deleteTask(Task target) throws TaskNotFoundException;
 
     /** Adds the given task */
-    void addPerson(Task task) throws DuplicateTaskException;
+    void addTask(Task task) throws DuplicateTaskException;
 
     /**
      * Replaces the given task {@code target} with {@code editedTask}.
@@ -33,16 +34,18 @@ public interface Model {
      *      another existing task in the list.
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      */
-    void updatePerson(Task target, Task editedTask)
+    void updateTask(Task target, Task editedTask)
             throws DuplicateTaskException, TaskNotFoundException;
 
     /** Returns an unmodifiable view of the filtered task list */
-    ObservableList<Task> getFilteredPersonList();
+    ObservableList<Task> getFilteredTaskList();
 
     /**
      * Updates the filter of the filtered task list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Task> predicate);
+    void updateFilteredTaskList(Predicate<Task> predicate);
 
+    /** Removes the given {@code tag} from all {@code Task}s. */
+    void deleteTag(Tag tag);
 }

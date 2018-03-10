@@ -2,7 +2,7 @@ package seedu.organizer.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.Organizer;
@@ -38,7 +38,7 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
     }
 
     @Override

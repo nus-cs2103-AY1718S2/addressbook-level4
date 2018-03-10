@@ -2,7 +2,7 @@ package seedu.organizer.logic.commands;
 
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.organizer.testutil.TypicalTasks.getTypicalAddressBook;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class AddCommandIntegrationTest {
         Task validTask = new TaskBuilder().build();
 
         Model expectedModel = new ModelManager(model.getOrganizer(), new UserPrefs());
-        expectedModel.addPerson(validTask);
+        expectedModel.addTask(validTask);
 
         assertCommandSuccess(prepareCommand(validTask, model), model,
                 String.format(AddCommand.MESSAGE_SUCCESS, validTask), expectedModel);
@@ -40,8 +40,8 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Task taskInList = model.getOrganizer().getPersonList().get(0);
-        assertCommandFailure(prepareCommand(taskInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        Task taskInList = model.getOrganizer().getTaskList().get(0);
+        assertCommandFailure(prepareCommand(taskInList, model), model, AddCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     /**

@@ -7,7 +7,7 @@ import static seedu.organizer.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERV
 import static seedu.organizer.testutil.TypicalTasks.CARL;
 import static seedu.organizer.testutil.TypicalTasks.ELLE;
 import static seedu.organizer.testutil.TypicalTasks.FIONA;
-import static seedu.organizer.testutil.TypicalTasks.getTypicalAddressBook;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,7 +28,7 @@ import seedu.organizer.model.task.Task;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -92,7 +92,7 @@ public class FindCommandTest {
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedList, model.getFilteredTaskList());
         assertEquals(expectedOrganizer, model.getOrganizer());
     }
 }

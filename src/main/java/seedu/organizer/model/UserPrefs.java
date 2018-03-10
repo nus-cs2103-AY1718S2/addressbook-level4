@@ -41,7 +41,7 @@ public class UserPrefs {
         return addressBookName;
     }
 
-    public void setAddressBookName(String addressBookName) {
+    public void setOrganizerName(String addressBookName) {
         this.addressBookName = addressBookName;
     }
 

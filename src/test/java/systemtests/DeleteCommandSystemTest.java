@@ -62,14 +62,14 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         /* Case: filtered task list, delete index within bounds of organizer book and task list -> deleted */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         Index index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        assertTrue(index.getZeroBased() < getModel().getFilteredTaskList().size());
         assertCommandSuccess(index);
 
         /* Case: filtered task list, delete index within bounds of organizer book but out of bounds of task list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getOrganizer().getPersonList().size();
+        int invalidIndex = getModel().getOrganizer().getTaskList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -98,7 +98,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
-                getModel().getOrganizer().getPersonList().size() + 1);
+                getModel().getOrganizer().getTaskList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -120,7 +120,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
     private Task removePerson(Model model, Index index) {
         Task targetTask = getPerson(model, index);
         try {
-            model.deletePerson(targetTask);
+            model.deleteTask(targetTask);
         } catch (TaskNotFoundException pnfe) {
             throw new AssertionError("targetTask is retrieved from model.");
         }

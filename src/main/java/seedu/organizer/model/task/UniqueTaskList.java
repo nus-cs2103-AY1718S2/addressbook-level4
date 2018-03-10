@@ -13,7 +13,7 @@ import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
+ * A list of tasks that enforces uniqueness between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
@@ -51,7 +51,7 @@ public class UniqueTaskList implements Iterable<Task> {
      * @throws DuplicateTaskException if the replacement is equivalent to another existing task in the list.
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      */
-    public void setPerson(Task target, Task editedTask)
+    public void setTask(Task target, Task editedTask)
             throws DuplicateTaskException, TaskNotFoundException {
         requireNonNull(editedTask);
 
@@ -74,24 +74,24 @@ public class UniqueTaskList implements Iterable<Task> {
      */
     public boolean remove(Task toRemove) throws TaskNotFoundException {
         requireNonNull(toRemove);
-        final boolean personFoundAndDeleted = internalList.remove(toRemove);
-        if (!personFoundAndDeleted) {
+        final boolean taskFoundAndDeleted = internalList.remove(toRemove);
+        if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
-        return personFoundAndDeleted;
+        return taskFoundAndDeleted;
     }
 
-    public void setPersons(UniqueTaskList replacement) {
+    public void setTasks(UniqueTaskList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setPersons(List<Task> tasks) throws DuplicateTaskException {
+    public void setTasks(List<Task> tasks) throws DuplicateTaskException {
         requireAllNonNull(tasks);
         final UniqueTaskList replacement = new UniqueTaskList();
         for (final Task task : tasks) {
             replacement.add(task);
         }
-        setPersons(replacement);
+        setTasks(replacement);
     }
 
     /**

@@ -1,6 +1,6 @@
 package seedu.organizer.logic.commands;
 
-import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 /**
  * Lists all persons in the organizer book to the user.
@@ -15,7 +15,7 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

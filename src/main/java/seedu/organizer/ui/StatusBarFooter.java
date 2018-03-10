@@ -86,6 +86,6 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(oce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
-        setTotalTasks(oce.data.getPersonList().size());
+        setTotalTasks(oce.data.getTaskList().size());
     }
 }

@@ -71,7 +71,7 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         Organizer dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableOrganizer.class).toModelType();
-        assertEquals(9, dataFromFile.getPersonList().size());
+        assertEquals(9, dataFromFile.getTaskList().size());
         assertEquals(0, dataFromFile.getTagList().size());
     }
 
@@ -130,7 +130,7 @@ public class XmlUtilTest {
 
         OrganizerBuilder builder = new OrganizerBuilder(new Organizer());
         dataToWrite = new XmlSerializableOrganizer(
-                builder.withPerson(new TaskBuilder().build()).withTag("Friends").build());
+                builder.withTask(new TaskBuilder().build()).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableOrganizer.class);

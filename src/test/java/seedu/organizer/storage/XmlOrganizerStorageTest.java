@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static seedu.organizer.testutil.TypicalTasks.ALICE;
 import static seedu.organizer.testutil.TypicalTasks.HOON;
 import static seedu.organizer.testutil.TypicalTasks.IDA;
-import static seedu.organizer.testutil.TypicalTasks.getTypicalAddressBook;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.io.IOException;
 
@@ -75,7 +75,7 @@ public class XmlOrganizerStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
-        Organizer original = getTypicalAddressBook();
+        Organizer original = getTypicalOrganizer();
         XmlOrganizerStorage xmlAddressBookStorage = new XmlOrganizerStorage(filePath);
 
         //Save in new file and read back
@@ -84,14 +84,14 @@ public class XmlOrganizerStorageTest {
         assertEquals(original, new Organizer(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addPerson(HOON);
-        original.removePerson(ALICE);
+        original.addTask(HOON);
+        original.removeTask(ALICE);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new Organizer(readBack));
 
         //Save and read without specifying file path
-        original.addPerson(IDA);
+        original.addTask(IDA);
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new Organizer(readBack));

@@ -36,7 +36,7 @@ public class XmlSerializableOrganizer {
      */
     public XmlSerializableOrganizer(ReadOnlyOrganizer src) {
         this();
-        tasks.addAll(src.getPersonList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
+        tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -52,7 +52,7 @@ public class XmlSerializableOrganizer {
             organizer.addTag(t.toModelType());
         }
         for (XmlAdaptedTask p : tasks) {
-            organizer.addPerson(p.toModelType());
+            organizer.addTask(p.toModelType());
         }
         return organizer;
     }

@@ -1,8 +1,13 @@
 package seedu.organizer.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
 import static seedu.organizer.testutil.TypicalTasks.ALICE;
-import static seedu.organizer.testutil.TypicalTasks.getTypicalAddressBook;
+import static seedu.organizer.testutil.TypicalTasks.AMY;
+import static seedu.organizer.testutil.TypicalTasks.BOB;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +23,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.testutil.OrganizerBuilder;
+import seedu.organizer.testutil.TaskBuilder;
 
 public class OrganizerTest {
 
@@ -25,10 +32,12 @@ public class OrganizerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final Organizer organizer = new Organizer();
+    private final Organizer organizerWithBobAndAmy = new OrganizerBuilder().withTask(BOB)
+            .withTask(AMY).build();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), organizer.getPersonList());
+        assertEquals(Collections.emptyList(), organizer.getTaskList());
         assertEquals(Collections.emptyList(), organizer.getTagList());
     }
 
@@ -39,14 +48,14 @@ public class OrganizerTest {
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        Organizer newData = getTypicalAddressBook();
+    public void resetData_withValidReadOnlyOrganizer_replacesData() {
+        Organizer newData = getTypicalOrganizer();
         organizer.resetData(newData);
         assertEquals(newData, organizer);
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsAssertionError() {
+    public void resetData_withDuplicateTasks_throwsAssertionError() {
         // Repeat ALICE twice
         List<Task> newTasks = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
@@ -57,9 +66,9 @@ public class OrganizerTest {
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getTaskList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        organizer.getPersonList().remove(0);
+        organizer.getTaskList().remove(0);
     }
 
     @Test
@@ -67,6 +76,38 @@ public class OrganizerTest {
         thrown.expect(UnsupportedOperationException.class);
         organizer.getTagList().remove(0);
     }
+
+    @Test
+    public void updateTask_detailsChanged_tasksAndTagsListUpdated() throws Exception {
+        Organizer organizerUpdatedToAmy = new OrganizerBuilder().withTask(BOB).build();
+        organizerUpdatedToAmy.updateTask(BOB, AMY);
+
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(AMY).build();
+
+        assertEquals(expectedOrganizer, organizerUpdatedToAmy);
+    }
+
+    @Test
+    public void removeTag_nonExistentTag_organizerUnchanged() throws Exception {
+        organizerWithBobAndAmy.removeTag(new Tag(VALID_TAG_UNUSED));
+
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(BOB).withTask(AMY).build();
+
+        assertEquals(expectedOrganizer, organizerWithBobAndAmy);
+    }
+
+    @Test
+    public void removeTag_tagUsedByMultipleTasks_tagRemoved() throws Exception {
+        organizerWithBobAndAmy.removeTag(new Tag(VALID_TAG_FRIEND));
+
+        Task amyWithoutFriendTag = new TaskBuilder(AMY).withTags().build();
+        Task bobWithoutFriendTag = new TaskBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(bobWithoutFriendTag)
+                .withTask(amyWithoutFriendTag).build();
+
+        assertEquals(expectedOrganizer, organizerWithBobAndAmy);
+    }
+
 
     /**
      * A stub ReadOnlyOrganizer whose tasks and tags lists can violate interface constraints.
@@ -81,7 +122,7 @@ public class OrganizerTest {
         }
 
         @Override
-        public ObservableList<Task> getPersonList() {
+        public ObservableList<Task> getTaskList() {
             return tasks;
         }
 

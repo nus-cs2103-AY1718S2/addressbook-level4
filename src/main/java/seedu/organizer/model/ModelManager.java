@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.organizer.commons.core.ComponentManager;
 import seedu.organizer.commons.core.LogsCenter;
 import seedu.organizer.commons.events.model.OrganizerChangedEvent;
+import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
@@ -29,14 +30,14 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given organizer and userPrefs.
      */
-    public ModelManager(ReadOnlyOrganizer addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyOrganizer organizer, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(organizer, userPrefs);
 
-        logger.fine("Initializing with organizer book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with organizer book: " + organizer + " and user prefs " + userPrefs);
 
-        this.organizer = new Organizer(addressBook);
-        filteredTasks = new FilteredList<>(this.organizer.getPersonList());
+        this.organizer = new Organizer(organizer);
+        filteredTasks = new FilteredList<>(this.organizer.getTaskList());
     }
 
     public ModelManager() {
@@ -46,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyOrganizer newData) {
         organizer.resetData(newData);
-        indicateAddressBookChanged();
+        indicateOrganizerChanged();
     }
 
     @Override
@@ -55,30 +56,35 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
+    private void indicateOrganizerChanged() {
         raise(new OrganizerChangedEvent(organizer));
     }
 
     @Override
-    public synchronized void deletePerson(Task target) throws TaskNotFoundException {
-        organizer.removePerson(target);
-        indicateAddressBookChanged();
+    public synchronized void deleteTask(Task target) throws TaskNotFoundException {
+        organizer.removeTask(target);
+        indicateOrganizerChanged();
     }
 
     @Override
-    public synchronized void addPerson(Task task) throws DuplicateTaskException {
-        organizer.addPerson(task);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+    public synchronized void addTask(Task task) throws DuplicateTaskException {
+        organizer.addTask(task);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        indicateOrganizerChanged();
     }
 
     @Override
-    public void updatePerson(Task target, Task editedTask)
+    public void updateTask(Task target, Task editedTask)
             throws DuplicateTaskException, TaskNotFoundException {
         requireAllNonNull(target, editedTask);
 
-        organizer.updatePerson(target, editedTask);
-        indicateAddressBookChanged();
+        organizer.updateTask(target, editedTask);
+        indicateOrganizerChanged();
+    }
+
+    @Override
+    public void deleteTag(Tag tag) {
+        organizer.removeTag(tag);
     }
 
     //=========== Filtered Task List Accessors =============================================================
@@ -88,12 +94,12 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code organizer}
      */
     @Override
-    public ObservableList<Task> getFilteredPersonList() {
+    public ObservableList<Task> getFilteredTaskList() {
         return FXCollections.unmodifiableObservableList(filteredTasks);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Task> predicate) {
+    public void updateFilteredTaskList(Predicate<Task> predicate) {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
     }

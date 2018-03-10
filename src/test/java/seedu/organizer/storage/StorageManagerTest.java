@@ -3,7 +3,7 @@ package seedu.organizer.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.organizer.testutil.TypicalTasks.getTypicalAddressBook;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.io.IOException;
 
@@ -61,7 +61,7 @@ public class StorageManagerTest {
          * {@link XmlOrganizerStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link XmlOrganizerStorageTest} class.
          */
-        Organizer original = getTypicalAddressBook();
+        Organizer original = getTypicalOrganizer();
         storageManager.saveAddressBook(original);
         ReadOnlyOrganizer retrieved = storageManager.readAddressBook().get();
         assertEquals(original, new Organizer(retrieved));

@@ -39,7 +39,7 @@ public class DeleteCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(taskToDelete);
         try {
-            model.deletePerson(taskToDelete);
+            model.deleteTask(taskToDelete);
         } catch (TaskNotFoundException pnfe) {
             throw new AssertionError("The target task cannot be missing");
         }
@@ -49,7 +49,7 @@ public class DeleteCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Task> lastShownList = model.getFilteredPersonList();
+        List<Task> lastShownList = model.getFilteredTaskList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

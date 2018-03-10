@@ -3,7 +3,7 @@ package seedu.organizer.logic.commands;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.organizer.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.organizer.testutil.TypicalTasks.getTypicalAddressBook;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
         expectedModel = new ModelManager(model.getOrganizer(), new UserPrefs());
 
         listCommand = new ListCommand();

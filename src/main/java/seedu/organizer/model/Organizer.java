@@ -24,7 +24,7 @@ import seedu.organizer.model.task.exceptions.TaskNotFoundException;
  */
 public class Organizer implements ReadOnlyOrganizer {
 
-    private final UniqueTaskList persons;
+    private final UniqueTaskList tasks;
     private final UniqueTagList tags;
 
     /*
@@ -36,7 +36,7 @@ public class Organizer implements ReadOnlyOrganizer {
      */
 
     {
-        persons = new UniqueTaskList();
+        tasks = new UniqueTaskList();
         tags = new UniqueTagList();
     }
 
@@ -44,7 +44,7 @@ public class Organizer implements ReadOnlyOrganizer {
     }
 
     /**
-     * Creates an Organizer using the Persons and Tags in the {@code toBeCopied}
+     * Creates an Organizer using the Tasks and Tags in the {@code toBeCopied}
      */
     public Organizer(ReadOnlyOrganizer toBeCopied) {
         this();
@@ -53,8 +53,8 @@ public class Organizer implements ReadOnlyOrganizer {
 
     //// list overwrite operations
 
-    public void setPersons(List<Task> tasks) throws DuplicateTaskException {
-        this.persons.setPersons(tasks);
+    public void setTasks(List<Task> tasks) throws DuplicateTaskException {
+        this.tasks.setTasks(tasks);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -67,14 +67,14 @@ public class Organizer implements ReadOnlyOrganizer {
     public void resetData(ReadOnlyOrganizer newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
-        List<Task> syncedTaskList = newData.getPersonList().stream()
+        List<Task> syncedTaskList = newData.getTaskList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 
         try {
-            setPersons(syncedTaskList);
+            setTasks(syncedTaskList);
         } catch (DuplicateTaskException e) {
-            throw new AssertionError("AddressBooks should not have duplicate persons");
+            throw new AssertionError("PrioriTask should not have duplicate tasks");
         }
     }
 
@@ -87,12 +87,12 @@ public class Organizer implements ReadOnlyOrganizer {
      *
      * @throws DuplicateTaskException if an equivalent task already exists.
      */
-    public void addPerson(Task p) throws DuplicateTaskException {
+    public void addTask(Task p) throws DuplicateTaskException {
         Task task = syncWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any task
         // in the task list.
-        persons.add(task);
+        tasks.add(task);
     }
 
     /**
@@ -104,7 +104,7 @@ public class Organizer implements ReadOnlyOrganizer {
      * @throws TaskNotFoundException  if {@code target} could not be found in the list.
      * @see #syncWithMasterTagList(Task)
      */
-    public void updatePerson(Task target, Task editedTask)
+    public void updateTask(Task target, Task editedTask)
             throws DuplicateTaskException, TaskNotFoundException {
         requireNonNull(editedTask);
 
@@ -112,7 +112,19 @@ public class Organizer implements ReadOnlyOrganizer {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any task
         // in the task list.
-        persons.setPerson(target, syncedEditedTask);
+        tasks.setTask(target, syncedEditedTask);
+        removeUnusedTags();
+    }
+
+    /**
+     * Removes all {@code Tag}s that are not used by any {@code Task} in this {@code Organizer}.
+     */
+    private void removeUnusedTags() {
+        Set<Tag> tagsInTasks = tasks.asObservableList().stream()
+                .map(Task::getTags)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+        tags.setTags(tagsInTasks);
     }
 
     /**
@@ -122,8 +134,8 @@ public class Organizer implements ReadOnlyOrganizer {
      * list.
      */
     private Task syncWithMasterTagList(Task task) {
-        final UniqueTagList personTags = new UniqueTagList(task.getTags());
-        tags.mergeFrom(personTags);
+        final UniqueTagList taskTags = new UniqueTagList(task.getTags());
+        tags.mergeFrom(taskTags);
 
         // Create map with values = tag object references in the master list
         // used for checking task tag references
@@ -132,7 +144,7 @@ public class Organizer implements ReadOnlyOrganizer {
 
         // Rebuild the list of task tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Task(
                 task.getName(), task.getPhone(), task.getEmail(), task.getAddress(), correctTagReferences);
     }
@@ -142,8 +154,8 @@ public class Organizer implements ReadOnlyOrganizer {
      *
      * @throws TaskNotFoundException if the {@code key} is not in this {@code Organizer}.
      */
-    public boolean removePerson(Task key) throws TaskNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removeTask(Task key) throws TaskNotFoundException {
+        if (tasks.remove(key)) {
             return true;
         } else {
             throw new TaskNotFoundException();
@@ -156,17 +168,53 @@ public class Organizer implements ReadOnlyOrganizer {
         tags.add(t);
     }
 
+    /**
+     * Removes {@code tag} from {@code task} in this {@code Organizer}.
+     * @throws TaskNotFoundException if the {@code task} is not in this {@code Organizer}.
+     */
+    private void removeTagFromTask(Tag tag, Task task) throws TaskNotFoundException {
+        Set<Tag> newTags = new HashSet<>(task.getTags());
+
+        if (!newTags.remove(tag)) {
+            return;
+        }
+
+        Task newTask =
+                new Task(task.getName(), task.getPhone(), task.getEmail(), task.getAddress(), newTags);
+
+        try {
+            updateTask(task, newTask);
+        } catch (DuplicateTaskException dte) {
+            throw new AssertionError("Modifying a task's tags only should not result in a duplicate. "
+                    + "See Task#equals(Object).");
+        }
+    }
+
+    /**
+     * Removes {@code tag} from all tasks in this {@code Organizer}.
+     */
+    public void removeTag(Tag tag) {
+        try {
+            for (Task task : tasks) {
+                removeTagFromTask(tag, task);
+            }
+        } catch (TaskNotFoundException tnfe) {
+            throw new AssertionError("Impossible: original task is obtained from PrioriTask.");
+        }
+    }
+
+
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
+        return tasks.asObservableList().size() + " tasks, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
     @Override
-    public ObservableList<Task> getPersonList() {
-        return persons.asObservableList();
+    public ObservableList<Task> getTaskList() {
+        return tasks.asObservableList();
     }
 
     @Override
@@ -178,13 +226,13 @@ public class Organizer implements ReadOnlyOrganizer {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Organizer // instanceof handles nulls
-                && this.persons.equals(((Organizer) other).persons)
+                && this.tasks.equals(((Organizer) other).tasks)
                 && this.tags.equalsOrderInsensitive(((Organizer) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(tasks, tags);
     }
 }

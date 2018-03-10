@@ -44,7 +44,7 @@ public class SampleDataUtil {
         try {
             Organizer sampleAb = new Organizer();
             for (Task sampleTask : getSamplePersons()) {
-                sampleAb.addPerson(sampleTask);
+                sampleAb.addTask(sampleTask);
             }
             return sampleAb;
         } catch (DuplicateTaskException e) {

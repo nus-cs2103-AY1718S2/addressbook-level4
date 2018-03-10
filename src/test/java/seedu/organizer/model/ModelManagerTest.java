@@ -1,10 +1,16 @@
 package seedu.organizer.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.organizer.testutil.TypicalTasks.ALICE;
+import static seedu.organizer.testutil.TypicalTasks.AMY;
 import static seedu.organizer.testutil.TypicalTasks.BENSON;
+import static seedu.organizer.testutil.TypicalTasks.BOB;
 
 import java.util.Arrays;
 
@@ -12,23 +18,53 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
+import seedu.organizer.model.task.Task;
 import seedu.organizer.testutil.OrganizerBuilder;
+import seedu.organizer.testutil.TaskBuilder;
 
 public class ModelManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getFilteredTaskList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
-        modelManager.getFilteredPersonList().remove(0);
+        modelManager.getFilteredTaskList().remove(0);
+    }
+
+    @Test
+    public void deleteTag_nonExistentTag_modelUnchanged() throws Exception {
+        Organizer organizer = new OrganizerBuilder().withTask(AMY).withTask(BOB).build();
+        UserPrefs userPrefs = new UserPrefs();
+
+        ModelManager modelManager = new ModelManager(organizer, userPrefs);
+        modelManager.deleteTag(new Tag(VALID_TAG_UNUSED));
+
+        assertEquals(new ModelManager(organizer, userPrefs), modelManager);
+    }
+
+    @Test
+    public void deleteTag_tagUsedByMultipleTasks_tagRemoved() throws Exception {
+        Organizer organizer = new OrganizerBuilder().withTask(AMY).withTask(BOB).build();
+        UserPrefs userPrefs = new UserPrefs();
+
+        ModelManager modelManager = new ModelManager(organizer, userPrefs);
+        modelManager.deleteTag(new Tag(VALID_TAG_FRIEND));
+
+        Task amyWithoutFriendTag = new TaskBuilder(AMY).withTags().build();
+        Task bobWithoutFriendTag = new TaskBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(amyWithoutFriendTag)
+                .withTask(bobWithoutFriendTag).build();
+
+        assertEquals(new ModelManager(expectedOrganizer, userPrefs), modelManager);
     }
 
     @Test
     public void equals() {
-        Organizer organizer = new OrganizerBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        Organizer organizer = new OrganizerBuilder().withTask(ALICE).withTask(BENSON).build();
         Organizer differentOrganizer = new Organizer();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -51,15 +87,15 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        modelManager.updateFilteredTaskList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(organizer, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookName("differentName");
+        differentUserPrefs.setOrganizerName("differentName");
         assertTrue(modelManager.equals(new ModelManager(organizer, differentUserPrefs)));
     }
 }

@@ -26,7 +26,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final String STUB_SAVE_LOCATION = "Stub";
     private static final String RELATIVE_PATH = "./";
 
-    private static final OrganizerChangedEvent EVENT_STUB = new OrganizerChangedEvent(new OrganizerBuilder().withPerson
+    private static final OrganizerChangedEvent EVENT_STUB = new OrganizerChangedEvent(new OrganizerBuilder().withTask
         (ALICE).build());
 
     private static final int INITIAL_TOTAL_TASKS = 0;
@@ -66,7 +66,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
             String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),
-            String.format(TOTAL_TASKS_STATUS, EVENT_STUB.data.getPersonList().size()));
+            String.format(TOTAL_TASKS_STATUS, EVENT_STUB.data.getTaskList().size()));
     }
 
     /**

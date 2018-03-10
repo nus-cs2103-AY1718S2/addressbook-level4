@@ -48,6 +48,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        subject = personToCopy.getSubject();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -92,7 +93,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Subject} of the {@code Person} that we are building.
      */
     public PersonBuilder withSubject(String subject) {
         this.subject = new Subject(subject);

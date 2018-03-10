@@ -80,7 +80,8 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getSubject().equals(this.getSubject());
     }
 
     @Override
@@ -99,6 +100,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Subject: ")
+                .append(getSubject())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

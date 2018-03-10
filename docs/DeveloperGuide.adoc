@@ -972,6 +972,10 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The product may need 3-5 minutes to build up for the first time.
+.  The data cannot be retrieved from outside
+.  User need to log in with their unique ID and corresponding password
+.  User can only view the information of their teammates
 
 _{More to be added}_
 

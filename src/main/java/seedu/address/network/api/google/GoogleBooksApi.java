@@ -59,7 +59,7 @@ public class GoogleBooksApi {
         return httpClient
                 .makeGetRequest(url)
                 .thenApply(response -> {
-                    if (response.getContentType().startsWith(CONTENT_TYPE_JSON)) {
+                    if (!response.getContentType().startsWith(CONTENT_TYPE_JSON)) {
                         throw new CompletionException(
                                 new IOException("Unexpected content type " + response.getContentType()));
                     }

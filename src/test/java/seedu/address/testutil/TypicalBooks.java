@@ -20,6 +20,9 @@ public class TypicalBooks {
     public static final Book COLLAPSING_EMPIRE = new BookBuilder().withAuthors("John Scalzi")
             .withTitle("The Collapsing Empire").withCategories("Fiction")
             .withDescription("This is The Collapsing Empire.").build();
+    public static final Book CONSIDER_PHLEBAS = new BookBuilder().withAuthors("Iain M. Banks")
+            .withTitle("Consider Phlebas").withCategories("Fiction", "Science Fiction")
+            .withDescription("This is Consider Phlebas.").build();
     public static final Book WAKING_GODS = new BookBuilder().withAuthors("Sylvain Neuvel").withTitle("Waking Gods")
             .withCategories("Fiction", "Science Fiction").withDescription("This is Waking Gods.").build();
 
@@ -41,6 +44,7 @@ public class TypicalBooks {
     }
 
     public static List<Book> getTypicalBooks() {
-        return new ArrayList<>(Arrays.asList(ARTEMIS, BABYLON_ASHES, COLLAPSING_EMPIRE, WAKING_GODS));
+        return new ArrayList<>(Arrays.asList(ARTEMIS, BABYLON_ASHES,
+                COLLAPSING_EMPIRE, CONSIDER_PHLEBAS, WAKING_GODS));
     }
 }

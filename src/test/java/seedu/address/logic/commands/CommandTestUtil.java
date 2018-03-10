@@ -34,20 +34,18 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class CommandTestUtil {
 
-    public static final String VALID_TITLE_ONE = "Freakonomics";
-    public static final String VALID_TITLE_TWO = "Nudge";
-    public static final String VALID_AUTHOR_ONE = "Stephen J. Dubner";
-    public static final String VALID_AUTHOR_TWO = "Steven Levitt";
+    public static final String VALID_TITLE_ARTEMIS = "Artemis";
+    public static final String VALID_TITLE_BABYLON = "Babylon's Ashes";
+    public static final String VALID_AUTHOR_ARTEMIS = "Andy Weir";
+    public static final String VALID_AUTHOR_BABYLON = "James S. A. Corey";
     public static final String VALID_AUTHOR_THREE = "Cass Sunstein";
     public static final String VALID_AUTHOR_FOUR = "Richard Thaler";
-    public static final String VALID_CATEGORY_ONE = "Psychology";
-    public static final String VALID_CATEGORY_TWO = "Economics";
+    public static final String VALID_CATEGORY_ARTEMIS = "Fiction";
+    public static final String VALID_CATEGORY_BABYLON = "Fiction";
     public static final String VALID_CATEGORY_THREE = "Science Fiction";
     public static final String VALID_CATEGORY_FOUR = "Fiction";
-    public static final String VALID_DESCRIPTION_ONE = "Which is more dangerous, "
-            + "a gun or a swimming pool?";
-    public static final String VALID_DESCRIPTION_TWO = "Nudge is about how we make "
-            + "choices and how we can make better ones.";
+    public static final String VALID_DESCRIPTION_ARTEMIS = "This is Artemis.";
+    public static final String VALID_DESCRIPTION_BABYLON = "This is Babylon's Ashes.";
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
@@ -60,18 +58,18 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
-    public static final String TITLE_DESC_ONE = " " + PREFIX_TITLE + VALID_TITLE_ONE;
-    public static final String TITLE_DESC_TWO = " " + PREFIX_TITLE + VALID_TITLE_TWO;
-    public static final String AUTHOR_DESC_ONE = " " + PREFIX_AUTHOR + VALID_AUTHOR_ONE;
-    public static final String AUTHOR_DESC_TWO = " " + PREFIX_AUTHOR + VALID_AUTHOR_TWO;
+    public static final String TITLE_DESC_ARTEMIS = " " + PREFIX_TITLE + VALID_TITLE_ARTEMIS;
+    public static final String TITLE_DESC_BABYLON = " " + PREFIX_TITLE + VALID_TITLE_BABYLON;
+    public static final String AUTHOR_DESC_ARTEMIS = " " + PREFIX_AUTHOR + VALID_AUTHOR_ARTEMIS;
+    public static final String AUTHOR_DESC_BABYLON = " " + PREFIX_AUTHOR + VALID_AUTHOR_BABYLON;
     public static final String AUTHOR_DESC_THREE = " " + PREFIX_AUTHOR + VALID_AUTHOR_THREE;
     public static final String AUTHOR_DESC_FOUR = " " + PREFIX_AUTHOR + VALID_AUTHOR_FOUR;
-    public static final String CATEGORY_DESC_ONE = " " + PREFIX_CATEGORY + VALID_CATEGORY_ONE;
-    public static final String CATEGORY_DESC_TWO = " " + PREFIX_CATEGORY + VALID_CATEGORY_TWO;
+    public static final String CATEGORY_DESC_ARTEMIS = " " + PREFIX_CATEGORY + VALID_CATEGORY_ARTEMIS;
+    public static final String CATEGORY_DESC_BABYLON = " " + PREFIX_CATEGORY + VALID_CATEGORY_BABYLON;
     public static final String CATEGORY_DESC_THREE = " " + PREFIX_CATEGORY + VALID_CATEGORY_THREE;
     public static final String CATEGORY_DESC_FOUR = " " + PREFIX_CATEGORY + VALID_CATEGORY_FOUR;
-    public static final String DESCRIPTION_DESC_ONE = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_ONE;
-    public static final String DESCRIPTION_DESC_TWO = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_TWO;
+    public static final String DESCRIPTION_DESC_ARTEMIS = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_ARTEMIS;
+    public static final String DESCRIPTION_DESC_BABYLON = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_BABYLON;
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

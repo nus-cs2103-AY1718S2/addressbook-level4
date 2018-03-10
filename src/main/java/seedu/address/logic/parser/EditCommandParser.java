@@ -67,15 +67,19 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         return new EditCommand(index, editPersonDescriptor);
     }
-
+    /**
+     * Parses {@code Optional<Resume> resume} into a {@code Optional<Resume>} if {@code resume} is non-empty.
+     * If resume is present and equals to empty string, it will be parsed into a
+     * {@code Resume} containing null value.
+     */
     private Optional<Resume> parseResumeForEdit(Optional<String> resume) throws IllegalValueException {
         assert resume != null;
-        if (!resume.isPresent()){
+        if (!resume.isPresent()) {
             return Optional.empty();
         }
-        if(resume.get().equals("")){
+        if (resume.get().equals("")) {
             return Optional.of(new Resume(null));
-        }else{
+        } else {
             return ParserUtil.parseResume(resume);
         }
     }

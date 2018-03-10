@@ -48,7 +48,7 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.favourite = new Favourite(fav.isFav);
+        this.favourite = new Favourite(fav.value);
     }
 
     public Name getName() {
@@ -67,7 +67,7 @@ public class Person {
         return address;
     }
 
-    public boolean isFavourite() { return favourite.isFav; }
+    public Favourite getFavourite() { return favourite; }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -113,7 +113,7 @@ public class Person {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         builder.append(" Favourite: ")
-                .append(isFavourite());
+                .append(getFavourite());
         return builder.toString();
     }
 

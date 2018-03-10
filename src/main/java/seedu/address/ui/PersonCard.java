@@ -14,8 +14,9 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
-    private static final String[] TAG_COLOR_STYLES = {"teal", "red", "yellow",
-                    "blue", "orange", "brown", "green", "pink", "black", "grey"};
+    private static final String[] TAG_COLOR_STYLES =
+            {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink",
+                    "black", "grey"};
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -65,8 +66,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     *Creates the tag labels for {@code person}.
-     *
+     * Creates the tag labels for {@code person}.
      */
     private void createTags(Person person) {
         person.getTags().forEach(tag -> {
@@ -75,7 +75,6 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-
 
 
     @Override

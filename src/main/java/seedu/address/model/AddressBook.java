@@ -173,7 +173,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes {@code tag} from {@code person} with that tag this {@code AddressBook}.
      *
      * @throws PersonNotFoundException if {@code person} is not found in this {@code AddressBook}.
-     *                                 Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
+     *                                 Reused from https://github.com/se-edu/addressbook-level4/
+     *                                 pull/790/files with minor modifications
      */
     private void removeTagParticular(Tag tag, Person person) throws PersonNotFoundException {
         Set<Tag> tagList = new HashSet<>(person.getTags()); //gets all the tags from a person

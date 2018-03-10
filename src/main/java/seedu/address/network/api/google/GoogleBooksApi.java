@@ -1,29 +1,30 @@
-package seedu.address.network;
+package seedu.address.network.api.google;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.Response;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
-import seedu.address.network.json.JsonDeserializer;
 
 /**
  * Provides access to the Google Books API.
  */
 public class GoogleBooksApi {
 
+    private static final String CONTENT_TYPE_JSON = "application/json";
     private static final String URL_SEARCH_BOOKS =
             "https://www.googleapis.com/books/v1/volumes?maxResults=30&printType=books&q=%s";
     private static final String URL_BOOK_DETAILS = "https://www.googleapis.com/books/v1/volumes/%s";
 
     private final AsyncHttpClient httpClient;
+    private final JsonDeserializer deserializer;
 
     public GoogleBooksApi(AsyncHttpClient httpClient) {
         this.httpClient = httpClient;
+        this.deserializer = new JsonDeserializer();
     }
 
     /**
@@ -34,7 +35,7 @@ public class GoogleBooksApi {
      */
     public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
         String requestUrl = URL_SEARCH_BOOKS.replace("%s", StringUtil.urlEncode(parameters));
-        return executeGetAndApply(requestUrl, JsonDeserializer::convertJsonResponseToBookShelf);
+        return executeGetAndApply(requestUrl, deserializer::convertJsonStringToBookShelf);
     }
 
     /**
@@ -45,18 +46,22 @@ public class GoogleBooksApi {
      */
     public CompletableFuture<Book> getBookDetails(String bookId) {
         String requestUrl = URL_BOOK_DETAILS.replace("%s", StringUtil.urlEncode(bookId));
-        return executeGetAndApply(requestUrl, JsonDeserializer::convertJsonResponseToBook);
+        return executeGetAndApply(requestUrl, deserializer::convertJsonStringToBook);
     }
 
     /**
      * Asynchronously executes a HTTP GET request to the specified url and
-     * applies the specified function to transform the resulting response.
+     * applies the specified function to transform the resulting response body.
      */
-    private <T> CompletableFuture<T> executeGetAndApply(String url, Function<Response, ? extends T> fn) {
+    private <T> CompletableFuture<T> executeGetAndApply(String url, Function<String, ? extends T> fn) {
         return httpClient
                 .prepareGet(url)
                 .execute()
                 .toCompletableFuture()
+                .thenApply(response -> {
+                    assert response.getContentType().startsWith(CONTENT_TYPE_JSON);
+                    return response.getResponseBody();
+                })
                 .thenApply(fn);
     }
 }

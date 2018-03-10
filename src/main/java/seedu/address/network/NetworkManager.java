@@ -13,6 +13,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.network.GoogleApiSearchRequestEvent;
 import seedu.address.commons.events.network.GoogleApiSearchResultEvent;
 import seedu.address.commons.events.network.ResultOutcome;
+import seedu.address.commons.util.StringUtil;
+import seedu.address.network.api.google.GoogleBooksApi;
 
 /**
  * Provides networking functionality (making API calls).
@@ -56,10 +58,11 @@ public class NetworkManager extends ComponentManager implements Network {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         googleBooksApi.searchBooks(event.searchParameters)
                 .thenApply(bookShelf -> {
-                    raise(new GoogleApiSearchResultEvent(ResultOutcome.SUCCESS, null));
+                    raise(new GoogleApiSearchResultEvent(ResultOutcome.SUCCESS, bookShelf));
                     return bookShelf;
                 })
                 .exceptionally(e -> {
+                    logger.warning("Search request failed: " + StringUtil.getDetails(e));
                     raise(new GoogleApiSearchResultEvent(ResultOutcome.FAILURE, null));
                     return null;
                 });

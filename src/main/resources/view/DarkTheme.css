@@ -390,12 +390,12 @@
     -fx-background-color: pink;
 }
 
-+#tags .black {
+#tags .black {
     -fx-text-fill: white;
     -fx-background-color: black;
 }
 
-+#tags .grey {
+#tags .grey {
     -fx-text-fill: black;
     -fx-background-color: grey;
 }

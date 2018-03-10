@@ -807,7 +807,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |Student with group project |Add person with project group tag |I know which person belongs to which project groups
 
-|`* * *` |Student that is finished with a group project |Delete the group tag of a finished group project |Delete the group tag of a finished group project
+|`* * *` |Student that is finished with a group project |Delete the group tag of a finished group project
 
 |`* * *` |Student who forget teammates’ information |I can find out more details of the person such as location, contact number
 

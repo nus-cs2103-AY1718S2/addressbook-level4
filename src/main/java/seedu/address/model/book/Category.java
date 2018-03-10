@@ -20,7 +20,6 @@ public class Category {
         this.category = category;
     }
 
-
     @Override
     public String toString() {
         return category;

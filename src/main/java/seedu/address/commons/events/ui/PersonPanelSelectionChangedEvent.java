@@ -6,6 +6,7 @@ import seedu.address.ui.PersonCard;
 /**
  * Represents a selection change in the Person List Panel
  */
+@Deprecated
 public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
 

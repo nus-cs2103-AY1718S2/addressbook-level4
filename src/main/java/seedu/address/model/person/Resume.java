@@ -35,7 +35,7 @@ public class Resume {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person resume.
      */
     public static boolean isValidResume(String test) {
         requireNonNull(test);
@@ -45,21 +45,17 @@ public class Resume {
         String userDir = System.getProperty("user.dir");
         File resumeFile = new File(userDir + File.separator + test);
         if (resumeFile.isDirectory()) {
-            System.out.println("is a dir");
             return false;
         } else if (!resumeFile.exists()) {
-            System.out.println("does not exist");
             return false;
         } else {
             if (resumeFile.length() > ONEMEGABYTE) {
-                System.out.println("file too large");
                 return false;
             } else {
                 try {
                     byte[] resumeBytes = Files.readAllBytes(resumeFile.toPath());
                     return isPdf(resumeBytes);
                 } catch (IOException ioe) {
-                    System.out.println("ioe");
                     return false;
                 }
             }

@@ -140,7 +140,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return bookShelf.equals(other.bookShelf) // TODO switch to using book shelf
+        return bookShelf.equals(other.bookShelf)
                 && filteredBooks.equals(other.filteredBooks);
     }
 

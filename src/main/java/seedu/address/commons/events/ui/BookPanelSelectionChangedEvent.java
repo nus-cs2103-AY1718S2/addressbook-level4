@@ -4,10 +4,9 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.BookCard;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the Book List Panel
  */
 public class BookPanelSelectionChangedEvent extends BaseEvent {
-
 
     private final BookCard newSelection;
 

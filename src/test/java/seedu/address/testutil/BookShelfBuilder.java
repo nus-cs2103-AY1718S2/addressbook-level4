@@ -7,7 +7,7 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
 /**
  * A utility class to help with building BookShelf objects.
  * Example usage: <br>
- *     {@code BookShelf bs = new BookShelfBuilder().withBook("Nudge", "The One").build();}
+ *     {@code BookShelf bs = new BookShelfBuilder().withBook(new Book(...)).build();}
  */
 public class BookShelfBuilder {
 

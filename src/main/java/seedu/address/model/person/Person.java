@@ -2,7 +2,9 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -95,6 +97,21 @@ public class Person {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    /**
+     * Returns a list of Strings which represents all the person's attributes
+     */
+
+    public List<String> toStringList() {
+        final List<String> result = new ArrayList<>();
+        result.add(getName().toString());
+        result.add(getAddress().toString());
+        result.add(getEmail().toString());
+        result.add(getPhone().toString());
+        result.add(getTags().toString());
+        return result;
+
     }
 
 }

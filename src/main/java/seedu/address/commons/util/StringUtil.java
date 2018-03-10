@@ -5,6 +5,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Helper functions for handling strings.
@@ -66,6 +68,19 @@ public class StringUtil {
             return value > 0 && !s.startsWith("+"); // "+1" is successfully parsed by Integer#parseInt(String)
         } catch (NumberFormatException nfe) {
             return false;
+        }
+    }
+
+    /**
+     * Returns the URL encoded form of the string {@code s}, or any empty string
+     * if UTF-8 encoding is not supported.
+     */
+    public static String urlEncode(String s) {
+        requireNonNull(s);
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "";
         }
     }
 }

@@ -9,7 +9,7 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Title;
-import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.util.BookDataUtil;
 
 /**
  * A utility class to help with building Book objects.
@@ -47,7 +47,7 @@ public class BookBuilder {
      * Parses the {@code authors} into a {@code Set<Author>} and set it to the {@code Book} that we are building.
      */
     public BookBuilder withAuthors(String... authors) {
-        this.authors = SampleDataUtil.getAuthorSet(authors);
+        this.authors = BookDataUtil.getAuthorSet(authors);
         return this;
     }
 
@@ -63,7 +63,7 @@ public class BookBuilder {
      * Parses the {@code categories} into a {@code Set<Category>} and set it to the {@code Book} that we are building.
      */
     public BookBuilder withCategories(String... categories) {
-        this.categories = SampleDataUtil.getCategorySet(categories);
+        this.categories = BookDataUtil.getCategorySet(categories);
         return this;
     }
 

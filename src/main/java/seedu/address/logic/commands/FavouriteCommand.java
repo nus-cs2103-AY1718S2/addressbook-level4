@@ -60,7 +60,7 @@ public class FavouriteCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, personToFavourite));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedPerson));
     }
 
     @Override

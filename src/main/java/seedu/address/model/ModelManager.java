@@ -86,6 +86,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
     }
+
+    @Override
+    public void favouritePerson(Person target) throws PersonNotFoundException {
+        logger.info("Executing favouritePerson() in Model");
+        // TODO: Implement this method
+    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**

@@ -48,4 +48,7 @@ public interface Model {
 
     /** Removes the given {@code tag} from all {@code Person}s. */
     void deleteTag(Tag tag);
+
+    /** Add the given person to Favourites */
+    void favouritePerson(Person target) throws PersonNotFoundException;
 }

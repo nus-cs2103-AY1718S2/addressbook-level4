@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.person.exceptions.Subject;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,21 +20,21 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final Subject subject;
 
-    private final UniqueSubjectList subjects
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Subject> subjects) {
+    public Person(Name name, Phone phone, Email email, Address address, Subject subject, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         // protect internal tags from changes in the arg list
-        this.subjects = new UniqueSubjectList(subjects);
+        this.subject = subject;
         this.tags = new UniqueTagList(tags);
     }
 
@@ -52,6 +52,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Subject getSubject() {
+        return subject;
     }
 
     /**

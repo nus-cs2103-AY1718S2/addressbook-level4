@@ -69,6 +69,15 @@ public class Person {
 
     public Favourite getFavourite() { return favourite; }
 
+    public boolean isFavourite() {
+        if (favourite.value.equals("true")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

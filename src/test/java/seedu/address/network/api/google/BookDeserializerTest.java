@@ -20,11 +20,11 @@ import seedu.address.model.book.Book;
 public class BookDeserializerTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/BookDeserializerTest/");
-    protected static final File VALID_RESPONSE_FILE = new File(TEST_DATA_FOLDER + "ValidResponse.json");
-    protected static final File VALID_RESPONSE_NO_DESC_FILE = new File(TEST_DATA_FOLDER + "ValidResponseNoDesc.json");
-    protected static final File INVALID_RESPONSE_WRONG_TYPE_FILE =
+    public static final File VALID_RESPONSE_FILE = new File(TEST_DATA_FOLDER + "ValidResponse.json");
+    public static final File VALID_RESPONSE_NO_DESC_FILE = new File(TEST_DATA_FOLDER + "ValidResponseNoDesc.json");
+    public static final File INVALID_RESPONSE_WRONG_TYPE_FILE =
             new File(TEST_DATA_FOLDER + "InvalidResponseWrongType.json");
-    protected static final File ERROR_RESPONSE_FILE = new File(TEST_DATA_FOLDER + "ErrorResponse.json");
+    public static final File ERROR_RESPONSE_FILE = new File(TEST_DATA_FOLDER + "ErrorResponse.json");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

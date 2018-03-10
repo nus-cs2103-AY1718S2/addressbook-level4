@@ -1,6 +1,5 @@
 package seedu.address.network;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.asynchttpclient.AsyncHttpClient;
@@ -30,27 +29,22 @@ public class NetworkManager extends ComponentManager implements Network {
     private static final int READ_TIMEOUT_MILLIS = 1000 * 5; // 5 seconds
     private static final int REQUEST_TIMEOUT_MILLIS = 1000 * 5; // 5 seconds
 
-    private final AsyncHttpClient httpClient;
+    private final HttpClient httpClient;
     private final GoogleBooksApi googleBooksApi;
 
     public NetworkManager() {
         super();
-        httpClient = Dsl.asyncHttpClient(Dsl.config()
+        AsyncHttpClient asyncHttpClient = Dsl.asyncHttpClient(Dsl.config()
                 .setConnectTimeout(CONNECTION_TIMEOUT_MILLIS)
                 .setReadTimeout(READ_TIMEOUT_MILLIS)
                 .setRequestTimeout(REQUEST_TIMEOUT_MILLIS));
+        httpClient = new HttpClient(asyncHttpClient);
         googleBooksApi = new GoogleBooksApi(httpClient);
     }
 
     @Override
     public void stop() {
-        try {
-            if (!httpClient.isClosed()) {
-                httpClient.close();
-            }
-        } catch (IOException e) {
-            logger.warning("Failed to shut down AsyncHttpClient.");
-        }
+        httpClient.close();
     }
 
     @Subscribe

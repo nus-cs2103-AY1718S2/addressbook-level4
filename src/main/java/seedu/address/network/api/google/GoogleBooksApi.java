@@ -1,28 +1,30 @@
 package seedu.address.network.api.google;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.function.Function;
-
-import org.asynchttpclient.AsyncHttpClient;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
+import seedu.address.network.HttpClient;
 
 /**
  * Provides access to the Google Books API.
  */
 public class GoogleBooksApi {
 
-    private static final String CONTENT_TYPE_JSON = "application/json";
-    private static final String URL_SEARCH_BOOKS =
+    protected static final String URL_SEARCH_BOOKS =
             "https://www.googleapis.com/books/v1/volumes?maxResults=30&printType=books&q=%s";
-    private static final String URL_BOOK_DETAILS = "https://www.googleapis.com/books/v1/volumes/%s";
+    protected static final String URL_BOOK_DETAILS = "https://www.googleapis.com/books/v1/volumes/%s";
+    private static final String CONTENT_TYPE_JSON = "application/json";
+    private static final int HTTP_STATUS_OK = 200;
 
-    private final AsyncHttpClient httpClient;
+    private final HttpClient httpClient;
     private final JsonDeserializer deserializer;
 
-    public GoogleBooksApi(AsyncHttpClient httpClient) {
+    public GoogleBooksApi(HttpClient httpClient) {
         this.httpClient = httpClient;
         this.deserializer = new JsonDeserializer();
     }
@@ -55,11 +57,13 @@ public class GoogleBooksApi {
      */
     private <T> CompletableFuture<T> executeGetAndApply(String url, Function<String, ? extends T> fn) {
         return httpClient
-                .prepareGet(url)
-                .execute()
-                .toCompletableFuture()
+                .makeGetRequest(url)
                 .thenApply(response -> {
                     assert response.getContentType().startsWith(CONTENT_TYPE_JSON);
+                    if (response.getStatusCode() != HTTP_STATUS_OK) {
+                        throw new CompletionException(
+                                new IOException("Get request failed with status code " + response.getStatusCode()));
+                    }
                     return response.getResponseBody();
                 })
                 .thenApply(fn);

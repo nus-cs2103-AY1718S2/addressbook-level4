@@ -19,6 +19,7 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final boolean isFavourite;
 
     private final UniqueTagList tags;
 
@@ -33,6 +34,7 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.isFavourite = false; // Default value
     }
 
     public Name getName() {
@@ -50,6 +52,8 @@ public class Person {
     public Address getAddress() {
         return address;
     }
+
+    public boolean isFavourite() { return isFavourite; }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

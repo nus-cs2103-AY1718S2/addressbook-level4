@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -58,6 +59,39 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
+        }
+    }
+
+    @Override
+    public Optional<ReadOnlyAddressBook> readAddressBookBackup() throws DataConversionException, IOException {
+        return readAddressBook(filePath + ".backup");
+    }
+
+    @Override
+    public Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws DataConversionException,
+                                                                                       IOException {
+        if (Objects.isNull(filePath)) {
+            throw new NullPointerException();
+        } else {
+            return readAddressBook(filePath + ".backup");
+        }
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        if (Objects.isNull(filePath)) {
+            throw new NullPointerException();
+        } else {
+            saveAddressBook(addressBook, filePath + ".backup");
+        }
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        if (Objects.isNull(filePath)) {
+            throw new NullPointerException();
+        } else {
+            saveAddressBook(addressBook, filePath + ".backup");
         }
     }
 

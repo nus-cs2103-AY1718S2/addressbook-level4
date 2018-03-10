@@ -55,8 +55,14 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
 
     /** Temporary data holder used for deserialization. */
     private static class JsonRoot {
+        private int error = 0;
         private int totalItems = 0;
         private JsonVolume[] items = new JsonVolume[0];
+
+        // This should fail if the API returns an error, due to incompatible types.
+        public void setError(int error) {
+            this.error = error;
+        }
 
         public void setTotalItems(int totalItems) {
             this.totalItems = totalItems;

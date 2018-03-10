@@ -35,8 +35,14 @@ public class BookDeserializer extends StdDeserializer<Book> {
 
     /** Temporary data holder used for deserialization. */
     private static class JsonRoot {
+        private int error = 0;
         private String id = "";
         private JsonVolumeInfo volumeInfo = new JsonVolumeInfo();
+
+        // This should fail if the API returns an error, due to incompatible types.
+        public void setError(int error) {
+            this.error = error;
+        }
 
         public void setId(String id) {
             this.id = id;

@@ -61,6 +61,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         }
     }
 
+    //@@author EdwardKSG-reused
+    //Reused from https://github.com/se-edu/addressbook-level4/pull/594
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, filePath + ".backup");
+    }
+    //@@author
+
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);

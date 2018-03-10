@@ -22,8 +22,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
-
+            "https://www.linkedin.com/search/results/index/?keywords=";
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -64,9 +63,9 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
-//    @Subscribe
-//    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-//        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-//        loadPersonPage(event.getNewSelection().person);
-//    }
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+    }
 }

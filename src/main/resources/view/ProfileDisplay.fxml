@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
@@ -19,7 +20,11 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                            <children>
-                              <Label layoutX="197.0" layoutY="56.0" prefHeight="127.0" prefWidth="429.0" text="Label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Label fx:id="name" layoutX="131.0" layoutY="32.0" text="Label" textFill="#a8d93b">
+                                 <font>
+                                    <Font size="53.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                     </items>
@@ -35,19 +40,16 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Name" />
-                        <Label fx:id="name" text="Label" GridPane.columnIndex="1" />
-                        <Label text="Address" GridPane.rowIndex="1" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Phone Number" GridPane.rowIndex="2" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Email Id" GridPane.rowIndex="3" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Address" textFill="#37c60b" />
+                        <Label fx:id="address" text="Label" GridPane.columnIndex="1" />
+                        <Label text="Phone Number" GridPane.rowIndex="1" />
+                        <Label fx:id="phone" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Email Id" GridPane.rowIndex="2" />
+                        <Label fx:id="email" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>

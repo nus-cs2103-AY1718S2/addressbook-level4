@@ -5,11 +5,11 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to obtain details for a book using the Google Books API.
  */
-public class GoogleApiBookDetailsRequestEvent extends BaseEvent {
+public class ApiBookDetailsRequestEvent extends BaseEvent {
 
     public final String bookId;
 
-    public GoogleApiBookDetailsRequestEvent(String bookId) {
+    public ApiBookDetailsRequestEvent(String bookId) {
         this.bookId = bookId;
     }
 

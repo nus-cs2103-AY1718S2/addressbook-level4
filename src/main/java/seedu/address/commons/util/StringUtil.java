@@ -72,8 +72,8 @@ public class StringUtil {
     }
 
     /**
-     * Returns the URL encoded form the string {@code s}.
-     * @throws NullPointerException if {@code s} is null.
+     * Returns the URL encoded form of the string {@code s}, or any empty string
+     * if UTF-8 encoding is not supported.
      */
     public static String urlEncode(String s) {
         requireNonNull(s);

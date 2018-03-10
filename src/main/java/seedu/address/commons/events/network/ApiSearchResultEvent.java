@@ -6,12 +6,12 @@ import seedu.address.model.ReadOnlyBookShelf;
 /**
  * Represents the results of a search for books using the Google Books API.
  */
-public class GoogleApiSearchResultEvent extends BaseEvent {
+public class ApiSearchResultEvent extends BaseEvent {
 
     public final ResultOutcome outcome;
     public final ReadOnlyBookShelf bookShelf;
 
-    public GoogleApiSearchResultEvent(ResultOutcome outcome, ReadOnlyBookShelf bookShelf) {
+    public ApiSearchResultEvent(ResultOutcome outcome, ReadOnlyBookShelf bookShelf) {
         this.outcome = outcome;
         this.bookShelf = bookShelf;
     }

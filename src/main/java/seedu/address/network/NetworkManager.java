@@ -9,10 +9,10 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.network.GoogleApiBookDetailsRequestEvent;
-import seedu.address.commons.events.network.GoogleApiBookDetailsResultEvent;
-import seedu.address.commons.events.network.GoogleApiSearchRequestEvent;
-import seedu.address.commons.events.network.GoogleApiSearchResultEvent;
+import seedu.address.commons.events.network.ApiBookDetailsRequestEvent;
+import seedu.address.commons.events.network.ApiBookDetailsResultEvent;
+import seedu.address.commons.events.network.ApiSearchRequestEvent;
+import seedu.address.commons.events.network.ApiSearchResultEvent;
 import seedu.address.commons.events.network.ResultOutcome;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.network.api.google.GoogleBooksApi;
@@ -50,31 +50,31 @@ public class NetworkManager extends ComponentManager implements Network {
     }
 
     @Subscribe
-    private void handleGoogleApiSearchRequestEvent(GoogleApiSearchRequestEvent event) {
+    private void handleGoogleApiSearchRequestEvent(ApiSearchRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         googleBooksApi.searchBooks(event.searchParameters)
                 .thenApply(bookShelf -> {
-                    raise(new GoogleApiSearchResultEvent(ResultOutcome.SUCCESS, bookShelf));
+                    raise(new ApiSearchResultEvent(ResultOutcome.SUCCESS, bookShelf));
                     return bookShelf;
                 })
                 .exceptionally(e -> {
                     logger.warning("Search request failed: " + StringUtil.getDetails(e));
-                    raise(new GoogleApiSearchResultEvent(ResultOutcome.FAILURE, null));
+                    raise(new ApiSearchResultEvent(ResultOutcome.FAILURE, null));
                     return null;
                 });
     }
 
     @Subscribe
-    private void handleGoogleApiBookDetailsRequestEvent(GoogleApiBookDetailsRequestEvent event) {
+    private void handleGoogleApiBookDetailsRequestEvent(ApiBookDetailsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         googleBooksApi.getBookDetails(event.bookId)
                 .thenApply(book -> {
-                    raise(new GoogleApiBookDetailsResultEvent(ResultOutcome.SUCCESS, book));
+                    raise(new ApiBookDetailsResultEvent(ResultOutcome.SUCCESS, book));
                     return book;
                 })
                 .exceptionally(e -> {
                     logger.warning("Book detail request failed: " + StringUtil.getDetails(e));
-                    raise(new GoogleApiBookDetailsResultEvent(ResultOutcome.FAILURE, null));
+                    raise(new ApiBookDetailsResultEvent(ResultOutcome.FAILURE, null));
                     return null;
                 });
     }

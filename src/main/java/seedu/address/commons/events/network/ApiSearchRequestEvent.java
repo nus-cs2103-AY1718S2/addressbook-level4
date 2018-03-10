@@ -5,11 +5,11 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to search for books using the Google Books API.
  */
-public class GoogleApiSearchRequestEvent extends BaseEvent {
+public class ApiSearchRequestEvent extends BaseEvent {
 
     public final String searchParameters;
 
-    public GoogleApiSearchRequestEvent(String searchParameters) {
+    public ApiSearchRequestEvent(String searchParameters) {
         this.searchParameters = searchParameters;
     }
 

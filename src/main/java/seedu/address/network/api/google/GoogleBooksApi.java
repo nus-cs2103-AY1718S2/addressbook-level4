@@ -36,7 +36,7 @@ public class GoogleBooksApi {
      * @return a CompletableFuture that resolves to a ReadOnlyBookShelf.
      */
     public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-        String requestUrl = URL_SEARCH_BOOKS.replace("%s", StringUtil.urlEncode(parameters));
+        String requestUrl = String.format(URL_SEARCH_BOOKS, StringUtil.urlEncode(parameters));
         return executeGetAndApply(requestUrl, deserializer::convertJsonStringToBookShelf);
     }
 
@@ -47,7 +47,7 @@ public class GoogleBooksApi {
      * @return a CompletableFuture that resolves to a Book.
      */
     public CompletableFuture<Book> getBookDetails(String bookId) {
-        String requestUrl = URL_BOOK_DETAILS.replace("%s", StringUtil.urlEncode(bookId));
+        String requestUrl = String.format(URL_BOOK_DETAILS, StringUtil.urlEncode(bookId));
         return executeGetAndApply(requestUrl, deserializer::convertJsonStringToBook);
     }
 
@@ -59,7 +59,10 @@ public class GoogleBooksApi {
         return httpClient
                 .makeGetRequest(url)
                 .thenApply(response -> {
-                    assert response.getContentType().startsWith(CONTENT_TYPE_JSON);
+                    if (response.getContentType().startsWith(CONTENT_TYPE_JSON)) {
+                        throw new CompletionException(
+                                new IOException("Unexpected content type " + response.getContentType()));
+                    }
                     if (response.getStatusCode() != HTTP_STATUS_OK) {
                         throw new CompletionException(
                                 new IOException("Get request failed with status code " + response.getStatusCode()));

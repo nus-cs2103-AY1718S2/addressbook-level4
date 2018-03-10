@@ -19,10 +19,10 @@ import seedu.address.network.HttpResponse;
 
 public class GoogleBooksApiTest {
 
-    private static final String URL_SEARCH_BOOKS_OK = GoogleBooksApi.URL_SEARCH_BOOKS.replace("%s", "123");
-    private static final String URL_BOOK_DETAILS_OK = GoogleBooksApi.URL_BOOK_DETAILS.replace("%s", "123");
-    private static final String URL_SEARCH_BOOKS_FAIL = GoogleBooksApi.URL_SEARCH_BOOKS.replace("%s", "");
-    private static final String URL_BOOK_DETAILS_FAIL = GoogleBooksApi.URL_BOOK_DETAILS.replace("%s", "");
+    private static final String URL_SEARCH_BOOKS_OK = String.format(GoogleBooksApi.URL_SEARCH_BOOKS, "123");
+    private static final String URL_BOOK_DETAILS_OK = String.format(GoogleBooksApi.URL_BOOK_DETAILS, "123");
+    private static final String URL_SEARCH_BOOKS_FAIL = String.format(GoogleBooksApi.URL_SEARCH_BOOKS, "");
+    private static final String URL_BOOK_DETAILS_FAIL = String.format(GoogleBooksApi.URL_BOOK_DETAILS, "");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

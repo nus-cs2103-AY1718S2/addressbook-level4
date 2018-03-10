@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyBookShelf;
 
 /**
- * Represents the results of a successful search for books using the Google Books API.
+ * Represents the results of a search for books using the Google Books API.
  */
 public class GoogleApiSearchResultEvent extends BaseEvent {
 
@@ -19,7 +19,7 @@ public class GoogleApiSearchResultEvent extends BaseEvent {
     @Override
     public String toString() {
         if (outcome == ResultOutcome.FAILURE) {
-            return "failure";
+            return "API failure";
         }
         return "number of books " + bookShelf.getBookList().size();
     }

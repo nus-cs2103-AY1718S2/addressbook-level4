@@ -1,7 +1,6 @@
 package seedu.address.commons.events.network;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.logic.commands.SearchCommand.SearchDescriptor;
 
 /**
  * Indicates a request to search for books using the Google Books API.

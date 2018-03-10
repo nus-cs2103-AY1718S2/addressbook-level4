@@ -9,6 +9,8 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.network.GoogleApiBookDetailsRequestEvent;
+import seedu.address.commons.events.network.GoogleApiBookDetailsResultEvent;
 import seedu.address.commons.events.network.GoogleApiSearchRequestEvent;
 import seedu.address.commons.events.network.GoogleApiSearchResultEvent;
 import seedu.address.commons.events.network.ResultOutcome;
@@ -58,6 +60,21 @@ public class NetworkManager extends ComponentManager implements Network {
                 .exceptionally(e -> {
                     logger.warning("Search request failed: " + StringUtil.getDetails(e));
                     raise(new GoogleApiSearchResultEvent(ResultOutcome.FAILURE, null));
+                    return null;
+                });
+    }
+
+    @Subscribe
+    private void handleGoogleApiBookDetailsRequestEvent(GoogleApiBookDetailsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        googleBooksApi.getBookDetails(event.bookId)
+                .thenApply(book -> {
+                    raise(new GoogleApiBookDetailsResultEvent(ResultOutcome.SUCCESS, book));
+                    return book;
+                })
+                .exceptionally(e -> {
+                    logger.warning("Book detail request failed: " + StringUtil.getDetails(e));
+                    raise(new GoogleApiBookDetailsResultEvent(ResultOutcome.FAILURE, null));
                     return null;
                 });
     }

@@ -14,9 +14,10 @@ import java.nio.file.Files;
  */
 public class Resume {
     public static final String MESSAGE_RESUME_CONSTRAINTS =
-            "Resume file should exists in the same directory as the jar programme, should be smaller than 1MB "
-                    + "and should be a valid PDF.";
+            "Resume file should be at least 1 character long, exist in the same directory as the jar programme, "
+                    + "smaller than 1MB and should be a valid PDF.";
     private static final int ONEMEGABYTE = 1 * 1024 * 1024;
+    private static final String RESUME_VALIDATION_REGEX = ".*\\S.*";
     public final String value;
 
     /**
@@ -38,6 +39,9 @@ public class Resume {
      */
     public static boolean isValidResume(String test) {
         requireNonNull(test);
+        if (!test.matches(RESUME_VALIDATION_REGEX)) {
+            return false;
+        }
         String userDir = System.getProperty("user.dir");
         File resumeFile = new File(userDir + File.separator + test);
         if (resumeFile.isDirectory()) {

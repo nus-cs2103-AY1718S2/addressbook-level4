@@ -20,6 +20,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -54,7 +55,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             ParserUtil.parseExpectedGraduationYear(argMultimap.getValue(PREFIX_EXPECTED_GRADUATION_YEAR))
                     .ifPresent(editPersonDescriptor::setExpectedGraduationYear);
-            ParserUtil.parseResume(argMultimap.getValue(PREFIX_RESUME)).ifPresent(editPersonDescriptor::setResume);
+            parseResumeForEdit(argMultimap.getValue(PREFIX_RESUME)).ifPresent(editPersonDescriptor::setResume);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -65,6 +66,18 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         return new EditCommand(index, editPersonDescriptor);
+    }
+
+    private Optional<Resume> parseResumeForEdit(Optional<String> resume) throws IllegalValueException {
+        assert resume != null;
+        if (!resume.isPresent()){
+            return Optional.empty();
+        }
+        if(resume.get().equals("")){
+            return Optional.of(new Resume(null));
+        }else{
+            return ParserUtil.parseResume(resume);
+        }
     }
 
     /**

@@ -247,6 +247,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+
+        /* Case: blank resume -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + " " +PREFIX_RESUME;
+        assertCommandFailure(command, Resume.MESSAGE_RESUME_CONSTRAINTS);
     }
 
     /**

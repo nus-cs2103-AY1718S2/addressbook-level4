@@ -12,11 +12,6 @@ import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CATEGORY_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_ARTEMIS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ARTEMIS;
-
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.testutil.TypicalBooks.ARTEMIS;
 import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
 import static seedu.address.testutil.TypicalBooks.COLLAPSING_EMPIRE;

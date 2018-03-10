@@ -1,3 +1,5 @@
+//@@author {ifalluphill}
+
 package seedu.address.ui;
 
 import java.io.BufferedReader;
@@ -29,26 +31,42 @@ public class ErrorsWindow extends UiPart<Stage> {
     public ErrorsWindow(Stage root) {
         super(FXML, root);
 
+        String errorLog = getErrorLogAsHTMLString();
+        String errorWindowHTML = createErrorLogPageAsHTMLString(errorLog);
+        browser.getEngine().loadContent(errorWindowHTML,"text/html");
+    }
+
+    /**
+     * Formats the error log for use in an HTML page.
+     */
+
+    private String getErrorLogAsHTMLString() {
         StringBuilder errorLog = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(ERROR_LOG_FILE_PATH)))) {
             String line;
             while ((line = reader.readLine()) != null)
-                errorLog.append("<p>" + line + "</p>");
-
+                errorLog.append("<p>").append(line).append("</p>");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        browser.getEngine().loadContent(
-                "<html>" +
-                "<style>" +
-                    "body { background: #eee; }" +
-                    "p { margin: 0; }" +
-                "</style>" +
-                "<body>" +
-                    "<div>" + errorLog + "</div>" +
-                "</body>" +
-                "</html>", "text/html");
+        return errorLog.toString();
+    }
+
+    /**
+     * Generates the HTML page content for the errors window.
+     */
+
+    private String createErrorLogPageAsHTMLString(String errorLog) {
+        return  "<html>" +
+                    "<style>" +
+                        "body { background: #eee; }" +
+                        "p { margin: 0; }" +
+                    "</style>" +
+                    "<body>" +
+                        "<div>" + errorLog + "</div>" +
+                    "</body>" +
+                "</html>";
     }
 
     /**
@@ -81,3 +99,5 @@ public class ErrorsWindow extends UiPart<Stage> {
         getRoot().show();
     }
 }
+
+//@@author

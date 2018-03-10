@@ -170,14 +170,16 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author {ifalluphill}
     /**
-     * Opens the help window.
+     * Opens the error window.
      */
     @FXML
     public void handleView() {
         ErrorsWindow errorsWindow = new ErrorsWindow();
         errorsWindow.show();
     }
+    //@@author
 
     void show() {
         primaryStage.show();
@@ -205,9 +207,11 @@ public class MainWindow extends UiPart<Stage> {
         handleHelp();
     }
 
+    //@@author {ifalluphill}
     @Subscribe
     private void handleShowErrorsEvent(ShowErrorsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleView();
     }
+    //@@author
 }

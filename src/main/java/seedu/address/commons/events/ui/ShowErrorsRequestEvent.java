@@ -1,3 +1,4 @@
+//@@author {ifalluphill}
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
@@ -13,3 +14,5 @@ public class ShowErrorsRequestEvent extends BaseEvent {
     }
 
 }
+
+//@@author

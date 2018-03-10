@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class remotePostgresConnectionTest {
 
     public static void main(String[] args) {
-       
+      
         //information for connecting to the remote postgresql server
         String url = "jdbc:postgresql://rds-postgresql-addressbook.cnpjakv2naou.ap-southeast-1.rds.amazonaws.com:5434/addressbook";
         String user = "anminkang";

@@ -13,7 +13,7 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.DuplicateBookException;
-import seedu.address.model.util.BookUtil;
+import seedu.address.model.util.BookDataUtil;
 
 /**
  * Custom Jackson deserializer for deserializing JSON to book shelf.
@@ -44,8 +44,8 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
     /** Converts a JsonVolume into a Book, and add it into the book shelf. */
     private void convertAndAddBook(BookShelf bookShelf, JsonVolume volume) {
         JsonVolumeInfo volumeInfo = volume.volumeInfo;
-        Book book = new Book(BookUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description));
+        Book book = new Book(BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
+                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description));
         try {
             bookShelf.addBook(book);
         } catch (DuplicateBookException e) {

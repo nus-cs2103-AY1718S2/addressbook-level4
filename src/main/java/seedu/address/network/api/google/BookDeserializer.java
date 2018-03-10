@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Title;
-import seedu.address.model.util.BookUtil;
+import seedu.address.model.util.BookDataUtil;
 
 /**
  * Custom Jackson deserializer for deserializing JSON to book.
@@ -29,8 +29,8 @@ public class BookDeserializer extends StdDeserializer<Book> {
         JsonRoot root = jp.readValueAs(JsonRoot.class);
         JsonVolumeInfo volumeInfo = root.volumeInfo;
 
-        return new Book(BookUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description));
+        return new Book(BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
+                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description));
     }
 
     /** Temporary data holder used for deserialization. */

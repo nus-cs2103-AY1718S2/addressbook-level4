@@ -33,7 +33,11 @@ public class ProfileDisplay extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
     }
-    
+
+    /**
+     * 
+     * @param person
+     */
     private void loadPersonProfile(Person person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));

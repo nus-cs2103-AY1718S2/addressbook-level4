@@ -811,7 +811,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Student who forget teammates’ information |Find a person by name|I can find out more details of the person such as location, contact number
 
-|`* * *` |Student who made a mistake in recording a group tag |Edit a person’s group tag|I can change the group tag accordingly 
+|`* * *` |Student who made a mistake in recording a group tag |Edit a person’s group tag|I can change the group tag accordingly
 
 |`* * *` |Student who recorded the wrong personal information |Edit a person|I can correct the details of the person
 
@@ -857,7 +857,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |Students who likes other colours on the interface |Change color scheme |Personalise the app
 
-|`*` |Student who wants to call an absent teammate |Open teammates’ whatsapp page within the application e |I can alert teammates of the meeting
+|`*` |Student who wants to call an absent teammate |Open teammates’ WHATSAPP page within the application e |I can alert teammates of the meeting
 
 |`*` |Student who do not how to reach the destination of the meet-up |Have the venue of the meet-up shown on google map |I can know the direction to the meetup
 

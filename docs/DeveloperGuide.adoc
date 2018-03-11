@@ -782,13 +782,16 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* university students
-* prefer desktop apps over other types
+* busy university students who has many tasks to keep track of
+* is taking many modules, and is part of various student organizations and activities
+* prefers a digital organizer over a physical organizer
+* requires help in monitoring the numerous tasks and their levels of importance
+* would like assistance for the planning of tasks
+* is forgetful, and requires constant reminders
+* prefers desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
-* prefers a digital organiser over a physical organiser
-* would rather the application do the planning for them
 
 *Value proposition*: helps busy university students keep track of their tasks and priorities
 
@@ -802,13 +805,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the application
 
 |`* * *` |user |add a new task |
 
-|`* * *` |user |add a priority level to a task |allow the application to order tasks by priority level
+|`* * *` |user |add a priority level to a task |keep track of the priority levels of my tasks and allow the application to order tasks by priority levels
 
-|`* * *` |user |add a deadline to a task |allow the application automate management of my task priorities
+|`* * *` |user |add a deadline to a task |keep track of the deadlines of my tasks and allow the application to help me manage my priorities according to my deadlines
 
 |`* *` |user |add a subtask to a task |split tasks into smaller subtasks for easier management
 
@@ -822,15 +825,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |delete a subtask from a task |remove a subtask I no longer need
 
-|`* *` |user |delete a tag from a task |remove a tag from a task that no longer belongs to a group
+|`* *` |user |delete a tag from a task |remove a tag from a task that no longer belongs to the group
 
 |`* *` |user |delete a description from a task|remove a description that is no longer relevant
 
 |`* *` |user |delete all tasks |remove all tasks quickly
 
-|`* * *` |user |edit a task's name |update the task's name in case of changes needed
+|`* * *` |user |edit a task's name |update the task’s name when required
 
-|`* * *` |user |edit a task's priority level |change a task's priority level when I need to reorganize priorities
+|`* * *` |user |edit a task's priority level |change a task's priority level when I need to re-organize my priorities
 
 |`* * *` |user |edit a task's deadline |change a task's deadline
 
@@ -838,39 +841,37 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |edit a task's description|change a task's description
 
-|`* * *` |user |mark a task as complete |indicate to the application to push a task to the completed list
+|`* * *` |user |mark a task as complete |complete the task
 
 |`* *` |user |mark a subtask as complete |keep track of subtasks already done
 
-|`* * *` |user |view all uncompleted tasks |see all tasks that need to be done, along with the deadlines and priorities
+|`* * *` |user with many uncompleted tasks |view all uncompleted tasks |see all tasks that need to be done, along with the deadlines and priorities
 
-|`* * *` |user |view all details of a task |view all details of a specified tasks, after seeing a list of all tasks
+|`* * *` |user |view all details of a task |view all details of a specified task, after seeing a list of all tasks
 
-|`* * *` |user |view all completed tasks |see all tasks that have been completed, for past reference
+|`* * *` |user with many tasks |view all completed tasks |see all tasks that have been completed, for past reference
 
-|`* *` |user with many tasks in the to-do list |view all tasks with a specific tag |locate all tasks with a specific tag, without the need of a manual search
+|`* *` |user with many tasks |view all tasks with a specific tag |locate all tasks with a specific tag, without the need for a manual search
 
-|`* *` |user with many tasks in the to-do list |view all tasks with a certain deadline |locate all tasks with a certain deadline, without the need of a manual search
+|`* *` |user with many tasks |view all tasks within a certain deadline |locate all tasks within a certain deadline, without the need of a manual search
 
 |`* *`|user |view a calender showing task's deadlines|see a chronic overview of all tasks and their deadlines
 
-|`* *` |user with many tasks in the to-do list |find a task by name|locate a task without the need to search through a list
+|`* *` |user with many tasks |find a task by name |locate a task without the need to search through an entire list
 
-|`* *` |user with many tasks in the to-do list |find a task by description|locate a task when I have forgotten it's name
+|`* *` |user with many tasks |find a task by description|locate a task when I have forgotten it's name
 
-|`* *` |user |have all tasks' priority levels be automatically updated as the deadline approaches |transfer the responsibility of updating priorities to the application
+|`* *` |user who is forgetful |have tasks' priority levels be automatically updated when nearing the deadline, or when deadline has passed |be reminded to complete tasks
 
-|`* *` |user |have a task's priority level automatically increased if still uncompleted after the deadline has passed |be reminded of urgent uncompleted tasks
+|`* *` |user |have a reminder of tasks with high priority levels |be reminded to complete tasks with high priority levels
 
-|`* *` |user |be reminded of tasks of highest priority |remember to complete tasks of highest priority
+|`* *` |user |undo an operation |revert an operation
 
-|`* *` |user |undo an operation |revert an operation without having to think of it's opposite operation
+|`* *` |user |redo an undo operation |redo an undo operation
 
-|`* *` |user |redo an undo operation |
+|`* *` |user |have a task with no priority level to have it’s priority level be automatically set to the lowest priority level |have priority levels for all tasks even if I had forgotten to set the priority levels
 
-|`* *` |user |automatically set tasks with no priority level to the lowest level |have priority levels for all tasks even if I had forgotten to set them
-
-|`*` |user |change view of the calendar |choose to view the calendar by year, month, week, or day
+|`*` |user |change the view of the calendar |choose to view the calendar by year, month, week, or day
 
 |`*` |user |reorder a task's subtasks |rearrange the order of a task's subtasks when necessary
 

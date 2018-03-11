@@ -5,7 +5,8 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToBookListRequestEvent;
+import seedu.address.commons.events.ui.JumpToResultsListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.Book;
 
@@ -17,11 +18,12 @@ public class SelectCommand extends Command {
     public static final String COMMAND_WORD = "select";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the book identified by the index number used in the last book listing.\n"
+            + ": Selects the book identified by the index number in the current book listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_BOOK_SUCCESS = "Selected Book: %1$s";
+    public static final String MESSAGE_WRONG_ACTIVE_LIST = "Items from the current list cannot be selected.";
 
     private final Index targetIndex;
 
@@ -31,14 +33,34 @@ public class SelectCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        switch (model.getActiveListType()) {
+        case BOOK_SHELF:
+        {
+            List<Book> filteredBookList = model.getFilteredBookList();
 
-        List<Book> lastShownList = model.getFilteredBookList();
+            if (targetIndex.getZeroBased() >= filteredBookList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            }
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            EventsCenter.getInstance().post(new JumpToBookListRequestEvent(targetIndex));
+            break;
+        }
+        case SEARCH_RESULTS:
+        {
+
+            List<Book> searchResultsList = model.getSearchResultsList();
+
+            if (targetIndex.getZeroBased() >= searchResultsList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            }
+
+            EventsCenter.getInstance().post(new JumpToResultsListRequestEvent(targetIndex));
+            break;
+        }
+        default:
+            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_BOOK_SUCCESS, targetIndex.getOneBased()));
 
     }

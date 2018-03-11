@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Remove a Person from favourites
  */
-public class UnfavouriteCommand extends UndoableCommand{
+public class UnfavouriteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "unfav";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove a person from favourites. "

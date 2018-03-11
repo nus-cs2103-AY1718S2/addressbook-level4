@@ -19,11 +19,9 @@ public class ListCommandParser {
         String[] keywords = args.split(" ");
         if (keywords.length == 1) {
             return new ListCommand(false);
-        }
-        else if (keywords[1].matches("-f")) {
+        } else if (keywords[1].matches("-f")) {
             return new ListCommand(true);
-        }
-        else {
+        } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
     }

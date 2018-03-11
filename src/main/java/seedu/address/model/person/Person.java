@@ -67,13 +67,17 @@ public class Person {
         return address;
     }
 
-    public Favourite getFavourite() { return favourite; }
+    public Favourite getFavourite() {
+        return favourite;
+    }
 
+    /**
+     * Returns true if Person is in favourites, else returns false.
+     */
     public boolean isFavourite() {
         if (favourite.value.equals("true")) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

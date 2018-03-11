@@ -21,25 +21,35 @@ public class ListCommandTest {
 
     private Model model;
     private Model expectedModel;
-    private ListCommand listCommand;
+    private ListCommand listCommand_All;
+    private ListCommand listCommand_FavOnly;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        listCommand = new ListCommand();
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommand_All = new ListCommand(false);
+        listCommand_All.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommand_FavOnly = new ListCommand(true);
+        listCommand_FavOnly.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(listCommand_All, model, ListCommand.MESSAGE_SUCCESS_LIST_ALL, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(listCommand_All, model, ListCommand.MESSAGE_SUCCESS_LIST_ALL, expectedModel);
     }
+
+    @Test
+    public void execute_listIsFilterd_showsFavouritesOnly() {
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_FAVOURITE_PERSONS);
+        assertCommandSuccess(listCommand_FavOnly, model, ListCommand.MESSAGE_SUCCESS_LIST_FAVOURITES, expectedModel);
+    }
+
 }

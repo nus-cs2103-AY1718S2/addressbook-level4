@@ -26,6 +26,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.network.Network;
+import seedu.address.network.NetworkManager;
 import seedu.address.storage.BookShelfStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
@@ -46,6 +48,7 @@ public class MainApp extends Application {
 
     protected Ui ui;
     protected Logic logic;
+    protected Network network;
     protected Storage storage;
     protected Model model;
     protected Config config;
@@ -67,6 +70,8 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+
+        network = new NetworkManager();
 
         logic = new LogicManager(model);
 
@@ -190,6 +195,7 @@ public class MainApp extends Application {
     @Override
     public void stop() {
         logger.info("============================ [ Stopping Bibliotek ] =============================");
+        network.stop();
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

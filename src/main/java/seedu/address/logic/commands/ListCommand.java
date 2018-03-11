@@ -3,11 +3,6 @@ package seedu.address.logic.commands;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_FAVOURITE_PERSONS;
 
-import java.util.logging.Logger;
-
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.util.JsonUtil;
-
 /**
  * Lists all persons in the address book to the user.
  */
@@ -21,13 +16,10 @@ public class ListCommand extends Command {
     public static final String MESSAGE_SUCCESS_LIST_ALL = "Listed all persons";
     public static final String MESSAGE_SUCCESS_LIST_FAVOURITES = "Listed all favourite persons";
 
-    private static final Logger logger = LogsCenter.getLogger(JsonUtil.class); // To use during initial production of favourite feature
-
     private final boolean isFavOnly;
 
     public ListCommand(boolean isFavOnly) {
         this.isFavOnly = isFavOnly;
-        logger.info("New list command created. isFavOnly = " + isFavOnly);
     }
 
     @Override

@@ -4,12 +4,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.JsonUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -34,8 +31,6 @@ public class FavouriteCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "Person added to favourites: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private static final Logger logger = LogsCenter.getLogger(JsonUtil.class); // To use during initial production of favourite feature
-
     private final Index targetIndex;
 
     private Person personToFavourite;
@@ -47,8 +42,6 @@ public class FavouriteCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        logger.info("Executing favourite command in logic");
-
         requireAllNonNull(personToFavourite, editedPerson);
 
         try {
@@ -72,8 +65,6 @@ public class FavouriteCommand extends UndoableCommand {
 
         personToFavourite = lastShownList.get(targetIndex.getZeroBased());
         editedPerson = createEditedPerson(personToFavourite);
-
-        logger.info("New edited person: " + editedPerson);
     }
 
     /**

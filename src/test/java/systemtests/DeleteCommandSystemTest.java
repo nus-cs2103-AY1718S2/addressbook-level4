@@ -61,9 +61,7 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
         showAllBooks();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
-        System.out.println(selectedIndex.getZeroBased());
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        System.out.println(expectedIndex);
         selectBook(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedBook = removeBook(expectedModel, selectedIndex);

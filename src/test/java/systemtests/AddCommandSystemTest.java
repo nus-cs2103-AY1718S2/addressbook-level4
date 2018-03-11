@@ -39,20 +39,19 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a book without tags to a non-empty book shelf, command with leading spaces and trailing spaces
-         * -> added
+        /* Case: add a book to a non-empty book shelf, command with leading spaces and trailing spaces -> added
          */
         Book toAdd = ARTEMIS;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + TITLE_DESC_ARTEMIS + "  " + AUTHOR_DESC_ARTEMIS + " "
                 + DESCRIPTION_DESC_ARTEMIS + "   " + CATEGORY_DESC_ARTEMIS + " ";
         assertCommandSuccess(command, toAdd);
 
-        /* Case: undo adding Amy to the list -> Amy deleted */
+        /* Case: undo adding Artemis to the list -> Artemis deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding Amy to the list -> Amy added again */
+        /* Case: redo adding Artemis to the list -> Artemis added again */
         command = RedoCommand.COMMAND_WORD;
         model.addBook(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
@@ -69,7 +68,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         deleteAllBooks();
         assertCommandSuccess(COLLAPSING_EMPIRE);
 
-        /* Case: add a book with tags, command with parameters in random order -> added */
+        /* Case: add a book, command with parameters in random order -> added */
         toAdd = BABYLON_ASHES;
         command = AddCommand.COMMAND_WORD + CATEGORY_DESC_BABYLON + AUTHOR_DESC_BABYLON
                 + DESCRIPTION_DESC_BABYLON + TITLE_DESC_BABYLON;

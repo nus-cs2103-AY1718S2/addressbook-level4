@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Agus Sentosa Hermawan
-image::agus.jpeg[width="150", align="left"]
+image::aguss787.jpeg[width="150", align="left"]
 {empty}[https://github.com/aguss787[github]] [<<agus#, portfolio>>]
 
 Role: Testing +
@@ -19,7 +19,7 @@ Responsibilities: Storage
 '''
 
 === Dominic Kenn Lim
-image::dominic.jpeg[width="150", align="left"]
+image::dominickenn.jpeg[width="150", align="left"]
 {empty}[https://github.com/dominickenn[github]] [<<dominic#, portfolio>>]
 
 Role: Team Lead, Scheduling and Tracking +
@@ -28,7 +28,7 @@ Responsibilities: Logic
 '''
 
 === Natania Djohari
-image::natania.jpeg[width="150", align="left"]
+image::natania-d.jpeg[width="150", align="left"]
 {empty}[https://github.com/natania-d[github]] [<<natania#, portfolio>>]
 
 Role: Documentation +

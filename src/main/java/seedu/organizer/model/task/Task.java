@@ -17,7 +17,7 @@ public class Task {
 
     private final Name name;
     private final Priority priority;
-    private final Email email;
+    private final Deadline deadline;
     private final Address address;
 
     private final UniqueTagList tags;
@@ -25,11 +25,11 @@ public class Task {
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Priority priority, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, priority, email, address, tags);
+    public Task(Name name, Priority priority, Deadline deadline, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, priority, deadline, address, tags);
         this.name = name;
         this.priority = priority;
-        this.email = email;
+        this.deadline = deadline;
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
@@ -43,8 +43,8 @@ public class Task {
         return priority;
     }
 
-    public Email getEmail() {
-        return email;
+    public Deadline getDeadline() {
+        return deadline;
     }
 
     public Address getAddress() {
@@ -72,14 +72,14 @@ public class Task {
         Task otherTask = (Task) other;
         return otherTask.getName().equals(this.getName())
                 && otherTask.getPriority().equals(this.getPriority())
-                && otherTask.getEmail().equals(this.getEmail())
+                && otherTask.getDeadline().equals(this.getDeadline())
                 && otherTask.getAddress().equals(this.getAddress());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, priority, email, address, tags);
+        return Objects.hash(name, priority, deadline, address, tags);
     }
 
     @Override
@@ -88,8 +88,8 @@ public class Task {
         builder.append(getName())
                 .append(" Priority: ")
                 .append(getPriority())
-                .append(" Email: ")
-                .append(getEmail())
+                .append(" Deadline: ")
+                .append(getDeadline())
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" Tags: ");

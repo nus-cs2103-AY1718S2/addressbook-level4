@@ -3,10 +3,10 @@ package seedu.organizer.logic.parser;
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.commands.CommandTestUtil.ADDRESS_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.ADDRESS_DESC_STUDY;
-import static seedu.organizer.logic.commands.CommandTestUtil.EMAIL_DESC_EXAM;
-import static seedu.organizer.logic.commands.CommandTestUtil.EMAIL_DESC_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_EXAM;
+import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -17,8 +17,8 @@ import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_ADDRESS_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_ADDRESS_STUDY;
-import static seedu.organizer.logic.commands.CommandTestUtil.VALID_EMAIL_EXAM;
-import static seedu.organizer.logic.commands.CommandTestUtil.VALID_EMAIL_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_EXAM;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PRIORITY_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PRIORITY_STUDY;
@@ -37,7 +37,7 @@ import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
-import seedu.organizer.model.task.Email;
+import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
@@ -83,14 +83,15 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
         assertParseFailure(parser,
                 "1" + INVALID_PRIORITY_DESC, Priority.MESSAGE_PRIORITY_CONSTRAINTS); // invalid priority
-        assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
+        assertParseFailure(parser, "1" + INVALID_DEADLINE_DESC,
+            Deadline.MESSAGE_DEADLINE_CONSTRAINTS); // invalid deadline
         assertParseFailure(parser,
                 "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid organizer
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
-        // invalid priority followed by valid email
+        // invalid priority followed by valid deadline
         assertParseFailure(parser,
-                "1" + INVALID_PRIORITY_DESC + EMAIL_DESC_EXAM, Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+                "1" + INVALID_PRIORITY_DESC + DEADLINE_DESC_EXAM, Priority.MESSAGE_PRIORITY_CONSTRAINTS);
 
         // valid priority followed by invalid priority. The test case for invalid priority followed by valid priority
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
@@ -108,7 +109,7 @@ public class EditCommandParserTest {
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser,
-                "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_EXAM + VALID_PRIORITY_EXAM,
+                "1" + INVALID_NAME_DESC + INVALID_DEADLINE_DESC + VALID_ADDRESS_EXAM + VALID_PRIORITY_EXAM,
                 Name.MESSAGE_NAME_CONSTRAINTS);
     }
 
@@ -116,10 +117,10 @@ public class EditCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_TASK;
         String userInput = targetIndex.getOneBased() + PRIORITY_DESC_STUDY + TAG_DESC_HUSBAND
-                + EMAIL_DESC_EXAM + ADDRESS_DESC_EXAM + NAME_DESC_EXAM + TAG_DESC_FRIEND;
+                + DEADLINE_DESC_EXAM + ADDRESS_DESC_EXAM + NAME_DESC_EXAM + TAG_DESC_FRIEND;
 
         EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_EXAM)
-                .withPriority(VALID_PRIORITY_STUDY).withEmail(VALID_EMAIL_EXAM).withAddress(VALID_ADDRESS_EXAM)
+                .withPriority(VALID_PRIORITY_STUDY).withDeadline(VALID_DEADLINE_EXAM).withAddress(VALID_ADDRESS_EXAM)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -129,10 +130,10 @@ public class EditCommandParserTest {
     @Test
     public void parse_someFieldsSpecified_success() {
         Index targetIndex = INDEX_FIRST_TASK;
-        String userInput = targetIndex.getOneBased() + PRIORITY_DESC_STUDY + EMAIL_DESC_EXAM;
+        String userInput = targetIndex.getOneBased() + PRIORITY_DESC_STUDY + DEADLINE_DESC_EXAM;
 
         EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY)
-                .withEmail(VALID_EMAIL_EXAM).build();
+                .withDeadline(VALID_DEADLINE_EXAM).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -153,9 +154,9 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // email
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_EXAM;
-        descriptor = new EditTaskDescriptorBuilder().withEmail(VALID_EMAIL_EXAM).build();
+        // deadline
+        userInput = targetIndex.getOneBased() + DEADLINE_DESC_EXAM;
+        descriptor = new EditTaskDescriptorBuilder().withDeadline(VALID_DEADLINE_EXAM).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -175,12 +176,12 @@ public class EditCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_TASK;
-        String userInput = targetIndex.getOneBased() + PRIORITY_DESC_EXAM + ADDRESS_DESC_EXAM + EMAIL_DESC_EXAM
-                + TAG_DESC_FRIEND + PRIORITY_DESC_EXAM + ADDRESS_DESC_EXAM + EMAIL_DESC_EXAM + TAG_DESC_FRIEND
-                + PRIORITY_DESC_STUDY + ADDRESS_DESC_STUDY + EMAIL_DESC_STUDY + TAG_DESC_HUSBAND;
+        String userInput = targetIndex.getOneBased() + PRIORITY_DESC_EXAM + ADDRESS_DESC_EXAM + DEADLINE_DESC_EXAM
+                + TAG_DESC_FRIEND + PRIORITY_DESC_EXAM + ADDRESS_DESC_EXAM + DEADLINE_DESC_EXAM + TAG_DESC_FRIEND
+                + PRIORITY_DESC_STUDY + ADDRESS_DESC_STUDY + DEADLINE_DESC_STUDY + TAG_DESC_HUSBAND;
 
         EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY)
-                .withEmail(VALID_EMAIL_STUDY).withAddress(VALID_ADDRESS_STUDY)
+                .withDeadline(VALID_DEADLINE_STUDY).withAddress(VALID_ADDRESS_STUDY)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -199,9 +200,10 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_STUDY + INVALID_PRIORITY_DESC + ADDRESS_DESC_STUDY
+        userInput = targetIndex.getOneBased() + DEADLINE_DESC_STUDY + INVALID_PRIORITY_DESC + ADDRESS_DESC_STUDY
                 + PRIORITY_DESC_STUDY;
-        descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY).withEmail(VALID_EMAIL_STUDY)
+        descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY).withDeadline
+                (VALID_DEADLINE_STUDY)
                 .withAddress(VALID_ADDRESS_STUDY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);

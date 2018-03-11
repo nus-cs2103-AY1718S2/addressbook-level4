@@ -3,7 +3,7 @@
 <task>
     <name>Hans Muster</name>
     <priority>9482asf424</priority>
-    <email>hans@example</email>
+    <deadline>2018-07-16</deadline>
     <address>4th street</address>
     <tagged>friends</tagged>
 </task>

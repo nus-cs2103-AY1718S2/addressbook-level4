@@ -12,7 +12,7 @@ import seedu.organizer.commons.exceptions.IllegalValueException;
 import seedu.organizer.commons.util.StringUtil;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
-import seedu.organizer.model.task.Email;
+import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 
@@ -117,27 +117,27 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
+     * Parses a {@code String deadline} into an {@code Deadline}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code email} is invalid.
+     * @throws IllegalValueException if the given {@code deadline} is invalid.
      */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+    public static Deadline parseDeadline(String deadline) throws IllegalValueException {
+        requireNonNull(deadline);
+        String trimmedDeadline = deadline.trim();
+        if (!Deadline.isValidDeadline(trimmedDeadline)) {
+            throw new IllegalValueException(Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new Deadline(trimmedDeadline);
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> deadline} into an {@code Optional<Deadline>} if {@code deadline} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    public static Optional<Deadline> parseDeadline(Optional<String> deadline) throws IllegalValueException {
+        requireNonNull(deadline);
+        return deadline.isPresent() ? Optional.of(parseDeadline(deadline.get())) : Optional.empty();
     }
 
     /**

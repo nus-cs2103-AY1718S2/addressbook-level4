@@ -2,12 +2,13 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.organizer.logic.commands.CommandTestUtil.ADDRESS_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.ADDRESS_DESC_STUDY;
-import static seedu.organizer.logic.commands.CommandTestUtil.EMAIL_DESC_EXAM;
-import static seedu.organizer.logic.commands.CommandTestUtil.EMAIL_DESC_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_EXAM;
+import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -18,7 +19,7 @@ import static seedu.organizer.logic.commands.CommandTestUtil.PRIORITY_DESC_STUDY
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_ADDRESS_STUDY;
-import static seedu.organizer.logic.commands.CommandTestUtil.VALID_EMAIL_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PRIORITY_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -40,7 +41,7 @@ import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
-import seedu.organizer.model.task.Email;
+import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
@@ -62,10 +63,10 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
          */
         Index index = INDEX_FIRST_TASK;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  "
-                + NAME_DESC_STUDY + "  " + PRIORITY_DESC_STUDY + " " + EMAIL_DESC_STUDY
+                + NAME_DESC_STUDY + "  " + PRIORITY_DESC_STUDY + " " + DEADLINE_DESC_STUDY
                 + "  " + ADDRESS_DESC_STUDY + " " + TAG_DESC_HUSBAND + " ";
         Task editedTask = new TaskBuilder().withName(VALID_NAME_STUDY)
-                .withPriority(VALID_PRIORITY_STUDY).withEmail(VALID_EMAIL_STUDY)
+                .withPriority(VALID_PRIORITY_STUDY).withDeadline(VALID_DEADLINE_STUDY)
                 .withAddress(VALID_ADDRESS_STUDY).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedTask);
 
@@ -83,7 +84,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: edit a task with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + EMAIL_DESC_STUDY
+                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
                 + ADDRESS_DESC_STUDY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, STUDY);
 
@@ -128,7 +129,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         index = INDEX_FIRST_TASK;
         selectTask(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + EMAIL_DESC_EXAM
+                + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM
                 + ADDRESS_DESC_EXAM + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new task's name
@@ -165,9 +166,9 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_PRIORITY_DESC,
                 Priority.MESSAGE_PRIORITY_CONSTRAINTS);
 
-        /* Case: invalid email -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_EMAIL_DESC,
-                Email.MESSAGE_EMAIL_CONSTRAINTS);
+        /* Case: invalid deadline -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_DEADLINE_DESC,
+                Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
 
         /* Case: invalid organizer -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_ADDRESS_DESC,
@@ -184,13 +185,13 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         assertFalse(getModel().getFilteredTaskList()
                 .get(index.getZeroBased()).equals(STUDY));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + EMAIL_DESC_STUDY
+                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
                 + ADDRESS_DESC_STUDY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: edit a task with new values same as another task's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + EMAIL_DESC_STUDY
+                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
                 + ADDRESS_DESC_STUDY + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_TASK);
     }

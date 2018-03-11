@@ -3,55 +3,55 @@
     <tasks>
         <name>Study</name>
         <priority isPrivate="false">9</priority>
-        <email isPrivate="false">hans@example.com</email>
+        <deadline isPrivate="false">2018-09-16</deadline>
         <address isPrivate="false">4th street</address>
     </tasks>
     <tasks>
         <name>Exam</name>
         <priority isPrivate="false">8</priority>
-        <email isPrivate="false">ruth@example.com</email>
+        <deadline isPrivate="false">2018-07-06</deadline>
         <address isPrivate="false">81th street</address>
     </tasks>
     <tasks>
         <name>Grocery</name>
         <priority isPrivate="false">9</priority>
-        <email isPrivate="false">heinz@example.com</email>
+        <deadline isPrivate="false">2018-03-11</deadline>
         <address isPrivate="false">wall street</address>
     </tasks>
     <tasks>
         <name>Housework</name>
         <priority isPrivate="false">8</priority>
-        <email isPrivate="false">cornelia@example.com</email>
+        <deadline isPrivate="false">2018-10-11</deadline>
         <address isPrivate="false">10th street</address>
     </tasks>
     <tasks>
         <name>BirthdayCard</name>
         <priority isPrivate="false">9</priority>
-        <email isPrivate="false">werner@example.com</email>
+        <deadline isPrivate="false">2018-09-12</deadline>
         <address isPrivate="false">michegan ave</address>
     </tasks>
     <tasks>
         <name>Homework</name>
         <priority isPrivate="false">9</priority>
-        <email isPrivate="false">lydia@example.com</email>
+        <deadline isPrivate="false">2018-07-04</deadline>
         <address isPrivate="false">little tokyo</address>
     </tasks>
     <tasks>
         <name>Revision</name>
         <priority isPrivate="false">9</priority>
-        <email isPrivate="false">anna@example.com</email>
+        <deadline isPrivate="false">2018-04-02</deadline>
         <address isPrivate="false">4th street</address>
     </tasks>
     <tasks>
         <name>SendEmail</name>
         <priority isPrivate="false">8</priority>
-        <email isPrivate="false">stefan@example.com</email>
+        <deadline isPrivate="false">2018-12-24</deadline>
         <address isPrivate="false">little india</address>
     </tasks>
     <tasks>
         <name>InterviewPrep</name>
         <priority isPrivate="false">8</priority>
-        <email isPrivate="false">hans@example.com</email>
+        <deadline isPrivate="false">2018-11-11</deadline>
         <address isPrivate="false">chicago ave</address>
     </tasks>
 </addressbook>

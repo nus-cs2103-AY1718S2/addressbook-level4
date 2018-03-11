@@ -25,7 +25,7 @@ public class GuiTestAssert {
     public static void assertCardEquals(TaskCardHandle expectedCard, TaskCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
-        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
+        assertEquals(expectedCard.getDeadline(), actualCard.getDeadline());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPriority(), actualCard.getPriority());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
@@ -39,7 +39,7 @@ public class GuiTestAssert {
     public static void assertCardDisplaysPerson(Task expectedTask, TaskCardHandle actualCard) {
         assertEquals(expectedTask.getName().fullName, actualCard.getName());
         assertEquals(expectedTask.getPriority().value, actualCard.getPriority());
-        assertEquals(expectedTask.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedTask.getDeadline().value, actualCard.getDeadline());
         assertEquals(expectedTask.getAddress().value, actualCard.getAddress());
         assertTagsEqual(expectedTask, actualCard);
     }

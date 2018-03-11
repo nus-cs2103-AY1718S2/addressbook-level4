@@ -20,7 +20,7 @@ import org.junit.rules.ExpectedException;
 import seedu.organizer.commons.exceptions.IllegalValueException;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
-import seedu.organizer.model.task.Email;
+import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.testutil.Assert;
@@ -29,13 +29,13 @@ public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PRIORITY = "+651234";
     private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_DEADLINE = "example.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PRIORITY = "1";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_DEADLINE = "2018-03-11";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -163,35 +163,35 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseEmail_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((Optional<String>) null));
+    public void parseDeadline_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDeadline((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDeadline((Optional<String>) null));
     }
 
     @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(INVALID_EMAIL));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(Optional.of(INVALID_EMAIL)));
+    public void parseDeadline_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDeadline(INVALID_DEADLINE));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDeadline(Optional.of(INVALID_DEADLINE)));
     }
 
     @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+    public void parseDeadline_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDeadline(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseEmail_validValueWithoutWhitespace_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(VALID_EMAIL)));
+    public void parseDeadline_validValueWithoutWhitespace_returnsDeadline() throws Exception {
+        Deadline expectedDeadline = new Deadline(VALID_DEADLINE);
+        assertEquals(expectedDeadline, ParserUtil.parseDeadline(VALID_DEADLINE));
+        assertEquals(Optional.of(expectedDeadline), ParserUtil.parseDeadline(Optional.of(VALID_DEADLINE)));
     }
 
     @Test
-    public void parseEmail_validValueWithWhitespace_returnsTrimmedEmail() throws Exception {
-        String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
+    public void parseDeadline_validValueWithWhitespace_returnsTrimmedDeadline() throws Exception {
+        String deadlineWithWhitespace = WHITESPACE + VALID_DEADLINE + WHITESPACE;
+        Deadline expectedDeadline = new Deadline(VALID_DEADLINE);
+        assertEquals(expectedDeadline, ParserUtil.parseDeadline(deadlineWithWhitespace));
+        assertEquals(Optional.of(expectedDeadline), ParserUtil.parseDeadline(Optional.of(deadlineWithWhitespace)));
     }
 
     @Test

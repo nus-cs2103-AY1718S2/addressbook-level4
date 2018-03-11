@@ -2,7 +2,7 @@ package seedu.organizer.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
@@ -21,7 +21,7 @@ import seedu.organizer.commons.util.CollectionUtil;
 import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
-import seedu.organizer.model.task.Email;
+import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
@@ -42,12 +42,12 @@ public class EditCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_DEADLINE + "DEADLINE] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PRIORITY + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_DEADLINE + "2018-03-11";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -105,11 +105,11 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
         Priority updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
-        Email updatedEmail = editTaskDescriptor.getEmail().orElse(taskToEdit.getEmail());
+        Deadline updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
         Address updatedAddress = editTaskDescriptor.getAddress().orElse(taskToEdit.getAddress());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
 
-        return new Task(updatedName, updatedPriority, updatedEmail, updatedAddress, updatedTags);
+        return new Task(updatedName, updatedPriority, updatedDeadline, updatedAddress, updatedTags);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class EditCommand extends UndoableCommand {
     public static class EditTaskDescriptor {
         private Name name;
         private Priority priority;
-        private Email email;
+        private Deadline deadline;
         private Address address;
         private Set<Tag> tags;
 
@@ -152,7 +152,7 @@ public class EditCommand extends UndoableCommand {
         public EditTaskDescriptor(EditTaskDescriptor toCopy) {
             setName(toCopy.name);
             setPriority(toCopy.priority);
-            setEmail(toCopy.email);
+            setDeadline(toCopy.deadline);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
         }
@@ -161,7 +161,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.priority, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.priority, this.deadline, this.address, this.tags);
         }
 
         public void setName(Name name) {
@@ -180,12 +180,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(priority);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setDeadline(Deadline deadline) {
+            this.deadline = deadline;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Deadline> getDeadline() {
+            return Optional.ofNullable(deadline);
         }
 
         public void setAddress(Address address) {
@@ -230,7 +230,7 @@ public class EditCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getPriority().equals(e.getPriority())
-                    && getEmail().equals(e.getEmail())
+                    && getDeadline().equals(e.getDeadline())
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags());
         }

@@ -8,7 +8,7 @@ import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
-import seedu.organizer.model.task.Email;
+import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
@@ -35,7 +35,7 @@ public class EditTaskDescriptorBuilder {
         descriptor = new EditCommand.EditTaskDescriptor();
         descriptor.setName(task.getName());
         descriptor.setPriority(task.getPriority());
-        descriptor.setEmail(task.getEmail());
+        descriptor.setDeadline(task.getDeadline());
         descriptor.setAddress(task.getAddress());
         descriptor.setTags(task.getTags());
     }
@@ -57,10 +57,14 @@ public class EditTaskDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code EditTaskDescriptor} that we are building.
+<<<<<<< HEAD
+     * Sets the {@code Deadline} of the {@code EditTaskDescriptor} that we are building.
+=======
+     * Sets the {@code Deadline} of the {@code EditTaskDescriptor} that we are building.
+>>>>>>> ff65e3137bd264588bf2aaa81c331b7a7109edae
      */
-    public EditTaskDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
+    public EditTaskDescriptorBuilder withDeadline(String deadline) {
+        descriptor.setDeadline(new Deadline(deadline));
         return this;
     }
 

@@ -5,14 +5,14 @@
     <tasks>
         <name>Grocery</name>
         <priority>0</priority>
-        <email>alice@example.com</email>
+        <deadline>2018-03-11</deadline>
         <address>123, Jurong West Ave 6, #08-111</address>
         <tagged>friends</tagged>
     </tasks>
     <tasks>
         <name>Spring cleaning</name>
         <priority>1</priority>
-        <email>johnd@example.com</email>
+        <deadline>2018-09-08</deadline>
         <address>311, Clementi Ave 2, #02-25</address>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
@@ -20,31 +20,31 @@
     <tasks>
         <name>Prepare breakfast</name>
         <priority>2</priority>
-        <email>heinz@example.com</email>
+        <deadline>2018-11-12</deadline>
         <address>wall street</address>
     </tasks>
     <tasks>
         <name>Do homework</name>
         <priority>3</priority>
-        <email>cornelia@example.com</email>
+        <deadline>2018-03-21</deadline>
         <address>10th street</address>
     </tasks>
     <tasks>
         <name>Do project</name>
         <priority>4</priority>
-        <email>werner@example.com</email>
+        <deadline>2018-09-14</deadline>
         <address>michegan ave</address>
     </tasks>
     <tasks>
         <name>Revision</name>
         <priority>5</priority>
-        <email>lydia@example.com</email>
+        <deadline>2018-04-05</deadline>
         <address>little tokyo</address>
     </tasks>
     <tasks>
         <name>Mock exam</name>
         <priority>6</priority>
-        <email>anna@example.com</email>
+        <deadline>2018-05-23</deadline>
         <address>4th street</address>
     </tasks>
     <tags>friends</tags>

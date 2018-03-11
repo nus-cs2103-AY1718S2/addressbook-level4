@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalBooks.ARTEMIS;
+import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
+import static seedu.address.testutil.TypicalBooks.WAKING_GODS;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
 import java.util.Arrays;
@@ -18,7 +20,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.BookNotFoundException;
-import seedu.address.testutil.TypicalBooks;
 
 public class BookShelfTest {
 
@@ -62,45 +63,45 @@ public class BookShelfTest {
 
     @Test
     public void updateBook_validTargetAndReplacement_success() throws Exception {
-        bookShelf.addBook(TypicalBooks.ARTEMIS);
-        bookShelf.updateBook(TypicalBooks.ARTEMIS, TypicalBooks.BABYLON_ASHES);
-        assertEquals(false, bookShelf.getBookList().contains(TypicalBooks.ARTEMIS));
-        assertEquals(true, bookShelf.getBookList().contains(TypicalBooks.BABYLON_ASHES));
+        bookShelf.addBook(ARTEMIS);
+        bookShelf.updateBook(ARTEMIS, BABYLON_ASHES);
+        assertEquals(false, bookShelf.getBookList().contains(ARTEMIS));
+        assertEquals(true, bookShelf.getBookList().contains(BABYLON_ASHES));
     }
 
     @Test
     public void updateBook_nonMatchingTarget_throwsBookNotFoundException() throws Exception {
-        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        bookShelf.addBook(ARTEMIS);
         thrown.expect(BookNotFoundException.class);
-        bookShelf.updateBook(TypicalBooks.BABYLON_ASHES, TypicalBooks.WAKING_GODS);
+        bookShelf.updateBook(BABYLON_ASHES, WAKING_GODS);
     }
 
     @Test
     public void updateBook_nullTarget_throwsBookNotFoundException() throws Exception {
-        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        bookShelf.addBook(ARTEMIS);
         thrown.expect(BookNotFoundException.class);
-        bookShelf.updateBook(null, TypicalBooks.WAKING_GODS);
+        bookShelf.updateBook(null, WAKING_GODS);
     }
 
     @Test
     public void updateBook_nullReplacement_throwsNullPointerException() throws Exception {
-        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        bookShelf.addBook(ARTEMIS);
         thrown.expect(NullPointerException.class);
-        bookShelf.updateBook(TypicalBooks.ARTEMIS, null);
+        bookShelf.updateBook(ARTEMIS, null);
     }
 
     @Test
     public void removeBook_validBook_success() throws Exception {
-        bookShelf.addBook(TypicalBooks.ARTEMIS);
-        bookShelf.removeBook(TypicalBooks.ARTEMIS);
+        bookShelf.addBook(ARTEMIS);
+        bookShelf.removeBook(ARTEMIS);
         assertEquals(0, bookShelf.getBookList().size());
     }
 
     @Test
     public void removeBook_nonMatchingBook_throwsBookNotFoundException() throws Exception {
-        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        bookShelf.addBook(ARTEMIS);
         thrown.expect(BookNotFoundException.class);
-        bookShelf.removeBook(TypicalBooks.BABYLON_ASHES);
+        bookShelf.removeBook(BABYLON_ASHES);
     }
 
     @Test

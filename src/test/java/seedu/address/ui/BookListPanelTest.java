@@ -14,14 +14,14 @@ import guitests.guihandles.BookCardHandle;
 import guitests.guihandles.BookListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToBookListRequestEvent;
 import seedu.address.model.book.Book;
 
 public class BookListPanelTest extends GuiUnitTest {
     private static final ObservableList<Book> TYPICAL_BOOKS =
             FXCollections.observableList(getTypicalBooks());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_BOOK);
+    private static final JumpToBookListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToBookListRequestEvent(INDEX_SECOND_BOOK);
 
     private BookListPanelHandle bookListPanelHandle;
 

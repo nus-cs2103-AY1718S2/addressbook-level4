@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -16,7 +17,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowBookListRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowSearchResultsRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -36,6 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private BookListPanel bookListPanel;
+    private SearchResultsPanel searchResultsPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -120,6 +124,7 @@ public class MainWindow extends UiPart<Stage> {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         bookListPanel = new BookListPanel(logic.getFilteredBookList());
+        searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
         bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -193,5 +198,23 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleShowBookListRequestEvent(ShowBookListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> {
+            bookListPanelPlaceholder.getChildren().clear();
+            bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
+        });
+    }
+
+    @Subscribe
+    private void handleShowSearchResultsRequestEvent(ShowSearchResultsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> {
+            bookListPanelPlaceholder.getChildren().clear();
+            bookListPanelPlaceholder.getChildren().add(searchResultsPanel.getRoot());
+        });
     }
 }

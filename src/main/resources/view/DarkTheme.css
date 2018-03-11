@@ -327,7 +327,7 @@
     -fx-text-fill: white;
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #bookListPanel, #bookWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
@@ -336,12 +336,21 @@
     -fx-background-radius: 0;
 }
 
-#tags {
+#authors, #categories {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#tags .label {
+#authors .label, #categories .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e9168;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 12;
+}
+
+#categories .label {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;

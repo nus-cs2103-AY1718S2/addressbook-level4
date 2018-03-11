@@ -4,13 +4,13 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates a request to jump to the list of books
+ * Indicates a request to jump to a particular index in the list of search results.
  */
-public class JumpToListRequestEvent extends BaseEvent {
+public class JumpToResultsListRequestEvent extends BaseEvent {
 
     public final int targetIndex;
 
-    public JumpToListRequestEvent(Index targetIndex) {
+    public JumpToResultsListRequestEvent(Index targetIndex) {
         this.targetIndex = targetIndex.getZeroBased();
     }
 

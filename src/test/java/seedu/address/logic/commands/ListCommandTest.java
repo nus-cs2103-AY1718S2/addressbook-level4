@@ -21,35 +21,35 @@ public class ListCommandTest {
 
     private Model model;
     private Model expectedModel;
-    private ListCommand listCommand_All;
-    private ListCommand listCommand_FavOnly;
+    private ListCommand listCommandAll;
+    private ListCommand listCommandFavOnly;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        listCommand_All = new ListCommand(false);
-        listCommand_All.setData(model, new CommandHistory(), new UndoRedoStack());
-        listCommand_FavOnly = new ListCommand(true);
-        listCommand_FavOnly.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommandAll = new ListCommand(false);
+        listCommandAll.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommandFavOnly = new ListCommand(true);
+        listCommandFavOnly.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(listCommand_All, model, ListCommand.MESSAGE_SUCCESS_LIST_ALL, expectedModel);
+        assertCommandSuccess(listCommandAll, model, ListCommand.MESSAGE_SUCCESS_LIST_ALL, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        assertCommandSuccess(listCommand_All, model, ListCommand.MESSAGE_SUCCESS_LIST_ALL, expectedModel);
+        assertCommandSuccess(listCommandAll, model, ListCommand.MESSAGE_SUCCESS_LIST_ALL, expectedModel);
     }
 
     @Test
     public void execute_listIsFilterd_showsFavouritesOnly() {
         expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_FAVOURITE_PERSONS);
-        assertCommandSuccess(listCommand_FavOnly, model, ListCommand.MESSAGE_SUCCESS_LIST_FAVOURITES, expectedModel);
+        assertCommandSuccess(listCommandFavOnly, model, ListCommand.MESSAGE_SUCCESS_LIST_FAVOURITES, expectedModel);
     }
 
 }

@@ -92,6 +92,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Favourite} of the {@code Person} that we are building.
+     */
     public PersonBuilder withFavourite(boolean val) {
         this.favourite = new Favourite(val);
         return this;

@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
@@ -23,7 +23,7 @@ import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
 import seedu.organizer.model.task.Email;
 import seedu.organizer.model.task.Name;
-import seedu.organizer.model.task.Phone;
+import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
@@ -41,34 +41,34 @@ public class EditCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
+            + PREFIX_PRIORITY + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Task: %1$s";
+    public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in the organizer book.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the organizer.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditTaskDescriptor editTaskDescriptor;
 
     private Task taskToEdit;
     private Task editedTask;
 
     /**
      * @param index                of the task in the filtered task list to edit
-     * @param editPersonDescriptor details to edit the task with
+     * @param editTaskDescriptor details to edit the task with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditTaskDescriptor editTaskDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editTaskDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
     }
 
     @Override
@@ -76,12 +76,12 @@ public class EditCommand extends UndoableCommand {
         try {
             model.updateTask(taskToEdit, editedTask);
         } catch (DuplicateTaskException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (TaskNotFoundException pnfe) {
             throw new AssertionError("The target task cannot be missing");
         }
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedTask));
+        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }
 
     @Override
@@ -93,23 +93,23 @@ public class EditCommand extends UndoableCommand {
         }
 
         taskToEdit = lastShownList.get(index.getZeroBased());
-        editedTask = createEditedPerson(taskToEdit, editPersonDescriptor);
+        editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
     }
 
     /**
      * Creates and returns a {@code Task} with the details of {@code taskToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * edited with {@code editTaskDescriptor}.
      */
-    private static Task createEditedPerson(Task taskToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Task createEditedTask(Task taskToEdit, EditTaskDescriptor editTaskDescriptor) {
         assert taskToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(taskToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(taskToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(taskToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(taskToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(taskToEdit.getTags());
+        Name updatedName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
+        Priority updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
+        Email updatedEmail = editTaskDescriptor.getEmail().orElse(taskToEdit.getEmail());
+        Address updatedAddress = editTaskDescriptor.getAddress().orElse(taskToEdit.getAddress());
+        Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
 
-        return new Task(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Task(updatedName, updatedPriority, updatedEmail, updatedAddress, updatedTags);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class EditCommand extends UndoableCommand {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor)
+                && editTaskDescriptor.equals(e.editTaskDescriptor)
                 && Objects.equals(taskToEdit, e.taskToEdit);
     }
 
@@ -135,23 +135,23 @@ public class EditCommand extends UndoableCommand {
      * Stores the details to edit the task with. Each non-empty field value will replace the
      * corresponding field value of the task.
      */
-    public static class EditPersonDescriptor {
+    public static class EditTaskDescriptor {
         private Name name;
-        private Phone phone;
+        private Priority priority;
         private Email email;
         private Address address;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {
+        public EditTaskDescriptor() {
         }
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditTaskDescriptor(EditTaskDescriptor toCopy) {
             setName(toCopy.name);
-            setPhone(toCopy.phone);
+            setPriority(toCopy.priority);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
@@ -161,7 +161,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.priority, this.email, this.address, this.tags);
         }
 
         public void setName(Name name) {
@@ -172,12 +172,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setPriority(Priority priority) {
+            this.priority = priority;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
         }
 
         public void setEmail(Email email) {
@@ -221,15 +221,15 @@ public class EditCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditTaskDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditTaskDescriptor e = (EditTaskDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
+                    && getPriority().equals(e.getPriority())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags());

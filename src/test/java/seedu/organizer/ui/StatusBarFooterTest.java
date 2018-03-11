@@ -2,7 +2,7 @@ package seedu.organizer.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.organizer.testutil.EventsUtil.postNow;
-import static seedu.organizer.testutil.TypicalTasks.ALICE;
+import static seedu.organizer.testutil.TypicalTasks.GROCERY;
 import static seedu.organizer.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.organizer.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.organizer.ui.StatusBarFooter.TOTAL_TASKS_STATUS;
@@ -27,7 +27,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final String RELATIVE_PATH = "./";
 
     private static final OrganizerChangedEvent EVENT_STUB = new OrganizerChangedEvent(new OrganizerBuilder().withTask
-        (ALICE).build());
+        (GROCERY).build());
 
     private static final int INITIAL_TOTAL_TASKS = 0;
 

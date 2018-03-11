@@ -5,9 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.organizer.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import org.junit.Before;
@@ -43,8 +43,8 @@ public class SelectCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredTaskList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
-        assertExecutionSuccess(INDEX_THIRD_PERSON);
+        assertExecutionSuccess(INDEX_FIRST_TASK);
+        assertExecutionSuccess(INDEX_THIRD_TASK);
         assertExecutionSuccess(lastPersonIndex);
     }
 
@@ -57,16 +57,16 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST_TASK);
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionSuccess(INDEX_FIRST_TASK);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST_TASK);
 
-        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundsIndex = INDEX_SECOND_TASK;
         // ensures that outOfBoundIndex is still in bounds of organizer book list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getOrganizer().getTaskList().size());
 
@@ -75,14 +75,14 @@ public class SelectCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_TASK);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_TASK);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_TASK);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false

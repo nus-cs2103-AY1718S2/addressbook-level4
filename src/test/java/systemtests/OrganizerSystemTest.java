@@ -102,7 +102,7 @@ public abstract class OrganizerSystemTest {
         return mainWindowHandle.getCommandBox();
     }
 
-    public TaskListPanelHandle getPersonListPanel() {
+    public TaskListPanelHandle getTaskListPanel() {
         return mainWindowHandle.getPersonListPanel();
     }
 
@@ -140,7 +140,7 @@ public abstract class OrganizerSystemTest {
     /**
      * Displays all persons in the organizer book.
      */
-    protected void showAllPersons() {
+    protected void showAllTasks() {
         executeCommand(ListCommand.COMMAND_WORD);
         assertEquals(getModel().getOrganizer().getTaskList().size(), getModel().getFilteredTaskList().size());
     }
@@ -148,7 +148,7 @@ public abstract class OrganizerSystemTest {
     /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
-    protected void showPersonsWithName(String keyword) {
+    protected void showTasksWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
         assertTrue(getModel().getFilteredTaskList().size() < getModel().getOrganizer().getTaskList().size());
     }
@@ -156,15 +156,15 @@ public abstract class OrganizerSystemTest {
     /**
      * Selects the task at {@code index} of the displayed list.
      */
-    protected void selectPerson(Index index) {
+    protected void selectTask(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        assertEquals(index.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+        assertEquals(index.getZeroBased(), getTaskListPanel().getSelectedCardIndex());
     }
 
     /**
      * Deletes all persons in the organizer book.
      */
-    protected void deleteAllPersons() {
+    protected void deleteAllTasks() {
         executeCommand(ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getOrganizer().getTaskList().size());
     }
@@ -180,7 +180,7 @@ public abstract class OrganizerSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getOrganizer(), testApp.readStorageAddressBook());
-        assertListMatching(getPersonListPanel(), expectedModel.getFilteredTaskList());
+        assertListMatching(getTaskListPanel(), expectedModel.getFilteredTaskList());
     }
 
     /**
@@ -193,7 +193,7 @@ public abstract class OrganizerSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberTotalTasksStatus();
         statusBarFooterHandle.rememberSyncStatus();
-        getPersonListPanel().rememberSelectedTaskCard();
+        getTaskListPanel().rememberSelectedTaskCard();
     }
 
     /**
@@ -204,7 +204,7 @@ public abstract class OrganizerSystemTest {
      */
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
-        assertFalse(getPersonListPanel().isAnyCardSelected());
+        assertFalse(getTaskListPanel().isAnyCardSelected());
     }
 
     /**
@@ -215,7 +215,7 @@ public abstract class OrganizerSystemTest {
      * @see TaskListPanelHandle#isSelectedTaskCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        String selectedCardName = getTaskListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
             expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
@@ -224,7 +224,7 @@ public abstract class OrganizerSystemTest {
         }
         assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
-        assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+        assertEquals(expectedSelectedCardIndex.getZeroBased(), getTaskListPanel().getSelectedCardIndex());
     }
 
     /**
@@ -235,7 +235,7 @@ public abstract class OrganizerSystemTest {
      */
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
-        assertFalse(getPersonListPanel().isSelectedTaskCardChanged());
+        assertFalse(getTaskListPanel().isSelectedTaskCardChanged());
     }
 
     /**
@@ -283,7 +283,7 @@ public abstract class OrganizerSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getPersonListPanel(), getModel().getFilteredTaskList());
+            assertListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());

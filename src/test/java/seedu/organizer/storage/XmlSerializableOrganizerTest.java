@@ -17,25 +17,25 @@ import seedu.organizer.testutil.TypicalTasks;
 public class XmlSerializableOrganizerTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableOrganizerTest/");
-    private static final File TYPICAL_PERSONS_FILE = new File(TEST_DATA_FOLDER + "typicalTasksOrganizer.xml");
-    private static final File INVALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "invalidTaskOrganizer.xml");
+    private static final File TYPICAL_TASKS_FILE = new File(TEST_DATA_FOLDER + "typicalTasksOrganizer.xml");
+    private static final File INVALID_TASK_FILE = new File(TEST_DATA_FOLDER + "invalidTaskOrganizer.xml");
     private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagOrganizer.xml");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void toModelType_typicalPersonsFile_success() throws Exception {
-        XmlSerializableOrganizer dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+    public void toModelType_typicalTasksFile_success() throws Exception {
+        XmlSerializableOrganizer dataFromFile = XmlUtil.getDataFromFile(TYPICAL_TASKS_FILE,
                 XmlSerializableOrganizer.class);
         Organizer organizerFromFile = dataFromFile.toModelType();
-        Organizer typicalPersonsOrganizer = TypicalTasks.getTypicalOrganizer();
-        assertEquals(organizerFromFile, typicalPersonsOrganizer);
+        Organizer typicalTasksOrganizer = TypicalTasks.getTypicalOrganizer();
+        assertEquals(organizerFromFile, typicalTasksOrganizer);
     }
 
     @Test
-    public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
-        XmlSerializableOrganizer dataFromFile = XmlUtil.getDataFromFile(INVALID_PERSON_FILE,
+    public void toModelType_invalidTaskFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableOrganizer dataFromFile = XmlUtil.getDataFromFile(INVALID_TASK_FILE,
                 XmlSerializableOrganizer.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();

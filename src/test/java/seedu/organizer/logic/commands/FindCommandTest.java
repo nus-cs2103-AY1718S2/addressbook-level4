@@ -3,10 +3,10 @@ package seedu.organizer.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.organizer.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.organizer.testutil.TypicalTasks.CARL;
-import static seedu.organizer.testutil.TypicalTasks.ELLE;
-import static seedu.organizer.testutil.TypicalTasks.FIONA;
+import static seedu.organizer.commons.core.Messages.MESSAGE_TASKS_LISTED_OVERVIEW;
+import static seedu.organizer.testutil.TypicalTasks.PREPAREBREAKFAST;
+import static seedu.organizer.testutil.TypicalTasks.PROJECT;
+import static seedu.organizer.testutil.TypicalTasks.REVISION;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.util.Arrays;
@@ -58,17 +58,17 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+    public void execute_zeroKeywords_noTaskFound() {
+        String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    public void execute_multipleKeywords_multipleTasksFound() {
+        String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Prepare breakfast Project Revision");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(PREPAREBREAKFAST, PROJECT, REVISION));
     }
 
     /**

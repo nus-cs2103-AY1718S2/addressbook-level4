@@ -7,7 +7,7 @@ import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
 import seedu.organizer.model.task.Email;
 import seedu.organizer.model.task.Name;
-import seedu.organizer.model.task.Phone;
+import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.util.SampleDataUtil;
 
@@ -16,21 +16,21 @@ import seedu.organizer.model.util.SampleDataUtil;
  */
 public class TaskBuilder {
 
-    public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_NAME = "Study";
+    public static final String DEFAULT_PRIORITY = "8";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
-    private Phone phone;
+    private Priority priority;
     private Email email;
     private Address address;
     private Set<Tag> tags;
 
     public TaskBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
+        priority = new Priority(DEFAULT_PRIORITY);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
@@ -41,7 +41,7 @@ public class TaskBuilder {
      */
     public TaskBuilder(Task taskToCopy) {
         name = taskToCopy.getName();
-        phone = taskToCopy.getPhone();
+        priority = taskToCopy.getPriority();
         email = taskToCopy.getEmail();
         address = taskToCopy.getAddress();
         tags = new HashSet<>(taskToCopy.getTags());
@@ -72,10 +72,10 @@ public class TaskBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Task} that we are building.
+     * Sets the {@code Priority} of the {@code Task} that we are building.
      */
-    public TaskBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
+    public TaskBuilder withPriority(String priority) {
+        this.priority = new Priority(priority);
         return this;
     }
 
@@ -88,7 +88,7 @@ public class TaskBuilder {
     }
 
     public Task build() {
-        return new Task(name, phone, email, address, tags);
+        return new Task(name, priority, email, address, tags);
     }
 
 }

@@ -42,7 +42,7 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar saveLocationStatus;
     @FXML
-    private StatusBar totalPersonsStatus;
+    private StatusBar totalTasksStatus;
 
     public StatusBarFooter(String saveLocation, int totalTasks) {
         super(FXML);
@@ -77,7 +77,7 @@ public class StatusBarFooter extends UiPart<Region> {
     //@@author guekling-reused
     //Reused from https://github.com/se-edu/addressbook-level4/pull/803/files with minor modifications
     private void setTotalTasks(int totalTasks) {
-        Platform.runLater(() -> this.totalPersonsStatus.setText(String.format(TOTAL_TASKS_STATUS, totalTasks)));
+        Platform.runLater(() -> this.totalTasksStatus.setText(String.format(TOTAL_TASKS_STATUS, totalTasks)));
     }
     //@@author
     @Subscribe

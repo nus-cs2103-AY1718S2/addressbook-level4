@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
-import static seedu.organizer.testutil.TypicalTasks.ALICE;
-import static seedu.organizer.testutil.TypicalTasks.AMY;
-import static seedu.organizer.testutil.TypicalTasks.BOB;
+import static seedu.organizer.testutil.TypicalTasks.EXAM;
+import static seedu.organizer.testutil.TypicalTasks.GROCERY;
+import static seedu.organizer.testutil.TypicalTasks.STUDY;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ public class OrganizerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final Organizer organizer = new Organizer();
-    private final Organizer organizerWithBobAndAmy = new OrganizerBuilder().withTask(BOB)
-            .withTask(AMY).build();
+    private final Organizer organizerWithStudyAndExam = new OrganizerBuilder().withTask(STUDY)
+            .withTask(EXAM).build();
 
     @Test
     public void constructor() {
@@ -56,9 +56,9 @@ public class OrganizerTest {
 
     @Test
     public void resetData_withDuplicateTasks_throwsAssertionError() {
-        // Repeat ALICE twice
-        List<Task> newTasks = Arrays.asList(ALICE, ALICE);
-        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        // Repeat GROCERY twice
+        List<Task> newTasks = Arrays.asList(GROCERY, GROCERY);
+        List<Tag> newTags = new ArrayList<>(GROCERY.getTags());
         OrganizerStub newData = new OrganizerStub(newTasks, newTags);
 
         thrown.expect(AssertionError.class);
@@ -79,33 +79,33 @@ public class OrganizerTest {
 
     @Test
     public void updateTask_detailsChanged_tasksAndTagsListUpdated() throws Exception {
-        Organizer organizerUpdatedToAmy = new OrganizerBuilder().withTask(BOB).build();
-        organizerUpdatedToAmy.updateTask(BOB, AMY);
+        Organizer organizerUpdatedToAmy = new OrganizerBuilder().withTask(STUDY).build();
+        organizerUpdatedToAmy.updateTask(STUDY, EXAM);
 
-        Organizer expectedOrganizer = new OrganizerBuilder().withTask(AMY).build();
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(EXAM).build();
 
         assertEquals(expectedOrganizer, organizerUpdatedToAmy);
     }
 
     @Test
     public void removeTag_nonExistentTag_organizerUnchanged() throws Exception {
-        organizerWithBobAndAmy.removeTag(new Tag(VALID_TAG_UNUSED));
+        organizerWithStudyAndExam.removeTag(new Tag(VALID_TAG_UNUSED));
 
-        Organizer expectedOrganizer = new OrganizerBuilder().withTask(BOB).withTask(AMY).build();
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(STUDY).withTask(EXAM).build();
 
-        assertEquals(expectedOrganizer, organizerWithBobAndAmy);
+        assertEquals(expectedOrganizer, organizerWithStudyAndExam);
     }
 
     @Test
     public void removeTag_tagUsedByMultipleTasks_tagRemoved() throws Exception {
-        organizerWithBobAndAmy.removeTag(new Tag(VALID_TAG_FRIEND));
+        organizerWithStudyAndExam.removeTag(new Tag(VALID_TAG_FRIEND));
 
-        Task amyWithoutFriendTag = new TaskBuilder(AMY).withTags().build();
-        Task bobWithoutFriendTag = new TaskBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Task amyWithoutFriendTag = new TaskBuilder(EXAM).withTags().build();
+        Task bobWithoutFriendTag = new TaskBuilder(STUDY).withTags(VALID_TAG_HUSBAND).build();
         Organizer expectedOrganizer = new OrganizerBuilder().withTask(bobWithoutFriendTag)
                 .withTask(amyWithoutFriendTag).build();
 
-        assertEquals(expectedOrganizer, organizerWithBobAndAmy);
+        assertEquals(expectedOrganizer, organizerWithStudyAndExam);
     }
 
 

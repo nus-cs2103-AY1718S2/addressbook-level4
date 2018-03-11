@@ -1,7 +1,7 @@
 package systemtests;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
+import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
 
 import org.junit.Test;
 
@@ -38,13 +38,13 @@ public class ClearCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: selects first card in task list and clears organizer book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original organizer book
-        selectPerson(Index.fromOneBased(1));
+        selectTask(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
         /* Case: filters the task list before clearing -> entire organizer book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original organizer book
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showTasksWithName(KEYWORD_MATCHING_SPRING);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 

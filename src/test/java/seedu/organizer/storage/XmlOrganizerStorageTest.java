@@ -2,9 +2,9 @@ package seedu.organizer.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.organizer.testutil.TypicalTasks.ALICE;
-import static seedu.organizer.testutil.TypicalTasks.HOON;
-import static seedu.organizer.testutil.TypicalTasks.IDA;
+import static seedu.organizer.testutil.TypicalTasks.GROCERY;
+import static seedu.organizer.testutil.TypicalTasks.INTERVIEWPREP;
+import static seedu.organizer.testutil.TypicalTasks.MAKEPRESENT;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.io.IOException;
@@ -84,14 +84,14 @@ public class XmlOrganizerStorageTest {
         assertEquals(original, new Organizer(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addTask(HOON);
-        original.removeTask(ALICE);
+        original.addTask(MAKEPRESENT);
+        original.removeTask(GROCERY);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new Organizer(readBack));
 
         //Save and read without specifying file path
-        original.addTask(IDA);
+        original.addTask(INTERVIEWPREP);
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new Organizer(readBack));

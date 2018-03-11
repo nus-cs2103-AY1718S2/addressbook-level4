@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Organizer save file which contains the same Task values as in
-{@code TypicalPersons#getTypicalAddressBook()}-->
+{@code TypicalTasks#getTypicalAddressBook()}-->
 <addressbook>
     <tasks>
-        <name>Alice Pauline</name>
-        <phone>85355255</phone>
+        <name>Grocery</name>
+        <priority>0</priority>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <tagged>friends</tagged>
     </tasks>
     <tasks>
-        <name>Benson Meier</name>
-        <phone>98765432</phone>
+        <name>Spring cleaning</name>
+        <priority>1</priority>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </tasks>
     <tasks>
-        <name>Carl Kurz</name>
-        <phone>95352563</phone>
+        <name>Prepare breakfast</name>
+        <priority>2</priority>
         <email>heinz@example.com</email>
         <address>wall street</address>
     </tasks>
     <tasks>
-        <name>Daniel Meier</name>
-        <phone>87652533</phone>
+        <name>Do homework</name>
+        <priority>3</priority>
         <email>cornelia@example.com</email>
         <address>10th street</address>
     </tasks>
     <tasks>
-        <name>Elle Meyer</name>
-        <phone>9482224</phone>
+        <name>Do project</name>
+        <priority>4</priority>
         <email>werner@example.com</email>
         <address>michegan ave</address>
     </tasks>
     <tasks>
-        <name>Fiona Kunz</name>
-        <phone>9482427</phone>
+        <name>Revision</name>
+        <priority>5</priority>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
     </tasks>
     <tasks>
-        <name>George Best</name>
-        <phone>9482442</phone>
+        <name>Mock exam</name>
+        <priority>6</priority>
         <email>anna@example.com</email>
         <address>4th street</address>
     </tasks>

@@ -146,7 +146,7 @@ public class Organizer implements ReadOnlyOrganizer {
         final Set<Tag> correctTagReferences = new HashSet<>();
         taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Task(
-                task.getName(), task.getPhone(), task.getEmail(), task.getAddress(), correctTagReferences);
+                task.getName(), task.getPriority(), task.getEmail(), task.getAddress(), correctTagReferences);
     }
 
     /**
@@ -180,7 +180,7 @@ public class Organizer implements ReadOnlyOrganizer {
         }
 
         Task newTask =
-                new Task(task.getName(), task.getPhone(), task.getEmail(), task.getAddress(), newTags);
+                new Task(task.getName(), task.getPriority(), task.getEmail(), task.getAddress(), newTags);
 
         try {
             updateTask(task, newTask);

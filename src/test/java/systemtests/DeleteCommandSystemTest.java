@@ -7,8 +7,8 @@ import static seedu.organizer.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON
 import static seedu.organizer.testutil.TestUtil.getLastIndex;
 import static seedu.organizer.testutil.TestUtil.getMidIndex;
 import static seedu.organizer.testutil.TestUtil.getPerson;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
 
 import org.junit.Test;
 
@@ -32,8 +32,8 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: delete the first task in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
-        Task deletedTask = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_TASK.getOneBased() + "       ";
+        Task deletedTask = removePerson(expectedModel, INDEX_FIRST_TASK);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedTask);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
@@ -59,16 +59,16 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered task list, delete index within bounds of organizer book and task list -> deleted */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        Index index = INDEX_FIRST_PERSON;
+        /* Case: filtered task list, delete index within bounds of organizer and task list -> deleted */
+        showTasksWithName(KEYWORD_MATCHING_SPRING);
+        Index index = INDEX_FIRST_TASK;
         assertTrue(index.getZeroBased() < getModel().getFilteredTaskList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered task list, delete index within bounds of organizer book but out of bounds of task list
+        /* Case: filtered task list, delete index within bounds of organizer but out of bounds of task list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showTasksWithName(KEYWORD_MATCHING_SPRING);
         int invalidIndex = getModel().getOrganizer().getTaskList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -76,11 +76,11 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         /* --------------------- Performing delete operation while a task card is selected ------------------------ */
 
         /* Case: delete the selected task -> task list panel selects the task before the deleted task */
-        showAllPersons();
+        showAllTasks();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectPerson(selectedIndex);
+        selectTask(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedTask = removePerson(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedTask);

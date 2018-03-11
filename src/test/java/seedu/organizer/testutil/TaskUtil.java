@@ -3,7 +3,7 @@ package seedu.organizer.testutil;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.organizer.logic.commands.AddCommand;
@@ -34,7 +34,7 @@ public class TaskUtil {
     public static String getPersonDetails(Task task) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + task.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + task.getPhone().value + " ");
+        sb.append(PREFIX_PRIORITY + task.getPriority().value + " ");
         sb.append(PREFIX_EMAIL + task.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + task.getAddress().value + " ");
         task.getTags().stream().forEach(

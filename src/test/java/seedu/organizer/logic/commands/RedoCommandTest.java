@@ -4,8 +4,8 @@ import static seedu.organizer.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.organizer.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.util.Arrays;
@@ -25,8 +25,8 @@ public class RedoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_SECOND_PERSON);
+    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_TASK);
+    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_SECOND_TASK);
 
     @Before
     public void setUp() throws Exception {

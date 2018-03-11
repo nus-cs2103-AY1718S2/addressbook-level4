@@ -741,7 +741,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsOrganizer.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `invalidAndValidPersonAddressBook.xml`, `typicalTasksOrganizer.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
 Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/task/Person.java[`Person`].
@@ -749,7 +749,7 @@ Since `Person` can now have a `Remark`, we should add a helper method to link:{r
 **Tests:**
 
 . Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the task that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
+. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalTasks.java[`TypicalTasks`].
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
 Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.

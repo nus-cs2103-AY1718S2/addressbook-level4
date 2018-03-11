@@ -2,8 +2,8 @@ package seedu.organizer.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.organizer.testutil.EventsUtil.postNow;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.organizer.testutil.TypicalTasks.getTypicalPersons;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalTasks;
 import static seedu.organizer.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.organizer.ui.testutil.GuiTestAssert.assertCardEquals;
 
@@ -19,9 +19,9 @@ import seedu.organizer.model.task.Task;
 
 public class TaskListPanelTest extends GuiUnitTest {
     private static final ObservableList<Task> TYPICAL_TASKS =
-            FXCollections.observableList(getTypicalPersons());
+            FXCollections.observableList(getTypicalTasks());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_TASK);
 
     private TaskListPanelHandle taskListPanelHandle;
 
@@ -51,7 +51,7 @@ public class TaskListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        TaskCardHandle expectedCard = taskListPanelHandle.getTaskCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        TaskCardHandle expectedCard = taskListPanelHandle.getTaskCardHandle(INDEX_SECOND_TASK.getZeroBased());
         TaskCardHandle selectedCard = taskListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }

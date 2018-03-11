@@ -2,7 +2,7 @@ package seedu.organizer.logic.commands;
 
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.organizer.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST_TASK);
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

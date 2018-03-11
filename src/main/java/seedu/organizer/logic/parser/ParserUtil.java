@@ -14,7 +14,7 @@ import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Address;
 import seedu.organizer.model.task.Email;
 import seedu.organizer.model.task.Name;
-import seedu.organizer.model.task.Phone;
+import seedu.organizer.model.task.Priority;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -69,27 +69,27 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Parses a {@code String priority} into a {@code Priority}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws IllegalValueException if the given {@code priority} is invalid.
      */
-    public static Phone parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+    public static Priority parsePriority(String priority) throws IllegalValueException {
+        requireNonNull(priority);
+        String trimmedPriority = priority.trim();
+        if (!Priority.isValidPriority(trimmedPriority)) {
+            throw new IllegalValueException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new Priority(trimmedPriority);
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code Optional<String> priority} into an {@code Optional<Priority>} if {@code priority} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
+    public static Optional<Priority> parsePriority(Optional<String> priority) throws IllegalValueException {
+        requireNonNull(priority);
+        return priority.isPresent() ? Optional.of(parsePriority(priority.get())) : Optional.empty();
     }
 
     /**

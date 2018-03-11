@@ -5,7 +5,7 @@ import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORM
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
@@ -16,7 +16,7 @@ import java.util.Set;
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.exceptions.IllegalValueException;
 import seedu.organizer.logic.commands.EditCommand;
-import seedu.organizer.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.organizer.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.organizer.logic.parser.exceptions.ParseException;
 import seedu.organizer.model.tag.Tag;
 
@@ -33,7 +33,9 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PRIORITY,
+                                            PREFIX_EMAIL, PREFIX_ADDRESS,
+                                            PREFIX_TAG);
 
         Index index;
 
@@ -43,22 +45,22 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        EditCommand.EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
         try {
-            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editTaskDescriptor::setName);
+            ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(editTaskDescriptor::setPriority);
+            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editTaskDescriptor::setEmail);
+            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editTaskDescriptor::setAddress);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
+        if (!editTaskDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        return new EditCommand(index, editTaskDescriptor);
     }
 
     /**

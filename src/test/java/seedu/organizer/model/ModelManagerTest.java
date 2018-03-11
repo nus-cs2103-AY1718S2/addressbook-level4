@@ -7,10 +7,10 @@ import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
-import static seedu.organizer.testutil.TypicalTasks.ALICE;
-import static seedu.organizer.testutil.TypicalTasks.AMY;
-import static seedu.organizer.testutil.TypicalTasks.BENSON;
-import static seedu.organizer.testutil.TypicalTasks.BOB;
+import static seedu.organizer.testutil.TypicalTasks.EXAM;
+import static seedu.organizer.testutil.TypicalTasks.GROCERY;
+import static seedu.organizer.testutil.TypicalTasks.SPRINGCLEAN;
+import static seedu.organizer.testutil.TypicalTasks.STUDY;
 
 import java.util.Arrays;
 
@@ -37,7 +37,7 @@ public class ModelManagerTest {
 
     @Test
     public void deleteTag_nonExistentTag_modelUnchanged() throws Exception {
-        Organizer organizer = new OrganizerBuilder().withTask(AMY).withTask(BOB).build();
+        Organizer organizer = new OrganizerBuilder().withTask(EXAM).withTask(STUDY).build();
         UserPrefs userPrefs = new UserPrefs();
 
         ModelManager modelManager = new ModelManager(organizer, userPrefs);
@@ -48,14 +48,14 @@ public class ModelManagerTest {
 
     @Test
     public void deleteTag_tagUsedByMultipleTasks_tagRemoved() throws Exception {
-        Organizer organizer = new OrganizerBuilder().withTask(AMY).withTask(BOB).build();
+        Organizer organizer = new OrganizerBuilder().withTask(EXAM).withTask(STUDY).build();
         UserPrefs userPrefs = new UserPrefs();
 
         ModelManager modelManager = new ModelManager(organizer, userPrefs);
         modelManager.deleteTag(new Tag(VALID_TAG_FRIEND));
 
-        Task amyWithoutFriendTag = new TaskBuilder(AMY).withTags().build();
-        Task bobWithoutFriendTag = new TaskBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Task amyWithoutFriendTag = new TaskBuilder(EXAM).withTags().build();
+        Task bobWithoutFriendTag = new TaskBuilder(STUDY).withTags(VALID_TAG_HUSBAND).build();
         Organizer expectedOrganizer = new OrganizerBuilder().withTask(amyWithoutFriendTag)
                 .withTask(bobWithoutFriendTag).build();
 
@@ -64,7 +64,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        Organizer organizer = new OrganizerBuilder().withTask(ALICE).withTask(BENSON).build();
+        Organizer organizer = new OrganizerBuilder().withTask(GROCERY).withTask(SPRINGCLEAN).build();
         Organizer differentOrganizer = new Organizer();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -86,7 +86,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentOrganizer, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
+        String[] keywords = GROCERY.getName().fullName.split("\\s+");
         modelManager.updateFilteredTaskList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(organizer, userPrefs)));
 

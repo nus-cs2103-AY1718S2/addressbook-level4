@@ -2,8 +2,8 @@
 <addressbook>
     <!-- Task with invalid name field -->
     <tasks>
-        <name>Ha!ns Mu@ster</name>
-        <phone isPrivate="false">9482424</phone>
+        <name>St!@#$dy</name>
+        <priority isPrivate="false">9</priority>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
     </tasks>

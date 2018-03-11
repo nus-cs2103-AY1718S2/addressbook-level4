@@ -45,7 +45,7 @@ public class SampleDataTest extends OrganizerSystemTest {
 
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Task[] expectedList = SampleDataUtil.getSamplePersons();
-        assertListMatching(getPersonListPanel(), expectedList);
+        Task[] expectedList = SampleDataUtil.getSampleTasks();
+        assertListMatching(getTaskListPanel(), expectedList);
     }
 }

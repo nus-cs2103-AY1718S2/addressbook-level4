@@ -11,7 +11,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public static final String STATUS_BAR_PLACEHOLDER = "#statusbarPlaceholder";
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
-    private static final String TOTAL_TASKS_STATUS_ID = "#totalPersonsStatus";
+    private static final String TOTAL_TASKS_STATUS_ID = "#totalTasksStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
 
     private final StatusBar syncStatusNode;
@@ -78,7 +78,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     /**
      * Returns true if the current content of the 'total persons' is different from the value remembered by the most
-     * recent {@code rememberTotalPersonsStatus()} call.
+     * recent {@code rememberTotalTasksStatus()} call.
      */
     public boolean isTotalTasksStatusChanged() {
         return !lastRememberedTotalTasksStatus.equals(getTotalTasksStatus());

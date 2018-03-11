@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ActiveListType;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyBookShelf;
@@ -97,6 +98,17 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
+        public ActiveListType getActiveListType() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void setActiveListType(ActiveListType type) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyBookShelf newData) {
             fail("This method should not be called.");
         }
@@ -130,6 +142,17 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredBookList(Predicate<Book> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Book> getSearchResultsList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateSearchResults(ReadOnlyBookShelf newResults) {
             fail("This method should not be called.");
         }
 

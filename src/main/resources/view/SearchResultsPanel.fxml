@@ -11,5 +11,5 @@
          <Insets bottom="4.0" left="15.0" right="15.0" top="4.0" />
       </padding>
    </Label>
-  <ListView fx:id="bookListView" VBox.vgrow="ALWAYS" />
+  <ListView fx:id="searchResultsListView" VBox.vgrow="ALWAYS" />
 </VBox>

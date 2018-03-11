@@ -16,13 +16,18 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.commons.events.ui.JumpToBookListRequestEvent;
+import seedu.address.commons.events.ui.JumpToResultsListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ActiveListType;
+import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.testutil.TypicalBooks;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -40,7 +45,7 @@ public class SelectCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
+    public void execute_validIndexUnfilteredBookList_success() {
         Index lastBookIndex = Index.fromOneBased(model.getFilteredBookList().size());
 
         assertExecutionSuccess(INDEX_FIRST_BOOK);
@@ -49,21 +54,43 @@ public class SelectCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_failure() {
+    public void execute_invalidIndexUnfilteredBookList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() {
+    public void execute_validIndexFilteredBookList_success() {
         showBookAtIndex(model, INDEX_FIRST_BOOK);
 
         assertExecutionSuccess(INDEX_FIRST_BOOK);
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_failure() {
+    public void execute_validIndexSearchResultsList_success() throws Exception {
+        model = new ModelManager();
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        BookShelf bookShelf = new BookShelf();
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        bookShelf.addBook(TypicalBooks.BABYLON_ASHES);
+        model.updateSearchResults(bookShelf);
+        assertExecutionSuccess(INDEX_FIRST_BOOK);
+        assertExecutionSuccess(INDEX_SECOND_BOOK);
+    }
+
+    @Test
+    public void execute_invalidIndexSearchResultsList_failure() throws Exception {
+        model = new ModelManager();
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        BookShelf bookShelf = new BookShelf();
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        model.updateSearchResults(bookShelf);
+        assertExecutionFailure(INDEX_SECOND_BOOK, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredBookList_failure() {
         showBookAtIndex(model, INDEX_FIRST_BOOK);
 
         Index outOfBoundsIndex = INDEX_SECOND_BOOK;
@@ -110,8 +137,14 @@ public class SelectCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        BaseEvent lastEvent = eventsCollectorRule.eventsCollector.getMostRecent();
+        int targetIndex = -1;
+        if (lastEvent instanceof JumpToBookListRequestEvent) {
+            targetIndex = ((JumpToBookListRequestEvent) lastEvent).targetIndex;
+        } else if (lastEvent instanceof JumpToResultsListRequestEvent) {
+            targetIndex = ((JumpToResultsListRequestEvent) lastEvent).targetIndex;
+        }
+        assertEquals(index, Index.fromZeroBased(targetIndex));
     }
 
     /**

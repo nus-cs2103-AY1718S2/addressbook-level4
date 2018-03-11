@@ -125,6 +125,7 @@ public class MainWindow extends UiPart<Stage> {
 
         bookListPanel = new BookListPanel(logic.getFilteredBookList());
         searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
+        bookListPanelPlaceholder.getChildren().add(searchResultsPanel.getRoot());
         bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();

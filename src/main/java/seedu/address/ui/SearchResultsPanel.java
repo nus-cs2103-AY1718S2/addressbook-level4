@@ -16,7 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToBookListRequestEvent;
 import seedu.address.commons.events.ui.JumpToResultsListRequestEvent;
 import seedu.address.model.book.Book;
 
@@ -31,7 +30,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     @FXML
     private Label infoLabel;
     @FXML
-    private ListView<BookCard> bookListView;
+    private ListView<BookCard> searchResultsListView;
 
     public SearchResultsPanel(ObservableList<Book> searchResults) {
         super(FXML);
@@ -42,14 +41,14 @@ public class SearchResultsPanel extends UiPart<Region> {
     private void setConnections(ObservableList<Book> searchResults) {
         ObservableList<BookCard> mappedList = EasyBind.map(
                 searchResults, (book) -> new BookCard(book, searchResults.indexOf(book) + 1));
-        bookListView.setItems(mappedList);
-        bookListView.setCellFactory(listView -> new BookListViewCell());
+        searchResultsListView.setItems(mappedList);
+        searchResultsListView.setCellFactory(listView -> new BookListViewCell());
         setEventHandlerForSelectionChangeEvent();
         setEventHandlerForListChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        bookListView.getSelectionModel().selectedItemProperty()
+        searchResultsListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in search results panel changed to : '" + newValue + "'");
@@ -59,7 +58,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     }
 
     private void setEventHandlerForListChangeEvent() {
-        bookListView.getItems().addListener((ListChangeListener<BookCard>) c -> {
+        searchResultsListView.getItems().addListener((ListChangeListener<BookCard>) c -> {
             long newSize = c.getList().size();
             infoLabel.setText(String.format(INFO_TEXT, newSize));
         });
@@ -69,10 +68,10 @@ public class SearchResultsPanel extends UiPart<Region> {
      * Scrolls to the {@code BookCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
-        if (index < bookListView.getItems().size()) {
+        if (index < searchResultsListView.getItems().size()) {
             Platform.runLater(() -> {
-                bookListView.scrollTo(index);
-                bookListView.getSelectionModel().clearAndSelect(index);
+                searchResultsListView.scrollTo(index);
+                searchResultsListView.getSelectionModel().clearAndSelect(index);
             });
         }
     }

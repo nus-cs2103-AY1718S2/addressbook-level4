@@ -21,7 +21,8 @@ public class BookListPanelTest extends GuiUnitTest {
     private static final ObservableList<Book> TYPICAL_BOOKS =
             FXCollections.observableList(getTypicalBooks());
 
-    private static final JumpToBookListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToBookListRequestEvent(INDEX_SECOND_BOOK);
+    private static final JumpToBookListRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToBookListRequestEvent(INDEX_SECOND_BOOK);
 
     private BookListPanelHandle bookListPanelHandle;
 

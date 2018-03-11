@@ -82,10 +82,16 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Task expectedTask = new TaskBuilder().withName(VALID_NAME_EXAM).withPriority(VALID_PRIORITY_EXAM)
+        Task expectedNoTagTask = new TaskBuilder().withName(VALID_NAME_EXAM).withPriority(VALID_PRIORITY_EXAM)
                 .withDeadline(VALID_DEADLINE_EXAM).withDescription(VALID_DESCRIPTION_EXAM).withTags().build();
         assertParseSuccess(parser, NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_EXAM,
-                new AddCommand(expectedTask));
+                new AddCommand(expectedNoTagTask));
+        // no priority
+        Task expectedNoPriorityTask = new TaskBuilder().withName(VALID_NAME_EXAM)
+                .withPriority(Priority.LOWEST_PRIORITY_LEVEL).withDeadline(VALID_DEADLINE_EXAM)
+                .withDescription(VALID_DESCRIPTION_EXAM).withTags(VALID_TAG_HUSBAND).build();
+        assertParseSuccess(parser, NAME_DESC_EXAM + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_EXAM + TAG_DESC_HUSBAND,
+                new AddCommand(expectedNoPriorityTask));
     }
 
     @Test
@@ -94,10 +100,6 @@ public class AddCommandParserTest {
 
         // missing name prefix
         assertParseFailure(parser, VALID_NAME_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
-            + DESCRIPTION_DESC_STUDY, expectedMessage);
-
-        // missing priority prefix
-        assertParseFailure(parser, NAME_DESC_STUDY + VALID_PRIORITY_STUDY + DEADLINE_DESC_STUDY
             + DESCRIPTION_DESC_STUDY, expectedMessage);
 
         // missing deadline prefix

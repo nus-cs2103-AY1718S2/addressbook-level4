@@ -68,6 +68,8 @@ Format: `add n/TASK_NAME p/PRIORITY_LEVEL d/DEADLINE [t/TAG]…​`
 
 [TIP]
 A task can have any number of tags (including 0)
+[TIP]
+Setting a priority level is optional. PrioriTask will automatically set it to it's default priority level 0
 
 Examples:
 

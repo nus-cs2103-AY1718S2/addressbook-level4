@@ -37,14 +37,21 @@ public class AddCommandParser implements Parser<AddCommand> {
                                             PREFIX_DEADLINE, PREFIX_DESCRIPTION,
                                             PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_PRIORITY, PREFIX_DEADLINE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Priority priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get();
+            //@@dominickenn
+            Priority priority;
+            if (arePrefixesPresent(argMultimap, PREFIX_PRIORITY)) {
+                priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get();
+            } else {
+                priority = ParserUtil.parsePriority(Priority.LOWEST_PRIORITY_LEVEL);
+            }
+            //@@author
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
             Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));

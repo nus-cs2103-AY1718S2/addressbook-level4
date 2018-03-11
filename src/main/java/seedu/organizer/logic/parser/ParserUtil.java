@@ -11,8 +11,8 @@ import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.exceptions.IllegalValueException;
 import seedu.organizer.commons.util.StringUtil;
 import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.Address;
 import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 
@@ -93,27 +93,28 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String organizer} into an {@code Address}.
+     * Parses a {@code String organizer} into an {@code Description}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code organizer} is invalid.
      */
-    public static Address parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+    public static Description parseDescription(String description) throws IllegalValueException {
+        requireNonNull(description);
+        String trimmedDescription = description.trim();
+        if (!Description.isValidDescription(trimmedDescription)) {
+            throw new IllegalValueException(Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new Description(trimmedDescription);
     }
 
     /**
-     * Parses a {@code Optional<String> organizer} into an {@code Optional<Address>} if {@code organizer} is present.
+     * Parses a {@code Optional<String> organizer} into an {@code Optional<Description>} if
+     * {@code organizer} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    public static Optional<Description> parseDescription(Optional<String> description) throws IllegalValueException {
+        requireNonNull(description);
+        return description.isPresent() ? Optional.of(parseDescription(description.get())) : Optional.empty();
     }
 
     /**

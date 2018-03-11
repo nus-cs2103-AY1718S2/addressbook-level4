@@ -2,8 +2,8 @@ package seedu.organizer.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
@@ -34,7 +34,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PRIORITY,
-                                            PREFIX_DEADLINE, PREFIX_ADDRESS,
+                                            PREFIX_DEADLINE, PREFIX_DESCRIPTION,
                                             PREFIX_TAG);
         Index index;
 
@@ -49,7 +49,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editTaskDescriptor::setName);
             ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(editTaskDescriptor::setPriority);
             ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).ifPresent(editTaskDescriptor::setDeadline);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editTaskDescriptor::setAddress);
+            ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION))
+                .ifPresent(editTaskDescriptor::setDescription);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

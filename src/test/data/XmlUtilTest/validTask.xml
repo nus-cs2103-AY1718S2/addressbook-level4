@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <task>
-    <name>Hans Muster</name>
-    <priority>9482424</priority>
+    <name>Work on PrioriTask</name>
+    <priority>9</priority>
     <deadline>2018-07-16</deadline>
-    <address>4th street</address>
+    <description>Refactor Address to Description</description>
     <tagged>friends</tagged>
 </task>

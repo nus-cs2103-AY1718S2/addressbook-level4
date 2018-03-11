@@ -86,14 +86,14 @@ public class MainApp extends Application {
      * or an empty organizer book will be used instead if errors occur when reading {@code storage}'s organizer book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyOrganizer> addressBookOptional;
+        Optional<ReadOnlyOrganizer> organizerOptional;
         ReadOnlyOrganizer initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
+            organizerOptional = storage.readAddressBook();
+            if (!organizerOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample Organizer");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = organizerOptional.orElseGet(SampleDataUtil::getSampleOrganizer);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty Organizer");
             initialData = new Organizer();

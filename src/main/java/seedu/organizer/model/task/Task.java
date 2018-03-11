@@ -18,19 +18,19 @@ public class Task {
     private final Name name;
     private final Priority priority;
     private final Deadline deadline;
-    private final Address address;
+    private final Description description;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Priority priority, Deadline deadline, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, priority, deadline, address, tags);
+    public Task(Name name, Priority priority, Deadline deadline, Description description, Set<Tag> tags) {
+        requireAllNonNull(name, priority, deadline, description, tags);
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
-        this.address = address;
+        this.description = description;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -47,8 +47,8 @@ public class Task {
         return deadline;
     }
 
-    public Address getAddress() {
-        return address;
+    public Description getDescription() {
+        return description;
     }
 
     /**
@@ -73,13 +73,13 @@ public class Task {
         return otherTask.getName().equals(this.getName())
                 && otherTask.getPriority().equals(this.getPriority())
                 && otherTask.getDeadline().equals(this.getDeadline())
-                && otherTask.getAddress().equals(this.getAddress());
+                && otherTask.getDescription().equals(this.getDescription());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, priority, deadline, address, tags);
+        return Objects.hash(name, priority, deadline, description, tags);
     }
 
     @Override
@@ -90,8 +90,8 @@ public class Task {
                 .append(getPriority())
                 .append(" Deadline: ")
                 .append(getDeadline())
-                .append(" Address: ")
-                .append(getAddress())
+                .append(" Description: ")
+                .append(getDescription())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

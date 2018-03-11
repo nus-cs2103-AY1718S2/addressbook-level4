@@ -33,12 +33,12 @@ public class XmlUtilTest {
     private static final File VALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "validTask.xml");
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempOrganizer.xml"));
 
-    private static final String INVALID_PRIORITY = "9482asf424";
+    private static final String INVALID_PRIORITY = "9!@#";
 
-    private static final String VALID_NAME = "Hans Muster";
-    private static final String VALID_PRIORITY = "9482424";
+    private static final String VALID_NAME = "Work on PrioriTask";
+    private static final String VALID_PRIORITY = "9";
     private static final String VALID_DEADLINE = "2018-07-16";
-    private static final String VALID_ADDRESS = "4th street";
+    private static final String VALID_DESCRIPTION = "Refactor Address to Description";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
@@ -80,7 +80,7 @@ public class XmlUtilTest {
         XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                null, VALID_PRIORITY, VALID_DEADLINE, VALID_ADDRESS, VALID_TAGS);
+                null, VALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -89,7 +89,7 @@ public class XmlUtilTest {
         XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +98,7 @@ public class XmlUtilTest {
         XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

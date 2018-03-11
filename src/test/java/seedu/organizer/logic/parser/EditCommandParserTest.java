@@ -1,12 +1,12 @@
 package seedu.organizer.logic.parser;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.organizer.logic.commands.CommandTestUtil.ADDRESS_DESC_EXAM;
-import static seedu.organizer.logic.commands.CommandTestUtil.ADDRESS_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_STUDY;
-import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_EXAM;
+import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
+import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -15,10 +15,10 @@ import static seedu.organizer.logic.commands.CommandTestUtil.PRIORITY_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.PRIORITY_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.organizer.logic.commands.CommandTestUtil.VALID_ADDRESS_EXAM;
-import static seedu.organizer.logic.commands.CommandTestUtil.VALID_ADDRESS_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DESCRIPTION_EXAM;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DESCRIPTION_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PRIORITY_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PRIORITY_STUDY;
@@ -36,8 +36,8 @@ import org.junit.Test;
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.Address;
 import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
@@ -86,7 +86,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_DEADLINE_DESC,
             Deadline.MESSAGE_DEADLINE_CONSTRAINTS); // invalid deadline
         assertParseFailure(parser,
-                "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid organizer
+                "1" + INVALID_DESCRIPTION_DESC, Description.MESSAGE_DESCRIPTION_CONSTRAINTS); // invalid organizer
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid priority followed by valid deadline
@@ -109,7 +109,7 @@ public class EditCommandParserTest {
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser,
-                "1" + INVALID_NAME_DESC + INVALID_DEADLINE_DESC + VALID_ADDRESS_EXAM + VALID_PRIORITY_EXAM,
+                "1" + INVALID_NAME_DESC + INVALID_DEADLINE_DESC + VALID_DESCRIPTION_EXAM + VALID_PRIORITY_EXAM,
                 Name.MESSAGE_NAME_CONSTRAINTS);
     }
 
@@ -117,11 +117,11 @@ public class EditCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_TASK;
         String userInput = targetIndex.getOneBased() + PRIORITY_DESC_STUDY + TAG_DESC_HUSBAND
-                + DEADLINE_DESC_EXAM + ADDRESS_DESC_EXAM + NAME_DESC_EXAM + TAG_DESC_FRIEND;
+                + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_EXAM + NAME_DESC_EXAM + TAG_DESC_FRIEND;
 
         EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_EXAM)
-                .withPriority(VALID_PRIORITY_STUDY).withDeadline(VALID_DEADLINE_EXAM).withAddress(VALID_ADDRESS_EXAM)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withPriority(VALID_PRIORITY_STUDY).withDeadline(VALID_DEADLINE_EXAM)
+                .withDescription(VALID_DESCRIPTION_EXAM).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -161,8 +161,8 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // organizer
-        userInput = targetIndex.getOneBased() + ADDRESS_DESC_EXAM;
-        descriptor = new EditTaskDescriptorBuilder().withAddress(VALID_ADDRESS_EXAM).build();
+        userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_EXAM;
+        descriptor = new EditTaskDescriptorBuilder().withDescription(VALID_DESCRIPTION_EXAM).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -176,12 +176,12 @@ public class EditCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_TASK;
-        String userInput = targetIndex.getOneBased() + PRIORITY_DESC_EXAM + ADDRESS_DESC_EXAM + DEADLINE_DESC_EXAM
-                + TAG_DESC_FRIEND + PRIORITY_DESC_EXAM + ADDRESS_DESC_EXAM + DEADLINE_DESC_EXAM + TAG_DESC_FRIEND
-                + PRIORITY_DESC_STUDY + ADDRESS_DESC_STUDY + DEADLINE_DESC_STUDY + TAG_DESC_HUSBAND;
+        String userInput = targetIndex.getOneBased() + PRIORITY_DESC_EXAM + DESCRIPTION_DESC_EXAM + DEADLINE_DESC_EXAM
+                + TAG_DESC_FRIEND + PRIORITY_DESC_EXAM + DESCRIPTION_DESC_EXAM + DEADLINE_DESC_EXAM + TAG_DESC_FRIEND
+                + PRIORITY_DESC_STUDY + DESCRIPTION_DESC_STUDY + DEADLINE_DESC_STUDY + TAG_DESC_HUSBAND;
 
         EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY)
-                .withDeadline(VALID_DEADLINE_STUDY).withAddress(VALID_ADDRESS_STUDY)
+                .withDeadline(VALID_DEADLINE_STUDY).withDescription(VALID_DESCRIPTION_STUDY)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -200,11 +200,11 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + DEADLINE_DESC_STUDY + INVALID_PRIORITY_DESC + ADDRESS_DESC_STUDY
+        userInput = targetIndex.getOneBased() + DEADLINE_DESC_STUDY + INVALID_PRIORITY_DESC + DESCRIPTION_DESC_STUDY
                 + PRIORITY_DESC_STUDY;
         descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY).withDeadline
                 (VALID_DEADLINE_STUDY)
-                .withAddress(VALID_ADDRESS_STUDY).build();
+                .withDescription(VALID_DESCRIPTION_STUDY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

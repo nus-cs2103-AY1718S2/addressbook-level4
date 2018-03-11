@@ -13,7 +13,7 @@ public class Deadline {
         "Task deadlines should be in the format YYYY-MM-DD, and it should not be blank";
 
     /*
-     * The first character of must not be a whitespace, otherwise " " (a blank string) becomes a valid input.
+     * The first character must not be a whitespace, otherwise " " (a blank string) becomes a valid input.
      * Format of string is YYYY-MM-DD.
      */
     public static final String DEADLINE_VALIDATION_REGEX = "\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])";

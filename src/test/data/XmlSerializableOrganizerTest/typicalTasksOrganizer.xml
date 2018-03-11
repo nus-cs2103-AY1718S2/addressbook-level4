@@ -6,14 +6,14 @@
         <name>Grocery</name>
         <priority>0</priority>
         <deadline>2018-03-11</deadline>
-        <address>123, Jurong West Ave 6, #08-111</address>
+        <description isPrivate="false">Go to NTUC</description>
         <tagged>friends</tagged>
     </tasks>
     <tasks>
         <name>Spring cleaning</name>
         <priority>1</priority>
         <deadline>2018-09-08</deadline>
-        <address>311, Clementi Ave 2, #02-25</address>
+        <description>Clean the entire house except the study room</description>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </tasks>
@@ -21,31 +21,31 @@
         <name>Prepare breakfast</name>
         <priority>2</priority>
         <deadline>2018-11-12</deadline>
-        <address>wall street</address>
+        <description>French Toast with coffee</description>
     </tasks>
     <tasks>
         <name>Do homework</name>
         <priority>3</priority>
         <deadline>2018-03-21</deadline>
-        <address>10th street</address>
+        <description>CS2103T, CS2101 and MA1101R</description>
     </tasks>
     <tasks>
         <name>Do project</name>
         <priority>4</priority>
         <deadline>2018-09-14</deadline>
-        <address>michegan ave</address>
+        <description>Finish writing script for OP1</description>
     </tasks>
     <tasks>
         <name>Revision</name>
         <priority>5</priority>
         <deadline>2018-04-05</deadline>
-        <address>little tokyo</address>
+        <description>Revise for CS2106 midterms</description>
     </tasks>
     <tasks>
         <name>Mock exam</name>
         <priority>6</priority>
         <deadline>2018-05-23</deadline>
-        <address>4th street</address>
+        <description>Mock exam for CS1101S - Revise!</description>
     </tasks>
     <tags>friends</tags>
     <tags>owesMoney</tags>

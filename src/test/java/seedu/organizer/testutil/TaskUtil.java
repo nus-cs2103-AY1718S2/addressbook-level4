@@ -1,7 +1,7 @@
 package seedu.organizer.testutil;
 
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
@@ -36,7 +36,7 @@ public class TaskUtil {
         sb.append(PREFIX_NAME + task.getName().fullName + " ");
         sb.append(PREFIX_PRIORITY + task.getPriority().value + " ");
         sb.append(PREFIX_DEADLINE + task.getDeadline().value + " ");
-        sb.append(PREFIX_ADDRESS + task.getAddress().value + " ");
+        sb.append(PREFIX_DESCRIPTION + task.getDescription().value + " ");
         task.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

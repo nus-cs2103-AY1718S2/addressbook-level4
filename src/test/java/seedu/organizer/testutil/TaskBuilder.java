@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.Address;
 import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
@@ -19,20 +19,20 @@ public class TaskBuilder {
     public static final String DEFAULT_NAME = "Study";
     public static final String DEFAULT_PRIORITY = "8";
     public static final String DEFAULT_DEADLINE = "2018-05-18";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_DESCRIPTION = "Study for CS2103T Exam";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
     private Priority priority;
     private Deadline deadline;
-    private Address address;
+    private Description description;
     private Set<Tag> tags;
 
     public TaskBuilder() {
         name = new Name(DEFAULT_NAME);
         priority = new Priority(DEFAULT_PRIORITY);
         deadline = new Deadline(DEFAULT_DEADLINE);
-        address = new Address(DEFAULT_ADDRESS);
+        description = new Description(DEFAULT_DESCRIPTION);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -43,7 +43,7 @@ public class TaskBuilder {
         name = taskToCopy.getName();
         priority = taskToCopy.getPriority();
         deadline = taskToCopy.getDeadline();
-        address = taskToCopy.getAddress();
+        description = taskToCopy.getDescription();
         tags = new HashSet<>(taskToCopy.getTags());
     }
 
@@ -64,10 +64,10 @@ public class TaskBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Task} that we are building.
+     * Sets the {@code Description} of the {@code Task} that we are building.
      */
-    public TaskBuilder withAddress(String address) {
-        this.address = new Address(address);
+    public TaskBuilder withDescription(String description) {
+        this.description = new Description(description);
         return this;
     }
 
@@ -88,7 +88,7 @@ public class TaskBuilder {
     }
 
     public Task build() {
-        return new Task(name, priority, deadline, address, tags);
+        return new Task(name, priority, deadline, description, tags);
     }
 
 }

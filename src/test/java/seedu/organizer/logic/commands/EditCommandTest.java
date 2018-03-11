@@ -3,8 +3,8 @@ package seedu.organizer.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.organizer.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.organizer.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.organizer.logic.commands.CommandTestUtil.DESC_EXAM;
+import static seedu.organizer.logic.commands.CommandTestUtil.DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PRIORITY_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -224,10 +224,10 @@ public class EditCommandTest {
 
     @Test
     public void equals() throws Exception {
-        final EditCommand standardCommand = prepareCommand(INDEX_FIRST_TASK, DESC_AMY);
+        final EditCommand standardCommand = prepareCommand(INDEX_FIRST_TASK, DESC_EXAM);
 
         // same values -> returns true
-        EditCommand.EditTaskDescriptor copyDescriptor = new EditTaskDescriptor(DESC_AMY);
+        EditCommand.EditTaskDescriptor copyDescriptor = new EditTaskDescriptor(DESC_EXAM);
         EditCommand commandWithSameValues = prepareCommand(INDEX_FIRST_TASK, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -245,10 +245,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_TASK, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_TASK, DESC_EXAM)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_TASK, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_TASK, DESC_STUDY)));
     }
 
     /**

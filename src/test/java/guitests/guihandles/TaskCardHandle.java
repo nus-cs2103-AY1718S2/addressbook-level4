@@ -13,14 +13,14 @@ import javafx.scene.layout.Region;
 public class TaskCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
-    private static final String ADDRESS_FIELD_ID = "#address";
+    private static final String DESCRIPTION_FIELD_ID = "#description";
     private static final String PRIORITY_FIELD_ID = "#priority";
     private static final String DEADLINE_FIELD_ID = "#deadline";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
     private final Label nameLabel;
-    private final Label addressLabel;
+    private final Label descriptionLabel;
     private final Label priorityLabel;
     private final Label deadlineLabel;
     private final List<Label> tagLabels;
@@ -30,7 +30,7 @@ public class TaskCardHandle extends NodeHandle<Node> {
 
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
-        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
+        this.descriptionLabel = getChildNode(DESCRIPTION_FIELD_ID);
         this.priorityLabel = getChildNode(PRIORITY_FIELD_ID);
         this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
 
@@ -50,8 +50,8 @@ public class TaskCardHandle extends NodeHandle<Node> {
         return nameLabel.getText();
     }
 
-    public String getAddress() {
-        return addressLabel.getText();
+    public String getDescription() {
+        return descriptionLabel.getText();
     }
 
     public String getPriority() {
@@ -70,7 +70,7 @@ public class TaskCardHandle extends NodeHandle<Node> {
     }
 
     // @@author guekling-reused
-    // Reused from https://github.com/se-edu/addressbook-level4/pull/798/files with minor modifications
+    // Reused from https://github.com/se-edu/descriptionbook-level4/pull/798/files with minor modifications
     public List<String> getTagStyleClasses(String tag) {
         return tagLabels
                 .stream()

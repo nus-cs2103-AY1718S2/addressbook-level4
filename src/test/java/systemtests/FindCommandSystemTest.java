@@ -119,7 +119,7 @@ public class FindCommandSystemTest extends OrganizerSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find organizer of task in organizer -> 0 tasks found */
-        command = FindCommand.COMMAND_WORD + " " + HOMEWORK.getAddress().value;
+        command = FindCommand.COMMAND_WORD + " " + HOMEWORK.getDescription().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

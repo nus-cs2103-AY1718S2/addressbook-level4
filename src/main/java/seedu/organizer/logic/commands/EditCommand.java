@@ -1,8 +1,8 @@
 package seedu.organizer.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
@@ -20,8 +20,8 @@ import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.util.CollectionUtil;
 import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.Address;
 import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
@@ -43,10 +43,10 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_DEADLINE + "DEADLINE] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PRIORITY + "91234567 "
+            + PREFIX_PRIORITY + "9 "
             + PREFIX_DEADLINE + "2018-03-11";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
@@ -106,10 +106,10 @@ public class EditCommand extends UndoableCommand {
         Name updatedName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
         Priority updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
         Deadline updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
-        Address updatedAddress = editTaskDescriptor.getAddress().orElse(taskToEdit.getAddress());
+        Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
 
-        return new Task(updatedName, updatedPriority, updatedDeadline, updatedAddress, updatedTags);
+        return new Task(updatedName, updatedPriority, updatedDeadline, updatedDescription, updatedTags);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class EditCommand extends UndoableCommand {
         private Name name;
         private Priority priority;
         private Deadline deadline;
-        private Address address;
+        private Description description;
         private Set<Tag> tags;
 
         public EditTaskDescriptor() {
@@ -153,7 +153,7 @@ public class EditCommand extends UndoableCommand {
             setName(toCopy.name);
             setPriority(toCopy.priority);
             setDeadline(toCopy.deadline);
-            setAddress(toCopy.address);
+            setDescription(toCopy.description);
             setTags(toCopy.tags);
         }
 
@@ -161,7 +161,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.priority, this.deadline, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.priority, this.deadline, this.description, this.tags);
         }
 
         public void setName(Name name) {
@@ -188,12 +188,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(deadline);
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
+        public void setDescription(Description description) {
+            this.description = description;
         }
 
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
+        public Optional<Description> getDescription() {
+            return Optional.ofNullable(description);
         }
 
         /**
@@ -231,7 +231,7 @@ public class EditCommand extends UndoableCommand {
             return getName().equals(e.getName())
                     && getPriority().equals(e.getPriority())
                     && getDeadline().equals(e.getDeadline())
-                    && getAddress().equals(e.getAddress())
+                    && getDescription().equals(e.getDescription())
                     && getTags().equals(e.getTags());
         }
     }

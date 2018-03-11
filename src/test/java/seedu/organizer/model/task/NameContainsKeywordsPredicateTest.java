@@ -70,6 +70,6 @@ public class NameContainsKeywordsPredicateTest {
         // Keywords match priority, deadline and organizer, but does not match name
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("1", "alice@deadline.com", "Main", "Street"));
         assertFalse(predicate.test(new TaskBuilder().withName("Study").withPriority("1")
-                .withDeadline("2018-11-11").withAddress("Main Street").build()));
+                .withDeadline("2018-11-11").withDescription("Study for CS2103T").build()));
     }
 }

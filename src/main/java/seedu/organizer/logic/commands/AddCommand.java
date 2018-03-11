@@ -1,8 +1,8 @@
 package seedu.organizer.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
@@ -24,13 +24,13 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_PRIORITY + "PRIORITY "
             + PREFIX_DEADLINE + "DEADLINE "
-            + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_DESCRIPTION + "DESCRIPTION "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PRIORITY + "9 "
             + PREFIX_DEADLINE + "2018-03-11 "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_DESCRIPTION + "Refactor AddressBook to PrioriTask "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 

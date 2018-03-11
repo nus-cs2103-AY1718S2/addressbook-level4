@@ -35,7 +35,7 @@ public class TaskCard extends UiPart<Region> {
     @FXML
     private Label priority;
     @FXML
-    private Label address;
+    private Label description;
     @FXML
     private Label deadline;
     @FXML
@@ -47,7 +47,7 @@ public class TaskCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(task.getName().fullName);
         priority.setText(task.getPriority().value);
-        address.setText(task.getAddress().value);
+        description.setText(task.getDescription().value);
         deadline.setText(task.getDeadline().value);
         initTags(task);
     }

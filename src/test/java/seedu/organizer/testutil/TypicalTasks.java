@@ -1,9 +1,9 @@
 package seedu.organizer.testutil;
 
-import static seedu.organizer.logic.commands.CommandTestUtil.VALID_ADDRESS_EXAM;
-import static seedu.organizer.logic.commands.CommandTestUtil.VALID_ADDRESS_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DESCRIPTION_EXAM;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DESCRIPTION_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PRIORITY_EXAM;
@@ -24,35 +24,36 @@ import seedu.organizer.model.task.exceptions.DuplicateTaskException;
  */
 public class TypicalTasks {
     public static final Task GROCERY = new TaskBuilder().withName("Grocery")
-            .withAddress("123, Jurong West Ave 6, #08-111").withDeadline("2018-03-11")
+            .withDescription("Go to NTUC").withDeadline("2018-03-11")
             .withPriority("0")
             .withTags("friends").build();
     public static final Task SPRINGCLEAN = new TaskBuilder().withName("Spring cleaning")
-            .withAddress("311, Clementi Ave 2, #02-25")
+            .withDescription("Clean the entire house except the study room")
             .withDeadline("2018-09-08").withPriority("1")
             .withTags("owesMoney", "friends").build();
     public static final Task PREPAREBREAKFAST = new TaskBuilder().withName("Prepare breakfast").withPriority("2")
-            .withDeadline("2018-11-12").withAddress("wall street").build();
+            .withDeadline("2018-11-12").withDescription("French Toast with coffee").build();
     public static final Task HOMEWORK = new TaskBuilder().withName("Do homework").withPriority("3")
-            .withDeadline("2018-03-21").withAddress("10th street").build();
+            .withDeadline("2018-03-21").withDescription("CS2103T, CS2101 and MA1101R").build();
     public static final Task PROJECT = new TaskBuilder().withName("Do project").withPriority("4")
-            .withDeadline("2018-09-14").withAddress("michegan ave").build();
+            .withDeadline("2018-09-14").withDescription("Finish writing script for OP1").build();
     public static final Task REVISION = new TaskBuilder().withName("Revision").withPriority("5")
-            .withDeadline("2018-04-05").withAddress("little tokyo").build();
+            .withDeadline("2018-04-05").withDescription("Revise for CS2106 midterms").build();
     public static final Task MOCKEXAM = new TaskBuilder().withName("Mock exam").withPriority("6")
-            .withDeadline("2018-05-23").withAddress("4th street").build();
+            .withDeadline("2018-05-23").withDescription("Mock exam for CS1101S - Revise!").build();
 
     // Manually added
     public static final Task MAKEPRESENT = new TaskBuilder().withName("Make present").withPriority("7")
-            .withDeadline("2018-08-06").withAddress("little india").build();
+            .withDeadline("2018-08-06").withDescription("Make photo frame for Denise").build();
     public static final Task INTERVIEWPREP = new TaskBuilder().withName("Interview prep").withPriority("8")
-            .withDeadline("2018-04-05").withAddress("chicago ave").build();
+            .withDeadline("2018-04-05").withDescription("Prepare technical questions").build();
 
     // Manually added - Task's details found in {@code CommandTestUtil}
     public static final Task EXAM = new TaskBuilder().withName(VALID_NAME_EXAM).withPriority(VALID_PRIORITY_EXAM)
-            .withDeadline(VALID_DEADLINE_EXAM).withAddress(VALID_ADDRESS_EXAM).withTags(VALID_TAG_FRIEND).build();
+            .withDeadline(VALID_DEADLINE_EXAM).withDescription(VALID_DESCRIPTION_EXAM)
+            .withTags(VALID_TAG_FRIEND).build();
     public static final Task STUDY = new TaskBuilder().withName(VALID_NAME_STUDY).withPriority(VALID_PRIORITY_STUDY)
-            .withDeadline(VALID_DEADLINE_STUDY).withAddress(VALID_ADDRESS_STUDY).withTags(VALID_TAG_HUSBAND,
+            .withDeadline(VALID_DEADLINE_STUDY).withDescription(VALID_DESCRIPTION_STUDY).withTags(VALID_TAG_HUSBAND,
                     VALID_TAG_FRIEND)
             .build();
 

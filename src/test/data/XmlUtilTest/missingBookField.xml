@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Book with missing title field -->
+<book>
+    <description>This is Artemis.</description>
+    <authors>Andy Weir</authors>
+    <categories>Fiction</categories>
+</book>

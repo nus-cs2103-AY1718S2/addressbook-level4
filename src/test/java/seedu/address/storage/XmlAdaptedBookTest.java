@@ -1,7 +1,7 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.storage.XmlAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.storage.XmlAdaptedBook.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalBooks.ARTEMIS;
 
 import java.util.List;

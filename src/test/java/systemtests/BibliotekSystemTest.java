@@ -31,6 +31,7 @@ import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -204,7 +205,8 @@ public abstract class BibliotekSystemTest {
         String selectedCardTitle = getBookListPanel().getHandleToSelectedCard().getTitle();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardTitle.replaceAll(" ", "%20"));
+            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL
+                    + StringUtil.urlEncode(selectedCardTitle).replaceAll("\\+", "%20"));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

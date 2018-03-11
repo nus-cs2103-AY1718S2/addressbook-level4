@@ -20,14 +20,10 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.BookBuilder;
 
 public class AddCommandTest {
@@ -106,11 +102,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public ReadOnlyBookShelf getBookShelf() {
             fail("This method should not be called.");
             return null;
@@ -142,40 +133,6 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        //// deprecated
-
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
-        }
     }
 
     /**

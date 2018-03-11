@@ -12,10 +12,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
-public class ProfileDisplay extends UiPart<Region> {
+public class ContactDetails extends UiPart<Region> {
 
-    private static final String FXML = "ProfileDisplay.fxml";
-    private final Logger logger = LogsCenter.getLogger(ProfileDisplay.class);
+    private static final String FXML = "ContactDetails.fxml";
+    private final Logger logger = LogsCenter.getLogger(ContactDetails.class);
     
     @FXML
     private Label name;
@@ -29,16 +29,15 @@ public class ProfileDisplay extends UiPart<Region> {
     @FXML
     private Label email;
 
-    public ProfileDisplay() {
+    public ContactDetails() {
         super(FXML);
         registerAsAnEventHandler(this);
     }
 
     /**
-     * 
-     * @param person
+     *Shows the contact details of the person
      */
-    private void loadPersonProfile(Person person) {
+    private void showPersonDetails(Person person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
@@ -48,7 +47,7 @@ public class ProfileDisplay extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonProfile(event.getNewSelection().person);
+        showPersonDetails(event.getNewSelection().person);
     }
 
 }

@@ -38,13 +38,13 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-    private DetailsPanel personDetailsPanel;
+    private DetailsPanel detailsPanel;
 
     @FXML
     private StackPane browserPlaceholder;
 
     @FXML
-    private StackPane personDetailsPlaceholder;
+    private StackPane detailsPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -121,10 +121,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
 
-        personDetailsPanel = new DetailsPanel();
-        personDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
-//        personDetailsPlaceholder.getChildren()
-
+        detailsPanel = new DetailsPanel();
+        detailsPlaceholder.getChildren().add(detailsPanel.getRoot());
+        
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -192,7 +191,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        personDetailsPanel.browserPanel.freeResources();
+        detailsPanel.releaseResources();
     }
 
     @Subscribe
@@ -200,5 +199,4 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
-
 }

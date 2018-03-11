@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -16,13 +17,20 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.testutil.TypicalBooks;
 
 public class BookShelfTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final BookShelf bookShelf = new BookShelf();
+    private BookShelf bookShelf;
+
+    @Before
+    public void setUp() {
+        bookShelf = new BookShelf();
+    }
 
     @Test
     public void constructor() {
@@ -53,7 +61,50 @@ public class BookShelfTest {
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void updateBook_validTargetAndReplacement_success() throws Exception {
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        bookShelf.updateBook(TypicalBooks.ARTEMIS, TypicalBooks.BABYLON_ASHES);
+        assertEquals(false, bookShelf.getBookList().contains(TypicalBooks.ARTEMIS));
+        assertEquals(true, bookShelf.getBookList().contains(TypicalBooks.BABYLON_ASHES));
+    }
+
+    @Test
+    public void updateBook_nonMatchingTarget_throwsBookNotFoundException() throws Exception {
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        thrown.expect(BookNotFoundException.class);
+        bookShelf.updateBook(TypicalBooks.BABYLON_ASHES, TypicalBooks.WAKING_GODS);
+    }
+
+    @Test
+    public void updateBook_nullTarget_throwsBookNotFoundException() throws Exception {
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        thrown.expect(BookNotFoundException.class);
+        bookShelf.updateBook(null, TypicalBooks.WAKING_GODS);
+    }
+
+    @Test
+    public void updateBook_nullReplacement_throwsNullPointerException() throws Exception {
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        thrown.expect(NullPointerException.class);
+        bookShelf.updateBook(TypicalBooks.ARTEMIS, null);
+    }
+
+    @Test
+    public void removeBook_validBook_success() throws Exception {
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        bookShelf.removeBook(TypicalBooks.ARTEMIS);
+        assertEquals(0, bookShelf.getBookList().size());
+    }
+
+    @Test
+    public void removeBook_nonMatchingBook_throwsBookNotFoundException() throws Exception {
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        thrown.expect(BookNotFoundException.class);
+        bookShelf.removeBook(TypicalBooks.BABYLON_ASHES);
+    }
+
+    @Test
+    public void getBookList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         bookShelf.getBookList().remove(0);
     }

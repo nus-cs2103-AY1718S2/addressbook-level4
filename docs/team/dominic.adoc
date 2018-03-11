@@ -1,0 +1,4 @@
+= Dominic Kenn Lim - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+

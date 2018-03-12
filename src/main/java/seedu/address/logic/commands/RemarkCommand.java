@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -25,21 +26,21 @@ public class RemarkCommand extends UndoableCommand {
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed remark from: %1$s";
 
     private final Person toAdd;
-    private final int index;
+    private final Index index;
     private final String remark;
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public RemarkCommand() {
-        this.index = 0;
-        this.remark = null;
+    public RemarkCommand(Index index, String remark) {
+        this.index = index;
+        this.remark = remark;
         toAdd = null;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException("Not yet implemented");
+        throw new CommandException("Index: " + index.getOneBased() + " Remark: " + remark);
 
     }
 

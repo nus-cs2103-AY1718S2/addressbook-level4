@@ -14,12 +14,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class DateTime {
 
-    public static final String DATE_FORMAT = "mm/dd/yyyy HH:MM:SS\n";
+    public static final String DATE_FORMAT = "MM/dd/yyyy hh:mm:ss";
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
             "Date and  Time numbers should be a date and should be in the format of " +
             DATE_FORMAT;
-    public static final String DATETIME_VALIDATION_REGEX =
-            "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20) ([0-1]\\d|2[0-3]):[0-5]\\d:[0-5]\\d)";
+    // TODO : FIND A REGET TO VALIDATE THE DATE AND TIME. 
+    public static final String DATETIME_VALIDATION_REGEX =".*";
+
     private final String value;
     private Date date;
     /**
@@ -43,12 +44,28 @@ public class DateTime {
      * Returns true if a given string is a valid activity phone number.
      */
     public static boolean isValidDateAndTime(String test) {
-        return test.matches(DATETIME_VALIDATION_REGEX);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        try {
+            sdf.parse(test);
+            return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+        //return test.matches(DATETIME_VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
-        return DateFormat.getDateInstance().format(date);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        String result = value;
+        try {
+            result = sdf.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = value;
+        }
+        return result;
     }
 
     @Override

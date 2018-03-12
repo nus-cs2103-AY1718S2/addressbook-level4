@@ -30,7 +30,7 @@ public class SampleDataUtil {
             new Activity(new Name("Irfan Ibrahim"), new DateTime("12/02/1991 23:59:59"),
                 new Remark("Blk 47 Tampines Street 20, #17-35"),
                 getTagSet("classmates")),
-            new Activity(new Name("Roy Balakrishnan"), new DateTime("92624417"),
+            new Activity(new Name("Roy Balakrishnan"), new DateTime("12/05/1991 23:59:59"),
                 new Remark("Blk 45 Aljunied Street 85, #11-31"),
                 getTagSet("colleagues"))
         };
@@ -51,7 +51,7 @@ public class SampleDataUtil {
     /**
      * Returns a tag set containing the list of strings given.
      */
-    public static Set<Tag> getTagSet(String... strings) {
+    public static Set<Tag> getTagSet(String ... strings) {
         HashSet<Tag> tags = new HashSet<>();
         for (String s : strings) {
             tags.add(new Tag(s));

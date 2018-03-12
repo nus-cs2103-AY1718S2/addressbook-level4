@@ -26,7 +26,6 @@ public class ContactDetailsDisplayTest extends GuiUnitTest{
     @Test
     public void display() {
         // default result text
-        guiRobot.pauseForHuman();
         assertEquals("", contactDetailsDisplayHandle.getName());
         assertEquals("", contactDetailsDisplayHandle.getAddress());
         assertEquals("", contactDetailsDisplayHandle.getPhone());
@@ -35,8 +34,10 @@ public class ContactDetailsDisplayTest extends GuiUnitTest{
         // new result received
         Person person = new PersonBuilder().build();
         PersonCard personCard = new PersonCard(person, 0);
+        
         postNow(new PersonPanelSelectionChangedEvent(personCard));
         guiRobot.pauseForHuman();
+        
         assertEquals(person.getName().toString(), contactDetailsDisplayHandle.getName());
         assertEquals(person.getAddress().toString(), contactDetailsDisplayHandle.getAddress());
         assertEquals(person.getPhone().toString(), contactDetailsDisplayHandle.getPhone());

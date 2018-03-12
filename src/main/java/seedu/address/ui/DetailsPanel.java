@@ -17,10 +17,11 @@ import seedu.address.commons.events.ui.SwitchTabRequestEvent;
  */
 public class DetailsPanel extends UiPart<Region> {
 
+    private static final String FXML = "DetailsPanel.fxml";
+
     private ContactDetailsDisplay contactDetailsDisplay;
     private BrowserPanel browserPanel;
     
-    private static final String FXML = "detailsPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
     
     @FXML
@@ -34,10 +35,6 @@ public class DetailsPanel extends UiPart<Region> {
 
     public DetailsPanel() {
         super(FXML);
-        contactDetailsDisplay = new ContactDetailsDisplay();
-        profile.setContent(contactDetailsDisplay.getRoot());
-        browserPanel = new BrowserPanel();
-        linkedIn.setContent(browserPanel.getRoot());
         registerAsAnEventHandler(this);
     }
     
@@ -47,7 +44,17 @@ public class DetailsPanel extends UiPart<Region> {
         tabPane.getSelectionModel().clearAndSelect(event.tabId);
     }
 
-     void releaseResources() {
+    public void releaseResources() {
         browserPanel.freeResources();
+    }
+    
+    public void addBrowserPanel() {
+        browserPanel = new BrowserPanel();
+        linkedIn.setContent(browserPanel.getRoot());
+    }
+
+    public void addContactDetailsDisplayPanel() {
+        contactDetailsDisplay = new ContactDetailsDisplay();
+        profile.setContent(contactDetailsDisplay.getRoot());
     }
 }

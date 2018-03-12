@@ -1,18 +1,18 @@
 package guitests.guihandles;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import seedu.address.ui.CommandBox;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
  */
-public class CommandBoxHandle extends NodeHandle<TextField> {
+public class CommandBoxHandle extends NodeHandle<TextArea> {
 
     public static final String COMMAND_INPUT_FIELD_ID = "#commandTextArea";
 
-    public CommandBoxHandle(TextField commandBoxNode) {
+    public CommandBoxHandle(TextArea commandBoxNode) {
         super(commandBoxNode);
     }
 

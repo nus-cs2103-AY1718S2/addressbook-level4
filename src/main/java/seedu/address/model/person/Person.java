@@ -27,7 +27,7 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Income income) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.age = new Age(12);
@@ -36,7 +36,7 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.income = new Income(29000);
+        this.income = income;
     }
 
     public Name getName() {

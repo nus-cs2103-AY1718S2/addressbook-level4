@@ -8,33 +8,33 @@ import java.util.Locale;
 
 
 /**
- * Represents a Person's income in the address book
+ * Represents a Person's value in the address book
  * Guarantees: immutable; is valid as declare in {@link #isValidIncome(float)}}
  */
 public class Income {
-    public static final String MESSAGE_INCOME_CONSTRAITS =
-            "Person income must be positive numerical numbers, floating point value";
+    public static final String MESSAGE_INCOME_CONSTRAINTS =
+            "Person value must be positive numerical numbers, floating point value";
 
-    public final float income;
+    public final Double value;
 
     /**
-     * @param income a valid income
+     * @param value a valid value
      */
-    public Income(float income) {
-        requireNonNull(income);
-        checkArgument(this.isValidIncome(income), this.MESSAGE_INCOME_CONSTRAITS);
-        this.income = income;
+    public Income(Double value) {
+        requireNonNull(value);
+        checkArgument(this.isValidIncome(value), this.MESSAGE_INCOME_CONSTRAINTS);
+        this.value = value;
     }
 
 
-    private static boolean isValidIncome(float income) {
+    public static boolean isValidIncome(Double income) {
         return (income >= 0);
     }
 
     @Override
     public String toString() {
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-        return format.format(this.income);
+        return format.format(this.value);
     }
 
 
@@ -42,7 +42,7 @@ public class Income {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof Income
-                && this.income == ((Income) other).income);
+                && this.value == ((Income) other).value);
     }
 
 }

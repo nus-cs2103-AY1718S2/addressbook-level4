@@ -231,6 +231,26 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Asserts that the browser's url is changed to display the details of the book in the search results panel at
+     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
+     * @see BrowserPanelHandle#isUrlChanged()
+     * @see SearchResultsPanelHandle#isSelectedBookCardChanged()
+     */
+    protected void assertSelectedSearchResultsCardChanged(Index expectedSelectedCardIndex) {
+        String selectedCardTitle = getSearchResultsPanel().getHandleToSelectedCard().getTitle();
+        URL expectedUrl;
+        try {
+            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL
+                    + StringUtil.urlEncode(selectedCardTitle).replaceAll("\\+", "%20"));
+        } catch (MalformedURLException mue) {
+            throw new AssertionError("URL expected to be valid.");
+        }
+        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+
+        assertEquals(expectedSelectedCardIndex.getZeroBased(), getSearchResultsPanel().getSelectedCardIndex());
+    }
+
+    /**
      * Asserts that the browser's url and the selected card in the book list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
      * @see BookListPanelHandle#isSelectedBookCardChanged()

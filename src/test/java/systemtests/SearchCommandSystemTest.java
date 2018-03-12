@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
@@ -17,16 +19,6 @@ import seedu.address.model.Model;
 public class SearchCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void search() throws Exception {
-        /* ----------------------------------- Perform valid search operations -----==------------------------------- */
-
-        // Note: these tests require network connection.
-        assertSearchSuccess(SearchCommand.COMMAND_WORD + " hello");
-        assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
-                + AUTHOR_DESC_ARTEMIS);
-        // Should return 0 results.
-        assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
-                + ISBN_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS);
-
         /* ----------------------------------- Perform invalid search operations ------------------------------------ */
 
         /* Case: no search term or parameters -> rejected */
@@ -37,11 +29,31 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeaRcH hello", MESSAGE_UNKNOWN_COMMAND);
+
+        /* ----------------------------------- Perform valid search operations -------------------------------------- */
+
+        // Note: these tests require network connection.
+
+        /* Case: search for non-existant book -> return 0 results */
+        assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
+                + ISBN_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS);
+
+        /* Case: search for books given search parameters -> success */
+        assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
+                + AUTHOR_DESC_ARTEMIS);
+
+        /* Case: search for books given search term -> success */
+        assertSearchSuccess(SearchCommand.COMMAND_WORD + " hello");
+
+        /* ----------------------------------- Perform commands on search results ----------------------------------- */
+
+        /* Case: trying to clear or delete result items -> rejected */
+        assertCommandFailure(ClearCommand.COMMAND_WORD, ClearCommand.MESSAGE_WRONG_ACTIVE_LIST);
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1", DeleteCommand.MESSAGE_WRONG_ACTIVE_LIST);
     }
 
     /**
-     * Executes {@code command} and performs the verifications in {@code assertCommandExecuted(String)},<br>
-     * In addition, after the web API has returned a result, also asserts that,
+     * Executes {@code command} and verifies that, after the web API has returned a result,<br>
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the search successful message.<br>
@@ -49,15 +61,17 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
      * 5. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see SearchCommandSystemTest#assertCommandExecuted(String)
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
      */
     private void assertSearchSuccess(String command) throws Exception {
         Model expectedModel = getModel();
-        assertCommandExecuted(command);
-        String resultMessage = getResultDisplay().getText();
-        new GuiRobot().waitForEvent(() -> !resultMessage.equals(getResultDisplay().getText()));
+
+        executeCommand(command);
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+
+        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
 
         BookShelf searchResults = new BookShelf();
         searchResults.setBooks(getModel().getSearchResultsList());
@@ -71,32 +85,10 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
 
     /**
      * Executes {@code command} and asserts that the,<br>
-     * 1. Command box displays an empty string.<br>
-     * 2. Command box has the default style class.<br>
-     * 3. Result display box displays the search in progress message.<br>
-     * 4. {@code Model}, {@code Storage}, and {@code BookListPanel} remain unchanged.<br>
-     * 5. Status bar remains unchanged.<br>
-     * Verifications 1, 3 and 4 are performed by
-     * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
-     */
-    private void assertCommandExecuted(String command) {
-        Model expectedModel = getModel();
-        expectedModel.updateSearchResults(new BookShelf());
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", SearchCommand.MESSAGE_SEARCHING, expectedModel);
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
-    }
-
-    /**
-     * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays {@code command}.<br>
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code SearchResultsPanel} remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, and {@code SearchResultsPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -107,6 +99,7 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedBookListCardUnchanged();
         assertSelectedSearchResultsCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();

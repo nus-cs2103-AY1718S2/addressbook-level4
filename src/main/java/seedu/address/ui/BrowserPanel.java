@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookPanelSelectionChangedEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Book;
 
 /**
@@ -42,7 +43,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadBookPage(Book book) {
-        loadPage(SEARCH_PAGE_URL + book.getTitle().title);
+        loadPage(SEARCH_PAGE_URL + StringUtil.urlEncode(book.getTitle().title).replaceAll("\\+", "%20"));
     }
 
     public void loadPage(String url) {

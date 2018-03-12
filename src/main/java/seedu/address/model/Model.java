@@ -26,7 +26,7 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
-    /** Sort existing persons by any field in alphabetical order*/
+    /** Sort existing employees by any field in alphabetical order */
     void sort(String field);
 
     /**

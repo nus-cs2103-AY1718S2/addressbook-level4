@@ -805,62 +805,67 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |Student with group project |Add person with project group tag |I know which person belongs to which project groups
 
-|`* * *` |user |add events that i have |So that I can keep track of the upcoming events
+|`* * *` |Student that is finished with a group project |Delete the group tag of a finished group project| I will not see the group in the application anymore
 
-|`* * *` |user |add tags to event|So that i can organise my events as I see fit
+|`* * *` |Student who forget teammates’ information |Find a person by name|I can find out more details of the person such as location, contact number
 
-|`* * *` |user |add the link which leads to coding challenge|So that I can open the coding challenge from the application
+|`* * *` |Student who made a mistake in recording a group tag |Edit a person’s group tag|I can change the group tag accordingly
 
-|`* * *` |user |delete events that aren't important anymore|So that I can better manage events
+|`* * *` |Student who recorded the wrong personal information |Edit a person|I can correct the details of the person
 
-|`* * *` |user |edit an existing event|So that I can change details of an event after adding them
+|`* * *` |Student who wants to know which teammates are in the project group |Print out the list of teammates under the same group tag |I know which teammates I am meeting
 
-|`* * *` |user |have upcoming events shown in a calendar|So that I can have the summary of upcoming events in a quick glance
+|`* * *` |Student with arranged meet-ups  |Add meet-ups with title, time, venue to the calendar |Have the summary of upcoming meet-ups in a quick glance
 
-|`* * *` |user using CLI |press up buttom to copy the previous command|So that I know what type of event it is and i know what to wear on that day
+|`* * *` |Student using CLI |Press up button to copy the previous command|I do not need to retype duplicate commands
 
-|`* * *` |forgetful user |search events by its title|So that I can get details of a particular event
+|`* * *` |Student that is involved with multiple groups |search events by its title|I can get details of a particular meet-up
 
-|`* * *` |user |search my events by day/week/month|So that I can get an overview of all events in that period
+|`* * *` |Student who wants to arrange meet-ups |Search meet-ups by its title|I can get details such as time and place of a particular meet-up
 
-|`* * *` |user |sort coding challenge based on time and date|So that I see all the coding challenges i have to do in a day
+|`* *` |Student who wants to know the location of teammates |Find the location of teammates’ address via google maps |Decide on a appropriate meeting location for all teammates considering their home address
 
-|`* * *` |new user |view the manuals of a command |I can learn about different commands
+|`* * *` |Student adding teammates’ information |Add the link to teammates’ timetable |I can see teammates’ timetables to arrange meet-ups
 
-|`* * *` |user |add contacts of those members|So that I can contact them regarding events
+|`* * *` |Student working with new teammates |Add their contact information |I can contact them if the need arises
 
+<<<<<<< HEAD
 |`* * *` |user |add info of the members involved in events|So that I know who I would need to talk to
+=======
+|`* * *` |Student first time using the application |See the usage instructions |Learn how to use the application
+>>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
 
-|`* * *` |user |add members to events|So that I know who to look for regarding events
+|`* *` |Student that does not leave applications open |See an overview of the week’s meetup right away when the application opens |Do not have to type in any commands when I first open the application
 
-|`* * *` |user |be reminded of today's events on the front page of the application|So that I am able to know the upcoming events without having to type the command line
+|`* * *` |Student who have unused contacts |Delete a teammate from the application |I can free up storage for my application
 
-|`* *` |user |compare two different calendars |So that I can be notified if two schedule clashes
+|`* * *` |Busy student with busy schedule |Have a reminder of the upcoming project meeting |I can be reminded of impending project with the details of group members printed on it
 
-|`* *` |user |export to .icl |So that i can export/share my calendar on other devices
+|`* *` |Student who would like different colours tag for different projects |Have customizable coloured tags for different groups |Easily differentiate the groups via colour tags
 
-|`* *` |user |have a reminder|So that i can be reminded of impending events
+|`*` |Student who is too lazy to eyeball through the timetables |Have an appropriate meet-up time generated for a group |I do not have to manually come up with time for meetup
 
-|`* *` |user |highlight overdue tasks|So that i can prioritise those first
+|`* * *` |Student who created a group |Show teammates from a group |I can see the information of the teammates from the group
 
-|`* *` |user |import .icl|So that I do not have to input events one by one
+|`* * *` |Student who has multiple group projects |Retrieve a list of all my groups |I can see all my groups at once
 
-|`* *` |user |mark a task as completed|So that completed tasks can be automatically hidden
+|`* * *` |Student who is finished with a project |Delete everyone in a group in one go |I do not have to delete contacts one by one
 
-|`* *` |user |search the location of the event|So that I know how to get there
+|`* * *` |Student who is too lazy to type |Use a shorter version of a command |Use the app faster
 
-|`* *` |user |show free/unscheduled time|So that I know when i can schedule for another event
+|`*` |Student who uses NUSMODS |Use my nusmods link to add my schedule into Fastis |I don’t have to manually input my timetable
 
-|`* *` |user |use a shorter version of a command|So that I can type faster
+|`* *` |User with accessibility problems |Increase the font size of the application |I can read and see more easily
 
-|`*` |user |add facebook events into Address Book using Facebook|So that I can conveniently sync with Facebook regarding eventss I am attending
+|`*` |Students who likes other colours on the interface |Change color scheme |Personalise the app
 
-|`*` |user |can see weather forecast of the event|So that I can decide whether to delete certain outdoor events I am attending
+|`*` |Student who wants to call an absent teammate |Open teammates’ WHATSAPP page within the application e |I can alert teammates of the meeting
 
-|`*` |user |change colour scheme |So that I can feel more personalised
+|`*` |Student who do not how to reach the destination of the meet-up |Have the venue of the meet-up shown on google map |I can know the direction to the meetup
 
+<<<<<<< HEAD
 |`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the, map while driving
 
 |`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related
@@ -868,157 +873,178 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |play music fromn address book |So that I can listen to music i want
 
 |`*` |user |play videos from youtube |So that I can watch videos i want
+=======
+>>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
 
 |=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Fastis` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add Event
+=== Use case: Add Meet up
 
 *MSS*
 
-1.  User requests to add an event by entering information
-2.  AddressBook adds the event
+1.  User requests to add a meet up by entering information
+2.  Fastis adds the meet up to the calendar
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. Event clashes with an existing event.
+* 2a. Meet up clashes with an existing event.
 +
 [none]
-** 2a1. AddressBook notifies user and asks for confirmation.
+** 2a1. Fastis notifies user and asks for confirmation.
 ** 2a2. User enters confirmation.
 +
 Use case resumes from 2.
 
 [discrete]
-=== Use case: Delete Event
+=== Use case: Delete Meet up
 
 *MSS*
 
-1.  User requests to delete an event by delete command line
-2.  AddressBook shows all event, listed by index
-3.  User types in which index to delete
-4.  Addressbook deletes the event
+1.  User requests to lists all meet ups.
+2.  Fastis shows all event, listed with indexes.
+3.  User requests to delete a specific meet up in the list.
+4.  Fastis deletes the meet up.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. Addressbook is empty.
+* 2a. Calendar is empty.
 +
 [none]
-** 2a1. AddressBook notifies user that AddressBook is empty.
+** 2a1. Fastis notifies user that the calendar is empty.
 +
 Use case ends.
 
 * 3a. Index given is invalid.
 +
 [none]
-** 3a1. AddressBook notifies user that the index was invalid.
+** 3a1. Fastis notifies user that the index was invalid.
 +
 Use case resumes from 3.
 
 [discrete]
-=== Use case: Edit Event
+=== Use case: Group multiple persons into a group
 
 *MSS*
 
-1.  User requests to edit an event
-2.  AddressBook shows all event, listed by index
-3.  User types in which index to edit
-4.  User types in the information they want to edit
-5.  AddressBook overwrites the event
+1. User requests to list all persons.
+2. Fastis shows all persons, listed with an index.
+3. User requests to add a group tag to a few specified persons on the list.
+4. Fastis adds the new group to the group list.
++
+Use case ends.
+
+*Extensions*
+[none]
+* 2.a Index given is invalid.
+[none]
+** 2a1. Fastis notifies user that the index given was invalid.
++
+Use case resumes from 1.
+
+[discrete]
+=== Use case: List all persons/groups
+
+*MSS*
+
+1.  User requests to list all persons or all groups in Fastis.
+2.  Fastis lists all persons or all groups.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is empty.
+* 2a. The persons list is empty.
 +
 [none]
-** 2a1. AddressBook notifies user that AddressBook is empty.
+** 2a1. Fastis notifies user that the persons list is empty.
 +
 Use case ends.
 
-* 3a. Index given is invalid.
+* 2b. No group tags were found.
 +
 [none]
-** 3a1. AddressBook notifies user that the index was invalid.
+** 2b1. Fastis notifies user that no groups were found.
 +
-Use case resumes from 3.
+Use case ends.
 
 [discrete]
-=== Use case: Search by tag
+=== Use case: Delete all persons in a group
 
 *MSS*
 
-1.  User requests to search events by entering one or multiple tags
-2.  AddressBook lists the events that have one or more of the given tags
+1.  User requests list all groups.
+2.  Fastis shows a list of all groups.
+3. User requests to delete all persons in a specific group in the list
+4. Fastis deletes all persons in the group, and deletes the group tag
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is empty.
+* 2a. The list is empty.
 +
 [none]
-** 2a1. AddressBook notifies user that AddressBook is empty.
+** 2a1. Fastis notifies user that no groups were found.
 +
 Use case ends.
 
-* 3a. No tags were found.
+* 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook notifies user that no events were found with the given tags.
+** 3a1. Fastis shows an error message.
 +
-Use case ends.
+Use case resumes from 2.
 
 [discrete]
-=== Use case: List events by date/month/year
+=== Use case: Show a person's timetable
 
 *MSS*
 
-1.  User requests to list events by entering desired date/month/year of the year
-2.  AddressBook lists the events that fall within that date/month/year for the current year
-+
-Use case ends.
-
-[discrete]
-=== Use case: Location of Event
-
-*MSS*
-
-1.  User requests for location of event
-2.  AddressBook searches location of event via google map
-3.  AddressBook shows page of google map with located event
+1.  User requests to show the timetable of the specified person.
+2.  Fastis show the timetable for the person.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is empty.
-+
+* 2a. The specified person has no timetable
 [none]
-** 2a1. AddressBook notifies user that AddressBook is empty.
+** 2a1. Fastis notifies the user that the person has no timetable
 +
 Use case ends.
 
-* 3a. Event is not found in AddressBook.
+[discrete]
+=== Use case: Print out all teammates under the same group
+
+*MSS*
+
+1.  User requests to list the teammates for a particular group
+2.  Fastis shows the table with group heading and lists all members in it.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no such group in Fastis.
 +
 [none]
-** 3a1. AddressBook is unable to find event.
-** 3a2. AddressBook notifies user that event is not found.
+** 2a1. Fastis notifies user that no group was found.
 +
 Use case ends.
 
@@ -1028,9 +1054,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to see all commands
-2.  Addressbook shows all commands, sorted by name
+2.  Fastis shows all commands, sorted by name
 3.  User types in which command they want to view
-4.  Addressbook shows the manual of that command
+4.  Fastis shows the manual of that command
 +
 Use case ends.
 
@@ -1040,7 +1066,7 @@ Use case ends.
 * 2a. Command name given is invalid.
 +
 [none]
-** 2a1. AddressBook notifies user that the command was invalid.
+** 2a1. Fastis notifies user that the command was invalid.
 +
 Use case resumes from 3.
 
@@ -1050,7 +1076,7 @@ Use case resumes from 3.
 *MSS*
 
 1.  User enters keystroke to navigate to previously entered command
-2.  AddressBook copies the previous command into the input field
+2.  Fastis copies the previous command into the input field
 +
 Use case ends.
 

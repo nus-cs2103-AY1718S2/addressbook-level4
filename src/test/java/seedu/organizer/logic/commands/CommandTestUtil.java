@@ -31,8 +31,8 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_EXAM = "CS2103T Exam";
     public static final String VALID_NAME_STUDY = "Study MA1101R";
-    public static final String VALID_PRIORITY_EXAM = "1";
-    public static final String VALID_PRIORITY_STUDY = "2";
+    public static final String VALID_PRIORITY_EXAM = "9";
+    public static final String VALID_PRIORITY_STUDY = "0";
     public static final String VALID_DEADLINE_EXAM = "2018-03-27";
     public static final String VALID_DEADLINE_STUDY = "2018-09-11";
     public static final String VALID_DESCRIPTION_EXAM = "CS2103T Exam";

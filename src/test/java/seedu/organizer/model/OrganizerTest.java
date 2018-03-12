@@ -6,6 +6,8 @@ import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
 import static seedu.organizer.testutil.TypicalTasks.EXAM;
 import static seedu.organizer.testutil.TypicalTasks.GROCERY;
+import static seedu.organizer.testutil.TypicalTasks.REVISION;
+import static seedu.organizer.testutil.TypicalTasks.SPRINGCLEAN;
 import static seedu.organizer.testutil.TypicalTasks.STUDY;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
@@ -23,6 +25,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 import seedu.organizer.testutil.OrganizerBuilder;
 import seedu.organizer.testutil.TaskBuilder;
 
@@ -108,6 +112,27 @@ public class OrganizerTest {
         assertEquals(expectedOrganizer, organizerWithStudyAndExam);
     }
 
+    //@@dominickenn
+    @Test
+    public void addTask_alwaysSorted() throws DuplicateTaskException {
+        Organizer addRevision = new OrganizerBuilder().withTask(STUDY)
+                .withTask(EXAM).build();
+        addRevision.addTask(REVISION);
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(STUDY)
+                .withTask(REVISION).withTask(EXAM).build();
+        assertEquals(expectedOrganizer, addRevision);
+    }
+
+    @Test
+    public void editTask_alwaysSorted() throws DuplicateTaskException, TaskNotFoundException {
+        Organizer editExam = new OrganizerBuilder().withTask(STUDY)
+                .withTask(REVISION).withTask(EXAM).build();
+        editExam.updateTask(EXAM, SPRINGCLEAN);
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(STUDY)
+                .withTask(REVISION).withTask(SPRINGCLEAN).build();
+        assertEquals(expectedOrganizer, editExam);
+    }
+    //@@author
 
     /**
      * A stub ReadOnlyOrganizer whose tasks and tags lists can violate interface constraints.

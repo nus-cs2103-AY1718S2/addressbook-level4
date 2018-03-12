@@ -3,6 +3,7 @@ package seedu.organizer.model.task;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -97,4 +98,17 @@ public class Task {
         return builder.toString();
     }
 
+    //@@dominickenn
+    /**
+     * @return a Task comparator based on priority
+     */
+    public static Comparator<Task> priorityComparator() {
+        return new Comparator<Task>() {
+            @Override
+            public int compare(Task task1, Task task2) {
+                return (task1.getPriority().value)
+                        .compareTo(task2.getPriority().value);
+            }
+        };
+    }
 }

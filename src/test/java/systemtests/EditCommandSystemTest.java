@@ -3,9 +3,7 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_STUDY;
-import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
@@ -14,12 +12,12 @@ import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PRIORITY_DE
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.NAME_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.NAME_DESC_STUDY;
-import static seedu.organizer.logic.commands.CommandTestUtil.PRIORITY_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.PRIORITY_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DESCRIPTION_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_PRIORITY_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -27,7 +25,7 @@ import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.organizer.testutil.TypicalTasks.EXAM;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
 import static seedu.organizer.testutil.TypicalTasks.STUDY;
 
@@ -107,9 +105,9 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         showTasksWithName(KEYWORD_MATCHING_SPRING);
         index = INDEX_FIRST_TASK;
         assertTrue(index.getZeroBased() < getModel().getFilteredTaskList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_STUDY;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_EXAM;
         taskToEdit = getModel().getFilteredTaskList().get(index.getZeroBased());
-        editedTask = new TaskBuilder(taskToEdit).withName(VALID_NAME_STUDY).build();
+        editedTask = new TaskBuilder(taskToEdit).withName(VALID_NAME_EXAM).build();
         assertCommandSuccess(command, index, editedTask);
 
         /* Case: filtered task list, edit index within bounds of organizer book but out of bounds of task list
@@ -117,7 +115,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
          */
         showTasksWithName(KEYWORD_MATCHING_SPRING);
         int invalidIndex = getModel().getOrganizer().getTaskList().size();
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_STUDY,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_EXAM,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* --------------------- Performing edit operation while a task card is selected -------------------------- */
@@ -129,11 +127,11 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         index = INDEX_FIRST_TASK;
         selectTask(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM
-                + DESCRIPTION_DESC_EXAM + TAG_DESC_FRIEND;
+                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
+                + DESCRIPTION_DESC_STUDY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new task's name
-        assertCommandSuccess(command, index, EXAM, index);
+        assertCommandSuccess(command, index, STUDY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
@@ -181,7 +179,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         /* Case: edit a task with new values same as another task's values -> rejected */
         executeCommand(TaskUtil.getAddCommand(STUDY));
         assertTrue(getModel().getOrganizer().getTaskList().contains(STUDY));
-        index = INDEX_FIRST_TASK;
+        index = INDEX_SECOND_TASK;
         assertFalse(getModel().getFilteredTaskList()
                 .get(index.getZeroBased()).equals(STUDY));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()

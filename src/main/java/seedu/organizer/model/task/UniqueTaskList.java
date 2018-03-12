@@ -43,6 +43,7 @@ public class UniqueTaskList implements Iterable<Task> {
             throw new DuplicateTaskException();
         }
         internalList.add(toAdd);
+        sortTasks();
     }
 
     /**
@@ -65,6 +66,7 @@ public class UniqueTaskList implements Iterable<Task> {
         }
 
         internalList.set(index, editedTask);
+        sortTasks();
     }
 
     /**
@@ -116,5 +118,13 @@ public class UniqueTaskList implements Iterable<Task> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
+    }
+
+    //@@dominickenn
+    /**
+     * Sorts all tasks in uniqueTaskList according to priority
+     */
+    private void sortTasks() {
+        internalList.sort(Task.priorityComparator());
     }
 }

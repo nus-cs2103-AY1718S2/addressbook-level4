@@ -12,11 +12,14 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
+/**
+ * Shows the contact details of the person in a separate and formatted page
+ */
 public class ContactDetailsDisplay extends UiPart<Region> {
 
     private static final String FXML = "ContactDetailsDisplay.fxml";
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
-    
+
     @FXML
     private Label name;
 
@@ -49,5 +52,4 @@ public class ContactDetailsDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showPersonDetails(event.getNewSelection().person);
     }
-
 }

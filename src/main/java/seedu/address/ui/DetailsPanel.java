@@ -21,15 +21,15 @@ public class DetailsPanel extends UiPart<Region> {
 
     private ContactDetailsDisplay contactDetailsDisplay;
     private BrowserPanel browserPanel;
-    
+
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
-    
+
     @FXML
     private Tab profile;
-    
+
     @FXML
     private Tab linkedIn;
-    
+
     @FXML
     private TabPane tabPane;
 
@@ -37,7 +37,7 @@ public class DetailsPanel extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
     }
-    
+
     @Subscribe
     private void handleSwitchTabRequestEvent(SwitchTabRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -47,12 +47,18 @@ public class DetailsPanel extends UiPart<Region> {
     public void releaseResources() {
         browserPanel.freeResources();
     }
-    
+
+    /**
+     * Adds the BrowserView to the DetailsPanel
+     */
     public void addBrowserPanel() {
         browserPanel = new BrowserPanel();
         linkedIn.setContent(browserPanel.getRoot());
     }
 
+    /**
+     * Adds the ContactDetailsPanel to the DetailsPanel
+     */
     public void addContactDetailsDisplayPanel() {
         contactDetailsDisplay = new ContactDetailsDisplay();
         profile.setContent(contactDetailsDisplay.getRoot());

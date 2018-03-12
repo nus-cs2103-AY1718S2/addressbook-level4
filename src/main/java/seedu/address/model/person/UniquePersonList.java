@@ -119,29 +119,30 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void sort(String field) {
         switch (field) {
-            case "name":
-                sortByName();
-                break;
-            case "phone":
-                sortByPhone();
-                break;
-            case "email":
-                sortByEmail();
-                break;
-            case "address":
-                sortByAddress();
-                break;
-            case "tag":
-                sortByTag();
-                break;
-            case "rate":
-                sortByRate();
-            default:
-                throw new AssertionError("Sort field should be name, phone, email, tag, address or rate.");
+        case "name":
+            sortByName();
+            break;
+        case "phone":
+            sortByPhone();
+            break;
+        case "email":
+            sortByEmail();
+            break;
+        case "address":
+            sortByAddress();
+            break;
+        case "tag":
+            sortByTag();
+            break;
+        case "rate":
+            sortByRate();
+            break;
+        default:
+            throw new AssertionError("Sort field should be name, phone, email, tag, address or rate.");
         }
     }
     /**
-     * Specific sort method for every field
+     * Specific sort method for every field, sort by name
      */
     public void sortByName() {
         Collections.sort(internalList, new Comparator<Person>() {
@@ -152,6 +153,9 @@ public class UniquePersonList implements Iterable<Person> {
         });
     }
 
+    /**
+     * when the input field is phone, sort by phone
+     */
     public void sortByPhone() {
         Collections.sort(internalList, new Comparator<Person>() {
             public int compare(Person p1, Person p2) {
@@ -161,6 +165,9 @@ public class UniquePersonList implements Iterable<Person> {
         });
     }
 
+    /**
+     * when the input field is email, sort by email
+     */
     public void sortByEmail() {
         Collections.sort(internalList, new Comparator<Person>() {
             public int compare(Person p1, Person p2) {
@@ -170,6 +177,9 @@ public class UniquePersonList implements Iterable<Person> {
         });
     }
 
+    /**
+     * when the input field is address, sort by address
+     */
     public void sortByAddress() {
         Collections.sort(internalList, new Comparator<Person>() {
             public int compare(Person p1, Person p2) {
@@ -179,6 +189,9 @@ public class UniquePersonList implements Iterable<Person> {
         });
     }
 
+    /**
+     * when the input field is tag, sort by tag
+     */
     public void sortByTag() {
         Collections.sort(internalList, new Comparator<Person>() {
             public int compare(Person p1, Person p2) {
@@ -188,6 +201,9 @@ public class UniquePersonList implements Iterable<Person> {
         });
     }
 
+    /**
+     * when the input field is rate, sort by rate in descending order
+     */
     public void sortByRate() {
         Collections.sort(internalList, new Comparator<Person>() {
             public int compare(Person p1, Person p2) {

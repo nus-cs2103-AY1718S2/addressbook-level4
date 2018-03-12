@@ -115,6 +115,15 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
     }
 
+    public static String parseRemark(String remark){
+        String trimmedRemark = remark.trim();
+        return trimmedRemark;
+    }
+
+    public static Optional<String> parseRemark(Optional<String> remark){
+        return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
+    }
+
     /**
      * Parses a {@code String email} into an {@code Email}.
      * Leading and trailing whitespaces will be trimmed.

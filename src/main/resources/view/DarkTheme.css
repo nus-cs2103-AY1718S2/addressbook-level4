@@ -349,3 +349,53 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#tags .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
+#tags .violet {
+    -fx-text-fill: black;
+    -fx-background-color: violet;
+}
+
+#tags indigo {
+    -fx-text-fill: white;
+    -fx-background-color: indigo;
+}
+
+#tags indigo {
+    -fx-text-fill: white;
+    -fx-background-color: purple;
+}
+
+#tags indigo {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#tags indigo {
+    -fx-text-fill: white;
+    -fx-background-color: grey;
+}

@@ -201,7 +201,9 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setRating(Rating rating) { this.rating = rating;}
+        public void setRating(Rating rating) {
+            this.rating = rating;
+        }
 
         public Optional<Rating> getRating() {
             return Optional.ofNullable(rating);

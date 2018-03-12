@@ -135,7 +135,7 @@ public class ParserUtil {
      * Parses a {@code Optional<String> value} into an {@code Optional<Rating>} if {@code address} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Rating> parseRating(Optional<String> value) throws IllegalValueException{
+    public static Optional<Rating> parseRating(Optional<String> value) throws IllegalValueException {
         requireNonNull(value);
         return value.isPresent() ? Optional.of(parseRating(value.get())) : Optional.empty();
     }

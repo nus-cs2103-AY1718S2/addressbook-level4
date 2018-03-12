@@ -867,151 +867,170 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Fastis` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add Event
+=== Use case: Add Meet up
 
 *MSS*
 
-1.  User requests to add an event by entering information
-2.  AddressBook adds the event
+1.  User requests to add a meet up by entering information
+2.  Fastis adds the meet up to the calendar
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. Event clashes with an existing event.
+* 2a. Meet up clashes with an existing event.
 +
 [none]
-** 2a1. AddressBook notifies user and asks for confirmation.
+** 2a1. Fastis notifies user and asks for confirmation.
 ** 2a2. User enters confirmation.
 +
 Use case resumes from 2.
 
 [discrete]
-=== Use case: Delete Event
+=== Use case: Delete Meet up
 
 *MSS*
 
-1.  User requests to delete an event by delete command line
-2.  AddressBook shows all event, listed by index
-3.  User types in which index to delete
-4.  Addressbook deletes the event
+1.  User requests to lists all meet ups.
+2.  Fastis shows all event, listed with indexes.
+3.  User requests to delete a specific meet up in the list.
+4.  Fastis deletes the meet up.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. Addressbook is empty.
+* 2a. Calendar is empty.
 +
 [none]
-** 2a1. AddressBook notifies user that AddressBook is empty.
+** 2a1. Fastis notifies user that the calendar is empty.
 +
 Use case ends.
 
 * 3a. Index given is invalid.
 +
 [none]
-** 3a1. AddressBook notifies user that the index was invalid.
+** 3a1. Fastis notifies user that the index was invalid.
 +
 Use case resumes from 3.
 
 [discrete]
-=== Use case: Edit Event
+=== Use case: Group multiple persons into a group
 
 *MSS*
 
-1.  User requests to edit an event
-2.  AddressBook shows all event, listed by index
-3.  User types in which index to edit
-4.  User types in the information they want to edit
-5.  AddressBook overwrites the event
+1. User requests to list all persons.
+2. Fastis shows all persons, listed with an index.
+3. User requests to add a group tag to a few specified persons on the list.
+4. Fastis adds the new group to the group list.
++
+Use case ends.
+
+*Extensions*
+[none]
+* 2.a Index given is invalid.
+[none]
+** 2a1. Fastis notifies user that the index given was invalid.
++
+Use case resumes from 1.
+
+[discrete]
+=== Use case: List all persons/groups
+
+*MSS*
+
+1.  User requests to list all persons or all groups in Fastis.
+2.  Fastis lists all persons or all groups.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is empty.
+* 2a. The persons list is empty.
 +
 [none]
-** 2a1. AddressBook notifies user that AddressBook is empty.
+** 2a1. Fastis notifies user that the persons list is empty.
 +
 Use case ends.
 
-* 3a. Index given is invalid.
+* 2b. No group tags were found.
 +
 [none]
-** 3a1. AddressBook notifies user that the index was invalid.
+** 2b1. Fastis notifies user that no groups were found.
 +
-Use case resumes from 3.
+Use case ends.
 
 [discrete]
-=== Use case: Search by tag
+=== Use case: Delete all persons in a group
 
 *MSS*
 
-1.  User requests to search events by entering one or multiple tags
-2.  AddressBook lists the events that have one or more of the given tags
+1.  User requests list all groups.
+2.  Fastis shows a list of all groups.
+3. User requests to delete all persons in a specific group in the list
+4. Fastis deletes all persons in the group, and deletes the group tag
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is empty.
+* 2a. The list is empty.
 +
 [none]
-** 2a1. AddressBook notifies user that AddressBook is empty.
+** 2a1. Fastis notifies user that no groups were found.
 +
 Use case ends.
 
-* 3a. No tags were found.
+* 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook notifies user that no events were found with the given tags.
+** 3a1. Fastis shows an error message.
 +
-Use case ends.
+Use case resumes from 2.
 
 [discrete]
-=== Use case: List events by date/month/year
+=== Use case: Show a person's timetable
 
 *MSS*
 
-1.  User requests to list events by entering desired date/month/year of the year
-2.  AddressBook lists the events that fall within that date/month/year for the current year
-+
-Use case ends.
-
-[discrete]
-=== Use case: Location of Event
-
-*MSS*
-
-1.  User requests for location of event
-2.  AddressBook searches location of event via google map
-3.  AddressBook shows page of google map with located event
+1.  User requests to show the timetable of the specified person.
+2.  Fastis show the timetable for the person.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is empty.
-+
+* 2a. The specified person has no timetable
 [none]
-** 2a1. AddressBook notifies user that AddressBook is empty.
+** 2a1. Fastis notifies the user that the person has no timetable
 +
 Use case ends.
 
-* 3a. Event is not found in AddressBook.
+[discrete]
+=== Use case: Print out all teammates under the same group
+
+*MSS*
+
+1.  User requests to list the teammates for a particular group
+2.  Fastis shows the table with group heading and lists all members in it.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no such group in Fastis.
 +
 [none]
-** 3a1. AddressBook is unable to find event.
-** 3a2. AddressBook notifies user that event is not found.
+** 2a1. Fastis notifies user that no group was found.
 +
 Use case ends.
 
@@ -1021,9 +1040,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to see all commands
-2.  Addressbook shows all commands, sorted by name
+2.  Fastis shows all commands, sorted by name
 3.  User types in which command they want to view
-4.  Addressbook shows the manual of that command
+4.  Fastis shows the manual of that command
 +
 Use case ends.
 
@@ -1033,7 +1052,7 @@ Use case ends.
 * 2a. Command name given is invalid.
 +
 [none]
-** 2a1. AddressBook notifies user that the command was invalid.
+** 2a1. Fastis notifies user that the command was invalid.
 +
 Use case resumes from 3.
 
@@ -1043,7 +1062,7 @@ Use case resumes from 3.
 *MSS*
 
 1.  User enters keystroke to navigate to previously entered command
-2.  AddressBook copies the previous command into the input field
+2.  Fastis copies the previous command into the input field
 +
 Use case ends.
 

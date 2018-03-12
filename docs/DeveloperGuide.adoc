@@ -876,7 +876,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [discrete]
 
-=== Use case: Add assgnment
+=== Use case: Add assignment
 
 *MSS*
 

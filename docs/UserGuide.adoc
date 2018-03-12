@@ -218,10 +218,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` or `c`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` or `c`
 
 === Exiting the program : `exit`
 

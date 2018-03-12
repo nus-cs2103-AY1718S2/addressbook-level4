@@ -30,6 +30,7 @@ public class DateTime {
     public DateTime(String dateAndTime) {
         requireNonNull(dateAndTime);
         checkArgument(isValidDateAndTime(dateAndTime), MESSAGE_DATETIME_CONSTRAINTS);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         try {
             date = sdf.parse(dateAndTime);
         } catch (ParseException e) {

@@ -25,12 +25,16 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static final String LF = "\n";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
-    private final KeyCombination keyComb1 = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
+    private final KeyCombination commandSubmissionKeys = new KeyCodeCombination(KeyCode.ENTER);
+    private final KeyCombination previousCommandKeys = new KeyCodeCombination(KeyCode.UP);
+    private final KeyCombination nextCommandKeys = new KeyCodeCombination(KeyCode.DOWN);
+    private final KeyCombination newLinekeys = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
 
     @FXML
     private TextArea commandTextArea;
@@ -48,23 +52,18 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
-        if (keyComb1.match(keyEvent)) {
+        if (commandSubmissionKeys.match(keyEvent)) {
             keyEvent.consume();
-            handleCommandInputChanged();
-        }
-        switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
+            submitCommand();
+        } else if (previousCommandKeys.match(keyEvent)) {
             keyEvent.consume();
             navigateToPreviousInput();
-            break;
-        case DOWN:
+        } else if (nextCommandKeys.match(keyEvent)) {
             keyEvent.consume();
             navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+        } else if (newLinekeys.match(keyEvent)) {
+            keyEvent.consume();
+            appendLineFeed();
         }
     }
 
@@ -104,10 +103,17 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Handles the Enter button pressed event.
+     * Append a line feed character to the command area
+     */
+    private void appendLineFeed() {
+        commandTextArea.appendText(LF);
+    }
+
+    /**
+     * Handles the command submission.
      */
     @FXML
-    private void handleCommandInputChanged() {
+    private void submitCommand() {
         try {
             CommandResult commandResult = logic.execute(commandTextArea.getText());
             initHistory();

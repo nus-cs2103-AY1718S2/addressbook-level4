@@ -218,10 +218,9 @@ public class AddressBookParserTest {
 
     @Test
     public void remarkCommand_returnsRemarkCommand() throws Exception {
-        assertTrue(parser.parseCommand(RemarkCommand.COMMAND_ALIAS) instanceof RemarkCommand);
-        /*assertTrue(parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + "r/ Is very clever") instanceof UndoCommand);
-        */
+        assertTrue(parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + "r/ Is very clever") instanceof RemarkCommand);
+
     }
 
     @Test

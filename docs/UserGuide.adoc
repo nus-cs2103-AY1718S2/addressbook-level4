@@ -238,7 +238,7 @@ Lock the address book with password: 123
 Lock the address book without password
 
 
-=== Lock the AddressBook: `unlock`
+=== Unlock the AddressBook: `unlock`
 
 Unlock the address book +
 Format: `unlock [PASSWORD]`

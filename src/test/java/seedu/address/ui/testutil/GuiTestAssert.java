@@ -1,25 +1,19 @@
 package seedu.address.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Arrays;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.person.Person;
-import seedu.address.ui.PersonCard;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
  */
 public class GuiTestAssert {
-
-    private static final String LABEL_DEFAULT_STYLE = "label";
-
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
@@ -30,9 +24,6 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
-
-        expectedCard.getTags().forEach(tag ->
-                assertEquals(expectedCard.getTagsStyleClasses(tag), actualCard.getTagsStyleClasses(tag)));
     }
 
     /**
@@ -43,59 +34,8 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
-        assertTagsEqual(expectedPerson, actualCard);
-    }
-
-    /*
-     * Code adopted from PR CS2103T Appendix A UI component
-     */
-    /* Returns the color style for {@code tagName}'s label. The tag's color is determined by
-     * looking up the color in {@code PersonCard#TAG_COLOUR_STYLES}, using an index generated
-     * by the hash code of the tag's content
-     * @see PersonCard#getTagColourStyleFor(String)
-     */
-    private static String getTagColourStyleFor(String tagName) {
-        switch(tagName) {
-            case "young":
-                return "red";
-
-            case "teenager":
-                return "orange";
-
-            case "female adult":
-                return "yellow";
-
-            case "male adult":
-                return "green";
-
-            case "old lady":
-                return "blue";
-
-            case "old man":
-                return "violet";
-
-            case "baby":
-                return "purple";
-
-            default:
-                fail(tagName + "does not have a colour assigned");
-                return "";
-        }
-    }
-
-    /*
-     * Asserts that the tags in {@code actualCard} matches all the tags in {@code expectedPerson}
-     * with the correct colour.
-     */
-
-    private static void assertTagsEqual(Person expectedPerson, PersonCardHandle actualCard) {
-        List<String> expectedTags = expectedPerson.getTags().stream().map(tag -> tag.tagName)
-                .collect(Collectors.toList());
-
-        assertEquals(expectedTags, actualCard.getTags());
-        expectedTags.forEach(tag ->
-                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColourStyleFor(tag)),
-                        actualCard.getTagsStyleClasses(tag)));
+        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
     }
 
     /**

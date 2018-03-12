@@ -68,16 +68,4 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
-
-    /*
-     * Code adopted from PR CS2103T Appendix A UI component
-     */
-    public List<String> getTagsStyleClasses(String tag) {
-        return tagLabels
-                .stream()
-                .filter(label -> label.getText().equals(tag))
-                .map(Label::getStyleClass)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
-    }
 }

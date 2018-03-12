@@ -38,6 +38,14 @@ public class CommandBoxHandle extends NodeHandle<TextArea> {
     }
 
     /**
+     * Append the given string to text already existing in the Command box
+     */
+    public void appendText(String text) {
+        guiRobot.interact(() -> getRootNode().appendText(text));
+        guiRobot.pauseForHuman();
+    }
+
+    /**
      * Returns the list of style classes present in the command box.
      */
     public ObservableList<String> getStyleClass() {

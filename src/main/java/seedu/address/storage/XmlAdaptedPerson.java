@@ -54,7 +54,7 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(Activity source) {
         name = source.getName().fullName;
-        dateTime = source.getDateTime().value;
+        dateTime = source.getDateTime().toString();
         remark = source.getRemark().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {

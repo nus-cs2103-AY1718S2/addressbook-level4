@@ -42,7 +42,7 @@ public class ActivityCard extends UiPart<Region> {
         this.activity = activity;
         id.setText(displayedIndex + ". ");
         name.setText(activity.getName().fullName);
-        dateTime.setText(activity.getDateTime().value);
+        dateTime.setText(activity.getDateTime().toString());
         remark.setText(activity.getRemark().value);
         activity.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }

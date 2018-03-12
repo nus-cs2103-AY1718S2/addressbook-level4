@@ -112,7 +112,7 @@ public class FindCommandSystemTest extends RemarkBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find phone number of activity in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getDateTime().value;
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getDateTime().toString();
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

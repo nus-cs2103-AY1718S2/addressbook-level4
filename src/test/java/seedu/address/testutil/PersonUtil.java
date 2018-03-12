@@ -27,7 +27,7 @@ public class PersonUtil {
     public static String getPersonDetails(Activity activity) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + activity.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + activity.getDateTime().value + " ");
+        sb.append(PREFIX_PHONE + activity.getDateTime().toString() + " ");
         sb.append(PREFIX_ADDRESS + activity.getRemark().value + " ");
         activity.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")

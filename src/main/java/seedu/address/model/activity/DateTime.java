@@ -1,5 +1,10 @@
 package seedu.address.model.activity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -9,12 +14,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class DateTime {
 
-
+    public static final String DATE_FORMAT = "mm/dd/yyyy HH:MM:SS\n";
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
-            "Date and  Time numbers should be a date and should be in the format of ";
-    public static final String DATETIME_VALIDATION_REGEX = ".*";
-    public final String value;
-
+            "Date and  Time numbers should be a date and should be in the format of " +
+            DATE_FORMAT;
+    public static final String DATETIME_VALIDATION_REGEX =
+            "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20) ([0-1]\\d|2[0-3]):[0-5]\\d:[0-5]\\d)";
+    private final String value;
+    private Date date;
     /**
      * Constructs a {@code DateTime}.
      *
@@ -23,6 +30,11 @@ public class DateTime {
     public DateTime(String dateAndTime) {
         requireNonNull(dateAndTime);
         checkArgument(isValidDateAndTime(dateAndTime), MESSAGE_DATETIME_CONSTRAINTS);
+        try {
+            date = sdf.parse(dateAndTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.value = dateAndTime;
     }
 
@@ -35,7 +47,7 @@ public class DateTime {
 
     @Override
     public String toString() {
-        return value;
+        return DateFormat.getDateInstance().format(date);
     }
 
     @Override

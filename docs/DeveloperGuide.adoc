@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= EduBuddy - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,9 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B1`      Since: `Mar 2018`      Licence: `MIT`
+
+
 
 == Setting up
 
@@ -782,6 +784,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+* is a secondary school teacher
+* needs to know more about students they teach
+* has a need to track results
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
@@ -800,18 +805,24 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |teacher with many students |find a student by name |retrieve details of a student without having to go through the entire list
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |teacher |access student's academic and non-academic achievements |stream the students properly (e.g. Normal Academic, Normal Technical, Express)
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |teacher |edit remarks of each individual student |update the students' individual needs that occur during class
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* *` |teacher |filter and group students |access information of specific students
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |teacher |update student's marks |track the student's improvement in a certain subject
+
+|`* *` |teacher |know the students' emergency contact information |know who to contact when something happens to the student
+
+|`* *` |teacher |update student's attendance records |know if a student has been absent too frequently
+
+|`*` |teacher |look up on student's identity |recognize who the student is
+
+|`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -821,7 +832,7 @@ _{More to be added}_
 [discrete]
 === Use case: Delete person
 
-*MSS*
+*Main Success Scenario*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
@@ -844,15 +855,107 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Retrieve information of selected person
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to select a specific person in the list
+4.  AddressBook loads the information of the selected person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add remarks for person
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remarks for a specific person in the list
+4.  AddressBook shows the updated information of the selected person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add an appointment
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to add an appointment for a specific person in the list
+4.  User inputs the selected date and time for the appointment
+5.  AddressBook shows the updated details of the appointment
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. The given date or time is invalid.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+* 4b. The given date or time is already booked by another appointment.
++
+[none]
+** 4b1. AddressBook prompts user to input another date or time.
++
+Use case resumes at step 3.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 450,000 students
+ without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
+.
 _{More to be added}_
 
 [appendix]

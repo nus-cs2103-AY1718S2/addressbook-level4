@@ -904,7 +904,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-== Use case: Undo action
+=== Use case: Undo action
 
 *MSS*
 
@@ -921,7 +921,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-== Use case: Find person
+=== Use case: Find person
 
 *MSS*
 
@@ -947,7 +947,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-== Use case: Delete old contacts
+=== Use case: Delete old contacts
 
 *MSS*
 

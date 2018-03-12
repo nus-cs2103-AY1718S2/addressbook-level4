@@ -21,9 +21,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ReadOnlyCalendar;
 import seedu.address.model.Calendar;
 import seedu.address.model.Model;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicateActivityException;
-import seedu.address.model.person.exceptions.ActivityNotFoundException;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
+import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {

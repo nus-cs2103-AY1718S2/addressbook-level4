@@ -15,7 +15,7 @@ public interface CalendarStorage {
     /**
      * Returns the file path of the data file.
      */
-    String getAddressBookFilePath();
+    String getCalendarFilePath();
 
     /**
      * Returns Calendar data as a {@link ReadOnlyCalendar}.
@@ -26,7 +26,7 @@ public interface CalendarStorage {
     Optional<ReadOnlyCalendar> readCalendar() throws DataConversionException, IOException;
 
     /**
-     * @see #getAddressBookFilePath()
+     * @see #getCalendarFilePath()
      */
     Optional<ReadOnlyCalendar> readCalendar(String filePath) throws DataConversionException, IOException;
 

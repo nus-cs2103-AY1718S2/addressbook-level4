@@ -11,10 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicateActivityException;
-import seedu.address.model.person.exceptions.ActivityNotFoundException;
+import seedu.address.commons.events.model.CalendarChangedEvent;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
+import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -56,7 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+        raise(new CalendarChangedEvent(addressBook));
     }
 
     @Override

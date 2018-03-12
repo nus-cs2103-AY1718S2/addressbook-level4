@@ -15,7 +15,7 @@ import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.person.Activity;
+import seedu.address.model.activity.Activity;
 
 public class ActivityListPanelTest extends GuiUnitTest {
     private static final ObservableList<Activity> TYPICAL_ACTIVITIES =

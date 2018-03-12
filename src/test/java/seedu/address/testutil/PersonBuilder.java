@@ -3,8 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.person.*;
-import seedu.address.model.person.Activity;
+import seedu.address.model.activity.*;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -15,21 +14,18 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
+    private DateTime dateTime;
+    private Remark remark;
     private Set<Tag> tags;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
+        dateTime = new DateTime(DEFAULT_PHONE);
+        remark = new Remark(DEFAULT_ADDRESS);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -38,9 +34,8 @@ public class PersonBuilder {
      */
     public PersonBuilder(Activity activityToCopy) {
         name = activityToCopy.getName();
-        phone = activityToCopy.getPhone();
-        email = activityToCopy.getEmail();
-        address = activityToCopy.getAddress();
+        dateTime = activityToCopy.getDateTime();
+        remark = activityToCopy.getRemark();
         tags = new HashSet<>(activityToCopy.getTags());
     }
 
@@ -61,31 +56,24 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Activity} that we are building.
+     * Sets the {@code Remark} of the {@code Activity} that we are building.
      */
     public PersonBuilder withAddress(String address) {
-        this.address = new Address(address);
+        this.remark = new Remark(address);
         return this;
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Activity} that we are building.
+     * Sets the {@code DateTime} of the {@code Activity} that we are building.
      */
     public PersonBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
+        this.dateTime = new DateTime(phone);
         return this;
     }
 
-    /**
-     * Sets the {@code Email} of the {@code Activity} that we are building.
-     */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
-        return this;
-    }
 
     public Activity build() {
-        return new Activity(name, phone, email, address, tags);
+        return new Activity(name, dateTime, remark, tags);
     }
 
 }

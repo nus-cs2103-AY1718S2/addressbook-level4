@@ -62,8 +62,8 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
-        userPrefs.setAddressBookFilePath(saveFileLocation);
-        userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
+        userPrefs.setCalendarFilePath(saveFileLocation);
+        userPrefs.setCalendarName(ADDRESS_BOOK_NAME);
         return userPrefs;
     }
 
@@ -84,7 +84,7 @@ public class TestApp extends MainApp {
      * Returns the file path of the storage file.
      */
     public String getStorageSaveLocation() {
-        return storage.getAddressBookFilePath();
+        return storage.getCalendarFilePath();
     }
 
     /**

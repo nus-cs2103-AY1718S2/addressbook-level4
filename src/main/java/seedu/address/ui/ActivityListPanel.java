@@ -15,7 +15,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ActivityPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.person.Activity;
+import seedu.address.model.activity.Activity;
 
 /**
  * Panel containing the list of persons.
@@ -35,7 +35,7 @@ public class ActivityListPanel extends UiPart<Region> {
 
     private void setConnections(ObservableList<Activity> activityList) {
         ObservableList<ActivityCard> mappedList = EasyBind.map(
-                activityList, (person) -> new ActivityCard(person, activityList.indexOf(person) + 1));
+                activityList, (activity) -> new ActivityCard(activity, activityList.indexOf(activity) + 1));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();

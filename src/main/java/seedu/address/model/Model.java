@@ -3,9 +3,9 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicateActivityException;
-import seedu.address.model.person.exceptions.ActivityNotFoundException;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
+import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 
 /**
  * The API of the Model component.

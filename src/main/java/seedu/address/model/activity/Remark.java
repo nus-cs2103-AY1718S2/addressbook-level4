@@ -1,36 +1,36 @@
-package seedu.address.model.person;
+package seedu.address.model.activity;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a task's remark in the task manager.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * Represents a Activity's remark in the calendar.
+ * Guarantees: immutable; is valid as declared in {@link #isValidRemark(String)}
  */
 public class Remark {
 
     public static final String MESSAGE_REMARK_CONSTRAINTS =
-            "Remark of Tasks can take any values.";
+            "Activity remark can take any values, and it could be blank";
 
-    public static final String REMARK_VALIDATION_REGEX = "*";
+    public static final String REMARK_VALIDATION_REGEX = ".*";
 
     public final String value;
 
     /**
-     * Constructs an {@code Address}.
+     * Constructs an {@code Remark}.
      *
-     * @param remark A valid address.
+     * @param remark A valid remark.
      */
     public Remark(String remark) {
         requireNonNull(remark);
-        checkArgument(isValidAddress(remark), MESSAGE_REMARK_CONSTRAINTS);
+        checkArgument(isValidRemark(remark), MESSAGE_REMARK_CONSTRAINTS);
         this.value = remark;
     }
 
     /**
      * Returns true if a given string is a valid activity email.
      */
-    public static boolean isValidAddress(String test) {
+    public static boolean isValidRemark(String test) {
         return test.matches(REMARK_VALIDATION_REGEX);
     }
 
@@ -52,4 +52,3 @@ public class Remark {
     }
 
 }
-

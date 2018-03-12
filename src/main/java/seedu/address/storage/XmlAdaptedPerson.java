@@ -9,11 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.Phone;
+import seedu.address.model.activity.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,11 +22,9 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String phone;
+    private String dateTime;
     @XmlElement(required = true)
-    private String email;
-    @XmlElement(required = true)
-    private String address;
+    private String remark;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -44,11 +38,10 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given activity details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String dateTime, String remark, List<XmlAdaptedTag> tagged) {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+        this.dateTime = dateTime;
+        this.remark = remark;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -61,9 +54,8 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(Activity source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
+        dateTime = source.getDateTime().value;
+        remark = source.getRemark().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -89,32 +81,24 @@ public class XmlAdaptedPerson {
         }
         final Name name = new Name(this.name);
 
-        if (this.phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        if (this.dateTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateTime.class.getSimpleName()));
         }
-        if (!Phone.isValidPhone(this.phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+        if (!DateTime.isValidDateAndTime(this.dateTime)) {
+            throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
-        final Phone phone = new Phone(this.phone);
+        final DateTime dateTime = new DateTime(this.dateTime);
 
-        if (this.email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        if (this.remark == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
         }
-        if (!Email.isValidEmail(this.email)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        if (!Remark.isValidRemark(this.remark)) {
+            throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
         }
-        final Email email = new Email(this.email);
-
-        if (this.address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(this.address)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        final Address address = new Address(this.address);
+        final Remark remark = new Remark(this.remark);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Activity(name, phone, email, address, tags);
+        return new Activity(name, dateTime, remark, tags);
     }
 
     @Override
@@ -129,9 +113,8 @@ public class XmlAdaptedPerson {
 
         XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
         return Objects.equals(name, otherPerson.name)
-                && Objects.equals(phone, otherPerson.phone)
-                && Objects.equals(email, otherPerson.email)
-                && Objects.equals(address, otherPerson.address)
+                && Objects.equals(dateTime, otherPerson.dateTime)
+                && Objects.equals(remark, otherPerson.remark)
                 && tagged.equals(otherPerson.tagged);
     }
 }

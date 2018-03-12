@@ -19,9 +19,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Calendar;
 import seedu.address.model.Model;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.exceptions.ActivityNotFoundException;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.NameContainsKeywordsPredicate;
+import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -65,10 +65,10 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withPhone(VALID_PHONE_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withPhone(VALID_PHONE_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 

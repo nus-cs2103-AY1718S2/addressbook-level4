@@ -46,7 +46,7 @@ import seedu.address.ui.CommandBox;
  * A system test class for Calendar, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
-public abstract class AddressBookSystemTest {
+public abstract class RemarkBookSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 

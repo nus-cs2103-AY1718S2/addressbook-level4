@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.person.Activity;
+import seedu.address.model.activity.Activity;
 import seedu.address.ui.ActivityCard;
 
 /**

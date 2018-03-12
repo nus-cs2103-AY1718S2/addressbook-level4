@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.person.Activity;
+import seedu.address.model.activity.Activity;
 
 /**
  * An UI component that displays information of a {@code Activity}.
@@ -31,11 +31,9 @@ public class ActivityCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private Label dateTime;
     @FXML
-    private Label address;
-    @FXML
-    private Label email;
+    private Label remark;
     @FXML
     private FlowPane tags;
 
@@ -44,9 +42,8 @@ public class ActivityCard extends UiPart<Region> {
         this.activity = activity;
         id.setText(displayedIndex + ". ");
         name.setText(activity.getName().fullName);
-        phone.setText(activity.getPhone().value);
-        address.setText(activity.getAddress().value);
-        email.setText(activity.getEmail().value);
+        dateTime.setText(activity.getDateTime().value);
+        remark.setText(activity.getRemark().value);
         activity.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 

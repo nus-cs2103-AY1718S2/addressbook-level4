@@ -4,11 +4,11 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyCalendar;
 
 /** Indicates the Calendar in the model has changed*/
-public class AddressBookChangedEvent extends BaseEvent {
+public class CalendarChangedEvent extends BaseEvent {
 
     public final ReadOnlyCalendar data;
 
-    public AddressBookChangedEvent(ReadOnlyCalendar data) {
+    public CalendarChangedEvent(ReadOnlyCalendar data) {
         this.data = data;
     }
 

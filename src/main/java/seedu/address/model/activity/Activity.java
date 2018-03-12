@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.activity;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -10,10 +10,10 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
- * Represents a Activity in the address book.
+ * Represents a Activity in the remark book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Task {
+public class Activity {
 
     private final Name name;
     private final DateTime dateTime;
@@ -24,7 +24,7 @@ public class Task {
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, DateTime dateTime, Remark remark, Set<Tag> tags) {
+    public Activity(Name name, DateTime dateTime,Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, dateTime, remark, tags);
         this.name = name;
         this.dateTime = dateTime;
@@ -65,8 +65,8 @@ public class Task {
 
         Activity otherActivity = (Activity) other;
         return otherActivity.getName().equals(this.getName())
-                && otherActivity.getPhone().equals(this.getDateTime())
-                && otherActivity.getEmail().equals(this.getRemark());
+                && otherActivity.getDateTime().equals(this.getDateTime())
+                && otherActivity.getRemark().equals(this.getRemark());
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Task {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Date and Time: ")
+                .append(" Date And Time: ")
                 .append(getDateTime())
                 .append(" Remark: ")
                 .append(getRemark())

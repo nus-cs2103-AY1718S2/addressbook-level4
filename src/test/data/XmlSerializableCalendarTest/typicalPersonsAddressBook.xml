@@ -4,48 +4,41 @@
 <addressbook>
     <activities>
         <name>Alice Pauline</name>
-        <phone>85355255</phone>
-        <email>alice@example.com</email>
-        <address>123, Jurong West Ave 6, #08-111</address>
+        <dateTime>85355255</dateTime>
+        <remark>123, Jurong West Ave 6, #08-111</remark>
         <tagged>friends</tagged>
     </activities>
     <activities>
         <name>Benson Meier</name>
-        <phone>98765432</phone>
-        <email>johnd@example.com</email>
-        <address>311, Clementi Ave 2, #02-25</address>
+        <dateTime>98765432</dateTime>
+        <remark>311, Clementi Ave 2, #02-25</remark>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </activities>
     <activities>
         <name>Carl Kurz</name>
-        <phone>95352563</phone>
-        <email>heinz@example.com</email>
-        <address>wall street</address>
+        <dateTime>95352563</dateTime>
+        <remark>wall street</remark>
     </activities>
     <activities>
         <name>Daniel Meier</name>
-        <phone>87652533</phone>
-        <email>cornelia@example.com</email>
-        <address>10th street</address>
+        <dateTime>87652533</dateTime>
+        <remark>10th street</remark>
     </activities>
     <activities>
         <name>Elle Meyer</name>
-        <phone>9482224</phone>
-        <email>werner@example.com</email>
-        <address>michegan ave</address>
+        <dateTime>9482224</dateTime>
+        <remark>michegan ave</remark>
     </activities>
     <activities>
         <name>Fiona Kunz</name>
-        <phone>9482427</phone>
-        <email>lydia@example.com</email>
-        <address>little tokyo</address>
+        <dateTime>9482427</dateTime>
+        <remark>little tokyo</remark>
     </activities>
     <activities>
         <name>George Best</name>
-        <phone>9482442</phone>
-        <email>anna@example.com</email>
-        <address>4th street</address>
+        <dateTime>9482442</dateTime>
+        <remark>4th street</remark>
     </activities>
     <tags>friends</tags>
     <tags>owesMoney</tags>

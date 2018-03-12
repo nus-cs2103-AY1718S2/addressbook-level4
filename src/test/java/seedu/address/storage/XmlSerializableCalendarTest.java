@@ -42,6 +42,7 @@ public class XmlSerializableCalendarTest {
     }
 
     @Test
+
     public void toModelType_invalidTagFile_throwsIllegalValueException() throws Exception {
         XmlSerializableCalendar dataFromFile = XmlUtil.getDataFromFile(INVALID_TAG_FILE,
                 XmlSerializableCalendar.class);

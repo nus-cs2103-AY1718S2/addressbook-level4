@@ -54,7 +54,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        CalendarStorage calendarStorage = new XmlCalendarStorage(userPrefs.getAddressBookFilePath());
+        CalendarStorage calendarStorage = new XmlCalendarStorage(userPrefs.getCalendarFilePath());
         storage = new StorageManager(calendarStorage, userPrefsStorage);
 
         initLogging(config);
@@ -182,7 +182,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping Remark Book ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

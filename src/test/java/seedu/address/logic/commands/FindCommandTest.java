@@ -21,8 +21,8 @@ import seedu.address.model.Calendar;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.NameContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.

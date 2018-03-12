@@ -2,8 +2,8 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Calendar;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicateActivityException;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 
 /**

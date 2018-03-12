@@ -13,8 +13,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.ActivityNotFoundException;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

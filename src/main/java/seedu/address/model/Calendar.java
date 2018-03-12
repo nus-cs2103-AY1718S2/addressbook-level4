@@ -11,10 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.UniqueActivityList;
-import seedu.address.model.person.exceptions.DuplicateActivityException;
-import seedu.address.model.person.exceptions.ActivityNotFoundException;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.UniqueActivityList;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
+import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -132,7 +132,7 @@ public class Calendar implements ReadOnlyCalendar {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Activity(
-                activity.getName(), activity.getPhone(), activity.getEmail(), activity.getAddress(), correctTagReferences);
+                activity.getName(), activity.getDateTime(), activity.getRemark(), correctTagReferences);
     }
 
     /**

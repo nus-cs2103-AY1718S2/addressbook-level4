@@ -5,8 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.*;
-import seedu.address.model.person.Activity;
+import seedu.address.model.activity.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -30,9 +29,8 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder(Activity activity) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(activity.getName());
-        descriptor.setPhone(activity.getPhone());
-        descriptor.setEmail(activity.getEmail());
-        descriptor.setAddress(activity.getAddress());
+        descriptor.setDateTime(activity.getDateTime());
+        descriptor.setRemark(activity.getRemark());
         descriptor.setTags(activity.getTags());
     }
 
@@ -45,26 +43,18 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code DateTime} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
+        descriptor.setDateTime(new DateTime(phone));
         return this;
     }
 
     /**
-     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
+        descriptor.setRemark(new Remark(address));
         return this;
     }
 

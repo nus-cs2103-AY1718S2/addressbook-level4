@@ -16,10 +16,10 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Activity;
+import seedu.address.model.activity.Activity;
 import seedu.address.model.tag.Tag;
 
-public class AddressBookTest {
+public class RemarkBookTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.activity;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -13,24 +13,22 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Activity in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Activity {
+public class Task {
 
     private final Name name;
-    private final Phone phone;
-    private final Email email;
-    private final Address address;
+    private final DateTime dateTime;
+    private final Remark remark;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Activity(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Task(Name name, DateTime dateTime, Remark remark, Set<Tag> tags) {
+        requireAllNonNull(name, dateTime, remark, tags);
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+        this.dateTime = dateTime;
+        this.remark = remark;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -39,16 +37,12 @@ public class Activity {
         return name;
     }
 
-    public Phone getPhone() {
-        return phone;
+    public DateTime getDateTime() {
+        return dateTime;
     }
 
-    public Email getEmail() {
-        return email;
-    }
-
-    public Address getAddress() {
-        return address;
+    public Remark getRemark() {
+        return remark;
     }
 
     /**
@@ -71,27 +65,24 @@ public class Activity {
 
         Activity otherActivity = (Activity) other;
         return otherActivity.getName().equals(this.getName())
-                && otherActivity.getPhone().equals(this.getPhone())
-                && otherActivity.getEmail().equals(this.getEmail())
-                && otherActivity.getAddress().equals(this.getAddress());
+                && otherActivity.getDateTime().equals(this.getDateTime())
+                && otherActivity.getRemark().equals(this.getRemark());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, dateTime, remark, tags);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
-                .append(getPhone())
-                .append(" Email: ")
-                .append(getEmail())
-                .append(" Address: ")
-                .append(getAddress())
+                .append(" Date and Time: ")
+                .append(getDateTime())
+                .append(" Remark: ")
+                .append(getRemark())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

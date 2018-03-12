@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.person.Activity;
+import seedu.address.model.activity.Activity;
 
 /**
  * A utility class for Activity.
@@ -27,9 +27,8 @@ public class PersonUtil {
     public static String getPersonDetails(Activity activity) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + activity.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + activity.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + activity.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + activity.getAddress().value + " ");
+        sb.append(PREFIX_PHONE + activity.getDateTime().value + " ");
+        sb.append(PREFIX_ADDRESS + activity.getRemark().value + " ");
         activity.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

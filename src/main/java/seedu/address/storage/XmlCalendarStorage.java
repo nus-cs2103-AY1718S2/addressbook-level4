@@ -27,7 +27,7 @@ public class XmlCalendarStorage implements CalendarStorage {
         this.filePath = filePath;
     }
 
-    public String getAddressBookFilePath() {
+    public String getCalendarFilePath() {
         return filePath;
     }
 

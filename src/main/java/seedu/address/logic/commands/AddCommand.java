@@ -8,8 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicateActivityException;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
 /**
  * Adds a activity to the address book.

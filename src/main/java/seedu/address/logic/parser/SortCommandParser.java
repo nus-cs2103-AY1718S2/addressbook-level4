@@ -9,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * By Yang Yuqing
  * Parses input arguments and creates a new SortCommand object
  */
-public class SortCommandParser implements Parser<SortCommand>{
+public class SortCommandParser implements Parser<SortCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the Sort
      * and returns an SortCommand object for execution.

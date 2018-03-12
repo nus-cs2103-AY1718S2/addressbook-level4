@@ -26,6 +26,7 @@ import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.SearchResultsPanelHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.MainApp;
 import seedu.address.TestApp;
@@ -104,6 +105,10 @@ public abstract class BibliotekSystemTest {
         return mainWindowHandle.getBookListPanel();
     }
 
+    public SearchResultsPanelHandle getSearchResultsPanel() {
+        return mainWindowHandle.getSearchResultsPanel();
+    }
+
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }
@@ -144,11 +149,19 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
-     * Selects the book at {@code index} of the displayed list.
+     * Selects the book at {@code index} of the book list.
      */
     protected void selectBook(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assertEquals(index.getZeroBased(), getBookListPanel().getSelectedCardIndex());
+    }
+
+    /**
+     * Selects the book at {@code index} of the search result list.
+     */
+    protected void selectSearchResult(Index index) {
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        assertEquals(index.getZeroBased(), getSearchResultsPanel().getSelectedCardIndex());
     }
 
     /**
@@ -162,7 +175,7 @@ public abstract class BibliotekSystemTest {
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
      * {@code expectedResultMessage}, the model and storage contains the same book objects as {@code expectedModel}
-     * and the book list panel displays the books in the model correctly.
+     * and the book list and search results panel displays the books in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
@@ -171,11 +184,12 @@ public abstract class BibliotekSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getBookShelf(), testApp.readStorageBookShelf());
         assertListMatching(getBookListPanel(), expectedModel.getFilteredBookList());
+        assertListMatching(getSearchResultsPanel(), expectedModel.getSearchResultsList());
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code BookListPanelHandle} and {@code StatusBarFooterHandle} to remember
-     * their current state.
+     * Calls {@code BrowserPanelHandle}, {@code BookListPanelHandle}, {@code SearchResultsPanelHandle},
+     * and {@code StatusBarFooterHandle} to remember their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
@@ -183,14 +197,15 @@ public abstract class BibliotekSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getBookListPanel().rememberSelectedBookCard();
+        getSearchResultsPanel().rememberSelectedBookCard();
     }
 
     /**
-     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected book.
+     * Asserts that the previously selected book list card is now deselected and the browser's url
+     * remains displaying the details of the previously selected book.
      * @see BrowserPanelHandle#isUrlChanged()
      */
-    protected void assertSelectedCardDeselected() {
+    protected void assertSelectedBookListCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getBookListPanel().isAnyCardSelected());
     }
@@ -201,7 +216,7 @@ public abstract class BibliotekSystemTest {
      * @see BrowserPanelHandle#isUrlChanged()
      * @see BookListPanelHandle#isSelectedBookCardChanged()
      */
-    protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
+    protected void assertSelectedBookListCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardTitle = getBookListPanel().getHandleToSelectedCard().getTitle();
         URL expectedUrl;
         try {
@@ -220,9 +235,19 @@ public abstract class BibliotekSystemTest {
      * @see BrowserPanelHandle#isUrlChanged()
      * @see BookListPanelHandle#isSelectedBookCardChanged()
      */
-    protected void assertSelectedCardUnchanged() {
+    protected void assertSelectedBookListCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getBookListPanel().isSelectedBookCardChanged());
+    }
+
+    /**
+     * Asserts that the browser's url and the selected card in the search results panel remain unchanged.
+     * @see BrowserPanelHandle#isUrlChanged()
+     * @see SearchResultsPanelHandle#isSelectedBookCardChanged()
+     */
+    protected void assertSelectedSearchResultsCardUnchanged() {
+        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getSearchResultsPanel().isSelectedBookCardChanged());
     }
 
     /**

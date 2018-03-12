@@ -68,12 +68,10 @@ public class SearchResultsPanel extends UiPart<Region> {
      * Scrolls to the {@code BookCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
-        if (index < searchResultsListView.getItems().size()) {
-            Platform.runLater(() -> {
-                searchResultsListView.scrollTo(index);
-                searchResultsListView.getSelectionModel().clearAndSelect(index);
-            });
-        }
+        Platform.runLater(() -> {
+            searchResultsListView.scrollTo(index);
+            searchResultsListView.getSelectionModel().clearAndSelect(index);
+        });
     }
 
     @Subscribe

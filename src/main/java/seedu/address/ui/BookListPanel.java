@@ -55,12 +55,10 @@ public class BookListPanel extends UiPart<Region> {
      * Scrolls to the {@code BookCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
-        if (index < bookListView.getItems().size()) {
-            Platform.runLater(() -> {
-                bookListView.scrollTo(index);
-                bookListView.getSelectionModel().clearAndSelect(index);
-            });
-        }
+        Platform.runLater(() -> {
+            bookListView.scrollTo(index);
+            bookListView.getSelectionModel().clearAndSelect(index);
+        });
     }
 
     @Subscribe

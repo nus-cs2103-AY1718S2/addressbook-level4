@@ -92,7 +92,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see BibliotekSystemTest#assertSelectedCardChanged(Index)
+     * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
@@ -104,9 +104,9 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
-            assertSelectedCardUnchanged();
+            assertSelectedBookListCardUnchanged();
         } else {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
+            assertSelectedBookListCardChanged(expectedSelectedCardIndex);
         }
 
         assertCommandBoxShowsDefaultStyle();
@@ -129,7 +129,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedBookListCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

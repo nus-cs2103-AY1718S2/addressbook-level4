@@ -90,6 +90,7 @@ public class LogicManager extends ComponentManager implements Logic {
             return;
         default:
             logger.warning("Unexpected event outcome.");
+            break;
         }
     }
 

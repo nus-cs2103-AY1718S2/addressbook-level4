@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -44,6 +45,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_RATING + "RATING] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -107,9 +109,10 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Rating updatedRating = editPersonDescriptor.getRating().orElse(personToEdit.getRating());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, personToEdit.getRating(),
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRating,
                 updatedTags);
     }
 
@@ -142,6 +145,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Rating rating;
 
         public EditPersonDescriptor() {}
 
@@ -154,6 +158,7 @@ public class EditCommand extends UndoableCommand {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setRating(toCopy.rating);
             setTags(toCopy.tags);
         }
 
@@ -161,7 +166,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.rating, this.tags);
         }
 
         public void setName(Name name) {
@@ -194,6 +199,12 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setRating(Rating rating) { this.rating = rating;}
+
+        public Optional<Rating> getRating() {
+            return Optional.ofNullable(rating);
         }
 
         /**
@@ -232,6 +243,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getRating().equals(e.getRating())
                     && getTags().equals(e.getTags());
         }
     }

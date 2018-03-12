@@ -81,10 +81,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    public void sortPersons() {
-        addressBook.sortPersons();
-    }
-
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -100,6 +96,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void sort(String field) {
+        addressBook.sort(field);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 
     @Override

@@ -116,11 +116,13 @@ public class ParserUtil {
     }
 
     public static String parseRemark(String remark){
+        requireNonNull(remark);
         String trimmedRemark = remark.trim();
         return trimmedRemark;
     }
 
     public static Optional<String> parseRemark(Optional<String> remark){
+        requireNonNull(remark);
         return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
     }
 

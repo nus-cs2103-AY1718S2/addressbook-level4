@@ -43,9 +43,6 @@ public class LocateCommand extends Command {
         Person location = lastShownList.get(targetIndex.getZeroBased());
 
         // Open Google Map on BrowserPanel
- /*       MainWindow.loadUrl("https://www.google.com.sg/maps/place"
-            + location.getName().fullName.replaceAll(" ", "+"));
-*/
         MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
                 + location.getAddress().toString());
 

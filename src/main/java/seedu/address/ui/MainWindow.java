@@ -17,6 +17,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowErrorsRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -169,6 +170,17 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author {ifalluphill}
+    /**
+     * Opens the error window.
+     */
+    @FXML
+    public void handleView() {
+        ErrorsWindow errorsWindow = new ErrorsWindow();
+        errorsWindow.show();
+    }
+    //@@author
+
     void show() {
         primaryStage.show();
     }
@@ -194,4 +206,12 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author {ifalluphill}
+    @Subscribe
+    private void handleShowErrorsEvent(ShowErrorsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleView();
+    }
+    //@@author
 }

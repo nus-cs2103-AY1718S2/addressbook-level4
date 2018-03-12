@@ -27,7 +27,13 @@ public class Income {
     }
 
 
+    /**
+     * checks if the income is valid
+     * @param income
+     * @return
+     */
     public static boolean isValidIncome(Double income) {
+        requireNonNull(income);
         return (income >= 0);
     }
 

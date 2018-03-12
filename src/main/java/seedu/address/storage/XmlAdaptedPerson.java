@@ -119,6 +119,9 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        if (this.income == null){
+            throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
+        }
         if (!Income.isValidIncome(this.income)) {
             throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
         }

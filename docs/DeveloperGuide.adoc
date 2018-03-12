@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F14-B2/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -782,13 +782,16 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* tech-savvy veterinarians and their <<assistants, assistants>>
+* can type relatively fast while maintaining accuracy
+* requires using the desktop in the workplace
+* requires <<cli, CLI>> applications for efficiency
+* provide veterinary services to domestic animals in Singapore
+* has to manage a significant number of <<pet_patients,pet patients>>
+* requires the information kept to generally be non-volatile
+* needs to search through amounts of data for information
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: all-in-one vet assistant app that can view and make appointments and search for information
 
 [appendix]
 == User Stories
@@ -800,15 +803,59 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |create pet patient profile |register its information
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |find a pet patient by name |locate details of pet patient without having to go through the entire list
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add appointments |schedule meeting with owners
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |find owner's contact number |
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |search for an animal's medical history |know next step of treatment
+
+|`* * *` |user |list out appointments for next day |know what to prepare
+
+|`* * *` |user |classify types of appointments |organize the appointments better
+
+|`* * *` |user |cancel an appointment |make space in schedule for other things
+
+|`* * *` |user |see future appointments |know how to plan my works
+
+|`* * *` |user |list out appointments for today |prepare for the work
+
+|`* * *` |user |list out pet patients of a specific species and their owners' contact information |contact them for blood donation
+
+|`* * *` |user |log in with passwords |protect my pet patients' and their respective owners' information
+
+|`* * *` |user |reschedule an appointment |make time for emergency situations
+
+|`* * *` |user |search by owner |retrieve a list of pet patients under a particular owner
+
+|`* * *` |user |create owner profiles |
+
+|`* * *` |user |add in owner details such as contact number |contact them when needed
+
+|`* * *` |user |update pet patients' information |
+
+|`* * *` |user |see owner's name when checking pet patients' profile |know who it belongs to
+
+|`* *` |user |delete a pet patient after certain period |remove entries that I no longer need
+
+|`* *` |user |update status of pet patient (living, deceased) |know the number of pets I am managing now
+
+|`* *` |user |check who is my assistant for the day/particular pet patient |brief them in advance
+
+|`* *` |user |have reminders sms sent to pet owners automatically 2 days before appointment|
+
+|`* *` |user |check services consumed for a particular appointment |know what a pet patient has gone through
+
+|`* *` |user |update my status |be recognized as an official vet after my training
+
+|`* *` |user |transfer a pet patient from my clinic to another in case of emergency|
+
+|`* *` |user |manage the "rooms" in hospital |make space for newly hospitalized pet patient
+
+|`*` |user with many pet patients in the address book |sort pet patients by name |locate a pet patient easily
 |=======================================================================
 
 _{More to be added}_
@@ -819,14 +866,45 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: View full details of an appointment
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list appointments
+2.  AddressBook shows a list of appointments for the current month
+3.  User requests to view a specific appointment in the list
+4.  AddressBook shows the full details of the specified appointment
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 2b. To retrieve a list of all upcoming appointments, use the command "list -a appointments"
++
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Update pet owner's contact information
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests to view contact information of a specific pet patient
+4.  AddressBook shows the pet patient's owner's contact information
+5.  User requests to modify the pet patient's owner's contact information
+6.  AddressBook shows the pet patient's updated contact information
 +
 Use case ends.
 
@@ -844,14 +922,168 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+* 5a. The given command is invalid.
++
+[none]
+** 5a1. AddressBook shows the correct command usage to edit pet patient's information.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Retrieve medical history of a pet patient
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests to view medical history of a specific pet patient
+4.  AddressBook shows the pet patient's medical history
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. No medical history (empty).
++
+Use case ends.
+
+[discrete]
+=== Use case: Retrieve information of a particular owner (contact details, pet patients owned by him/her, and appointments made)
+
+*MSS*
+
+1.  User requests to find an owner named "Mavis"
+2.  AddressBook shows a list of owners with "Mavis" as part of their name
+3.  User requests to view information of a specific owner
+4.  AddressBook shows information about the owner
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Generate a pdf report of a pet patient's medical history and owner's contact information
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  AddressBook shows a list of pet patients with the name "Joseph"
+3.  User requests for a pdf report of a specific pet patient on the list
+4.  AddressBook generates a pdf report for the user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Generate a pdf report of a particular owner's full information e.g. contact details, list of pet patients under this owner and their medical histories
+*MSS*
+
+1.  User requests to find an owner with the name "Mavis"
+2.  AddressBook shows a list of owners with the name "Mavis"
+3.  User requests for a pdf report of a specific owner on the list
+4.  AddressBook generates a pdf report for the user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add tag(s) to a pet owner
+
+*MSS*
+
+1.  User requests to find an owner with the name "Mavis"
+2.  AddressBook shows a list of owners with the name "Mavis"
+3.  User requests to add tags to a specific owner on the list
+4.  AddressBook shows updated owner information
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given tag(s) is/are invalid.
++
+[none]
+** 3b1. AddressBook shows a list of valid tags.
++
+Use case resumes at step 2.
+
 _{More to be added}_
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should work on Windows, Linux and macOS as long as it has Java `1.8.0_60` or higher installed.
+.  A user (vet or vet assistant) with above average typing speed for regular English text (i.e. not code, not system administrative commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should be accessible, even without any Internet connection (or with poor Internet connection).
+.  The system should be able to hold the information of at least 1000 patients (pets) and their respective owners without noticeable sluggishness in performance for typical usage.
+.  The system should be stable (runs without crashing, even for extended hours) and responsive (with a maximum lag of 2 seconds) due to the possibility of patient emergencies.
+.  The system should be reliable and accurate (i.e. information keyed in is guaranteed to be saved, information retrieved is guaranteed to be accurate based on what was keyed in previously).
+.  The system must have sufficient security (such as password protection / encrypted storage file) to protect the confidentiality of the patients (pets) and their respective owners. This is also to ensure compliance with PDPA.
+.  Patient's and owner's information should be easily and accurately backed up, with zero errors in the information.
+.  Restoring patient's and their respective owner's information should be an easy process.
+.  The system should have sufficient commands / functions to ensure that information can be maintained and managed easily. Basic operations such as add, delete, find, update must be included for patients and their respective owners.
 
 _{More to be added}_
 
@@ -861,8 +1093,15 @@ _{More to be added}_
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+[[assistants]] Assistants::
+People who help Veterinarians (receptionist, technicians etc.)
+
+[[cli]] CLI::
+Command Line Interface
+
+[[pet_patients]] Pet Patients::
+Domestic animals which seek veterinary services
+
 
 [appendix]
 == Product Survey

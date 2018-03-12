@@ -14,6 +14,10 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
+    private static final String[] TAG_COLOR_STYLES =
+        {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink",
+            "black", "grey"};
+
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -47,8 +51,31 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        createTags(person);
     }
+
+    /**
+     * Returns the color style for {@code tagName}'s label.
+     * Solution below adopted from :
+     * https://github.com/se-edu/addressbook-level4/pull/798/commits/167b3d0b4f7ad34296d2fbf505f9ae71f983f53c
+     */
+    private String getTagColorStyleFor(String tagName) {
+        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between tags.
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+    }
+
+    /**
+     * Creates the tag labels for {@code person}.
+     */
+    private void createTags(Person person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
 
     @Override
     public boolean equals(Object other) {

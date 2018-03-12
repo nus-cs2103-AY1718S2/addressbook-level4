@@ -30,7 +30,7 @@ Responsibilities: Logic
 '''
 
 === Shi Jin
-image::SHIJIN.jpg[width="150", align="left"]
+image::592363789.jpg[width="150", align="left"]
 {empty}[http://github.com/592363789[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

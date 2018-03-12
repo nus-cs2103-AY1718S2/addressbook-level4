@@ -27,10 +27,10 @@ public class ActivityListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_ACTIVITIES);
-        uiPartRule.setUiPart(personListPanel);
+        ActivityListPanel activityListPanel = new ActivityListPanel(TYPICAL_ACTIVITIES);
+        uiPartRule.setUiPart(activityListPanel);
 
-        personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
+        personListPanelHandle = new PersonListPanelHandle(getChildNode(activityListPanel.getRoot(),
                 PersonListPanelHandle.PERSON_LIST_VIEW_ID));
     }
 

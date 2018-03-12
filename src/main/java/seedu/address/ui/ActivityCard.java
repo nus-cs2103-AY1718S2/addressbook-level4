@@ -10,16 +10,16 @@ import seedu.address.model.person.Activity;
 /**
  * An UI component that displays information of a {@code Activity}.
  */
-public class PersonCard extends UiPart<Region> {
+public class ActivityCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "ActivityListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
      * or an exception will be thrown by JavaFX during runtime.
      *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on Calendar level 4</a>
      */
 
     public final Activity activity;
@@ -39,7 +39,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonCard(Activity activity, int displayedIndex) {
+    public ActivityCard(Activity activity, int displayedIndex) {
         super(FXML);
         this.activity = activity;
         id.setText(displayedIndex + ". ");
@@ -58,12 +58,12 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof ActivityCard)) {
             return false;
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
+        ActivityCard card = (ActivityCard) other;
         return id.getText().equals(card.id.getText())
                 && activity.equals(card.activity);
     }

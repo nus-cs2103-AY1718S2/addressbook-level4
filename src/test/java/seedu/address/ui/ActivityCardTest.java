@@ -17,51 +17,51 @@ public class ActivityCardTest extends GuiUnitTest {
     public void display() {
         // no tags
         Activity activityWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        PersonCard personCard = new PersonCard(activityWithNoTags, 1);
-        uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, activityWithNoTags, 1);
+        ActivityCard activityCard = new ActivityCard(activityWithNoTags, 1);
+        uiPartRule.setUiPart(activityCard);
+        assertCardDisplay(activityCard, activityWithNoTags, 1);
 
         // with tags
         Activity activityWithTags = new PersonBuilder().build();
-        personCard = new PersonCard(activityWithTags, 2);
-        uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, activityWithTags, 2);
+        activityCard = new ActivityCard(activityWithTags, 2);
+        uiPartRule.setUiPart(activityCard);
+        assertCardDisplay(activityCard, activityWithTags, 2);
     }
 
     @Test
     public void equals() {
         Activity activity = new PersonBuilder().build();
-        PersonCard personCard = new PersonCard(activity, 0);
+        ActivityCard activityCard = new ActivityCard(activity, 0);
 
         // same activity, same index -> returns true
-        PersonCard copy = new PersonCard(activity, 0);
-        assertTrue(personCard.equals(copy));
+        ActivityCard copy = new ActivityCard(activity, 0);
+        assertTrue(activityCard.equals(copy));
 
         // same object -> returns true
-        assertTrue(personCard.equals(personCard));
+        assertTrue(activityCard.equals(activityCard));
 
         // null -> returns false
-        assertFalse(personCard.equals(null));
+        assertFalse(activityCard.equals(null));
 
         // different types -> returns false
-        assertFalse(personCard.equals(0));
+        assertFalse(activityCard.equals(0));
 
         // different activity, same index -> returns false
         Activity differentActivity = new PersonBuilder().withName("differentName").build();
-        assertFalse(personCard.equals(new PersonCard(differentActivity, 0)));
+        assertFalse(activityCard.equals(new ActivityCard(differentActivity, 0)));
 
         // same activity, different index -> returns false
-        assertFalse(personCard.equals(new PersonCard(activity, 1)));
+        assertFalse(activityCard.equals(new ActivityCard(activity, 1)));
     }
 
     /**
-     * Asserts that {@code personCard} displays the details of {@code expectedActivity} correctly and matches
+     * Asserts that {@code activityCard} displays the details of {@code expectedActivity} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(PersonCard personCard, Activity expectedActivity, int expectedId) {
+    private void assertCardDisplay(ActivityCard activityCard, Activity expectedActivity, int expectedId) {
         guiRobot.pauseForHuman();
 
-        PersonCardHandle personCardHandle = new PersonCardHandle(personCard.getRoot());
+        PersonCardHandle personCardHandle = new PersonCardHandle(activityCard.getRoot());
 
         // verify id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());

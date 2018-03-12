@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.AddressBook;
+import seedu.address.model.Calendar;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
 
 /**
  * A utility class containing a list of {@code Activity} objects to be used in tests.
@@ -61,14 +61,14 @@ public class TypicalPersons {
     private TypicalPersons() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code Calendar} with all the typical persons.
      */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
+    public static Calendar getTypicalAddressBook() {
+        Calendar ab = new Calendar();
         for (Activity activity : getTypicalPersons()) {
             try {
-                ab.addPerson(activity);
-            } catch (DuplicatePersonException e) {
+                ab.addActivity(activity);
+            } catch (DuplicateActivityException e) {
                 throw new AssertionError("not possible");
             }
         }

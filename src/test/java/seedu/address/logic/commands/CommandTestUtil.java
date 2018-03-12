@@ -17,11 +17,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Calendar;
 import seedu.address.model.Model;
 import seedu.address.model.person.Activity;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -97,8 +97,8 @@ public class CommandTestUtil {
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Activity> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        Calendar expectedAddressBook = new Calendar(actualModel.getAddressBook());
+        List<Activity> expectedFilteredList = new ArrayList<>(actualModel.getFilteredActivityList());
 
         try {
             command.execute();
@@ -106,7 +106,7 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredList, actualModel.getFilteredActivityList());
         }
     }
 
@@ -115,23 +115,23 @@ public class CommandTestUtil {
      * {@code model}'s address book.
      */
     public static void showPersonAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredActivityList().size());
 
-        Activity activity = model.getFilteredPersonList().get(targetIndex.getZeroBased());
+        Activity activity = model.getFilteredActivityList().get(targetIndex.getZeroBased());
         final String[] splitName = activity.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredActivityList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredActivityList().size());
     }
 
     /**
      * Deletes the first activity in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
-        Activity firstActivity = model.getFilteredPersonList().get(0);
+        Activity firstActivity = model.getFilteredActivityList().get(0);
         try {
-            model.deletePerson(firstActivity);
-        } catch (PersonNotFoundException pnfe) {
+            model.deleteActivity(firstActivity);
+        } catch (ActivityNotFoundException pnfe) {
             throw new AssertionError("Activity in filtered list must exist in model.", pnfe);
         }
     }

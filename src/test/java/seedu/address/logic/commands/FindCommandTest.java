@@ -17,7 +17,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Calendar;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -85,14 +85,14 @@ public class FindCommandTest {
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>
      *     - the {@code FilteredList<Activity>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     *     - the {@code Calendar} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<Activity> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        Calendar expectedAddressBook = new Calendar(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedList, model.getFilteredActivityList());
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }

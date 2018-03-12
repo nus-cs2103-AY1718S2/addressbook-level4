@@ -13,29 +13,29 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ActivityPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Activity;
 
 /**
  * Panel containing the list of persons.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class ActivityListPanel extends UiPart<Region> {
+    private static final String FXML = "ActivityListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(ActivityListPanel.class);
 
     @FXML
-    private ListView<PersonCard> personListView;
+    private ListView<ActivityCard> personListView;
 
-    public PersonListPanel(ObservableList<Activity> activityList) {
+    public ActivityListPanel(ObservableList<Activity> activityList) {
         super(FXML);
         setConnections(activityList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<Activity> activityList) {
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                activityList, (person) -> new PersonCard(person, activityList.indexOf(person) + 1));
+        ObservableList<ActivityCard> mappedList = EasyBind.map(
+                activityList, (person) -> new ActivityCard(person, activityList.indexOf(person) + 1));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -46,13 +46,13 @@ public class PersonListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in activity list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                        raise(new ActivityPanelSelectionChangedEvent(newValue));
                     }
                 });
     }
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code ActivityCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -68,12 +68,12 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code ActivityCard}.
      */
-    class PersonListViewCell extends ListCell<PersonCard> {
+    class PersonListViewCell extends ListCell<ActivityCard> {
 
         @Override
-        protected void updateItem(PersonCard person, boolean empty) {
+        protected void updateItem(ActivityCard person, boolean empty) {
             super.updateItem(person, empty);
 
             if (empty || person == null) {

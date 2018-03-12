@@ -9,7 +9,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 
 /**
  * Deletes a activity identified using it's last displayed index from the address book.
@@ -38,8 +38,8 @@ public class DeleteCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(activityToDelete);
         try {
-            model.deletePerson(activityToDelete);
-        } catch (PersonNotFoundException pnfe) {
+            model.deleteActivity(activityToDelete);
+        } catch (ActivityNotFoundException pnfe) {
             throw new AssertionError("The target activity cannot be missing");
         }
 
@@ -48,10 +48,10 @@ public class DeleteCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Activity> lastShownList = model.getFilteredPersonList();
+        List<Activity> lastShownList = model.getFilteredActivityList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
         }
 
         activityToDelete = lastShownList.get(targetIndex.getZeroBased());

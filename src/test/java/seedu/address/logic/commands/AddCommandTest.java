@@ -18,12 +18,12 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.ReadOnlyCalendar;
+import seedu.address.model.Calendar;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -97,56 +97,56 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Activity activity) throws DuplicatePersonException {
+        public void addActivity(Activity activity) throws DuplicateActivityException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyCalendar newData) {
             fail("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Activity target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Activity target, Activity editedActivity)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Activity> getFilteredPersonList() {
+        public ReadOnlyCalendar getAddressBook() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Activity> predicate) {
+        public void deleteActivity(Activity target) throws ActivityNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateActivity(Activity target, Activity editedActivity)
+                throws DuplicateActivityException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Activity> getFilteredActivityList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredActivityList(Predicate<Activity> predicate) {
             fail("This method should not be called.");
         }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a activity.
+     * A Model stub that always throw a DuplicateActivityException when trying to add a activity.
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
-        public void addPerson(Activity activity) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addActivity(Activity activity) throws DuplicateActivityException {
+            throw new DuplicateActivityException();
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyCalendar getAddressBook() {
+            return new Calendar();
         }
     }
 
@@ -157,14 +157,14 @@ public class AddCommandTest {
         final ArrayList<Activity> personsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Activity activity) throws DuplicatePersonException {
+        public void addActivity(Activity activity) throws DuplicateActivityException {
             requireNonNull(activity);
             personsAdded.add(activity);
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyCalendar getAddressBook() {
+            return new Calendar();
         }
     }
 

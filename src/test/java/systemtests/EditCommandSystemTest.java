@@ -24,7 +24,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -43,8 +43,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Activity;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -75,8 +75,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: redo editing the last activity in the list -> last activity edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        model.updatePerson(
-                getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedActivity);
+        model.updateActivity(
+                getModel().getFilteredActivityList().get(INDEX_FIRST_PERSON.getZeroBased()), editedActivity);
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a activity with new values same as existing values -> edited */
@@ -87,7 +87,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
-        Activity activityToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        Activity activityToEdit = getModel().getFilteredActivityList().get(index.getZeroBased());
         editedActivity = new PersonBuilder(activityToEdit).withTags(VALID_TAG_FRIEND).build();
         assertCommandSuccess(command, index, editedActivity);
 
@@ -102,9 +102,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered activity list, edit index within bounds of address book and activity list -> edited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        assertTrue(index.getZeroBased() < getModel().getFilteredActivityList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
-        activityToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        activityToEdit = getModel().getFilteredActivityList().get(index.getZeroBased());
         editedActivity = new PersonBuilder(activityToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedActivity);
 
@@ -114,7 +114,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
         /* --------------------- Performing edit operation while a activity card is selected -------------------------- */
 
@@ -141,9 +141,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredPersonList().size() + 1;
+        invalidIndex = getModel().getFilteredActivityList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
         /* Case: missing index -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + NAME_DESC_BOB,
@@ -177,7 +177,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         executeCommand(PersonUtil.getAddCommand(BOB));
         assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
-        assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
+        assertFalse(getModel().getFilteredActivityList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
@@ -210,10 +210,10 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {
-            expectedModel.updatePerson(
-                    expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()), editedActivity);
-            expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        } catch (DuplicatePersonException | PersonNotFoundException e) {
+            expectedModel.updateActivity(
+                    expectedModel.getFilteredActivityList().get(toEdit.getZeroBased()), editedActivity);
+            expectedModel.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
+        } catch (DuplicateActivityException | ActivityNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedActivity is a duplicate in expectedModel, or it isn't found in the model.");
         }
@@ -248,7 +248,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
         executeCommand(command);
-        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        expectedModel.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {

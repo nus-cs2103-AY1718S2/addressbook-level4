@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACTIVITY;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -21,8 +21,8 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.*;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -70,22 +70,22 @@ public class EditCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.updatePerson(activityToEdit, editedActivity);
-        } catch (DuplicatePersonException dpe) {
+            model.updateActivity(activityToEdit, editedActivity);
+        } catch (DuplicateActivityException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (ActivityNotFoundException pnfe) {
             throw new AssertionError("The target activity cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedActivity));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Activity> lastShownList = model.getFilteredPersonList();
+        List<Activity> lastShownList = model.getFilteredActivityList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
         }
 
         activityToEdit = lastShownList.get(index.getZeroBased());

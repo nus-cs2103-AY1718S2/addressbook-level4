@@ -32,7 +32,7 @@ public class AddCommandIntegrationTest {
         Activity validActivity = new PersonBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validActivity);
+        expectedModel.addActivity(validActivity);
 
         assertCommandSuccess(prepareCommand(validActivity, model), model,
                 String.format(AddCommand.MESSAGE_SUCCESS, validActivity), expectedModel);

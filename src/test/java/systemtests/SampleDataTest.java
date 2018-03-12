@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
-import seedu.address.model.AddressBook;
+import seedu.address.model.Calendar;
 import seedu.address.model.person.Activity;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
@@ -18,7 +18,7 @@ public class SampleDataTest extends AddressBookSystemTest {
      * Returns null to force test app to load data of the file in {@code getDataFileLocation()}.
      */
     @Override
-    protected AddressBook getInitialData() {
+    protected Calendar getInitialData() {
         return null;
     }
 

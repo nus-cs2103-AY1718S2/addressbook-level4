@@ -3,15 +3,15 @@ package seedu.address.model.util;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.Calendar;
+import seedu.address.model.ReadOnlyCalendar;
 import seedu.address.model.person.*;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code Calendar} with sample data.
  */
 public class SampleDataUtil {
     public static Activity[] getSamplePersons() {
@@ -37,14 +37,14 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
+    public static ReadOnlyCalendar getSampleAddressBook() {
         try {
-            AddressBook sampleAb = new AddressBook();
+            Calendar sampleAb = new Calendar();
             for (Activity sampleActivity : getSamplePersons()) {
-                sampleAb.addPerson(sampleActivity);
+                sampleAb.addActivity(sampleActivity);
             }
             return sampleAb;
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicateActivityException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
     }

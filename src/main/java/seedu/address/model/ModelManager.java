@@ -13,8 +13,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -23,34 +23,34 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final Calendar addressBook;
     private final FilteredList<Activity> filteredActivities;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyCalendar addressBook, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.addressBook = new Calendar(addressBook);
         filteredActivities = new FilteredList<>(this.addressBook.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new Calendar(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyCalendar newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
+    public ReadOnlyCalendar getAddressBook() {
         return addressBook;
     }
 
@@ -60,24 +60,24 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(Activity target) throws PersonNotFoundException {
+    public synchronized void deleteActivity(Activity target) throws ActivityNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addPerson(Activity activity) throws DuplicatePersonException {
-        addressBook.addPerson(activity);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public synchronized void addActivity(Activity activity) throws DuplicateActivityException {
+        addressBook.addActivity(activity);
+        updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void updatePerson(Activity target, Activity editedActivity)
-            throws DuplicatePersonException, PersonNotFoundException {
+    public void updateActivity(Activity target, Activity editedActivity)
+            throws DuplicateActivityException, ActivityNotFoundException {
         requireAllNonNull(target, editedActivity);
 
-        addressBook.updatePerson(target, editedActivity);
+        addressBook.updateActivity(target, editedActivity);
         indicateAddressBookChanged();
     }
 
@@ -88,12 +88,12 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code addressBook}
      */
     @Override
-    public ObservableList<Activity> getFilteredPersonList() {
+    public ObservableList<Activity> getFilteredActivityList() {
         return FXCollections.unmodifiableObservableList(filteredActivities);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Activity> predicate) {
+    public void updateFilteredActivityList(Predicate<Activity> predicate) {
         requireNonNull(predicate);
         filteredActivities.setPredicate(predicate);
     }

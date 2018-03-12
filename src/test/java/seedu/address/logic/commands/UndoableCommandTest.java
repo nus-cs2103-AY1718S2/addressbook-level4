@@ -14,7 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -56,10 +56,10 @@ public class UndoableCommandTest {
 
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
-            Activity activityToDelete = model.getFilteredPersonList().get(0);
+            Activity activityToDelete = model.getFilteredActivityList().get(0);
             try {
-                model.deletePerson(activityToDelete);
-            } catch (PersonNotFoundException pnfe) {
+                model.deleteActivity(activityToDelete);
+            } catch (ActivityNotFoundException pnfe) {
                 fail("Impossible: activityToDelete was retrieved from model.");
             }
             return new CommandResult("");

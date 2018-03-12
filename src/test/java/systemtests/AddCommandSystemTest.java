@@ -44,7 +44,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.*;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -72,7 +72,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
-        model.addPerson(toAdd);
+        model.addActivity(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
@@ -138,7 +138,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a duplicate activity except with different tags -> rejected */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
-        // AddressBook#addPerson(Activity)
+        // Calendar#addActivity(Activity)
         command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
@@ -190,7 +190,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing {@code AddCommand} with the details of
      * {@code toAdd}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
+     * 4. {@code Model}, {@code Storage} and {@code ActivityListPanel} equal to the corresponding components in
      * the current model added with {@code toAdd}.<br>
      * 5. Browser url and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
@@ -210,8 +210,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Activity toAdd) {
         Model expectedModel = getModel();
         try {
-            expectedModel.addPerson(toAdd);
-        } catch (DuplicatePersonException dpe) {
+            expectedModel.addActivity(toAdd);
+        } catch (DuplicateActivityException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
@@ -223,7 +223,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, Activity)} except asserts that
      * the,<br>
      * 1. Result display box displays {@code expectedResultMessage}.<br>
-     * 2. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
+     * 2. {@code Model}, {@code Storage} and {@code ActivityListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
      * @see AddCommandSystemTest#assertCommandSuccess(String, Activity)
      */
@@ -240,7 +240,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * 1. Command box displays {@code command}.<br>
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage} and {@code ActivityListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>

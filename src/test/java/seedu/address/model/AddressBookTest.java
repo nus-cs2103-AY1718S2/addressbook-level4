@@ -24,7 +24,7 @@ public class AddressBookTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AddressBook addressBook = new AddressBook();
+    private final Calendar addressBook = new Calendar();
 
     @Test
     public void constructor() {
@@ -40,7 +40,7 @@ public class AddressBookTest {
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = getTypicalAddressBook();
+        Calendar newData = getTypicalAddressBook();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
     }
@@ -50,7 +50,7 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Activity> newActivities = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newActivities, newTags);
+        CalendarStub newData = new CalendarStub(newActivities, newTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -69,13 +69,13 @@ public class AddressBookTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose activities and tags lists can violate interface constraints.
+     * A stub ReadOnlyCalendar whose activities and tags lists can violate interface constraints.
      */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
+    private static class CalendarStub implements ReadOnlyCalendar {
         private final ObservableList<Activity> activities = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Activity> activities, Collection<? extends Tag> tags) {
+        CalendarStub(Collection<Activity> activities, Collection<? extends Tag> tags) {
             this.activities.setAll(activities);
             this.tags.setAll(tags);
         }

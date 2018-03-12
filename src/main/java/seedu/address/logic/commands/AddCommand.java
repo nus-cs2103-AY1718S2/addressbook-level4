@@ -9,7 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
 
 /**
  * Adds a activity to the address book.
@@ -50,9 +50,9 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addPerson(toAdd);
+            model.addActivity(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicateActivityException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

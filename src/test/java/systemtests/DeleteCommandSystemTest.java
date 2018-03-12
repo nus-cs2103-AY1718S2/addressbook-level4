@@ -1,7 +1,7 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
@@ -19,7 +19,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -62,7 +62,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered activity list, delete index within bounds of address book and activity list -> deleted */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         Index index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        assertTrue(index.getZeroBased() < getModel().getFilteredActivityList().size());
         assertCommandSuccess(index);
 
         /* Case: filtered activity list, delete index within bounds of address book but out of bounds of activity list
@@ -71,7 +71,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
         /* --------------------- Performing delete operation while a activity card is selected ------------------------ */
 
@@ -100,7 +100,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getPersonList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
@@ -119,8 +119,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private Activity removePerson(Model model, Index index) {
         Activity targetActivity = getPerson(model, index);
         try {
-            model.deletePerson(targetActivity);
-        } catch (PersonNotFoundException pnfe) {
+            model.deleteActivity(targetActivity);
+        } catch (ActivityNotFoundException pnfe) {
             throw new AssertionError("targetActivity is retrieved from model.");
         }
         return targetActivity;

@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Activity;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.UniqueActivityList;
+import seedu.address.model.person.exceptions.DuplicateActivityException;
+import seedu.address.model.person.exceptions.ActivityNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,9 +22,9 @@ import seedu.address.model.tag.UniqueTagList;
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
-public class AddressBook implements ReadOnlyAddressBook {
+public class Calendar implements ReadOnlyCalendar {
 
-    private final UniquePersonList persons;
+    private final UniqueActivityList activities;
     private final UniqueTagList tags;
 
     /*
@@ -35,24 +35,24 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        activities = new UniqueActivityList();
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public Calendar() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an Calendar using the Persons and Tags in the {@code toBeCopied}
      */
-    public AddressBook(ReadOnlyAddressBook toBeCopied) {
+    public Calendar(ReadOnlyCalendar toBeCopied) {
         this();
         resetData(toBeCopied);
     }
 
     //// list overwrite operations
 
-    public void setPersons(List<Activity> activities) throws DuplicatePersonException {
-        this.persons.setPersons(activities);
+    public void setActivities(List<Activity> activities) throws DuplicateActivityException {
+        this.activities.setPersons(activities);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -60,9 +60,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code Calendar} with {@code newData}.
      */
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyCalendar newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
         List<Activity> syncedActivityList = newData.getPersonList().stream()
@@ -70,8 +70,8 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .collect(Collectors.toList());
 
         try {
-            setPersons(syncedActivityList);
-        } catch (DuplicatePersonException e) {
+            setActivities(syncedActivityList);
+        } catch (DuplicateActivityException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
@@ -83,35 +83,35 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Also checks the new activity's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the activity to point to those in {@link #tags}.
      *
-     * @throws DuplicatePersonException if an equivalent activity already exists.
+     * @throws DuplicateActivityException if an equivalent activity already exists.
      */
-    public void addPerson(Activity p) throws DuplicatePersonException {
+    public void addActivity(Activity p) throws DuplicateActivityException {
         Activity activity = syncWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any activity
         // in the activity list.
-        persons.add(activity);
+        activities.add(activity);
     }
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
+     * {@code Calendar}'s tag list will be updated with the tags of {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if updating the activity's details causes the activity to be equivalent to
+     * @throws DuplicateActivityException if updating the activity's details causes the activity to be equivalent to
      *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws ActivityNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncWithMasterTagList(Activity)
      */
-    public void updatePerson(Activity target, Activity editedActivity)
-            throws DuplicatePersonException, PersonNotFoundException {
+    public void updateActivity(Activity target, Activity editedActivity)
+            throws DuplicateActivityException, ActivityNotFoundException {
         requireNonNull(editedActivity);
 
         Activity syncedEditedActivity = syncWithMasterTagList(editedActivity);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any activity
         // in the activity list.
-        persons.setPerson(target, syncedEditedActivity);
+        activities.setPerson(target, syncedEditedActivity);
     }
 
     /**
@@ -136,14 +136,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * Removes {@code key} from this {@code Calendar}.
+     * @throws ActivityNotFoundException if the {@code key} is not in this {@code Calendar}.
      */
-    public boolean removePerson(Activity key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removePerson(Activity key) throws ActivityNotFoundException {
+        if (activities.remove(key)) {
             return true;
         } else {
-            throw new PersonNotFoundException();
+            throw new ActivityNotFoundException();
         }
     }
 
@@ -157,13 +157,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return activities.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
 
     @Override
     public ObservableList<Activity> getPersonList() {
-        return persons.asObservableList();
+        return activities.asObservableList();
     }
 
     @Override
@@ -174,14 +174,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                || (other instanceof Calendar // instanceof handles nulls
+                && this.activities.equals(((Calendar) other).activities)
+                && this.tags.equalsOrderInsensitive(((Calendar) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(activities, tags);
     }
 }

@@ -117,7 +117,8 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getStatusBarFooter();
     }
 
-    public ResultDisplayHandle getResultDisplay() {
+    public ResultDisplayHandle
+    getResultDisplay() {
         return mainWindowHandle.getResultDisplay();
     }
 

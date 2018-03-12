@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Qiu Siyu
-image::qiusiyu.jpg[width="150", align="left"]
+image::takuyakanbr.png[width="150", align="left"]
 {empty}[https://danielteo.me[homepage]] [http://github.com/takuyakanbr[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -21,7 +21,7 @@ Responsibilities: Dev Ops + Model
 '''
 
 === Qiu Siqi
-image::qiusiqi.jpg[width="150", align="left"]
+image::qiu-siqi.png[width="150", align="left"]
 {empty}[http://github.com/qiu-siqi[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -39,7 +39,7 @@ Responsibilities: Storage
 '''
 
 === Liu Jianghao
-image::liujianghao.jpg[width="150", align="left"]
+image::fishTT.png[width="150", align="left"]
 {empty}[http://github.com/fishTT[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

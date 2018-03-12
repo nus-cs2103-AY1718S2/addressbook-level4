@@ -10,7 +10,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Activity in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Task {
@@ -59,14 +59,14 @@ public class Task {
             return true;
         }
 
-        if (!(other instanceof Person)) {
+        if (!(other instanceof Activity)) {
             return false;
         }
 
-        Person otherPerson = (Person) other;
-        return otherPerson.getName().equals(this.getName())
-                && otherPerson.getPhone().equals(this.getDateTime())
-                && otherPerson.getEmail().equals(this.getRemark());
+        Activity otherActivity = (Activity) other;
+        return otherActivity.getName().equals(this.getName())
+                && otherActivity.getPhone().equals(this.getDateTime())
+                && otherActivity.getEmail().equals(this.getRemark());
     }
 
     @Override

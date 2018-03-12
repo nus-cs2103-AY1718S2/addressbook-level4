@@ -28,7 +28,7 @@ public class Remark {
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid activity email.
      */
     public static boolean isValidAddress(String test) {
         return test.matches(REMARK_VALIDATION_REGEX);

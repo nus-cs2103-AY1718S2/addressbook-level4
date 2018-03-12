@@ -28,7 +28,7 @@ public class DateTime {
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid activity email.
      */
     public static boolean isValidDateTime(String test) {
         return test.matches(DATETIME_VALIDATION_REGEX);

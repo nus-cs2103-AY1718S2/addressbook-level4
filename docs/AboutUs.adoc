@@ -21,7 +21,7 @@ Responsibilities: Dev Ops + Model
 '''
 
 === Qiu Siqi
-image::qiusiqi.jpg[width="150", align="left"]
+image::qiu-siqi.png[width="150", align="left"]
 {empty}[http://github.com/qiu-siqi[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

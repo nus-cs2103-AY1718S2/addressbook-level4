@@ -40,6 +40,7 @@ jacocoTestReport {
 }
 
 dependencies {
+
     String testFxVersion = '4.0.7-alpha'
 
     compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
@@ -55,10 +56,6 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
     testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
-
-    compile 'com.google.api-client:google-api-client:1.23.0'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
-    compile 'com.google.apis:google-api-services-calendar:v3-rev296-1.23.0'
 }
 
 shadowJar {
@@ -205,3 +202,10 @@ deployOfflineDocs.dependsOn asciidoctor
 processResources.dependsOn deployOfflineDocs
 
 defaultTasks 'clean', 'headless', 'allTests', 'coverage', 'asciidoctor'
+
+dependencies {
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-calendar:v3-rev296-1.23.0'
+
+}

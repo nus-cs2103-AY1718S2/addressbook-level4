@@ -8,7 +8,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.ui.BrowserPanel;
 
 /**
  * Selects a person identified using it's last displayed index from the address book.
@@ -38,10 +37,6 @@ public class SelectCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
-        BrowserPanel.setSearchPageUrl("https://calendar.google.com/calendar/embed?src="
-                + lastShownList.get(targetIndex.getZeroBased()).getPersonUrl()
-                .replaceAll("@", "%40") + "&ctz=Asia%2FSingapore&mode=day");
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));

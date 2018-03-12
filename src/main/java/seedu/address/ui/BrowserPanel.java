@@ -73,5 +73,4 @@ public class BrowserPanel extends UiPart<Region> {
     public static void setSearchPageUrl(String url) {
         SEARCH_PAGE_URL = url;
     }
-
 }

@@ -17,11 +17,11 @@ import seedu.address.commons.events.ui.SwitchTabRequestEvent;
  */
 public class DetailsPanel extends UiPart<Region> {
 
-    private ContactDetails contactDetails;
+    private ContactDetailsDisplay contactDetailsDisplay;
     private BrowserPanel browserPanel;
     
     private static final String FXML = "detailsPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ContactDetails.class);
+    private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
     
     @FXML
     private Tab profile;
@@ -34,8 +34,8 @@ public class DetailsPanel extends UiPart<Region> {
 
     public DetailsPanel() {
         super(FXML);
-        contactDetails = new ContactDetails();
-        profile.setContent(contactDetails.getRoot());
+        contactDetailsDisplay = new ContactDetailsDisplay();
+        profile.setContent(contactDetailsDisplay.getRoot());
         browserPanel = new BrowserPanel();
         linkedIn.setContent(browserPanel.getRoot());
         registerAsAnEventHandler(this);

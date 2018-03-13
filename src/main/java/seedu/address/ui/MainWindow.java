@@ -127,6 +127,7 @@ public class MainWindow extends UiPart<Stage> {
         searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
         bookListPanelPlaceholder.getChildren().add(searchResultsPanel.getRoot());
         bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
+        searchResultsPanel.getRoot().setVisible(false);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -205,8 +206,8 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            bookListPanelPlaceholder.getChildren().clear();
-            bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
+            bookListPanel.getRoot().setVisible(true);
+            searchResultsPanel.getRoot().setVisible(false);
         });
     }
 
@@ -214,8 +215,8 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            bookListPanelPlaceholder.getChildren().clear();
-            bookListPanelPlaceholder.getChildren().add(searchResultsPanel.getRoot());
+            bookListPanel.getRoot().setVisible(false);
+            searchResultsPanel.getRoot().setVisible(true);
         });
     }
 }

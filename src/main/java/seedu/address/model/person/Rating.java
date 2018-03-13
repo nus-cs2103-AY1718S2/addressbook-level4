@@ -9,7 +9,7 @@ import com.vdurmont.emoji.EmojiParser;
  * Guarantees: immutable; is valid as declared in {@link #isValidRating(String)}
  */
 public class Rating {
-    public static final String MESSAGE_RATING_CONSTRAINTS = "Rating must be an integer";
+    public static final String MESSAGE_RATING_CONSTRAINTS = "Rating must be 1, 2, 3, 4 or 5";
     public static final String RATING_VALIDATION_REGEX = "-?\\d*";
     private static final String INVALID_RATING_DISPLAY = "-";
     private static final String RATING_DISPLAY = ":star2: ";
@@ -39,6 +39,13 @@ public class Rating {
      */
     public static boolean isValidRating(String test) {
         return test.matches(RATING_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if a given string is a valid input of person rating.
+     */
+    public static boolean isValidInputRating(int test) {
+        return test > 0 && test <= 5;
     }
 
     @Override

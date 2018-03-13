@@ -45,6 +45,10 @@ public class RateCommandParser implements Parser<RateCommand> {
         }
         Integer rating = sc.nextInt();
 
+        if (!Rating.isValidInputRating(rating)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RateCommand.MESSAGE_USAGE));
+        }
+
         RateCommand.EditPersonDescriptor editPersonDescriptor = new RateCommand.EditPersonDescriptor();
         editPersonDescriptor.setRating(new Rating(rating.toString()));
         if (!editPersonDescriptor.isAnyFieldEdited()) {

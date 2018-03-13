@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Sell IT - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -782,13 +782,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* Salesperson targeting clients from multiple countries.
+* has a need to manage a significant number of clients
 * prefer desktop apps over other types
-* can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: A client management application that includes contact management and calendar, and note-taking and supports multiple time-zones
+
 
 [appendix]
 == User Stories
@@ -800,11 +801,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |user |schedule meetings with my clients |remember when I am supposed to meet them
+
+|`* * *` |user |tag clients with important info like the products they are interested in | so that I can list and group together related clients quickly.
+
+|`* * *` |user |log notes specific to each client |so that I can recall the information when I need it
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* *` |user |set the timezone for each contact |meet or call them at an appropriate time
+
+|`* *` |user |archive certain contacts |useless or expired contacts won't clutter up the program but I can still find them when I need to
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
@@ -819,14 +830,14 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add category to person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User searches for a specific client
+2.  AddressBook shows a list of users matching query
+3.  User puts the contact into the desired category (a user can have many).
+4.  System updates contact to reflect new category.
 +
 Use case ends.
 
@@ -836,22 +847,50 @@ Use case ends.
 * 2a. The list is empty.
 +
 Use case ends.
-
-* 3a. The given index is invalid.
+* 2a1. The contact is not found.
 +
-[none]
+Use case resumes at step 1.
+* 3a. The category does not exist.
++
+User creates a new category.
+Use case resumes at step 3.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Archive inactive contacts.
+
+*MSS*
+
+1.  System puts users in the inactive category if contact had no activity for a specified period of time.
+2.  User filters contacts to show those in the inactive category.
+3.  System displays users which are in the inactive category.
+4.  User selects which contacts to archive.
+5.  System moves archived contacts into the archived category.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No users are in the inactive category.
++
+Use case ends.
+* 4a. The user does not select any contacts.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should work with a large number of, which is more than 1000, contacts.
+.  Should respond quickly after any action, which is less than 2 seconds.
+.  Should store its data in plain text so that data can be manually accessed if required.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  All actions should be performable using only the keyboard.
+
 
 _{More to be added}_
 
@@ -863,6 +902,15 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[archive]] Archive::
+The list of contacts that are no longer in use
+
+[[client]] Client::
+A potential customer, someone the user is in contact with for the purposes of business
+
+[[notes]] Notes::
+Some plain text information associated with a contact that the user wants to remember
 
 [appendix]
 == Product Survey

@@ -12,7 +12,7 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday date can only contain numbers, and should follow the DDMMYY format";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{6,}";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{6,6}";
     public final String value;
 
     /**

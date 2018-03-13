@@ -11,10 +11,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Birthday;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -156,7 +156,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> birthday} into an {@code Optional<Phone>} if {@code birthday} is present.
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {

@@ -16,9 +16,9 @@ public class LoginCommand extends Command{
     private final String username;
     private final String password;
 
-    public LoginCommand(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public LoginCommand() {
+        this.username = null;
+        this.password = null;
     }
 
     @Override

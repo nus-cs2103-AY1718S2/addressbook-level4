@@ -22,6 +22,9 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of books */
     ObservableList<Book> getFilteredBookList();
 
+    /** Returns an unmodifiable view of the search results list. */
+    ObservableList<Book> getSearchResultsList();
+
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 }

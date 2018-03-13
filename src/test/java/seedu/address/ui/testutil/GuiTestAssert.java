@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import guitests.guihandles.BookCardHandle;
 import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.SearchResultsPanelHandle;
 import seedu.address.model.book.Book;
 
 /**
@@ -46,6 +47,16 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code searchResultsPanelHandle} displays the details of {@code books} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(SearchResultsPanelHandle searchResultsPanelHandle, Book... books) {
+        for (int i = 0; i < books.length; i++) {
+            assertCardDisplaysBook(books[i], searchResultsPanelHandle.getBookCardHandle(i));
+        }
+    }
+
+    /**
      * Asserts that the list in {@code bookListPanelHandle} displays the details of {@code books} correctly and
      * in the correct order.
      */
@@ -54,11 +65,27 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code searchResultsPanelHandle} displays the details of {@code books} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(SearchResultsPanelHandle searchResultsPanelHandle, List<Book> books) {
+        assertListMatching(searchResultsPanelHandle, books.toArray(new Book[0]));
+    }
+
+    /**
      * Asserts the size of the list in {@code bookListPanelHandle} equals to {@code size}.
      */
     public static void assertListSize(BookListPanelHandle bookListPanelHandle, int size) {
-        int numberOfPeople = bookListPanelHandle.getListSize();
-        assertEquals(size, numberOfPeople);
+        int numberOfBooks = bookListPanelHandle.getListSize();
+        assertEquals(size, numberOfBooks);
+    }
+
+    /**
+     * Asserts the size of the list in {@code searchResultsPanelHandle} equals to {@code size}.
+     */
+    public static void assertListSize(SearchResultsPanelHandle searchResultsPanelHandle, int size) {
+        int numberOfBooks = searchResultsPanelHandle.getListSize();
+        assertEquals(size, numberOfBooks);
     }
 
     /**

@@ -59,6 +59,23 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+=== Searching for books online: `search`
+
+Searches for books online +
+Format: `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
+
+****
+* Searches online for books containing the specified `SEARCH_TERM`, and matches the specified constraints on its `ISBN`, `TITLE`, `AUTHOR`, and `CATEGORY`.
+* At least one of the fields must be provided.
+****
+
+Examples:
+
+* `search Artemis a/Andy Weir` +
+Searches online for books related to `Artemis`, where `Andy Weir` matches one of the authors.
+* `search t/Babylon's Ashes c/Science Fiction` +
+Searches online for `Science Fiction` books that contains `Babylon's Ashes` in the title.
+
 === Adding a person: `add`
 
 Adds a person to the address book +

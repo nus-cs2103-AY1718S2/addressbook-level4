@@ -7,48 +7,61 @@ import org.fxmisc.easybind.EasyBind;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToBookListIndexRequestEvent;
+import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
 import seedu.address.model.book.Book;
 
 /**
- * Panel containing the list of books.
+ * Panel containing the list of search results.
  */
-public class BookListPanel extends UiPart<Region> {
-    private static final String FXML = "BookListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(BookListPanel.class);
+public class SearchResultsPanel extends UiPart<Region> {
+    private static final String FXML = "SearchResultsPanel.fxml";
+    private static final String INFO_TEXT = "Showing %s search results.";
+    private final Logger logger = LogsCenter.getLogger(SearchResultsPanel.class);
 
     @FXML
-    private ListView<BookCard> bookListView;
+    private Label infoLabel;
+    @FXML
+    private ListView<BookCard> searchResultsListView;
 
-    public BookListPanel(ObservableList<Book> bookList) {
+    public SearchResultsPanel(ObservableList<Book> searchResults) {
         super(FXML);
-        setConnections(bookList);
+        setConnections(searchResults);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Book> bookList) {
+    private void setConnections(ObservableList<Book> searchResults) {
         ObservableList<BookCard> mappedList = EasyBind.map(
-                bookList, (book) -> new BookCard(book, bookList.indexOf(book) + 1));
-        bookListView.setItems(mappedList);
-        bookListView.setCellFactory(listView -> new BookListViewCell());
+                searchResults, (book) -> new BookCard(book, searchResults.indexOf(book) + 1));
+        searchResultsListView.setItems(mappedList);
+        searchResultsListView.setCellFactory(listView -> new BookListViewCell());
         setEventHandlerForSelectionChangeEvent();
+        setEventHandlerForListChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        bookListView.getSelectionModel().selectedItemProperty()
+        searchResultsListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in book list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in search results panel changed to : '" + newValue + "'");
                         raise(new BookPanelSelectionChangedEvent(newValue));
                     }
                 });
+    }
+
+    private void setEventHandlerForListChangeEvent() {
+        searchResultsListView.getItems().addListener((ListChangeListener<BookCard>) c -> {
+            long newSize = c.getList().size();
+            infoLabel.setText(String.format(INFO_TEXT, newSize));
+        });
     }
 
     /**
@@ -56,13 +69,13 @@ public class BookListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            bookListView.scrollTo(index);
-            bookListView.getSelectionModel().clearAndSelect(index);
+            searchResultsListView.scrollTo(index);
+            searchResultsListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
     @Subscribe
-    private void handleJumpToBookListRequestEvent(JumpToBookListIndexRequestEvent event) {
+    private void handleJumpToResultsListRequestEvent(JumpToSearchResultsIndexRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }

@@ -14,6 +14,12 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Book> PREDICATE_SHOW_ALL_BOOKS = unused -> true;
 
+    /** Returns the type of list that is currently active. */
+    ActiveListType getActiveListType();
+
+    /** Sets the type of list that is currently active. */
+    void setActiveListType(ActiveListType type);
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyBookShelf newData);
 
@@ -45,4 +51,9 @@ public interface Model {
      */
     void updateFilteredBookList(Predicate<Book> predicate);
 
+    /** Returns an unmodifiable view of the search results. */
+    ObservableList<Book> getSearchResultsList();
+
+    /** Updates the search results that should be displayed. */
+    void updateSearchResults(ReadOnlyBookShelf newResults);
 }

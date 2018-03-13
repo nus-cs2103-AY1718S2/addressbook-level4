@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 public class MainWindowHandle extends StageHandle {
 
     private final BookListPanelHandle bookListPanel;
+    private final SearchResultsPanelHandle searchResultsPanel;
     private final ResultDisplayHandle resultDisplay;
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
@@ -18,6 +19,8 @@ public class MainWindowHandle extends StageHandle {
         super(stage);
 
         bookListPanel = new BookListPanelHandle(getChildNode(BookListPanelHandle.BOOK_LIST_VIEW_ID));
+        searchResultsPanel =
+                new SearchResultsPanelHandle(getChildNode(SearchResultsPanelHandle.SEARCH_RESULTS_LIST_VIEW_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
@@ -27,6 +30,10 @@ public class MainWindowHandle extends StageHandle {
 
     public BookListPanelHandle getBookListPanel() {
         return bookListPanel;
+    }
+
+    public SearchResultsPanelHandle getSearchResultsPanel() {
+        return searchResultsPanel;
     }
 
     public ResultDisplayHandle getResultDisplay() {

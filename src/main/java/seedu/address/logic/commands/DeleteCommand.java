@@ -8,6 +8,7 @@ import java.util.Objects;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ActiveListType;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 
@@ -19,11 +20,12 @@ public class DeleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the book identified by the index number used in the last book listing.\n"
+            + ": Deletes the book identified by the index number used in the current book listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_BOOK_SUCCESS = "Deleted Book: %1$s";
+    public static final String MESSAGE_WRONG_ACTIVE_LIST = "Items from the current list cannot be deleted.";
 
     private final Index targetIndex;
 
@@ -35,8 +37,12 @@ public class DeleteCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(bookToDelete);
+        if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
+            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
+        }
+
         try {
             model.deleteBook(bookToDelete);
         } catch (BookNotFoundException pnfe) {

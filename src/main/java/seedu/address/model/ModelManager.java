@@ -23,8 +23,10 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private ActiveListType activeListType;
     private final BookShelf bookShelf;
     private final FilteredList<Book> filteredBooks;
+    private final BookShelf searchResults;
 
     /**
      * Initializes a ModelManager with the given bookShelf and userPrefs.
@@ -35,12 +37,24 @@ public class ModelManager extends ComponentManager implements Model {
 
         logger.fine("Initializing with book shelf: " + bookShelf + " and user prefs " + userPrefs);
 
+        this.activeListType = ActiveListType.BOOK_SHELF;
         this.bookShelf = new BookShelf(bookShelf);
         this.filteredBooks = new FilteredList<>(this.bookShelf.getBookList());
+        this.searchResults = new BookShelf();
     }
 
     public ModelManager() {
         this(new BookShelf(), new UserPrefs());
+    }
+
+    @Override
+    public ActiveListType getActiveListType() {
+        return activeListType;
+    }
+
+    @Override
+    public void setActiveListType(ActiveListType type) {
+        this.activeListType = type;
     }
 
     @Override
@@ -97,6 +111,21 @@ public class ModelManager extends ComponentManager implements Model {
         filteredBooks.setPredicate(predicate);
     }
 
+    //=========== Search Results ===========================================================================
+
+    /**
+     * Returns an unmodifable view of the list of {@code Book} backed by the internal list of {@code searchResults}.
+     * */
+    @Override
+    public ObservableList<Book> getSearchResultsList() {
+        return FXCollections.unmodifiableObservableList(searchResults.getBookList());
+    }
+
+    @Override
+    public void updateSearchResults(ReadOnlyBookShelf newResults) {
+        searchResults.resetData(newResults);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -112,7 +141,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return bookShelf.equals(other.bookShelf)
-                && filteredBooks.equals(other.filteredBooks);
+                && filteredBooks.equals(other.filteredBooks)
+                && searchResults.equals(other.searchResults);
     }
 
 }

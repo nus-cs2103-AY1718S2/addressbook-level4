@@ -34,6 +34,11 @@ public class ModelManagerTest {
         ModelManager modelManagerCopy = new ModelManager(bookShelf, userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
 
+        // same values -> returns true
+        modelManager.updateSearchResults(bookShelf);
+        modelManagerCopy.updateSearchResults(bookShelf);
+        assertTrue(modelManager.equals(modelManagerCopy));
+
         // same object -> returns true
         assertTrue(modelManager.equals(modelManager));
 
@@ -46,12 +51,17 @@ public class ModelManagerTest {
         // different bookShelf -> returns false
         assertFalse(modelManager.equals(new ModelManager(differentBookShelf, userPrefs)));
 
+        // different searchResults -> returns false
+        assertFalse(modelManager.equals(new ModelManager(bookShelf, userPrefs)));
+
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setBookShelfName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(bookShelf, differentUserPrefs)));
+        ModelManager modelManagerDiffPrefs = new ModelManager(bookShelf, differentUserPrefs);
+        modelManagerDiffPrefs.updateSearchResults(bookShelf);
+        assertTrue(modelManager.equals(modelManagerDiffPrefs));
     }
 }

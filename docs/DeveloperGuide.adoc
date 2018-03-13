@@ -780,19 +780,21 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: Salespersons from small companies or home-grown businesses with customers from various social media platforms.
 
-* promotes and sells products or services through social media
-* works in a small company or runs his/her own business
-* has limited applications to support their marketing strategies
-* has a need to manage a large number of contacts
-* has many contacts spread across many social media platforms such as Facebook, Youtube, Twitter
-* has many contacts with volatile details
-* has many contacts that can be grouped together based on type of products purchased by contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+A typical user from our target user profile:
+
+* promotes and sells products or services through social media.
+* works in a small company or runs his/her own business.
+* has limited applications to support their marketing strategies.
+* has a need to manage a large number of contacts.
+* has many contacts spread across many social media platforms such as Facebook, Twitter, Instagram, etc.
+* has many contacts with volatile details.
+* has many contacts that can be grouped together based on type of products purchased by contacts.
+* prefer desktop apps over other types.
+* can type fast.
+* prefers typing over mouse input.
+* is reasonably comfortable using CLI apps.
 
 *Value proposition*: consolidation platform for all contacts from different platforms for users to communicate with customers more easily, analyse and apply their marketing strategies more effectively and efficiently.
 
@@ -801,80 +803,80 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="59%",cols="20%,<20%,<20%,<20%,<20%",options="header",]
 |=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|Priority |As a ... |I want to ... |So that I can... |Release
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App |1.0
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |add new entries |1.0
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a person |remove entries that I no longer need |1.0
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list |1.0
 
-|`* * *` |user |keep an offline back up |download and access a local copy of the application data
+|`* * *` |user |keep an offline back up |download and access a local copy of the application data |2.0
 
-|`* * *` |lazy user |use short-forms for commands |execute commands more quickly
+|`* * *` |lazy user |use short-forms for commands |execute commands more quickly |1.0
 
-|`* * *` |task-oriented user |implement meetings or deadlines for contacts |keep track of tasks to do for the contacts
+|`* * *` |task-oriented user |implement meetings or deadlines for contacts |keep track of tasks to do for the contacts |2.0
 
-|`* * *` |organized user |delete multiple contacts at a time |remove the contacts I no longer need quickly
+|`* * *` |organized user |delete multiple contacts at a time |remove the contacts I no longer need quickly |2.0
 
-|`* * *` |user with many contacts |remove a specific tag |all contacts with that tag will have the tag removed instead of removing the tag from from every one of them
+|`* * *` |user with many contacts |remove a specific tag |all contacts with that tag will have the tag removed instead of removing the tag from from every one of them |1.1
 
-|`* * *` |user with many contacts |find contacts based on the group they are in |see all contacts belonging to a certain group
+|`* * *` |user with many contacts |find contacts based on the group they are in |see all contacts belonging to a certain group |1.1
 
-|`* * *` |user with many contacts |sort the contacts by last contacted time |find contacts I corresponded with recently
+|`* * *` |user with many contacts |sort the contacts by last contacted time |find contacts I corresponded with recently |2.0
 
-|`* * *` |salesperson |view a list of current orders| keep track of which customers I might need to contact at that point in time
+|`* * *` |salesperson |view a list of current orders| keep track of which customers I might need to contact at that point in time |2.0
 
-|`* * *` |salesperson |see a list of current customers |view necessary information about current customers more quickly
+|`* * *` |salesperson |see a list of current customers |view necessary information about current customers more quickly |2.0
 
-|`* * *` |salesperson |send promotions to a group of contacts |ensure my differentiated marketing strategies work
+|`* * *` |salesperson |send promotions to a group of contacts |ensure my differentiated marketing strategies work |2.0
 
-|`* * *` |salesperson |add a list of preferences to contact |know what my customers are interested in
+|`* * *` |salesperson |add a list of preferences to contact |know what my customers are interested in |2.0
 
-|`* * *` |salesperson |edit contact’s preferences |update my customers' changing interests
+|`* * *` |salesperson |edit contact’s preferences |update my customers' changing interests |2.0
 
-|`* * *` |salesperson |see the top preference among all contacts |know what products I should focus on
+|`* * *` |salesperson |see the top preference among all contacts |know what products I should focus on |2.0
 
-|`* * *` |salesperson |edit specific details of contacts |update my customers' information more conveniently
+|`* * *` |salesperson |edit specific details of contacts |update my customers' information more conveniently |2.0
 
-|`* * *` |salesperson |see top contacts |divide my attention among my customers as needed
+|`* * *` |salesperson |see top contacts |divide my attention among my customers as needed |2.0
 
-|`* *` |salesperson |export contacts |share my customers' public details with concerned businesses
+|`* *` |salesperson |export contacts |share my customers' public details with concerned businesses |2.0
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident |1.0
 
-|`* *` |user who prefers visual imagery |use a calendar to know if there are any meetings or deadlines |clearer view on how to prioritise my work
+|`* *` |user who prefers visual imagery |use a calendar to know if there are any tasks or deadlines |clearer view on how to prioritise my work |2.0
 
-|`* *` |user |access and change my preferred Email Service provider within the ContactSails |look at my emails and my contacts at the same time
+|`* *` |user |access and change my preferred Email Service provider within the ContactSails |look at my emails and my contacts at the same time |2.0
 
-|`* *` |user with many contacts |synchronise the ContactSails with Google Contacts |save time importing contacts from Google Contacts
+|`* *` |user with many contacts |synchronise the ContactSails with Google Contacts |save time importing contacts from Google Contacts |2.0
 
-|`* *` |user who is fast at typing |copy a contact's email to the clipboard without using a mouse |save time in emailing a contact
+|`* *` |user who is fast at typing |copy a contact's email to the clipboard without using a mouse |save time in emailing a contact |2.0
 
-|`* *` |lazy user |add contact details in any order |don't need to remember the order to enter the details
+|`* *` |lazy user |add contact details in any order |don't need to remember the order to enter the details |2.0
 
-|`* *` |lazy user |auto-completion of commands |execute commands quickly
+|`* *` |lazy user |auto-completion of commands |execute commands quickly |1.1
 
-|`* *` |user |add notes to a contact |have a clearer description about the contact
+|`* *` |user |add notes to a contact |have a clearer description about the contact |2.0
 
-|`* *` |user |group contacts using tags |categorize my customers as needed
+|`* *` |user |group contacts using tags |categorize my customers as needed |2.0
 
-|`* *` |user |change the theme and font of the application |personalize my AddressBook
+|`* *` |user |change the theme and font of the application |personalize my AddressBook |2.0
 
-|`* *` |salesperson |see contact statistics |more informed about my customer demographic
+|`* *` |salesperson |see contact statistics |more informed about my customer demographic |2.0
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily |1.0
 
-|`*` |user |sort the list of contacts in alphabetical order |easily find contacts whose names I could not remember
+|`*` |user |sort the list of contacts in alphabetical order |easily find contacts whose names I could not remember |1.0
 
-|`*` |user |export contacts in different formats |share contacts to other software
+|`*` |user |export contacts in different formats |share contacts to other software |2.0
 
-|`*` |user who likes personalising contacts |add profile photos to each contact |recognise the customer easily based on their photo
+|`*` |user who likes personalising contacts |add profile photos to each contact |recognise the customer easily based on their photo |2.0
 
-|`*` |user |see a list of tags |don't need to remember all existing tags
+|`*` |user |see a list of tags |don't need to remember all existing tags |2.0
 
 |=======================================================================
 
@@ -1214,13 +1216,13 @@ Use case resumes at step 3.
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  The ContactSails should be usable even for users without experience in social media marketing.
+.  ContactSails should be usable even for users without experience in using command line applications.
 .  As ContactSails is modified from an open-source software, users should be able to download it for free.
-.  ContactSails should continue to run normally even when problems occur during execution.
+.  ContactSails should continue to run the original, intended functions, even when problems occur during execution.
 .  In case ContactSails has crashed, changes made to it during those sessions should not be lost.
-.  Size of ContactSails should not exceed 100 MB even with many contacts stored in it.
+.  Size of ContactSails should not exceed 100 MB even with many contacts stored in it (maximum number of contacts allowed is 1000)
 .  ContactSails should take up to 2 seconds to execute any command except for commands that are reliant on internet connectivity.
-.  ContactSails can still work even if there is limited internet connectivity when executed command opens websites.
+.  ContactSails can still work even if there is limited internet connectivity when executed commands open websites.
 .  Users can use ContactSails without requiring an installer.
 .  Data of ContactSails should be stored locally and in a human editable text file.
 .  Data of ContactSails should be able to be encrypted such that only the user can see it when text file containing the data is directly accessed.

@@ -93,6 +93,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(person);
     }
 
+    public void importPerson(Person p) {
+        Person person = syncWithMasterTagList(p);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        persons.importPerson(person);
+    }
+
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
@@ -164,6 +172,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    public void importTag(Tag t) {
+        tags.importTag(t);
     }
 
     /**

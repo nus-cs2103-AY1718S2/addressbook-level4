@@ -39,7 +39,7 @@ Responsibilities: Storage
 
 === Yuan Quan
 
-{empty}[http://github.com/m133225[github]]
+{empty}[http://github.com/YuanQQLer[github]]
 
 Role: To Be Confirmed
 Responsibilities: Model

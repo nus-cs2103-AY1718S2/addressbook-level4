@@ -84,7 +84,7 @@ Format: `help`
 
 === Searching for books online: `search`
 
-Want to find a specific book? Browsing for new books? Use the `search` command. +
+Want to lookup for a specific book? Browsing for new books? Use the `search` command. +
 Format: `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
 
 ****

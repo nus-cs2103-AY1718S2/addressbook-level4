@@ -96,6 +96,7 @@ public class TestApp extends MainApp {
     public Model getModel() {
         Model copy = new ModelManager((model.getBookShelf()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredBookList());
+        ModelHelper.setSearchResults(copy, model.getSearchResultsList());
         return copy;
     }
 

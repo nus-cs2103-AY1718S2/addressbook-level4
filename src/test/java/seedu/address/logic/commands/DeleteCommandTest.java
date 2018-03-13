@@ -12,16 +12,21 @@ import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.ActiveListType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.book.Book;
+import seedu.address.testutil.TypicalBooks;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -29,7 +34,15 @@ import seedu.address.model.book.Book;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
+    }
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -42,6 +55,23 @@ public class DeleteCommandTest {
         expectedModel.deleteBook(bookToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidActiveListType_throwsCommandException() throws Exception {
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
+
+        assertCommandFailure(deleteCommand, model, DeleteCommand.MESSAGE_WRONG_ACTIVE_LIST);
+    }
+
+    @Test
+    public void execute_invalidBook_throwsAssertionError() throws Exception {
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
+        deleteCommand.preprocessUndoableCommand();
+        model.deleteBook(TypicalBooks.ARTEMIS);
+        thrown.expect(AssertionError.class);
+        deleteCommand.executeUndoableCommand();
     }
 
     @Test

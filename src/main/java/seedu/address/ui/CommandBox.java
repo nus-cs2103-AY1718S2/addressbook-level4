@@ -63,7 +63,7 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
         } else if (newLinekeys.match(keyEvent)) {
             keyEvent.consume();
-            appendLineFeed();
+            createNewLine();
         }
     }
 
@@ -105,8 +105,13 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Append a line feed character to the command area
      */
-    private void appendLineFeed() {
-        commandTextArea.appendText(LF);
+    private void createNewLine() {
+        int caretPosition = commandTextArea.getCaretPosition();
+        StringBuilder commandTextStringBuilder = new StringBuilder(commandTextArea.getText());
+        commandTextStringBuilder.insert(caretPosition, LF);
+        String newCommandText = commandTextStringBuilder.toString();
+        commandTextArea.setText(newCommandText);
+        commandTextArea.positionCaret(caretPosition + 1);
     }
 
     /**

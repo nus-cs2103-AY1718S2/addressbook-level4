@@ -34,7 +34,7 @@ import seedu.organizer.TestApp;
 import seedu.organizer.commons.core.EventsCenter;
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.ClearCommand;
-import seedu.organizer.logic.commands.FindNameCommand;
+import seedu.organizer.logic.commands.FindCommand;
 import seedu.organizer.logic.commands.ListCommand;
 import seedu.organizer.logic.commands.SelectCommand;
 import seedu.organizer.model.Model;
@@ -149,7 +149,7 @@ public abstract class OrganizerSystemTest {
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showTasksWithName(String keyword) {
-        executeCommand(FindNameCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
         assertTrue(getModel().getFilteredTaskList().size() < getModel().getOrganizer().getTaskList().size());
     }
 

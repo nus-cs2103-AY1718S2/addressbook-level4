@@ -17,20 +17,20 @@ import org.junit.Test;
 
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.DeleteCommand;
-import seedu.organizer.logic.commands.FindNameCommand;
+import seedu.organizer.logic.commands.FindCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.tag.Tag;
 
-public class FindNameCommandSystemTest extends OrganizerSystemTest {
+public class FindCommandSystemTest extends OrganizerSystemTest {
 
     @Test
     public void find() {
         /* Case: find multiple tasks in organizer, command with leading spaces and trailing spaces
          * -> 2 tasks found
          */
-        String command = "   " + FindNameCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_DO + "   ";
+        String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_DO + "   ";
         Model expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, HOMEWORK, PROJECT); // first names of HOMEWORK and PROJECT are "Do"
         assertCommandSuccess(command, expectedModel);
@@ -39,36 +39,36 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         /* Case: repeat previous find command where task list is displaying the tasks we are finding
          * -> 2 tasks found
          */
-        command = FindNameCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_DO;
+        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_DO;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find task where task list is not displaying the task we are finding -> 1 task found */
-        command = FindNameCommand.COMMAND_WORD + " Spring";
+        command = FindCommand.COMMAND_WORD + " Spring";
         ModelHelper.setFilteredList(expectedModel, SPRINGCLEAN);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple tasks in organizer, 2 keywords -> 2 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " Spring Prepare";
+        command = FindCommand.COMMAND_WORD + " Spring Prepare";
         ModelHelper.setFilteredList(expectedModel, SPRINGCLEAN, PREPAREBREAKFAST);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple tasks in organizer, 2 keywords in reversed order -> 2 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " Prepare Spring";
+        command = FindCommand.COMMAND_WORD + " Prepare Spring";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple tasks in organizer, 2 keywords with 1 repeat -> 2 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " Prepare Spring Prepare";
+        command = FindCommand.COMMAND_WORD + " Prepare Spring Prepare";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple tasks in organizer, 2 matching keywords and 1 non-matching keyword
          * -> 2 tasks found
          */
-        command = FindNameCommand.COMMAND_WORD + " Prepare Spring NonMatchingKeyWord";
+        command = FindCommand.COMMAND_WORD + " Prepare Spring NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -85,52 +85,52 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         /* Case: find same tasks in organizer after deleting 1 of them -> 1 task found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 2");
         assertFalse(getModel().getOrganizer().getTaskList().contains(PREPAREBREAKFAST));
-        command = FindNameCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_SPRING;
+        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_SPRING;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, SPRINGCLEAN);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find task in organizer, keyword is same as name but of different case -> 1 task found */
-        command = FindNameCommand.COMMAND_WORD + " Spring";
+        command = FindCommand.COMMAND_WORD + " Spring";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find task in organizer, keyword is substring of name -> 0 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " Mei";
+        command = FindCommand.COMMAND_WORD + " Mei";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find task in organizer, name is substring of keyword -> 0 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " Springs";
+        command = FindCommand.COMMAND_WORD + " Springs";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find task not in organizer -> 0 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " Swim";
+        command = FindCommand.COMMAND_WORD + " Swim";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find priority number of task in organizer -> 0 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " " + HOMEWORK.getPriority().value;
+        command = FindCommand.COMMAND_WORD + " " + HOMEWORK.getPriority().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find organizer of task in organizer -> 0 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " " + HOMEWORK.getDescription().value;
+        command = FindCommand.COMMAND_WORD + " " + HOMEWORK.getDescription().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find email of task in organizer book -> 0 persons found */
-        command = FindNameCommand.COMMAND_WORD + " " + HOMEWORK.getDeadline().value;
+        command = FindCommand.COMMAND_WORD + " " + HOMEWORK.getDeadline().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find tags of task in organizer -> 0 tasks found */
         List<Tag> tags = new ArrayList<>(HOMEWORK.getTags());
-        command = FindNameCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -138,14 +138,14 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         showAllTasks();
         selectTask(Index.fromOneBased(1));
         assertFalse(getTaskListPanel().getHandleToSelectedCard().getName().equals(HOMEWORK.getName().fullName));
-        command = FindNameCommand.COMMAND_WORD + " Homework";
+        command = FindCommand.COMMAND_WORD + " Homework";
         ModelHelper.setFilteredList(expectedModel, HOMEWORK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
         /* Case: find task in empty organizer -> 0 tasks found */
         deleteAllTasks();
-        command = FindNameCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_SPRING;
+        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_SPRING;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, HOMEWORK);
         assertCommandSuccess(command, expectedModel);

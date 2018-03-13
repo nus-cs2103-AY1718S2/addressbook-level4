@@ -21,7 +21,7 @@ import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.organizer.logic.commands.ExitCommand;
-import seedu.organizer.logic.commands.FindNameCommand;
+import seedu.organizer.logic.commands.FindCommand;
 import seedu.organizer.logic.commands.HelpCommand;
 import seedu.organizer.logic.commands.HistoryCommand;
 import seedu.organizer.logic.commands.ListCommand;
@@ -90,12 +90,12 @@ public class OrganizerParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindNameCommand command = (FindNameCommand) parser.parseCommand(
-                FindNameCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        FindNameCommand commandAlias = (FindNameCommand) parser.parseCommand(
-                FindNameCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindNameCommand(new NameContainsKeywordsPredicate(keywords)), command);
-        assertEquals(new FindNameCommand(new NameContainsKeywordsPredicate(keywords)), commandAlias);
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        FindCommand commandAlias = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), commandAlias);
     }
 
     @Test

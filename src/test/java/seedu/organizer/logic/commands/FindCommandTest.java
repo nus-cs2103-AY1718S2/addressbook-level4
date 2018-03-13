@@ -25,9 +25,9 @@ import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 import seedu.organizer.model.task.Task;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code FindNameCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
-public class FindNameCommandTest {
+public class FindCommandTest {
     private Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
 
     @Test
@@ -37,14 +37,14 @@ public class FindNameCommandTest {
         NameContainsKeywordsPredicate secondPredicate =
                 new NameContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FindNameCommand findFirstCommand = new FindNameCommand(firstPredicate);
-        FindNameCommand findSecondCommand = new FindNameCommand(secondPredicate);
+        FindCommand findFirstCommand = new FindCommand(firstPredicate);
+        FindCommand findSecondCommand = new FindCommand(secondPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindNameCommand findFirstCommandCopy = new FindNameCommand(firstPredicate);
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -60,23 +60,23 @@ public class FindNameCommandTest {
     @Test
     public void execute_zeroKeywords_noTaskFound() {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 0);
-        FindNameCommand command = prepareCommand(" ");
+        FindCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multipleTasksFound() {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
-        FindNameCommand command = prepareCommand("Prepare breakfast Project Revision");
+        FindCommand command = prepareCommand("Prepare breakfast Project Revision");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(PREPAREBREAKFAST, PROJECT, REVISION));
     }
 
     /**
-     * Parses {@code userInput} into a {@code FindNameCommand}.
+     * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private FindNameCommand prepareCommand(String userInput) {
-        FindNameCommand command =
-                new FindNameCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FindCommand prepareCommand(String userInput) {
+        FindCommand command =
+                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -87,7 +87,7 @@ public class FindNameCommandTest {
      * - the {@code FilteredList<Task>} is equal to {@code expectedList}<br>
      * - the {@code Organizer} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindNameCommand command, String expectedMessage, List<Task> expectedList) {
+    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<Task> expectedList) {
         Organizer expectedOrganizer = new Organizer(model.getOrganizer());
         CommandResult commandResult = command.execute();
 

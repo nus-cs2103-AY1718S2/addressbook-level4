@@ -8,28 +8,27 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import seedu.organizer.logic.commands.FindNameCommand;
+import seedu.organizer.logic.commands.FindCommand;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 
-public class FindNameCommandParserTest {
+public class FindCommandParserTest {
 
-    private FindNameCommandParser parser = new FindNameCommandParser();
+    private FindCommandParser parser = new FindCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-            FindNameCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
-        FindNameCommand expectedFindNameCommand =
-                new FindNameCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, "Alice Bob", expectedFindNameCommand);
+        FindCommand expectedFindCommand =
+                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindNameCommand);
+        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
     }
 
 }

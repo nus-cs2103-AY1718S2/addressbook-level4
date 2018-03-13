@@ -20,6 +20,7 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+<<<<<<< .merge_file_a07408
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -32,6 +33,13 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+=======
+import seedu.address.model.*;
+import seedu.address.model.Calendar;
+import seedu.address.model.util.SampleDataUtil;
+import seedu.address.storage.*;
+import seedu.address.storage.CalendarStorage;
+>>>>>>> .merge_file_a11284
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -54,15 +62,24 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
+<<<<<<< .merge_file_a07408
         logger.info("=============================[ Initializing AddressBook ]===========================");
+=======
+        logger.info("=============================[ Initializing Calendar ]===========================");
+>>>>>>> .merge_file_a11284
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+<<<<<<< .merge_file_a07408
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
+=======
+        CalendarStorage calendarStorage = new XmlCalendarStorage(userPrefs.getCalendarFilePath());
+        storage = new StorageManager(calendarStorage, userPrefsStorage);
+>>>>>>> .merge_file_a11284
 
         initLogging(config);
 
@@ -86,6 +103,7 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+<<<<<<< .merge_file_a07408
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         try {
@@ -100,6 +118,22 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+=======
+        Optional<ReadOnlyCalendar> addressBookOptional;
+        ReadOnlyCalendar initialData;
+        try {
+            addressBookOptional = storage.readCalendar();
+            if (!addressBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample Calendar");
+            }
+            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty Calendar");
+            initialData = new Calendar();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty Calendar");
+            initialData = new Calendar();
+>>>>>>> .merge_file_a11284
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -163,7 +197,11 @@ public class MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
+<<<<<<< .merge_file_a07408
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+=======
+            logger.warning("Problem while reading from the file. Will be starting with an empty Calendar");
+>>>>>>> .merge_file_a11284
             initializedPrefs = new UserPrefs();
         }
 
@@ -183,13 +221,21 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+<<<<<<< .merge_file_a07408
         logger.info("Starting AddressBook " + MainApp.VERSION);
+=======
+        logger.info("Starting Calendar " + MainApp.VERSION);
+>>>>>>> .merge_file_a11284
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
+<<<<<<< .merge_file_a07408
         logger.info("============================ [ Stopping Address Book ] =============================");
+=======
+        logger.info("============================ [ Stopping Remark Book ] =============================");
+>>>>>>> .merge_file_a11284
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

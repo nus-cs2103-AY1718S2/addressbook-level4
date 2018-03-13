@@ -16,7 +16,29 @@ By: `Team F14-B4`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-Bibliotek is for those who *prefer to use a desktop app for managing contacts*. More importantly, Bibliotek is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Bibliotek can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+=== What is Bibliotek
+
+Bibliotek is a free book cataloguing application that is simple, fast and easy to use.
+You can use Bibliotek to search for books, manage your reading list and track the availability of your books.
+
+If you *prefer to use a desktop app*, like *working with a Command Line Interface* (CLI)
+while still having the benefits of a Graphical User Interface (GUI) or can *type fast*, Bibliotek is just for you!
+
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+
+=== Using this guide
+This document is a reference for installing and using Bibliotek.
+It can be accessed using the `help` command in the application.
+
+=== Features and Capabilities
+Below are some features and capabilities that Bibliotek supports:
+
+* Search for new books
+* View book reviews
+* Track the books you are reading, have read and want to read
+* Update you when books in your watchlist become available in the library
+* Recommend new books based on your reading list
+* Undo/redo your previous actions
 
 == Quick Start
 
@@ -27,7 +49,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `bibliotek.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your Book Shelf.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -36,9 +58,9 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all books
+* **`search`**`t/Babylon's Ashes c/Science Fiction` : searches for books with `Babylon's Ashes` in their title, belonging to the category `Science Fiction`.
+* **`delete`**`3` : deletes the 3rd book shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -49,17 +71,35 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER_CASE` are the parameters you supply e.g. in `search t/TITLE`, `TITLE` is a parameter which you can use as `search t/Harry Potter`.
+* Items in square brackets are optional e.g you can use `[t/TITLE] [a/AUTHOR]` as `t/Harry Potter a/Rowling` or as `t/Harry Potter` (but there cannot be no parameters).
+* Items with `…`​ after them can be used multiple times including zero times e.g. you can use `[a/AUTHOR]...` as `{nbsp}` (i.e. 0 times), `a/Dubner`, `a/Dubner a/Steven Levitt` etc.
+* Parameters can be in any order e.g. if the command specifies `a/AUTHOR t/TITLE`, `t/TITLE a/AUTHOR` is acceptable.
 ====
 
 === Viewing help : `help`
 
+Opens this document +
 Format: `help`
 
-=== Adding a person: `add`
+=== Searching for books online: `search`
+
+Searches for books online +
+Format: `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
+
+****
+* Searches online for books using the specified `SEARCH_TERM` and constraints on its `ISBN`, `TITLE`, `AUTHOR`, and `CATEGORY`.
+* At least one of the fields must be provided.
+****
+
+Examples:
+
+* `search Artemis a/Andy Weir` +
+Searches online for books related to `Artemis`, where `Andy Weir` matches one of the authors.
+* `search t/Babylon's Ashes c/Science Fiction` +
+Searches online for `Science Fiction` books that contains `Babylon's Ashes` in the title.
+
+=== Adding a book: `add`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`

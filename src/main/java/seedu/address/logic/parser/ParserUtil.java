@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -137,6 +138,30 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code DateAdded}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static DateAdded parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!DateAdded.isValidDate(trimmedDate)) {
+            throw new IllegalValueException(DateAdded.MESSAGE_DATE_CONSTRAINTS);
+        }
+        return new DateAdded(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into a {@code Optional<DateAdded>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DateAdded> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
 
     /**

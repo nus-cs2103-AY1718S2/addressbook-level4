@@ -131,8 +131,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        return new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                person.getDateAdded(), correctTagReferences);
     }
 
     /**
@@ -145,6 +145,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    /**
+     * Removes {@code keys} from this {@code AddressBook}.
+     * @throws PersonNotFoundException if any of the {@code keys} are not in this {@code AddressBook}.
+     */
+    public void removePersons(List<Person> keys) throws PersonNotFoundException {
+        persons.removeAll(keys);
     }
 
     //// tag-level operations

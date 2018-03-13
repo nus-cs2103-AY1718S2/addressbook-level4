@@ -249,10 +249,10 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Auto-complete command 
+=== Auto-complete command
 
 To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
-[NOTE] 
+[NOTE]
 The first lexicographically matched command is returned.
 Examples:
 
@@ -260,8 +260,8 @@ Examples:
     `add n/ e/ a/ [t/]...`
 
 * Typing `h` and pressing `TAB` gives: +
-     `help` 
- 
+     `help`
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -302,5 +302,5 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *LinkedIn*: `linkedIn INDEX` + 
+* *LinkedIn*: `linkedIn INDEX` +
 e.g. `linkedIn 2`

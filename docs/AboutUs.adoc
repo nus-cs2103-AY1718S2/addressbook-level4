@@ -26,12 +26,12 @@ Responsibilities: UI
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Alicia Ho Sor Sian
+image::suxianalicia.JPG[width="150", align="left"]
+{empty}[https://github.com/SuxianAlicia[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: In charge of Model Component, Code Quality
 
 '''
 

@@ -60,6 +60,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * `DESCRIPTION`
 ** A task can have a description that takes in any value (i.e. alphabet, numbers, special symbols).
 ** Having a task description is optional.
+* `STATUS`
+** A task can be in one of two states, "Done" or "Not Done".
+** By default, every new task is marked as "Not Done".
 * `TAG`
 ** A task can have any number of tags (including 0).
 ====
@@ -177,6 +180,26 @@ Selects the 2nd task in the PrioriTask.
 `select 1` +
 Selects the 1st task in the results of the `find` command.
 
+=== Mark task as complete: `toggle` or `t`
+
+Toggle the status of the task identified by the index number used in the last task listing
+between `Done` and `Not Done`. +
+Format: `toggle INDEX`
+
+****
+* Index usage is same with `select`. Please refer to `select` for more details.
+****
+
+Example:
+
+* `list` +
+`toggle 1` +
+Toggle the first task in the PrioriTask.
+* `find homework` +
+`toggle 1` +
+Toggle the first task in th result of `find homework` command.
+
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -260,10 +283,6 @@ _{ coming in v2.0 }_
 * Delete either a tag, deadline, or description from a particular task.
 ****
 
-=== Mark task as complete `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
 === Locating tasks by deadline `[coming in v2.0]`
 
 _{ coming in v2.0 }_
@@ -328,6 +347,8 @@ e.g. `find Developer User`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Toggle* : `toggle INDEX` +
+e.g.`select 3`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

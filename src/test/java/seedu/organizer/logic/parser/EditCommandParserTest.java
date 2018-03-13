@@ -34,6 +34,7 @@ import org.junit.Test;
 
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.EditCommand;
+import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Name;
@@ -115,7 +116,7 @@ public class EditCommandParserTest {
         String userInput = targetIndex.getOneBased() + PRIORITY_DESC_STUDY + TAG_DESC_HUSBAND
                 + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_EXAM + NAME_DESC_EXAM + TAG_DESC_FRIEND;
 
-        EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_EXAM)
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_EXAM)
                 .withPriority(VALID_PRIORITY_STUDY).withDeadline(VALID_DEADLINE_EXAM)
                 .withDescription(VALID_DESCRIPTION_EXAM).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -128,7 +129,7 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_FIRST_TASK;
         String userInput = targetIndex.getOneBased() + PRIORITY_DESC_STUDY + DEADLINE_DESC_EXAM;
 
-        EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY)
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY)
                 .withDeadline(VALID_DEADLINE_EXAM).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -140,7 +141,7 @@ public class EditCommandParserTest {
         // name
         Index targetIndex = INDEX_THIRD_TASK;
         String userInput = targetIndex.getOneBased() + NAME_DESC_EXAM;
-        EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_EXAM).build();
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_EXAM).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -176,7 +177,7 @@ public class EditCommandParserTest {
                 + TAG_DESC_FRIEND + PRIORITY_DESC_EXAM + DESCRIPTION_DESC_EXAM + DEADLINE_DESC_EXAM + TAG_DESC_FRIEND
                 + PRIORITY_DESC_STUDY + DESCRIPTION_DESC_STUDY + DEADLINE_DESC_STUDY + TAG_DESC_HUSBAND;
 
-        EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY)
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_STUDY)
                 .withDeadline(VALID_DEADLINE_STUDY).withDescription(VALID_DESCRIPTION_STUDY)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
@@ -190,7 +191,7 @@ public class EditCommandParserTest {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_TASK;
         String userInput = targetIndex.getOneBased() + INVALID_PRIORITY_DESC + PRIORITY_DESC_STUDY;
-        EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
                 .withPriority(VALID_PRIORITY_STUDY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -210,7 +211,7 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_THIRD_TASK;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
-        EditCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withTags().build();
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withTags().build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

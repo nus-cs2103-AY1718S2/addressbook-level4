@@ -4,8 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import seedu.organizer.logic.commands.EditCommand;
-import seedu.organizer.logic.commands.EditCommand.EditTaskDescriptor;
+import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
@@ -32,11 +31,12 @@ public class EditTaskDescriptorBuilder {
      * Returns an {@code EditTaskDescriptor} with fields containing {@code task}'s details
      */
     public EditTaskDescriptorBuilder(Task task) {
-        descriptor = new EditCommand.EditTaskDescriptor();
+        descriptor = new EditTaskDescriptor();
         descriptor.setName(task.getName());
         descriptor.setPriority(task.getPriority());
         descriptor.setDeadline(task.getDeadline());
         descriptor.setDescription(task.getDescription());
+        descriptor.setStatus(task.getStatus());
         descriptor.setTags(task.getTags());
     }
 

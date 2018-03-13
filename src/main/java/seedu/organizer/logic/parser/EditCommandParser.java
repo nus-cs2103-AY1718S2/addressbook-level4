@@ -16,7 +16,7 @@ import java.util.Set;
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.exceptions.IllegalValueException;
 import seedu.organizer.logic.commands.EditCommand;
-import seedu.organizer.logic.commands.EditCommand.EditTaskDescriptor;
+import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.logic.parser.exceptions.ParseException;
 import seedu.organizer.model.tag.Tag;
 
@@ -44,7 +44,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        EditCommand.EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
+        EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editTaskDescriptor::setName);
             ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(editTaskDescriptor::setPriority);

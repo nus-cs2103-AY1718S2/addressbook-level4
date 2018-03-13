@@ -38,6 +38,7 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(Task expectedTask, TaskCardHandle actualCard) {
         assertEquals(expectedTask.getName().fullName, actualCard.getName());
+        assertEquals("[" + expectedTask.getStatus().toString() + "]", actualCard.getStatus());
         assertEquals(expectedTask.getPriority().value, actualCard.getPriority());
         assertEquals(expectedTask.getDeadline().value, actualCard.getDeadline());
         assertEquals(expectedTask.getDescription().value, actualCard.getDescription());

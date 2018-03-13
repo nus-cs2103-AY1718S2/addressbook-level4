@@ -12,7 +12,7 @@ import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import org.junit.Test;
 
-import seedu.organizer.logic.commands.EditCommand.EditTaskDescriptor;
+import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
 
 public class EditTaskDescriptorTest {
@@ -36,7 +36,7 @@ public class EditTaskDescriptorTest {
         assertFalse(DESC_EXAM.equals(DESC_STUDY));
 
         // different name -> returns false
-        EditCommand.EditTaskDescriptor editedAmy = new EditTaskDescriptorBuilder(DESC_EXAM)
+        EditTaskDescriptor editedAmy = new EditTaskDescriptorBuilder(DESC_EXAM)
                 .withName(VALID_NAME_STUDY).build();
         assertFalse(DESC_EXAM.equals(editedAmy));
 

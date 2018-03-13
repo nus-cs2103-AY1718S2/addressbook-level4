@@ -20,11 +20,12 @@ public class Task {
     private final Priority priority;
     private final Deadline deadline;
     private final Description description;
+    private final Status status;
 
     private final UniqueTagList tags;
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null
      */
     public Task(Name name, Priority priority, Deadline deadline, Description description, Set<Tag> tags) {
         requireAllNonNull(name, priority, deadline, description, tags);
@@ -32,6 +33,22 @@ public class Task {
         this.priority = priority;
         this.deadline = deadline;
         this.description = description;
+        this.status = null;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+    }
+
+    /**
+     * Another constructor with custom status
+     */
+    public Task(Name name, Priority priority, Deadline deadline,
+                Description description, Status status, Set<Tag> tags) {
+        requireAllNonNull(name, priority, deadline, description, tags);
+        this.name = name;
+        this.priority = priority;
+        this.deadline = deadline;
+        this.description = description;
+        this.status = status;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -50,6 +67,13 @@ public class Task {
 
     public Description getDescription() {
         return description;
+    }
+
+    public Status getStatus() {
+        if (status == null) {
+            return new Status(false);
+        }
+        return status;
     }
 
     /**
@@ -80,7 +104,7 @@ public class Task {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, priority, deadline, description, tags);
+        return Objects.hash(name, priority, deadline, description, tags, status);
     }
 
     @Override
@@ -91,6 +115,8 @@ public class Task {
                 .append(getPriority())
                 .append(" Deadline: ")
                 .append(getDeadline())
+                .append(" Status: ")
+                .append(getStatus())
                 .append(" Description: ")
                 .append(getDescription())
                 .append(" Tags: ");

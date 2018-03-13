@@ -14,6 +14,7 @@ import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
 
 /**
@@ -31,6 +32,8 @@ public class XmlAdaptedTask {
     private String deadline;
     @XmlElement(required = true)
     private String description;
+    @XmlElement(required = true)
+    private Boolean status;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -45,12 +48,14 @@ public class XmlAdaptedTask {
     /**
      * Constructs an {@code XmlAdaptedTask} with the given task details.
      */
-    public XmlAdaptedTask(String name, String priority, String deadline, String description, List<XmlAdaptedTag>
+    public XmlAdaptedTask(String name, String priority, String deadline, String description,
+                          Boolean status, List<XmlAdaptedTag>
             tagged) {
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
         this.description = description;
+        this.status = status;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -66,6 +71,7 @@ public class XmlAdaptedTask {
         priority = source.getPriority().value;
         deadline = source.getDeadline().value;
         description = source.getDescription().value;
+        status = source.getStatus().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -111,12 +117,17 @@ public class XmlAdaptedTask {
 
         if (this.description == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                Description.class.getSimpleName()));
+                    Description.class.getSimpleName()));
         }
         final Description description = new Description(this.description);
 
+        if (this.status == null) {
+            this.status = false;
+        }
+        final Status status = new Status(this.status);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Task(name, priority, deadline, description, tags);
+        return new Task(name, priority, deadline, description, status, tags);
     }
 
     @Override
@@ -134,6 +145,7 @@ public class XmlAdaptedTask {
                 && Objects.equals(priority, otherPerson.priority)
                 && Objects.equals(deadline, otherPerson.deadline)
                 && Objects.equals(description, otherPerson.description)
+                && Objects.equals(status, otherPerson.status)
                 && tagged.equals(otherPerson.tagged);
     }
 }

@@ -30,15 +30,16 @@ public class TypicalTasks {
     public static final Task SPRINGCLEAN = new TaskBuilder().withName("Spring cleaning")
             .withDescription("Clean the entire house except the study room")
             .withDeadline("2018-09-08").withPriority("1")
-            .withTags("owesMoney", "friends").build();
+            .withTags("owesMoney", "friends")
+            .withStatus(true).build();
     public static final Task PREPAREBREAKFAST = new TaskBuilder().withName("Prepare breakfast").withPriority("2")
             .withDeadline("2018-11-12").withDescription("French Toast with coffee").build();
     public static final Task HOMEWORK = new TaskBuilder().withName("Do homework").withPriority("3")
-            .withDeadline("2018-03-21").withDescription("CS2103T, CS2101 and MA1101R").build();
+            .withDeadline("2018-03-21").withDescription("CS2103T, CS2101 and MA1101R").withStatus(true).build();
     public static final Task PROJECT = new TaskBuilder().withName("Do project").withPriority("4")
             .withDeadline("2018-09-14").withDescription("Finish writing script for OP1").build();
     public static final Task REVISION = new TaskBuilder().withName("Revision").withPriority("5")
-            .withDeadline("2018-04-05").withDescription("Revise for CS2106 midterms").build();
+            .withDeadline("2018-04-05").withDescription("Revise for CS2106 midterms").withStatus(true).build();
     public static final Task MOCKEXAM = new TaskBuilder().withName("Mock exam").withPriority("6")
             .withDeadline("2018-05-23").withDescription("Mock exam for CS1101S - Revise!").build();
 

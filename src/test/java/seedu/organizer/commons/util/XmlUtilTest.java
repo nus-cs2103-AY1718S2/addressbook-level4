@@ -39,6 +39,7 @@ public class XmlUtilTest {
     private static final String VALID_PRIORITY = "9";
     private static final String VALID_DEADLINE = "2018-07-16";
     private static final String VALID_DESCRIPTION = "Refactor Address to Description";
+    private static final Boolean VALID_STATUS = null;
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
@@ -80,7 +81,7 @@ public class XmlUtilTest {
         XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                null, VALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_TAGS);
+                null, VALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -89,7 +90,7 @@ public class XmlUtilTest {
         XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_TAGS);
+                VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +99,7 @@ public class XmlUtilTest {
         XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_TAGS);
+                VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

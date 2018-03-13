@@ -8,6 +8,7 @@ import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.util.SampleDataUtil;
 
@@ -21,11 +22,13 @@ public class TaskBuilder {
     public static final String DEFAULT_DEADLINE = "2018-05-18";
     public static final String DEFAULT_DESCRIPTION = "Study for CS2103T Exam";
     public static final String DEFAULT_TAGS = "friends";
+    public static final Boolean DEFAULT_STATUS = false;
 
     private Name name;
     private Priority priority;
     private Deadline deadline;
     private Description description;
+    private Status status;
     private Set<Tag> tags;
 
     public TaskBuilder() {
@@ -33,6 +36,7 @@ public class TaskBuilder {
         priority = new Priority(DEFAULT_PRIORITY);
         deadline = new Deadline(DEFAULT_DEADLINE);
         description = new Description(DEFAULT_DESCRIPTION);
+        status = new Status(DEFAULT_STATUS);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -44,6 +48,7 @@ public class TaskBuilder {
         priority = taskToCopy.getPriority();
         deadline = taskToCopy.getDeadline();
         description = taskToCopy.getDescription();
+        status = taskToCopy.getStatus();
         tags = new HashSet<>(taskToCopy.getTags());
     }
 
@@ -72,6 +77,14 @@ public class TaskBuilder {
     }
 
     /**
+     * Sets the {@code Status} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withStatus(Boolean status) {
+        this.status = new Status(status);
+        return this;
+    }
+
+    /**
      * Sets the {@code Priority} of the {@code Task} that we are building.
      */
     public TaskBuilder withPriority(String priority) {
@@ -88,7 +101,7 @@ public class TaskBuilder {
     }
 
     public Task build() {
-        return new Task(name, priority, deadline, description, tags);
+        return new Task(name, priority, deadline, description, status, tags);
     }
 
 }

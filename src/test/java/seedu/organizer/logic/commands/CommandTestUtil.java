@@ -17,6 +17,7 @@ import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.CommandHistory;
 import seedu.organizer.logic.UndoRedoStack;
 import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
@@ -60,8 +61,8 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditTaskDescriptor DESC_EXAM;
-    public static final EditCommand.EditTaskDescriptor DESC_STUDY;
+    public static final EditTaskDescriptor DESC_EXAM;
+    public static final EditTaskDescriptor DESC_STUDY;
 
     static {
         DESC_EXAM = new EditTaskDescriptorBuilder().withName(VALID_NAME_EXAM)

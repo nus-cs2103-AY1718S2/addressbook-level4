@@ -8,22 +8,20 @@ import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.organizer.commons.core.Messages;
 import seedu.organizer.commons.core.index.Index;
-import seedu.organizer.commons.util.CollectionUtil;
 import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
@@ -107,9 +105,10 @@ public class EditCommand extends UndoableCommand {
         Priority updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
         Deadline updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
         Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
+        Status updatedstatus = editTaskDescriptor.getStatus().orElse(taskToEdit.getStatus());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
 
-        return new Task(updatedName, updatedPriority, updatedDeadline, updatedDescription, updatedTags);
+        return new Task(updatedName, updatedPriority, updatedDeadline, updatedDescription, updatedstatus, updatedTags);
     }
 
     @Override
@@ -131,108 +130,4 @@ public class EditCommand extends UndoableCommand {
                 && Objects.equals(taskToEdit, e.taskToEdit);
     }
 
-    /**
-     * Stores the details to edit the task with. Each non-empty field value will replace the
-     * corresponding field value of the task.
-     */
-    public static class EditTaskDescriptor {
-        private Name name;
-        private Priority priority;
-        private Deadline deadline;
-        private Description description;
-        private Set<Tag> tags;
-
-        public EditTaskDescriptor() {
-        }
-
-        /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public EditTaskDescriptor(EditTaskDescriptor toCopy) {
-            setName(toCopy.name);
-            setPriority(toCopy.priority);
-            setDeadline(toCopy.deadline);
-            setDescription(toCopy.description);
-            setTags(toCopy.tags);
-        }
-
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.priority, this.deadline, this.description, this.tags);
-        }
-
-        public void setName(Name name) {
-            this.name = name;
-        }
-
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
-        }
-
-        public void setPriority(Priority priority) {
-            this.priority = priority;
-        }
-
-        public Optional<Priority> getPriority() {
-            return Optional.ofNullable(priority);
-        }
-
-        public void setDeadline(Deadline deadline) {
-            this.deadline = deadline;
-        }
-
-        public Optional<Deadline> getDeadline() {
-            return Optional.ofNullable(deadline);
-        }
-
-        public void setDescription(Description description) {
-            this.description = description;
-        }
-
-        public Optional<Description> getDescription() {
-            return Optional.ofNullable(description);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof EditTaskDescriptor)) {
-                return false;
-            }
-
-            // state check
-            EditTaskDescriptor e = (EditTaskDescriptor) other;
-
-            return getName().equals(e.getName())
-                    && getPriority().equals(e.getPriority())
-                    && getDeadline().equals(e.getDeadline())
-                    && getDescription().equals(e.getDescription())
-                    && getTags().equals(e.getTags());
-        }
-    }
 }

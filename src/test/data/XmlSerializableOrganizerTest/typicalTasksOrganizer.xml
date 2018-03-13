@@ -7,6 +7,7 @@
         <priority>0</priority>
         <deadline>2018-03-11</deadline>
         <description isPrivate="false">Go to NTUC</description>
+        <status>false</status>
         <tagged>friends</tagged>
     </tasks>
     <tasks>
@@ -14,6 +15,7 @@
         <priority>1</priority>
         <deadline>2018-09-08</deadline>
         <description>Clean the entire house except the study room</description>
+        <status>true</status>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </tasks>
@@ -22,30 +24,35 @@
         <priority>2</priority>
         <deadline>2018-11-12</deadline>
         <description>French Toast with coffee</description>
+        <status>false</status>
     </tasks>
     <tasks>
         <name>Do homework</name>
         <priority>3</priority>
         <deadline>2018-03-21</deadline>
         <description>CS2103T, CS2101 and MA1101R</description>
+        <status>true</status>
     </tasks>
     <tasks>
         <name>Do project</name>
         <priority>4</priority>
         <deadline>2018-09-14</deadline>
         <description>Finish writing script for OP1</description>
+        <status>false</status>
     </tasks>
     <tasks>
         <name>Revision</name>
         <priority>5</priority>
         <deadline>2018-04-05</deadline>
         <description>Revise for CS2106 midterms</description>
+        <status>true</status>
     </tasks>
     <tasks>
         <name>Mock exam</name>
         <priority>6</priority>
         <deadline>2018-05-23</deadline>
         <description>Mock exam for CS1101S - Revise!</description>
+        <status>false</status>
     </tasks>
     <tags>friends</tags>
     <tags>owesMoney</tags>

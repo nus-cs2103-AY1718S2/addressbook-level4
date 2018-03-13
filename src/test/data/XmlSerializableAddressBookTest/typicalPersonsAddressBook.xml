@@ -34,6 +34,8 @@
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
+        <tagged>owesMoney</tagged>
+        <tagged>neighbours</tagged>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
@@ -49,4 +51,5 @@
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>
+    <tags>neighbours</tags>
 </addressbook>

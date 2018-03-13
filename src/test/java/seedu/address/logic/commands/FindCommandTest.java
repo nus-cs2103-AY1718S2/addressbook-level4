@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
@@ -17,6 +18,8 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.FindCommandParser;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -29,6 +32,7 @@ import seedu.address.model.person.Person;
  */
 public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private FindCommandParser parser = new FindCommandParser();
 
     @Test
     public void equals() {
@@ -58,25 +62,60 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    public void execute_noKeywords_invalidCommandFormat() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        FindCommand command;
+
+        try {
+            command = prepareCommand(" ");
+            assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+        } catch (ParseException pve) {
+            if (!pve.getMessage().equals(expectedMessage)) {
+                pve.printStackTrace();
+            }
+        }
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void execute_multipleKeywords_multiplePersonsFound() throws ParseException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
+    @Test
+    public void execute_singlePrefixWithSingleKeyword_onePersonsFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommand(" n/Kurz");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL));
+    }
+
+    @Test
+    public void execute_singlePrefixWithMultipleKeywords_multiplePersonsFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand(" n/Kurz Elle Kunz");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    @Test
+    public void execute_multiplePrefixesWithSingleKeyword_onePersonsFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommand(" n/Kurz p/95352563 e/heinz@example.com a/wall street y/2019");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL));
+    }
+
+    @Test
+    public void execute_multiplePrefixesWithMultipleKeywords_zeroPersonsFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        FindCommand command = prepareCommand(" n/Kurz p/999 e/heinz@example.com a/wall street y/2019");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList());
+    }
+
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private FindCommand prepareCommand(String userInput) {
-        FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FindCommand prepareCommand(String userInput) throws ParseException {
+        FindCommand command = parser.parse(userInput);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

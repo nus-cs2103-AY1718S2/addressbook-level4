@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= CLIndar - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W13-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -780,18 +780,18 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user*: University students
+*Target user*: Computing University students
 
 *Target user profile*:
 
-* has a need to manage a significant number of assignments and events
+* has a need to manage a significant number of tasks and events
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using Linux-style commands and CLI apps
 
-*Value proposition*: The user will have all their assignment and event
-tasks in one app. This creates convenience for the user. The CLI also makes it
+*Value proposition*: The user will have all their tasks and events in one app.
+This creates convenience for the user. The CLI also makes it
 faster than a typical mouse/GUI-driven app
 
 [appendix]

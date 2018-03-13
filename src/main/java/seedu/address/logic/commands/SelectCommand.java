@@ -5,8 +5,8 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToBookListRequestEvent;
-import seedu.address.commons.events.ui.JumpToResultsListRequestEvent;
+import seedu.address.commons.events.ui.JumpToBookListIndexRequestEvent;
+import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.Book;
 
@@ -42,7 +42,7 @@ public class SelectCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
             }
 
-            EventsCenter.getInstance().post(new JumpToBookListRequestEvent(targetIndex));
+            EventsCenter.getInstance().post(new JumpToBookListIndexRequestEvent(targetIndex));
             break;
         }
         case SEARCH_RESULTS:
@@ -54,7 +54,7 @@ public class SelectCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
             }
 
-            EventsCenter.getInstance().post(new JumpToResultsListRequestEvent(targetIndex));
+            EventsCenter.getInstance().post(new JumpToSearchResultsIndexRequestEvent(targetIndex));
             break;
         }
         default:

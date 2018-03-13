@@ -17,8 +17,8 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.commons.events.ui.JumpToBookListRequestEvent;
-import seedu.address.commons.events.ui.JumpToResultsListRequestEvent;
+import seedu.address.commons.events.ui.JumpToBookListIndexRequestEvent;
+import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -80,16 +80,6 @@ public class SelectCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexSearchResultsList_failure() throws Exception {
-        model = new ModelManager();
-        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
-        BookShelf bookShelf = new BookShelf();
-        bookShelf.addBook(TypicalBooks.ARTEMIS);
-        model.updateSearchResults(bookShelf);
-        assertExecutionFailure(INDEX_SECOND_BOOK, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-    }
-
-    @Test
     public void execute_invalidIndexFilteredBookList_failure() {
         showBookAtIndex(model, INDEX_FIRST_BOOK);
 
@@ -98,6 +88,16 @@ public class SelectCommandTest {
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getBookShelf().getBookList().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexSearchResultsList_failure() throws Exception {
+        model = new ModelManager();
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        BookShelf bookShelf = new BookShelf();
+        bookShelf.addBook(TypicalBooks.ARTEMIS);
+        model.updateSearchResults(bookShelf);
+        assertExecutionFailure(INDEX_SECOND_BOOK, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     @Test
@@ -139,10 +139,10 @@ public class SelectCommandTest {
 
         BaseEvent lastEvent = eventsCollectorRule.eventsCollector.getMostRecent();
         int targetIndex = -1;
-        if (lastEvent instanceof JumpToBookListRequestEvent) {
-            targetIndex = ((JumpToBookListRequestEvent) lastEvent).targetIndex;
-        } else if (lastEvent instanceof JumpToResultsListRequestEvent) {
-            targetIndex = ((JumpToResultsListRequestEvent) lastEvent).targetIndex;
+        if (lastEvent instanceof JumpToBookListIndexRequestEvent) {
+            targetIndex = ((JumpToBookListIndexRequestEvent) lastEvent).targetIndex;
+        } else if (lastEvent instanceof JumpToSearchResultsIndexRequestEvent) {
+            targetIndex = ((JumpToSearchResultsIndexRequestEvent) lastEvent).targetIndex;
         }
         assertEquals(index, Index.fromZeroBased(targetIndex));
     }

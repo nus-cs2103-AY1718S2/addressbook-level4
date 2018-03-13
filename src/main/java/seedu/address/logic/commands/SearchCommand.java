@@ -19,8 +19,8 @@ public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Search for books on Google Books\n"
-            + "Parameters: SEARCH_TERM "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for books online.\n"
+            + "Parameters: [SEARCH_TERM] "
             + "[" + PREFIX_ISBN + "ISBN] "
             + "[" + PREFIX_TITLE + "TITLE] "
             + "[" + PREFIX_AUTHOR + "AUTHOR] "
@@ -31,7 +31,7 @@ public class SearchCommand extends Command {
 
     public static final String MESSAGE_SEARCHING = "Searching for matching books...";
     public static final String MESSAGE_EMPTY_QUERY = "No search term or search parameter specified.";
-    public static final String MESSAGE_SEARCH_FAIL = "Failed to retrieve information from Google Books.";
+    public static final String MESSAGE_SEARCH_FAIL = "Failed to retrieve information from online.";
     public static final String MESSAGE_SEARCH_SUCCESS = "Found %s matching books.";
 
     private final SearchDescriptor searchDescriptor;
@@ -92,9 +92,9 @@ public class SearchCommand extends Command {
         }
 
         /**
-         * Returns true if at least one field is edited.
+         * Returns true if at least one field is not empty.
          */
-        public boolean isAnyFieldEdited() {
+        public boolean isValid() {
             return CollectionUtil.isAnyNonNull(searchTerm, isbn, title, author, category);
         }
 

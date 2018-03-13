@@ -35,7 +35,7 @@ public class SearchCommandParser implements Parser<SearchCommand> {
         argMultimap.getValue(PREFIX_AUTHOR).ifPresent(searchDescriptor::setAuthor);
         argMultimap.getValue(PREFIX_CATEGORY).ifPresent(searchDescriptor::setCategory);
 
-        if (!searchDescriptor.isAnyFieldEdited()) {
+        if (!searchDescriptor.isValid()) {
             throw new ParseException(SearchCommand.MESSAGE_EMPTY_QUERY);
         }
 

@@ -1,13 +1,16 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
+import seedu.address.commons.events.network.ApiSearchRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.SearchCommand.SearchDescriptor;
@@ -16,11 +19,14 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.testutil.SearchDescriptorBuilder;
+import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for SearchCommand.
  */
 public class SearchCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model;
 
@@ -33,42 +39,26 @@ public class SearchCommandTest {
     public void execute_allFieldsSpecifiedWithSearchTerm_success() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle("1")
                 .withCategory("1").withIsbn("1").withAuthor("1").withSearchTerm("searchterm").build();
-        SearchCommand command = prepareCommand(searchDescriptor);
-
-        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
-
-        assertCommandSuccess(command, model, SearchCommand.MESSAGE_SEARCHING, expectedModel);
+        assertExecutionSuccess(searchDescriptor);
     }
 
     @Test
     public void execute_allFieldsSpecifiedNoSearchTerm_success() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle("1")
                 .withCategory("1").withIsbn("1").withAuthor("1").build();
-        SearchCommand command = prepareCommand(searchDescriptor);
-
-        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
-
-        assertCommandSuccess(command, model, SearchCommand.MESSAGE_SEARCHING, expectedModel);
+        assertExecutionSuccess(searchDescriptor);
     }
 
     @Test
     public void execute_someFieldsSpecifiedNoSearchTerm_success() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle("1").withIsbn("1").build();
-        SearchCommand command = prepareCommand(searchDescriptor);
-
-        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
-
-        assertCommandSuccess(command, model, SearchCommand.MESSAGE_SEARCHING, expectedModel);
+        assertExecutionSuccess(searchDescriptor);
     }
 
     @Test
     public void execute_noFieldSpecifiedNoSearchTerm_success() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().build();
-        SearchCommand command = prepareCommand(searchDescriptor);
-
-        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
-
-        assertCommandSuccess(command, model, SearchCommand.MESSAGE_SEARCHING, expectedModel);
+        assertExecutionSuccess(searchDescriptor);
     }
 
     @Test
@@ -95,6 +85,19 @@ public class SearchCommandTest {
 
         // different descriptor -> returns false
         assertFalse(standardCommand.equals(new SearchCommand(descriptorB)));
+    }
+
+    /**
+     * Executes a {@code SearchCommand} with the given {@code descriptor}, and checks that
+     * {@code ApiSearchRequestEvent} is raised with the correct search parameters.
+     */
+    private void assertExecutionSuccess(SearchDescriptor descriptor) {
+        SearchCommand command = prepareCommand(descriptor);
+        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
+        assertCommandSuccess(command, model, SearchCommand.MESSAGE_SEARCHING, expectedModel);
+
+        ApiSearchRequestEvent lastEvent = (ApiSearchRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(descriptor.toSearchString(), lastEvent.searchParameters);
     }
 
     private SearchCommand prepareCommand(SearchDescriptor descriptor) {

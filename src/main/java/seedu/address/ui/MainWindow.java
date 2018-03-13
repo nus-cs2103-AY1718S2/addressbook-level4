@@ -17,9 +17,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.ShowBookListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.ui.ShowSearchResultsRequestEvent;
+import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -202,7 +202,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleShowBookListRequestEvent(ShowBookListRequestEvent event) {
+    private void handleShowBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
             bookListPanelPlaceholder.getChildren().clear();
@@ -211,7 +211,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleShowSearchResultsRequestEvent(ShowSearchResultsRequestEvent event) {
+    private void handleShowSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
             bookListPanelPlaceholder.getChildren().clear();

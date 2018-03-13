@@ -16,7 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToResultsListRequestEvent;
+import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
 import seedu.address.model.book.Book;
 
 /**
@@ -75,7 +75,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToResultsListRequestEvent(JumpToResultsListRequestEvent event) {
+    private void handleJumpToResultsListRequestEvent(JumpToSearchResultsIndexRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }

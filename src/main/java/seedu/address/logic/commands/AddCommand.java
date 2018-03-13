@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ShowBookListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.DuplicateBookException;
@@ -51,7 +51,7 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addBook(toAdd);
-            EventsCenter.getInstance().post(new ShowBookListRequestEvent());
+            EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateBookException e) {
             throw new CommandException(MESSAGE_DUPLICATE_BOOK);

@@ -16,21 +16,21 @@ public class SearchDescriptorTest {
         // has at least 1 modified field -> returns true
         SearchDescriptor descriptor =
                 new SearchDescriptorBuilder().withAuthor("author1").withIsbn("12345").build();
-        assertTrue(descriptor.isAnyFieldEdited());
+        assertTrue(descriptor.isValid());
         descriptor = new SearchDescriptorBuilder().withAuthor("12345").build();
-        assertTrue(descriptor.isAnyFieldEdited());
+        assertTrue(descriptor.isValid());
         descriptor = new SearchDescriptorBuilder().withCategory("12345").build();
-        assertTrue(descriptor.isAnyFieldEdited());
+        assertTrue(descriptor.isValid());
         descriptor = new SearchDescriptorBuilder().withIsbn("12345").build();
-        assertTrue(descriptor.isAnyFieldEdited());
+        assertTrue(descriptor.isValid());
         descriptor = new SearchDescriptorBuilder().withSearchTerm("12345").build();
-        assertTrue(descriptor.isAnyFieldEdited());
+        assertTrue(descriptor.isValid());
         descriptor = new SearchDescriptorBuilder().withTitle("12345").build();
-        assertTrue(descriptor.isAnyFieldEdited());
+        assertTrue(descriptor.isValid());
 
         // has no modified field -> returns false
         descriptor = new SearchDescriptorBuilder().build();
-        assertFalse(descriptor.isAnyFieldEdited());
+        assertFalse(descriptor.isValid());
     }
 
     @Test

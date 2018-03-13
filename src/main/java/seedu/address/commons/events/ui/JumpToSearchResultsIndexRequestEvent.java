@@ -6,11 +6,11 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to jump to a particular index in the list of search results.
  */
-public class JumpToResultsListRequestEvent extends BaseEvent {
+public class JumpToSearchResultsIndexRequestEvent extends BaseEvent {
 
     public final int targetIndex;
 
-    public JumpToResultsListRequestEvent(Index targetIndex) {
+    public JumpToSearchResultsIndexRequestEvent(Index targetIndex) {
         this.targetIndex = targetIndex.getZeroBased();
     }
 

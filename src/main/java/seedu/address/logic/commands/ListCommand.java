@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ShowBookListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
 
 /**
  * Lists all books in the book shelf to the user.
@@ -18,7 +18,7 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
-        EventsCenter.getInstance().post(new ShowBookListRequestEvent());
+        EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

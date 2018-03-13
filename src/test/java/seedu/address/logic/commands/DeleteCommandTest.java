@@ -60,14 +60,14 @@ public class DeleteCommandTest {
     @Test
     public void execute_invalidActiveListType_throwsCommandException() throws Exception {
         model.setActiveListType(ActiveListType.SEARCH_RESULTS);
-        DeleteCommand deleteCommand = prepareCommand(Index.fromZeroBased(0));
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
 
         assertCommandFailure(deleteCommand, model, DeleteCommand.MESSAGE_WRONG_ACTIVE_LIST);
     }
 
     @Test
     public void execute_invalidBook_throwsAssertionError() throws Exception {
-        DeleteCommand deleteCommand = prepareCommand(Index.fromZeroBased(0));
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
         deleteCommand.preprocessUndoableCommand();
         model.deleteBook(TypicalBooks.ARTEMIS);
         thrown.expect(AssertionError.class);

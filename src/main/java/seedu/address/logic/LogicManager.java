@@ -10,8 +10,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.network.ApiSearchResultEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.events.ui.ShowBookListRequestEvent;
-import seedu.address.commons.events.ui.ShowSearchResultsRequestEvent;
+import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.SearchCommand;
@@ -76,32 +76,32 @@ public class LogicManager extends ComponentManager implements Logic {
         switch (event.outcome) {
         case FAILURE:
             raise(new NewResultAvailableEvent(SearchCommand.MESSAGE_SEARCH_FAIL));
-            return;
+            break;
         case SUCCESS:
             // Updating the search results on the model will update its observable list (and hence the UI)
             // so this must be done on the JavaFX thread.
             Platform.runLater(() -> {
                 ReadOnlyBookShelf searchResults = event.bookShelf;
                 model.updateSearchResults(searchResults);
-                raise(new ShowSearchResultsRequestEvent());
+                raise(new SwitchToSearchResultsRequestEvent());
                 raise(new NewResultAvailableEvent(
                         String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, searchResults.getBookList().size())));
             });
-            return;
+            break;
         default:
-            logger.warning("Unexpected event outcome.");
+            logger.warning("Unexpected ApiSearchResultEvent outcome.");
             break;
         }
     }
 
     @Subscribe
-    private void handleShowBookListRequestEvent(ShowBookListRequestEvent event) {
+    private void handleShowBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         model.setActiveListType(ActiveListType.BOOK_SHELF);
     }
 
     @Subscribe
-    private void handleShowSearchResultsRequestEvent(ShowSearchResultsRequestEvent event) {
+    private void handleShowSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         model.setActiveListType(ActiveListType.SEARCH_RESULTS);
     }

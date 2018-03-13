@@ -65,7 +65,7 @@ Searches for books online +
 Format: `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
 
 ****
-* Searches online for books using the specified `SEARCH_TERM` and constraints on its `ISBN`, `TITLE`, `AUTHOR`, and `CATEGORY`.
+* Searches online for books containing the specified `SEARCH_TERM`, and matches the specified constraints on its `ISBN`, `TITLE`, `AUTHOR`, and `CATEGORY`.
 * At least one of the fields must be provided.
 ****
 

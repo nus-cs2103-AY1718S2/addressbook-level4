@@ -30,6 +30,9 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeaRcH hello", MESSAGE_UNKNOWN_COMMAND);
 
+        /* Case: misspelled command word -> rejected */
+        assertCommandFailure("searchh hello", MESSAGE_UNKNOWN_COMMAND);
+
         /* ----------------------------------- Perform valid search operations -------------------------------------- */
 
         // Note: these tests require network connection.

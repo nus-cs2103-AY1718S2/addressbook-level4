@@ -1,13 +1,17 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.CATEGORY_DESC_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CATEGORY_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BABYLON;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -23,7 +27,7 @@ public class SearchCommandParserTest {
     private SearchCommandParser parser = new SearchCommandParser();
 
     @Test
-    public void parse_missingParts_failure() {
+    public void parse_noFieldSpecified_failure() {
         // no search term and no parameters specified
         assertParseFailure(parser, "", SearchCommand.MESSAGE_EMPTY_QUERY);
     }
@@ -81,9 +85,9 @@ public class SearchCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         String userInput = DEFAULT_SEARCH_TERM + TITLE_DESC_ARTEMIS + TITLE_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS
-                + AUTHOR_DESC_ARTEMIS + TITLE_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS;
-        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle(VALID_TITLE_ARTEMIS)
-                .withAuthor(VALID_AUTHOR_ARTEMIS).withSearchTerm(DEFAULT_SEARCH_TERM).build();
+                + AUTHOR_DESC_ARTEMIS + TITLE_DESC_BABYLON + AUTHOR_DESC_BABYLON;
+        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle(VALID_TITLE_BABYLON)
+                .withAuthor(VALID_AUTHOR_BABYLON).withSearchTerm(DEFAULT_SEARCH_TERM).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

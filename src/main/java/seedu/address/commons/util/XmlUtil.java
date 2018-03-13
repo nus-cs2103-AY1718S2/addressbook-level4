@@ -4,11 +4,14 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
+import seedu.address.storage.SecurityUtil;
 
 /**
  * Helps with reading from and writing to XML files.
@@ -24,10 +27,11 @@ public class XmlUtil {
      *                       Cannot be null.
      * @throws FileNotFoundException Thrown if the file is missing.
      * @throws JAXBException         Thrown if the file is empty or does not have the correct format.
+     * @throws IOException           Thrown if the file cannot be opened
      */
     @SuppressWarnings("unchecked")
     public static <T> T getDataFromFile(File file, Class<T> classToConvert)
-            throws FileNotFoundException, JAXBException {
+            throws IOException, JAXBException {
 
         requireNonNull(file);
         requireNonNull(classToConvert);
@@ -35,7 +39,7 @@ public class XmlUtil {
         if (!FileUtil.isFileExists(file)) {
             throw new FileNotFoundException("File not found : " + file.getAbsolutePath());
         }
-
+        SecurityUtil.decrypt(file);
         JAXBContext context = JAXBContext.newInstance(classToConvert);
         Unmarshaller um = context.createUnmarshaller();
 
@@ -50,8 +54,9 @@ public class XmlUtil {
      * @throws FileNotFoundException Thrown if the file is missing.
      * @throws JAXBException         Thrown if there is an error during converting the data
      *                               into xml and writing to the file.
+     * @throws IOException           Thrown if the file cannot be opened
      */
-    public static <T> void saveDataToFile(File file, T data) throws FileNotFoundException, JAXBException {
+    public static <T> void saveDataToFile(File file, T data) throws IOException, JAXBException {
 
         requireNonNull(file);
         requireNonNull(data);
@@ -65,6 +70,7 @@ public class XmlUtil {
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
         m.marshal(data, file);
+        SecurityUtil.encrypt(file);
     }
 
 }

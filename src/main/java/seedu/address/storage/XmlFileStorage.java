@@ -1,7 +1,7 @@
 package seedu.address.storage;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 
@@ -16,8 +16,9 @@ public class XmlFileStorage {
      * Saves the given addressbook data to the specified file.
      */
     public static void saveDataToFile(File file, XmlSerializableAddressBook addressBook)
-            throws FileNotFoundException {
+            throws IOException {
         try {
+            SecurityUtil.decrypt(file);
             XmlUtil.saveDataToFile(file, addressBook);
         } catch (JAXBException e) {
             throw new AssertionError("Unexpected exception " + e.getMessage());
@@ -28,9 +29,11 @@ public class XmlFileStorage {
      * Returns address book in the file or an empty address book
      */
     public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
-                                                                            FileNotFoundException {
+                                                                            IOException {
         try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
+            XmlSerializableAddressBook xmlBook =  XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
+            SecurityUtil.encrypt(file);
+            return xmlBook;
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

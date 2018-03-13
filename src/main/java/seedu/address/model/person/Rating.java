@@ -11,6 +11,7 @@ public class Rating {
     public static final String RATING_VALIDATION_REGEX = "-?\\d*";
     private static final String INVALID_RATING_DISPLAY = "-";
     private static final String RATING_DISPLAY = "*";
+    private static final int DEFAULT_INVALID_RATING = -1;
 
     public final Integer value;
 
@@ -18,7 +19,7 @@ public class Rating {
      * Constructs a {@code Rating} for a new person who hasn't been assigned a rating.
      */
     public Rating() {
-        value = -1;
+        value = DEFAULT_INVALID_RATING;
     }
 
     /**

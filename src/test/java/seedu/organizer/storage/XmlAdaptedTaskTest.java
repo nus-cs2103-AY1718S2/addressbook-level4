@@ -20,7 +20,6 @@ import seedu.organizer.testutil.Assert;
 public class XmlAdaptedTaskTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PRIORITY = "+651234";
-    private static final String INVALID_DESCRIPTION = " ";
     private static final String INVALID_DEADLINE = "2018/09/09";
     private static final String INVALID_TAG = "#friend";
     private static final String VALID_NAME = SPRINGCLEAN.getName().toString();
@@ -79,14 +78,6 @@ public class XmlAdaptedTaskTest {
     public void toModelType_nullDeadline_throwsIllegalValueException() {
         XmlAdaptedTask person = new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, null, VALID_DESCRIPTION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Deadline.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
-    public void toModelType_invalidDescription_throwsIllegalValueException() {
-        XmlAdaptedTask person =
-                new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, INVALID_DESCRIPTION, VALID_TAGS);
-        String expectedMessage = Description.MESSAGE_DESCRIPTION_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 

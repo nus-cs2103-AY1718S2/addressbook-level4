@@ -6,7 +6,6 @@ import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_STUDY
 import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
-import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -37,7 +36,6 @@ import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
-import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
@@ -85,8 +83,6 @@ public class EditCommandParserTest {
                 "1" + INVALID_PRIORITY_DESC, Priority.MESSAGE_PRIORITY_CONSTRAINTS); // invalid priority
         assertParseFailure(parser, "1" + INVALID_DEADLINE_DESC,
             Deadline.MESSAGE_DEADLINE_CONSTRAINTS); // invalid deadline
-        assertParseFailure(parser,
-                "1" + INVALID_DESCRIPTION_DESC, Description.MESSAGE_DESCRIPTION_CONSTRAINTS); // invalid organizer
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid priority followed by valid deadline

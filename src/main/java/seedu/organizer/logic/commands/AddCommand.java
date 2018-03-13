@@ -27,7 +27,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_DESCRIPTION + "DESCRIPTION "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
+            + PREFIX_NAME + "CS2103T "
             + PREFIX_PRIORITY + "9 "
             + PREFIX_DEADLINE + "2018-03-11 "
             + PREFIX_DESCRIPTION + "Refactor AddressBook to PrioriTask "

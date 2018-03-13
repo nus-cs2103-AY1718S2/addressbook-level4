@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
-import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -39,7 +38,6 @@ import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
-import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
@@ -167,10 +165,6 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         /* Case: invalid deadline -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_DEADLINE_DESC,
                 Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
-
-        /* Case: invalid organizer -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_DESCRIPTION_DESC,
-                Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_TAG_DESC,

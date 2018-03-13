@@ -6,7 +6,6 @@ import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_STUDY
 import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_EXAM;
 import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
-import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -44,7 +43,6 @@ import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
-import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
@@ -106,7 +104,7 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a task with all fields same as another task in the organizer book except organizer -> added */
+        /* Case: add a task with all fields same as another task in the organizer book except description -> added */
         toAdd = new TaskBuilder().withName(VALID_NAME_EXAM)
                 .withPriority(VALID_PRIORITY_EXAM).withDeadline(VALID_DEADLINE_EXAM)
                 .withDescription(VALID_DESCRIPTION_STUDY).withTags(VALID_TAG_FRIEND).build();
@@ -128,6 +126,16 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: add a task, missing tags -> added */
         assertCommandSuccess(MAKEPRESENT);
+
+        //@@guekling
+        /* Case: add a task, missing description -> added */
+        // deleteAllTasks();
+        toAdd = new TaskBuilder().withName(VALID_NAME_EXAM).withPriority
+                (VALID_PRIORITY_EXAM).withDeadline(VALID_DEADLINE_EXAM).withDescription("")
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+        //@@author
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
@@ -162,10 +170,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DESCRIPTION_DESC_EXAM;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing organizer -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
         /* Case: invalid keyword -> rejected */
         command = "adds " + TaskUtil.getPersonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
@@ -184,11 +188,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM
                 + PRIORITY_DESC_EXAM + INVALID_DEADLINE_DESC + DESCRIPTION_DESC_EXAM;
         assertCommandFailure(command, Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
-
-        /* Case: invalid organizer -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM
-                + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM + INVALID_DESCRIPTION_DESC;
-        assertCommandFailure(command, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM

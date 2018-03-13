@@ -28,7 +28,6 @@ import seedu.organizer.testutil.Assert;
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PRIORITY = "+651234";
-    private static final String INVALID_DESCRIPTION = " ";
     private static final String INVALID_DEADLINE = "20180203";
     private static final String INVALID_TAG = "#friend";
 
@@ -134,13 +133,6 @@ public class ParserUtilTest {
     public void parseDescription_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDescription((String) null));
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDescription((Optional<String>) null));
-    }
-
-    @Test
-    public void parseDescription_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDescription(INVALID_DESCRIPTION));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDescription(Optional.of
-                (INVALID_DESCRIPTION)));
     }
 
     @Test

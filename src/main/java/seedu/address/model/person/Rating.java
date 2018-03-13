@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import com.vdurmont.emoji.EmojiParser;
+
 /**
  * Represents a Person's rating in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidRating(String)}
@@ -10,7 +12,7 @@ public class Rating {
     public static final String MESSAGE_RATING_CONSTRAINTS = "Rating must be an integer";
     public static final String RATING_VALIDATION_REGEX = "-?\\d*";
     private static final String INVALID_RATING_DISPLAY = "-";
-    private static final String RATING_DISPLAY = "*";
+    private static final String RATING_DISPLAY = ":star2: ";
     private static final int DEFAULT_INVALID_RATING = -1;
 
     public final Integer value;
@@ -72,6 +74,7 @@ public class Rating {
         while (rating-- > 0) {
             sb.append(RATING_DISPLAY);
         }
-        return sb.toString();
+        String result = EmojiParser.parseToUnicode(sb.toString());
+        return result;
     }
 }

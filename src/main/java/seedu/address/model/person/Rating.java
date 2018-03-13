@@ -72,10 +72,21 @@ public class Rating {
     }
 
     /**
-     * Returns true if a given string is a valid tag name.
+     * Returns true if a given double is a valid score.
      */
     public static boolean isValidScore(Double test) {
         return test >= MINIMUM_SCORE && test <= MAXIMUM_SCORE;
+    }
+
+    /**
+     * Returns true if a given double is a default score.
+     */
+    public static boolean isDefaultScore(Double test) {
+        return test == DEFAULT_SCORE;
+    }
+
+    public static boolean isValidOrDefaultScore(Double test) {
+        return isValidScore(test) || isDefaultScore(test);
     }
 
     @Override

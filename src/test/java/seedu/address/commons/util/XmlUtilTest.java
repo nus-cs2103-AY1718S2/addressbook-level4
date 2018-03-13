@@ -44,7 +44,9 @@ public class XmlUtilTest {
     private static final String VALID_COMMUNICATION_SKILLS_SCORE = "3.5";
     private static final String VALID_PROBLEM_SOLVING_SKILLS_SCORE = "3";
     private static final String VALID_EXPERIENCE_SCORE = "2.5";
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final String VALID_RESUME = TEST_DATA_FOLDER + "hans.pdf";
+    private static final List<XmlAdaptedTag> VALID_TAGS =
+            Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -87,7 +89,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
-                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_TAGS);
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +100,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
-                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_TAGS);
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -109,7 +111,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
-                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_TAGS);
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

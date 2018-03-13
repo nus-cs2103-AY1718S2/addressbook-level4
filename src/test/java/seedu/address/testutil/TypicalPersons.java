@@ -16,6 +16,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROBLEM_SOLVING_SKILLS_SCORE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROBLEM_SOLVING_SKILLS_SCORE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_RESUME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_RESUME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TECHNICAL_SKILLS_SCORE_AMY;
@@ -39,9 +41,11 @@ public class TypicalPersons {
             .withPhone("85355255").withExpectedGraduationYear("2020")
             .withRating("-1", "-1",
                     "-1","-1")
+            .withResume(formPathFromFileName("alice.pdf"))
             .withTags("friends").build();
+
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25")
+            .withAddress("311, Clementi Ave 2, #02-25").withResume(formPathFromFileName(null))
             .withEmail("johnd@example.com").withPhone("98765432").withExpectedGraduationYear("2021")
             .withRating("4", "4.5",
                     "3","3.5")
@@ -55,7 +59,8 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withExpectedGraduationYear("2020")
             .withRating("-1", "-1",
-                    "-1","-1").build();
+                    "-1","-1")
+            .withResume(formPathFromFileName("daniel.pdf")).build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
             .withExpectedGraduationYear("2018")
@@ -70,7 +75,8 @@ public class TypicalPersons {
             .withEmail("anna@example.com").withAddress("4th street")
             .withExpectedGraduationYear("2022")
             .withRating("-1", "-1",
-                    "-1","-1").build();
+                    "-1","-1")
+            .withResume(formPathFromFileName("george.pdf")).build();
     public static final Person ALICE_WITHOUT_TAG = new PersonBuilder(ALICE).withTags().build();
     public static final Person BENSON_WITH_FRIENDS_TAG_REMOVED = new PersonBuilder(BENSON)
             .withTags("owesMoney").build();
@@ -81,7 +87,8 @@ public class TypicalPersons {
             .withEmail("stefan@example.com").withAddress("little india")
             .withExpectedGraduationYear("2019")
             .withRating("-1", "-1",
-                    "-1","-1").build();
+                    "-1","-1")
+            .withResume(formPathFromFileName("hoon.pdf")).build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave")
             .withExpectedGraduationYear("2018")
@@ -94,9 +101,11 @@ public class TypicalPersons {
             .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
             .withRating(VALID_TECHNICAL_SKILLS_SCORE_AMY, VALID_COMMUNICATION_SKILLS_SCORE_AMY,
                     VALID_PROBLEM_SOLVING_SKILLS_SCORE_AMY,VALID_EXPERIENCE_SCORE_AMY)
+            .withResume(VALID_RESUME_AMY)
             .withTags(VALID_TAG_FRIEND).build();
+
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withResume(VALID_RESUME_BOB)
             .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_BOB)
             .withRating(VALID_TECHNICAL_SKILLS_SCORE_BOB, VALID_COMMUNICATION_SKILLS_SCORE_BOB,
                     VALID_PROBLEM_SOLVING_SKILLS_SCORE_BOB, VALID_EXPERIENCE_SCORE_BOB)
@@ -105,6 +114,8 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
     public static final String KEYWORD_MATCHING_2019 = "2019"; //A keyword that matches 2020
+
+    private static final String RESUME_PATH = "src/test/resources/resume/";
 
     private TypicalPersons() {} // prevents instantiation
 
@@ -125,5 +136,19 @@ public class TypicalPersons {
 
     public static List<Person> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    /**
+     * Forms the resume path from the resume file name
+     */
+    private static String formPathFromFileName(String fileName) {
+        if (fileName == null) {
+            return null;
+        } else {
+            return RESUME_PATH + fileName;
+        }
+    }
+    public static void main(String[] args) {
+        System.out.println(ALICE);
     }
 }

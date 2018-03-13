@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
@@ -19,6 +20,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -35,7 +37,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_TAG);
+                        PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_RESUME, PREFIX_TAG);
 
         Index index;
 
@@ -53,6 +55,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             ParserUtil.parseExpectedGraduationYear(argMultimap.getValue(PREFIX_EXPECTED_GRADUATION_YEAR))
                     .ifPresent(editPersonDescriptor::setExpectedGraduationYear);
+            parseResumeForEdit(argMultimap.getValue(PREFIX_RESUME)).ifPresent(editPersonDescriptor::setResume);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -63,6 +66,22 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         return new EditCommand(index, editPersonDescriptor);
+    }
+    /**
+     * Parses {@code Optional<Resume> resume} into a {@code Optional<Resume>} if {@code resume} is non-empty.
+     * If resume is present and equals to empty string, it will be parsed into a
+     * {@code Resume} containing null value.
+     */
+    private Optional<Resume> parseResumeForEdit(Optional<String> resume) throws IllegalValueException {
+        assert resume != null;
+        if (!resume.isPresent()) {
+            return Optional.empty();
+        }
+        if (resume.get().equals("")) {
+            return Optional.of(new Resume(null));
+        } else {
+            return ParserUtil.parseResume(resume);
+        }
     }
 
     /**

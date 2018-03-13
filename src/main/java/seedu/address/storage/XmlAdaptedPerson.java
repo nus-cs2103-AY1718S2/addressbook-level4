@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static java.util.Objects.isNull;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
+import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -25,6 +28,7 @@ public class XmlAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
+    //compulsory fields
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -35,6 +39,9 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String expectedGraduationYear;
+    //optional fields
+    @XmlElement(nillable = true)
+    private String resume;
 
     @XmlElement
     private String technicalSkillsScore;
@@ -59,7 +66,8 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
                             String technicalSkillsScore, String communicationSkillsScore,
-                            String problemSolvingSkillsScore, String experienceScore, List<XmlAdaptedTag> tagged) {
+                            String problemSolvingSkillsScore, String experienceScore,
+                            String resume, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -69,6 +77,7 @@ public class XmlAdaptedPerson {
         this.communicationSkillsScore = communicationSkillsScore;
         this.problemSolvingSkillsScore = problemSolvingSkillsScore;
         this.experienceScore = experienceScore;
+        this.resume = resume;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -89,6 +98,7 @@ public class XmlAdaptedPerson {
         communicationSkillsScore = Double.toString(source.getRating().communicationSkillsScore);
         problemSolvingSkillsScore = Double.toString(source.getRating().problemSolvingSkillsScore);
         experienceScore = Double.toString(source.getRating().experienceScore);
+        resume = source.getResume().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -147,11 +157,22 @@ public class XmlAdaptedPerson {
         }
         final ExpectedGraduationYear expectedGraduationYear = new ExpectedGraduationYear(this.expectedGraduationYear);
 
+        if (!Rating.isValidOrDefaultScore(Double.valueOf(technicalSkillsScore))
+                || !Rating.isValidOrDefaultScore(Double.valueOf(communicationSkillsScore))
+                || !Rating.isValidOrDefaultScore(Double.valueOf(problemSolvingSkillsScore))
+                || !Rating.isValidOrDefaultScore(Double.valueOf(experienceScore))) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
         final Rating rating = new Rating(Double.valueOf(technicalSkillsScore), Double.valueOf(communicationSkillsScore),
                 Double.valueOf(problemSolvingSkillsScore), Double.valueOf(experienceScore));
 
+        if (!isNull(this.resume) && !Resume.isValidResume(this.resume)) {
+            throw new IllegalValueException(Resume.MESSAGE_RESUME_CONSTRAINTS);
+        }
+        final Resume resume = new Resume(this.resume);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, expectedGraduationYear, rating, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, rating, resume, tags);
     }
 
     @Override

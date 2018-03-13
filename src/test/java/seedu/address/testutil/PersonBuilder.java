@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import static java.util.Objects.isNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +12,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
+import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -17,6 +20,7 @@ import seedu.address.model.util.SampleDataUtil;
  * A utility class to help with building Person objects.
  */
 public class PersonBuilder {
+    private static final String RESUME_PATH = "src/test/resources/resume/";
 
     private static final String DEFAULT_NAME = "Alice Pauline";
     private static final String DEFAULT_PHONE = "85355255";
@@ -27,6 +31,7 @@ public class PersonBuilder {
     private static final String DEFAULT_COMMUNICATION_SKILLS_SCORE = "-1";
     private static final String DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE = "-1";
     private static final String DEFAULT_EXPERIENCE_SCORE = "-1";
+    private static final String DEFAULT_RESUME = "alice.pdf";
     private static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -35,6 +40,8 @@ public class PersonBuilder {
     private Address address;
     private ExpectedGraduationYear expectedGraduationYear;
     private Rating rating;
+    private Resume resume;
+
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -47,6 +54,8 @@ public class PersonBuilder {
                 Double.valueOf(DEFAULT_COMMUNICATION_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_EXPERIENCE_SCORE));
+        resume = new Resume(formPathFromFileName(DEFAULT_RESUME));
+
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -60,6 +69,8 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         expectedGraduationYear = personToCopy.getExpectedGraduationYear();
         rating = personToCopy.getRating();
+        resume = personToCopy.getResume();
+
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -122,8 +133,27 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Resume} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withResume(String resume) {
+        this.resume = new Resume(resume);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, expectedGraduationYear, rating, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, rating, resume, tags);
+    }
+
+    /**
+     * Forms the resume path from the resume file name
+     */
+    private static String formPathFromFileName(String fileName) {
+        if (isNull(fileName)) {
+            return null;
+        } else {
+            return RESUME_PATH + fileName;
+        }
     }
 
 }

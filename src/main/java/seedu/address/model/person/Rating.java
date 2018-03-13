@@ -11,15 +11,15 @@ import java.util.Objects;
 public class Rating {
     public static final String MESSAGE_RATING_CONSTRAINTS =
             "The scores should be numbers between 1 to 5.";
+    public static final double DEFAULT_SCORE = -1;
+    public static final double MAXIMUM_SCORE = 5;
+    public static final double MINIMUM_SCORE = 1;
+
 
     public final double technicalSkillsScore;
     public final double communicationSkillsScore;
     public final double problemSolvingSkillsScore;
     public final double experienceScore;
-
-    public static final double DEFAULT_SCORE = -1;
-    public static final double MAXIMUM_SCORE = 5;
-    public static final double MINIMUM_SCORE = 1;
 
     /**
      * Constructs a {@code Rating}.

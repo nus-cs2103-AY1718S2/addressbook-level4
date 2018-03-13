@@ -30,7 +30,6 @@ import seedu.address.testutil.PersonBuilder;
   * Contains integration tests (interaction with the Model) and unit tests for RateCommand.
   */
 public class RateCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     public static final String TECHNICAL_SKILLS_SCORE = "4";
     public static final String COMMUNICATION_SKILLS_SCORE = "4.5";
@@ -38,6 +37,8 @@ public class RateCommandTest {
     public static final String EXPERIENCE_SCORE = "3.5";
     public static final Rating VALID_RATING = new Rating(4, 4.5,
             3, 3.5);
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -142,57 +143,57 @@ public class RateCommandTest {
      * unfiltered list is different from the index at the filtered list.
      * 4. Redo the modification. This ensures {@code RedoCommand} modifies the person object regardless of indexing.
      */
-     @Test
-     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
-         UndoRedoStack undoRedoStack = new UndoRedoStack();
-         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-         RateCommand rateCommand = prepareCommand(INDEX_FIRST_PERSON, VALID_RATING);
-         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+    @Test
+    public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
+        UndoRedoStack undoRedoStack = new UndoRedoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
+        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        RateCommand rateCommand = prepareCommand(INDEX_FIRST_PERSON, VALID_RATING);
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-         showPersonAtIndex(model, INDEX_SECOND_PERSON);
-         Person personToModify = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-         Person modifiedPerson = new PersonBuilder(personToModify).withRating(TECHNICAL_SKILLS_SCORE,
-                 COMMUNICATION_SKILLS_SCORE, PROBLEM_SOLVING_SKILLS_SCORE, EXPERIENCE_SCORE).build();
-         // rate -> modifies second person in unfiltered person list / first person in filtered person list
-         rateCommand.execute();
-         undoRedoStack.push(rateCommand);
+        showPersonAtIndex(model, INDEX_SECOND_PERSON);
+        Person personToModify = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person modifiedPerson = new PersonBuilder(personToModify).withRating(TECHNICAL_SKILLS_SCORE,
+                COMMUNICATION_SKILLS_SCORE, PROBLEM_SOLVING_SKILLS_SCORE, EXPERIENCE_SCORE).build();
+        // rate -> modifies second person in unfiltered person list / first person in filtered person list
+        rateCommand.execute();
+        undoRedoStack.push(rateCommand);
 
-         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
-         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-         expectedModel.updatePerson(personToModify, modifiedPerson);
-         assertNotEquals(personToModify, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-         // redo -> modifies same second person in unfiltered person list
-         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-     }
+        expectedModel.updatePerson(personToModify, modifiedPerson);
+        assertNotEquals(personToModify, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        // redo -> modifies same second person in unfiltered person list
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
 
-     @Test
-     public void equals() {
-         final RateCommand standardCommand = new RateCommand(INDEX_FIRST_PERSON, VALID_RATING);
+    @Test
+    public void equals() {
+        final RateCommand standardCommand = new RateCommand(INDEX_FIRST_PERSON, VALID_RATING);
 
-         // same values -> returns true
-         RateCommand commandWithSameValues = new RateCommand(INDEX_FIRST_PERSON, VALID_RATING);
-         assertTrue(standardCommand.equals(commandWithSameValues));
+        // same values -> returns true
+        RateCommand commandWithSameValues = new RateCommand(INDEX_FIRST_PERSON, VALID_RATING);
+        assertTrue(standardCommand.equals(commandWithSameValues));
 
-         // same object -> returns true
-         assertTrue(standardCommand.equals(standardCommand));
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
 
-         // null -> returns false
-         assertFalse(standardCommand.equals(null));
+        // null -> returns false
+        assertFalse(standardCommand.equals(null));
 
-         // different types -> returns false
-         assertFalse(standardCommand.equals(new ClearCommand()));
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
 
-         // different index -> returns false
-         assertFalse(standardCommand.equals(new RateCommand(INDEX_SECOND_PERSON,
-                 VALID_RATING)));
+        // different index -> returns false
+        assertFalse(standardCommand.equals(new RateCommand(INDEX_SECOND_PERSON,
+                VALID_RATING)));
 
-         // different rating -> returns false
-         assertFalse(standardCommand.equals(new RateCommand(INDEX_FIRST_PERSON,
-                 new Rating(1, 1,
-                         1, 1))));
-     }
+        // different rating -> returns false
+        assertFalse(standardCommand.equals(new RateCommand(INDEX_FIRST_PERSON,
+                new Rating(1, 1,
+                        1, 1))));
+    }
 
     /**
       * Returns an {@code RemarkCommand}.

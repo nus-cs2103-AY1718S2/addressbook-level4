@@ -20,12 +20,12 @@ public class RatingTest {
         // invalid scores
         assertFalse(Rating.isValidScore((double) 0));
         assertFalse(Rating.isValidScore(5.5));
-        assertFalse(Rating.isValidScore((double)-3));
+        assertFalse(Rating.isValidScore((double) -3));
 
         // valid phone numbers
-        assertTrue(Rating.isValidScore((double)1));
+        assertTrue(Rating.isValidScore((double) 1));
         assertTrue(Rating.isValidScore(3.5));
-        assertTrue(Rating.isValidScore((double)5));
+        assertTrue(Rating.isValidScore((double) 5));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class RatingTest {
     @Test
     public void equals_differentValues_returnsFalse() {
         Rating differentRating = new Rating(1, 1,
-                1,1);
+                1, 1);
         assertFalse(rating.equals(differentRating));
     }
 }

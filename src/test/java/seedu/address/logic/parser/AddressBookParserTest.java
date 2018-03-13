@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.LoginCommand.TEST_PASSWORD;
+import static seedu.address.logic.commands.LoginCommand.TEST_USERNAME;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -181,7 +183,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_returnsLoginCommand() throws Exception {
-        assertTrue(parser.parseCommand(LoginCommand.COMMAND_WORD) instanceof LoginCommand);
+        assertTrue(parser.parseCommand(LoginCommand.COMMAND_WORD + " " + TEST_USERNAME + " "
+                + TEST_PASSWORD) instanceof LoginCommand);
     }
 
     @Test

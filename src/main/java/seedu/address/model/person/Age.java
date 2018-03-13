@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Person's email in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidAge(Integer)}
+ */
 public class Age {
     public static final String AGE_CONSTRAINTS =
             "Persons age must be above 0 years old and under 150.";

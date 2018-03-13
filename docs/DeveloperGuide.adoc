@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Integrated Medical DataBase - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -794,11 +794,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that...
-|`* * *` |medical staff |filter the details that I want to see |I can have easy access to information I need
+|`* * *` |medical staff |maintain a waiting list of patients(scheduler)|I can have easy access to the current patient's information
 
 |`* * *` |doctor |record health profile (chronic conditions and allergies) of the patient|-
 
-|`* * *` |medical staff |keep records of each visit of the patient |symptoms/condition of patient can be analysed and monitored
+|`* * *` |doctor |keep records of each visit of the patient |symptoms/condition of patient can be analysed and monitored
 
 |`* * *` |medical staff |ensure that all patient's records are secure with a login system |patients know that their medical information is kept confidential
 
@@ -815,7 +815,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `IMDB` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Update record of patient's visit

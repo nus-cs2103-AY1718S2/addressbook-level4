@@ -3,7 +3,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-StardyTogether was developed by team W11-B2. +
+StardyTogether was developed by team W11-B4. +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team

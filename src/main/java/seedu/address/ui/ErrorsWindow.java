@@ -31,21 +31,22 @@ public class ErrorsWindow extends UiPart<Stage> {
     public ErrorsWindow(Stage root) {
         super(FXML, root);
 
-        String errorLog = getErrorLogAsHTMLString();
-        String errorWindowHTML = createErrorLogPageAsHTMLString(errorLog);
-        browser.getEngine().loadContent(errorWindowHTML,"text/html");
+        String errorLog = getErrorLogAsHtmlString();
+        String errorWindowHtml = createErrorLogPageAsHtmlString(errorLog);
+        browser.getEngine().loadContent(errorWindowHtml, "text/Html");
     }
 
     /**
-     * Formats the error log for use in an HTML page.
+     * Formats the error log for use in an Html page.
      */
 
-    private String getErrorLogAsHTMLString() {
+    private String getErrorLogAsHtmlString() {
         StringBuilder errorLog = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(ERROR_LOG_FILE_PATH)))) {
             String line;
-            while ((line = reader.readLine()) != null)
+            while ((line = reader.readLine()) != null) {
                 errorLog.append("<p>").append(line).append("</p>");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,19 +55,19 @@ public class ErrorsWindow extends UiPart<Stage> {
     }
 
     /**
-     * Generates the HTML page content for the errors window.
+     * Generates the Html page content for the errors window.
      */
 
-    private String createErrorLogPageAsHTMLString(String errorLog) {
-        return  "<html>" +
-                    "<style>" +
-                        "body { background: #eee; }" +
-                        "p { margin: 0; }" +
-                    "</style>" +
-                    "<body>" +
-                        "<div>" + errorLog + "</div>" +
-                    "</body>" +
-                "</html>";
+    private String createErrorLogPageAsHtmlString(String errorLog) {
+        return  "<HTML>"
+                    + "<style>"
+                        + "body { background: #eee; }"
+                        + "p { margin: 0; }"
+                    + "</style>"
+                    + "<body>"
+                        + "<div>" + errorLog + "</div>"
+                    + "</body>"
+                + "</HTML>";
     }
 
     /**

@@ -6,10 +6,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 
+import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.PersonIsAddedBeforeDateInputAndContainsTagsPredicate;
 import seedu.address.model.person.DateAdded;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -31,11 +32,13 @@ public class  DeleteBeforeCommand extends UndoableCommand {
             + PREFIX_TAG + "non-client"
             + PREFIX_TAG + "cash cow";
 
-    public static final String MESSAGE_DELETE_PERSONS_SUCCESS = "Deleted all persons with tags %s added before %s";
+    public static final String MESSAGE_DELETE_PERSONS_SUCCESS = "Deleted %d persons with tags %s added before %s";
 
     private final DateAdded inputDate;
     private final Set<Tag> inputTags;
     private final PersonIsAddedBeforeDateInputAndContainsTagsPredicate predicate;
+
+    private int totalPersonsDeleted;
 
     public DeleteBeforeCommand(DateAdded inputDate, Set<Tag> inputTags) {
         this.inputDate = inputDate;
@@ -46,17 +49,27 @@ public class  DeleteBeforeCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
-        requireNonNull(predicate);
         try {
-            model.updateFilteredPersonList(predicate);
             model.deletePersons(model.getFilteredPersonList());
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Any of the target persons cannot be missing");
+            throw new AssertionError("Must have a least one person in the list");
         }
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSONS_SUCCESS, inputTags, inputDate));
+        return new CommandResult(
+                String.format(MESSAGE_DELETE_PERSONS_SUCCESS, totalPersonsDeleted, inputTags, inputDate));
     }
 
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        requireNonNull(predicate);
+        model.updateFilteredPersonList(predicate);
+        totalPersonsDeleted = model.getFilteredPersonList().size();
+
+        if (totalPersonsDeleted <= 0) {
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+            throw new CommandException(Messages.MESSAGE_PERSONS_NOT_FOUND);
+        }
+    }
 
     @Override
     public boolean equals(Object other) {

@@ -115,13 +115,23 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
     }
 
-    public static String parseRemark(String remark){
+    /**
+     * Parses a {@code String remark}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code address} is invalid.
+     */
+    public static String parseRemark(String remark) {
         requireNonNull(remark);
         String trimmedRemark = remark.trim();
         return trimmedRemark;
     }
 
-    public static Optional<String> parseRemark(Optional<String> remark){
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<String>}.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseRemark(Optional<String> remark) {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
     }

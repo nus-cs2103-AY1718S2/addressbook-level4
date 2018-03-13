@@ -17,9 +17,9 @@ public class Rating {
     public final double problemSolvingSkillsScore;
     public final double experienceScore;
 
-    public static final double MINIMUM_SCORE = 1;
-    public static final double MAXIMUM_SCORE = 5;
     public static final double DEFAULT_SCORE = -1;
+    public static final double MAXIMUM_SCORE = 5;
+    public static final double MINIMUM_SCORE = 1;
 
     /**
      * Constructs a {@code Rating}.

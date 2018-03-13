@@ -197,8 +197,8 @@ public class ParserUtil {
         if (technicalSkillsScore.get().trim().equals("")) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
-        return technicalSkillsScore.isPresent() ?
-                Optional.of(parseTechnicalSkillsScore(technicalSkillsScore.get())) : Optional.empty();
+        return technicalSkillsScore.isPresent() ? Optional.of(parseTechnicalSkillsScore(
+                technicalSkillsScore.get())) : Optional.empty();
     }
 
     /**
@@ -229,8 +229,8 @@ public class ParserUtil {
         if (communicationSkillsScore.get().trim().equals("")) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
-        return communicationSkillsScore.isPresent() ?
-                Optional.of(parseCommunicationSkillsScore(communicationSkillsScore.get())) : Optional.empty();
+        return communicationSkillsScore.isPresent() ? Optional.of(parseCommunicationSkillsScore(
+                communicationSkillsScore.get())) : Optional.empty();
     }
 
     /**
@@ -261,8 +261,8 @@ public class ParserUtil {
         if (problemSolvingSkillsScore.get().trim().equals("")) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
-        return problemSolvingSkillsScore.isPresent() ?
-                Optional.of(parseProblemSolvingSkillsScore(problemSolvingSkillsScore.get())) : Optional.empty();
+        return problemSolvingSkillsScore.isPresent() ? Optional.of(parseProblemSolvingSkillsScore(
+                problemSolvingSkillsScore.get())) : Optional.empty();
     }
 
     /**
@@ -293,8 +293,8 @@ public class ParserUtil {
         if (experienceScore.get().trim().equals("")) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
-        return experienceScore.isPresent() ?
-                Optional.of(parseExperienceScore(experienceScore.get())) : Optional.empty();
+        return experienceScore.isPresent() ? Optional.of(parseExperienceScore(
+                experienceScore.get())) : Optional.empty();
     }
 
     /**

@@ -9,6 +9,7 @@ import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,6 +23,10 @@ public class PersonBuilder {
     private static final String DEFAULT_EMAIL = "alice@gmail.com";
     private static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     private static final String DEFAULT_EXPECTED_GRADUATION_YEAR = "2020";
+    private static final String DEFAULT_TECHNICAL_SKILLS_SCORE = "-1";
+    private static final String DEFAULT_COMMUNICATION_SKILLS_SCORE = "-1";
+    private static final String DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE = "-1";
+    private static final String DEFAULT_EXPERIENCE_SCORE = "-1";
     private static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -29,6 +34,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private ExpectedGraduationYear expectedGraduationYear;
+    private Rating rating;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -37,6 +43,10 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         expectedGraduationYear = new ExpectedGraduationYear(DEFAULT_EXPECTED_GRADUATION_YEAR);
+        rating = new Rating(Double.valueOf(DEFAULT_TECHNICAL_SKILLS_SCORE),
+                Double.valueOf(DEFAULT_COMMUNICATION_SKILLS_SCORE),
+                Double.valueOf(DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE),
+                Double.valueOf(DEFAULT_EXPERIENCE_SCORE));
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -49,6 +59,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         expectedGraduationYear = personToCopy.getExpectedGraduationYear();
+        rating = personToCopy.getRating();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -99,8 +110,20 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Rating} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRating(String technicalSkillsScore, String communicationSkillsScore,
+                                    String problemSolvingSkillsScore, String experienceScore) {
+        this.rating = new Rating(Double.valueOf(technicalSkillsScore),
+                Double.valueOf(communicationSkillsScore),
+                Double.valueOf(problemSolvingSkillsScore),
+                Double.valueOf(experienceScore));
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, expectedGraduationYear, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, rating, tags);
     }
 
 }

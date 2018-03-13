@@ -41,6 +41,15 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_EXPECTED_GRADUATION_YEAR_AMY = "2018";
     public static final String VALID_EXPECTED_GRADUATION_YEAR_BOB = "2020";
+    public static final String VALID_TECHNICAL_SKILLS_SCORE_AMY = "4";
+    public static final String VALID_TECHNICAL_SKILLS_SCORE_BOB = "4.5";
+    public static final String VALID_COMMUNICATION_SKILLS_SCORE_AMY = "3";
+    public static final String VALID_COMMUNICATION_SKILLS_SCORE_BOB = "4";
+    public static final String VALID_PROBLEM_SOLVING_SKILLS_SCORE_AMY = "2";
+    public static final String VALID_PROBLEM_SOLVING_SKILLS_SCORE_BOB = "4";
+    public static final String VALID_EXPERIENCE_SCORE_AMY = "3";
+    public static final String VALID_EXPERIENCE_SCORE_BOB = "4.5";
+
 
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";

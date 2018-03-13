@@ -118,6 +118,38 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons taking that module: `module`
+
+Finds persons who is taking the module as specified. +
+Format: `module MODULE_CODE`
+
+****
+* The search is case insensitive. e.g `CS2010` will match `cs2010`
+* Only full module codes will be matched e.g. `2010` will not match `CS2010`
+* Persons taking the module will be returned.
+****
+
+Examples:
+
+* `module CS2010` +
+Returns all persons having CS2010 in their modules
+
+=== Viewing common time slots in timetable: `free`
+
+Displays the common free time of two people in the addressbook. +
+Format: `free [PERSON1] [PERSON2]`
+
+****
+* Only full names will be matched e.g. `Han` will not match `Han Tan`
+* Overlap of the two persons' timetables will be displayed.
+* Auto-fill for person's name
+****
+
+Examples:
+
+* `module CS2010` +
+Returns all persons having CS2010 in their modules
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -234,10 +266,20 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Encrypting data files (coming in v2.0)
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
+
+=== Sorting all persons by module code: `sortCode` (coming in v2.0)
+
+Sorts all persons in the addressbook by module code in the order of A to Z. +
+Format: `sortCode`
+
+****
+* Displays full name of persons, arranged in the order of the modules they are taking.
+* There may by multiple entries for each person.
+****
 
 == FAQ
 

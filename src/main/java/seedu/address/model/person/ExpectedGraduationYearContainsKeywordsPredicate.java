@@ -18,14 +18,16 @@ public class ExpectedGraduationYearContainsKeywordsPredicate implements Predicat
     @Override
     public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getExpectedGraduationYear().value, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase
+                        (person.getExpectedGraduationYear().value, keyword));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ExpectedGraduationYearContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((ExpectedGraduationYearContainsKeywordsPredicate) other).keywords)); // state check
+                && this.keywords.equals(((
+                        ExpectedGraduationYearContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }

@@ -32,7 +32,7 @@ public class RemarkCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage("Index: 1 Remark: Test");
 
-        RemarkCommand command = new RemarkCommand(Index.fromOneBased(1),"Test");
+        RemarkCommand command = new RemarkCommand(Index.fromOneBased(1), "Test");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         command.execute();
     }

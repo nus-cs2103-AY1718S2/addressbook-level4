@@ -20,12 +20,9 @@ public class TimeTableLink {
             + "    - start and end with alphanumeric characters\n"
             + "    - consist of alphanumeric characters, a period or a hyphen for the characters in between, if any.";
     // alphanumeric and special characters
-    private static final String LOCAL_PART_REGEX = "^[\\w" + SPECIAL_CHARACTERS + "]+";
-    private static final String DOMAIN_FIRST_CHARACTER_REGEX = "[^\\W_]"; // alphanumeric characters except underscore
-    private static final String DOMAIN_MIDDLE_REGEX = "[a-zA-Z0-9.-]*"; // alphanumeric, period and hyphen
-    private static final String DOMAIN_LAST_CHARACTER_REGEX = "[^\\W_]$";
-    public static final String EMAIL_VALIDATION_REGEX = LOCAL_PART_REGEX + "@"
-            + DOMAIN_FIRST_CHARACTER_REGEX + DOMAIN_MIDDLE_REGEX + DOMAIN_LAST_CHARACTER_REGEX;
+    private static final String SHORT_URL_FROINT_REGEX = "http://modsn\\.us/";
+    private static final String SHORT_URL_TRAIL_REGEX = "[a-zA-Z0-9\\-]+"; // alphanumeric and hyphen
+    public static final String SHORT_URL_VALIDATION_REGEX = SHORT_URL_FROINT_REGEX + SHORT_URL_TRAIL_REGEX;
 
     public final String value;
 
@@ -44,7 +41,7 @@ public class TimeTableLink {
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidLink(String test) {
-        return test.matches(EMAIL_VALIDATION_REGEX);
+        return test.matches(SHORT_URL_VALIDATION_REGEX);
     }
 
     @Override

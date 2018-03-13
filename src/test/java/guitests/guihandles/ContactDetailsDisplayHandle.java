@@ -3,14 +3,17 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
-public class ContactDetailsDisplayHandle extends NodeHandle<Node>{
+/**
+ * A handle to the {@code ContactDetailsDisplay} in the GUI.
+ */
+public class ContactDetailsDisplayHandle extends NodeHandle<Node> {
 
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
     //TODO: include Tags
-    
+
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
@@ -18,7 +21,7 @@ public class ContactDetailsDisplayHandle extends NodeHandle<Node>{
 
     public ContactDetailsDisplayHandle(Node contactDetailsDisplayNode) {
         super(contactDetailsDisplayNode);
-        
+
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);

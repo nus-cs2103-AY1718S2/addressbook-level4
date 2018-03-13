@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.CommandList;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -55,8 +58,31 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            keyEvent.consume();
+            autoCompleteCommand(commandTextField.getText());
+            break;
         default:
             // let JavaFx handle the keypress
+        }
+    }
+
+    /**
+     * Auto-completes the partial command {@code text} entered with the first command matched
+     * in the lexicographically sorted command list
+     */
+    private void autoCompleteCommand(String text) {
+
+        CommandList commandListObj = new CommandList();
+
+        List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(text))
+                .collect(Collectors.toList());
+
+        if (matchedCommands.size() > 0) {
+            String textToDisplay = commandListObj.getSyntax(matchedCommands.get(0));
+
+            replaceText(textToDisplay);
+            commandTextField.positionCaret(matchedCommands.get(0).length() + 1);
         }
     }
 

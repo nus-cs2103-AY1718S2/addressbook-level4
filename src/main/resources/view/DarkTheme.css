@@ -285,7 +285,7 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-color: derive(#1d1d1d, 70%);
     -fx-background-insets: 3;
 }
 
@@ -322,9 +322,9 @@
     -fx-border-color: #383838 #383838 #ffffff #383838;
     -fx-border-insets: 0;
     -fx-border-width: 2;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 15pt;
+    -fx-text-fill: darkorange;
 }
 
 #filterField, #personListPanel, #personWebpage {

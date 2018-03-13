@@ -79,12 +79,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
-Opens this document +
+If you are unsure of some commands, use the `help` command to open this document. +
 Format: `help`
 
 === Searching for books online: `search`
 
-Searches for books online +
+Want to find a specific book? Browsing for new books? Use the `search` command. +
 Format: `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
 
 ****
@@ -92,81 +92,89 @@ Format: `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
 * At least one of the fields must be provided.
 ****
 
+CAUTION: You can only perform `search` with internet connection.
+
 Examples:
 
 * `search Artemis a/Andy Weir` +
-Searches online for books related to `Artemis`, where `Andy Weir` matches one of the authors.
+Returns a list of books related to `Artemis`, where `Andy Weir` matches one of the authors.
 * `search t/Babylon's Ashes c/Science Fiction` +
-Searches online for `Science Fiction` books that contains `Babylon's Ashes` in the title.
+Returns a list of `Science Fiction` books that contains `Babylon's Ashes` in the title.
 
 === Adding a book: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+If you find a book you wish to read in your search results, you can add this book into your book shelf. Use the `add` command. +
+Format: `add INDEX`
 
-[TIP]
-A person can have any number of tags (including 0)
+****
+* Adds the book at the specified `INDEX`.
+* The index refers to the index number shown in your search results.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+CAUTION: You can only perform `add` when the list shown is a search result.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `search t/Babylon's Ashes c/Science Fiction` +
+`add 1` +
+Adds the 1st book in the search results.
 
-=== Listing all persons : `list`
+=== Listing your book shelf : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+If you want to view a portion of the books in your book shelf, use the `list` command. +
+Format: `list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [p/PRIORITY] [s/STATUS]`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Lists all books in your book shelf that satisfies all the constraints on `TITLE`, `AUTHOR`, `CATEGORY`, `PRIORITY` and `STATUS`.
+* If no parameters are provided, all books will be listed.
+****
+
+Examples:
+
+* `list` +
+Lists all books in your book shelf.
+* `list a/Andy Weir` +
+Lists books in your book shelf where `Andy Weir` matches one of the authors.
+* `list t/Babylon's Ashes c/Science Fiction` +
+Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes` in the title.
+
+
+=== Editing a book : `edit`
+
+After reading a book, you may want to give the book a rating or set the book as read. Or, you may want
+to change the priority of books to remind yourself what you should read next. These can be done using `edit`. +
+Format: `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
+
+****
+* Edits the book at the specified `INDEX`. The index refers to the index number shown in the last book shelf listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+CAUTION: You can only perform `edit` when the list shown is from your book shelf.
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/HIGH` +
+Changes the priority of the 1st book to `HIGH`.
+* `edit 2 s/READ r/5` +
+Marks the 2nd book as `READ` and changes its rating to `5`.
 
-=== Locating persons by name: `find`
+=== Deleting a book : `delete`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
+No longer want a book in your book shelf? Remove it using `delete`. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the book at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+
+CAUTION: You can only perform `delete` if the list shown is from your book shelf.
+
+TIP: You don't have to delete books after reading them. Simply mark them as read. They may serve as useful reference in the future.
 
 Examples:
 
@@ -177,13 +185,13 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a book : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+If you are interested in a book and want to view more information about it, use `select`. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the book at the specified `INDEX` and displays detailed information about it.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -192,15 +200,22 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
+Selects the 2nd book in your book shelf.
+* `list p/HIGH` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st book among books with `HIGH` priority in your book shelf.
+* `search Artemis a/Andy Weir` +
+`select 1` +
+Selects the 1st book in the search results.
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
+If you want to view the commands that you have entered previously, use `history`. +
 Format: `history`
+
+****
+* Lists the previous commands in reverse chronological order.
+****
 
 [NOTE]
 ====
@@ -210,12 +225,16 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+If you regret executing a command, use `undo` to reverse your action. +
 Format: `undo`
+
+****
+* Restores the book shelf to the state before the previous _undoable_ command was executed.
+****
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the book shelf's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -236,7 +255,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+If you regret an undone command, use `redo` to reverse the most recent undone command. +
 Format: `redo`
 
 Examples:
@@ -259,45 +278,51 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Don't need the data in your book shelf anymore? Remove them using `clear`. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+=== Closing the program : `exit`
 
-Exits the program. +
+Use `exit` to close the program. +
 Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Bibliotek saves data in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Getting book recommendations `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Having problems deciding what to read next? Bibliotek can give you book recommendations
+based on the books in your book shelf. Use `suggest` to obtain your personalized recommendations! +
+Format: `suggest`
+
+TIP: Give appropriate ratings to books you have read to obtain recommendations that are closer to your preferences.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Bibliotek folder.
+
+*Q*: I have a problem and this guide did not help. +
+*A*: Post in our https://github.com/CS2103JAN2018-F14-B4/main/issues[issues page] and we will try our best to answer your queries.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add INDEX` +
+e.g. `add 1`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
+* *Edit* : `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]` +
+e.g. `edit 2 s/READ r/5`
+* *Exit* : `exit`
 * *Help* : `help`
+* *History* : `history`
+* *List* : `list`
+* *Redo* : `redo`
+* *Search* : `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]` +
+e.g. `search t/Babylon's Ashes c/Science Fiction`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
 * *Undo* : `undo`
-* *Redo* : `redo`

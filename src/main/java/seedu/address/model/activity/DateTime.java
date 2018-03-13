@@ -18,7 +18,7 @@ public class DateTime {
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
             "Date and  Time numbers should be a date and should be in the format of " +
             DATE_FORMAT;
-    // TODO : FIND A REGET TO VALIDATE THE DATE AND TIME. 
+    // TODO : FIND A REGET TO VALIDATE THE DATE AND TIME.
     public static final String DATETIME_VALIDATION_REGEX =".*";
 
     private final String value;

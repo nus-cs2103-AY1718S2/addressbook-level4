@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
-
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;

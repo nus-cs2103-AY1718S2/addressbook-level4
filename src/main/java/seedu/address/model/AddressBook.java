@@ -147,6 +147,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Sorts all the persons alphabetical order of their names
+     */
+    public void sort() {
+        requireNonNull(persons);
+        persons.sort();
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

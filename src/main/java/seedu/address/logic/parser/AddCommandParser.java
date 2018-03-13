@@ -65,7 +65,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public DateAdded createDate() {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
-        return new DateAdded(dateFormatter.format(calendar));
+        return new DateAdded(dateFormatter.format(calendar.getTime()));
     }
 
     /**

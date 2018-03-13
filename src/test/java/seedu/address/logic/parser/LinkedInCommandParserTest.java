@@ -10,16 +10,16 @@ import org.junit.Test;
 import seedu.address.logic.commands.LinkedInCommand;
 
 public class LinkedInCommandParserTest {
-        private LinkedInCommandParser parser = new LinkedInCommandParser();
 
-        @Test
-        public void parse_validArgs_returnsLinkedInCommand() {
-            assertParseSuccess(parser, "1", new LinkedInCommand(INDEX_FIRST_PERSON));
-        }
+    private LinkedInCommandParser parser = new LinkedInCommandParser();
 
-        @Test
-        public void parse_invalidArgs_throwsParseException() {
-            assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkedInCommand.MESSAGE_USAGE));
-        }
+    @Test
+    public void parse_validArgs_returnsLinkedInCommand() {
+        assertParseSuccess(parser, "1", new LinkedInCommand(INDEX_FIRST_PERSON));
+    }
 
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkedInCommand.MESSAGE_USAGE));
+    }
 }

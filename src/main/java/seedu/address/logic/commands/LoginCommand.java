@@ -13,6 +13,14 @@ public class LoginCommand extends Command{
     public static final String MESSAGE_LOGIN_SUCCESS = "Successfully logged in!";
     public static final String MESSAGE_LOGIN_FAIL = "Wrong username and password! Please try again.";
 
+    private final String username;
+    private final String password;
+
+    public LoginCommand(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public CommandResult execute() throws CommandException{
         throw new CommandException("Not yet implemented");

@@ -11,21 +11,21 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
 /**
- * Shows the linkedIn profile of a person identified using it's last displayed index
+ * Shows the linkedIn search of a person identified using it's last displayed index
  * from the address book.
  */
 public class LinkedInCommand extends Command {
     public static final String COMMAND_WORD = "linkedIn";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Shows the linkedIn profile of the person identified by the index number used "
+            + ": Shows the linkedIn search of the person identified by the index number used "
             + "in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final int TAB_ID_LINKEDIN = 1;
 
-    public static final String MESSAGE_LINKEDIN_PERSON_SUCCESS = "Showing LinkedIn Profile of: %1$s";
+    public static final String MESSAGE_LINKEDIN_PERSON_SUCCESS = "Showing LinkedIn search of: %1$s";
 
     private final Index targetIndex;
 

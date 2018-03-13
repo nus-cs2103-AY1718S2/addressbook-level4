@@ -25,28 +25,27 @@ public class DeleteBeforeCommandParser implements Parser<DeleteBeforeCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteBeforeCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_TAG);
 
-            ArgumentMultimap argMultimap =
-                    ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_TAG);
+        if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_TAG)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteBeforeCommand.MESSAGE_USAGE));
+        }
 
-            if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_TAG)
-                    || !argMultimap.getPreamble().isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteBeforeCommand.MESSAGE_USAGE));
-            }
+        try {
+            DateAdded inputDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            Set<Tag> inputTags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            try {
-                DateAdded inputDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
-                Set<Tag> inputTags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormatter.parse(inputDate.toString()); //check if can parse inputDate, requires review
+            return new DeleteBeforeCommand(inputDate, inputTags);
 
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-                dateFormatter.parse(inputDate.toString()); //check if can parse inputDate, requires review
-                return new DeleteBeforeCommand(inputDate, inputTags);
-
-            } catch (IllegalValueException ive) {
-                throw new ParseException(ive.getMessage(), ive);
-            } catch (java.text.ParseException e) { //cannot parse dateAdded into a Date object
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteBeforeCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        } catch (java.text.ParseException e) { //cannot parse dateAdded into a Date object
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteBeforeCommand.MESSAGE_USAGE));
         }
     }
 

@@ -67,7 +67,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePersons(List<Person> targets) throws PersonNotFoundException{
+    public synchronized void deletePersons(List<Person> targets) throws PersonNotFoundException {
         addressBook.removePersons(targets);
         indicateAddressBookChanged();
     }

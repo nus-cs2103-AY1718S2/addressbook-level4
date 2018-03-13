@@ -32,9 +32,9 @@ public class DateAddedIsBeforeDateInputPredicate implements Predicate<Person> {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DateAddedIsBeforeDateInputPredicate // instanceof handles nulls
-                && this.dateInputString.equals(((DateAddedIsBeforeDateInputPredicate) other).dateInputString)); // state check
+        return other == this
+                || (other instanceof DateAddedIsBeforeDateInputPredicate
+                && this.dateInputString.equals(((DateAddedIsBeforeDateInputPredicate) other).dateInputString));
     }
 
 }

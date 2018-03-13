@@ -21,7 +21,7 @@ import seedu.address.model.person.Person;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static String SEARCH_PAGE_URL =
+    private static String SEARCH_PAGE_URL =
             "https://calendar.google.com/calendar/embed?src=8nfr293d26bcmd9oubia86re4k%40group.calendar."
              + "google.com&ctz=Asia%2FSingapore";
     private static final String FXML = "BrowserPanel.fxml";

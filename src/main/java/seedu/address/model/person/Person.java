@@ -53,7 +53,9 @@ public class Person {
         return address;
     }
 
-    public String getCalendarId() { return calendarId; }
+    public String getCalendarId() {
+        return calendarId;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

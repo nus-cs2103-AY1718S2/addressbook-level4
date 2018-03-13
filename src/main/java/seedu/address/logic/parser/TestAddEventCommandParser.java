@@ -42,7 +42,7 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
 
         String temp = args.trim();
         int i;
-        for(i = 0; i <temp.length(); i++) {
+        for (i = 0; i < temp.length(); i++) {
             if (temp.charAt(i) == 32) {
                 break;
             }

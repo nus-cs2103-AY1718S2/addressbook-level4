@@ -1,11 +1,14 @@
 package seedu.address.model.person;
 
-public class CalendarID {
+/**
+ * Represents a Person's calendarId
+ */
+public class CalendarId {
 
     public final String value;
 
-    public CalendarID(String calendarID) {
-        this.value = calendarID;
+    public CalendarId(String calendarId) {
+        this.value = calendarId;
     }
 
     @Override

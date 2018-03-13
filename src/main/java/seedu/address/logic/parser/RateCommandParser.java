@@ -51,9 +51,6 @@ public class RateCommandParser implements Parser<RateCommand> {
 
         RateCommand.EditPersonDescriptor editPersonDescriptor = new RateCommand.EditPersonDescriptor();
         editPersonDescriptor.setRating(new Rating(rating.toString()));
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
-        }
 
         return new RateCommand(index, editPersonDescriptor);
     }

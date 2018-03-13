@@ -29,7 +29,6 @@ import com.google.api.services.calendar.model.EventDateTime;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.ui.BrowserPanel;
 
 /**
  * Adds an event to a person.

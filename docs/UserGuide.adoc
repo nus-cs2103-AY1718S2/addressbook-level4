@@ -195,7 +195,7 @@ Format: `history` or `hi`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// condition::undoredo[]
+// tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
 Restores the IMDB to the state before the previous _undoable_ command was executed. +
@@ -260,7 +260,7 @@ Format: `exit` or `x`
 IMDB data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// condition::dataencryption[]
+// tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_

@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,6 +37,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setCustTimeZone(person.getCustTimeZone());
         descriptor.setTags(person.getTags());
     }
 
@@ -69,6 +71,13 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
         return this;
+    }
+
+    /**
+     * Sets the {@code Time Zone} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withTimeZone(String timeZone) {
+        descriptor.setTimeZone(new TimeZone(timeZone));
     }
 
     /**

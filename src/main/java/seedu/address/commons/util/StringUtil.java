@@ -35,8 +35,9 @@ public class StringUtil {
 
         for (String wordInSentence: wordsInPreppedSentence) {
             for (int i = 0; i <= wordInSentence.length() - preppedWord.length(); i++) {
-                if (wordInSentence.substring(i, i + preppedWord.length()).equalsIgnoreCase(preppedWord))
+                if (wordInSentence.substring(i, i + preppedWord.length()).equalsIgnoreCase(preppedWord)) {
                     return true;
+                }
             }
         }
         return false;

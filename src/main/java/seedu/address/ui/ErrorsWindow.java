@@ -13,6 +13,10 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
+/**
+ * The ErrorWindow Window. Provides the basic window generation,
+ * layout, content population, and rendering.
+ */
 public class ErrorsWindow extends UiPart<Stage> {
 
     private static final String ERROR_LOG_FILE_PATH = "./addressbook.log.0";

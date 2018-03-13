@@ -2,8 +2,6 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.calendarfx.view.page.MonthPage;
-import com.calendarfx.view.page.PageBase;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
@@ -40,7 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-    private PageBase calendarView;
+    private CalendarPanel calendarPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -134,8 +132,8 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        calendarView = new MonthPage();
-        browserPlaceholder.getChildren().add(calendarView);
+        calendarPanel = new CalendarPanel(logic.getCalendar());
+        browserPlaceholder.getChildren().add(calendarPanel.getCalendarPage());
     }
 
     void hide() {

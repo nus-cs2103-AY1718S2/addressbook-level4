@@ -6,13 +6,17 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.calendarfx.model.CalendarSource;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.InsuranceCalendar.AppointmentEntry;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -73,6 +77,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException {
+        addressBook.addAppointment(appointmentEntry);
+        indicateAddressBookChanged();
+
+    }
+
+    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
@@ -96,6 +107,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public CalendarSource getCalendar() {
+        return addressBook.getCalendar();
     }
 
     @Override

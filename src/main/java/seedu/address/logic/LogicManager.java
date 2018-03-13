@@ -2,6 +2,8 @@ package seedu.address.logic;
 
 import java.util.logging.Logger;
 
+import com.calendarfx.model.CalendarSource;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
@@ -53,5 +55,10 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public CalendarSource getCalendar() {
+        return model.getCalendar();
     }
 }

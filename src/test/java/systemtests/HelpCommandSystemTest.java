@@ -43,7 +43,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-// will add after adding default page to details panel
+//        will add after adding default page to details panel
 //        getBrowserPanel().click();
 //        getMainMenu().openHelpWindowUsingAccelerator();
 //        assertHelpWindowNotOpen();

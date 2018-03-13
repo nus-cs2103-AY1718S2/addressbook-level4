@@ -120,25 +120,45 @@ Edits the priority level and deadline of the 1st task to be `9` and `2018-12-30`
 * `edit 2 n/CS2101 Final Assignment t/` +
 Edits the name of the 2nd task to be `CS2101 Final Assignment` and clears all existing tags.
 
-=== Locating tasks by name: `find` or `f`
+=== Locating tasks by name: `findn/` or `fn/`
 
 Finds tasks whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findn/ KEYWORD [MORE_KEYWORDS]` or `fn/ KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `Developer` will match `developer`
 * The order of the keywords does not matter. e.g. `Guide Developer` will match `Developer Guide`
 * Only the name is searched.
 * Only full words will be matched e.g. `Guide` will not match `Guides`
-* Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `CS2101 Guide` will return `CS2101 Script`, `Developer Guide`
+* Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `CS2101 Guide` will return `CS2101 Script`, `Developer Guide`.
 ****
 
 Examples:
 
-* find `Developer` +
-Returns `developer` and `Developer Guide`
-* find `CS2101 Developer User` +
+* findn/ `Guide` +
+Returns `User Guide` and `Developer Guide`
+* fn/ `CS2101 Developer User` +
 Returns any task having names `CS2101`, `Developer`, or `User`
+
+=== Locating tasks by description: `finddes/` or `fdes/`
+
+Find tasks whose descriptions contain any of the given keywords. +
+Format: `finddes/ KEYWORD [MORE_KEYWORDS]` or `fdes/ KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Update` will match `update`
+* The order of the keywords does not matter. e.g. `update study` will match `study update`
+* Only the description is searched.
+* Only full words will be matched e.g. `CS2103` will not match `CS2103T`
+* Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `Update Study` will return `Update script`, `Study midterms`.
+****
+
+Examples:
+
+* finddes/ `Study` +
+Returns tasks with descriptions `Study midterms` and `study chapter 2`.
+* fdes/ `Study Update Chapter` +
+Returns any task having descriptions containing words `Study`, `Update`, or `Chapter`.
 
 === Deleting a task : `delete` or `d`
 
@@ -341,8 +361,10 @@ e.g. `add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​` +
 e.g. `edit 1 p/9 d/2018-12-30`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find Developer User`
+* *Find Name* : `findn/ KEYWORD [MORE_KEYWORDS]` or `fn/ KEYWORD [MORE_KEYWORDS]` +
+e.g. `findn/ Developer User`
+* *Find Description* : `finddes/ KEYWORD [MORE_KEYWORDS]` or `fdes/ KEYWORDS [MORE_KEYWORDS]` +
+e.g. `finddes/ study update`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

@@ -20,7 +20,8 @@ import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.logic.commands.ExitCommand;
-import seedu.organizer.logic.commands.FindCommand;
+import seedu.organizer.logic.commands.FindDescriptionCommand;
+import seedu.organizer.logic.commands.FindNameCommand;
 import seedu.organizer.logic.commands.HelpCommand;
 import seedu.organizer.logic.commands.HistoryCommand;
 import seedu.organizer.logic.commands.ListCommand;
@@ -30,6 +31,7 @@ import seedu.organizer.logic.commands.ToggleCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.logic.parser.exceptions.ParseException;
+import seedu.organizer.model.task.DescriptionContainsKeywordsPredicate;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
@@ -89,15 +91,30 @@ public class OrganizerParserTest {
     }
 
     @Test
-    public void parseCommand_find() throws Exception {
+    public void parseCommand_findName() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        FindCommand commandAlias = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), commandAlias);
+        FindNameCommand command = (FindNameCommand) parser.parseCommand(
+                FindNameCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        FindNameCommand commandAlias = (FindNameCommand) parser.parseCommand(
+                FindNameCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindNameCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindNameCommand(new NameContainsKeywordsPredicate(keywords)), commandAlias);
     }
+
+    //@@author guekling
+    @Test
+    public void parseCommand_findDescription() throws Exception {
+        List<String> keywords = Arrays.asList("cs2103", "cs2101", "CS2010");
+        FindDescriptionCommand command = (FindDescriptionCommand) parser.parseCommand(
+            FindDescriptionCommand.COMMAND_WORD + " " + keywords.stream()
+            .collect(Collectors.joining(" ")));
+        FindDescriptionCommand commandAlias = (FindDescriptionCommand) parser.parseCommand(
+            FindDescriptionCommand.COMMAND_ALIAS + " " + keywords.stream()
+            .collect(Collectors.joining(" ")));
+        assertEquals(new FindDescriptionCommand(new DescriptionContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindDescriptionCommand(new DescriptionContainsKeywordsPredicate(keywords)), commandAlias);
+    }
+    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {

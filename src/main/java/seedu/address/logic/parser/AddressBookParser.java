@@ -111,7 +111,7 @@ public class AddressBookParser {
             return new HelpCommand();
 
         case LoginCommand.COMMAND_WORD:
-            return new LoginCommand();
+            return new LoginCommandParser().parse(arguments);
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();

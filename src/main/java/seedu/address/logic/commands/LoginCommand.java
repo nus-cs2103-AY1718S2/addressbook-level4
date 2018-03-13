@@ -16,13 +16,13 @@ public class LoginCommand extends Command{
     private final String username;
     private final String password;
 
-    public LoginCommand() {
-        this.username = null;
-        this.password = null;
+    public LoginCommand(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     @Override
     public CommandResult execute() throws CommandException{
-        throw new CommandException("Not yet implemented");
+        throw new CommandException("Username: " + username + ", Password: " + password);
     }
 }

@@ -95,8 +95,8 @@ public class CreateNewCalendar {
      */
     public static com.google.api.services.calendar.Calendar
         getCalendarService() throws IOException {
-            Credential credential = authorize();
-            return new com.google.api.services.calendar.Calendar.Builder(
+        Credential credential = authorize();
+        return new com.google.api.services.calendar.Calendar.Builder(
                 httpTransport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();

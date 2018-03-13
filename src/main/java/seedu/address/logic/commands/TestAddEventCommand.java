@@ -94,7 +94,8 @@ public class TestAddEventCommand extends Command {
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public TestAddEventCommand(Index index, String title, String location, String startTime, String endTime, String description) {
+    public TestAddEventCommand(Index index, String title, String location, String startTime,
+                               String endTime, String description) {
         this.title = title;
         this.location = location;
         this.startTime = startTime;

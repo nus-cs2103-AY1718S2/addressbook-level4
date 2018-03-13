@@ -141,7 +141,24 @@ Examples:
 Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st person in the results of the `find` command
+
+=== Deleting dated persons  : `deletebefore` or `db`
+
+Deletes all persons added before a specified date with specified tags. +
+Format: `deletebefore [d/DATE] [t/TAG]...` or `db [d/DATE] [t/TAG]...`
+
+****
+* Persons deleted must have tags that matches all the specified `TAG` s.
+* The specified tags can be in any order.
+* *At least one tag* must be provided.
+* The input `DATE` *must be in the following format: dd/MM/yyyy*.
+****
+
+Examples:
+
+* `deletebefore d/12/12/2017 t/friends` +
+Deletes all friends added before 12/12/2017 in the address book.
 
 === Selecting a person : `select` or `s`
 
@@ -172,6 +189,30 @@ Format: `history` or `hist`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+=== Email appointment reminder  : `emailreminder` or `er` (tentative)
+
+Email a person a reminder with regards to an upcoming appointment with the specified date and time. +
+Format: `emailreminder INDEX [d/DATE] [ti/TIME]` or `er INDEX [d/DATE] [ti/TIME]`
+
+****
+* Emails the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Appointment is set at `DATE` and `TIME`
+* The input date *must be in the following format: dd/MM/yyyy*.
+* The input time *must be in the following format: HH:MM (24hr format)*.
+****
+
+Examples:
+
+* `list` +
+`er 3 d/12/12/2017 ti/12:30` +
+Emails the 3rd person in the address book a reminder of an appointment on 12/12/2017 at 12:30pm.
+
+* `find Betsy` +
+`er 1st d/1/1/2017 ti/14:00` +
+Emails the 1st person in the results of the `find` command a reminder of an appointment on 1/1/2017 at 2:00pm.
 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
@@ -256,6 +297,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Before* : `deletebefore d/DATE [t/TAG]...` +
+e.g. `deletebefore d/12/12/2017 t/friends`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -265,5 +308,6 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Email Reminder* : `er 3 d/12/12/2017 ti/12:30`
 * *Undo* : `undo`
 * *Redo* : `redo`

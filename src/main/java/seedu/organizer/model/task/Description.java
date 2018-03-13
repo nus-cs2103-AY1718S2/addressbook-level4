@@ -3,6 +3,7 @@ package seedu.organizer.model.task;
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
+//@@author guekling
 /**
  * Represents a Task's description in the organizer book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDescription(String)}

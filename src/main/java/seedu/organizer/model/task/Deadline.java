@@ -3,6 +3,7 @@ package seedu.organizer.model.task;
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
+//@@author guekling
 /**
  * Represents a Task's deadline in the organizer book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
@@ -35,7 +36,7 @@ public class Deadline {
      * Returns true if a given string is a valid task deadline.
      */
     public static boolean isValidDeadline(String test) {
-        return test.matches(DEADLINE_VALIDATION_REGEX);
+        return test.matches("") || test.matches(DEADLINE_VALIDATION_REGEX);
     }
 
     @Override

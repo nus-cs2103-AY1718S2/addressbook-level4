@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.organizer.testutil.Assert;
 
+//@@author guekling
 public class DescriptionTest {
 
     @Test
@@ -19,18 +20,19 @@ public class DescriptionTest {
         // null organizer
         Assert.assertThrows(NullPointerException.class, () -> Description.isValidDescription(null));
 
+        // blank descriptions
+        assertTrue(Description.isValidDescription("")); // empty string
+        assertTrue(Description.isValidDescription(" ")); // spaces only
+
         // valid descriptions
-        assertTrue(Description.isValidDescription("")); // empty string - Description is not a compulsory field
-        assertTrue(Description.isValidDescription(" ")); // spaces only - Description is not a compulsory field
         assertTrue(Description.isValidDescription("Practice MA1101R past year questions"));
         assertTrue(Description.isValidDescription("!")); // one character
         assertTrue(Description.isValidDescription("Add new sort feature / Update README.md / Refactor Address to "
             + "Email")); // long description
     }
 
-    //@@guekling
     @Test
-    public void isHashCodeEquals() {
+    public void hashCode_equals() {
         Description testDescription = new Description("CS2103T Testing");
         String testDescriptionValue = "CS2103T Testing";
         assertEquals(testDescription.hashCode(), testDescriptionValue.hashCode());

@@ -148,4 +148,9 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    /**
+     * Handles dynamic 'find' command, {@code keyEvent}
+     */
+    private void dynamicFindCommand(KeyEvent keyEvent){}
+
 }

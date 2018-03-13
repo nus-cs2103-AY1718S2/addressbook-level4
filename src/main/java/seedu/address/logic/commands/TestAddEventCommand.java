@@ -208,8 +208,6 @@ public class TestAddEventCommand extends Command {
             e.printStackTrace();
         }
         System.out.printf("Event created: %s\n", event.getHtmlLink());
-        BrowserPanel.setSearchPageUrl("https://calendar.google.com/calendar/embed?src="
-                + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore&mode=day");
         return new CommandResult("event added.");
     }
 

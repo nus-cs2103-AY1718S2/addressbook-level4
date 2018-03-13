@@ -840,9 +840,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |replace an existing tag with a new tag |update tags effectively
 
-|`* * *` |user |delete a tage from everyone in the address book |save time
+|`* * *` |user |delete a tag from everyone in the address book |save time
 
-|`* *` |user |export the contacts to a spreadsheet |furthre make use of them
+|`* *` |user |export the contacts to a spreadsheet |further make use of them
 
 |`* *` |user |prioritise clients |single out the more profitable clients
 
@@ -861,6 +861,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |back up my address book periodically |avoid losing all data
 
 |`* *` |user |select tabs for different categories of clients |effectively look for clients belonging to the same category
+
+|`* *` |user |pull my contacts from LinkedIn |synchronize my contacts across platforms
 
 |`*` |user |link to the clients' social media page |find out more about them
 
@@ -902,7 +904,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-== Use case: Undo action
+=== Use case: Undo action
 
 *MSS*
 
@@ -919,7 +921,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-== Use case: Find person
+=== Use case: Find person
 
 *MSS*
 
@@ -945,7 +947,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-== Use case: Delete old contacts
+=== Use case: Delete old contacts
 
 *MSS*
 
@@ -996,6 +998,7 @@ _{More to be added}_
 . Must be less than 10MB in size
 . Data must be backed up
 . Should be able to be extended into a mobile application
+. CRUD operations must be relatively fast
 
 
 _{More to be added}_

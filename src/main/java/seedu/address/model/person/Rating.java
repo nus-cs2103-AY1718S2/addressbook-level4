@@ -56,8 +56,8 @@ public class Rating {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Rating) // instanceof handles nulls
-                && this.value == ((Rating) other).value; // state check
+                || ((other instanceof Rating) // instanceof handles nulls
+                && this.value == ((Rating) other).value); // state check
     }
 
     @Override

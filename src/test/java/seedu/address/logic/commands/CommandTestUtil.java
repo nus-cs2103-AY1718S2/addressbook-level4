@@ -5,12 +5,16 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMUNICATION_SKILLS_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROBLEM_SOLVING_SKILLS_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TECHNICAL_SKILLS_SCORE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,6 +83,10 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_EXPECTED_GRADUATION_YEAR_DESC = " " + PREFIX_EXPECTED_GRADUATION_YEAR
             + "2o20";
+    public static final String INVALID_RATING_DESC = " " + PREFIX_TECHNICAL_SKILLS_SCORE + "-10"
+            + " " + PREFIX_COMMUNICATION_SKILLS_SCORE + "0"
+            + " " + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + "7.5"
+            + " " + PREFIX_EXPERIENCE_SCORE + "0.5"; // scores should be between 1 and 5 or equal to default value -1
     public static final String INVALID_RESUME_DESC = " " + PREFIX_RESUME + "fileDoesNot.exist";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 

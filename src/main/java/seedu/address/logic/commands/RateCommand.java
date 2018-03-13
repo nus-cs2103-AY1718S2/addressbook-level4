@@ -66,7 +66,7 @@ public class RateCommand extends UndoableCommand {
         try {
             model.updatePerson(personToRate, ratedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new AssertionError("Changing target person's rating should not result in a duplicate");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }

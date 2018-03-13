@@ -193,6 +193,9 @@ public class ParserUtil {
     public static Optional<Double> parseTechnicalSkillsScore(Optional<String> technicalSkillsScore)
             throws IllegalValueException {
         requireNonNull(technicalSkillsScore);
+        if (technicalSkillsScore.get().trim().equals("")) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
         return technicalSkillsScore.isPresent() ?
                 Optional.of(parseTechnicalSkillsScore(technicalSkillsScore.get())) : Optional.empty();
     }
@@ -222,6 +225,9 @@ public class ParserUtil {
     public static Optional<Double> parseCommunicationSkillsScore(Optional<String> communicationSkillsScore)
             throws IllegalValueException {
         requireNonNull(communicationSkillsScore);
+        if (communicationSkillsScore.get().trim().equals("")) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
         return communicationSkillsScore.isPresent() ?
                 Optional.of(parseCommunicationSkillsScore(communicationSkillsScore.get())) : Optional.empty();
     }
@@ -251,6 +257,9 @@ public class ParserUtil {
     public static Optional<Double> parseProblemSolvingSkillsScore(Optional<String> problemSolvingSkillsScore)
             throws IllegalValueException {
         requireNonNull(problemSolvingSkillsScore);
+        if (problemSolvingSkillsScore.get().trim().equals("")) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
         return problemSolvingSkillsScore.isPresent() ?
                 Optional.of(parseProblemSolvingSkillsScore(problemSolvingSkillsScore.get())) : Optional.empty();
     }
@@ -280,6 +289,9 @@ public class ParserUtil {
     public static Optional<Double> parseExperienceScore(Optional<String> experienceScore)
             throws IllegalValueException {
         requireNonNull(experienceScore);
+        if (experienceScore.get().trim().equals("")) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
         return experienceScore.isPresent() ?
                 Optional.of(parseExperienceScore(experienceScore.get())) : Optional.empty();
     }

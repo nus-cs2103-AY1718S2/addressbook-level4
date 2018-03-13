@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMUNICATION_SKILLS_S
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROBLEM_SOLVING_SKILLS_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
@@ -36,7 +37,10 @@ public class RateCommandParser implements Parser<RateCommand> {
         if (!arePrefixesPresent(argMultimap,
                 PREFIX_TECHNICAL_SKILLS_SCORE, PREFIX_COMMUNICATION_SKILLS_SCORE,
                 PREFIX_PROBLEM_SOLVING_SKILLS_SCORE, PREFIX_EXPERIENCE_SCORE)
-                || argMultimap.getPreamble().isEmpty()) {
+                || argMultimap.getPreamble().isEmpty()
+                || !areAllFieldsSupplied(argMultimap,
+                PREFIX_TECHNICAL_SKILLS_SCORE, PREFIX_COMMUNICATION_SKILLS_SCORE,
+                PREFIX_PROBLEM_SOLVING_SKILLS_SCORE, PREFIX_EXPERIENCE_SCORE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RateCommand.MESSAGE_USAGE));
         }
 
@@ -65,5 +69,9 @@ public class RateCommandParser implements Parser<RateCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    private static boolean areAllFieldsSupplied(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> !Optional.of(argumentMultimap.getValue(prefix)).equals(""));
     }
 }

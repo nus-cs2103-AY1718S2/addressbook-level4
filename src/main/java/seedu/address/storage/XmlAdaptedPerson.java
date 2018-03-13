@@ -119,7 +119,7 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         if (this.dateAdded == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateAdded.class.getSimpleName()));
         }
         assert(DateAdded.isValidDate(dateAdded));
         final DateAdded dateAdded = new DateAdded(this.dateAdded);

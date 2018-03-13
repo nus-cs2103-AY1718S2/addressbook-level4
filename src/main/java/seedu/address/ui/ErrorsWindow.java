@@ -20,7 +20,7 @@ import seedu.address.commons.core.LogsCenter;
 public class ErrorsWindow extends UiPart<Stage> {
 
     private static final String ERROR_LOG_FILE_PATH = "./addressbook.log.0";
-    private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
+    private static final Logger logger = LogsCenter.getLogger(ErrorsWindow.class);
     private static final String FXML = "ErrorsWindow.fxml";
 
     @FXML

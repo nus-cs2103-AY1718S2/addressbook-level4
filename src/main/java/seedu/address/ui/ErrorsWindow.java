@@ -15,8 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 
 public class ErrorsWindow extends UiPart<Stage> {
 
-    public static final String ERROR_LOG_FILE_PATH = "./addressbook.log.0";
-
+    private static final String ERROR_LOG_FILE_PATH = "./addressbook.log.0";
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "ErrorsWindow.fxml";
 
@@ -24,7 +23,7 @@ public class ErrorsWindow extends UiPart<Stage> {
     private WebView browser;
 
     /**
-     * Creates a new HelpWindow.
+     * Creates a new ErrorsWindow (Overload).
      *
      * @param root Stage to use as the root of the HelpWindow.
      */
@@ -34,6 +33,13 @@ public class ErrorsWindow extends UiPart<Stage> {
         String errorLog = getErrorLogAsHtmlString();
         String errorWindowHtml = createErrorLogPageAsHtmlString(errorLog);
         browser.getEngine().loadContent(errorWindowHtml, "text/Html");
+    }
+
+    /**
+     * Creates a new ErrorsWindow.
+     */
+    public ErrorsWindow() {
+        this(new Stage());
     }
 
     /**
@@ -68,13 +74,6 @@ public class ErrorsWindow extends UiPart<Stage> {
                         + "<div>" + errorLog + "</div>"
                     + "</body>"
                 + "</HTML>";
-    }
-
-    /**
-     * Creates a new ErrorsWindow.
-     */
-    public ErrorsWindow() {
-        this(new Stage());
     }
 
     /**

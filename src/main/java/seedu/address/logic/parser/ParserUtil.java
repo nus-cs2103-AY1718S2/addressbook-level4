@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -137,6 +138,30 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String birthday} into a {@code Birthday}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code birthday} is invalid.
+     */
+    public static Birthday parseBirthday(String birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        String trimmedBirthday = birthday.trim();
+        if (!Birthday.isValidBirthday(trimmedBirthday)) {
+            throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        return new Birthday(trimmedBirthday);
+    }
+
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Phone>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(parseBirthday(birthday.get())) : Optional.empty();
     }
 
     /**

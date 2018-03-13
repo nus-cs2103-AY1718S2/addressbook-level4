@@ -12,6 +12,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.card.Card;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -165,6 +166,21 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String card} into an {@code Card}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code card} is invalid.
+     */
+    public static String parseCard(String card) throws IllegalValueException {
+        requireNonNull(card);
+        String trimmedCard = card.trim();
+        if (!Card.isValidCard(trimmedCard)) {
+            throw new IllegalValueException(Card.MESSAGE_CARD_CONSTRAINTS);
+        }
+        return trimmedCard;
     }
 
     /**

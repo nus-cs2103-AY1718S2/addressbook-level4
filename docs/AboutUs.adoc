@@ -18,6 +18,14 @@ Role:
 
 '''
 
+=== Yang Yuqing
+image::yoochard.png[width="150", align="left"]
+{empty} [https://github.com/yoochard[github]]
+
+Role:
+
+'''
+
 === John Roe
 image::lejolly.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]

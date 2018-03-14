@@ -11,9 +11,9 @@ import com.vdurmont.emoji.EmojiParser;
 public class Rating {
     public static final String MESSAGE_RATING_CONSTRAINTS = "Rating must be 1, 2, 3, 4 or 5";
     public static final String RATING_VALIDATION_REGEX = "-?\\d*";
-    private static final String INVALID_RATING_DISPLAY = "-";
-    private static final String RATING_DISPLAY = ":star2: ";
-    private static final int DEFAULT_INVALID_RATING = -1;
+    public static final int DEFAULT_NULL_RATING = -1;
+    public static final String INVALID_RATING_DISPLAY = "-";
+    public static final String RATING_DISPLAY = ":star2: ";
 
     public final Integer value;
 
@@ -21,7 +21,7 @@ public class Rating {
      * Constructs a {@code Rating} for a new person who hasn't been assigned a rating.
      */
     public Rating() {
-        value = DEFAULT_INVALID_RATING;
+        value = DEFAULT_NULL_RATING;
     }
 
     /**
@@ -81,7 +81,6 @@ public class Rating {
         while (rating-- > 0) {
             sb.append(RATING_DISPLAY);
         }
-        String result = EmojiParser.parseToUnicode(sb.toString());
-        return result;
+        return EmojiParser.parseToUnicode(sb.toString());
     }
 }

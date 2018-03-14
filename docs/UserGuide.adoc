@@ -110,6 +110,7 @@ Format: `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD {MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
+* The search is dynamic. As the user types alphabets, the results will be shown without the need to press enter key
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`

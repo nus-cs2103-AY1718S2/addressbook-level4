@@ -18,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.commons.events.ui.ShowErrorsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchFeatureEvent;
@@ -80,6 +81,9 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem viewCalendarMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -111,6 +115,7 @@ public class MainWindow extends UiPart<Stage> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(viewCalendarMenuItem, KeyCombination.valueOf("F8"));
     }
 
     /**
@@ -240,9 +245,18 @@ public class MainWindow extends UiPart<Stage> {
      * Opens the error window.
      */
     @FXML
-    public void handleView() {
+    public void handleViewErrors() {
         ErrorsWindow errorsWindow = new ErrorsWindow();
         errorsWindow.show();
+    }
+
+    /**
+     * Opens the calendar window.
+     */
+    @FXML
+    public void handleViewCalendar() {
+        CalendarWindow calendarWindow = new CalendarWindow();
+        calendarWindow.show();
     }
     //@@author
 
@@ -300,7 +314,13 @@ public class MainWindow extends UiPart<Stage> {
     @Subscribe
     private void handleShowErrorsEvent(ShowErrorsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleView();
+        handleViewErrors();
+    }
+
+    @Subscribe
+    private void handleViewCalendarEvent(ShowCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleViewCalendar();
     }
     //@@author
 }

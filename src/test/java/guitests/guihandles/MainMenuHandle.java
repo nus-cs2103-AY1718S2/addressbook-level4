@@ -19,7 +19,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
      * Opens the {@code HelpWindow} using the menu bar in {@code MainWindow}.
      */
     public void openHelpWindowUsingMenu() {
-        clickOnMenuItemsSequentially("Help", "F1");
+        clickOnMenuItemsSequentially("Help", "Help");
     }
 
     /**
@@ -29,6 +29,23 @@ public class MainMenuHandle extends NodeHandle<Node> {
     public void openHelpWindowUsingAccelerator() {
         guiRobot.push(KeyCode.F1);
     }
+
+    //@@author {ifalluphill}
+    /**
+     * Opens the {@code CalendarWindow} using the menu bar in {@code MainWindow}.
+     */
+    public void openCalendarWindowUsingMenu() {
+        clickOnMenuItemsSequentially("View", "Open Calendar");
+    }
+
+    /**
+     * Opens the {@code CalendarWindow} by pressing the shortcut key associated
+     * with the menu bar in {@code MainWindow}.
+     */
+    public void openCalendarWindowUsingAccelerator() {
+        guiRobot.push(KeyCode.F8);
+    }
+    //@@author
 
     /**
      * Clicks on {@code menuItems} in order.

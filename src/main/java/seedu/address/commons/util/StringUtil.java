@@ -6,6 +6,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import seedu.address.logic.commands.ViewCommand;
+
 /**
  * Helper functions for handling strings.
  */
@@ -66,6 +68,24 @@ public class StringUtil {
         try {
             int value = Integer.parseInt(s);
             return value > 0 && !s.startsWith("+"); // "+1" is successfully parsed by Integer#parseInt(String)
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if {@code s} is within the range 2 to 13.
+     * e.g. 2, 3, 4, ..., 13 <br>
+     * Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isWithinRange(String s) {
+        requireNonNull(s);
+
+        try {
+            int value = Integer.parseInt(s);
+            return value >= ViewCommand.MIN_WEEK_NUMBER && value <= ViewCommand.MAX_WEEK_NUMBER;
         } catch (NumberFormatException nfe) {
             return false;
         }

@@ -170,6 +170,21 @@ Selects the 2nd person in the address book.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Change view to a specific week : `view`
+
+Change the browser view to display contents identified by the week number.
+Format: `view INDEX`
+
+****
+* View the contents such as learning outcomes and practices of the week at the specified `INDEX`.
+* The index refers to the school week number.
+* The index *must be a positive integer* in the *range of 2 to 13* `2, 3, ..., 13`
+****
+
+Examples:
+
+* `view 2`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -273,6 +288,8 @@ e.g. `search James Jake` +
 * *Help* : `help OR h`
 * *Select* : `select INDEX OR s INDEX` +
 e.g.`select 2`
+* *View* : `view INDEX` +
+e.g. `view 5`
 * *History* : `history`
 * *Undo* : `undo OR u`
 * *Redo* : `redo OR r`

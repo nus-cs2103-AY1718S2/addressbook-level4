@@ -359,6 +359,32 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+=== Manipulating the Rating field
+
+If a `Person` is instantiated without specifying `Rating` value, he will be assigned a `null rating` (indicated by -1 currently) by default. This will be displayed as `-` to user, indicating that this Person is yet to be rated.
+
+The `Rating` field can be manipulated by user through `edit` or `rate` command. However, the valid inputs for rating are `1, 2, 3, 4, or 5`. That said, the current implementation does not allow a user to assign `null rating` to an existing person.
+
+=== Editing and rating a person
+
+`edit` command and `rate` command are implemented in a similar manner. They both involve modifying the field(s) of a person. The only difference is that `rate` can only change the `Rating` field, but `edit` can be used to change any field.
+
+The implementation of `edit` and `rate` command in the Logic component involves 4 objects: +
+
+. Person toEdit
+. Person edited
+. Parser: EditCommandParser or RateCommandParser
+. EditPersonDescriptor
+
+Since all fields of the `Person` class are immutable, we need to use `edited` Person to replace the `toEdit` Person
+
+The details of implementation are as follow:
+
+. `Parser` extracts the new information for each field from user input.
+. `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
+. `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
+. `edited` Person is used to replace `toEdit` Person in `AddressBook`
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

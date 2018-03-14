@@ -124,11 +124,11 @@ public class ParserUtil {
      */
     public static Rating parseRating(String rating) throws IllegalValueException {
         requireNonNull(rating);
-        String trimmedRating = rating.trim();
-        if (!Rating.isValidRating(trimmedRating)) {
+        Integer trimmedRating = Integer.parseInt(rating.trim());
+        if (!Rating.isValidInputRating(trimmedRating)) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
-        return new Rating(trimmedRating);
+        return new Rating(trimmedRating.toString());
     }
 
     /**

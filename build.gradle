@@ -54,6 +54,7 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
     testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+    compile 'com.vdurmont:emoji-java:4.0.0'
 }
 
 shadowJar {

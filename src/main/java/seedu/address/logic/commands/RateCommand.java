@@ -34,8 +34,8 @@ public class RateCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Rate the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "RATING \n"
+            + "Parameters: INDEX must be positive integer "
+            + "RATING (must be 1, 2, 3, 4, or 5) \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + "5";
 

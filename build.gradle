@@ -26,6 +26,30 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
+task makeTempFiles(type: Copy) {
+    from 'docs'
+    into 'temp'
+    include '**/*.adoc'
+    include '**/*.css'
+}
+
+task fixWhitespace(type: Copy) {
+    from 'temp'
+    into 'docs'
+    include '**/*.adoc'
+    include '**/*.css'
+    filter { String line ->
+        line.replaceAll(/ +$/, '')
+    }
+}
+
+task deleteTempFiles(type: Delete) {
+    delete 'temp'
+}
+
+fixWhitespace.dependsOn makeTempFiles
+fixWhitespace.finalizedBy deleteTempFiles
+
 checkstyle {
     toolVersion = '8.1'
 }

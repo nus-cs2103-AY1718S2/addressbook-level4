@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F09-B3/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -34,21 +34,21 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first.
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -57,22 +57,22 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the following options:
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* Set `Class count to use import with '\*'` and `Names count to use static import with '*'` to `999` to prevent IntelliJ from contracting the import statements.
+* Set the order for `Import Layout`: `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-F09-B3/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to `CS2103JAN2018-F09-B3/main`), you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+See <<UsingTravis#, UsingTravis.adoc>> to learn how to set up Travis to perform Continuous Integration (CI) for your fork.
 
 After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
 
@@ -410,7 +410,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot (Fig. 11) below.
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
@@ -422,40 +422,58 @@ image::chrome_save_as_pdf.png[width="300"]
 
 There are three ways to run tests.
 
-[TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
-
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run a subset of tests, right-click on a test package, test class, or a test, e.g. `ABC`, and choose `Run 'ABC'`
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+Open a console and run the following command:
+
+Windows
+```
+> gradlew clean allTests
+```
+Mac/Linux
+```
+$ ./gradlew clean allTests
+```
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in _headless_ mode. In headless mode, GUI tests do not show up on the screen. That means the developer can do other things on their computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the following command:
+
+Windows
+```
+> gradlew clean headless allTests
+```
+Mac/Linux
+```
+$ ./gradlew clean headless allTests
+```
+
+[TIP]
+The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 === Types of tests
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
+*  *GUI Tests* - These are tests involving the GUI. They include:
+** _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+** _Unit tests_ that test the individual components. These are in the `seedu.address.ui` package.
+*  *Non-GUI Tests* - These are tests not involving the GUI. They include:
+**  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+**  _Integration tests_ that check the integration of multiple code units (those code units are assumed to be working). +
 e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
+**  Hybrids of unit and integration tests. These tests check multiple code units as well as the connections between them. +
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
@@ -488,14 +506,15 @@ Here are the steps to create a new release.
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  Tag the repo with the version number, e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Gradle can manage these _dependencies_ for you by downloading the dependencies automatically, instead of having to: +
+
+* Include those libraries in the repo (this bloats the repo size), or +
+* Require developers to download those libraries manually (this creates extra work for developers)
 
 [[GetStartedProgramming]]
 [appendix]
@@ -782,65 +801,98 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of cryptocurrencies
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* requires various analysis and visualisation tools for decision-making
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage cryptocurrencies faster than a typical mouse/GUI driven app
 
 [appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="80%",cols="20%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |user |add a new person |
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |new user |see usage instructions |figure out how to use the application.
+|`* * *` |user |see my personal portfolio |track gains/losses.
+|`* * *` |user |add new coin accounts |
+|`* * *` |user |delete coin accounts | remove unwanted information.
+|`* * *` |user |have a tagging system |simplify and categorize my accounts.
+|`* * *` |user actively trading |be able to store up to 2000 cryptocurrencies |maintain my extensive portfolio.
+|`* * *` |user |have a search and find feature |avoid going through all coins manually.
+|`* * *` |user who values privacy |use a program without making accounts |keep it simple.
+|`* * *` |user who values privacy |store my data only on local storage |avoid having my data on potentially insecure servers.
+|`* * *` |user |avoid lots of manual entry |save time.
+|`* *` |user |not to have to exit the current search results before entering a new command |operate on my search results efficiently.
+|`* *` |user |have a sorting feature for names, coin prices, account values, etc. |quickly rank my choices.
+|`* *` |user |have a bookmarks or favourites watchlist |prioritise certain coins.
+|`* *` |user |have different color themes | customise my program.
+|`* *` |user |have multilingual support |understand the program better.
+|`* *` |user |be able to import/export my data |transfer it to other computers.
+|`* *` |user |have a fixed interval backups, that can also be manually set |ensure my data will not be lost.
+|`* *` |user |macro and write custom aliasing for commands |customize my experience.
+|`* *` |user |track price, market cap, and circulating supply from coinmarket |get all my information in one place.
+|`* *`  |user |see <<RSI,RSI>>/<<MACD,MACD>> graphs |analyse price trends for decision-making. 
+|`* *` |user |see Overbought/Oversold lines | do as above.
+|`*` |user |be able to set support and resistance lines | do as above.
+|`*` |user |have candlestick graphs with simple/exponential moving average overlay | do as above. 
+|`*` |user |be able to search information on a specific coin |get all my information in one place.
+|`*` |user |have desktop notifications |be informed when something needs my attention. 
+|`*` |user |have a daily/hourly report |keep track of the current state of my accounts. 
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `CoinBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete coin listings
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to delete a coin listing
+2. CoinBook deletes the specified coin
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The specified coin does not exist in the storage.
++
+[none]
+** 2a1. CoinBook shows an error message.
++
+Use case resumes at step 1.
+
+=== Use case: Export storage data
+
+*MSS*
+
+1.  User requests to export storage data
+2.  CoinBook requests for the file destination
+3.  User specifies the file destination
+4.  CoinBook exports the file
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+*Extensions*
+
+[none]
+* 2a. The storage is empty.
++
+Use case ends.
+
+* 3a. The given file destination is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CoinBook shows an error message.
 +
 Use case resumes at step 2.
 
@@ -850,19 +902,58 @@ _{More to be added}_
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 2000 Coin accounts without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be accurate in the representation of Coin amounts, free of numerical errors.
+.  All sensitive data should be stored locally.
+.  Should only make configuration files in the local directory to remain fully portable.
+.  Should not take more than one minute to generate summary reports.
+.  Should update news and charts automatically at the user-specified frequency, with tolerance of 1% (e.g. +/-18s for 30min interval)
 
 [appendix]
 == Glossary
 
+[[alias]] Alias::
+Alternate names for commands.
+
+[[coinmarketcap]] Coinmarketcap::
+A website that hosts Cryptocurrency information, including cap rankings, prices, volumes and circulating supplies.
+
+[[coin]] Coin::
+See <<cryptocurrency, Cryptocurrency>>.
+
+[[cryptocurrency]] Cryptocurrency::
+Digital currency. Examples are: Bitcoin, Dogecoin, Etherium.
+
+[[cryptopanic]] Cryptopanic::
+An online news platform for cryptocurrencies.
+
+[[exponential-moving-average]] Exponential moving average::
+A moving average window of closing prices over a past period that places more weight on the more recent days considered. Since cryptocurrencies do not have a closing price, this defaults to their price at 23:59:59 at the timezone of the exchange.
+
+[[MACD]] Moving Average Convergence Divergence (MACD)::
+Moving Average Convergence Divergence is an indicator that is the difference between two moving averages.
+
+[[macros]] Macros::
+A set of commands that can be executed under a single custom command is a macro. For example, if a user wishes to only view coins of a specific tag in a certain sorted order, he can set create a custom macro (e.g. `sortfavourites`) such that upon entering it at a command, the program will internally first call the `search` command on the user set tags, then call the `sort` command.
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+[[resistance-lines]] Resistance Lines::
+When the price of a coin has risen to a certain amount, the price may eventually sustain its value at this point for a period of time. This is when it obtains "resistance".
+
+[[RSI]] Relative Strength Index::
+Relative Strength Index is used as an indicator to compare the current strength of cryptocurrency versus its historical strength. The strength is calculated based on the closing prices over a period of time.
+
+[[sensitive-data]] Sensitive Data::
+Refers to data that is not meant to be shared with others.
+
+[[simple-moving-average]] Simple Moving Average::
+A moving average window of closing prices over a past period that places equal weight on all days considered. Since cryptocurrencies do not have a closing price, this defaults to their price at 23:59:59 at the timezone of the exchange.
+
+[[support-lines]] Support lines::
+When the price of a coin has fallen to a certain amount, the price may eventually sustain its value at this point for a period of time. This is when it obtains "support".
 
 [appendix]
 == Product Survey

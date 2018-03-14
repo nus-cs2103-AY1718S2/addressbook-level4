@@ -33,7 +33,7 @@ public class PersonUtil {
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_TIMETABLE_LINK + person.getTimeTableLink().value + " ");
-        sb.append(PREFIX_DETAIL + person.getDetail().value + " ");
+        sb.append(PREFIX_DETAIL + person.getDetail().detail + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

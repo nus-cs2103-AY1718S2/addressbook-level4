@@ -74,7 +74,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         link = source.getTimeTableLink().value;
-        detail = source.getDetail().value;
+        detail = source.getDetail().detail;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));

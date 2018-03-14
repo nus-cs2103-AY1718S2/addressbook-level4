@@ -96,10 +96,10 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTimeTableLink(VALID_TIMETABLE_LINK_AMY)
+                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTimeTableLink(VALID_TIMETABLE_LINK_AMY).withDetail(VALID_DETAIL_AMY)
                 .withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TIMETABLE_LINK_DESC_AMY, new AddCommand(expectedPerson));
+                + TIMETABLE_LINK_DESC_AMY + DETAIL_DESC_AMY, new AddCommand(expectedPerson));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class AddCommandParserTest {
 
         // invalid detail
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TIMETABLE_LINK_DESC_BOB + INVALID_DETAIL_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
+                + TIMETABLE_LINK_DESC_BOB + INVALID_DETAIL_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Detail.MESSAGE_DETAIL_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB

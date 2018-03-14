@@ -16,8 +16,8 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void find() {
-        /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
-         * -> 2 persons found
+        /* Case: find a person in address book, command with leading spaces and trailing spaces
+         * -> 1 persons found
          */
         String command = "   " + FindTagCommand.COMMAND_WORD + " " + TAG_MATCHING_OWESMONEY + "   ";
         Model expectedModel = getModel();
@@ -26,7 +26,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: repeat previous find command where person list is displaying the tag we are finding
-         * -> 2 persons found
+         * -> 1 persons found
          */
         command = FindTagCommand.COMMAND_WORD + " " + TAG_MATCHING_OWESMONEY;
         assertCommandSuccess(command, expectedModel);

@@ -18,6 +18,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ExitLoginRequestEvent;
+import seedu.address.commons.events.ui.LoginAccessGrantedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
@@ -56,7 +58,6 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
     protected Login login;
 
-
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
@@ -77,7 +78,7 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model);
 
-        login = new LoginManager(storageManager, ui);
+        login = new LoginManager(storageManager);
 
         ui = new UiManager(logic, config, userPrefs, login);
 
@@ -194,7 +195,11 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting Login to AddressBook " + MainApp.VERSION);
         ui.startLogin(primaryStage);
+    }
 
+    public void startApp(Stage primaryStage) {
+        logger.info("Starting AddressBook " + MainApp.VERSION);
+        ui.start(primaryStage);
     }
 
     @Override
@@ -214,6 +219,20 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
+    }
+
+    @Subscribe
+    public void handleExitLoginRequestEvent(ExitLoginRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @Subscribe
+    public void handleAccessGrantedEvent(LoginAccessGrantedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ui.stopLogin();
+        this.startApp(new Stage());
     }
 
     public static void main(String[] args) {

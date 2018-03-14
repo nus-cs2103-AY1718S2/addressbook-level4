@@ -17,7 +17,7 @@
                 <TextField fx:id="usernameTextField" layoutX="163.0" layoutY="300.0" />
                 <Button fx:id="loginButton" layoutX="106.0" layoutY="388.0" mnemonicParsing="false" onAction="#checkLoginDetails" text="Login" />
                 <Button fx:id="createButton" layoutX="183.0" layoutY="388.0" mnemonicParsing="false" onAction="#createNewAccount" text="Create" />
-                <Button fx:id="exitButton" layoutX="264.0" layoutY="388.0" mnemonicParsing="false" text="Exit" />
+                <Button fx:id="exitButton" layoutX="264.0" layoutY="388.0" mnemonicParsing="false" onAction="#closeApplication" text="Exit" />
                 <ImageView blendMode="SOFT_LIGHT" cacheHint="QUALITY" depthTest="ENABLE" fitHeight="243.0" fitWidth="243.0" layoutX="78.0" layoutY="45.0" preserveRatio="true">
                     <image>
                         <Image url="@../images/pigeons logo 2.jpg" />
@@ -25,7 +25,7 @@
                 </ImageView>
                 <Text layoutX="93.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " />
                 <Text layoutX="93.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
-            <Text fx:id="loginStatus" boundsType="VISUAL" layoutX="165.0" layoutY="448.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Status: " textOrigin="CENTER" />
+            <Text fx:id="loginStatus" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Status: " textOrigin="CENTER" x="165.0" y="464.0" />
             </children>
         </Pane>
     </children>

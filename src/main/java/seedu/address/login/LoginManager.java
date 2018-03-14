@@ -3,7 +3,9 @@ package seedu.address.login;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.LoginAccessGrantedEvent;
 import seedu.address.model.ModelManager;
 import seedu.address.storage.StorageManager;
 import seedu.address.ui.Ui;
@@ -17,12 +19,10 @@ public class LoginManager extends ComponentManager implements Login {
     public static final boolean CHECK_SUCCESS = true;
     private UserPassStorage userPassStorage;
     private StorageManager storage;
-    private UiManager ui;
 
-    public LoginManager(StorageManager storage, Ui ui){
+    public LoginManager(StorageManager storage){
         this.storage = storage;
         this.userPassStorage = storage.getUserPassStorage();
-        this.ui = (UiManager) ui;
     }
 
     public boolean checkLoginDetails(UserPass userpass) throws InvalidUsernameException, InvalidPasswordException {
@@ -57,8 +57,7 @@ public class LoginManager extends ComponentManager implements Login {
     }
 
     public void accessPermitted(){
-        logger.info("Starting AddressBook " + MainApp.VERSION);
-        ui.start();
+        EventsCenter.getInstance().post(new LoginAccessGrantedEvent());
     }
 
 }

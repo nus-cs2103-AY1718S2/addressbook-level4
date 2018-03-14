@@ -50,29 +50,6 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Override
-    public void startLogin(Stage primaryStage) {
-        logger.info("Starting Login...");
-        this.primaryStage = primaryStage;
-
-        try {
-            primaryStage.setHeight(600);
-            primaryStage.setWidth(400);
-            loginWindow = new LoginWindow(primaryStage, login);
-            loginWindow.show();
-            loginWindow.fillPane();
-
-        } catch (Throwable e) {
-            logger.severe(StringUtil.getDetails(e));
-            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
-        }
-    }
-
-    @Override
-    public void start() {
-        start(new Stage());
-    }
-
-    @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
 
@@ -95,6 +72,29 @@ public class UiManager extends ComponentManager implements Ui {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
         mainWindow.releaseResources();
+    }
+
+    @Override
+    public void startLogin(Stage primaryStage) {
+        logger.info("Starting Login...");
+        this.primaryStage = primaryStage;
+
+        try {
+            primaryStage.setHeight(600);
+            primaryStage.setWidth(400);
+            loginWindow = new LoginWindow(primaryStage, login);
+            loginWindow.show();
+            loginWindow.fillPane();
+
+        } catch (Throwable e) {
+            logger.severe(StringUtil.getDetails(e));
+            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+        }
+    }
+
+    @Override
+    public void stopLogin() {
+        loginWindow.hide();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {

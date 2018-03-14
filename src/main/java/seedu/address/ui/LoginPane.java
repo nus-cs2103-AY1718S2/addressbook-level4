@@ -10,7 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ExitLoginRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.login.Login;
 import seedu.address.login.UserPass;
@@ -63,7 +66,7 @@ public class LoginPane extends UiPart<Region> {
             loginStatus.setText("Login Failed.");
         }
         if(isAccessPermitted){
-            loginStatus.setText("Login Successful. Bringing you to main page...");
+            loginStatus.setText("Login Successful.");
         }
         return isAccessPermitted;
     }
@@ -80,6 +83,11 @@ public class LoginPane extends UiPart<Region> {
         catch(Exception e){
             loginStatus.setText("Account cannot be created. Please try a different username.");
         }
+    }
+
+    @FXML
+    private void closeApplication(){
+        EventsCenter.getInstance().post(new ExitLoginRequestEvent());
     }
 
     public boolean isAccessPermitted() {

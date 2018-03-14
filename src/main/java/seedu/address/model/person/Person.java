@@ -20,6 +20,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private Rating rating;
+    private Review review;
 
     private final UniqueTagList tags;
 
@@ -35,6 +36,7 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.rating = new Rating();
+        this.review = new Review();
     }
 
     public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags) {
@@ -46,6 +48,18 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.rating = rating;
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Review review, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.rating = rating;
+        this.review = review;
     }
 
     public Name getName() {
@@ -62,6 +76,10 @@ public class Person {
 
     public Rating getRating() {
         return rating;
+    }
+
+    public Review getReview() {
+        return review;
     }
 
     public String getRatingDisplay() {

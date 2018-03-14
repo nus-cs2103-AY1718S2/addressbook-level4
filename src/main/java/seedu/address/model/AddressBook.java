@@ -27,19 +27,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
 
-    /*
-     * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
-     */
-    {
+        /*
+         * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
+         * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
+         *
+         * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
+        *   among constructors.
+        */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -98,9 +98,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncWithMasterTagList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
@@ -128,10 +127,12 @@ public class AddressBook implements ReadOnlyAddressBook {
                         .collect(Collectors.toSet());
         tags.setTags(personTags);
     }
+
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
-     *  list.
+     * Updates the master tag list to include tags in {@code person} that are not in the list.
+     *
+     * @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     * list.
      */
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
@@ -151,6 +152,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
+     *
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
@@ -169,8 +171,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code tag} from {@code person} with that tag this {@code AddressBook}.
+     *
      * @throws PersonNotFoundException if {@code person} is not found in this {@code AddressBook}.
-     * Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
+     *                                 Reused from https://github.com/se-edu/addressbook-level4/
+     *                                 pull/790/files with minor modifications
      */
     private void removeTagParticular(Tag tag, Person person) throws PersonNotFoundException {
         Set<Tag> tagList = new HashSet<>(person.getTags()); //gets all the tags from a person
@@ -184,8 +188,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             } catch (DuplicatePersonException dpe) {
                 throw new AssertionError("Modifying tag only should not result in duplicate person.");
             }
-        }
-        else {
+        } else {
             return;
         }
     }
@@ -208,7 +211,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.Objects;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -23,8 +24,8 @@ public class ChangeTagColorCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " friends red\n"
             + "Available colors are: teal, red, yellow, blue, orange, brown, green, pink, black, grey";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Tag %1$s's color changed to %2$s";
-    public static final String MESSAGE_NOT_EDITED = "Wrong tag name or color provided";
+    public static final String MESSAGE_EDIT_TAG_SUCCESS = "Tag %1$s's color changed to %2$s";
+    public static final String MESSAGE_TAG_NOT_IN_LIST = "The tag specified is not associated with any person";
 
     private final String tagName;
     private final String tagColor;
@@ -52,12 +53,12 @@ public class ChangeTagColorCommand extends UndoableCommand {
         try {
             model.updateTag(tagToEdit, editedTag);
         } catch (TagNotFoundException tnfe ) {
-            throw new CommandException("The tag specified is not associated with any person");
+            throw new CommandException(MESSAGE_TAG_NOT_IN_LIST);
         } catch (PersonNotFoundException pnfe) {
             throw new CommandException("Person not found");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, tagName, tagColor));
+        return new CommandResult(String.format(MESSAGE_EDIT_TAG_SUCCESS, tagName, tagColor));
     }
 
     @Override
@@ -70,6 +71,24 @@ public class ChangeTagColorCommand extends UndoableCommand {
                 return;
             }
         }
-        throw new CommandException("The tag specified is not associated with any person");
+        throw new CommandException(MESSAGE_TAG_NOT_IN_LIST);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ChangeTagColorCommand)) {
+            return false;
+        }
+
+        // state check
+        ChangeTagColorCommand e = (ChangeTagColorCommand) other;
+        return tagName.equals(e.tagName)
+                && tagColor.equals(e.tagColor);
     }
 }

@@ -16,8 +16,13 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 '''
 
 === Aditya Agarwal
+
+image::adityaa1998.png[width="150", align="left"]
+{empty}[http://github.com/adityaa1998[github]] [<<johndoe#, portfolio>>]
+=======
 image::adityaa1998.png[width="150", align="left"]
 {empty}[http://github.com/adityaa1998[github]] [<<aditya#, portfolio>>]
+
 
 Role: Team Lead +
 Responsibilities: Integration, code quality

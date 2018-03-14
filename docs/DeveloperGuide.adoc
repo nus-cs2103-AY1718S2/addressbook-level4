@@ -939,6 +939,16 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: find person
+
+*MSS*
+
+1.  User types find
+2.  ProgressCheck automatically shows the list dynamically without the user needing to press enter key
+3.  User need not need to type the whole name, substrings will generate results
+4.  ProgressCheck displays the necessary results
+=======
 [none]
 * 2a. The tasks list is empty.
 +
@@ -960,11 +970,25 @@ Use case ends.
 2.  ProgressCheck shows content of the specified week
 3.  User requests to key in and save an answer to a question
 4.  ProgressCheck takes in input and saves
+
 +
 Use case ends.
 
 *Extensions*
 
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given substring doesn't exist in any name
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+=======
 * 1a. Specified week does not exist.
 +
 [none]

@@ -13,6 +13,9 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
+    private final PersonDetailsPanelHandle personDetailsPanel;
+    private final CalendarPanelHandle calendarPanel;
+    private final DailySchedulerPanelHandle dailySchedulerPanel;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -23,6 +26,9 @@ public class MainWindowHandle extends StageHandle {
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+        personDetailsPanel = new PersonDetailsPanelHandle(getChildNode(PersonDetailsPanelHandle.BROWSER_ID));
+        calendarPanel = new CalendarPanelHandle(getChildNode(CalendarPanelHandle.BROWSER_ID));
+        dailySchedulerPanel = new DailySchedulerPanelHandle(getChildNode(DailySchedulerPanelHandle.BROWSER_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -48,4 +54,12 @@ public class MainWindowHandle extends StageHandle {
     public BrowserPanelHandle getBrowserPanel() {
         return browserPanel;
     }
+
+    public PersonDetailsPanelHandle getPersonDetailsPanel() {
+        return personDetailsPanel;
+    }
+
+    public CalendarPanelHandle getCalendarPanel() { return calendarPanel; }
+
+    public DailySchedulerPanelHandle getDailySchedulerPanel() { return dailySchedulerPanel; }
 }

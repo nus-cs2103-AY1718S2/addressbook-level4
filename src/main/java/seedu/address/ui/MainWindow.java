@@ -7,6 +7,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -19,6 +21,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.commons.events.ui.ShowErrorsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchFeatureEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -37,12 +40,39 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private PersonDetailsPanel personDetailsPanel;
+    private CalendarPanel calendarPanel;
+    private DailySchedulerPanel dailySchedulerPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
     private StackPane browserPlaceholder;
+
+    //@@author jaronchan
+    @FXML
+    private StackPane personDetailsPlaceholder;
+
+    @FXML
+    private StackPane calendarPlaceholder;
+
+    @FXML
+    private StackPane dailySchedulerPlaceholder;
+
+    @FXML
+    private TabPane featuresTabPane;
+
+    @FXML
+    private Tab detailsTab;
+
+    @FXML
+    private Tab calendarTab;
+
+    @FXML
+    private Tab dailySchedulerTab;
+
+    //@@author
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -122,8 +152,15 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //@@author jaronchan
+        personDetailsPanel = new PersonDetailsPanel();
+        calendarPanel = new CalendarPanel();
+        dailySchedulerPanel = new DailySchedulerPanel();
+
+        personDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
+        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
+        dailySchedulerPlaceholder.getChildren().add(dailySchedulerPanel.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -139,6 +176,7 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         hideBeforeLogin();
+
     }
 
     void hide() {
@@ -150,7 +188,10 @@ public class MainWindow extends UiPart<Stage> {
      * Hides browser and person list panel.
      */
     void hideBeforeLogin() {
-        browserPlaceholder.setVisible(false);
+        featuresTabPane.setVisible(false);
+        personDetailsPlaceholder.setVisible(false);
+        calendarPlaceholder.setVisible(false);
+        dailySchedulerPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
     }
 
@@ -159,7 +200,10 @@ public class MainWindow extends UiPart<Stage> {
      * Unhide browser and person list panel.
      */
     void showAfterLogin() {
-        browserPlaceholder.setVisible(true);
+        featuresTabPane.setVisible(true);
+        personDetailsPlaceholder.setVisible(true);
+        calendarPlaceholder.setVisible(true);
+        dailySchedulerPlaceholder.setVisible(true);
         personListPanelPlaceholder.setVisible(true);
     }
 
@@ -220,6 +264,32 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.show();
     }
 
+    //@@author jaronchan
+
+    /**
+     * Handle event of feature tab switching.
+     */
+    @Subscribe
+    private void handleFeatureSwitch(SwitchFeatureEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switch (event.getFeatureTarget()) {
+        case "details":
+            featuresTabPane.getSelectionModel().select(detailsTab);
+            break;
+
+        case "calendar":
+            featuresTabPane.getSelectionModel().select(calendarTab);
+            break;
+
+        case "scheduler":
+            featuresTabPane.getSelectionModel().select(dailySchedulerTab);
+            break;
+
+        default:
+            break;
+        }
+    }
+
     /**
      * Closes the application.
      */
@@ -233,7 +303,9 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        personDetailsPanel.freeResources();
+        calendarPanel.freeResources();
+        dailySchedulerPanel.freeResources();
     }
 
     @Subscribe

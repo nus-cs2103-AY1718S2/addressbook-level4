@@ -10,12 +10,12 @@ to fit social worker more specifically.
 == Project Team
 
 === Chan Jin Jia
-image::damithc.jpg[width="150", align="left"]
+image::chan-jin-jia-photo.jpg[width="150", align="left"]
 
-{empty}[https://github.com/[github]]
+{empty}[https://github.com/jaronchan[github]]
 
 +Role:
-+Responsibilities:
++Responsibilities: Main UI, Map and Daily Scheduler
 
 '''
 

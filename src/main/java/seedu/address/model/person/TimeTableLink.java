@@ -9,16 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class TimeTableLink {
 
-    private static  final String SPECIAL_CHARACTERS = "!#$%&'*+/=?`{|}~^.-";
-    public static final String MESSAGE_EMAIL_CONSTRAINTS = "Person emails should be of the format local-part@domain "
-            + "and adhere to the following constraints:\n"
-            + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "
-            + "the parentheses, (" + SPECIAL_CHARACTERS + ") .\n"
-            + "2. This is followed by a '@' and then a domain name. "
-            + "The domain name must:\n"
-            + "    - be at least 2 characters long\n"
-            + "    - start and end with alphanumeric characters\n"
-            + "    - consist of alphanumeric characters, a period or a hyphen for the characters in between, if any.";
+    public static final String MESSAGE_TIMETABLE_LINK_CONSTRAINTS = "Timetable Links should "
+            + "adhere to the following constraints:\n"
+            + "1. Begin with \"http://modsn.us/\". \n"
+            + "2. This is followed by a string of alphanumeric characters. ";
     // alphanumeric and special characters
     private static final String SHORT_URL_FROINT_REGEX = "http://modsn\\.us/";
     private static final String SHORT_URL_TRAIL_REGEX = "[a-zA-Z0-9\\-]+"; // alphanumeric and hyphen
@@ -33,7 +27,7 @@ public class TimeTableLink {
      */
     public TimeTableLink(String link) {
         requireNonNull(link);
-        checkArgument(isValidLink(link), MESSAGE_EMAIL_CONSTRAINTS);
+        checkArgument(isValidLink(link), MESSAGE_TIMETABLE_LINK_CONSTRAINTS);
         this.value = link;
     }
 

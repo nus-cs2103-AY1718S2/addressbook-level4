@@ -38,8 +38,9 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
         }
         StringBuilder sb = new StringBuilder();
+        sb.append(sc.next());
         while (sc.hasNext()) {
-            sb.append(sc.next());
+            sb.append(" " + sc.next());
         }
         String review = sb.toString();
 

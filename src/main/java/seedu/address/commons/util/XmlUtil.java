@@ -11,8 +11,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import seedu.address.storage.SecurityUtil;
-
 /**
  * Helps with reading from and writing to XML files.
  */
@@ -39,7 +37,6 @@ public class XmlUtil {
         if (!FileUtil.isFileExists(file)) {
             throw new FileNotFoundException("File not found : " + file.getAbsolutePath());
         }
-        SecurityUtil.decrypt(file);
         JAXBContext context = JAXBContext.newInstance(classToConvert);
         Unmarshaller um = context.createUnmarshaller();
 
@@ -70,7 +67,6 @@ public class XmlUtil {
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
         m.marshal(data, file);
-        SecurityUtil.encrypt(file);
     }
 
 }

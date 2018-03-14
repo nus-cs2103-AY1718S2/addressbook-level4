@@ -18,7 +18,6 @@ public class XmlFileStorage {
     public static void saveDataToFile(File file, XmlSerializableAddressBook addressBook)
             throws IOException {
         try {
-            SecurityUtil.decrypt(file);
             XmlUtil.saveDataToFile(file, addressBook);
         } catch (JAXBException e) {
             throw new AssertionError("Unexpected exception " + e.getMessage());
@@ -32,7 +31,6 @@ public class XmlFileStorage {
                                                                             IOException {
         try {
             XmlSerializableAddressBook xmlBook =  XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
-            SecurityUtil.encrypt(file);
             return xmlBook;
         } catch (JAXBException e) {
             throw new DataConversionException(e);

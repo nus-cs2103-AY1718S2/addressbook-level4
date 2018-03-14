@@ -19,6 +19,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchFeatureEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -215,16 +216,20 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Handle event of feature tab switching.
      */
-    private void handleFeatureSwitch(String feature) {
-        switch (feature) {
+    @Subscribe
+    private void handleFeatureSwitch(SwitchFeatureEvent event) {
+        switch (event.getFeatureTarget()) {
         case "details":
             featuresTabPane.getSelectionModel().select(detailsTab);
+            break;
 
         case "calendar":
             featuresTabPane.getSelectionModel().select(calendarTab);
+            break;
 
-        case "schedule":
+        case "scheduler":
             featuresTabPane.getSelectionModel().select(dailySchedulerTab);
+            break;
         }
     }
 

@@ -1,6 +1,9 @@
 //@@author jaronchan
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.SwitchFeatureEvent;
+
 /**
  * Switches user interface to the feature requested.
  */
@@ -23,7 +26,7 @@ public class SwitchCommand extends Command {
 
     @Override
     public CommandResult execute() {
-
+        EventsCenter.getInstance().post(new SwitchFeatureEvent(featureTarget));
         return new CommandResult(String.format(MESSAGE_SUCCESS, featureTarget));
     }
 

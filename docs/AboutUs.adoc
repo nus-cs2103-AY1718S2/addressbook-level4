@@ -17,15 +17,6 @@ Responsibilities: Logic, Documentation, Deliverables and Deadlines
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
 === Alicia Ho Sor Sian
 image::suxianalicia.JPG[width="150", align="left"]
 {empty}[https://github.com/SuxianAlicia[github]] [<<johndoe#, portfolio>>]
@@ -35,20 +26,20 @@ Responsibilities: In charge of Model Component, Code Quality
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
 === Ang Jing Zhe
 image::AJZ1995.jpg[width="150", align="left"]
 {empty}[https://github.com/AJZ1995[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer
+Role: Developer +
 Responsibilities: UI
+
+'''
+
+=== Kevin Yeong
+image::kevinyeong.jpg[width="150", align="left"]
+{empty}[https://github.com/A0143487X[github]] [<<kevinyeong#, portfolio>>]
+
+Role: Developer +
+Responsibilities: -
 
 '''

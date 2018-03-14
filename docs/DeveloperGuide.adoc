@@ -798,65 +798,65 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |view help instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |view help information |find out how to use the application
 
 |`* * *` |user |list all my customers |have an overview of all customers
 
-|`* * *` |user |add a new customer |store the data of a new customer and related deals and contracts
+|`* * *` |user |add a new customer |store the data of a new customer as well as related deals and contracts
 
 |`* * *` |user |clear the list of customers |start on a clean state
 
-|`* * *` |user |delete a customer |remove entries that I no longer need
+|`* * *` |user |delete a customer |remove unwanted data
 
-|`* * *` |user |edit a customer's data |correct mistakes or update to the latest information
+|`* * *` |user |edit a customer's data |correct mistakes or update the data with the latest information
 
 |`* * *` |user |exit the application |call it a day
 
 |`* * *` |user |find a customer with a keyword |search up a customer quickly without looking at the whole list
 
-|`* * *` |user |view history of commands entered |trace the workflow
+|`* * *` |user |view history of previously entered commands |trace my workflow
 
 |`* * *` |user |undo a command |easily revert to a previous state
 
-|`* * *` |user |redo a command |get back to a command that was undone
+|`* * *` |user |redo a command |redo a command that was undone
 
-|`* * *` |user |select a person from the list |view details
+|`* * *` |user |select a person from the previously retrieved list |view more details about the particular customer
 
 |`* * *` |user |view a customer's address on Google Maps |visualize the location of the customer
 
-|`* * *` |user |back up the list |create backup copies of the current data in case of data corruption
+|`* * *` |user |back up my list |create backup copies of the current data in case of data corruption
 
-|`* * *` |user |list all runners |get an overview of all my subordinates
+|`* * *` |user |list all my runners |get an overview of all subordinates
 
-|`* * *` |user |schedule a collection of payment |facilitate meetings with customers and timely collection of money
+|`* * *` |user |schedule collection of payment |plan  meetings with customers and facilitate timely collection of payments
 
-|`* * *` |user |schedule a house visit |send a reminder to customers regarding payments
+|`* * *` |user |schedule a house visit |send a friendly, personal reminder to a customer regarding payments
 
-|`* * *` |user |add customers with partial information |add incomplete data about a customer
+|`* * *` |user |add a customer with partial information |add a customer entry without requiring all the details
 
-|`* * *` |user |make ad hoc calculations |calculate the amount a customer would owe after X months with Y interest rate
+|`* * *` |user |easily make ad hoc calculations |perform simple payment calculations without disrupting my workflow
 
-|`* * *` |user |view statistics of customers or transactions |inform decisions or to get an overview of operations
+|`* * *` |user |view customer or transaction statistics |make informed decisions or get relevant information about customers or transactions
 
-|`* * *` |user |rate my customers |know who are the most reliable customers
+|`* * *` |user |rate my customers |know who the most reliable customers are
 
-|`* * *` |user |filter customers by area |make operations more time- and cost-efficient
+|`* * *` |user |filter customers by area |make operations, collections and visitations more time and cost efficient
 
-|`* * *` |user |hide my applications quickly |prevent unwanted eyes from seeing the activities of the syndicate and seeing confidential data
+|`* * *` |user |hide my application quickly |prevent unwanted eyes from confidential data and the activities of the syndicate
 
-|`* * *` |user |view information about customer's collateral |analyse possible courses of action against recalcitrant customers
+|`* * *` |user |view information about a customer's collateral (family members, relatives, property)  |nalyse possible courses of action against recalcitrant customers who do not pay up
 
-|`* * *` |user |view a compact status view of customers using small symbols/pictorial representations |see general status information about customers at a glance
+|`* * *` |user |view a compact status view of customers using small symbols or pictorial representations |see general status information about customers at a glance
 
-|`* * *` |user |view different configurations of routes |find the optical cost/time/effort involved in collecting from a set of customers
+|`* * *` |user |view different configurations of one or more routes, all together encompassing a given set of customers' locations |find the optimal route in terms of cost, time and effort that can be taken to collect from a given set of customers
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |export data of customers and runners |view the data in another format on another platform
+|`* *` |user |export data of customers and runners |view the data in another format or on another platform
 
-|`* *` |user |view a route encompassing a given set of customers' locations |access the cost/time/effort involved in collecting from a set of customers
+|`* *` |user |view a route encompassing a given set of customers' locations |access the cost, time and effort involved in collecting from a set of customers
 
-|`*` |user |export current view to another format |view specific information in another format and print out a hardcopy
+|`*` |user |export my current view to another format |view specific information in another format or print out a hardcopy and pass the information to subordinates
 |=======================================================================
 
 _{More to be added}_

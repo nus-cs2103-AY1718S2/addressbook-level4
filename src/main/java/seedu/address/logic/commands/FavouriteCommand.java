@@ -16,6 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -78,8 +79,9 @@ public class FavouriteCommand extends UndoableCommand {
         Email email = target.getEmail();
         Address address = target.getAddress();
         Set<Tag> tags = target.getTags();
+        Subject subject = target.getSubject();
         Favourite fav = new Favourite(true);
 
-        return new Person(name, phone, email, address, tags, fav);
+        return new Person(name, phone, email, address, subject, tags, fav);
     }
 }

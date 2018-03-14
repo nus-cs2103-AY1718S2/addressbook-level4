@@ -43,16 +43,16 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Favourite fav) {
-        // TODO: Add subject field here
+    public Person(Name name, Phone phone, Email email, Address address, Subject subject, Set<Tag> tags, Favourite fav) {
         requireAllNonNull(name, phone, email, address, tags, fav);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         // protect internal tags from changes in the arg list
+        this.subject = subject;
         this.tags = new UniqueTagList(tags);
-        this.favourite = new Favourite(fav.value);
+        this.favourite = fav;
     }
 
     public Name getName() {
@@ -85,7 +85,7 @@ public class Person {
             return false;
         }
     }
-      
+
     public Subject getSubject() {
         return subject;
     }

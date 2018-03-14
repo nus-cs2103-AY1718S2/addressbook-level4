@@ -7,6 +7,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -54,6 +56,19 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane dailySchedulerPlaceholder;
+
+    @FXML
+    private TabPane featuresTabPane;
+
+    @FXML
+    private Tab detailsTab;
+
+    @FXML
+    private Tab calendarTab;
+
+    @FXML
+    private Tab dailySchedulerTab;
+
     //@@author
 
     @FXML
@@ -151,6 +166,7 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
     }
 
     void hide() {
@@ -192,6 +208,24 @@ public class MainWindow extends UiPart<Stage> {
 
     void show() {
         primaryStage.show();
+    }
+
+    //@@author jaronchan
+
+    /**
+     * Handle event of feature tab switching.
+     */
+    private void handleFeatureSwitch(String feature) {
+        switch (feature) {
+        case "details":
+            featuresTabPane.getSelectionModel().select(detailsTab);
+
+        case "calendar":
+            featuresTabPane.getSelectionModel().select(calendarTab);
+
+        case "schedule":
+            featuresTabPane.getSelectionModel().select(dailySchedulerTab);
+        }
     }
 
     /**

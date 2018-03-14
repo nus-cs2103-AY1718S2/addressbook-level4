@@ -56,10 +56,10 @@
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
           <!-- @@author jaronchan -->
-          <TabPane tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
+          <TabPane fx:id="featuresTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
                    xmlns="http://javafx.com/javafx/9.0.4">
             <tabs>
-              <Tab text="Details">
+              <Tab fx:id="detailsTab" text="Details">
                 <content>
                   <StackPane fx:id="personDetailsPlaceholder" prefWidth="340">
                     <padding>
@@ -68,7 +68,7 @@
                   </StackPane>
                 </content>
               </Tab>
-              <Tab text="Calendar">
+              <Tab fx:id="calendarTab" text="Calendar">
                 <content>
                   <StackPane fx:id="calendarPlaceholder" prefWidth="340">
                     <padding>
@@ -77,7 +77,7 @@
                   </StackPane>
                 </content>
               </Tab>
-              <Tab text="Daily Scheduler">
+              <Tab fx:id="dailySchedulerTab" text="Daily Scheduler">
                 <content>
                   <StackPane fx:id="dailySchedulerPlaceholder" prefWidth="340">
                     <padding>

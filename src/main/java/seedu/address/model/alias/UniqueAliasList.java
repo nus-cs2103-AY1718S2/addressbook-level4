@@ -2,18 +2,15 @@ package seedu.address.model.alias;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.alias.Alias;
-import seedu.address.model.alias.UniqueAliasList;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
-import seedu.address.logic.commands.Command;
 
 import static java.util.Objects.requireNonNull;
 import java.util.HashMap;
 
 public class UniqueAliasList {
 
-    private final static HashMap<String, String> internalList = new HashMap<String, String>();
+    private final static HashMap<String, String> hashList = new HashMap<String, String>();
+    private ObservableList<Alias> internalList = FXCollections.observableArrayList();
 
     /**
      * Constructs empty AliasList.
@@ -25,7 +22,7 @@ public class UniqueAliasList {
      */
     public boolean contains(String toCheck) {
         requireNonNull(toCheck);
-        return internalList.containsKey(toCheck);
+        return hashList.containsKey(toCheck);
     }
 
     /**
@@ -33,7 +30,7 @@ public class UniqueAliasList {
      */
     public String getCommandFromAlias(String alias) {
         requireNonNull(alias);
-        return internalList.get(alias);
+        return hashList.get(alias);
     }
 
     /**
@@ -46,7 +43,23 @@ public class UniqueAliasList {
         if (contains(toAdd.aliasName)) {
             throw new DuplicateAliasException();
         }
-        internalList.put(toAdd.aliasName, toAdd.command);
-
+        hashList.put(toAdd.aliasName, toAdd.command);
     }
-}
+
+    /**
+     * Converts HashMap into an observable list
+     *
+     */
+    public void convertToList() {
+        for (String key : hashList.keySet()) {
+            Alias newAlias = new Alias(hashList.get(key), key);
+            internalList.add(newAlias);
+        }
+    }
+
+    public ObservableList<Alias> getAliasObservableList() {
+        internalList = FXCollections.observableArrayList();
+        convertToList();
+        return internalList;
+    }
+ }

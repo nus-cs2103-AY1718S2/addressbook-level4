@@ -36,12 +36,12 @@ Responsibilities: Data
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Koh Yee Ru
+image::inekox3.jpg[width="150", align="left"]
+{empty}[http://github.com/inekox3[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Logic + Scheduling & Tracking + Deliverables & Deadlines
 
 '''
 

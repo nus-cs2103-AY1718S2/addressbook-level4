@@ -16,7 +16,7 @@ public class Tag {
             + "teal, red, yellow, blue, orange, brown, green, pink, black, grey";
     public static final String TAG_COLOR_FILE_PATH = "data/tagColors.txt";
     private static final String[] AVAILABLE_COLORS = new String[] {"teal", "red", "yellow", "blue", "orange", "brown",
-         "green", "pink", "black", "grey", "undefined"};
+        "green", "pink", "black", "grey", "undefined"};
 
     public final String name;
     public final String color;

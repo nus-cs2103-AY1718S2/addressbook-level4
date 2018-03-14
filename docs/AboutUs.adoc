@@ -26,12 +26,12 @@ Role:
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Gilbert Emerson
+image::emer7.png[width="150", align="left"]
+{empty}[http://github.com/emer7[github]]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: - +
+Responsibilities: Implement enhanced feature search and new feature review
 
 '''
 

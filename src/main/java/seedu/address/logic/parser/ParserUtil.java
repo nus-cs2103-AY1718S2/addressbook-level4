@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.NRIC;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -137,6 +138,34 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String nric} into a {@code NRIC}.
+     * Leading and trailing whitespaces will be trimmed.
+     * @param nric
+     * @return
+     * @throws IllegalValueException
+     */
+    public static NRIC parseNric(String nric) throws IllegalValueException {
+        requireNonNull(nric);
+        String trimmedNric = nric.trim();
+        if (!NRIC.isValidNRIC(trimmedNric)) {
+            throw new IllegalValueException(NRIC.MESSAGE_NRIC_CONSTRAINTS);
+        }
+        return new NRIC(trimmedNric);
+    }
+
+    /**
+     * Parses a {@code Optional<String> nric} into an {@code Optional<NRIC>} if {@code nric} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * @param nric
+     * @return
+     * @throws IllegalValueException
+     */
+    public static Optional<NRIC> parseNric(Optional<String> nric) throws IllegalValueException {
+        requireNonNull(nric);
+        return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
     }
 
     /**

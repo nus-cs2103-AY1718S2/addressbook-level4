@@ -3,8 +3,11 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+//import com.sun.deploy.perf.PerfRollup;
+
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.NRIC;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -20,12 +23,14 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_NRIC = "G1234567A";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private NRIC nric;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -33,6 +38,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        nric = new NRIC(DEFAULT_NRIC);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -44,6 +50,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        nric = personToCopy.getNric();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -87,8 +94,18 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code NRIC} of the {@code Person} that we are building.
+     * @param nric
+     * @return
+     */
+    public PersonBuilder withNric(String nric) {
+        this.nric = new NRIC(nric);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, nric, tags);
     }
 
 }

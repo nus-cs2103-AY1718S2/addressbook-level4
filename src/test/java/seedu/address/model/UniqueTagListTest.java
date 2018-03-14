@@ -1,15 +1,14 @@
 package seedu.address.model;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR_RED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;

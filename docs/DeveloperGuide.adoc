@@ -782,13 +782,12 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
-
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+* Loan Shark Bosses
+* Need to manage a significant number of contacts (customers and runners).
+* Prefer desktop apps over other types since he will be operating the syndicate from his den / headquarters and not out in the field.
+* Can type fast as he is tech-savvy and is comfortable with using technology to manage data and streamline his workflow.
+* Prefer typing over mouse mouse input as he has fast fingers.
+* Is reasonable comfortable using CLI apps.
 
 [appendix]
 == User Stories

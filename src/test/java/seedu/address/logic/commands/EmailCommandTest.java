@@ -183,7 +183,11 @@ public class EmailCommandTest {
             CommandResult result = testCommand.execute();
             assertEquals(expectedResult, result.feedbackToUser);
         } catch (CommandException ce) {
-            throw new AssertionError("Execution of command should not fail.", ce);
+            if (ce.equals(new CommandException(Messages.UNSUPPORTED_DESKTOP))) {
+                assertEquals(ce, (new CommandException(Messages.UNSUPPORTED_DESKTOP)));
+            } else {
+                throw new AssertionError("Execution of command should not fail.", ce);
+            }
         }
     }
 }

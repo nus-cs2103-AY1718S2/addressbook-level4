@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import java.awt.Desktop;
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -46,6 +47,8 @@ public class EmailCommand extends Command {
 
         try {
             Desktop.getDesktop().mail(new URI(MAIL_SYNTAX + emailAddress));
+        } catch (HeadlessException hlError) {
+            throw new CommandException(Messages.UNSUPPORTED_DESKTOP);
         } catch (URISyntaxException Urierror) {
             throw new CommandException(Messages.MAIL_APP_ERROR);
         } catch (IOException e) {

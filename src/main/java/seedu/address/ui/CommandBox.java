@@ -25,8 +25,8 @@ public class CommandBox extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
-    public MainWindow mainWindow;
     private ListElementPointer historySnapshot;
+    private MainWindow mainWindow;
 
     @FXML
     private TextField commandTextField;
@@ -37,6 +37,14 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+    }
+
+    /**
+     * Initialise MainWindow
+     * @param mainWindow
+     */
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
     }
 
     /**

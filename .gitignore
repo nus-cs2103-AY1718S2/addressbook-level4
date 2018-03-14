@@ -9,7 +9,7 @@ lib/*
 *.log.*
 *.csv
 config.json
-src/test/data/
+src/test/data/*
 preferences.json
 .DS_Store
 ./screenshot*.png

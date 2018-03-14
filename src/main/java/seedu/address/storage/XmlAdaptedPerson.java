@@ -9,11 +9,12 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Year;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -30,7 +31,9 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
-    private String address;
+    private String major;
+    @XmlElement(required = true)
+    private String year;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -44,11 +47,13 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(
+            String name, String phone, String email, String major, String year, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.major = major;
+        this.year = year;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -63,7 +68,8 @@ public class XmlAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        address = source.getAddress().value;
+        major = source.getMajor().value;
+        year = source.getYear().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -105,16 +111,24 @@ public class XmlAdaptedPerson {
         }
         final Email email = new Email(this.email);
 
-        if (this.address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        if (this.major == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Major.class.getSimpleName()));
         }
-        if (!Address.isValidAddress(this.address)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        if (!Major.isValidMajor(this.major)) {
+            throw new IllegalValueException(Major.MESSAGE_MAJOR_CONSTRAINTS);
         }
-        final Address address = new Address(this.address);
+        final Major major = new Major(this.major);
+
+        if (this.year == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Year.class.getSimpleName()));
+        }
+        if (!Year.isValidYear(this.year)) {
+            throw new IllegalValueException(Year.MESSAGE_YEAR_CONSTRAINTS);
+        }
+        final Year year = new Year(this.year);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, major, year, tags);
     }
 
     @Override
@@ -131,7 +145,8 @@ public class XmlAdaptedPerson {
         return Objects.equals(name, otherPerson.name)
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
-                && Objects.equals(address, otherPerson.address)
+                && Objects.equals(major, otherPerson.major)
+                && Objects.equals(year, otherPerson.year)
                 && tagged.equals(otherPerson.tagged);
     }
 }

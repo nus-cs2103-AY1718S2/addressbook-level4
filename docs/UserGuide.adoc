@@ -38,7 +38,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2` : adds a contact named `John Doe` to the Address Book. He is in his 2nd year majoring in computer engineering.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -63,19 +63,19 @@ Format: `help OR h`
 === Adding a person: `add OR a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
         `OR` +
-       `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+       `a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2`
+* `a n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com m/Computer Engineering p/1234567 y/3 t/criminal`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com m/Information Security y/2 p/1234567 t/criminal`
 
 === Listing all persons : `list OR l`
 
@@ -110,6 +110,7 @@ Format: `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD {MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
+* The search is dynamic. As the user types alphabets, the results will be shown without the need to press enter key
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
@@ -251,13 +252,13 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
+`a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com m/Computer Science y/2 t/friend t/colleague`
 * *Clear* : `clear OR c`
 * *Delete* : `delete INDEX OR d INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... OR e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]... OR e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD {MORE_KEYWORDS]` +
 e.g. `search James Jake` +

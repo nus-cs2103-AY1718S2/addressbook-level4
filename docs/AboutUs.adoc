@@ -32,8 +32,8 @@ image::Profilepic_Kaiser.jpg[width="150", align="left"]
 image::damithc.jpg[width="150", align="left"]
 {empty}[https://github.com/[github]]
 
-+Role:
-+Responsibilities:
++Role: Hello
++Responsibilities: Hello
 
 '''
 
@@ -45,5 +45,3 @@ image::damithc.jpg[width="150", align="left"]
 +Responsibilities:
 
 '''
-
-

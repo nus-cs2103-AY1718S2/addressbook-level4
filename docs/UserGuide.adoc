@@ -62,6 +62,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+====
+
+=== Viewing calendar : `calendar`
+
+Format: `calendar`
+
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -272,6 +278,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
+* *Calendar* : `calendar`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`

@@ -3,8 +3,11 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
+ProgressChecker was developed by the https://github.com/CS2103JAN2018-T09-B3/main[T09-B3] team. +
+ProgressChecker helps to remind students learning outcomes every week. +
+With a simple click, students will never miss their weekly LOs again. +
+It also keeps track of the progress of each team member. +
+Thus it is convenient for teammates to compare help each other. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
@@ -13,37 +16,42 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 '''
 
 === Aditya Agarwal
-image::Aditya.png[width="150", align="left"]
+
+image::adityaa1998.png[width="150", align="left"]
 {empty}[http://github.com/adityaa1998[github]] [<<johndoe#, portfolio>>]
+=======
+image::adityaa1998.png[width="150", align="left"]
+{empty}[http://github.com/adityaa1998[github]] [<<aditya#, portfolio>>]
+
 
 Role: Team Lead +
 Responsibilities: Integration, code quality
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Lai Liwen
+image::livian1107.png[width="150", align="left"]
+{empty}[https://github.com/Livian1107[github]] [<<liwen#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: UI + Documentation + Testing(helper)
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Koh Yee Ru
+image::inekox3.png[width="150", align="left"]
+{empty}[http://github.com/inekox3[github]] [<<yeeru#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Logic + Scheduling & Tracking + Deliverables & Deadlines
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Kang Anmin
+image::edwardksg.png[width="150", align="left"]
+{empty}[https://github.com/EdwardKSG[github]] [<<anmin#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Model + Testing + Scheduling & Tracking(helper)
 
 '''

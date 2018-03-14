@@ -5,9 +5,8 @@
         <firstName>John</firstName>
         <lastName>Doe</lastName>
         <githubUsername></githubUsername>
-        <street></street>
-        <postalCode></postalCode>
-        <city></city>
+        <major></major>
+        <year></year>
     </persons>
     <tags>
         <name>Friends</name>

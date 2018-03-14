@@ -22,10 +22,12 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static final String CORRECT_COMMAND_WORD = "find";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private boolean isCorrectCommandWord = false;
 
     @FXML
     private TextField commandTextField;
@@ -56,7 +58,22 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            // let JavaFx handle the keypress
+            try {
+                if ((commandTextField.getText().trim().equalsIgnoreCase(CORRECT_COMMAND_WORD)
+                        || isCorrectCommandWord)) {
+                    isCorrectCommandWord = !commandTextField.getText().trim().isEmpty();
+                    CommandResult commandResult = logic.execute(commandTextField.getText() + keyEvent.getText());
+                    // process result of the command
+                    logger.info("Result: " + commandResult.feedbackToUser);
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+                }
+
+            } catch (CommandException | ParseException e) {
+                // handle command failure
+                setStyleToIndicateCommandFailure();
+                logger.info("Invalid command: " + commandTextField.getText());
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            }
         }
     }
 
@@ -147,5 +164,4 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
 }

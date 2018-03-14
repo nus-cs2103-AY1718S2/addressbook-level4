@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 
 /**
@@ -33,9 +34,17 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPerson.getMajor().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+
+        if (!actualCard.getTagLabels().isEmpty()) {
+            ObservableList<String> classes = actualCard.getTagLabels().get(0).getStyleClass();
+            String tagColor = classes.toString().split("\\s+")[1];
+            List<String> expectedClasses = expectedPerson.getTags().stream().map(tag -> tag.tagName)
+                .collect(Collectors.toList());
+            assertEquals(getTagColor(expectedClasses.get(0)), tagColor);
+        }
     }
 
     /**
@@ -69,5 +78,24 @@ public class GuiTestAssert {
      */
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
+    }
+
+    public static String getTagColor(String tagName) {
+        switch(tagName) {
+        case "friends":
+        case "husband":
+            return "green";
+        case "colleagues":
+        case "neighbours":
+        case "classmates":
+            return "blue";
+        case "family":
+        case "owesMoney":
+            return "red";
+        case "friend":
+            return "yellow";
+        default:
+            return null;
+        }
     }
 }

@@ -131,6 +131,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasLoggedIn() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }

@@ -1080,6 +1080,30 @@ Use case resumes from 3.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Change Tag Color
+
+*MSS*
+
+1. User enter command to change a specific tag color
+2. Fastis changes the color accordingly and display it
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tag specified doesn't exist within the address book
+** 2a1. Fastis notifies the user.
++
+Use case ends
+
+[none]
+* 3a. The color specified is not supported by Fastis
+** 3a1. Fastis notifies the user.
++
+Use case ends
+
 _{More to be added}_
 
 [appendix]

@@ -11,6 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.login.Password;
+import seedu.address.model.login.Username;
+import seedu.address.model.login.exceptions.AlreadyLoggedInException;
+import seedu.address.model.login.exceptions.AuthenticationFailedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,6 +30,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final Username username;
+    private final Password password;
+
+    private boolean hasLoggedIn;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -39,7 +47,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+        hasLoggedIn = false;
+        this.username = new Username("slap");
+        this.password = new Password("password");
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -47,6 +59,45 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
         resetData(toBeCopied);
+    }
+
+    /**
+     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied} and logged-in status
+     */
+    public AddressBook(ReadOnlyAddressBook toBeCopied, boolean loggedin) {
+        this();
+        resetData(toBeCopied);
+        hasLoggedIn = loggedin;
+    }
+
+    /// login authentication operations
+
+    public boolean hasLoggedIn() {
+        return hasLoggedIn;
+    }
+
+
+    /** @@author kaisertanqr
+     *
+     * Checks the login credentials whether it matches the one in addressbook
+     *
+     * @param username
+     * @param password
+     * @throws AlreadyLoggedInException is the user is already logged in.
+     * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given
+     *                                       in ModelManager.
+     */
+
+    public void checkLoginCredentials(Username username, Password password)
+            throws AlreadyLoggedInException, AuthenticationFailedException {
+        if (hasLoggedIn) {
+            throw new AlreadyLoggedInException();
+        } else if (!username.equals(this.username) || !password.equals(this.password)) {
+            throw new AuthenticationFailedException();
+        } else {
+            hasLoggedIn = true;
+        }
+
     }
 
     //// list overwrite operations

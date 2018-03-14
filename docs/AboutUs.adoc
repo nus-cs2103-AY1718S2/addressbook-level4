@@ -32,7 +32,7 @@ image::Profilepic_Kaiser.jpg[width="150", align="left"]
 image::Profilepic_Jason.jpg[width="150", align="left"]
 {empty}[https://github.com/ifalluphill[github]]
 
-+Role: Developer 
++Role: Developer
 +Responsibilities: Calendar and Todolist
 
 '''

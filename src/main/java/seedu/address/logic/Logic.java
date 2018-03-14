@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -24,4 +25,10 @@ public interface Logic {
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
+
+    /** Returns the execution of the login function only, regardless of commandText */
+    CommandResult executeLoginCommandOnly(String commandText, Command command) throws CommandException;
+
+    /** Returns whether the user has logged in successfully */
+    boolean hasLoggedIn();
 }

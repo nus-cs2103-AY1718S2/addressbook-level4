@@ -130,11 +130,32 @@ public class MainWindow extends UiPart<Stage> {
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
+        commandBox.setMainWindow(this);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        hideBeforeLogin();
     }
 
     void hide() {
         primaryStage.hide();
+    }
+
+    /** @@author {kaisertanqr}
+     *
+     * Hides browser and person list panel.
+     */
+    void hideBeforeLogin() {
+        browserPlaceholder.setVisible(false);
+        personListPanelPlaceholder.setVisible(false);
+    }
+
+    /** @@author {kaisertanqr}
+     *
+     * Unhide browser and person list panel.
+     */
+    void showAfterLogin() {
+        browserPlaceholder.setVisible(true);
+        personListPanelPlaceholder.setVisible(true);
     }
 
     private void setTitle(String appTitle) {

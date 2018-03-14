@@ -1,4 +1,4 @@
-, = E.T. (Employees Tracker)
+= E.T. (Employees Tracker)
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-W15-B1[image:https://travis-ci.org/CS2103JAN2018-W15-B1/main.svg?branch=master[Build Status]]

@@ -121,7 +121,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Locating persons by tags: `findTag`
 
 Finds persons whose labels contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findTag KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `Friends` will match `friends`

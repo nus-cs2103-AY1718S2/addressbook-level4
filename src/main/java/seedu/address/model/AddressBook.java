@@ -2,11 +2,14 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -269,6 +272,34 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
                     + "See Person#equals(Object).");
+        }
+    }
+
+    public void addColorsToTag() {
+        HashMap<String, String> tagColors = readTagColorFile();
+        HashSet<Tag> coloredTags = new HashSet<Tag>();
+        for (Tag tag : tags) {
+            if (tagColors.containsKey(tag.name)) {
+                coloredTags.add(new Tag(tag.name, tagColors.get(tag.name)));
+            } else {
+                coloredTags.add(new Tag(tag.name));
+            }
+        }
+        tags.setTags(coloredTags);
+    }
+
+    private HashMap<String, String> readTagColorFile() {
+        String tagColorsFilePath = Tag.TAG_COLOR_FILE_PATH;
+        HashMap<String, String> tagColors = new HashMap<String, String>();
+        try {
+            Scanner scan = new Scanner(new File(tagColorsFilePath));
+            while (scan.hasNextLine()) {
+                String[] t = scan.nextLine().split(":");
+                tagColors.put(t[0], t[1]);
+            }
+            return tagColors;
+        } catch (FileNotFoundException fnfe){
+            throw new AssertionError("Tag color file not found. Using default settings.");
         }
     }
 }

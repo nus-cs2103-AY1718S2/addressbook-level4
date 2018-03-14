@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Fastis-Meetup Manager - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -17,7 +17,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+This is a desktop Event Manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and generate a suitable meetup time.
 
 == Quick Start
 
@@ -65,15 +65,15 @@ Format: `help`
 
 Adds a person to the address book +
 Alias: `a` +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 l/http://modsn.us/MYwiD`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 l/http://modsn.us/56Dn9 t/criminal`
 
 === Listing all persons : `list`
 
@@ -85,7 +85,7 @@ Format: `list`
 
 Edits an existing person in the address book. +
 Alias: `e` +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [l/TIMETABLE_LINK] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...

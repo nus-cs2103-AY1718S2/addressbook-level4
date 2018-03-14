@@ -77,14 +77,14 @@
 }
 
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(dimgray, 20%);
     -fx-border-color: transparent transparent transparent #4d4d4d;
 }
 
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(dimgray, 20%);
 }
 
 .list-view {
@@ -138,7 +138,7 @@
 
 .pane-with-border {
     -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: derive(#1d1d1d, 10%);
+    -fx-border-color: derive(gray, 10%);
     -fx-border-top-width: 1px;
 }
 
@@ -192,7 +192,7 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(black, 20%);
 }
 
 .menu-bar .label {
@@ -281,7 +281,7 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(darkgrey, 20%);
 }
 
 .scroll-bar .thumb {
@@ -321,10 +321,10 @@
     -fx-background-insets: 0;
     -fx-border-color: #383838 #383838 #ffffff #383838;
     -fx-border-insets: 0;
-    -fx-border-width: 1;
+    -fx-border-width: 0;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-font-size: 14pt;
+    -fx-text-fill: black;
 }
 
 #filterField, #personListPanel, #personWebpage {

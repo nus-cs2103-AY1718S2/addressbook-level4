@@ -1,6 +1,9 @@
 package seedu.address.logic;
 
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.logic.commands.AddCommand;
@@ -80,10 +83,11 @@ public class Autocompleter {
 
                 possibilities = generatePossibleSuffixes(field, fieldsList);
             } else {
-                //the last word of the query doesn't correspond to a command and doesn't correspond to an option starting with 'x/'
+                //the last word of the query doesn't correspond to a command
+                // and doesn't correspond to an option starting with 'x/'
                 //so we're trying to match the last word to a name of the adress book
 
-                possibilities = generatePossibleSuffixes(words[words.length-1], names);
+                possibilities = generatePossibleSuffixes(words[words.length - 1], names);
             }
         }
         String longestCommonPrefix = "";
@@ -109,6 +113,12 @@ public class Autocompleter {
         return longestCommonPrefix;
     }
 
+    /**
+     *
+     * @param lastWord the last word of the query we're trying to complete
+     * @param possibleWords the set of all possible words according to the query type
+     * @return the set of all possible suffixes to the last word
+     */
     private Set<String> generatePossibleSuffixes(String lastWord, Set<String> possibleWords) {
         Set<String> suffixes = new HashSet<>();
 
@@ -121,6 +131,9 @@ public class Autocompleter {
         return suffixes;
     }
 
+    /**
+     * Update the sets of fields
+     */
     private void updateFields() {
         names = logic.getFilteredPersonList().stream()
                 .map(person -> person.getName().toString()).collect(Collectors.toSet());
@@ -132,6 +145,9 @@ public class Autocompleter {
                 .map(person -> person.getAddress().toString()).collect(Collectors.toSet());
     }
 
+    /**
+     * Updates the set of commands
+     */
     private void updateCommands() {
         commandsList.addAll(Arrays.asList(AddCommand.COMMAND_WORD,
                 ClearCommand.COMMAND_WORD,

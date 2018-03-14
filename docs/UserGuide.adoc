@@ -65,12 +65,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
-You can get help using the following format: +
+You can get help using the following format. +
 Format: `help`
 
 === Adding a person: `add`
 
-You can add a person to contactHero using the following format: +
+You can add a person to contactHero using the following format. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pp/PROFILE_PICTURE [t/TAG]...`
 
 [TIP]
@@ -86,12 +86,12 @@ Examples:
 
 === Listing all persons : `list`
 
-You can show a list of all persons in contactHero using the following format: +
+You can show a list of all persons in contactHero using the following format. +
 Format: `list`
 
 === Editing a person : `edit`
 
-You can edit an existing person in contactHero using this format: +
+You can edit an existing person in contactHero using this format. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pp/PROFILE_PICTURE][t/TAG]...`
 
 ****

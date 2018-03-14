@@ -76,6 +76,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Sorts the existing {@code UniquePersonList} of this {@code AddressBook}
+     * with their names in alphabetical order.
+     */
+    public void sort() {
+        requireNonNull(persons);
+        persons.sort();
+    }
+
     //// person-level operations
 
     /**

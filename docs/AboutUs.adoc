@@ -32,7 +32,7 @@ Responsibilities: UI + Documentation + Testing(helper)
 '''
 
 === Koh Yee Ru
-image::inekox3.jpg[width="150", align="left"]
+image::inekox3.png[width="150", align="left"]
 {empty}[http://github.com/inekox3[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

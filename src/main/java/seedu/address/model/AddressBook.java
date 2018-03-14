@@ -11,15 +11,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.UniqueAliasList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.alias.Alias;
-import seedu.address.model.alias.UniqueAliasList;
-import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
 /**
  * Wraps all data at the address-book level

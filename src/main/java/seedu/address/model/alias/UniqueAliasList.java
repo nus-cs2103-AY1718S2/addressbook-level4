@@ -1,12 +1,20 @@
 package seedu.address.model.alias;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.HashMap;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
-import static java.util.Objects.requireNonNull;
-import java.util.HashMap;
-
+/**
+ * A list of aliases that enforces no nulls and uniqueness between its elements.
+ *
+ * Supports minimal set of list operations for the app's features.
+ *
+ * @see Alias#equals(Object)
+ */
 public class UniqueAliasList {
 
     private final static HashMap<String, String> hashList = new HashMap<String, String>();

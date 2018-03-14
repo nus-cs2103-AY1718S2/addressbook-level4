@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.alias.Alias;
@@ -61,6 +60,7 @@ public class XmlAdaptedAlias {
             return false;
         }
 
-        return aliasName.equals(((XmlAdaptedAlias) other).aliasName) && command.equals(((XmlAdaptedAlias) other).command);
+        return aliasName.equals(((XmlAdaptedAlias) other).aliasName)
+                && command.equals(((XmlAdaptedAlias) other).command);
     }
 }

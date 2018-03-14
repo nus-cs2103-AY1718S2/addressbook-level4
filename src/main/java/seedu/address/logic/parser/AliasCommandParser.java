@@ -3,17 +3,24 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
-
 import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Stream;
 import java.util.List;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -39,7 +46,8 @@ public class AliasCommandParser implements Parser<AliasCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
         } else if (!commands.contains(command)) {
             throw new ParseException(
-                    String.format(AliasCommand.MESSAGE_INVALID_COMMAND, AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
+                    String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
+                            AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
         }
 
         Alias alias = new Alias(trimmedArgs[0], trimmedArgs[1]);

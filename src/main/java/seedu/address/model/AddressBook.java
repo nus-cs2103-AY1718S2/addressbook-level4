@@ -17,6 +17,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.UniqueAliasList;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
 /**
  * Wraps all data at the address-book level
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueAliasList aliases;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        aliases = new UniqueAliasList();
     }
 
     public AddressBook() {}
@@ -91,6 +96,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(person);
+    }
+
+    //// command-level operations
+
+    /**
+     * Adds an alias to the address book.
+     *
+     * @throws DuplicateAliasException if an equivalent alias already exists.
+     */
+    public void addAlias(Alias alias) throws DuplicateAliasException {
+        aliases.add(alias);
     }
 
     /**
@@ -170,6 +186,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
+
+    @Override
+    public ObservableList<Alias> getAliasList() {
+        return aliases.getAliasObservableList();
+    }
+
 
     @Override
     public boolean equals(Object other) {

@@ -7,10 +7,16 @@ import javafx.stage.Stage;
  */
 public interface Ui {
 
+    /** Starts the UI for Login.  */
+    void startLogin(Stage primaryStage);
+
+    /** Starts the UI (and the App).  */
+    void start();
+
     /** Starts the UI (and the App).  */
     void start(Stage primaryStage);
 
-    /** Stops the UI. */
+    /** Stops the UI for the App. */
     void stop();
 
 }

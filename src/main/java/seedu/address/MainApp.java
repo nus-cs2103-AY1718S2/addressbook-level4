@@ -3,6 +3,9 @@ package seedu.address;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -34,6 +37,7 @@ import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
+import seedu.address.login.*;
 
 /**
  * The main entry point to the application.
@@ -50,6 +54,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected Login login;
 
 
     @Override
@@ -62,7 +67,9 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        UserPassStorage userPassStorage = new UserPassStorage();
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
+        StorageManager storageManager = (StorageManager) storage;
 
         initLogging(config);
 
@@ -70,7 +77,9 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model);
 
-        ui = new UiManager(logic, config, userPrefs);
+        login = new LoginManager(storageManager, ui);
+
+        ui = new UiManager(logic, config, userPrefs, login);
 
         initEventsCenter();
     }
@@ -183,8 +192,9 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
-        ui.start(primaryStage);
+        logger.info("Starting Login to AddressBook " + MainApp.VERSION);
+        ui.startLogin(primaryStage);
+
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.List;
 
+import javax.crypto.IllegalBlockSizeException;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -77,6 +78,7 @@ public class XmlUtilTest {
 
     @Test
     public void xmlAdaptedPersonFromFile_fileWithMissingPersonField_validResult() throws Exception {
+        thrown.expect(IllegalBlockSizeException.class);
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(

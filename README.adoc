@@ -1,7 +1,7 @@
 = contactHeRo
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
-https://travis-ci.org/CS2103JAN2018-W09-B2/main.svg?branch=master
+https://travis-ci.org/CS2103JAN2018-W09-B2/main[image:https://travis-ci.org/CS2103JAN2018-W09-B2/main.svg?branch=master[Build Status]]
 https://coveralls.io/github/CS2103JAN2018-W09-B2/main?branch=master[image:https://coveralls.io/github/CS2103JAN2018-W09-B2/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]

@@ -57,6 +57,9 @@ public class CommandList {
         case EditCommand.COMMAND_WORD:
             return EditCommand.COMMAND_SYNTAX;
 
+        case FindCommand.COMMAND_WORD:
+            return FindCommand.COMMAND_SYNTAX;
+
         default:
             return matchedCommandWord;
         }

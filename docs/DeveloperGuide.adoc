@@ -780,7 +780,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: NUS students
 
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -788,7 +788,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app and helps user to track study progress in NUS.
 
 [appendix]
 == User Stories

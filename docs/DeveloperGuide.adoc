@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W15-B3/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -577,7 +577,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.name)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
@@ -780,15 +780,22 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: Computing Students
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Have a number of events to keep track of:
+** Talks
+** Career Fairs
+** Interviewws
+** Consultations
+** etc.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+* Prefer desktop apps over other types
+* Can type fast
+* (Many) prefers typing over mouse input
+* Are reasonably comfortable using CLI apps
+
+*Value proposition*: Help students manage the humongous amount of events that they might have
+
 
 [appendix]
 == User Stories
@@ -798,35 +805,190 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |Student with group project |Add person with project group tag |I know which person belongs to which project groups
 
-|`* * *` |user |add a new person |
+|`* * *` |Student that is finished with a group project |Delete the group tag of a finished group project| I will not see the group in the application anymore
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |Student who forget teammates’ information |Find a person by name|I can find out more details of the person such as location, contact number
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |Student who made a mistake in recording a group tag |Edit a person’s group tag|I can change the group tag accordingly
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |Student who recorded the wrong personal information |Edit a person|I can correct the details of the person
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |Student who wants to know which teammates are in the project group |Print out the list of teammates under the same group tag |I know which teammates I am meeting
+
+|`* * *` |Student with arranged meet-ups  |Add meet-ups with title, time, venue to the calendar |Have the summary of upcoming meet-ups in a quick glance
+
+|`* * *` |Student using CLI |Press up button to copy the previous command|I do not need to retype duplicate commands
+
+|`* * *` |Student that is involved with multiple groups |search events by its title|I can get details of a particular meet-up
+
+|`* * *` |Student who wants to arrange meet-ups |Search meet-ups by its title|I can get details such as time and place of a particular meet-up
+
+|`* *` |Student who wants to know the location of teammates |Find the location of teammates’ address via google maps |Decide on a appropriate meeting location for all teammates considering their home address
+
+|`* * *` |Student adding teammates’ information |Add the link to teammates’ timetable |I can see teammates’ timetables to arrange meet-ups
+
+|`* * *` |Student working with new teammates |Add their contact information |I can contact them if the need arises
+
+<<<<<<< HEAD
+|`* * *` |user |add info of the members involved in events|So that I know who I would need to talk to
+=======
+|`* * *` |Student first time using the application |See the usage instructions |Learn how to use the application
+>>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
+
+|`* *` |Student that does not leave applications open |See an overview of the week’s meetup right away when the application opens |Do not have to type in any commands when I first open the application
+
+|`* * *` |Student who have unused contacts |Delete a teammate from the application |I can free up storage for my application
+
+|`* * *` |Busy student with busy schedule |Have a reminder of the upcoming project meeting |I can be reminded of impending project with the details of group members printed on it
+
+|`* *` |Student who would like different colours tag for different projects |Have customizable coloured tags for different groups |Easily differentiate the groups via colour tags
+
+|`*` |Student who is too lazy to eyeball through the timetables |Have an appropriate meet-up time generated for a group |I do not have to manually come up with time for meetup
+
+|`* * *` |Student who created a group |Show teammates from a group |I can see the information of the teammates from the group
+
+|`* * *` |Student who has multiple group projects |Retrieve a list of all my groups |I can see all my groups at once
+
+|`* * *` |Student who is finished with a project |Delete everyone in a group in one go |I do not have to delete contacts one by one
+
+|`* * *` |Student who is too lazy to type |Use a shorter version of a command |Use the app faster
+
+|`*` |Student who uses NUSMODS |Use my nusmods link to add my schedule into Fastis |I don’t have to manually input my timetable
+
+|`* *` |User with accessibility problems |Increase the font size of the application |I can read and see more easily
+
+|`*` |Students who likes other colours on the interface |Change color scheme |Personalise the app
+
+|`*` |Student who wants to call an absent teammate |Open teammates’ WHATSAPP page within the application e |I can alert teammates of the meeting
+
+|`*` |Student who do not how to reach the destination of the meet-up |Have the venue of the meet-up shown on google map |I can know the direction to the meetup
+
+<<<<<<< HEAD
+|`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the, map while driving
+
+|`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related
+
+|`*` |user |play music fromn address book |So that I can listen to music i want
+
+|`*` |user |play videos from youtube |So that I can watch videos i want
+=======
+>>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
+
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Fastis` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add Meet up
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a meet up by entering information
+2.  Fastis adds the meet up to the calendar
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Meet up clashes with an existing event.
++
+[none]
+** 2a1. Fastis notifies user and asks for confirmation.
+** 2a2. User enters confirmation.
++
+Use case resumes from 2.
+
+[discrete]
+=== Use case: Delete Meet up
+
+*MSS*
+
+1.  User requests to lists all meet ups.
+2.  Fastis shows all event, listed with indexes.
+3.  User requests to delete a specific meet up in the list.
+4.  Fastis deletes the meet up.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Calendar is empty.
++
+[none]
+** 2a1. Fastis notifies user that the calendar is empty.
++
+Use case ends.
+
+* 3a. Index given is invalid.
++
+[none]
+** 3a1. Fastis notifies user that the index was invalid.
++
+Use case resumes from 3.
+
+[discrete]
+=== Use case: Group multiple persons into a group
+
+*MSS*
+
+1. User requests to list all persons.
+2. Fastis shows all persons, listed with an index.
+3. User requests to add a group tag to a few specified persons on the list.
+4. Fastis adds the new group to the group list.
++
+Use case ends.
+
+*Extensions*
+[none]
+* 2.a Index given is invalid.
+[none]
+** 2a1. Fastis notifies user that the index given was invalid.
++
+Use case resumes from 1.
+
+[discrete]
+=== Use case: List all persons/groups
+
+*MSS*
+
+1.  User requests to list all persons or all groups in Fastis.
+2.  Fastis lists all persons or all groups.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The persons list is empty.
++
+[none]
+** 2a1. Fastis notifies user that the persons list is empty.
++
+Use case ends.
+
+* 2b. No group tags were found.
++
+[none]
+** 2b1. Fastis notifies user that no groups were found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete all persons in a group
+
+*MSS*
+
+1.  User requests list all groups.
+2.  Fastis shows a list of all groups.
+3. User requests to delete all persons in a specific group in the list
+4. Fastis deletes all persons in the group, and deletes the group tag
 +
 Use case ends.
 
@@ -835,23 +997,127 @@ Use case ends.
 [none]
 * 2a. The list is empty.
 +
+[none]
+** 2a1. Fastis notifies user that no groups were found.
++
 Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Fastis shows an error message.
 +
-Use case resumes at step 2.
+Use case resumes from 2.
+
+[discrete]
+=== Use case: Show a person's timetable
+
+*MSS*
+
+1.  User requests to show the timetable of the specified person.
+2.  Fastis show the timetable for the person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The specified person has no timetable
+[none]
+** 2a1. Fastis notifies the user that the person has no timetable
++
+Use case ends.
+
+[discrete]
+=== Use case: Print out all teammates under the same group
+
+*MSS*
+
+1.  User requests to list the teammates for a particular group
+2.  Fastis shows the table with group heading and lists all members in it.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no such group in Fastis.
++
+[none]
+** 2a1. Fastis notifies user that no group was found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests to see all commands
+2.  Fastis shows all commands, sorted by name
+3.  User types in which command they want to view
+4.  Fastis shows the manual of that command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Command name given is invalid.
++
+[none]
+** 2a1. Fastis notifies user that the command was invalid.
++
+Use case resumes from 3.
+
+[discrete]
+=== Use case: Copy Previous Command
+
+*MSS*
+
+1.  User enters keystroke to navigate to previously entered command
+2.  Fastis copies the previous command into the input field
++
+Use case ends.
+
+[discrete]
+=== Use case: Change Tag Color
+
+*MSS*
+
+1. User enter command to change a specific tag color
+2. Fastis changes the color accordingly and display it
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tag specified doesn't exist within the address book
+** 2a1. Fastis notifies the user.
++
+Use case ends
+
+[none]
+* 3a. The color specified is not supported by Fastis
+** 3a1. Fastis notifies the user.
++
+Use case ends
 
 _{More to be added}_
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Fastis should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  Fastis should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Fastis should usable without the need of a mouse.
+.  Fastis should be usable solely via a command line interface.
+.  Fastis should respond within 2 seconds.
+.  Fastis should have an easy to follow user guide.
+.  Fastis should open the help page when user enters an invalid entry.
+.  Fastis should be possible to fixed and debugged in the event of malfunction.
 
 _{More to be added}_
 
@@ -863,6 +1129,10 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[event]] Event::
+a set of scheduled activity that user needs to attend at a specific time
+E.g.: Interviews, parties, CCAs, talks, coding challenges, assignments, etc
 
 [appendix]
 == Product Survey

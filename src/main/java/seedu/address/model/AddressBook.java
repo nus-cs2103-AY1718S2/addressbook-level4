@@ -2,11 +2,14 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,7 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
@@ -39,7 +43,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -98,9 +103,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncWithMasterTagList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
@@ -115,9 +119,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
-     *  list.
+     * Updates the master tag list to include tags in {@code person} that are not in the list.
+     *
+     * @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     * list.
      */
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
@@ -132,11 +137,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getTimeTableLink(),
+                correctTagReferences);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
+     *
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
@@ -157,7 +164,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
@@ -183,5 +190,129 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
+    }
+
+    /**
+     * Removes {@code tag} from all {@code persons} in the {@code AddressBook} and from the {@code AddressBook}.
+     */
+    public void removeTag(Tag tag) {
+        try {
+            for (Person person : persons) {
+                removeTagFromPerson(tag, person);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: original person is not found from the address book.");
+        }
+
+        removeTagFromAddressBook(tag);
+
+    }
+
+    /**
+     * Removes {@code tag} from the {@code AddressBook}.
+     */
+    private void removeTagFromAddressBook(Tag tag) {
+        Set<Tag> editedTagList = tags.toSet();
+        if (editedTagList.contains(tag)) {
+            editedTagList.remove(tag);
+            tags.setTags(editedTagList);
+        }
+    }
+
+    /**
+     * Replaces the old {@code target} tag with the new {@code editedTag}
+     */
+    public void editTag(Tag target, Tag editedTag) throws TagNotFoundException {
+        Set<Tag> editedTagList = tags.toSet();
+        if (editedTagList.contains(target)) {
+            editedTagList.remove(target);
+            editedTagList.add(editedTag);
+            tags.setTags(editedTagList);
+        } else {
+            throw new TagNotFoundException();
+        }
+        for (Person p : persons) {
+            replaceTagInPerson(target, editedTag, p);
+        }
+    }
+
+    /**
+     * Replaces the old {@code target} tag of a {@code person} with the new {@code editedTag}
+     */
+    private void replaceTagInPerson(Tag target, Tag editedTag, Person person) {
+        Set<Tag> tagList = new HashSet<>(person.getTags());
+
+        //Terminate if tag is not is tagList
+        if (!tagList.remove(target)) {
+            return;
+        }
+        tagList.add(editedTag);
+        Person updatedPerson = new Person(person.getName(), person.getPhone(),
+                person.getEmail(), person.getAddress(), person.getTimeTableLink(), tagList);
+
+        try {
+            updatePerson(person, updatedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Modifying a person's tags only should not result in "
+                    + "a PersonNotFoundException. See Person#equals(Object).");
+        }
+    }
+
+    /**
+     * Removes {@code tag} from all {@code persons} in the {@code AddressBook}.
+     */
+    private void removeTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
+        Set<Tag> tagList = new HashSet<>(person.getTags());
+
+        //Terminate if tag is not is tagList
+        if (!tagList.remove(tag)) {
+            return;
+        }
+        Person updatedPerson = new Person(person.getName(), person.getPhone(),
+                person.getEmail(), person.getAddress(), person.getTimeTableLink(), tagList);
+
+        try {
+            updatePerson(person, updatedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
+        }
+    }
+
+    /**
+     * Add all the user-specified colors from saved file to the tags in the address book
+     */
+    public void addColorsToTag() {
+        HashMap<String, String> tagColors = readTagColorFile();
+        HashSet<Tag> coloredTags = new HashSet<Tag>();
+        for (Tag tag : tags) {
+            if (tagColors.containsKey(tag.name)) {
+                coloredTags.add(new Tag(tag.name, tagColors.get(tag.name)));
+            } else {
+                coloredTags.add(new Tag(tag.name));
+            }
+        }
+        tags.setTags(coloredTags);
+    }
+
+    /**
+     * Read the saved file to map the tags to the color that the user specified
+     */
+    private HashMap<String, String> readTagColorFile() {
+        String tagColorsFilePath = Tag.TAG_COLOR_FILE_PATH;
+        HashMap<String, String> tagColors = new HashMap<String, String>();
+        try {
+            Scanner scan = new Scanner(new File(tagColorsFilePath));
+            while (scan.hasNextLine()) {
+                String[] t = scan.nextLine().split(":");
+                tagColors.put(t[0], t[1]);
+            }
+            return tagColors;
+        } catch (FileNotFoundException fnfe) {
+            throw new AssertionError("Tag color file not found. Using default settings.");
+        }
     }
 }

@@ -22,9 +22,12 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.CalendarPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.DailySchedulerPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.PersonDetailsPanelHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
@@ -111,6 +114,18 @@ public abstract class AddressBookSystemTest {
 
     public BrowserPanelHandle getBrowserPanel() {
         return mainWindowHandle.getBrowserPanel();
+    }
+
+    public PersonDetailsPanelHandle getPersonDetailsPanel() {
+        return mainWindowHandle.getPersonDetailsPanel();
+    }
+
+    public CalendarPanelHandle getCalenderPanel() {
+        return mainWindowHandle.getCalendarPanel();
+    }
+
+    public DailySchedulerPanelHandle getDailySchedulerPanel() {
+        return mainWindowHandle.getDailySchedulerPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {

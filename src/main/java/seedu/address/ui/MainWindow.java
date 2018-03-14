@@ -271,6 +271,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @Subscribe
     private void handleFeatureSwitch(SwitchFeatureEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switch (event.getFeatureTarget()) {
         case "details":
             featuresTabPane.getSelectionModel().select(detailsTab);
@@ -282,6 +283,9 @@ public class MainWindow extends UiPart<Stage> {
 
         case "scheduler":
             featuresTabPane.getSelectionModel().select(dailySchedulerTab);
+            break;
+
+        default:
             break;
         }
     }

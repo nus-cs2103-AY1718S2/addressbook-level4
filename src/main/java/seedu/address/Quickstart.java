@@ -18,8 +18,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.*;
-
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
 
 
 /**
@@ -107,7 +107,7 @@ public class Quickstart {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws IOException {
+        getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -115,6 +115,12 @@ public class Quickstart {
                 .build();
     }
 
+    /**
+     * Build and return an authorized Calendar client service.
+     *
+     * @return an authorized Calendar client service
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the

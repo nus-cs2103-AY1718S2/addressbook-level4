@@ -28,4 +28,12 @@ public class LoginCommand extends Command{
     public CommandResult execute() throws CommandException{
         throw new CommandException("Username: " + username + ", Password: " + password);
     }
+
+    @Override
+    public boolean equals (Object other){
+        return other == this // short circuit if same object
+                || (other instanceof LoginCommand // instanceof handles nulls
+                && username.equals(((LoginCommand) other).username)
+                && password.equals(((LoginCommand) other).password));
+    }
 }

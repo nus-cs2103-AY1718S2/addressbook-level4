@@ -242,7 +242,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_viewAppointmentCommandAlias() throws Exception {
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS) instanceof ViewAppointmentCommand);
-        assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS + "3") instanceof ViewAppointmentCommand);
+        assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS + " 3") instanceof ViewAppointmentCommand);
     }
 
     @Test

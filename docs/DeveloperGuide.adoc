@@ -844,6 +844,32 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: find person
+
+*MSS*
+
+1.  User types find
+2.  AddressBook automatically shows the list dynamically without the user needing to press enter key
+3.  User need not need to type the whole name, substrings will generate results
+4.  AddressBook displays the necessary results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given substring doesn't exist in any name
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 _{More to be added}_
 
 [appendix]

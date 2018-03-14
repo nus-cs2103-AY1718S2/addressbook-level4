@@ -11,7 +11,7 @@ public class DelivDate {
      */
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person delivery date can take dates in the from YYYY/MM/DD, and it should not be blank";
+            "Person delivery date can take dates in the from YYYY-MM-DD, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -35,7 +35,9 @@ public class DelivDate {
     /**
      * Returns true if a given string is a valid person date.
      */
-    public static boolean isValidDate(String test) { return test.matches(DATE_VALIDATION_REGEX); }
+    public static boolean isValidDate(String test) { 
+        return test.matches(DATE_VALIDATION_REGEX); 
+    }
 
     @Override
     public String toString() {

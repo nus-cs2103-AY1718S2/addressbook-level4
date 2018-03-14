@@ -2,7 +2,10 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
-public class LoginCommand extends Command{
+/**
+ * Allows user to login to the system
+ */
+public class LoginCommand extends Command {
     public static final String COMMAND_WORD = "login";
 
     public static final String MESSAGE_LOGIN_SUCCESS = "Successfully logged in!";
@@ -25,12 +28,13 @@ public class LoginCommand extends Command{
     }
 
     @Override
-    public CommandResult execute() throws CommandException{
+    public CommandResult execute() throws CommandException {
         throw new CommandException("Username: " + username + ", Password: " + password);
+
     }
 
     @Override
-    public boolean equals (Object other){
+    public boolean equals (Object other) {
         return other == this // short circuit if same object
                 || (other instanceof LoginCommand // instanceof handles nulls
                 && username.equals(((LoginCommand) other).username)

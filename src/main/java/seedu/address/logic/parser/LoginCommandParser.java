@@ -5,6 +5,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new LoginCommand object
+ */
 public class LoginCommandParser implements Parser<LoginCommand> {
     public static final int USERNAME_INDEX = 0;
     public static final int PASSWORD_INDEX = 1;

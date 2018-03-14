@@ -577,7 +577,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.name)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
@@ -831,7 +831,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Student working with new teammates |Add their contact information |I can contact them if the need arises
 
+<<<<<<< HEAD
+|`* * *` |user |add info of the members involved in events|So that I know who I would need to talk to
+=======
 |`* * *` |Student first time using the application |See the usage instructions |Learn how to use the application
+>>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
 
 |`* *` |Student that does not leave applications open |See an overview of the week’s meetup right away when the application opens |Do not have to type in any commands when I first open the application
 
@@ -861,6 +865,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |Student who do not how to reach the destination of the meet-up |Have the venue of the meet-up shown on google map |I can know the direction to the meetup
 
+<<<<<<< HEAD
+|`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the, map while driving
+
+|`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related
+
+|`*` |user |play music fromn address book |So that I can listen to music i want
+
+|`*` |user |play videos from youtube |So that I can watch videos i want
+=======
+>>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
 
 |=======================================================================
 
@@ -1065,6 +1079,30 @@ Use case resumes from 3.
 2.  Fastis copies the previous command into the input field
 +
 Use case ends.
+
+[discrete]
+=== Use case: Change Tag Color
+
+*MSS*
+
+1. User enter command to change a specific tag color
+2. Fastis changes the color accordingly and display it
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tag specified doesn't exist within the address book
+** 2a1. Fastis notifies the user.
++
+Use case ends
+
+[none]
+* 3a. The color specified is not supported by Fastis
+** 3a1. Fastis notifies the user.
++
+Use case ends
 
 _{More to be added}_
 

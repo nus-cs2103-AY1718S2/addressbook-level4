@@ -176,6 +176,17 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Change a tag's color: `changeTagColor`
+
+Change a specific tag color to one of the supported colors. +
+Alias: `color` +
+Format `changeTagColor TAG COLOR`
+
+****
+* The TAG specified must belong to one of the people in the address book
+* Available COLORS are: teal, red, yellow, blue, orange, brown, green, pink, black, grey
+****
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 

@@ -191,4 +191,19 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    /**
+     * Parses a {@code String phone} into a {@code Phone}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code phone} is invalid.
+     */
+    public static String parseColor(String color) throws IllegalValueException {
+        requireNonNull(color);
+        if (Tag.isValidTagColor(color)) {
+            return color;
+        } else {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_COLOR_CONSTRAINTS);
+        }
+    }
 }

@@ -11,7 +11,7 @@ public class ClearCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "clear";
     public static final String COMMAND_ALIAS = "c";
-    public static final String MESSAGE_SUCCESS = "Remark book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Desk Board has been cleared!";
 
 
     @Override

@@ -180,7 +180,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Remark Book ] =============================");
+        logger.info("============================ [ Stopping DeskBoard ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

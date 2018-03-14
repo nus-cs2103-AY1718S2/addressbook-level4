@@ -11,6 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TimeTableLink;
+import seedu.address.model.person.Detail;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,6 +39,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTimeTableLink(person.getTimeTableLink());
+        descriptor.setDetail(person.getDetail());
         descriptor.setTags(person.getTags());
     }
 
@@ -78,6 +80,14 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withTimeTableLink(String link) {
         descriptor.setTimeTableLink(new TimeTableLink(link));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Detail} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDetail(String detail) {
+        descriptor.setDetail(new Detail(detail));
         return this;
     }
 

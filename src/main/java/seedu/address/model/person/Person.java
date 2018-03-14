@@ -20,9 +20,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private final DelivDate date;
-    
     private final UniqueTagList tags;
-    
     /**
      * Every field must be present and not null.
      */

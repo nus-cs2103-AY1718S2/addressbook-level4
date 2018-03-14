@@ -27,7 +27,8 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, TimeTableLink link, Detail detail, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, TimeTableLink link, Detail detail,
+                  Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, link, detail, tags);
         this.name = name;
         this.phone = phone;
@@ -59,7 +60,9 @@ public class Person {
         return link;
     }
 
-    public  Detail getDetail() { return detail; }
+    public  Detail getDetail() {
+        return detail;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

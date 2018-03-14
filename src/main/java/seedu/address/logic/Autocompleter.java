@@ -1,6 +1,5 @@
 package seedu.address.logic;
 
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,25 +59,25 @@ public class Autocompleter {
                 Set<String> fieldsList;
 
                 switch (input.charAt(lastFieldIndex - 1)) {
-                    case 'n':
-                        fieldsList = names;
-                        break;
+                case 'n':
+                    fieldsList = names;
+                    break;
 
-                    case 'p':
-                        fieldsList = phones;
-                        break;
+                case 'p':
+                    fieldsList = phones;
+                    break;
 
-                    case 'e':
-                        fieldsList = emails;
-                        break;
+                case 'e':
+                    fieldsList = emails;
+                    break;
 
-                    case 'a':
-                        fieldsList = adresses;
-                        break;
+                case 'a':
+                    fieldsList = adresses;
+                    break;
 
-                    default:
-                        fieldsList = new HashSet<>();
-                        break;
+                default:
+                    fieldsList = new HashSet<>();
+                    break;
                 }
 
                 possibilities = generatePossibleSuffixes(field, fieldsList);

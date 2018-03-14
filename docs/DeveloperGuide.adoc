@@ -787,8 +787,20 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* has a need to manage finances with fellow contacts
+* has a need to keep track of personal balance
+* has a need to keep track of transactions between contacts
+* travels with a group and lends money/borrows money.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* manage contacts faster than a typical mouse/GUI driven app
+* easily keep track of balances and debts between contacts
+* easily see your overall balance
+* easily see contacts that owe you money
+* easily see contacts to which you are in debt
+* easily keep track of transactions between contacts
+* easily update balance once debts are paid
 
 [appendix]
 == User Stories
@@ -809,9 +821,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
 
-_{More to be added}_
+|`* * *` |user | add/update/settle an amount of money that a contact owes me
+|`* * *` |user | check my overall balance
+|`* * *` |user | see which contacts owe me money
+|`* * *` |user | see to which of my contacts do I owe money
+|`* *` |user | see for which items do I owe a contact / a contact owes me
+|`* ` |user | select the currency that I am owed
+|`* ` |user | convert my balance into a different currency
+|`*` |user | calculate the amount I am owed with an applied interest rate
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -852,8 +871,10 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  The system should respond within 3 seconds, even for more intensive procedures such as balance calculation.
+.  The system should update its records immediately after the user makes an update.
+.  The system should provide helpful and clear messages to the user when errors occur.
+.  The system should preserve all data and user preferences when software updates are installed.
 
 [appendix]
 == Glossary

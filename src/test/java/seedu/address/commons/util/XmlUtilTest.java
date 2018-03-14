@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.List;
 
-import javax.crypto.IllegalBlockSizeException;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -15,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import org.xml.sax.SAXParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
@@ -78,7 +78,7 @@ public class XmlUtilTest {
 
     @Test
     public void xmlAdaptedPersonFromFile_fileWithMissingPersonField_validResult() throws Exception {
-        thrown.expect(IllegalBlockSizeException.class);
+        thrown.expect(SAXParseException.class);
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(

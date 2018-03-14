@@ -27,8 +27,6 @@ import seedu.address.commons.util.StringUtil;
 public class SecurityUtil {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     private static String password = new String("test");
-    private static byte[] hashedPassword;
-    private static Key secretAESKey;
 
     /**
      * Encrypts the given file using AES key created by password.
@@ -38,8 +36,8 @@ public class SecurityUtil {
      */
     public static void encrypt(File file)throws IOException {
         try {
-            hashPassword();
-            secretAESKey = createKey(hashedPassword);
+            byte[] hashedPassword = hashPassword(password);
+            Key secretAESKey = createKey(hashedPassword);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretAESKey);
             fileProcessor(cipher, file);
@@ -57,8 +55,8 @@ public class SecurityUtil {
      */
     public static void decrypt(File file) throws IOException {
         try {
-            hashPassword();
-            secretAESKey = createKey(hashedPassword);
+            byte[] hashedPassword = hashPassword(password);
+            Key secretAESKey = createKey(hashedPassword);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretAESKey);
             fileProcessor(cipher, file);
@@ -100,7 +98,7 @@ public class SecurityUtil {
     /**
      * Hashes the password to meet the required length for AES.
      */
-    private static void hashPassword() throws NoSuchAlgorithmException, IOException {
+    private static byte[] hashPassword(String password) throws NoSuchAlgorithmException, IOException {
         MessageDigest md = MessageDigest.getInstance("SHA-1");
         try {
             md.update(password.getBytes("UTF-8"));
@@ -108,14 +106,14 @@ public class SecurityUtil {
             logger.severe("UTF-8 not supported, using default but may not be able to decrypt in other computer.");
             md.update(password.getBytes());
         }
-        hashedPassword = md.digest();
-        hashedPassword = Arrays.copyOf(hashedPassword, 16);
+        byte[] hashedPassword = md.digest();
+        return Arrays.copyOf(hashedPassword, 16);
     }
 
     /**
-     * Use the hash to generate a key.
+     * Generates a key.
      */
-    private static Key createKey(byte[] hashedPassword) {
-        return new SecretKeySpec(hashedPassword, "AES");
+    private static Key createKey(byte[] password) {
+        return new SecretKeySpec(password, "AES");
     }
 }

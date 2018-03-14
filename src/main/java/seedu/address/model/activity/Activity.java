@@ -21,6 +21,8 @@ public class Activity {
 
     private final UniqueTagList tags;
 
+    private static final String  ACTIVITY_TYPE = "BASE TYPE";
+
     /**
      * Every field must be present and not null.
      */
@@ -53,6 +55,10 @@ public class Activity {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    //TODO: Make this method abstract
+    public String getActivityType() {
+        return ACTIVITY_TYPE;
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

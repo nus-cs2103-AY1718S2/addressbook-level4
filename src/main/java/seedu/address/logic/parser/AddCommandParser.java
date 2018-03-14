@@ -19,6 +19,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses input arguments and creates a new AddCommand object
  */
+//TODO: Need to change to match the new model
 public class AddCommandParser implements Parser<AddCommand> {
 
     /**

@@ -12,16 +12,16 @@ import seedu.address.model.ReadOnlyDeskBoard;
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyDeskBoard previousAddressBook;
+    private ReadOnlyDeskBoard previousDeskBoard;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
      * Stores the current state of {@code model#addressBook}.
      */
-    private void saveAddressBookSnapshot() {
+    private void saveDeskBoardSnapshot() {
         requireNonNull(model);
-        this.previousAddressBook = new DeskBoard(model.getDeskBoard());
+        this.previousDeskBoard = new DeskBoard(model.getDeskBoard());
     }
 
     /**
@@ -36,8 +36,8 @@ public abstract class UndoableCommand extends Command {
      * show all persons.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
+        requireAllNonNull(model, previousDeskBoard);
+        model.resetData(previousDeskBoard);
         model.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
     }
 
@@ -58,7 +58,7 @@ public abstract class UndoableCommand extends Command {
 
     @Override
     public final CommandResult execute() throws CommandException {
-        saveAddressBookSnapshot();
+        saveDeskBoardSnapshot();
         preprocessUndoableCommand();
         return executeUndoableCommand();
     }

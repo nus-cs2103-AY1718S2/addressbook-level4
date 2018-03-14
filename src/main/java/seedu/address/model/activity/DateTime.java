@@ -1,6 +1,5 @@
 package seedu.address.model.activity;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,15 +8,15 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Activity's phone number in the address book.
+ * Represents a Activity's date and time in the desk board.
  * Guarantees: immutable; is valid as declared in {@link #isValidDateAndTime(String)}
  */
 public class DateTime {
 
-    public static final String DATE_FORMAT = "dd/MM/yyyy hh:mm";
+    public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy hh:mm";
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
             "Date and  Time numbers should be a date and should be in the format of " +
-            DATE_FORMAT;
+                    DEFAULT_DATE_FORMAT;
     // TODO : FIND A REGET TO VALIDATE THE DATE AND TIME.
     public static final String DATETIME_VALIDATION_REGEX =".*";
 
@@ -31,7 +30,7 @@ public class DateTime {
     public DateTime(String dateAndTime) {
         requireNonNull(dateAndTime);
         checkArgument(isValidDateAndTime(dateAndTime), MESSAGE_DATETIME_CONSTRAINTS);
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
         try {
             date = sdf.parse(dateAndTime);
         } catch (ParseException e) {
@@ -44,7 +43,7 @@ public class DateTime {
      * Returns true if a given string is a valid activity phone number.
      */
     public static boolean isValidDateAndTime(String test) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
         try {
             sdf.parse(test);
             return true;
@@ -57,7 +56,7 @@ public class DateTime {
 
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
         String result = value;
         try {
             result = sdf.format(date);

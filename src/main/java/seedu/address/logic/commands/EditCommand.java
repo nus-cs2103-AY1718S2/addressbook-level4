@@ -27,6 +27,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Edits the details of an existing activity in the remark book.
  */
+//TODO: This command need a lot of rework
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";

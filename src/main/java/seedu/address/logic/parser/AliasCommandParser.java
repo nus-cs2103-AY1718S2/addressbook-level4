@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +26,7 @@ import seedu.address.model.alias.Alias;
  */
 public class AliasCommandParser implements Parser<AliasCommand> {
 
-    List<String> commands = Arrays.asList(AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
+    private List<String> commands = Arrays.asList(AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
             DeleteCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, FindCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
             HistoryCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD,
             RedoCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD);

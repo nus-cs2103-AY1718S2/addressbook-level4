@@ -17,7 +17,7 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
  */
 public class UniqueAliasList {
 
-    private final static HashMap<String, String> hashList = new HashMap<String, String>();
+    private final HashMap<String, String> hashList = new HashMap<String, String>();
     private ObservableList<Alias> internalList = FXCollections.observableArrayList();
 
     /**
@@ -70,4 +70,4 @@ public class UniqueAliasList {
         convertToList();
         return internalList;
     }
- }
+}

@@ -863,7 +863,7 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Medeina` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: View full details of an appointment
@@ -871,9 +871,9 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list appointments
-2.  AddressBook shows a list of appointments for the current month
+2.  Medeina shows a list of appointments for the current month
 3.  User requests to view a specific appointment in the list
-4.  AddressBook shows the full details of the specified appointment
+4.  Medeina shows the full details of the specified appointment
 +
 Use case ends.
 
@@ -890,7 +890,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Medeina shows an error message.
 +
 Use case resumes at step 2.
 
@@ -900,11 +900,11 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find a pet patient with the name "Joseph"
-2.  AddressBook shows a list of pet patients with the name "Joseph"
+2.  Medeina shows a list of pet patients with the name "Joseph"
 3.  User requests to view contact information of a specific pet patient
-4.  AddressBook shows the pet patient's owner's contact information
+4.  Medeina shows the pet patient's owner's contact information
 5.  User requests to modify the pet patient's owner's contact information
-6.  AddressBook shows the pet patient's updated contact information
+6.  Medeina shows the pet patient's updated contact information
 +
 Use case ends.
 
@@ -918,14 +918,14 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Medeina shows an error message.
 +
 Use case resumes at step 2.
 
 * 5a. The given command is invalid.
 +
 [none]
-** 5a1. AddressBook shows the correct command usage to edit pet patient's information.
+** 5a1. Medeina shows the correct command usage to edit pet patient's information.
 +
 Use case resumes at step 2.
 
@@ -935,9 +935,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find a pet patient with the name "Joseph"
-2.  AddressBook shows a list of pet patients with the name "Joseph"
+2.  Medeina shows a list of pet patients with the name "Joseph"
 3.  User requests to view medical history of a specific pet patient
-4.  AddressBook shows the pet patient's medical history
+4.  Medeina shows the pet patient's medical history
 +
 Use case ends.
 
@@ -951,7 +951,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Medeina shows an error message.
 +
 Use case resumes at step 2.
 
@@ -965,9 +965,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to find an owner named "Mavis"
-2.  AddressBook shows a list of owners with "Mavis" as part of their name
+2.  Medeina shows a list of owners with "Mavis" as part of their name
 3.  User requests to view information of a specific owner
-4.  AddressBook shows information about the owner
+4.  Medeina shows information about the owner
 +
 Use case ends.
 
@@ -981,7 +981,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Medeina shows an error message.
 +
 Use case resumes at step 2.
 
@@ -991,9 +991,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find a pet patient with the name "Joseph"
-2.  AddressBook shows a list of pet patients with the name "Joseph"
+2.  Medeina shows a list of pet patients with the name "Joseph"
 3.  User requests for a pdf report of a specific pet patient on the list
-4.  AddressBook generates a pdf report for the user
+4.  Medeina generates a pdf report for the user
 +
 Use case ends.
 
@@ -1007,7 +1007,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Medeina shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1016,9 +1016,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find an owner with the name "Mavis"
-2.  AddressBook shows a list of owners with the name "Mavis"
+2.  Medeina shows a list of owners with the name "Mavis"
 3.  User requests for a pdf report of a specific owner on the list
-4.  AddressBook generates a pdf report for the user
+4.  Medeina generates a pdf report for the user
 +
 Use case ends.
 
@@ -1032,7 +1032,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Medeina shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1042,9 +1042,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find an owner with the name "Mavis"
-2.  AddressBook shows a list of owners with the name "Mavis"
+2.  Medeina shows a list of owners with the name "Mavis"
 3.  User requests to add tags to a specific owner on the list
-4.  AddressBook shows updated owner information
+4.  Medeina shows updated owner information
 +
 Use case ends.
 
@@ -1058,14 +1058,14 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Medeina shows an error message.
 +
 Use case resumes at step 2.
 
 * 3b. The given tag(s) is/are invalid.
 +
 [none]
-** 3b1. AddressBook shows a list of valid tags.
+** 3b1. Medeina shows a list of valid tags.
 +
 Use case resumes at step 2.
 

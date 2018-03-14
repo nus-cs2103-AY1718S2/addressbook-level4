@@ -2,11 +2,14 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,7 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
@@ -216,6 +220,48 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the old {@code target} tag with the new {@code editedTag}
+     */
+    public void editTag(Tag target, Tag editedTag) throws TagNotFoundException {
+        Set<Tag> editedTagList = tags.toSet();
+        if (editedTagList.contains(target)) {
+            editedTagList.remove(target);
+            editedTagList.add(editedTag);
+            tags.setTags(editedTagList);
+        } else {
+            throw new TagNotFoundException();
+        }
+        for (Person p : persons) {
+            replaceTagInPerson(target, editedTag, p);
+        }
+    }
+
+    /**
+     * Replaces the old {@code target} tag of a {@code person} with the new {@code editedTag}
+     */
+    private void replaceTagInPerson(Tag target, Tag editedTag, Person person) {
+        Set<Tag> tagList = new HashSet<>(person.getTags());
+
+        //Terminate if tag is not is tagList
+        if (!tagList.remove(target)) {
+            return;
+        }
+        tagList.add(editedTag);
+        Person updatedPerson = new Person(person.getName(), person.getPhone(),
+                person.getEmail(), person.getAddress(), person.getTimeTableLink(), tagList);
+
+        try {
+            updatePerson(person, updatedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Modifying a person's tags only should not result in "
+                    + "a PersonNotFoundException. See Person#equals(Object).");
+        }
+    }
+
+    /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook}.
      */
     private void removeTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
@@ -233,6 +279,40 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
                     + "See Person#equals(Object).");
+        }
+    }
+
+    /**
+     * Add all the user-specified colors from saved file to the tags in the address book
+     */
+    public void addColorsToTag() {
+        HashMap<String, String> tagColors = readTagColorFile();
+        HashSet<Tag> coloredTags = new HashSet<Tag>();
+        for (Tag tag : tags) {
+            if (tagColors.containsKey(tag.name)) {
+                coloredTags.add(new Tag(tag.name, tagColors.get(tag.name)));
+            } else {
+                coloredTags.add(new Tag(tag.name));
+            }
+        }
+        tags.setTags(coloredTags);
+    }
+
+    /**
+     * Read the saved file to map the tags to the color that the user specified
+     */
+    private HashMap<String, String> readTagColorFile() {
+        String tagColorsFilePath = Tag.TAG_COLOR_FILE_PATH;
+        HashMap<String, String> tagColors = new HashMap<String, String>();
+        try {
+            Scanner scan = new Scanner(new File(tagColorsFilePath));
+            while (scan.hasNextLine()) {
+                String[] t = scan.nextLine().split(":");
+                tagColors.put(t[0], t[1]);
+            }
+            return tagColors;
+        } catch (FileNotFoundException fnfe) {
+            throw new AssertionError("Tag color file not found. Using default settings.");
         }
     }
 }

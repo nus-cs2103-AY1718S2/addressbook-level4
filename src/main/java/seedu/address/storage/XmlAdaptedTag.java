@@ -20,7 +20,7 @@ public class XmlAdaptedTag {
     public XmlAdaptedTag() {}
 
     /**
-     * Constructs a {@code XmlAdaptedTag} with the given {@code tagName}.
+     * Constructs a {@code XmlAdaptedTag} with the given {@code name}.
      */
     public XmlAdaptedTag(String tagName) {
         this.tagName = tagName;
@@ -32,7 +32,7 @@ public class XmlAdaptedTag {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedTag(Tag source) {
-        tagName = source.tagName;
+        tagName = source.name;
     }
 
     /**

@@ -44,7 +44,8 @@ public class CommandTestUtil {
     public static final String VALID_DETAIL_AMY = "Likes boy";
     public static final String VALID_DETAIL_BOB = "Likes girl";
     public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TAG_FRIEND = "friends";
+    public static final String VALID_TAG_COLOR_RED = "red";
     public static final String VALID_TAG_UNUSED = "UNUSED"; //for testing only, do not use to build person
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -71,6 +72,7 @@ public class CommandTestUtil {
     public static final String INVALID_DETAIL_DESC = " " + PREFIX_DETAIL
             + "Likes &"; //'&' not allowed in detail
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_TAG_COLOR = " rainbow"; // doesn't support
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

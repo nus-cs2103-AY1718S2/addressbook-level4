@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static seedu.address.storage.XmlAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
@@ -17,6 +18,8 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TimeTableLink;
 import seedu.address.model.person.Detail;
+import seedu.address.model.tag.Tag;
+
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedPersonTest {
@@ -148,4 +151,15 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 
+    @Test
+    public void xmlAdaptedTagEqual() {
+        XmlAdaptedTag tag1 = new XmlAdaptedTag("friends");
+        XmlAdaptedTag tag2 = new XmlAdaptedTag("friends");
+        Tag tag3 = new Tag("friends");
+        XmlAdaptedTag tag4 = new XmlAdaptedTag("husband");
+
+        assertEquals(tag1, tag2);
+        assertNotEquals(tag1, tag3);
+        assertNotEquals(tag2, tag4);
+    }
 }

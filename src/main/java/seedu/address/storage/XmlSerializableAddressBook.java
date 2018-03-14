@@ -54,6 +54,7 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
+        addressBook.addColorsToTag();
         return addressBook;
     }
 

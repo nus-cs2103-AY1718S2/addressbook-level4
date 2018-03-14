@@ -55,7 +55,9 @@ public class Person {
         return address;
     }
 
-    public  TimeTableLink getTimeTableLink() { return link; }
+    public  TimeTableLink getTimeTableLink() {
+        return link;
+    }
 
     public  Detail getDetail() { return detail; }
 

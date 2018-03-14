@@ -39,9 +39,9 @@ image::damithc.jpg[width="150", align="left"]
 
 === Clarissa Yong
 image::damithc.jpg[width="150", align="left"]
-{empty}[https://github.com/[github]]
+{empty}[https://github.com/clarissayong[github]]
 
-+Role:
++Role: Project Developer
 +Responsibilities:
 
 '''

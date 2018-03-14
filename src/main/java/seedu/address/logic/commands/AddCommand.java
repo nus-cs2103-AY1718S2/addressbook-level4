@@ -18,7 +18,7 @@ public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String COMMANND_ALIAS = "a";
+    public static final String COMMAND_ALIAS = "a";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
@@ -35,7 +35,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney" + "\n"
             + "or\n"
-            +"Example: " + COMMANND_ALIAS + " "
+            + "Example: " + COMMAND_ALIAS + " "
             + PREFIX_NAME + "Lee Hua "
             + PREFIX_PHONE + "81227675 "
             + PREFIX_EMAIL + "leehua@example.com "

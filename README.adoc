@@ -14,12 +14,12 @@ endif::[]
 
 *Welcome to contactHeRo!*
 
-contactHeRo is a desktop Address Book application designed for Human Resources Managers at companies, especially those responsible for recruitment.
+contactHeRo is a desktop contact management application designed for Human Resources Managers at companies, especially those responsible for recruitment.
 
 We understand that recruiters have a lot of contacts to
 manage which include contact details and profiles of potential employees. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
 
-contactHeRo has a graphical user interface but most of the user interactions happen using a CLI (Command Line Interface).
+contactHeRo has a GUI(Graphical User Interface) but most of the user interactions happen using a CLI (Command Line Interface).
 
 So what are you waiting for? Head over to our <<UserGuide#, User Guide>> to get started!
 

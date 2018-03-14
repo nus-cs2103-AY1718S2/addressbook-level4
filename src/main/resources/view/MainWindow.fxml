@@ -30,6 +30,11 @@
           <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
           </Menu>
+          <!-- @@author {ifalluphill} -->
+          <Menu mnemonicParsing="false" text="View">
+            <MenuItem fx:id="viewMenuItem" mnemonicParsing="false" onAction="#handleView" text="Show Error Log" />
+          </Menu>
+          <!-- @@author -->
           <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
           </Menu>

@@ -18,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowErrorsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchFeatureEvent;
 import seedu.address.logic.Logic;
@@ -48,7 +49,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane browserPlaceholder;
 
-    //@@author
+    //@@author jaronchan
     @FXML
     private StackPane personDetailsPlaceholder;
 
@@ -166,12 +167,39 @@ public class MainWindow extends UiPart<Stage> {
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
+        commandBox.setMainWindow(this);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        hideBeforeLogin();
 
     }
 
     void hide() {
         primaryStage.hide();
+    }
+
+    /** @@author {kaisertanqr}
+     *
+     * Hides browser and person list panel.
+     */
+    void hideBeforeLogin() {
+        featuresTabPane.setVisible(false);
+        personDetailsPlaceholder.setVisible(false);
+        calendarPlaceholder.setVisible(false);
+        dailySchedulerPlaceholder.setVisible(false);
+        personListPanelPlaceholder.setVisible(false);
+    }
+
+    /** @@author {kaisertanqr}
+     *
+     * Unhide browser and person list panel.
+     */
+    void showAfterLogin() {
+        featuresTabPane.setVisible(true);
+        personDetailsPlaceholder.setVisible(true);
+        calendarPlaceholder.setVisible(true);
+        dailySchedulerPlaceholder.setVisible(true);
+        personListPanelPlaceholder.setVisible(true);
     }
 
     private void setTitle(String appTitle) {
@@ -206,6 +234,17 @@ public class MainWindow extends UiPart<Stage> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
+    //@@author {ifalluphill}
+    /**
+     * Opens the error window.
+     */
+    @FXML
+    public void handleView() {
+        ErrorsWindow errorsWindow = new ErrorsWindow();
+        errorsWindow.show();
+    }
+    //@@author
 
     void show() {
         primaryStage.show();
@@ -256,4 +295,12 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author {ifalluphill}
+    @Subscribe
+    private void handleShowErrorsEvent(ShowErrorsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleView();
+    }
+    //@@author
 }

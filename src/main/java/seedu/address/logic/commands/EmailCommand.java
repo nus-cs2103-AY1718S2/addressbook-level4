@@ -10,6 +10,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.UnsupportDesktopException;
 import seedu.address.model.person.Person;
 
 /**
@@ -48,7 +49,7 @@ public class EmailCommand extends Command {
         try {
             Desktop.getDesktop().mail(new URI(MAIL_SYNTAX + emailAddress));
         } catch (HeadlessException hlError) {
-            throw new CommandException(Messages.UNSUPPORTED_DESKTOP);
+            throw new UnsupportDesktopException(Messages.UNSUPPORTED_DESKTOP);
         } catch (URISyntaxException Urierror) {
             throw new CommandException(Messages.MAIL_APP_ERROR);
         } catch (IOException e) {

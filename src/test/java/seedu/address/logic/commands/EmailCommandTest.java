@@ -15,6 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.UnsupportDesktopException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -182,12 +183,10 @@ public class EmailCommandTest {
         try {
             CommandResult result = testCommand.execute();
             assertEquals(expectedResult, result.feedbackToUser);
+        } catch (UnsupportDesktopException de) {
+            assertEquals(de, new UnsupportDesktopException(Messages.UNSUPPORTED_DESKTOP));
         } catch (CommandException ce) {
-            if (ce.equals(new CommandException(Messages.UNSUPPORTED_DESKTOP))) {
-                assertEquals(ce, (new CommandException(Messages.UNSUPPORTED_DESKTOP)));
-            } else {
-                throw new AssertionError("Execution of command should not fail.", ce);
-            }
+            throw new AssertionError("Execution of command should not fail.", ce);
         }
     }
 }

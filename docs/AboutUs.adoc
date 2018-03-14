@@ -19,7 +19,7 @@ Role: Project Advisor
 '''
 
 === Jacqueline Cheong
-image::aquarinte.jpg[width="150", align="left"]
+image::aquarinte.png[width="150", align="left"]
 {empty}[http://github.com/aquarinte[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

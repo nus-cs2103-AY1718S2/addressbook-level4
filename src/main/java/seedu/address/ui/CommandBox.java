@@ -14,7 +14,6 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.login.Password;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -107,7 +106,7 @@ public class CommandBox extends UiPart<Region> {
             historySnapshot.next();
             // process result of the command
             commandTextField.setText("");
-            if(commandResult != null) {
+            if (commandResult != null) {
                 logger.info("Result: " + commandResult.feedbackToUser);
                 raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             } else {

@@ -39,7 +39,7 @@ public class LogicManager extends ComponentManager implements Logic {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
             CommandResult result;
-            if(model.hasLoggedIn()) {
+            if (model.hasLoggedIn()) {
                 result = command.execute();
             } else {
                 logger.info("User attempts to use a command without logging in first.");
@@ -72,7 +72,7 @@ public class LogicManager extends ComponentManager implements Logic {
             } else {
                 result = null;
             }
-        } finally {}
+        } finally { }
         return result;
     }
 

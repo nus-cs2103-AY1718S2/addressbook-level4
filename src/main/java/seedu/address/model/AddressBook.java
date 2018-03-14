@@ -81,9 +81,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void checkLoginCredentials(Username username, Password password)
             throws AlreadyLoggedInException, AuthenticationFailedException {
-        if (hasLoggedIn){
+        if (hasLoggedIn) {
             throw new AlreadyLoggedInException();
-        } else if (!username.equals(this.username) || !password.equals(this.password)){
+        } else if (!username.equals(this.username) || !password.equals(this.password)) {
             throw new AuthenticationFailedException();
         } else {
             hasLoggedIn = true;

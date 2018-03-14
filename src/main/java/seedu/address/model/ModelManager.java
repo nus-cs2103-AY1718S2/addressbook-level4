@@ -93,6 +93,11 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.checkLoginCredentials(username, password);
     }
 
+    @Override
+    public boolean hasLoggedIn() {
+        return addressBook.hasLoggedIn();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -128,11 +133,5 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
-    /** @@author kaisertanqr
-    */
-    @Override
-    public boolean hasLoggedIn() {
-        return addressBook.hasLoggedIn();
-    }
 
 }

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= contactHeRo - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,13 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/W09-B2/main
+:repoURL: https://github.com/CS2103JAN2018-W09-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Welcome to *contactHero*! contactHeRo is the *perfect contact management solution for recruiters* across companies who need a *quick and efficient way* to manage the contact details and profiles of their potential recruits. It is a *Command Line Interface(CLI) application* with intuitive usage and effective features. You can `add`, `delete` and `edit` your contacts and `find` them by names or tags that you can assign. Other than that, you can also `view the linkedIn profiles` of your potential employees, `set reminders` and `arrange meetings`.
 
 == Quick Start
 
@@ -54,13 +54,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
-
-====
-*Auto-complete feature*
-
-* After typing partial command, press TAB for the command to be auto-completed. For e.g typing 'a' and pressing TAB will give the entire syntax for 'add' command.
-* The first lexicographically matched command is returned.
 ====
 
 === Viewing help : `help`
@@ -127,7 +120,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+You can delete a specified person from contactHeRo using the following format. +
 Format: `delete INDEX`
 
 ****
@@ -140,18 +133,18 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in contactHeRo.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Viewing the contact details of a person: `select`
 
-Selects the person identified by the index number used in the last person listing. +
+You can select a person identified by the index number used in the last person listing to view his/her contact details using the following format. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Shows the contact details of the person at the specified `INDEX` in a formatted page.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -160,10 +153,31 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the .
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Viewing the LinkedIn search of a person: `linkedIn`
+
+You can select a person identified by the index number used in the last person listing to view his/her LinkedIn search using the following format. +
+Format: `linkedIn INDEX`
+
+****
+* Loads the LinkedIn search of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* You *will have to login to LinkedIn* the first time to use this command in order to search the person.
+****
+
+Examples:
+
+* `list` +
+`linkedIn 2` +
+Loads the LinkedIn search of the 2nd person in the contactHeRo.
+* `find Betsy` +
+`select 1` +
+Loads the LinkedIn search of 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -235,10 +249,29 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Auto-complete command
+
+To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
+[NOTE]
+The first lexicographically matched command is returned.
+Examples:
+
+* Typing `ad` and pressing `TAB` gives: +
+    `add n/ e/ a/ [t/]...`
+
+* Typing `h` and pressing `TAB` gives: +
+     `help`
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+// tag::dataencryption[]
+
+=== Set reminders `[comming in v1.5]`
+
+You can set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
@@ -269,3 +302,5 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *LinkedIn*: `linkedIn INDEX` +
+e.g. `linkedIn 2`

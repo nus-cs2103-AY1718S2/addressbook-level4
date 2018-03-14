@@ -28,7 +28,7 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, CustTimeZone timeZone, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, timeZone, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -54,9 +54,7 @@ public class Person {
         return address;
     }
 
-    public CustTimeZone getCustTimeZone() {
-        return timeZone;
-    }
+    public CustTimeZone getCustTimeZone() { return timeZone; }
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -79,13 +77,14 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getCustTimeZone().equals(this.getCustTimeZone());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, timeZone, tags);
     }
 
     @Override
@@ -98,6 +97,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Time Zone: ")
+                .append(getCustTimeZone())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

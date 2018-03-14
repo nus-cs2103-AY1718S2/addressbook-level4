@@ -33,9 +33,13 @@ public class CustTimeZone {
     }
 
     @Override
+    public String toString() { return timeZone; }
+
+    @Override
     public boolean equals(Object other) {
         return other == this
-                || (other instanceof CustTimeZone);
+                || (other instanceof CustTimeZone
+                && this.timeZone.equals(((CustTimeZone) other).timeZone));
     }
 
     @Override

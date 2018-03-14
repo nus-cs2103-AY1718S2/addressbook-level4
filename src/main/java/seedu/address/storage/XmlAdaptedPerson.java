@@ -140,6 +140,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(timeZone, otherPerson.timeZone)
                 && tagged.equals(otherPerson.tagged);
     }
 }

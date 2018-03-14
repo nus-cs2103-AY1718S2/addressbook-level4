@@ -41,7 +41,7 @@ public class Quickstart {
     /**
      * Global instance of the {@link FileDataStoreFactory}.
      */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+    private static FileDataStoreFactory DATASTOREFACTORY;
 
     /**
      * Global instance of the JSON factory.
@@ -52,7 +52,7 @@ public class Quickstart {
     /**
      * Global instance of the HTTP transport.
      */
-    private static HttpTransport HTTP_TRANSPORT;
+    private static HttpTransport HTTPTRANSPORT;
 
     /**
      * Global instance of the scopes required by this quickstart.
@@ -65,8 +65,8 @@ public class Quickstart {
 
     static {
         try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            HTTPTRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            DATASTOREFACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
@@ -89,8 +89,8 @@ public class Quickstart {
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                        .setDataStoreFactory(DATA_STORE_FACTORY)
+                        HTTPTRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                        .setDataStoreFactory(DATASTOREFACTORY)
                         .setAccessType("offline")
                         .build();
         Credential credential = new AuthorizationCodeInstalledApp(
@@ -110,16 +110,13 @@ public class Quickstart {
         getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, credential)
+                HTTPTRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
 
     /**
      * Build and return an authorized Calendar client service.
-     *
-     * @return an authorized Calendar client service
-     * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         // Build a new authorized API client service.

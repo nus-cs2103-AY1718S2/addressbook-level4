@@ -123,6 +123,9 @@ public class BookBuilder {
         return this;
     }
 
+    /**
+     * Returns a new {@code Book} object.
+     */
     public Book build() {
         return new Book(gid, isbn, authors, title, categories, description,
                 publisher, publicationDate);

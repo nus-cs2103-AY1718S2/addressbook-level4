@@ -101,23 +101,23 @@ public class LogicManager extends ComponentManager implements Logic {
     private void handleApiBookDetailsResultEvent(ApiBookDetailsResultEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switch (event.outcome) {
-            case FAILURE:
-                raise(new NewResultAvailableEvent(AddCommand.MESSAGE_ADD_FAIL));
-                break;
-            case SUCCESS:
-                Book toAdd = event.book;
-                try {
-                    model.addBook(toAdd);
-                    logger.info(toAdd.getDescription().description);
-                    raise(new NewResultAvailableEvent(
-                            String.format(AddCommand.MESSAGE_SUCCESS, toAdd)));
-                } catch (DuplicateBookException e) {
-                    raise(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
-                }
-                break;
-            default:
-                logger.warning("Unexpected ApiBookDetailsEvent outcome.");
-                break;
+        case FAILURE:
+            raise(new NewResultAvailableEvent(AddCommand.MESSAGE_ADD_FAIL));
+            break;
+        case SUCCESS:
+            Book toAdd = event.book;
+            try {
+                model.addBook(toAdd);
+                logger.info(toAdd.getDescription().description);
+                raise(new NewResultAvailableEvent(
+                        String.format(AddCommand.MESSAGE_SUCCESS, toAdd)));
+            } catch (DuplicateBookException e) {
+                raise(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
+            }
+            break;
+        default:
+            logger.warning("Unexpected ApiBookDetailsEvent outcome.");
+            break;
         }
     }
 

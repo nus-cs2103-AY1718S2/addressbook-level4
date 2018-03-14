@@ -26,21 +26,6 @@ public class Book {
     /**
      * Every field must be present and not null.
      */
-    public Book(Set<Author> authors, Title title, Set<Category> categories, Description description) {
-        requireAllNonNull(authors, title, categories, description);
-        this.authors = new UniqueList<>(authors);
-        this.title = title;
-        this.categories = new UniqueList<>(categories);
-        this.description = description;
-        this.gid = new Gid("");
-        this.isbn = new Isbn("");
-        this.publisher = new Publisher("");
-        this.publicationDate = new PublicationDate("");
-    }
-
-    /**
-     * Every field must be present and not null.
-     */
     public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
                 Description description, Publisher publisher, PublicationDate publicationDate) {
         requireAllNonNull(gid, isbn, authors, title, categories, description, publisher, publicationDate);
@@ -105,12 +90,14 @@ public class Book {
         }
 
         Book otherBook = (Book) other;
-        return otherBook.getTitle().equals(this.getTitle());
+        return otherBook.getIsbn().equals(this.getIsbn())
+                && otherBook.getTitle().equals(this.getTitle())
+                && otherBook.getAuthors().equals(this.getAuthors());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title);
+        return Objects.hash(isbn);
     }
 
     @Override
@@ -119,8 +106,6 @@ public class Book {
         builder.append(getTitle())
                 .append(" - Authors: ");
         getAuthors().forEach(author -> builder.append("[").append(author).append("]"));
-        builder.append(" Categories: ");
-        getCategories().forEach(category -> builder.append("[").append(category).append("]"));
         return builder.toString();
     }
 

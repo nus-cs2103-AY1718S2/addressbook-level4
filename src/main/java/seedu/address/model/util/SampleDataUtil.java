@@ -30,7 +30,7 @@ public class SampleDataUtil {
             new Book(new Gid("CIj1DAAAQBAJ"), new Isbn("9781405921909"),
                 Collections.singleton(new Author("Sylvain Neuvel")), new Title("Waking Gods"),
                 CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction")),
-                new Description("This is Waking Gods."),new Publisher("Penguin UK"),
+                new Description("This is Waking Gods."), new Publisher("Penguin UK"),
                 new PublicationDate("2017-04-06")),
             new Book(new Gid("3jsYCwAAQBAJ"), new Isbn("9780316217637"),
                 Collections.singleton(new Author("James S. A. Corey")), new Title("Babylon's Ashes"),

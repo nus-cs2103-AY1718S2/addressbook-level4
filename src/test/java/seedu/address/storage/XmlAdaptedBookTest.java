@@ -22,6 +22,10 @@ public class XmlAdaptedBookTest {
             .map(XmlAdaptedAuthor::new).collect(Collectors.toList());
     private static final List<XmlAdaptedCategory> VALID_CATEGORIES = ARTEMIS.getCategories().stream()
             .map(XmlAdaptedCategory::new).collect(Collectors.toList());
+    private static final String VALID_GID = ARTEMIS.getGid().toString();
+    private static final String VALID_ISBN = ARTEMIS.getIsbn().toString();
+    private static final String VALID_PUBLISHER = ARTEMIS.getPublisher().toString();
+    private static final String VALID_PUBLICATION_DATE = ARTEMIS.getPublicationDate().toString();
 
     @Test
     public void toModelType_validBookDetails_returnsBook() throws Exception {
@@ -31,14 +35,16 @@ public class XmlAdaptedBookTest {
 
     @Test
     public void toModelType_nullTitle_throwsIllegalValueException() {
-        XmlAdaptedBook book = new XmlAdaptedBook(null, VALID_DESCRIPTION, VALID_AUTHORS, VALID_CATEGORIES);
+        XmlAdaptedBook book = new XmlAdaptedBook(VALID_GID, VALID_ISBN, null, VALID_DESCRIPTION,
+                VALID_AUTHORS, VALID_CATEGORIES, VALID_PUBLISHER, VALID_PUBLICATION_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Title.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, book::toModelType);
     }
 
     @Test
     public void toModelType_nullDescription_throwsIllegalValueException() {
-        XmlAdaptedBook book = new XmlAdaptedBook(VALID_TITLE, null, VALID_AUTHORS, VALID_CATEGORIES);
+        XmlAdaptedBook book = new XmlAdaptedBook(VALID_GID, VALID_ISBN, VALID_TITLE, null,
+                VALID_AUTHORS, VALID_CATEGORIES, VALID_PUBLISHER, VALID_PUBLICATION_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Description.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, book::toModelType);
     }

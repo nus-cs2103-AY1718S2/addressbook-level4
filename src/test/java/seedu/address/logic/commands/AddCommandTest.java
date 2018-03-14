@@ -24,14 +24,12 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.book.Book;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
  * {@code AddCommand}.
  */
 public class AddCommandTest {
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -58,31 +56,19 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_validIndexSearchResultsList_success() throws Exception {
-        Book bookToAdd = model.getSearchResultsList().get(INDEX_FIRST_BOOK.getZeroBased());
-
-        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, bookToAdd);
-
+    public void execute_validIndex_success() throws Exception {
         AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
         ModelManager expectedModel = new ModelManager();
         prepareSearchResultListInModel(expectedModel);
-        expectedModel.addBook(bookToAdd);
 
-        assertCommandSuccess(addCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(addCommand, model, AddCommand.MESSAGE_ADDING, expectedModel);
     }
 
     @Test
-    public void execute_invalidIndexSearchResultsList_failure() {
+    public void execute_invalidIndex_failure() {
         AddCommand addCommand = prepareCommand(Index.fromOneBased(model.getSearchResultsList().size() + 1));
 
         assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_duplicateBook_throwsCommandException() throws Exception {
-        Book bookInList = model.getSearchResultsList().get(INDEX_FIRST_BOOK.getZeroBased());
-        model.addBook(bookInList);
-        assertCommandFailure(prepareCommand(INDEX_FIRST_BOOK), model, AddCommand.MESSAGE_DUPLICATE_BOOK);
     }
 
     @Test
@@ -90,7 +76,6 @@ public class AddCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Book bookToAdd = model.getSearchResultsList().get(INDEX_FIRST_BOOK.getZeroBased());
         AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
         ModelManager expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
         prepareSearchResultListInModel(expectedModel);
@@ -103,7 +88,6 @@ public class AddCommandTest {
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first book added again
-        expectedModel.addBook(bookToAdd);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

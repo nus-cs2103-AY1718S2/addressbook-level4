@@ -1,5 +1,6 @@
 package systemtests;
 
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -11,7 +12,6 @@ import guitests.GuiRobot;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.BookShelf;
@@ -46,10 +46,12 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding firstBook to the list -> firstBook added again */
+        /*
         command = RedoCommand.COMMAND_WORD;
         model.addBook(firstBook);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelAfterAdding, expectedResultMessage);
+        */
 
         /* Case: add to empty book shelf -> added */
         deleteAllBooks();
@@ -75,7 +77,10 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate book -> rejected */
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOK);
+        model = getModel();
+        executeCommand(command);
+        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
+        assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(AddCommand.COMMAND_WORD + " " + 0,
@@ -118,11 +123,10 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
     }
 
     /**
-     * Executes the {@code AddCommand} that adds {@code toAdd} to the model and asserts that the,<br>
+     * Executes {@code command} and verifies that, after the web API has returned a result,<br>
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
-     * 3. Result display box displays the success message of executing {@code AddCommand} with the details of
-     * {@code toAdd}.<br>
+     * 3. Result display box displays the search successful message.<br>
      * 4. {@code Model}, {@code Storage} and {@code BookListPanel} equal to the corresponding components in
      * the current model added with {@code toAdd}.<br>
      * 5. Browser url and selected card remain unchanged.<br>
@@ -130,17 +134,29 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
      */
-    private void assertCommandSuccess(String command, Book toAdd) {
+    private void assertCommandSuccess(String command, Book toAdd) throws Exception {
         Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertCommandBoxShowsDefaultStyle();
+
+        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
+
         try {
             expectedModel.addBook(toAdd);
         } catch (DuplicateBookException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
+        assertBookInBookShelf(toAdd);
+        expectedModel.resetData(getModel().getBookShelf());
 
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedBookListCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**
@@ -178,5 +194,12 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         assertSelectedBookListCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
+    }
+
+    /**
+     * Checks that {@code book} is contained in the latest book shelf.
+     */
+    private void assertBookInBookShelf(Book book) {
+        assertTrue(getModel().getBookShelf().getBookList().contains(book));
     }
 }

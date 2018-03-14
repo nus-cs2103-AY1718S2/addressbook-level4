@@ -3,9 +3,6 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.BENSON2;
-import static seedu.address.testutil.TypicalPersons.JOHN;
-import static seedu.address.testutil.TypicalPersons.JOHN2;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -66,14 +63,11 @@ public class AddressBookTest {
     @Test
     public void removeTag_withValidAddressBook()
             throws DuplicatePersonException, PersonNotFoundException, UniqueTagList.DuplicateTagException {
-        addressBook.addPerson(JOHN);
         addressBook.addPerson(BENSON);
-
-        AddressBook afterRemoveAddressBook = new AddressBook();
-        afterRemoveAddressBook.addPerson(JOHN2);
-        afterRemoveAddressBook.addPerson(BENSON2);
+        List<Tag> tagList = new ArrayList<Tag>();
+        tagList.add(new Tag("owesMoney"));
         addressBook.removeTag(new Tag("friends"));
-        assertEquals(addressBook, afterRemoveAddressBook);
+        assertEquals(addressBook.getTagList(), tagList);
     }
 
     @Test

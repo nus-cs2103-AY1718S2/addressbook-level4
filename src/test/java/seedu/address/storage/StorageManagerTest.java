@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.Before;
@@ -52,6 +53,11 @@ public class StorageManagerTest {
         storageManager.saveUserPrefs(original);
         UserPrefs retrieved = storageManager.readUserPrefs().get();
         assertEquals(original, retrieved);
+    }
+
+    @Test
+    public void createProfilesPictureFolder() {
+        assertTrue(new File("./src/main/resources/ProfilePictures").exists());
     }
 
     @Test

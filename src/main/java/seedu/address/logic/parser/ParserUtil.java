@@ -10,10 +10,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Year;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -92,27 +93,51 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String address} into an {@code Address}.
+     * Parses a {@code String major} into an {@code Major}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code address} is invalid.
+     * @throws IllegalValueException if the given {@code major} is invalid.
      */
-    public static Address parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+    public static Major parseMajor(String major) throws IllegalValueException {
+        requireNonNull(major);
+        String trimmedMajor = major.trim();
+        if (!Major.isValidMajor(trimmedMajor)) {
+            throw new IllegalValueException(Major.MESSAGE_MAJOR_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new Major(trimmedMajor);
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Parses a {@code Optional<String> major} into an {@code Optional<Major>} if {@code major} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    public static Optional<Major> parseMajor(Optional<String> major) throws IllegalValueException {
+        requireNonNull(major);
+        return major.isPresent() ? Optional.of(parseMajor(major.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String year} into an {@code Year}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code year} is invalid.
+     */
+    public static Year parseYear(String year) throws IllegalValueException {
+        requireNonNull(year);
+        String trimmedYear = year.trim();
+        if (!Year.isValidYear(trimmedYear)) {
+            throw new IllegalValueException(Year.MESSAGE_YEAR_CONSTRAINTS);
+        }
+        return new Year(trimmedYear);
+    }
+
+    /**
+     * Parses a {@code Optional<String> year} into an {@code Optional<Year>} if {@code year} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Year> parseYear(Optional<String> year) throws IllegalValueException {
+        requireNonNull(year);
+        return year.isPresent() ? Optional.of(parseYear(year.get())) : Optional.empty();
     }
 
     /**

@@ -59,6 +59,7 @@ public class AddCommandTest {
         getAddCommandForPerson(validPerson, modelStub).execute();
     }
 
+
     @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();

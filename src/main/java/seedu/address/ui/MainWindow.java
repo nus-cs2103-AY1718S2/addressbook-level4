@@ -129,7 +129,8 @@ public class MainWindow extends UiPart<Stage> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic, this);
+        CommandBox commandBox = new CommandBox(logic);
+        commandBox.mainWindow = this;
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         hideBeforeLogin();

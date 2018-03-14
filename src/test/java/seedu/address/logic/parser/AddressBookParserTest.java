@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.LoginCommand.TEST_PASSWORD;
+import static seedu.address.logic.commands.LoginCommand.TEST_USERNAME;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -25,6 +27,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -176,6 +179,12 @@ public class AddressBookParserTest {
     public void parseCommand_listCommandAlias() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_returnsLoginCommand() throws Exception {
+        assertTrue(parser.parseCommand(LoginCommand.COMMAND_WORD + " " + TEST_USERNAME + " "
+                + TEST_PASSWORD) instanceof LoginCommand);
     }
 
     @Test

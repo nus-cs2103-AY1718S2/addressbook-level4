@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -26,6 +27,7 @@ import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Resume;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -47,6 +49,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_EXPECTED_GRADUATION_YEAR + "EXPECTED GRADUATION YEAR] "
+            + "[" + PREFIX_RESUME + "RESUME] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -112,10 +115,11 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         ExpectedGraduationYear updatedExpectedGraduationYear = editPersonDescriptor.getExpectedGraduationYear()
                 .orElse(personToEdit.getExpectedGraduationYear());
+        Resume updatedResume = editPersonDescriptor.getResume().orElse(personToEdit.getResume());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedExpectedGraduationYear, updatedTags);
+                updatedExpectedGraduationYear, updatedResume, updatedTags);
     }
 
     @Override
@@ -147,6 +151,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private ExpectedGraduationYear expectedGraduationYear;
+        private Resume resume;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -161,6 +166,7 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setExpectedGraduationYear(toCopy.expectedGraduationYear);
+            setResume(toCopy.resume);
             setTags(toCopy.tags);
         }
 
@@ -169,7 +175,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
-                    this.expectedGraduationYear, this.tags);
+                    this.expectedGraduationYear, this.resume, this.tags);
         }
 
         public void setName(Name name) {
@@ -211,6 +217,14 @@ public class EditCommand extends UndoableCommand {
         public Optional<ExpectedGraduationYear> getExpectedGraduationYear() {
             return Optional.ofNullable(expectedGraduationYear);
         }
+
+        public void setResume(Resume resume) {
+            this.resume = resume;
+        }
+
+        public Optional<Resume> getResume() {
+            return Optional.ofNullable(resume);
+        }
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -248,6 +262,7 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getExpectedGraduationYear().equals(e.getExpectedGraduationYear())
+                    && getResume().equals(e.getResume())
                     && getTags().equals(e.getTags());
         }
     }

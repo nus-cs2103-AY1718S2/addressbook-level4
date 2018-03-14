@@ -40,7 +40,9 @@ public class XmlUtilTest {
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
     private static final String VALID_EXPECTED_GRADUATION_YEAR = "2020";
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final String VALID_RESUME = TEST_DATA_FOLDER + "hans.pdf";
+    private static final List<XmlAdaptedTag> VALID_TAGS =
+            Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -81,7 +83,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR, VALID_TAGS);
+                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -90,7 +93,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -99,7 +103,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

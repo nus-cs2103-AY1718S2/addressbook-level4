@@ -16,9 +16,9 @@ By: `Team W14-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
-=== Prerequisites
 
 . *JDK `1.8.0_60`* or later
+
 +
 [NOTE]
 Having any Java 8 version is not enough. +

@@ -80,12 +80,13 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getDate().equals(this.getDate());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address,date, tags);
     }
 
     @Override
@@ -98,6 +99,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Delivery Date: ")
+                .append(getDate())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

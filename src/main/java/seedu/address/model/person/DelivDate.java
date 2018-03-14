@@ -17,7 +17,7 @@ public class DelivDate {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DATE_VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}\n";
+    public static final String DATE_VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}";
 
     public final String value;
 
@@ -36,7 +36,8 @@ public class DelivDate {
      * Returns true if a given string is a valid person date.
      */
     public static boolean isValidDate(String test) { 
-        return test.matches(DATE_VALIDATION_REGEX); 
+        boolean itMatches = test.matches(DATE_VALIDATION_REGEX); 
+        return itMatches;
     }
 
     @Override

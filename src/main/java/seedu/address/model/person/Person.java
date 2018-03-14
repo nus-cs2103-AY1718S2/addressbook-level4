@@ -19,14 +19,14 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
-    private final NRIC nric;
+    private final Nric nric;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, NRIC nric, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Nric nric, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, nric, tags);
         this.name = name;
         this.phone = phone;
@@ -53,7 +53,7 @@ public class Person {
         return address;
     }
 
-    public NRIC getNric() {
+    public Nric getNric() {
         return nric;
     }
 
@@ -86,7 +86,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, nric, tags);
     }
 
     @Override

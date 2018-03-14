@@ -6,7 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Person's email in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidNRIC(String)}
  */
-public class NRIC {
+public class Nric {
     public static final String MESSAGE_NRIC_CONSTRAINTS = "Person NRIC should be of the format #0000000@ "
         + "where # is a letter that can be S T F or G,\n "
         + "0000000 is a 7 digit serial number assigned to the document holder, \n "
@@ -24,9 +24,9 @@ public class NRIC {
      *
      * @param nric A valid NRIC number
      */
-    public NRIC(String nric) {
+    public Nric(String nric) {
         requireNonNull(nric);
-        checkArgument(isValidNRIC(nric), MESSAGE_NRIC_CONSTRAINTS);
+        checkArgument(isValidNric(nric), MESSAGE_NRIC_CONSTRAINTS);
         this.value = nric;
     }
 
@@ -35,7 +35,7 @@ public class NRIC {
      * @param test
      * @return
      */
-    public static boolean isValidNRIC(String test) {
+    public static boolean isValidNric(String test) {
         return test.matches(NRIC_VALIDATION_REGEX);
     }
 
@@ -47,8 +47,8 @@ public class NRIC {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-            || (other instanceof NRIC // instanceof handles nulls
-            && this.value.equals(((NRIC) other).value)); // state check
+            || (other instanceof Nric // instanceof handles nulls
+            && this.value.equals(((Nric) other).value)); // state check
     }
 
     @Override

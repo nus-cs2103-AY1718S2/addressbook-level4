@@ -22,8 +22,9 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.NRIC;
+//import seedu.address.model.person.NRIC;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -110,7 +111,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        NRIC updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNric, updatedTags);
@@ -144,7 +145,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
-        private NRIC nric;
+        private Nric nric;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -201,9 +202,9 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setNric(NRIC nric) { this.nric = nric; }
+        public void setNric(Nric nric) { this.nric = nric; }
 
-        public Optional<NRIC> getNric() { return Optional.ofNullable(nric); }
+        public Optional<Nric> getNric() { return Optional.ofNullable(nric); }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

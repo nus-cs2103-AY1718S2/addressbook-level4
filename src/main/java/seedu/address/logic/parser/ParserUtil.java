@@ -12,8 +12,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.NRIC;
+//import seedu.address.model.person.NRIC;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -147,13 +148,13 @@ public class ParserUtil {
      * @return
      * @throws IllegalValueException
      */
-    public static NRIC parseNric(String nric) throws IllegalValueException {
+    public static Nric parseNric(String nric) throws IllegalValueException {
         requireNonNull(nric);
         String trimmedNric = nric.trim();
-        if (!NRIC.isValidNRIC(trimmedNric)) {
-            throw new IllegalValueException(NRIC.MESSAGE_NRIC_CONSTRAINTS);
+        if (!Nric.isValidNric(trimmedNric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
         }
-        return new NRIC(trimmedNric);
+        return new Nric(trimmedNric);
     }
 
     /**
@@ -163,7 +164,7 @@ public class ParserUtil {
      * @return
      * @throws IllegalValueException
      */
-    public static Optional<NRIC> parseNric(Optional<String> nric) throws IllegalValueException {
+    public static Optional<Nric> parseNric(Optional<String> nric) throws IllegalValueException {
         requireNonNull(nric);
         return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
     }

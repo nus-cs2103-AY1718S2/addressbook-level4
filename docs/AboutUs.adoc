@@ -6,6 +6,8 @@
 ProgressChecker was developed by the https://github.com/CS2103JAN2018-T09-B3/main[T09-B3] team. +
 ProgressChecker helps to remind students learning outcomes every week. +
 With a simple click, students will never miss their weekly LOs again. +
+It also keeps track of the progress of each team member. +
+Thus it is convenient for teammates to compare help each other. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
@@ -14,8 +16,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 '''
 
 === Aditya Agarwal
-image::Aditya.png[width="150", align="left"]
-{empty}[http://github.com/adityaa1998[github]] [<<johndoe#, portfolio>>]
+image::adityaa1998.png[width="150", align="left"]
+{empty}[http://github.com/adityaa1998[github]] [<<aditya#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: Integration, code quality
@@ -23,8 +25,8 @@ Responsibilities: Integration, code quality
 '''
 
 === Lai Liwen
-image::liwen.png[width="150", align="left"]
-{empty}[https://github.com/Livian1107[github]] [<<johndoe#, portfolio>>]
+image::livian1107.png[width="150", align="left"]
+{empty}[https://github.com/Livian1107[github]] [<<liwen#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI + Documentation + Testing(helper)
@@ -33,18 +35,18 @@ Responsibilities: UI + Documentation + Testing(helper)
 
 === Koh Yee Ru
 image::inekox3.png[width="150", align="left"]
-{empty}[http://github.com/inekox3[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/inekox3[github]] [<<yeeru#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic + Scheduling & Tracking + Deliverables & Deadlines
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Kang Anmin
+image::edwardksg.png[width="150", align="left"]
+{empty}[https://github.com/EdwardKSG[github]] [<<anmin#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Model + Testing + Scheduling & Tracking(helper)
 
 '''

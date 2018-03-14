@@ -9,6 +9,7 @@ import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -21,6 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_SUBJECT = "English";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_FAVOURITE = "false";
 
@@ -28,6 +30,7 @@ public class PersonBuilder {
     private Phone phone;
     private Email email;
     private Address address;
+    private Subject subject;
     private Set<Tag> tags;
     private Favourite favourite;
 
@@ -36,6 +39,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        subject = new Subject(DEFAULT_SUBJECT);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         favourite = new Favourite(DEFAULT_FAVOURITE);
     }
@@ -48,6 +52,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        subject = personToCopy.getSubject();
         tags = new HashSet<>(personToCopy.getTags());
         favourite = personToCopy.getFavourite();
     }
@@ -99,9 +104,17 @@ public class PersonBuilder {
         this.favourite = new Favourite(val);
         return this;
     }
+    
+    /**
+     * Sets the {@code Subject} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSubject(String subject) {
+        this.subject = new Subject(subject);
+        return this;
+    }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, favourite);
+        return new Person(name, phone, email, address, subject, tags);
     }
 
 }

@@ -195,11 +195,16 @@ public class EditCommand extends UndoableCommand {
         }
 
         public Optional<Address> getAddress() {
+
             return Optional.ofNullable(address);
         }
-        public void setDate(DelivDate date) {this.date = date; }
 
-        public Optional<DelivDate> getDate() {return Optional.ofNullable(date); }
+        public void setDate(DelivDate date) {
+            this.date = date;
+        }
+
+        public Optional<DelivDate> getDate() {
+            return Optional.ofNullable(date); }
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.

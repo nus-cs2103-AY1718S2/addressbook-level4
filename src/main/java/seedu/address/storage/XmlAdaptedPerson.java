@@ -47,7 +47,8 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address,String date, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String date,
+                            List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -119,7 +120,8 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         if (this.date == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DelivDate.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DelivDate.class.getSimpleName()));
         }
         if (!DelivDate.isValidDate(this.date)) {
             throw new IllegalValueException(DelivDate.MESSAGE_ADDRESS_CONSTRAINTS);

@@ -38,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private CalendarPanel calendarPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -130,6 +131,9 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        calendarPanel = new CalendarPanel(logic.getCalendar());
+        browserPlaceholder.getChildren().add(calendarPanel.getCalendarPage());
     }
 
     void hide() {

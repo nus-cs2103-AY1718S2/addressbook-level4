@@ -25,14 +25,16 @@ public class CommandBox extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
+    private final MainWindow mainWindow;
     private ListElementPointer historySnapshot;
 
     @FXML
     private TextField commandTextField;
 
-    public CommandBox(Logic logic) {
+    public CommandBox(Logic logic, MainWindow mainWindow) {
         super(FXML);
         this.logic = logic;
+        this.mainWindow = mainWindow;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
@@ -102,6 +104,9 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
+            if(logic.hasLoggedIn()){
+                mainWindow.showAfterLogin();
+            }
             initHistory();
             historySnapshot.next();
             // process result of the command

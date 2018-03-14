@@ -15,6 +15,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
@@ -166,6 +167,134 @@ public class ParserUtil {
         requireNonNull(expectedGraduationYear);
         return expectedGraduationYear.isPresent() ? Optional.of(parseExpectedGraduationYear(
                 expectedGraduationYear.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String technicalSkillsScore} into an {@code double}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code technicalSkillsScore} is invalid.
+     */
+    public static double parseTechnicalSkillsScore(String technicalSkillsScore)
+        throws IllegalValueException {
+        requireNonNull(technicalSkillsScore);
+        String trimmedTechnicalSkillsScore = technicalSkillsScore.trim();
+        double technicalSkillsScoreValue = Double.parseDouble(trimmedTechnicalSkillsScore);
+        if (!Rating.isValidScore(technicalSkillsScoreValue)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return technicalSkillsScoreValue;
+    }
+
+    /**
+     * Parses a {@code Optional<String> technicalSkillsScore} into an {@code Optional<Double>}
+     * if {@code technicalSkillsScore} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Double> parseTechnicalSkillsScore(Optional<String> technicalSkillsScore)
+            throws IllegalValueException {
+        requireNonNull(technicalSkillsScore);
+        if (technicalSkillsScore.get().trim().equals("")) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return technicalSkillsScore.isPresent() ? Optional.of(parseTechnicalSkillsScore(
+                technicalSkillsScore.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String communicationSkillsScore} into an {@code double}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code communicationSkillsScore} is invalid.
+     */
+    public static double parseCommunicationSkillsScore(String communicationSkillsScore)
+            throws IllegalValueException {
+        requireNonNull(communicationSkillsScore);
+        String trimmedCommunicationSkillsScore = communicationSkillsScore.trim();
+        double communicationSkillsScoreValue = Double.parseDouble(trimmedCommunicationSkillsScore);
+        if (!Rating.isValidScore(communicationSkillsScoreValue)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return communicationSkillsScoreValue;
+    }
+
+    /**
+     * Parses a {@code Optional<String> communicationSkillsScore} into an {@code Optional<Double>}
+     * if {@code communicationSkillsScore} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Double> parseCommunicationSkillsScore(Optional<String> communicationSkillsScore)
+            throws IllegalValueException {
+        requireNonNull(communicationSkillsScore);
+        if (communicationSkillsScore.get().trim().equals("")) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return communicationSkillsScore.isPresent() ? Optional.of(parseCommunicationSkillsScore(
+                communicationSkillsScore.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String problemSolvingSkillsScore} into an {@code double}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code problemSolvingSkillsScore} is invalid.
+     */
+    public static double parseProblemSolvingSkillsScore(String problemSolvingSkillsScore)
+            throws IllegalValueException {
+        requireNonNull(problemSolvingSkillsScore);
+        String trimmedProblemSolvingSkillsScore = problemSolvingSkillsScore.trim();
+        double problemSolvingSkillsScoreValue = Double.parseDouble(trimmedProblemSolvingSkillsScore);
+        if (!Rating.isValidScore(problemSolvingSkillsScoreValue)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return problemSolvingSkillsScoreValue;
+    }
+
+    /**
+     * Parses a {@code Optional<String> problemSolvingSkillsScore} into an {@code Optional<Double>}
+     * if {@code problemSolvingSkillsScore} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Double> parseProblemSolvingSkillsScore(Optional<String> problemSolvingSkillsScore)
+            throws IllegalValueException {
+        requireNonNull(problemSolvingSkillsScore);
+        if (problemSolvingSkillsScore.get().trim().equals("")) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return problemSolvingSkillsScore.isPresent() ? Optional.of(parseProblemSolvingSkillsScore(
+                problemSolvingSkillsScore.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String experienceScore} into an {@code double}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code experienceScore} is invalid.
+     */
+    public static double parseExperienceScore(String experienceScore)
+            throws IllegalValueException {
+        requireNonNull(experienceScore);
+        String trimmedExperienceScore = experienceScore.trim();
+        double experienceScoreValue = Double.parseDouble(trimmedExperienceScore);
+        if (!Rating.isValidScore(experienceScoreValue)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return experienceScoreValue;
+    }
+
+    /**
+     * Parses a {@code Optional<String> experienceScore} into an {@code Optional<Double>}
+     * if {@code experienceScore} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Double> parseExperienceScore(Optional<String> experienceScore)
+            throws IllegalValueException {
+        requireNonNull(experienceScore);
+        if (experienceScore.get().trim().equals("")) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return experienceScore.isPresent() ? Optional.of(parseExperienceScore(
+                experienceScore.get())) : Optional.empty();
     }
 
     /**

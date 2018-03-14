@@ -13,4 +13,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_EXPECTED_GRADUATION_YEAR = new Prefix("y/");
     public static final Prefix PREFIX_RESUME = new Prefix("r/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+
+    public static final Prefix PREFIX_TECHNICAL_SKILLS_SCORE = new Prefix("t/");
+    public static final Prefix PREFIX_COMMUNICATION_SKILLS_SCORE = new Prefix("c/");
+    public static final Prefix PREFIX_PROBLEM_SOLVING_SKILLS_SCORE = new Prefix("p/");
+    public static final Prefix PREFIX_EXPERIENCE_SCORE = new Prefix("e/");
 }

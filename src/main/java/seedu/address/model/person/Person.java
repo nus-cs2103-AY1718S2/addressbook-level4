@@ -20,6 +20,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private final ExpectedGraduationYear expectedGraduationYear;
+    private final Rating rating;
     private final Resume resume;
 
     private final UniqueTagList tags;
@@ -28,13 +29,15 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  ExpectedGraduationYear expectedGraduationYear, Resume resume, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, expectedGraduationYear, resume, tags);
+                  ExpectedGraduationYear expectedGraduationYear, Rating rating,
+                  Resume resume, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, expectedGraduationYear, rating, resume, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
+        this.rating = rating;
         this.resume = resume;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
@@ -58,6 +61,10 @@ public class Person {
 
     public ExpectedGraduationYear getExpectedGraduationYear() {
         return expectedGraduationYear;
+    }
+
+    public Rating getRating() {
+        return rating;
     }
 
     public Resume getResume() {
@@ -93,7 +100,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, expectedGraduationYear, resume, tags);
+        return Objects.hash(name, phone, email, address, expectedGraduationYear, rating, resume, tags);
     }
 
     @Override
@@ -106,7 +113,7 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Expected graudation year: ")
+                .append(" Expected graduation year: ")
                 .append(getExpectedGraduationYear())
                 .append(" Resume: ")
                 .append(getResume())

@@ -8,6 +8,10 @@
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -16,6 +20,10 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <expectedGraduationYear>2021</expectedGraduationYear>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
@@ -25,6 +33,10 @@
         <email>heinz@example.com</email>
         <address>wall street</address>
         <expectedGraduationYear>2019</expectedGraduationYear>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
     </persons>
     <persons>
         <name>Daniel Meier</name>
@@ -32,6 +44,10 @@
         <email>cornelia@example.com</email>
         <address>10th street</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
     </persons>
     <persons>
         <name>Elle Meyer</name>
@@ -39,6 +55,10 @@
         <email>werner@example.com</email>
         <address>michegan ave</address>
         <expectedGraduationYear>2018</expectedGraduationYear>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
@@ -46,6 +66,10 @@
         <email>lydia@example.com</email>
         <address>little tokyo</address>
         <expectedGraduationYear>2019</expectedGraduationYear>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
     </persons>
     <persons>
         <name>George Best</name>
@@ -53,6 +77,10 @@
         <email>anna@example.com</email>
         <address>4th street</address>
         <expectedGraduationYear>2022</expectedGraduationYear>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>

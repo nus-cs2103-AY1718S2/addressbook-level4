@@ -40,7 +40,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         assertCommandSuccess(command, firstBook);
 
         /* Case: undo adding firstBook to the list -> firstBook deleted */
-        Model modelAfterAdding = getModel();
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);

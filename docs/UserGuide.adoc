@@ -228,24 +228,32 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Display Calendar : 'display'
+=== Display Calendar : `display`
 
-Show all the group meeting in list in Calendar in time order.
+Show all the group meeting in list in Calendar in time order.+
 Alias: `d` +
 Format: `display`
 
-=== Schedule suitable time : 'schedule'
+=== Schedule suitable time : `schedule`
 
-Compute a time suitable for all group members to meet.
+Compute a time suitable for all group members to meet. +
 Alias: `s` +
-Format: `schedule`
+Format: `schedule GROUP`
+****
+GROUP refers the name of group which you want to work with. +
+The name of the group entered must already exist in FASTIS or saved by your previously.
+****
 
-=== Edit a person's group : 'update group'
+=== Edit a person's group : `update group`
 
-Edit the group that the person belongs to.
+Edit the group that the person belongs to. +
 Alias: `u` +
-Format: `update`
+Format: `update INDEX`
 
+****
+INDEX refers to the index of the person you are trying to update his group.
+The index *must be a positive integer* 1, 2, 3, ...
+****
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -266,9 +274,10 @@ There is no need to save manually.
 === Encrypting data files `[coming in v2.0]`
 
 Personal log in page that requires saved password.
-Sign up with username and password.
+Sign up with `username` and `password`.
 Creation of password should use at least 1 lower case ,1 upper case and 1 number.
 Sign in with saved username and password to be able to use the secured application.
+Data files created by FASTIS will be encrypted using the `password` you have provided.
 // end::dataencryption[]
 
 == FAQ

@@ -14,7 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::Articho28.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
-Role: Project Advisor
+Role: Team Lead + Deliverables and Deadlines 
 
 '''
 
@@ -22,8 +22,8 @@ Role: Project Advisor
 image::pkunahan.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Testing
+
 
 '''
 
@@ -31,8 +31,8 @@ Responsibilities: UI
 image::chenchongsong.jpg[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Data
+Role: Code Quality
+
 
 '''
 
@@ -40,8 +40,8 @@ Responsibilities: Data
 image::software-1234.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Documentation 
+
 
 '''
 

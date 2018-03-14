@@ -32,8 +32,7 @@ public class ChangeTagColorCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "color";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes the current color of the tag specified by name"
-            + "\nParameters: TAGNAME (must be an existing tag) "
-            + "COLOR"
+            + "\nParameters: TAGNAME (must be an existing tag) COLOR\n"
             + "Example: " + COMMAND_WORD + " friends red\n"
             + "Available colors are: teal, red, yellow, blue, orange, brown, green, pink, black, grey";
 
@@ -42,10 +41,6 @@ public class ChangeTagColorCommand extends UndoableCommand {
 
     private final String tagName;
     private final String tagColor;
-
-    private static final Set<String> TAG_COLOR_STYLES = new HashSet<String>(Arrays.asList(
-            new String[] {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"}
-    ));
 
     private Tag tagToEdit;
     private Tag editedTag;
@@ -64,15 +59,15 @@ public class ChangeTagColorCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        if (!TAG_COLOR_STYLES.contains(tagColor)) {
+        if (Tag.isValidTagColor(tagColor)) {
             throw new AssertionError("Tag color is not defined");
         }
         try {
             model.updateTag(tagToEdit, editedTag);
         } catch (TagNotFoundException tnfe ) {
-            throw new AssertionError("The tag specified is associated with any person");
+            throw new CommandException("The tag specified is not associated with any person");
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The tag specified is associated with any person");
+            throw new CommandException("Person not found");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, tagName, tagColor));
@@ -88,6 +83,6 @@ public class ChangeTagColorCommand extends UndoableCommand {
                 return;
             }
         }
-        throw new AssertionError("The tag specified is associated with any person");
+        throw new CommandException("The tag specified is not associated with any person");
     }
 }

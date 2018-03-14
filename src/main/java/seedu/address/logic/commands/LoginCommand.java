@@ -1,14 +1,15 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.login.exceptions.AuthenticationFailedException;
 
-import static java.util.Objects.requireNonNull;
-
-/**
+/** @@author kaisertanqr
+ *
  * Authenticates login credentials.
  */
 public class LoginCommand extends Command {
@@ -38,9 +39,9 @@ public class LoginCommand extends Command {
         try {
             model.checkLoginCredentials(this.username, this.password);
             return new CommandResult(LOGIN_SUCCESS);
-        }catch (AlreadyLoggedInException e){
+        } catch (AlreadyLoggedInException e) {
             throw new CommandException(LOGIN_ALREADY);
-        }catch (AuthenticationFailedException e) {
+        } catch (AuthenticationFailedException e) {
             throw new CommandException(LOGIN_FAILURE);
         }
     }

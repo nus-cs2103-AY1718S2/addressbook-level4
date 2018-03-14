@@ -49,12 +49,15 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    /**
-     * Checks the login credien
+    /** @@auther kaisertanqr
+     *
+     * Checks the login credentials
      * @param username
      * @param password
      *
-     * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given in ModelManager.
+     * @throws AlreadyLoggedInException if user has already logged in.
+     * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given
+     *                                          in ModelManager.
      */
     void checkLoginCredentials(Username username, Password password)
             throws AlreadyLoggedInException, AuthenticationFailedException;

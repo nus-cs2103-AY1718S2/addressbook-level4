@@ -75,7 +75,7 @@ public class AddressBookParser {
         case LoginCommand.COMMAND_WORD:
             return new LoginCommandParser().parse(arguments);
 
-            default:
+        default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }

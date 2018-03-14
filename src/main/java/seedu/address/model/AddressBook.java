@@ -63,9 +63,21 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /// login authentication operations
 
-    public boolean hasLoggedIn(){
+    public boolean hasLoggedIn() {
         return hasLoggedIn;
     }
+
+
+    /** @@author kaisertanqr
+     *
+     * Checks the login credentials whether it matches the one in addressbook
+     *
+     * @param username
+     * @param password
+     * @throws AlreadyLoggedInException is the user is already logged in.
+     * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given
+     *                                       in ModelManager.
+     */
 
     public void checkLoginCredentials(Username username, Password password)
             throws AlreadyLoggedInException, AuthenticationFailedException {

@@ -84,6 +84,9 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /** @@author kaisertanqr
+     *
+     */
     @Override
     public void checkLoginCredentials(Username username, Password password)
             throws AlreadyLoggedInException, AuthenticationFailedException  {

@@ -61,6 +61,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         resetData(toBeCopied);
     }
 
+    /**
+     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied} and logged-in status
+     */
+    public AddressBook(ReadOnlyAddressBook toBeCopied, boolean loggedin) {
+        this();
+        resetData(toBeCopied);
+        hasLoggedIn = loggedin;
+    }
+
     /// login authentication operations
 
     public boolean hasLoggedIn() {

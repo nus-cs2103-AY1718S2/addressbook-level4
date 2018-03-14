@@ -75,7 +75,7 @@ public class TestApp extends MainApp {
      */
     public AddressBook readStorageAddressBook() {
         try {
-            return new AddressBook(storage.readAddressBook().get());
+            return new AddressBook(storage.readAddressBook().get(), true);
         } catch (DataConversionException dce) {
             throw new AssertionError("Data is not in the AddressBook format.");
         } catch (IOException ioe) {

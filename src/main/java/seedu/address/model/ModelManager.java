@@ -39,7 +39,20 @@ public class ModelManager extends ComponentManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.addressBook = new AddressBook(addressBook, true);
+        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+    }
+
+    /**
+     * Initializes a ModelManager with the given addressBook and userPrefs and a login status
+     */
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, boolean loggedIn) {
+        super();
+        requireAllNonNull(addressBook, userPrefs);
+
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+
+        this.addressBook = new AddressBook(addressBook, true);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -84,9 +97,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    /** @@author kaisertanqr
-     *
-     */
     @Override
     public void checkLoginCredentials(Username username, Password password)
             throws AlreadyLoggedInException, AuthenticationFailedException  {

@@ -29,19 +29,21 @@ image::Profilepic_Kaiser.jpg[width="150", align="left"]
 '''
 
 === Jason Mason-Hing
-image::damithc.jpg[width="150", align="left"]
-{empty}[https://github.com/[github]]
+image::Profilepic_Jason.jpg[width="150", align="left"]
+{empty}[https://github.com/ifalluphill[github]]
 
-+Role: Hello
-+Responsibilities: Hello
++Role: Developer 
++Responsibilities: Calendar and Todolist
 
 '''
 
 === Clarissa Yong
-image::damithc.jpg[width="150", align="left"]
-{empty}[https://github.com/[github]]
+image::Clarissa_profilepic.jpg[width="150", align="left"]
+{empty}[https://github.com/clarissayong[github]]
 
-+Role:
++Role: Project Developer
 +Responsibilities:
 
 '''
+
+

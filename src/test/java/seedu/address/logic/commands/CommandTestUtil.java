@@ -71,6 +71,13 @@ public class CommandTestUtil {
     public static final String VALID_FRONT_CARD_2 = "Who was Singapore's first President?";
     public static final String VALID_BACK_CARD_2 = "Yushof Ishak";
 
+    public static final String VALID_THEME_1 = "light";
+    public static final String VALID_THEME_2 = "dark";
+    public static final Integer CORRESPONDING_THEME_INDEX_1 = 0;
+    public static final Integer CORRESPONDING_THEME_INDEX_2 = 1;
+
+    public static final String INVALID_THEME = "solarized";
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)

@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.ui.UiManager.VALID_THEMES;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +32,8 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_THEME =
+            "Theme must be one of " + String.join(", ", VALID_THEMES);
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -190,11 +193,10 @@ public class ParserUtil {
      * @throws IllegalValueException if the given {@code theme} is invalid.
      */
     public static Integer parseTheme(Optional<String> theme) throws IllegalValueException {
-        final String[] validThemeStrings = {"light", "dark"};
-        final ArrayList<String> validThemes = new ArrayList<String>(Arrays.asList(validThemeStrings));
+        final ArrayList<String> validThemes = new ArrayList<String>(Arrays.asList(VALID_THEMES));
         requireNonNull(theme);
         if (!validThemes.contains(theme.get())) {
-            throw new IllegalValueException("Theme must be either 'light' or 'dark'.");
+            throw new IllegalValueException(MESSAGE_INVALID_THEME);
         }
         return validThemes.indexOf(theme.get());
     }

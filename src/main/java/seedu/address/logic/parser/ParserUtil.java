@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DelivDate;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -121,6 +122,22 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code email} is invalid.
      */
+    
+    public static DelivDate parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedAddress = date.trim();
+        if (!Address.isValidAddress(trimmedAddress)) {
+            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        return new DelivDate(trimmedAddress);
+    }
+    
+    public static Optional<DelivDate> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
+    }
+    
+    
     public static Email parseEmail(String email) throws IllegalValueException {
         requireNonNull(email);
         String trimmedEmail = email.trim();

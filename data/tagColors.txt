@@ -1,0 +1,4 @@
+classmates:teal
+friends:orange
+colleagues:yellow
+family:brown

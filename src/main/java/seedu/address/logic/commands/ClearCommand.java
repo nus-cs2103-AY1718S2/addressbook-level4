@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.model.Calendar;
+import seedu.address.model.DeskBoard;
 
 /**
  * Clears the address book.
@@ -17,7 +17,7 @@ public class ClearCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
-        model.resetData(new Calendar());
+        model.resetData(new DeskBoard());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

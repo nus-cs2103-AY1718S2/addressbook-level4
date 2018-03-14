@@ -57,7 +57,7 @@ public class SelectCommandSystemTest extends RemarkBookSystemTest {
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getPersonList().size();
+        int invalidIndex = getModel().getDeskBoard().getActivityList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
         /* Case: filtered activity list, select index within bounds of address book and activity list -> selected */

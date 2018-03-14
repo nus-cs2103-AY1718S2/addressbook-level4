@@ -15,7 +15,8 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly version of the Activity.
  */
-public class XmlAdaptedPerson {
+//TODO : NEED TO CHANGE WHEN MODEL CHANGES
+public class XmlAdaptedActivity {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Activity's %s field is missing!";
 
@@ -30,15 +31,15 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedActivity.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedActivity() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given activity details.
+     * Constructs an {@code XmlAdaptedActivity} with the given activity details.
      */
-    public XmlAdaptedPerson(String name, String dateTime, String remark, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedActivity(String name, String dateTime, String remark, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.dateTime = dateTime;
         this.remark = remark;
@@ -50,9 +51,9 @@ public class XmlAdaptedPerson {
     /**
      * Converts a given Activity into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedActivity
      */
-    public XmlAdaptedPerson(Activity source) {
+    public XmlAdaptedActivity(Activity source) {
         name = source.getName().fullName;
         dateTime = source.getDateTime().toString();
         remark = source.getRemark().value;
@@ -107,14 +108,14 @@ public class XmlAdaptedPerson {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedPerson)) {
+        if (!(other instanceof XmlAdaptedActivity)) {
             return false;
         }
 
-        XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
-        return Objects.equals(name, otherPerson.name)
-                && Objects.equals(dateTime, otherPerson.dateTime)
-                && Objects.equals(remark, otherPerson.remark)
-                && tagged.equals(otherPerson.tagged);
+        XmlAdaptedActivity otherActivity = (XmlAdaptedActivity) other;
+        return Objects.equals(name, otherActivity.name)
+                && Objects.equals(dateTime, otherActivity.dateTime)
+                && Objects.equals(remark, otherActivity.remark)
+                && tagged.equals(otherActivity.tagged);
     }
 }

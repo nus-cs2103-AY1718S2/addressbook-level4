@@ -892,7 +892,7 @@ Use case ends.
 *Extensions*
 
 [none]
-*2a. CLIndar detects that the format of the command typed is invalid
+** 2a. CLIndar detects that the format of the command typed is invalid
 +
 [none]
 ** 3a1. CLIndar shows an error message
@@ -911,7 +911,7 @@ Use case ends.
 *Extensions*
 
 [none]
-*3a. CLIndar detects that the format of the command typed is invalid
+** 3a. CLIndar detects that the format of the command typed is invalid
 +
 [none]
 ** 3a1. CLIndar shows an error message

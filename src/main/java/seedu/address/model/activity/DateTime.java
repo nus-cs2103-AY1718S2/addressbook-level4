@@ -14,7 +14,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class DateTime {
 
-    public static final String DATE_FORMAT = "MM/dd/yyyy hh:mm:ss";
+    public static final String DATE_FORMAT = "dd/MM/yyyy hh:mm";
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
             "Date and  Time numbers should be a date and should be in the format of " +
             DATE_FORMAT;

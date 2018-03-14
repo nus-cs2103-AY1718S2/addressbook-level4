@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.UniqueAliasList;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueAliasList aliases;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        aliases = new UniqueAliasList();
     }
 
     public AddressBook() {}
@@ -93,6 +98,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(person);
     }
 
+    //// command-level operations
+
+    /**
+     * Adds an alias to the address book.
+     *
+     * @throws DuplicateAliasException if an equivalent alias already exists.
+     */
+    public void addAlias(Alias alias) throws DuplicateAliasException {
+        aliases.add(alias);
+    }
+
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
@@ -145,7 +161,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getBirthday(),
+                correctTagReferences);
     }
 
     /**
@@ -176,7 +193,8 @@ public class AddressBook implements ReadOnlyAddressBook {
             return;
         }
         Person newPerson =
-                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), newTags);
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                        person.getBirthday(), newTags);
         try {
             updatePerson(person, newPerson);
         } catch (DuplicatePersonException dpe) {
@@ -215,6 +233,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
+
+    @Override
+    public ObservableList<Alias> getAliasList() {
+        return aliases.getAliasObservableList();
+    }
+
 
     @Override
     public boolean equals(Object other) {

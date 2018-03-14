@@ -12,6 +12,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.login.Password;
+import seedu.address.model.login.Username;
+import seedu.address.model.login.exceptions.AlreadyLoggedInException;
+import seedu.address.model.login.exceptions.AuthenticationFailedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -76,9 +80,14 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void checkLoginCredentials(Username username, Password password)
+            throws AlreadyLoggedInException, AuthenticationFailedException  {
+        addressBook.checkLoginCredentials(username, password);
     }
 
     //=========== Filtered Person List Accessors =============================================================

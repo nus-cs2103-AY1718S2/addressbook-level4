@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMETABLE_LINK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAIL;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TIMETABLE_LINK, PREFIX_TAG);
+                        PREFIX_TIMETABLE_LINK, PREFIX_DETAIL, PREFIX_TAG);
 
         Index index;
 
@@ -53,6 +54,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             ParserUtil.parseTimeTableLink(argMultimap.getValue(PREFIX_TIMETABLE_LINK))
                     .ifPresent(editPersonDescriptor::setTimeTableLink);
+            ParserUtil.parseDetail(argMultimap.getValue(PREFIX_DETAIL)).ifPresent(editPersonDescriptor::setDetail);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

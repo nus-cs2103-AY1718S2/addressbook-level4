@@ -19,6 +19,8 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private Rating rating;
+    private Review review;
 
     private final UniqueTagList tags;
 
@@ -33,6 +35,31 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.rating = new Rating();
+        this.review = new Review();
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.rating = rating;
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Review review, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.rating = rating;
+        this.review = review;
     }
 
     public Name getName() {
@@ -45,6 +72,18 @@ public class Person {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public String getRatingDisplay() {
+        return rating.getRatingDisplay();
     }
 
     public Address getAddress() {
@@ -92,9 +131,14 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Rating: ")
+                .append(getRatingDisplay())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
 
+    public void setRating(String newRating) {
+        rating = new Rating(newRating);
+    }
 }

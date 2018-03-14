@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ContainKeywordsPredicate;
 
 public class FindCommandParserTest {
 
@@ -24,11 +24,12 @@ public class FindCommandParserTest {
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
+                new FindCommand(new ContainKeywordsPredicate(Arrays.asList("Alice Bob", "Carol"),
+                                Arrays.asList("Friends", "Family")));
+        assertParseSuccess(parser, " n/Alice Bob n/Carol t/Friends t/Family", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+        assertParseSuccess(parser, " \n n/Alice Bob\n \t n/Carol  \t t/Friends \n t/Family", expectedFindCommand);
     }
 
 }

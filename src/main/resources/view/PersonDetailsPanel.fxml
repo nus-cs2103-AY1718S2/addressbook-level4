@@ -83,7 +83,8 @@
                         </ListView>
                      </children>
                   </VBox>
-               </children></StackPane>
+               </children>
+            </StackPane>
         </items>
       </SplitPane>
    </children>

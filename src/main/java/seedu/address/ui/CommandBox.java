@@ -104,7 +104,7 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
-            if(logic.hasLoggedIn()){
+            if (logic.hasLoggedIn()) {
                 mainWindow.showAfterLogin();
             }
             initHistory();

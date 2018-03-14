@@ -143,7 +143,7 @@ public class MainWindow extends UiPart<Stage> {
      *
      * Hides browser and person list panel.
      */
-    void hideBeforeLogin(){
+    void hideBeforeLogin() {
         browserPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
     }

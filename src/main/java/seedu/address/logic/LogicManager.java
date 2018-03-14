@@ -77,7 +77,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public boolean hasLoggedIn(){
+    public boolean hasLoggedIn() {
         return model.hasLoggedIn();
     }
 

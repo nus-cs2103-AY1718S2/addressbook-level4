@@ -51,7 +51,8 @@ public interface Model {
 
     /** @@auther kaisertanqr
      *
-     * Checks the login credentials
+     * Checks the login credentials.
+     *
      * @param username
      * @param password
      *
@@ -61,5 +62,12 @@ public interface Model {
      */
     void checkLoginCredentials(Username username, Password password)
             throws AlreadyLoggedInException, AuthenticationFailedException;
+
+    /** @@author kaisertanqr
+     *
+     * Returns whether the AddressBook has already been logged into.
+     *
+     */
+    boolean hasLoggedIn();
 
 }

@@ -49,7 +49,7 @@ Responsibilities: Dev Ops + Threading
 image::AJZ1995.jpg[width="150", align="left"]
 {empty}[https://github.com/AJZ1995[github]] [<<johndoe#, portfolio>>]
 
-Role: In charge of UI
+Role: Developer
 Responsibilities: UI
 
 '''

@@ -104,7 +104,7 @@ public class PersonBuilder {
         this.favourite = new Favourite(val);
         return this;
     }
-    
+
     /**
      * Sets the {@code Subject} of the {@code Person} that we are building.
      */

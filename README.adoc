@@ -14,7 +14,7 @@ endif::[]
 
 * This is a desktop Session Logger and Planner application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a simple Java application intended for social workers to help them plan their day and keep track of their beneficiaries.
-* Some key features of this application include data encryption, secure sign-on, an address book, a planner/todo list, and user session reporting. 
+* Some key features of this application include data encryption, secure sign-on, an address book, a planner/todo list, and user session reporting.
 
 == Site Map
 

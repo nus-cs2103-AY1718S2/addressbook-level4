@@ -29,7 +29,7 @@ public class ErrorsWindow extends UiPart<Stage> {
     /**
      * Creates a new ErrorsWindow (Overload).
      *
-     * @param root Stage to use as the root of the HelpWindow.
+     * @param root Stage to use as the root of the ErrorsWindow.
      */
     public ErrorsWindow(Stage root) {
         super(FXML, root);
@@ -81,7 +81,7 @@ public class ErrorsWindow extends UiPart<Stage> {
     }
 
     /**
-     * Shows the help window.
+     * Shows the error window.
      * @throws IllegalStateException
      * <ul>
      *     <li>

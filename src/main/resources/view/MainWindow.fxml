@@ -30,7 +30,8 @@
           </Menu>
           <!-- @@author {ifalluphill} -->
           <Menu mnemonicParsing="false" text="View">
-            <MenuItem fx:id="viewMenuItem" mnemonicParsing="false" onAction="#handleView" text="Show Error Log" />
+            <MenuItem fx:id="viewMenuItem" mnemonicParsing="false" onAction="#handleViewCalendar" text="Open Calendar" />
+            <MenuItem fx:id="viewMenuItem" mnemonicParsing="false" onAction="#handleViewErrors" text="Show Error Log" />
           </Menu>
           <!-- @@author -->
           <Menu mnemonicParsing="false" text="Help">

@@ -240,8 +240,8 @@ Compute a time suitable for all group members to meet. +
 Alias: `s` +
 Format: `schedule GROUP`
 ****
-GROUP refers the name of group which you want to work with. +
-The name of the group entered must already exist in FASTIS or saved by your previously.
+*GROUP refers the name of group which you want to work with. +
+*The name of the group entered must already exist in FASTIS or saved by your previously.
 ****
 
 === Edit a person's group : `update group`
@@ -251,8 +251,8 @@ Alias: `u` +
 Format: `update INDEX`
 
 ****
-INDEX refers to the index of the person you are trying to update his group.
-The index *must be a positive integer* 1, 2, 3, ...
+*INDEX refers to the index of the person you are trying to update his group.
+*&The index *must be a positive integer* 1, 2, 3, ...
 ****
 === Clearing all entries : `clear`
 

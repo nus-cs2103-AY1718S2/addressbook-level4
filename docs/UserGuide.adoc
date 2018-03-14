@@ -68,6 +68,23 @@ Format: `help`
 
 Format: `calendar`
 
+=== Switching between feature interfaces : `switch`
+
+Switches to the user interface feature identified by the user. +
+Format: `switch FEATURE`
+
+****
+* Switches to the specified `FEATURE`
+* `FEATURE` must be either "details", "calendar" or "scheduler".
+****
+
+Examples:
+
+* `switch calendar` +
+Switches to `calendar` tab and displays contents
+* `switch details` +
+Switches to `details` tab and displays contents
+
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -279,6 +296,8 @@ e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
 * *Calendar* : `calendar`
+* *Switch* : `switch FEATURE` +
+e.g.`switch scheduler`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`

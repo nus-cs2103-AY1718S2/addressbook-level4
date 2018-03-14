@@ -104,7 +104,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException, PersonNotFoundException {
+        public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException {
             fail("This method should not be called.");
         }
 

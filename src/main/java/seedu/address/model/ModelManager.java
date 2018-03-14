@@ -75,7 +75,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException, PersonNotFoundException {
+    public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException {
         addressBook.editTag(target, editedTag);
         indicateAddressBookChanged();
     }

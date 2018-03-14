@@ -222,7 +222,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Replaces the old {@code target} tag with the new {@code editedTag}
      */
-    public void editTag(Tag target, Tag editedTag) throws TagNotFoundException, PersonNotFoundException {
+    public void editTag(Tag target, Tag editedTag) throws TagNotFoundException {
         Set<Tag> editedTagList = tags.toSet();
         if (editedTagList.contains(target)) {
             editedTagList.remove(target);
@@ -239,7 +239,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Replaces the old {@code target} tag of a {@code person} with the new {@code editedTag}
      */
-    private void replaceTagInPerson(Tag target, Tag editedTag, Person person) throws PersonNotFoundException {
+    private void replaceTagInPerson(Tag target, Tag editedTag, Person person) {
         Set<Tag> tagList = new HashSet<>(person.getTags());
 
         //Terminate if tag is not is tagList
@@ -255,6 +255,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
                     + "See Person#equals(Object).");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Modifying a person's tags only should not result in "
+                    + "a PersonNotFoundException. See Person#equals(Object).");
         }
     }
 

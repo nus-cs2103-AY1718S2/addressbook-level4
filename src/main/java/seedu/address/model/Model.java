@@ -29,7 +29,7 @@ public interface Model {
     void addPerson(Person person) throws DuplicatePersonException;
 
     /** Changes the color of a tag */
-    public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException, PersonNotFoundException;
+    public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException;
 
     /** Removes the given tag from addressbook and all persons */
     void removeTag(Tag tag);

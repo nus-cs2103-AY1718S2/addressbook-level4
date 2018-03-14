@@ -53,8 +53,6 @@ public class ChangeTagColorCommand extends UndoableCommand {
             model.updateTag(tagToEdit, editedTag);
         } catch (TagNotFoundException tnfe) {
             throw new CommandException(MESSAGE_TAG_NOT_IN_LIST);
-        } catch (PersonNotFoundException pnfe) {
-            throw new CommandException("Person not found");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_TAG_SUCCESS, tagName, tagColor));

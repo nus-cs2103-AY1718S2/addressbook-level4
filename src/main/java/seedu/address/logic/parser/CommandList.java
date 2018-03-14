@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -17,7 +18,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 /**
- * Contains the list of commands
+ * Contains the list of commands.
  */
 public class CommandList {
 
@@ -29,7 +30,7 @@ public class CommandList {
         //add all commands to the list lexicographically
         commandList.add(AddCommand.COMMAND_WORD);
         commandList.add(ClearCommand.COMMAND_WORD);
-        commandList.add(ClearCommand.COMMAND_WORD);
+        commandList.add(ClearHistoryCommand.COMMAND_WORD);
         commandList.add(DeleteCommand.COMMAND_WORD);
         commandList.add(EditCommand.COMMAND_WORD);
         commandList.add(ExitCommand.COMMAND_WORD);

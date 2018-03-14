@@ -35,11 +35,11 @@ Responsibilities: Implement enhanced feature search and new feature review
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Ho Bing Xuan
+image::izhobx.jpg[width="150", align="left"]
+{empty}[https://github.com/IzHoBX[github]]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Rating feature, notifications on timetable entry deadlines, email command, enhanced person identifying
 
 '''

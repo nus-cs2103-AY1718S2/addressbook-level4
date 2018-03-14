@@ -789,6 +789,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * Prefer typing over mouse mouse input as he has fast fingers.
 * Is reasonable comfortable using CLI apps.
 
+*Value proposition*:
+* Manage the operations of the loan shark syndicate substantially more efficiently and quickly than a typical mouse / GUI-driven app.
+* Untapped market potential.
+* Integrated with map, calendar and calculator functionality to centralise and optimise management tasks for the syndicate.
+
 [appendix]
 == User Stories
 

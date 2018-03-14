@@ -184,7 +184,8 @@ public class EmailCommandTest {
             CommandResult result = testCommand.execute();
             assertEquals(expectedResult, result.feedbackToUser);
         } catch (UnsupportDesktopException de) {
-            assertEquals(de, new UnsupportDesktopException(Messages.UNSUPPORTED_DESKTOP));
+            // Code is running on unsupported OS
+            assertEquals(de.getMessage(), Messages.UNSUPPORTED_DESKTOP);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
         }

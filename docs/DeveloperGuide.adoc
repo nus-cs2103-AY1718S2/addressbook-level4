@@ -844,7 +844,63 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Edit module
+
+*MSS*
+
+1.  User requests to list modules
+2.  AddressBook shows a list of modules
+3.  User requests to edit a specific person in the list with new information
+4.  AddressBook updates the module
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Import photo of person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to upload photo to a specific person in the list
+4.  AddressBook request for file location
+5.  User specifies file location
+6.  AddressBook import the photo and attach it to the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given file location is invalid.
++
+** 5a1. AddressBook shows an error message.
++
+Use case resumes at step 4.
 
 [appendix]
 == Non Functional Requirements

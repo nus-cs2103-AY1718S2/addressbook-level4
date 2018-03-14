@@ -22,7 +22,7 @@ public class LoginCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_displaysUsernameAndPassword() throws Exception{
+    public void execute_displaysUsernameAndPassword() throws Exception {
         thrown.expect(CommandException.class);
         thrown.expectMessage("Username: " + TEST_USERNAME + ", Password: " + TEST_PASSWORD);
 

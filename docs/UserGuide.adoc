@@ -60,6 +60,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
+=== Logging into the system: `login`
+
+Logs the user into the IMDB, given a matching username and password.
+Format: `login USERNAME PASSWORD`
+
 === Adding a person: `add` or `a`
 
 Adds a person to the address book +

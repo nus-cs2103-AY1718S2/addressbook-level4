@@ -9,6 +9,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -38,6 +39,7 @@ public final class CommandSyntaxListUtil {
         commandSyntaxList.add(EditCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(ExitCommand.COMMAND_WORD);
         commandSyntaxList.add(FindCommand.COMMAND_SYNTAX);
+        commandSyntaxList.add(FindTagCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(HelpCommand.COMMAND_WORD);
         commandSyntaxList.add(HistoryCommand.COMMAND_WORD);
         commandSyntaxList.add(ListCommand.COMMAND_WORD);

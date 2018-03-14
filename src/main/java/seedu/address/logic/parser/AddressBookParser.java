@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -20,6 +21,8 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.alias.UniqueAliasList;
+
 
 /**
  * Parses user input.
@@ -44,8 +47,13 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+        UniqueAliasList aliasList = new UniqueAliasList();
+
+        if (aliasList.contains(commandWord) == true) {
+            commandWord = aliasList.getCommandFromAlias(commandWord);
+        }
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
@@ -93,6 +101,9 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        case AliasCommand.COMMAND_WORD:
+            return new AliasCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

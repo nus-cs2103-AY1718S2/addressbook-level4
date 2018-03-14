@@ -11,24 +11,25 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
 /**
- * Selects a person identified using it's last displayed index from the address book.
+ * Shows the linkedIn search of a person identified using it's last displayed index
+ * from the address book.
  */
-public class SelectCommand extends Command {
-
-    public static final String COMMAND_WORD = "select";
+public class LinkedInCommand extends Command {
+    public static final String COMMAND_WORD = "linkedIn";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the person identified by the index number used in the last person listing.\n"
+            + ": Shows the linkedIn search of the person identified by the index number used "
+            + "in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final int TAB_ID_SELECT = 0;
+    public static final int TAB_ID_LINKEDIN = 1;
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
+    public static final String MESSAGE_LINKEDIN_PERSON_SUCCESS = "Showing LinkedIn search of: %1$s";
 
     private final Index targetIndex;
 
-    public SelectCommand(Index targetIndex) {
+    public LinkedInCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -41,16 +42,16 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID_SELECT));
+        EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID_LINKEDIN));
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_LINKEDIN_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SelectCommand // instanceof handles nulls
-                && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+                || (other instanceof LinkedInCommand // instanceof handles nulls
+                && this.targetIndex.equals(((LinkedInCommand) other).targetIndex)); // state check
     }
 }

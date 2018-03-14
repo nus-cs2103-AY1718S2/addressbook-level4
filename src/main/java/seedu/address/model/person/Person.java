@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -13,12 +15,17 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public class Person implements ReadOnlyPerson {
 
     private final Name name;
     private final Phone phone;
     private final Email email;
     private final Address address;
+
+    private ObjectProperty<Name> nameProperty;
+    private ObjectProperty<Phone> phoneProperty;
+    private ObjectProperty<Email> emailProperty;
+    private ObjectProperty<Address> addressProperty;
 
     private final UniqueTagList tags;
 
@@ -28,9 +35,13 @@ public class Person {
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
+        this.nameProperty = new SimpleObjectProperty<>(name);
         this.phone = phone;
+        this.phoneProperty = new SimpleObjectProperty<>(phone);
         this.email = email;
+        this.emailProperty = new SimpleObjectProperty<>(email);
         this.address = address;
+        this.addressProperty = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -97,4 +108,19 @@ public class Person {
         return builder.toString();
     }
 
+    public ObjectProperty<Name> nameProperty() {
+        return nameProperty;
+    }
+
+    public ObjectProperty<Phone> phoneProperty() {
+        return phoneProperty;
+    }
+
+    public ObjectProperty<Email> emailProperty() {
+        return emailProperty;
+    }
+
+    public ObjectProperty<Address> addressProperty() {
+        return addressProperty;
+    }
 }

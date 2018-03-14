@@ -142,7 +142,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.setTags(tagsInPersons);
     }
 
-
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master

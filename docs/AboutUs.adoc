@@ -3,27 +3,25 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
+AddressBook - Level 4 was developed by the https://CS2103JAN2018-F12-B1.github.io/docs/Team.html[se-edu] team. +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a team based in the http://www.nus.edu.sg[National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== ZHU Leyan
+image::zhuleyan.png[width="150", align="left"]
+{empty}[https://github.com/zhuleyan[github]]
 
-Role: Project Advisor
+Role: Developer +
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Liu Yiming
+image::liuyiming.png[width="150", align="left"]
+{empty}[http://github.com/A0155428B[github]]
 
 Role: Team Lead +
-Responsibilities: UI
 
 '''
 

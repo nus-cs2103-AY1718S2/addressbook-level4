@@ -246,7 +246,9 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        personDetailsPanel.freeResources();
+        calendarPanel.freeResources();
+        dailySchedulerPanel.freeResources();
     }
 
     @Subscribe

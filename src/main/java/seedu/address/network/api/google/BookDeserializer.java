@@ -1,13 +1,20 @@
 package seedu.address.network.api.google;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import seedu.address.model.book.Book;
+import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
+import seedu.address.model.book.Gid;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.PublicationDate;
+import seedu.address.model.book.Publisher;
 import seedu.address.model.book.Title;
 import seedu.address.model.util.BookDataUtil;
 
@@ -29,8 +36,36 @@ public class BookDeserializer extends StdDeserializer<Book> {
         JsonRoot root = jp.readValueAs(JsonRoot.class);
         JsonVolumeInfo volumeInfo = root.volumeInfo;
 
-        return new Book(BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description));
+        return new Book(new Gid(root.id), getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers),
+                BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
+                getCategorySet(volumeInfo.categories), getDescription(volumeInfo.description),
+                new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
+    }
+
+    private Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] ii) {
+        if (ii.length < 2) {
+            return new Isbn("");
+        }
+        if (ii[0].type.equals("ISBN_13")) {
+            return new Isbn(ii[0].identifier);
+        } else {
+            return new Isbn(ii[1].identifier);
+        }
+    }
+
+    private Set<Category> getCategorySet(String[] categories) {
+        Set<Category> categorySet = new HashSet<>();
+        for (String category: categories) {
+            String[] splitCats = category.split("/");
+            for (String token: splitCats) {
+                categorySet.add(new Category(token.trim()));
+            }
+        }
+        return categorySet;
+    }
+
+    private Description getDescription(String description) {
+        return new Description(description.replaceAll("<br>", "\n"));
     }
 
     /** Temporary data holder used for deserialization. */
@@ -60,7 +95,12 @@ public class BookDeserializer extends StdDeserializer<Book> {
         private String publisher = "";
         private String publishedDate = "";
         private String description = "";
+        private JsonIndustryIdentifiers[] industryIdentifiers = new JsonIndustryIdentifiers[0];
         private String[] categories = new String[0];
+
+        public void setIndustryIdentifiers(JsonIndustryIdentifiers[] industryIdentifiers) {
+            this.industryIdentifiers = industryIdentifiers;
+        }
 
         public void setTitle(String title) {
             this.title = title;
@@ -84,6 +124,20 @@ public class BookDeserializer extends StdDeserializer<Book> {
 
         public void setCategories(String[] categories) {
             this.categories = categories;
+        }
+    }
+
+    /** Temporary data holder used for deserialization. */
+    private static class JsonIndustryIdentifiers {
+        private String type;
+        private String identifier;
+
+        public void setIdentifier(String identifier) {
+            this.identifier = identifier;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
     }
 

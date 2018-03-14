@@ -8,6 +8,10 @@ import seedu.address.model.book.Author;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
+import seedu.address.model.book.Gid;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.PublicationDate;
+import seedu.address.model.book.Publisher;
 import seedu.address.model.book.Title;
 import seedu.address.model.util.BookDataUtil;
 
@@ -20,17 +24,29 @@ public class BookBuilder {
     public static final String DEFAULT_TITLE = "Artemis";
     public static final String DEFAULT_CATEGORY = "Science Fiction";
     public static final String DEFAULT_DESCRIPTION = "This is a description for Artemis.";
+    public static final String DEFAULT_ID = "ry3GjwEACAAJ";
+    public static final String DEFAULT_ISBN = "9780525572664";
+    public static final String DEFAULT_PUBLISHER = "Someone";
+    public static final String DEFAULT_PUBLICATION_DATE = "2017-11-14";
 
     private Set<Author> authors;
     private Title title;
     private Set<Category> categories;
     private Description description;
+    private Gid gid;
+    private Isbn isbn;
+    private PublicationDate publicationDate;
+    private Publisher publisher;
 
     public BookBuilder() {
         authors = Collections.singleton(new Author(DEFAULT_AUTHOR));
         title = new Title(DEFAULT_TITLE);
         categories = Collections.singleton(new Category(DEFAULT_CATEGORY));
         description = new Description(DEFAULT_DESCRIPTION);
+        gid = new Gid(DEFAULT_ID);
+        isbn = new Isbn(DEFAULT_ISBN);
+        publicationDate = new PublicationDate(DEFAULT_PUBLICATION_DATE);
+        publisher = new Publisher(DEFAULT_PUBLISHER);
     }
 
     /**
@@ -75,8 +91,41 @@ public class BookBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Gid} of the {@code Book} that we are building.
+     */
+    public BookBuilder withGid(String gid) {
+        this.gid = new Gid(gid);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Isbn} of the {@code Book} that we are building.
+     */
+    public BookBuilder withIsbn(String isbn) {
+        this.isbn = new Isbn(isbn);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Publisher} of the {@code Book} that we are building.
+     */
+    public BookBuilder withPublisher(String publisher) {
+        this.publisher = new Publisher(publisher);
+        return this;
+    }
+
+    /**
+     * Sets the {@code PublicationDate} of the {@code Book} that we are building.
+     */
+    public BookBuilder withPublicationDate(String date) {
+        this.publicationDate = new PublicationDate(date);
+        return this;
+    }
+
     public Book build() {
-        return new Book(authors, title, categories, description);
+        return new Book(gid, isbn, authors, title, categories, description,
+                publisher, publicationDate);
     }
 
 }

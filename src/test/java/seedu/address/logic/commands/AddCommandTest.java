@@ -1,36 +1,47 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
+import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
+import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
-
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyBookShelf;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.book.Book;
-import seedu.address.model.book.exceptions.BookNotFoundException;
-import seedu.address.model.book.exceptions.DuplicateBookException;
-import seedu.address.testutil.BookBuilder;
 
+/**
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * {@code AddCommand}.
+ */
 public class AddCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(new BookShelf(), new UserPrefs());
+        prepareSearchResultListInModel(model);
+    }
 
     @Test
     public void constructor_nullBook_throwsNullPointerException() {
@@ -39,156 +50,122 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_bookAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingBookAdded modelStub = new ModelStubAcceptingBookAdded();
-        Book validBook = new BookBuilder().build();
+    public void execute_invalidActiveListType_failure() {
+        model.setActiveListType(ActiveListType.BOOK_SHELF);
+        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
 
-        CommandResult commandResult = getAddCommandForBook(validBook, modelStub).execute();
+        assertCommandFailure(addCommand, model, AddCommand.MESSAGE_WRONG_ACTIVE_LIST);
+    }
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validBook), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validBook), modelStub.booksAdded);
+    @Test
+    public void execute_validIndexSearchResultsList_success() throws Exception {
+        Book bookToAdd = model.getSearchResultsList().get(INDEX_FIRST_BOOK.getZeroBased());
+
+        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, bookToAdd);
+
+        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
+        ModelManager expectedModel = new ModelManager();
+        prepareSearchResultListInModel(expectedModel);
+        expectedModel.addBook(bookToAdd);
+
+        assertCommandSuccess(addCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexSearchResultsList_failure() {
+        AddCommand addCommand = prepareCommand(Index.fromOneBased(model.getSearchResultsList().size() + 1));
+
+        assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_duplicateBook_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateBookException();
-        Book validBook = new BookBuilder().build();
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_BOOK);
-
-        getAddCommandForBook(validBook, modelStub).execute();
+        Book bookInList = model.getSearchResultsList().get(INDEX_FIRST_BOOK.getZeroBased());
+        model.addBook(bookInList);
+        assertCommandFailure(prepareCommand(INDEX_FIRST_BOOK), model, AddCommand.MESSAGE_DUPLICATE_BOOK);
     }
 
     @Test
-    public void equals() {
-        Book one = new BookBuilder().withTitle("One").build();
-        Book two = new BookBuilder().withTitle("Two").build();
-        AddCommand addOneCommand = new AddCommand(one);
-        AddCommand addTwoCommand = new AddCommand(two);
+    public void executeUndoRedo_validIndex_success() throws Exception {
+        UndoRedoStack undoRedoStack = new UndoRedoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
+        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        Book bookToAdd = model.getSearchResultsList().get(INDEX_FIRST_BOOK.getZeroBased());
+        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
+        ModelManager expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
+        prepareSearchResultListInModel(expectedModel);
+
+        // add -> first book added
+        addCommand.execute();
+        undoRedoStack.push(addCommand);
+
+        // undo -> reverts bookshelf back to previous state
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // redo -> same first book added again
+        expectedModel.addBook(bookToAdd);
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void executeUndoRedo_invalidIndex_failure() throws Exception {
+        UndoRedoStack undoRedoStack = new UndoRedoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
+        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        Index outOfBoundIndex = Index.fromOneBased(model.getSearchResultsList().size() + 1);
+        AddCommand addCommand = prepareCommand(outOfBoundIndex);
+
+        // execution failed -> addCommand not pushed into undoRedoStack
+        assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        // no commands in undoRedoStack -> undoCommand and redoCommand fail
+        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void equals() throws Exception {
+        AddCommand addFirstCommand = prepareCommand(INDEX_FIRST_BOOK);
+        AddCommand addSecondCommand = prepareCommand(INDEX_SECOND_BOOK);
 
         // same object -> returns true
-        assertTrue(addOneCommand.equals(addOneCommand));
+        assertTrue(addFirstCommand.equals(addFirstCommand));
 
         // same values -> returns true
-        AddCommand addOneCommandCopy = new AddCommand(one);
-        assertTrue(addOneCommand.equals(addOneCommandCopy));
+        AddCommand addFirstCommandCopy = prepareCommand(INDEX_FIRST_BOOK);
+        assertTrue(addFirstCommand.equals(addFirstCommandCopy));
+
+        // one command preprocessed when previously equal -> returns false
+        addFirstCommandCopy.preprocessUndoableCommand();
+        assertFalse(addFirstCommand.equals(addFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(addOneCommand.equals(1));
+        assertFalse(addFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addOneCommand.equals(null));
+        assertFalse(addFirstCommand.equals(null));
 
         // different book -> returns false
-        assertFalse(addOneCommand.equals(addTwoCommand));
+        assertFalse(addFirstCommand.equals(addSecondCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given book.
+     * Set up {@code model} with a non-empty search result list and
+     * switch active list to search results list.
      */
-    private AddCommand getAddCommandForBook(Book book, Model model) {
-        AddCommand command = new AddCommand(book);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
+    private void prepareSearchResultListInModel(Model model) {
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        BookShelf bookShelf = getTypicalBookShelf();
+        model.updateSearchResults(bookShelf);
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
-    private class ModelStub implements Model {
-        @Override
-        public ActiveListType getActiveListType() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void setActiveListType(ActiveListType type) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyBookShelf newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyBookShelf getBookShelf() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deleteBook(Book target) throws BookNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addBook(Book book) throws DuplicateBookException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateBook(Book target, Book editedBook) throws BookNotFoundException, DuplicateBookException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Book> getFilteredBookList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredBookList(Predicate<Book> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Book> getSearchResultsList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateSearchResults(ReadOnlyBookShelf newResults) {
-            fail("This method should not be called.");
-        }
-
-    }
-
-    /**
-     * A Model stub that always throw a DuplicateBookException when trying to add a book.
-     */
-    private class ModelStubThrowingDuplicateBookException extends ModelStub {
-        @Override
-        public void addBook(Book book) throws DuplicateBookException {
-            throw new DuplicateBookException();
-        }
-
-        @Override
-        public ReadOnlyBookShelf getBookShelf() {
-            return new BookShelf();
-        }
-    }
-
-    /**
-     * A Model stub that always accept the book being added.
-     */
-    private class ModelStubAcceptingBookAdded extends ModelStub {
-        final ArrayList<Book> booksAdded = new ArrayList<>();
-
-        @Override
-        public void addBook(Book book) throws DuplicateBookException {
-            requireNonNull(book);
-            booksAdded.add(book);
-        }
-
-        @Override
-        public ReadOnlyBookShelf getBookShelf() {
-            return new BookShelf();
-        }
+    private AddCommand prepareCommand(Index index) {
+        AddCommand addCommand = new AddCommand(index);
+        addCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addCommand;
     }
 
 }

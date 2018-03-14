@@ -18,8 +18,10 @@ public class Book {
     private final Title title;
     private final UniqueList<Category> categories;
     private final Description description;
-
-    // TODO add more fields: gid, isbn13, publisher, publishedDate
+    private final Gid gid;
+    private final Isbn isbn;
+    private final PublicationDate publicationDate;
+    private final Publisher publisher;
 
     /**
      * Every field must be present and not null.
@@ -30,6 +32,26 @@ public class Book {
         this.title = title;
         this.categories = new UniqueList<>(categories);
         this.description = description;
+        this.gid = new Gid("");
+        this.isbn = new Isbn("");
+        this.publisher = new Publisher("");
+        this.publicationDate = new PublicationDate("");
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
+                Description description, Publisher publisher, PublicationDate publicationDate) {
+        requireAllNonNull(gid, isbn, authors, title, categories, description, publisher, publicationDate);
+        this.gid = gid;
+        this.isbn = isbn;
+        this.authors = new UniqueList<>(authors);
+        this.title = title;
+        this.categories = new UniqueList<>(categories);
+        this.description = description;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
     }
 
     /**
@@ -54,6 +76,22 @@ public class Book {
 
     public Description getDescription() {
         return description;
+    }
+
+    public Gid getGid() {
+        return gid;
+    }
+
+    public Isbn getIsbn() {
+        return isbn;
+    }
+
+    public PublicationDate getPublicationDate() {
+        return publicationDate;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
     }
 
     @Override

@@ -11,6 +11,7 @@ import seedu.address.model.book.Book;
 /**
  * A utility class for Book.
  */
+@Deprecated
 public class BookUtil {
 
     /**

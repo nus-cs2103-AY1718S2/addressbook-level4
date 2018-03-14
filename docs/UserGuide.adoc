@@ -21,18 +21,27 @@ Welcome to *contactHero*! contactHeRo is the *perfect contact management solutio
 
 == Quick Start
 
+You can begin using contactHeRo by following a few simple steps below.
+
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+[TIP]
+Not sure how to install Java? Visit the oracle website link below for more information. https://tinyurl.com/yb8leqv8
+
+
+.  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for contactHeRo.
+.  Double-click the file to start the app. The user interface should appear in a few seconds as shown below.
 +
 image::Ui.png[width="790"]
 +
+
+Now you can start using contactHeRo.
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -42,7 +51,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+.  You can refer to <<Features>> for more details of each command.
+
+Thank you for choosing us as your contact management solution!
 
 [[Features]]
 == Features
@@ -197,12 +208,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+You can restore contactHeRo to the state before the previous _undoable_ command was executed using the following format. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the contactHeRo's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -223,7 +234,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+You can reverse the most recent `undo` command using the following format. +
 Format: `redo`
 
 Examples:

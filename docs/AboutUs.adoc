@@ -23,7 +23,7 @@ Responsibilities: Integration, code quality
 '''
 
 === Lai Liwen
-image::liwen.jpg[width="150", align="left"]
+image::liwen.png[width="150", align="left"]
 {empty}[https://github.com/Livian1107[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

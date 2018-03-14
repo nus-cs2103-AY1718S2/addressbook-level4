@@ -128,7 +128,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
+        removeUnusedTags();
     }
+
+    /**
+     * Removes all {@code tag}s that are not used by any {@code person} in this {@code AddressBook}.
+     */
+    private void removeUnusedTags() {
+        Set<Tag> tagsInPersons = persons.asObservableList().stream()
+                .map(Person::getTags)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+        tags.setTags(tagsInPersons);
+    }
+
 
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
@@ -148,7 +161,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getBirthday(),
+                correctTagReferences);
     }
 
     /**
@@ -167,6 +181,39 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    /**
+    * Removes {@code tag} from {@code person} in this {@code AddressBook}.
+    * @throws PersonNotFoundException if the {@code person} is not in this {@code AddressBook}.
+    */
+    private void removeTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
+        Set<Tag> newTags = new HashSet<>(person.getTags());
+        if (!newTags.remove(tag)) {
+            return;
+        }
+        Person newPerson =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                        person.getBirthday(), newTags);
+        try {
+            updatePerson(person, newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
+        }
+    }
+
+    /**
+    * Removes {@code tag} from all persons in this {@code AddressBook}.
+    */
+    public void removeTag(Tag tag) {
+        try {
+            for (Person person : persons) {
+                removeTagFromPerson(tag, person);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible exception: person is obtained from the address book.");
+        }
     }
 
     //// util methods

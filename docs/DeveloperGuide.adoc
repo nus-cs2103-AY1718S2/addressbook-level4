@@ -787,8 +787,10 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* is a student in National University of Singapore
+* has many friends in the same course
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: share useful information with their friends who are taking the same modules and find a common studying time
 
 [appendix]
 == User Stories
@@ -800,6 +802,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |student with friends |search friends who have taken or are taking similar modules |know who I can group with or approach for help
+
+|`* * *` |student with friends |find my friend’s timetables |can find common studying time with them
+
+|`* * *` |user |add tasks |keep track of what I need to do
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
@@ -808,7 +816,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
+|`* *` |student with friends |tag my friends in my tasks, so that we can share important information |
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |student |find venues in NUS |locate my tutorial rooms
 |=======================================================================
 
 _{More to be added}_
@@ -844,6 +856,44 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Find venue
+
+*MSS*
+
+1.  User requests to find an available venue
+2.  AddressBook prompts user to input a faculty
+3.  User requests venues near this faculty
+4.  AddressBook prints out a list of available venues near the specified faculty
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No location is available
++
+[none]
+** 2a1. AddressBook displays the empty result
++
+Use case resumes at step 2
+
+* 3a. The given location is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. AddressBook cannot retrieve the information online
++
+[none]
+** 4a1. AddressBook shows an error message
+** 4a2. AddressBook attempts to reconnect
+** 4a3. If problem persists, AddressBook directs User to troubleshooting
++
+Use case ends
+
 _{More to be added}_
 
 [appendix]
@@ -852,6 +902,13 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Address book must be able to be picked up with 2 hours of usage.
+.  Color Scheme must be pleasing to the eyes.
+.  User guide must be clear and concise.
+.  Basic features must be intuitive to use.
+.  Should respond to user within 3 seconds.
+.  Should work in both 32-bit and 64-bit environments.
+.  Should be usable by a new user who has not used command line interface before.
 
 _{More to be added}_
 

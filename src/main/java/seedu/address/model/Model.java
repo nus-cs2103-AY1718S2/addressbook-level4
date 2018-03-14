@@ -8,6 +8,7 @@ import seedu.address.model.alias.Alias;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -50,4 +51,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Remove {@code tag} from all {@code person}s in the {@code AddressBook}.
+     * @param tag
+     */
+    void deleteTag(Tag tag);
 }

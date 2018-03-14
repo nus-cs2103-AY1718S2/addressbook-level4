@@ -10,11 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Tag {
 
     public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: "
-            + "teal, red, yellow, blue, orange, brown, green, pink, black, grey";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
-    private static final String[] AVAILABLE_COLORS
-            = {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
 
     public final String tagName;
     public String tagColor;
@@ -43,20 +39,6 @@ public class Tag {
      */
     public static boolean isValidTagName(String test) {
         return test.matches(TAG_VALIDATION_REGEX);
-    }
-
-    /**
-     * Returns true if a given string is a available tag color
-     */
-    public static boolean isValidTagColor(String color) {
-        boolean isValidColor = false;
-        String trimmedColor = color.trim().toLowerCase();
-        for (String s : AVAILABLE_COLORS) {
-            if (s.equals(trimmedColor)) {
-                isValidColor = true;
-            }
-        }
-        return isValidColor;
     }
 
     @Override

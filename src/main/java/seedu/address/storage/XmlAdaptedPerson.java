@@ -41,7 +41,6 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson(String name, String phone, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
-        this.email = email;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }

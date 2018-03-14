@@ -780,7 +780,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: NUS students
 
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -788,7 +788,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app and helps user to track study progress in NUS.
 
 [appendix]
 == User Stories
@@ -844,7 +844,63 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Edit module
+
+*MSS*
+
+1.  User requests to list modules
+2.  AddressBook shows a list of modules
+3.  User requests to edit a specific person in the list with new information
+4.  AddressBook updates the module
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Import photo of person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to upload photo to a specific person in the list
+4.  AddressBook request for file location
+5.  User specifies file location
+6.  AddressBook import the photo and attach it to the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given file location is invalid.
++
+** 5a1. AddressBook shows an error message.
++
+Use case resumes at step 4.
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +908,9 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  User should be able to protect his contacts and information with a password.
+.  User should ba able to use the addressbook on both online and offline settings.
+.  User guide should be easy to understand.
 
 [appendix]
 == Glossary

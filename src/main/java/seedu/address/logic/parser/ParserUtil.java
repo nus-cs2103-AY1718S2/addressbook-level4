@@ -178,7 +178,9 @@ public class ParserUtil {
     public static String parseFeature(String feature) throws IllegalValueException {
         requireNonNull(feature);
         String trimmedFeature = feature.trim();
-        if (!(trimmedFeature.equals("details") || trimmedFeature.equals("calendar") || trimmedFeature.equals("scheduler"))) {
+        if (!(trimmedFeature.equals("details")
+                || trimmedFeature.equals("calendar")
+                || trimmedFeature.equals("scheduler"))) {
             throw new IllegalValueException("Feature should only be either \"details\", \"calendar\" or \"scheduler\"");
         }
         return trimmedFeature;

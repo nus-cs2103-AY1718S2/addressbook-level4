@@ -45,11 +45,11 @@ Responsibilities: Dev Ops + Threading
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Ang Jing Zhe
+image::AJZ1995.jpg[width="150", align="left"]
+{empty}[https://github.com/AJZ1995[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
+Role: In charge of UI
 Responsibilities: UI
 
 '''

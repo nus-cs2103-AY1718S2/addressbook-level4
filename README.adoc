@@ -7,6 +7,10 @@ https://coveralls.io/github/CS2103JAN2018-W13-B1/main?branch=master[image:https:
 https://www.codacy.com/app/CS2103-W13-B1-helper/main?utm_source=github.com&utm_medium=referral&utm_content=CS2103JAN2018-W13-B1/main&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/bd21fc56cd1f4c968e246a55d23ed930[Codacy Badge]]
 https://gitter.im/se-edu/Lobby[image:https://badges.gitter.im/se-edu/Lobby.svg[Gitter chat]]
 
+ContactSails is an address book application meant exclusively for salespersons from small businesses with customers from various social media platforms.
+
+In addition to aggregating customer details from these platforms, it can also be used for keeping track of orders of your customers and sending relevant promotions to them.
+
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
@@ -15,24 +19,27 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+== Features
+
+With ContactSails, you can do the following:
+
+* Manage customer contacts: Add, edit and delete contacts.
+* Categorize customers: Group customers according to their preferences, social media platforms, or any other category you want to define.
+* Manage orders: Add, edit, and delete customer orders.
+* Send promotions: Apply differentiated marketing strategies by sending promotions to relevant customers.
+* Keep track of deadlines: Add tasks and reminders and view your schedules in the integrated calendar.
+* Know your customer demographic: See what the top selling items and who your most frequent customers are.
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
 == Acknowledgements
 
+* This project is based on AddressBook-Level4 project which was created by the https://github.com/se-edu/[SE-EDU initiative].
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 * Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]

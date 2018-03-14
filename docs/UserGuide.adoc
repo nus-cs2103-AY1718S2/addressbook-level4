@@ -17,9 +17,11 @@ By: `Team W13-B1`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+ContactSails is for users who *prefer to use a desktop app for managing contacts*. More importantly, it is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ContactSails can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
+
+To set up and start using ContactSails, do the following:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -55,6 +57,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [[Features]]
 == Features
 
+This section describes each command in ContactSails in detail.
+
 ====
 *Command Format*
 
@@ -63,6 +67,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
+
+[TIP]
+ContactSails will automatically complete the command you want to enter if you press the `TAB` key. +
+For example, typing `ad` in the command box and then pressing `TAB` will automatically fill `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` in the command box.
 
 === Viewing help : `help`
 
@@ -138,6 +146,29 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` OR +
 `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by tags: `findtag`
+
+Finds persons whose tags matches any of the given keywords. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]` +
+Alias: `ft`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+* Only the names of tags of a person is searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `criminal friends` will return `John Doe`, `Betsy Crowe` who have the tags `friends` and `criminal` respectively.
+****
+
+Examples:
+
+* `findtag friends` OR +
+`ft friends` +
+Returns `John Doe`
+
+* `findtag neighbours friends owesMoney` OR +
+`ft neighbours friends owesMoney` +
+Returns any person having tags `neighbours`, `friends`, or `owesMoney`
 
 === Deleting a person : `delete`
 
@@ -262,12 +293,6 @@ Alias: `q`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -284,6 +309,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Findtag* : findtag KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtag friends`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -304,6 +331,8 @@ e.g. `d 3`
 e.g. `e 2 n/James Lee e/jameslee@example.com`
 * *Find* : `f KEYWORD [MORE_KEYWORDS]` +
 e.g. `f James Jake`
+* *Findtag* : ft KEYWORD [MORE_KEYWORDS]` +
+e.g. `ft friends`
 * *List* : `l`
 * *Help* : `?`
 * *Select* : `s INDEX` +
@@ -312,3 +341,11 @@ e.g. `s 2`
 * *Undo* : `u`
 * *Redo* : `r`
 * *Exit* : `q`
+
+== Coming in v2.0
+
+* Encrypting data files
+* Adding, editing, and deleting orders
+* Reminders
+* Viewing schedule in integrated calendar
+* Sending promotions to target groups

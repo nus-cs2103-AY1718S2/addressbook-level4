@@ -6,7 +6,12 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.TagsContainsKeywordsPredicate;
+
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -25,9 +30,34 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        String[] arguments = trimmedArgs.split("\\s+");
+        String[] keywords;
+        //TODO: add code to throw exception for invalid specifier
+        //check arguments[0] for specifier
+        switch (arguments[0]) {
 
-        return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        case "-all":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-n":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-p":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-e":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-a":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-t":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new TagsContainsKeywordsPredicate(Arrays.asList(keywords)));
+        default:
+            //no specifier so just search through all valid fields of Person instance
+            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(arguments)));
+        }
     }
 
 }

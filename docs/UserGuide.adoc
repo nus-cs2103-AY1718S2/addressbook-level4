@@ -118,6 +118,27 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by tags: `findTag`
+
+Finds persons whose labels contain any of the given keywords. +
+Format: `findTag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+* The order of the keywords does not matter. e.g. ` friends owesMoney` will match `owesMoney friends`
+* Only the tag is searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends owesMoney` will return `friends rich`, `owesMoney poor`
+****
+
+Examples:
+
+When your AddressBook has a person named John Doe, which you have tagged t/friends and t/owesMoney, and a person named Betsy which you have tagged t/owesMoney and t/poor,
+* `findTag friends` +
+Returns `John Doe`
+* `findTag friends owesMoney` +
+Returns any person having tags `friends`, `owesMoney`, i.e. `John Doe` and `Betsy`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +

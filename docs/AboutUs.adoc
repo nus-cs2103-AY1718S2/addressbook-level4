@@ -29,11 +29,11 @@ image::Profilepic_Kaiser.jpg[width="150", align="left"]
 '''
 
 === Jason Mason-Hing
-image::damithc.jpg[width="150", align="left"]
-{empty}[https://github.com/[github]]
+image::Profilepic_Jason.jpg[width="150", align="left"]
+{empty}[https://github.com/ifalluphill[github]]
 
-+Role:
-+Responsibilities:
++Role: Developer 
++Responsibilities: Calendar and Todolist
 
 '''
 

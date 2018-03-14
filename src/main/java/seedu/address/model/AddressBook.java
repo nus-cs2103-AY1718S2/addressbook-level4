@@ -16,6 +16,7 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
@@ -211,6 +212,42 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (editedTagList.contains(tag)) {
             editedTagList.remove(tag);
             tags.setTags(editedTagList);
+        }
+    }
+
+    /**
+     * Replaces the old {@code tag} with the new {@code editedTag}
+     */
+    public void editTag(Tag target, Tag editedTag) throws TagNotFoundException, PersonNotFoundException{
+        Set<Tag> editedTagList = tags.toSet();
+        if (editedTagList.contains(target)) {
+            editedTagList.remove(target);
+            editedTagList.add(editedTag);
+            tags.setTags(editedTagList);
+        } else {
+            throw new TagNotFoundException();
+        }
+        for (Person p : persons) {
+            replaceTagInPerson(target, editedTag, p);
+        }
+    }
+
+    private void replaceTagInPerson(Tag target, Tag editedTag, Person person) throws PersonNotFoundException{
+        Set<Tag> tagList = new HashSet<>(person.getTags());
+
+        //Terminate if tag is not is tagList
+        if (!tagList.remove(target)) {
+            return;
+        }
+        tagList.add(editedTag);
+        Person updatedPerson = new Person(person.getName(), person.getPhone(),
+                person.getEmail(), person.getAddress(), tagList);
+
+        try {
+            updatePerson(person, updatedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
         }
     }
 

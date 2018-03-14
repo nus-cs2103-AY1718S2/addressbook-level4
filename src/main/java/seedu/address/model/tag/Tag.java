@@ -13,6 +13,7 @@ public class Tag {
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
+    public String tagColor;
 
     /**
      * Constructs a {@code Tag}.
@@ -23,6 +24,14 @@ public class Tag {
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
         this.tagName = tagName;
+        this.tagColor = "undefined";
+    }
+
+    public Tag(String tagName, String tagColor) {
+        requireNonNull(tagName);
+        checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
+        this.tagName = tagName;
+        this.tagColor = tagColor;
     }
 
     /**

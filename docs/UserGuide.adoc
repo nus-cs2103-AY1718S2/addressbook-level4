@@ -69,36 +69,40 @@ Thank you for choosing us as your contact management solution!
 
 === Viewing help : `help`
 
+You can get help using the following format. +
 Format: `help`
 
 === Adding a person : `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+You can add a person to contactHero using the following format. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pp/PROFILE_PICTURE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
+[TIP]
+Profile Picture indicates the profile picture's file path
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pp/C:\\Downloads\\john.jpg`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pp/C:\\Downloads\\john.jpg t/criminal`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+You can see a list of all persons in contactHero using the following format. +
 Format: `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+You can edit an existing person in contactHero using this format. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pp/PROFILE_PICTURE][t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
+* Edits the person at the specified `INDEX`. Remember that the index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* You need to provide at least one of the optional.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When you edit tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 

@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
-import com.google.common.collect.Ordering;
-import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
+import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
+import com.google.common.collect.Ordering;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
 
 /**
  * Displays the current list of persons in the address book to the user sorted alphabetically.

@@ -65,8 +65,8 @@ public class Person {
      * Similar names are compared lexicographically.
      */
     public static Comparator<Person> nameComparator() {
-        return Comparator.comparing((Person p) -> p.getName().toString(),
-                (s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2));
+        return Comparator.comparing((Person p) -> p.getName().toString(), (
+            s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2));
     }
 
     @Override

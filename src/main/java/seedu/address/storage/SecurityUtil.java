@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.GeneralSecurityException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
@@ -15,6 +16,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
@@ -25,8 +27,8 @@ import seedu.address.commons.util.StringUtil;
  */
 public class SecurityUtil {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-
-    private static SecretKey secretAESKey;
+    private static String password = new String("test");
+    private static Key secretAESKey = new SecretKeySpec(password.getBytes(), "AES");
     private static final String AES_KEY_FILEPATH = "data/key.key";
 
     /**

@@ -113,7 +113,6 @@ public class XmlAdaptedPerson {
         if (this.address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
-        
         if (!Address.isValidAddress(this.address)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
@@ -122,12 +121,10 @@ public class XmlAdaptedPerson {
         if (this.date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DelivDate.class.getSimpleName()));
         }
-        
         if (!DelivDate.isValidDate(this.date)) {
             throw new IllegalValueException(DelivDate.MESSAGE_ADDRESS_CONSTRAINTS);
         }
         final DelivDate date = new DelivDate(this.date);
-        
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, date, tags);
     }

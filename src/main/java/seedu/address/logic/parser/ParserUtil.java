@@ -130,12 +130,10 @@ public class ParserUtil {
         }
         return new DelivDate(trimmedAddress);
     }
-    
     public static Optional<DelivDate> parseDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
-    
     public static Email parseEmail(String email) throws IllegalValueException {
         requireNonNull(email);
         String trimmedEmail = email.trim();

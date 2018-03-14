@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.CommandSyntaxListUtil;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -48,12 +52,15 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+        case TAB:
+            keyEvent.consume();
+            autocompleteCommand(commandTextField.getText());
             break;
         default:
             // let JavaFx handle the keypress
@@ -93,6 +100,24 @@ public class CommandBox extends UiPart<Region> {
     private void replaceText(String text) {
         commandTextField.setText(text);
         commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
+    /**
+     * Handles the Tab button pressed event by updating {@code CommandBox}'s text
+     * field with the full command syntax based on {@code text} entered so far.
+     */
+    private void autocompleteCommand(String text) {
+        ArrayList<String> commandSyntaxList = CommandSyntaxListUtil.getCommandSyntaxList();
+
+        // get list of matches of the input entered so far
+        List<String> autocompleteCommandList = commandSyntaxList.stream()
+                .filter(s -> s.startsWith(text))
+                .collect(Collectors.toList());
+
+        // replace input in text field with first match
+        if (!(autocompleteCommandList.isEmpty())) {
+            replaceText(autocompleteCommandList.get(0));
+        }
     }
 
     /**

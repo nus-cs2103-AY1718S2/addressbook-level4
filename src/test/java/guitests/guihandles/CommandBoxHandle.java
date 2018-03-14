@@ -24,6 +24,13 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Sets text in the command box.
+     */
+    public void setInput(String input) {
+        getRootNode().setText(input);
+    }
+
+    /**
      * Enters the given command in the Command Box and presses enter.
      * @return true if the command succeeded, false otherwise.
      */

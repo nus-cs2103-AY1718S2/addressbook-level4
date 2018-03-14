@@ -68,6 +68,10 @@ This section describes each command in ContactSails in detail.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+[TIP]
+ContactSails will automatically complete the command you want to enter if you press the `TAB` key. +
+For example, typing `ad` in the command box and then pressing `TAB` will automatically fill `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` in the command box.
+
 === Viewing help : `help`
 
 Format: `help` +

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -19,19 +20,21 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final Subject subject;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Subject subject, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         // protect internal tags from changes in the arg list
+        this.subject = subject;
         this.tags = new UniqueTagList(tags);
     }
 
@@ -49,6 +52,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Subject getSubject() {
+        return subject;
     }
 
     /**
@@ -73,7 +80,8 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getSubject().equals(this.getSubject());
     }
 
     @Override
@@ -92,6 +100,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Subject: ")
+                .append(getSubject())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

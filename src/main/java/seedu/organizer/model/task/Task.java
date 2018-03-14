@@ -132,8 +132,8 @@ public class Task {
         return new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
-                return (task1.getPriority().value)
-                        .compareTo(task2.getPriority().value);
+                return (task2.getPriority().value)
+                        .compareTo(task1.getPriority().value);
             }
         };
     }

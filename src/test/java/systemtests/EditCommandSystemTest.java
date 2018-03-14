@@ -3,16 +3,21 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_REVISION;
 import static seedu.organizer.logic.commands.CommandTestUtil.DEADLINE_DESC_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_REVISION;
 import static seedu.organizer.logic.commands.CommandTestUtil.DESCRIPTION_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.NAME_DESC_EXAM;
+import static seedu.organizer.logic.commands.CommandTestUtil.NAME_DESC_REVISION;
 import static seedu.organizer.logic.commands.CommandTestUtil.NAME_DESC_STUDY;
+import static seedu.organizer.logic.commands.CommandTestUtil.PRIORITY_DESC_REVISION;
 import static seedu.organizer.logic.commands.CommandTestUtil.PRIORITY_DESC_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_FRIENDS;
 import static seedu.organizer.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DEADLINE_STUDY;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_DESCRIPTION_STUDY;
@@ -26,7 +31,7 @@ import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
-import static seedu.organizer.testutil.TypicalTasks.STUDY;
+import static seedu.organizer.testutil.TypicalTasks.REVISION;
 
 import org.junit.Test;
 
@@ -80,9 +85,9 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: edit a task with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
-                + DESCRIPTION_DESC_STUDY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, index, STUDY);
+                + NAME_DESC_REVISION + PRIORITY_DESC_REVISION + DEADLINE_DESC_REVISION
+                + DESCRIPTION_DESC_REVISION;
+        assertCommandSuccess(command, index, REVISION);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_TASK;
@@ -125,11 +130,11 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         index = INDEX_FIRST_TASK;
         selectTask(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
-                + DESCRIPTION_DESC_STUDY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+                + NAME_DESC_REVISION + PRIORITY_DESC_REVISION + DEADLINE_DESC_REVISION
+                + DESCRIPTION_DESC_REVISION + TAG_DESC_FRIENDS;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new task's name
-        assertCommandSuccess(command, index, STUDY, index);
+        assertCommandSuccess(command, index, REVISION, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
@@ -171,14 +176,14 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a task with new values same as another task's values -> rejected */
-        executeCommand(TaskUtil.getAddCommand(STUDY));
-        assertTrue(getModel().getOrganizer().getTaskList().contains(STUDY));
+        executeCommand(TaskUtil.getAddCommand(REVISION));
+        assertTrue(getModel().getOrganizer().getTaskList().contains(REVISION));
         index = INDEX_SECOND_TASK;
         assertFalse(getModel().getFilteredTaskList()
-                .get(index.getZeroBased()).equals(STUDY));
+                .get(index.getZeroBased()).equals(REVISION));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
-                + DESCRIPTION_DESC_STUDY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+                + NAME_DESC_REVISION + PRIORITY_DESC_REVISION + DEADLINE_DESC_REVISION
+                + DESCRIPTION_DESC_REVISION + TAG_DESC_FRIENDS;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: edit a task with new values same as another task's values but with different tags -> rejected */

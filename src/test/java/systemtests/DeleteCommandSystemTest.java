@@ -8,7 +8,7 @@ import static seedu.organizer.testutil.TestUtil.getLastIndex;
 import static seedu.organizer.testutil.TestUtil.getMidIndex;
 import static seedu.organizer.testutil.TestUtil.getPerson;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
+import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_REVISION;
 
 import org.junit.Test;
 
@@ -60,7 +60,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
         /* Case: filtered task list, delete index within bounds of organizer and task list -> deleted */
-        showTasksWithName(KEYWORD_MATCHING_SPRING);
+        showTasksWithName(KEYWORD_MATCHING_REVISION);
         Index index = INDEX_FIRST_TASK;
         assertTrue(index.getZeroBased() < getModel().getFilteredTaskList().size());
         assertCommandSuccess(index);
@@ -68,7 +68,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         /* Case: filtered task list, delete index within bounds of organizer but out of bounds of task list
          * -> rejected
          */
-        showTasksWithName(KEYWORD_MATCHING_SPRING);
+        showTasksWithName(KEYWORD_MATCHING_REVISION);
         int invalidIndex = getModel().getOrganizer().getTaskList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

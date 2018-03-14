@@ -59,7 +59,7 @@ public class FindNameCommandTestTest extends FindCommandTest<FindNameCommand> {
     public void execute_multipleKeywords_multipleTasksFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
         FindNameCommand command = prepareCommand("Prepare breakfast Project Revision");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(PREPAREBREAKFAST, PROJECT, REVISION));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(REVISION, PROJECT, PREPAREBREAKFAST));
     }
 
     /**

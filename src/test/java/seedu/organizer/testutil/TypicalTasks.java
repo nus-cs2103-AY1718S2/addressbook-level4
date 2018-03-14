@@ -58,6 +58,7 @@ public class TypicalTasks {
                     VALID_TAG_FRIEND)
             .build();
 
+    public static final String KEYWORD_MATCHING_REVISION = "Revision"; // A keyword that matches REVISION
     public static final String KEYWORD_MATCHING_SPRING = "Spring"; // A keyword that matches SPRING
     public static final String KEYWORD_MATCHING_DO = "Do"; // A keyword that matches DO
 

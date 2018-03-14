@@ -67,7 +67,7 @@ public class FindDescriptionCommandTestTest extends FindCommandTest<FindDescript
     public void execute_multipleKeywords_multipleTasksFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
         FindDescriptionCommand command = prepareCommand("coffee OP1 midterms");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(PREPAREBREAKFAST, PROJECT, REVISION));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(REVISION, PROJECT, PREPAREBREAKFAST));
     }
 
     /**

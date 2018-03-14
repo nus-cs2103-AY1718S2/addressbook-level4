@@ -83,7 +83,7 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: find same tasks in organizer after deleting 1 of them -> 1 task found */
-        executeCommand(DeleteCommand.COMMAND_WORD + " 2");
+        executeCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertFalse(getModel().getOrganizer().getTaskList().contains(PREPAREBREAKFAST));
         command = FindNameCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_SPRING;
         expectedModel = getModel();

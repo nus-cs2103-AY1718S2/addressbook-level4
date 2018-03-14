@@ -32,25 +32,35 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_EXAM = "CS2103T Exam";
     public static final String VALID_NAME_STUDY = "Study MA1101R";
+    public static final String VALID_NAME_REVISION = "Revision";
     public static final String VALID_PRIORITY_EXAM = "9";
     public static final String VALID_PRIORITY_STUDY = "0";
+    public static final String VALID_PRIORITY_REVISION = "5";
     public static final String VALID_DEADLINE_EXAM = "2018-03-27";
     public static final String VALID_DEADLINE_STUDY = "2018-09-11";
+    public static final String VALID_DEADLINE_REVISION = "2018-04-05";
     public static final String VALID_DESCRIPTION_EXAM = "CS2103T Exam";
     public static final String VALID_DESCRIPTION_STUDY = "Study for CS2103T Exam";
+    public static final String VALID_DESCRIPTION_REVISION = " Revise for CS2106 midterms";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TAG_FRIENDS = "friends";
     public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a person
 
     public static final String NAME_DESC_EXAM = " " + PREFIX_NAME + VALID_NAME_EXAM;
     public static final String NAME_DESC_STUDY = " " + PREFIX_NAME + VALID_NAME_STUDY;
+    public static final String NAME_DESC_REVISION = " " + PREFIX_NAME + VALID_NAME_REVISION;
     public static final String PRIORITY_DESC_EXAM = " " + PREFIX_PRIORITY + VALID_PRIORITY_EXAM;
     public static final String PRIORITY_DESC_STUDY = " " + PREFIX_PRIORITY + VALID_PRIORITY_STUDY;
+    public static final String PRIORITY_DESC_REVISION = " " + PREFIX_PRIORITY + VALID_PRIORITY_REVISION;
     public static final String DEADLINE_DESC_EXAM = " " + PREFIX_DEADLINE + VALID_DEADLINE_EXAM;
     public static final String DEADLINE_DESC_STUDY = " " + PREFIX_DEADLINE + VALID_DEADLINE_STUDY;
+    public static final String DEADLINE_DESC_REVISION = " " + PREFIX_DEADLINE + VALID_DEADLINE_REVISION;
     public static final String DESCRIPTION_DESC_EXAM = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_EXAM;
     public static final String DESCRIPTION_DESC_STUDY = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_STUDY;
+    public static final String DESCRIPTION_DESC_REVISION = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_REVISION;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
+    public static final String TAG_DESC_FRIENDS = " " + PREFIX_TAG + VALID_TAG_FRIENDS;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names

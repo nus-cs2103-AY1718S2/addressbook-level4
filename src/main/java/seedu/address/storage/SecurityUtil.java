@@ -37,9 +37,9 @@ public class SecurityUtil {
     public static void encrypt(File file)throws IOException {
         try {
             byte[] hashedPassword = hashPassword(password);
-            Key secretAESKey = createKey(hashedPassword);
+            Key secretAesKey = createKey(hashedPassword);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secretAESKey);
+            cipher.init(Cipher.ENCRYPT_MODE, secretAesKey);
             fileProcessor(cipher, file);
         } catch (GeneralSecurityException gse) {
             logger.severe("ERROR: Wrong cipher to encrypt message " + StringUtil.getDetails(gse));
@@ -56,9 +56,9 @@ public class SecurityUtil {
     public static void decrypt(File file) throws IOException {
         try {
             byte[] hashedPassword = hashPassword(password);
-            Key secretAESKey = createKey(hashedPassword);
+            Key secretAesKey = createKey(hashedPassword);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, secretAESKey);
+            cipher.init(Cipher.DECRYPT_MODE, secretAesKey);
             fileProcessor(cipher, file);
         } catch (GeneralSecurityException gse) {
             logger.severe("ERROR: Wrong cipher to encrypt message " + StringUtil.getDetails(gse));

@@ -56,7 +56,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Returns the color style for {@code tagName}'s label.
+     * Returns the color style for {@code name}'s label.
      */
     private String getTagColorStyleFor(String tagName) {
         // use the hash code of the tag name to generate a random color, so that the color remain consistent
@@ -69,13 +69,13 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initTags(Person person) {
         person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            if (tag.tagColor.equals("undefined")) {
+            Label tagLabel = new Label(tag.name);
+            if (tag.color.equals("undefined")) {
                 tagLabel.getStyleClass().clear();
-                tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
+                tagLabel.getStyleClass().add(getTagColorStyleFor(tag.name));
             } else {
                 tagLabel.getStyleClass().clear();
-                tagLabel.getStyleClass().add(tag.tagColor);
+                tagLabel.getStyleClass().add(tag.color);
             }
             tags.getChildren().add(tagLabel);
         });

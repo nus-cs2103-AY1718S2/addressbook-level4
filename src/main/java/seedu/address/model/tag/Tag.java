@@ -15,29 +15,31 @@ public class Tag {
     public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: "
             + "teal, red, yellow, blue, orange, brown, green, pink, black, grey";
     private static final String[] AVAILABLE_COLORS
-            = {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
+            = {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey", "undefined"};
 
+    public static final String TAG_COLOR_FILE_PATH = "data/tagColors.txt";
 
-    public final String tagName;
-    public String tagColor;
+    public final String name;
+    public String color;
 
     /**
      * Constructs a {@code Tag}.
      *
-     * @param tagName A valid tag name.
+     * @param name A valid tag name.
      */
-    public Tag(String tagName) {
-        requireNonNull(tagName);
-        checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
-        this.tagName = tagName;
-        this.tagColor = "undefined";
+    public Tag(String name) {
+        requireNonNull(name);
+        checkArgument(isValidTagName(name), MESSAGE_TAG_CONSTRAINTS);
+        this.name = name;
+        this.color = "undefined";
     }
 
-    public Tag(String tagName, String tagColor) {
-        requireNonNull(tagName);
-        checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
-        this.tagName = tagName;
-        this.tagColor = tagColor;
+    public Tag(String name, String color) {
+        requireNonNull(name);
+        checkArgument(isValidTagName(name), MESSAGE_TAG_CONSTRAINTS);
+        checkArgument(isValidTagColor(color), MESSAGE_TAG_COLOR_CONSTRAINTS);
+        this.name = name;
+        this.color = color;
     }
 
     /**
@@ -51,33 +53,32 @@ public class Tag {
      * Returns true if a given string is a available tag color
      */
     public static boolean isValidTagColor(String color) {
-        boolean isValidColor = false;
         String trimmedColor = color.trim().toLowerCase();
         for (String s : AVAILABLE_COLORS) {
             if (s.equals(trimmedColor)) {
-                isValidColor = true;
+                return true;
             }
         }
-        return isValidColor;
+        return false;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Tag // instanceof handles nulls
-                && this.tagName.equals(((Tag) other).tagName)); // state check
+                && this.name.equals(((Tag) other).name)); // state check
     }
 
     @Override
     public int hashCode() {
-        return tagName.hashCode();
+        return name.hashCode();
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + tagName + ']';
+        return '[' + name + ']';
     }
 
 }

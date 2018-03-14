@@ -20,7 +20,7 @@ public class ChangeTagColorCommandParser implements Parser<ChangeTagColorCommand
 
             Tag tag = ParserUtil.parseTag(args[1]);
             String color = ParserUtil.parseColor((args[2]));
-            return new ChangeTagColorCommand(tag.tagName, color);
+            return new ChangeTagColorCommand(tag.name, color);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

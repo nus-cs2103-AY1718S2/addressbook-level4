@@ -207,7 +207,6 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-        assert false: "string";
         launch(args);
     }
 }

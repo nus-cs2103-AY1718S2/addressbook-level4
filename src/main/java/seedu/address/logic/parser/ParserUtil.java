@@ -122,7 +122,6 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code email} is invalid.
      */
-    
     public static DelivDate parseDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedAddress = date.trim();
@@ -136,7 +135,6 @@ public class ParserUtil {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
-    
     
     public static Email parseEmail(String email) throws IllegalValueException {
         requireNonNull(email);

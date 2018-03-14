@@ -35,8 +35,8 @@ public class DelivDate {
     /**
      * Returns true if a given string is a valid person date.
      */
-    public static boolean isValidDate(String test) { 
-        boolean itMatches = test.matches(DATE_VALIDATION_REGEX); 
+    public static boolean isValidDate(String test) {
+        boolean itMatches = test.matches(DATE_VALIDATION_REGEX);
         return itMatches;
     }
 

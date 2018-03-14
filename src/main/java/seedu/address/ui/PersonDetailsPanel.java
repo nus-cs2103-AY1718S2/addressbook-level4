@@ -15,8 +15,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
+//@@author jaronchan
 /**
- * The Browser Panel of the App.
+ * The Person Details Panel of the App.
+ * To be UPDATED
  */
 public class PersonDetailsPanel extends UiPart<Region> {
 

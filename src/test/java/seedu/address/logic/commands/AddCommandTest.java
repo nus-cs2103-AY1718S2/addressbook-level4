@@ -102,11 +102,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortPersons() {
-            fail("This method should not be called");
-        }
-
-        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -132,6 +127,11 @@ public class AddCommandTest {
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void sort(String field) {
+            fail("This method should not be called.");
         }
 
         @Override

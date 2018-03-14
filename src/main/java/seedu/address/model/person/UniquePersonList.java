@@ -114,12 +114,99 @@ public class UniquePersonList implements Iterable<Person> {
                         && this.internalList.equals(((UniquePersonList) other).internalList));
     }
     /**
-     * Sorts existing persons
+     * Sorts existing persons, check sort field here
      */
-    public void sort() {
+    public void sort(String field) {
+        switch (field) {
+        case "name":
+            sortByName();
+            break;
+        case "phone":
+            sortByPhone();
+            break;
+        case "email":
+            sortByEmail();
+            break;
+        case "address":
+            sortByAddress();
+            break;
+        case "tag":
+            sortByTag();
+            break;
+        case "rate":
+            sortByRate();
+            break;
+        default:
+            throw new AssertionError("Sort field should be name, phone, email, tag, address or rate.");
+        }
+    }
+    /**
+     * Specific sort method for every field, sort by name
+     */
+    public void sortByName() {
         Collections.sort(internalList, new Comparator<Person>() {
             public int compare(Person p1, Person p2) {
-                int num = p1.getName().toString().compareTo(p2.getName().toString());
+                int num = p1.getName().toString().compareToIgnoreCase(p2.getName().toString());
+                return num;
+            }
+        });
+    }
+
+    /**
+     * when the input field is phone, sort by phone
+     */
+    public void sortByPhone() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person p1, Person p2) {
+                int num = p1.getPhone().toString().compareToIgnoreCase(p2.getPhone().toString());
+                return num;
+            }
+        });
+    }
+
+    /**
+     * when the input field is email, sort by email
+     */
+    public void sortByEmail() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person p1, Person p2) {
+                int num = p1.getEmail().toString().compareToIgnoreCase(p2.getEmail().toString());
+                return num;
+            }
+        });
+    }
+
+    /**
+     * when the input field is address, sort by address
+     */
+    public void sortByAddress() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person p1, Person p2) {
+                int num = p1.getAddress().toString().compareToIgnoreCase(p2.getAddress().toString());
+                return num;
+            }
+        });
+    }
+
+    /**
+     * when the input field is tag, sort by tag
+     */
+    public void sortByTag() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person p1, Person p2) {
+                int num = p1.getTags().toString().compareToIgnoreCase(p2.getTags().toString());
+                return num;
+            }
+        });
+    }
+
+    /**
+     * when the input field is rate, sort by rate in descending order
+     */
+    public void sortByRate() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person p1, Person p2) {
+                int num = p2.getRating().toString().compareToIgnoreCase(p1.getRating().toString());
                 return num;
             }
         });

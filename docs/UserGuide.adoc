@@ -245,11 +245,11 @@ Format: `schedule GROUP`
 * The name of the group entered must already exist in FASTIS or saved by your previously.
 ****
 
-=== Edit a person's group : `update group`
+=== Edit a person's group : `modify`
 
-Edit the group that the person belongs to. +
-Alias: `u` +
-Format: `update INDEX`
+Modify the group that the person belongs to. +
+Alias: `m` +
+Format: `modify INDEX`
 
 ****
 * INDEX refers to the index of the person you are trying to update his group.
@@ -275,11 +275,11 @@ There is no need to save manually.
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-Personal log in page that requires saved password.
-Sign up with `username` and `password`.
-Creation of password should use at least 1 lower case ,1 upper case and 1 number.
-Sign in with saved username and password to be able to use the secured application.
-Data files created by FASTIS will be encrypted using the `password` you have provided.
+Personal log in page that requires saved password. +
+Sign up with `username` and `password`. +
+Creation of password should use at least 1 lower case ,1 upper case and 1 number. +
+Sign in with saved username and password to be able to use the secured application. +
+Data files created by FASTIS will be encrypted using the `password` you have provided. +
 // end::dataencryption[]
 
 == FAQ

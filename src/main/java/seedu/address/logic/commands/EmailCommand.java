@@ -12,7 +12,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
 /**
- * Emails a person identified using it's last displayed index from the address book.
+ * Deletes a person identified using it's last displayed index from the address book.
  */
 public class EmailCommand extends Command {
 

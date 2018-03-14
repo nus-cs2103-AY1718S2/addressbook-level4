@@ -37,7 +37,7 @@ Responsibilities: Data
 '''
 
 === Eric Zhou
-image::sofware-1234.jpg[width="150", align="left"]
+image::software-1234.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

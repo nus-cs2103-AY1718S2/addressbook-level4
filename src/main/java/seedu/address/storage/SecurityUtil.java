@@ -92,7 +92,7 @@ public class SecurityUtil {
         } catch (BadPaddingException e) {
             logger.severe("ERROR: Wrong password length used " + StringUtil.getDetails(e));
         } catch (IllegalBlockSizeException e) {
-            logger.warning("ERROR: Text already in plain text ");
+            logger.info("Warning: Text already in plain text ");
             logger.info("Encrypting");
             encrypt(file);
             decrypt(file);

@@ -250,6 +250,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== View patient appointments: `viewappt`
+
+Shows a list of patient appointments in the IMDB.
+Format: `viewappt` or `va`
+
 === Clearing all entries : `clear` or `c`
 
 Clears all entries from the IMDB. +
@@ -299,6 +304,7 @@ e.g. `find James Jake`
 e.g.`select 2`
 * *Remark* : `remark INDEX r/[REMARK]` +
 e.g.`remark 1 r/Likes to drink coffee.`
+* *View Appointment* : `viewappt`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
@@ -320,6 +326,7 @@ e.g. `f James Jake`
 e.g.`s 2`
 * *Remark* : `rk INDEX r/[REMARK]` +
 e.g.`rk 1 r/Likes to drink coffee.`
+* *View Appointment* : `va`
 * *History* : `hi`
 * *Undo* : `u`
 * *Redo* : `r`

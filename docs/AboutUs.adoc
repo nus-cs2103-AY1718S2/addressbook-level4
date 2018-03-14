@@ -16,11 +16,11 @@ Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Kai Yong
+image::Kyholmes.png[width="150", align="left"]
+{empty}[http://github.com/[github]] [<<johndoe#, portfolio>>]
 
-Role: Team Lead +
+Role: Developer +
 Responsibilities: UI
 
 '''

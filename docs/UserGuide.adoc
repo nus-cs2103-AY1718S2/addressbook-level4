@@ -322,5 +322,5 @@ e.g.`select 2`
 * *<<Listing-entered-commands, History>>* : `history`
 * *<<Undoing-previous-command, Undo>>* : `undo`
 * *<<Redoing-the-previously-undone-command, Redo>>* : `redo`
-* *<<Viewing-the-LinkedIn-search of the person*: `linkedIn INDEX` +
+* *<<Viewing-the-LinkedIn-search-of-the-person>>*: `linkedIn INDEX` +
 e.g. `linkedIn 2`

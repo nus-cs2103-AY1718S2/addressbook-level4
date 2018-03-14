@@ -94,8 +94,8 @@ public class SecurityUtil {
         } catch (IllegalBlockSizeException e) {
             logger.info("Warning: Text already in plain text ");
             logger.info("Encrypting");
-            encrypt(file);
-            decrypt(file);
+            //encrypt(file);
+            //decrypt(file);
         }
     }
 

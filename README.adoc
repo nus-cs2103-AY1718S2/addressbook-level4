@@ -6,6 +6,8 @@ https://ci.appveyor.com/project/takuyakanbr/main[image:https://ci.appveyor.com/a
 https://coveralls.io/github/CS2103JAN2018-F14-B4/main?branch=master[image:https://coveralls.io/repos/github/CS2103JAN2018-F14-B4/main/badge.svg?branch=master[Coverage Status]]
 https://www.codacy.com/app/takuyakanbr/main[image:https://api.codacy.com/project/badge/Grade/aa9140dcebbd474c9dc16c57fe247e78[Codacy Badge]]
 
+Bibliotek is a free book cataloguing application that is simple, fast, and easy to use. It is targeted at heavy readers who require a hassle-free way of managing and keep tracking of their read and unread books.
+
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
@@ -14,26 +16,28 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop book management application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC) than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+== Features
+
+* Runs on all mainstream OS
+* Uses short and simple commands for user interactions
+* Provides a GUI to display lists and details of books
+* Search online for new books and add them with a command
+* Prioritize, rate, and mark books as read or unread
+* Filter and sort books by title, priority, rating, etc.
+* View book reviews
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
 == Acknowledgements
 
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
+* This application is built upon the https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by https://github.com/se-edu[SE-EDU] initiative.
+* Some parts of this application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
-* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]
+* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4], https://github.com/AsyncHttpClient/async-http-client[AsyncHttpClient]
 
 == Licence : link:LICENSE[MIT]

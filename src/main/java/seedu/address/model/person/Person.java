@@ -53,7 +53,9 @@ public class Person {
         return address;
     }
 
-    public  TimeTableLink getTimeTableLink() { return link; }
+    public  TimeTableLink getTimeTableLink() {
+        return link;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

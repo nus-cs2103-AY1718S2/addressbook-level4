@@ -14,13 +14,12 @@ public class Tag {
 
     public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: "
             + "teal, red, yellow, blue, orange, brown, green, pink, black, grey";
-    private static final String[] AVAILABLE_COLORS
-            = {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey", "undefined"};
-
     public static final String TAG_COLOR_FILE_PATH = "data/tagColors.txt";
+    private static final String[] AVAILABLE_COLORS =
+            {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey", "undefined"};
 
     public final String name;
-    public String color;
+    public final String color;
 
     /**
      * Constructs a {@code Tag}.

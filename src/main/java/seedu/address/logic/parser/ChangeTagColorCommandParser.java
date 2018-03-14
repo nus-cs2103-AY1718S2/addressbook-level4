@@ -7,7 +7,12 @@ import seedu.address.logic.commands.ChangeTagColorCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
-public class ChangeTagColorCommandParser implements Parser<ChangeTagColorCommand>{
+/**
+ * Parses the given {@code String} of arguments in the context of the ChangeTagColorCommand
+ * and returns an ChangeTagColorCommand object for execution.
+ * @throws ParseException if the user input does not conform the expected format
+ */
+public class ChangeTagColorCommandParser implements Parser<ChangeTagColorCommand> {
 
     @Override
     public ChangeTagColorCommand parse(String userInput) throws ParseException {

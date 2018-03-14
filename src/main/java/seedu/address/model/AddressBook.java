@@ -220,9 +220,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the old {@code tag} with the new {@code editedTag}
+     * Replaces the old {@code target} tag with the new {@code editedTag}
      */
-    public void editTag(Tag target, Tag editedTag) throws TagNotFoundException, PersonNotFoundException{
+    public void editTag(Tag target, Tag editedTag) throws TagNotFoundException, PersonNotFoundException {
         Set<Tag> editedTagList = tags.toSet();
         if (editedTagList.contains(target)) {
             editedTagList.remove(target);
@@ -236,7 +236,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    private void replaceTagInPerson(Tag target, Tag editedTag, Person person) throws PersonNotFoundException{
+    /**
+     * Replaces the old {@code target} tag of a {@code person} with the new {@code editedTag}
+     */
+    private void replaceTagInPerson(Tag target, Tag editedTag, Person person) throws PersonNotFoundException {
         Set<Tag> tagList = new HashSet<>(person.getTags());
 
         //Terminate if tag is not is tagList
@@ -276,6 +279,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Add all the user-specified colors from saved file to the tags in the address book
+     */
     public void addColorsToTag() {
         HashMap<String, String> tagColors = readTagColorFile();
         HashSet<Tag> coloredTags = new HashSet<Tag>();
@@ -289,6 +295,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.setTags(coloredTags);
     }
 
+    /**
+     * Read the saved file to map the tags to the color that the user specified
+     */
     private HashMap<String, String> readTagColorFile() {
         String tagColorsFilePath = Tag.TAG_COLOR_FILE_PATH;
         HashMap<String, String> tagColors = new HashMap<String, String>();
@@ -299,7 +308,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 tagColors.put(t[0], t[1]);
             }
             return tagColors;
-        } catch (FileNotFoundException fnfe){
+        } catch (FileNotFoundException fnfe) {
             throw new AssertionError("Tag color file not found. Using default settings.");
         }
     }

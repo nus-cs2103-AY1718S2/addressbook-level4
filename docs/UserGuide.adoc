@@ -140,7 +140,7 @@ Deletes the 1st person in the results of the `find` command.
 
 === Sorting all persons : `sort`
 
-Sorts all persons in the address book alphabetically and then displays the sorted list. +
+Sorts all persons in the address book alphabetically and then displays the current list in sorted order. +
 Format: `sort`
 
 === Selecting a person : `select`

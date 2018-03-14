@@ -71,10 +71,8 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.name);
             if (tag.color.equals("undefined")) {
-                tagLabel.getStyleClass().clear();
                 tagLabel.getStyleClass().add(getTagColorStyleFor(tag.name));
             } else {
-                tagLabel.getStyleClass().clear();
                 tagLabel.getStyleClass().add(tag.color);
             }
             tags.getChildren().add(tagLabel);

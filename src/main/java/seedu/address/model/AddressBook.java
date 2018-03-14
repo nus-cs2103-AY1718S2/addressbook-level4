@@ -245,7 +245,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         tagList.add(editedTag);
         Person updatedPerson = new Person(person.getName(), person.getPhone(),
-                person.getEmail(), person.getAddress(), tagList);
+                person.getEmail(), person.getAddress(), person.getTimeTableLink(), tagList);
 
         try {
             updatePerson(person, updatedPerson);

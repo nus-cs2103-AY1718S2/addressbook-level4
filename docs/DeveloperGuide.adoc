@@ -819,6 +819,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |forgetful RC student |add other RC friends name, birthday, hall CCAs and tags into CollegeZone |
 
+|`* * *` |RC student |find the Resident Assistant (RA) of a RC student |I can discuss with the RA regarding any particular student or floor matters
+
 |`* *` |careless RC student |undo a command I entered |undo a wrong command that I entered
 
 |`* *` |careless RC student |redo a command I entered |redo when I want to undo my "undo" command

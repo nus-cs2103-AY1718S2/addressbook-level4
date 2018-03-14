@@ -30,7 +30,7 @@ public class CalendarWindow extends UiPart<Stage> {
     public CalendarWindow(Stage root) {
         super(FXML, root);
 
-        browser.getEngine().loadContent("<html><h1>Hello World</h1></html>", "text/Html");
+        browser.getEngine().load("https://calendar.google.com/calendar/r");
     }
 
     /**

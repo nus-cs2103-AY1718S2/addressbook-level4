@@ -206,6 +206,9 @@ public class MainWindow extends UiPart<Stage> {
         errorsWindow.show();
     }
 
+    /**
+     * Opens the calendar window.
+     */
     @FXML
     public void handleViewCalendar() {
         CalendarWindow calendarWindow = new CalendarWindow();
@@ -247,7 +250,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleViewCalendar(ShowCalendarRequestEvent event) {
+    private void handleViewCalendarEvent(ShowCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleViewCalendar();
     }

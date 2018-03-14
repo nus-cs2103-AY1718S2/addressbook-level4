@@ -3,7 +3,10 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
-public class ShowCalendarRequestEvent extends BaseEvent{
+/**
+ * An event requesting to open the calendar.
+ */
+public class ShowCalendarRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {

@@ -92,9 +92,8 @@ public class GuiTestAssert {
         List<String> expectedTags = expectedPerson.getTags().stream()
                 .map(tag -> tag.tagName).collect(Collectors.toList());
         assertEquals(expectedTags, actualCard.getTags());
-        expectedTags.forEach(tag ->
-            assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColorStyleFor(tag)),
-                    actualCard.getTagStyleClasses(tag)));
+        expectedTags.forEach(tag -> assertEquals(
+                Arrays.asList(LABEL_DEFAULT_STYLE, getTagColorStyleFor(tag)), actualCard.getTagStyleClasses(tag)));
     }
 
     /**

@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/W09-B2/main/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W09-B2/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -782,14 +782,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target users:*
 
-The application is targeted towards Human Resources Managers at SMEs and start-ups. HR managers have a lot of contacts to manage which include current employees, customers, potential employees, potential customers, investors and many others. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
+The application is targeted towards Human Resources Managers at companies, especially those responsible for recruitment. Such recruiters have a lot of contacts to +
+manage which include contact details and profiles of potential employees. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
 
 *User Profile*:
 
-* HR managers who have a significant number of contacts to manage
-* Start-up employee who is new to HR management
-* HR managers who prefer desktop apps
-* HR managers who are good at typing and hence prefer CLI apps
+* Recruiters who have a significant number of contacts and profiles to manage
+* Recruiters who prefer desktop apps
+* Recruiters who are good at typing and hence prefer CLI apps
 
 *Value proposition*: An ideal solution for small teams and business professionals who need a simple solution to manage their contacts and help them with day-to-day business activities.
 
@@ -815,7 +815,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find people by tag | find people with similar tag
 
-|`* * *` |user |add Linkedin and Github link | view pople's profile
+|`* * *` |user |view LinkedIn profile | stay updated about the person's professional advancement and achievement
 
 |`* * *` |user |submit feedback to developer | receive a better version in the future
 

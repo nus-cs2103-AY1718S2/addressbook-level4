@@ -65,15 +65,15 @@ Format: `help`
 
 Adds a person to the address book +
 Alias: `a` +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 l/http://modsn.us/MYwiD`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 l/http://modsn.us/56Dn9 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 l/http://modsn.us/MYwiD d/Likes tennis`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 l/http://modsn.us/56Dn9 d/Likes tennis t/criminal`
 
 === Listing all persons : `list`
 
@@ -85,7 +85,7 @@ Format: `list`
 
 Edits an existing person in the address book. +
 Alias: `e` +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [l/TIMETABLE_LINK] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [l/TIMETABLE_LINK] [d/DETAIL] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...

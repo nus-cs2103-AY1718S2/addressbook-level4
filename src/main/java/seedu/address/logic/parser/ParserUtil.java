@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Detail;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -162,6 +163,30 @@ public class ParserUtil {
     public static Optional<TimeTableLink> parseTimeTableLink(Optional<String> link) throws IllegalValueException {
         requireNonNull(link);
         return  link.isPresent() ? Optional.of(parseTimeTableLink(link.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String detail} into a {@code Detail}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code detail} is invalid.
+     */
+    public static Detail parseDetail(String detail) throws IllegalValueException {
+        requireNonNull(detail);
+        String trimmedDetail = detail.trim();
+        if (!Detail.isValidDetail(trimmedDetail)) {
+            throw new IllegalValueException(Detail.MESSAGE_DETAIL_CONSTRAINTS);
+        }
+        return new Detail(trimmedDetail);
+    }
+
+    /**
+     * Parses a {@code Optional<String> detail} into an {@code Optional<Detail>} if {@code detail} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Detail> parseDetail(Optional<String> detail) throws IllegalValueException {
+        requireNonNull(detail);
+        return detail.isPresent() ? Optional.of(parseDetail(detail.get())) : Optional.empty();
     }
 
     /**

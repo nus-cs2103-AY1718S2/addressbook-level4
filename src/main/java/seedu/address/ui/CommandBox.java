@@ -49,18 +49,17 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
+        hideSuggestions();
         switch (keyEvent.getCode()) {
             case UP:
                 // As up and down buttons will alter the position of the caret,
                 // consuming it causes the caret's position to remain unchanged
                 keyEvent.consume();
                 navigateToPreviousInput();
-                hideSuggestions();
                 break;
             case DOWN:
                 keyEvent.consume();
                 navigateToNextInput();
-                hideSuggestions();
                 break;
             case CONTROL:
                 keyEvent.consume();
@@ -68,7 +67,6 @@ public class CommandBox extends UiPart<Region> {
                 break;
             default:
                 // let JavaFx handle the keypress
-                hideSuggestions();
         }
     }
 
@@ -93,7 +91,7 @@ public class CommandBox extends UiPart<Region> {
         String inputText = commandTextField.getText();
         suggestionPopUp.findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
         suggestionPopUp.getItems().addAll((List) suggestionPopUp.getSuggestions());
-        suggestionPopUp.show(commandTextField, Side.BOTTOM, 0, 0);
+        suggestionPopUp.show(commandTextField, Side.BOTTOM, 0, commandTextField.getCaretPosition());
         suggestionPopUp.setAutoHide(true);
     }
 

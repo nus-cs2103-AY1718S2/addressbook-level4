@@ -1,9 +1,12 @@
 package seedu.address.ui;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -22,6 +25,8 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit",
+            "exit", "find", "help", "history", "list", "redo", "select", "undo"};
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -29,6 +34,7 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
+    private SuggestionPopUp suggestionPopUp;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -44,19 +50,25 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
-
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
+                navigateToPreviousInput();
+                hideSuggestions();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                hideSuggestions();
+                break;
+            case CONTROL:
+                keyEvent.consume();
+                showSuggestions();
+                break;
+            default:
+                // let JavaFx handle the keypress
+                hideSuggestions();
         }
     }
 
@@ -71,6 +83,27 @@ public class CommandBox extends UiPart<Region> {
         }
 
         replaceText(historySnapshot.previous());
+    }
+
+    /**
+     * Shows suggestions for commands when users type in Command Box
+     */
+    private void showSuggestions() {
+        suggestionPopUp = new SuggestionPopUp();
+        String inputText = commandTextField.getText();
+        suggestionPopUp.findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
+        suggestionPopUp.getItems().addAll((List) suggestionPopUp.getSuggestions());
+        suggestionPopUp.show(commandTextField, Side.BOTTOM, 0, 0);
+        suggestionPopUp.setAutoHide(true);
+    }
+
+    /**
+     * Hides suggestions
+     */
+    private void hideSuggestions() {
+        if (suggestionPopUp != null && suggestionPopUp.isShowing()) {
+            suggestionPopUp.hide();
+        }
     }
 
     /**

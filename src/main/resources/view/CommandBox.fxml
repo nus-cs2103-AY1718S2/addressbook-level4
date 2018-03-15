@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
 
 <StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <JFXTextField fx:id="commandTextField" focusColor="#ff6a00" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..." unFocusColor="#323232" />
-   </children>
+  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..."/>
 </StackPane>
+

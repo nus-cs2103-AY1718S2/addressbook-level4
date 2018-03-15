@@ -59,6 +59,19 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    /**
+     * Returns the tag names of tags of a person as String.
+     * @return a string of all the tag names of tags of a person.
+     */
+    public String getTagsAsString() {
+        final StringBuilder builder = new StringBuilder();
+        for (String tag : tags.arrayOfTags()) {
+            builder.append(tag);
+            builder.append(" ");
+        }
+        return builder.toString();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

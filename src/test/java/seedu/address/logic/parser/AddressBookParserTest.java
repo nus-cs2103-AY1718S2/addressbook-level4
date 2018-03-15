@@ -93,14 +93,10 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
-        assertTrue("Help for '3' is unknown or not available",
-                parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
+        assertTrue("Help for '3' is unknown or not available".equals(
+                parser.parseCommand(HelpCommand.COMMAND_WORD + " 3")));
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_ALIAS) instanceof HelpCommand);
-        assertTrue("add: Adds a person to the address book. "
-                        + "Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...\n"
-                        + "Example: add n/John Doe p/98765432 e/johnd@example.com a/311, "
-                        + "Clementi Ave 2, #02-25 t/friends t/owesMoney",
-                parser.parseCommand(HelpCommand.COMMAND_WORD + " add") instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " add") instanceof HelpCommand);
     }
 
     @Test

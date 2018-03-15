@@ -23,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Income;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -111,8 +112,17 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Income updatedIncome = editPersonDescriptor.getIncome().orElse(personToEdit.getIncome());
+        Age updatedAge = editPersonDescriptor.getAge().orElse(personToEdit.getAge());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedIncome);
+        return new Person(
+            updatedName,
+            updatedPhone,
+            updatedEmail,
+            updatedAddress,
+            updatedTags,
+            updatedIncome,
+            updatedAge
+        );
     }
 
     @Override
@@ -145,6 +155,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
         private Income income;
+        private Age age;
 
         public EditPersonDescriptor() {
         }
@@ -160,7 +171,7 @@ public class EditCommand extends UndoableCommand {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setIncome(toCopy.income);
-
+            setAge(toCopy.age);
         }
 
         /**
@@ -209,6 +220,10 @@ public class EditCommand extends UndoableCommand {
         public Optional<Income> getIncome() {
             return Optional.ofNullable(income);
         }
+
+        public void setAge(Age age) { this.age = age; }
+
+        public Optional<Age> getAge() { return Optional.ofNullable(age); }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

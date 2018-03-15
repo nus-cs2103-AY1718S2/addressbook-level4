@@ -27,12 +27,11 @@ Responsibilities: UI
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
++=== Daniel Tan
++image::joonkai1995.jpg[width="150", align="left"]
++{empty}[http://github.com/JoonKai1995[github]]
 Role: Developer +
-Responsibilities: Data
+Responsibilities: UI
 
 '''
 

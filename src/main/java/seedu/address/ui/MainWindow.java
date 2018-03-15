@@ -208,30 +208,53 @@ public class MainWindow extends UiPart<Stage> {
      * Change the theme of the application
      */
 
-    public void setTheme(String theme) {
+    public String setTheme(String theme) {
         String dark = this.getClass().getResource("/view/DarkTheme.css").toExternalForm();
         String light = this.getClass().getResource("/view/LightTheme.css").toExternalForm();
-        String extensions = this.getClass().getResource("/view/Extensions.css").toExternalForm();
 
         switch (theme.toLowerCase()) {
         case "dark":
-            if (!getRoot().getScene().getStylesheets().contains(dark)) {
-                getRoot().getScene().getStylesheets().clear();
-                getRoot().getScene().getStylesheets().add(dark);
+            if (!isCurrentStyleSheet(dark)) {
+                changeStyleSheet(dark);
+            } else {
+                return "The current theme is Dark";
             }
             break;
 
         case "light":
-            if (!getRoot().getScene().getStylesheets().contains(light)) {
-                getRoot().getScene().getStylesheets().clear();
-                getRoot().getScene().getStylesheets().add(light);
+            if (!isCurrentStyleSheet(light)) {
+                changeStyleSheet(light);
+            } else {
+                return "The current theme is Light";
             }
             break;
 
         default:
-            System.out.println("do nothing for now");
+            return "Invalid theme name. Please specify either the 'Dark' theme or the 'Light' theme";
         }
 
-        getRoot().getScene().getStylesheets().add(extensions);
+        return "The theme is successfully changed to: "
+                + theme.substring(0,1).toUpperCase() + theme.substring(1).toLowerCase();
+    }
+
+    /**
+     * Returns true if none of the current stylesheets contains {@code String} theme
+     */
+    public Boolean isCurrentStyleSheet(String theme){
+        if (!getRoot().getScene().getStylesheets().contains(theme)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes all existing stylesheets and add the given {@code String} theme to style sheets
+     * Re-add Extensions.css to style sheets.
+     */
+    public void changeStyleSheet(String theme) {
+        String extensions = this.getClass().getResource("/view/Extensions.css").toExternalForm();
+        getRoot().getScene().getStylesheets().clear(); //removes all style sheets
+        getRoot().getScene().getStylesheets().add(theme);
+        getRoot().getScene().getStylesheets().add(extensions); //re-add Extensions.css
     }
 }

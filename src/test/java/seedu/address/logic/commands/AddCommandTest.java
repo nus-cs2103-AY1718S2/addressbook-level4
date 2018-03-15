@@ -139,7 +139,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setLoginStatus(boolean status){
+        public void setLoginStatus(boolean status) {
             fail("This method should not be called.");
         }
 

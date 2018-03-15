@@ -24,6 +24,7 @@ public class TypicalPersons {
             .withPhone("85355255")
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
+            .withPhone("91234567")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533").build();

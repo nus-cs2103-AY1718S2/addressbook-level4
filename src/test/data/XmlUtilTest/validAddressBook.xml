@@ -1,57 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <tags>
-        <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <name>Physics</name>
+        <description isPrivate="false">physics physics</description>
     </tags>
     <tags>
         <name>Ruth Mueller</name>
-        <phone isPrivate="false">87249245</phone>
-        <email isPrivate="false">ruth@example.com</email>
-        <address isPrivate="false">81th street</address>
+        <description isPrivate="false">81th street</description>
     </tags>
     <tags>
         <name>Heinz Kurz</name>
-        <phone isPrivate="false">95352563</phone>
-        <email isPrivate="false">heinz@example.com</email>
-        <address isPrivate="false">wall street</address>
+        <description isPrivate="false">wall street</description>
     </tags>
     <tags>
         <name>Cornelia Meier</name>
-        <phone isPrivate="false">87652533</phone>
-        <email isPrivate="false">cornelia@example.com</email>
-        <address isPrivate="false">10th street</address>
+        <description isPrivate="false">10th street</description>
     </tags>
     <tags>
         <name>Werner Meyer</name>
-        <phone isPrivate="false">9482224</phone>
-        <email isPrivate="false">werner@example.com</email>
-        <address isPrivate="false">michegan ave</address>
+        <description isPrivate="false">michegan ave</description>
     </tags>
     <tags>
         <name>Lydia Kunz</name>
-        <phone isPrivate="false">9482427</phone>
-        <email isPrivate="false">lydia@example.com</email>
-        <address isPrivate="false">little tokyo</address>
+        <description isPrivate="false">little tokyo</description>
     </tags>
     <tags>
         <name>Anna Best</name>
-        <phone isPrivate="false">9482442</phone>
-        <email isPrivate="false">anna@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <description isPrivate="false">physics physics</description>
     </tags>
     <tags>
         <name>Stefan Meier</name>
-        <phone isPrivate="false">8482424</phone>
-        <email isPrivate="false">stefan@example.com</email>
-        <address isPrivate="false">little india</address>
+        <description isPrivate="false">little india</description>
     </tags>
     <tags>
         <name>Martin Mueller</name>
-        <phone isPrivate="false">8482131</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">chicago ave</address>
+        <description isPrivate="false">chicago ave</description>
     </tags>
 </addressbook>

@@ -3,46 +3,32 @@
 {@code TypicalAddressBook#getTypicalAddressBook()}-->
 <addressbook>
     <tags>
-        <name>Alice Pauline</name>
-        <phone>85355255</phone>
-        <email>alice@example.com</email>
-        <address>123, Jurong West Ave 6, #08-111</address>
+        <name>Physics</name>
+        <description>physics physics</description>
     </tags>
     <tags>
-        <name>Benson Meier</name>
-        <phone>98765432</phone>
-        <email>johnd@example.com</email>
-        <address>311, Clementi Ave 2, #02-25</address>
+        <name>Biology Midterms</name>
+        <description>biology midterms</description>
     </tags>
     <tags>
-        <name>Carl Kurz</name>
-        <phone>95352563</phone>
-        <email>heinz@example.com</email>
-        <address>wall street</address>
+        <name>Chemistry</name>
+        <description>chemistry chemistry</description>
     </tags>
     <tags>
-        <name>Daniel Meier</name>
-        <phone>87652533</phone>
-        <email>cornelia@example.com</email>
-        <address>10th street</address>
+        <name>Economics Midterms</name>
+        <description>economics economics</description>
     </tags>
     <tags>
-        <name>Elle Meyer</name>
-        <phone>9482224</phone>
-        <email>werner@example.com</email>
-        <address>michegan ave</address>
+        <name>History</name>
+        <description>history history</description>
     </tags>
     <tags>
-        <name>Fiona Kunz</name>
-        <phone>9482427</phone>
-        <email>lydia@example.com</email>
-        <address>little tokyo</address>
+        <name>Malay</name>
+        <description>malay malay</description>
     </tags>
     <tags>
-        <name>George Best</name>
-        <phone>9482442</phone>
-        <email>anna@example.com</email>
-        <address>4th street</address>
+        <name>Tamil</name>
+        <description>tamil tamil</description>
     </tags>
     <cards>
         <front>Who is the current POTUS?</front>

@@ -5,8 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_COMSCI;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -31,7 +30,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditTagDescriptorBuilder;
 import seedu.address.testutil.TagBuilder;
 
-/**
+/**ed
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
  */
 public class EditCommandTest {
@@ -58,11 +57,11 @@ public class EditCommandTest {
         Tag lastTag = model.getFilteredTagList().get(indexLastTag.getZeroBased());
 
         TagBuilder tagInList = new TagBuilder(lastTag);
-        Tag editedTag = tagInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Tag editedTag = tagInList.withName(VALID_NAME_COMSCI)
                 .build();
 
-        EditCommand.EditTagDescriptor descriptor = new EditTagDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).build();
+        EditCommand.EditTagDescriptor descriptor = new EditTagDescriptorBuilder().withName(VALID_NAME_COMSCI)
+                .build();
         EditCommand editCommand = prepareCommand(indexLastTag, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_TAG_SUCCESS, editedTag);
@@ -90,9 +89,9 @@ public class EditCommandTest {
         showTagAtIndex(model, INDEX_FIRST_TAG);
 
         Tag tagInFilteredList = model.getFilteredTagList().get(INDEX_FIRST_TAG.getZeroBased());
-        Tag editedTag = new TagBuilder(tagInFilteredList).withName(VALID_NAME_BOB).build();
+        Tag editedTag = new TagBuilder(tagInFilteredList).withName(VALID_NAME_COMSCI).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_TAG,
-                new EditTagDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditTagDescriptorBuilder().withName(VALID_NAME_COMSCI).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_TAG_SUCCESS, editedTag);
 
@@ -126,7 +125,7 @@ public class EditCommandTest {
     @Test
     public void execute_invalidTagIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTagList().size() + 1);
-        EditCommand.EditTagDescriptor descriptor = new EditTagDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCommand.EditTagDescriptor descriptor = new EditTagDescriptorBuilder().withName(VALID_NAME_COMSCI).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_TAG_DISPLAYED_INDEX);
@@ -144,7 +143,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getTagList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
-                new EditTagDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditTagDescriptorBuilder().withName(VALID_NAME_COMSCI).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_TAG_DISPLAYED_INDEX);
     }
@@ -178,7 +177,7 @@ public class EditCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTagList().size() + 1);
-        EditTagDescriptor descriptor = new EditTagDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditTagDescriptor descriptor = new EditTagDescriptorBuilder().withName(VALID_NAME_COMSCI).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> editCommand not pushed into undoRedoStack
@@ -201,7 +200,7 @@ public class EditCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Tag editedTag = new TagBuilder().build();
+        Tag editedTag = new TagBuilder().withName("Jethro Kuan").build();
         EditTagDescriptor descriptor = new EditTagDescriptorBuilder(editedTag).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_TAG, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());

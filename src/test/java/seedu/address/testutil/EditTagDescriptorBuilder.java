@@ -2,10 +2,8 @@ package seedu.address.testutil;
 
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditTagDescriptor;
-import seedu.address.model.tag.Address;
-import seedu.address.model.tag.Email;
+import seedu.address.model.tag.Description;
 import seedu.address.model.tag.Name;
-import seedu.address.model.tag.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,9 +27,7 @@ public class EditTagDescriptorBuilder {
     public EditTagDescriptorBuilder(Tag tag) {
         descriptor = new EditTagDescriptor();
         descriptor.setName(tag.getName());
-        descriptor.setPhone(tag.getPhone());
-        descriptor.setEmail(tag.getEmail());
-        descriptor.setAddress(tag.getAddress());
+        descriptor.setDescription(tag.getDescription());
     }
 
     /**
@@ -42,27 +38,12 @@ public class EditTagDescriptorBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code Phone} of the {@code EditTagDescriptor} that we are building.
-     */
-    public EditTagDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
-        return this;
-    }
 
     /**
-     * Sets the {@code Email} of the {@code EditTagDescriptor} that we are building.
+     * Sets the {@code Description} of the {@code EditTagDescriptor} that we are building.
      */
-    public EditTagDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code EditTagDescriptor} that we are building.
-     */
-    public EditTagDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
+    public EditTagDescriptorBuilder withDescription(String address) {
+        descriptor.setDescription(new Description(address));
         return this;
     }
 

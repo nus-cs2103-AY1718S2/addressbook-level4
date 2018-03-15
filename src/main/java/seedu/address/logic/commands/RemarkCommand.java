@@ -9,11 +9,14 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Remark;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Edits the remark of an existing person in the address book.
+ */
 public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
@@ -99,10 +102,9 @@ public class RemarkCommand extends UndoableCommand {
      */
     private String generateSuccessMessage(Person personToEdit) {
         String message;
-        if (remark.value.isEmpty()){
+        if (remark.value.isEmpty()) {
             message = MESSAGE_DELETE_REMARK_SUCCESS;
-        }
-        else {
+        } else {
             message = MESSAGE_ADD_REMARK_SUCCESS;
         }
         return String.format(message, personToEdit);

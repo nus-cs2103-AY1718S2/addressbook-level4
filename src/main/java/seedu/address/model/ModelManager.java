@@ -109,7 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setLoginStatus(boolean status){
+    public void setLoginStatus(boolean status) {
         addressBook.setLoginStatus(status);
     }
 

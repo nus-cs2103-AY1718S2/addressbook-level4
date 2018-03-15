@@ -34,7 +34,7 @@ import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
-import seedu.address.ui.MainWindow;
+
 
 /**
  * The main entry point to the application.
@@ -76,9 +76,10 @@ public class MainApp extends Application {
         initEventsCenter();
     }
 
-    public void initTest(){
+    /** Initialise for tests */
+    public void initTest() {
         model.setLoginStatus(true);
-        (ui.getMainWindow()).showAfterLogin();
+        ui.getMainWindow().showAfterLogin();
     }
 
     private String getApplicationParameter(String parameterName) {

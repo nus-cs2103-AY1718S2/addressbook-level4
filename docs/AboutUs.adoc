@@ -39,7 +39,7 @@ Responsibilities: Storage
 '''
 
 === Liu Jianghao
-image::fishTT.png[width="150", align="left"]
+image::fishtt.png[width="150", align="left"]
 {empty}[http://github.com/fishTT[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

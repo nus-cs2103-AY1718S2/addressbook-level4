@@ -44,7 +44,7 @@ public class BookDeserializer extends StdDeserializer<Book> {
 
     private Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] iiArray) {
         for (JsonIndustryIdentifiers ii: iiArray) {
-            if (ii.type.equals("ISBN_13")) {
+            if ("ISBN_13".equals(ii.type)) {
                 return new Isbn(ii.identifier);
             }
         }

@@ -17,7 +17,9 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+CoinBook is a desktop application that is made for users who prefer to work on a mouse-free, command line platform with minimal graphical user interface (GUI) support.
+Our program allows you to store a portfolio of your cryptocurrency purchases as well as track the latest price trends and news, in addition to allowing for many
+operations to simplify and expedite your management process such as profit calculation.
 
 == Quick Start
 
@@ -28,7 +30,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your CoinBook.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,15 +39,14 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all Coins
+* **`add`**`n/BTC a/100` : adds a Coin account named `BTC` to the CoinBook with an initial amount of 100 coins.
+* **`buy`**`BTC 3` : adds 3 coins into the BTC account.
 * *`exit`* : exits the app
 
 . Alternatively, you can type replace commands by their aliases which are shorter to achieve the same effect. For example:
 
-* *`l`* : lists all contacts
-* **`d`**`3` : deletes the 3rd contact shown in the current list
+* *`l`* : lists all accounts
 
 .  Refer to <<Features>> for details of each command. Command aliases are specified after the `/` symbol.
 
@@ -55,101 +56,95 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user. e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/ETH`.
+* Items in square brackets are optional. e.g `n/NAME [t/TAG]` can be used as `n/BTC t/fav` or as `n/BTC`.
+* Items with `…`​ after them can be used multiple times including zero times. e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/cheap`, `t/active t/fav` etc.
+* Parameters can be in any order. e.g. if the command specifies `n/NAME a/VALUE`, `a/VALUE n/NAME` is also acceptable.
+* Items in curly braces indicate multiple possibilities. e.g. `buy {NAME, TAG} AMOUNT`, is a command where the first parameter can either be a NAME or a TAG. +
+    [!] Bear in mind that if multiple items are tagged, then the command will be applied to all accounts under the same tag.
 ====
 
 === Viewing help : `help` / `?`
 
 Format: `help`
 
-=== Adding a person: `add` / `a`
+=== Adding a Coin account: `add` / `a`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a Coin account to the address book +
+Format: `add n/NAME a/AMOUNT [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A Coin account can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/BTC a/50.50`
+* `add n/ETH a/1000 t/fav`
 
-=== Listing all persons : `list` / `l`
+=== Buying Coin for an account: `buy` / `b`
 
-Shows a list of all persons in the address book. +
+Adds value into a given Coin account. +
+Format: `buy {INDEX, NAME, TAG} VALUE`
+
+Example:
+* `buy BTC 0.5`
+
+=== Selling Coin from an account: `sell` / `se`
+
+Removes value from a given Coin account. +
+Format: `sell {INDEX, NAME, TAG} VALUE`
+
+Example:
+* `sell BTC 0.5`
+
+=== Listing all Coin accounts : `list` / `l`
+
+Shows a list of all Coin accounts in the CoinBook. +
 Format: `list`
 
-=== Editing a person : `edit` / `e`
+=== Locating Coin accounts: `find` / `f`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Finds coin accounts whose details satisfy the query. +
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find` / `f`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find QUERY [LOGICAL_OPERATORS QUERY]...` +
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* List of logical operators include:
+    1. AND
+    2. OR
+    3. NOT
+* List of possible queries include:
+    1. name NAME: Name of the Coin account
+    2. tag TAGNAME: Tag attribute of the Coin account
+    3. price > VALUE : The current price any Coin exceeding <VALUE>
+    4. price < VALUE : The current price any Coin less than <VALUE>
+    5. profit > VALUE : The total profits derived from selling a Coin exceeding <VALUE>
+    6. profit < VALUE : The total profits derived from selling a Coin less than <VALUE>
+    7. amount < VALUE : The amount held in a Coin exceeding <VALUE>
+    8. amount > VALUE : The amount held in Coin less than <VALUE>
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find BTC` +
+Returns the account named BTC. +
+* `find tag fav` +
+Returns any accounts with the "fav" tag. +
+* `find (price > 500 AND tag fav) OR amount < 20` +
+Returns any accounts that either currently cost more than 500 dollars and was previously tagged as FAV,
+or which the the account has less than 20 Coins left.
 
-=== Deleting a person : `delete` / `d`
+=== Selecting an account : `select` / `s`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select` / `s`
-
-Selects the person identified by the index number used in the last person listing. +
+Selects the account identified by the index number used in the most recent listing. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the account and loads the relevant information related to the account at the specified `INDEX`. The information includes:
+    1. Amount spent in dollars to purchase the amount of current coin.
+    2. Amount earned based on past sales of the current coin.
+    3. Amount of possible profit if coin amount was sold at that point.
+    4. A chart depicting the price history of that coin account.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -158,10 +153,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
+Selects the 2nd Coin account in the address book.
+* `find BTC` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st Coin account in the results of the `find` command.
 
 === Listing entered commands : `history` / `h`
 
@@ -186,19 +181,19 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `delete 1` +
+* `buy BTC 10` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `buy BTC 10` command) +
 
 * `select 1` +
 `list` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
+* `sell BTC 10` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `sell BTC 10` command) +
 
 === Redoing the previously undone command : `redo` / `r`
 
@@ -207,26 +202,65 @@ Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `buy BTC 10` +
+`undo` (reverses the `buy BTC 10` command) +
+`redo` (reapplies the `buy BTC 10` command) +
 
-* `delete 1` +
+* `list` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+* `sell BTC 10` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (reverses the `sell BTC 10` command) +
+`redo` (reapplies the `sell BTC 10` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
 === Clearing all entries : `clear` / `c`
 
-Clears all entries from the address book. +
+Clears all entries from the CoinBook. +
 Format: `clear`
+
+=== Tagging an entry : `tag` / `t`
+
+Adds a tag attribute to an entry in the CoinBook, so that they can be grouped for other commands. +
+Format: `tag {INDEX, NAME} TAG_NAME`
+
+Example:
+
+* `tag 1 fav` +
+`tag 3 fav` +
+`tag 5 fav` +
+The first, third, and fifth entry in the list is now tagged with the `fav` attribute.
+
+=== Setting up notifications : `notifyme` / `n`
+
+Sets a condition that triggers a desktop notification when met. +
+Format: `notifyme {INDEX, NAME, TAG} CONDITION [LOGICAL_OPERATOR CONDITION]...`
+
+****
+* Logical operators indlude: +
+    1. AND
+    2. OR
+    3. NOT
+* The list of conditions include: +
+    1. When the price exceeds AMOUNT: price > AMOUNT
+    2. When the price has drops below AMOUNT: price < AMOUNT
+    3. When the profitability exceeds AMOUNT: profit > AMOUNT
+    4. When the profitability drops below AMOUNT: profit < AMOUNT
+****
+
+Example:
+
+* `notifyme 1 price > 50` +
+When the price of the first entry has exceeded 50 dollars, a desktop notification will be triggered.
+
+=== Updating the information : `update` / `u`
+
+Obtains the latest prices and refreshes the news feed using the Internet.
+Format: `update`
 
 === Exiting the program : `exit` / `q`
 
@@ -235,7 +269,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+CoinBook data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -251,19 +285,17 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
+* *Add* : `add n/NAME a/AMOUNT [t/TAG]...` +
+* *Buy* : `buy {INDEX, NAME, TAG} VALUE` +
+* *Sell* : `sell {INDEX, NAME, TAG} VALUE` +
+* *List* : `list` +
+* *Find* : `find QUERY [LOGICAL_OPERATORS QUERY]...` +
 * *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *History* : `history` +
+* *Undo* : `undo` +
+* *Redo* : `redo` +
+* *Clear* : `clear` +
+* *Notifyme* : `notifyme {INDEX, NAME, TAG} CONDITION [LOGICAL_OPERATOR CONDITION]...` +
+* *Update* : `update` +
+* *Exit* :  `exit` +
+

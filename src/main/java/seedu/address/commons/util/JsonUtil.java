@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +26,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 
 /**
  * Converts a Java object instance to JSON and vice versa
+ * OR an array of JSON objects to Java object instances
  */
 public class JsonUtil {
 
@@ -38,6 +41,8 @@ public class JsonUtil {
                     .addSerializer(Level.class, new ToStringSerializer())
                     .addDeserializer(Level.class, new LevelDeserializer(Level.class)));
 
+    private static ObjectMapper listOfObjectsMapper = new ObjectMapper();
+
     static <T> void serializeObjectToJsonFile(File jsonFile, T objectToSerialize) throws IOException {
         FileUtil.writeToFile(jsonFile, toJsonString(objectToSerialize));
     }
@@ -45,6 +50,14 @@ public class JsonUtil {
     static <T> T deserializeObjectFromJsonFile(File jsonFile, Class<T> classOfObjectToDeserialize)
             throws IOException {
         return fromJsonString(FileUtil.readFromFile(jsonFile), classOfObjectToDeserialize);
+    }
+
+    @SuppressWarnings( "unchecked" )
+    static <T> List<T> deserializeListOfObjectsFromJsonFile(File jsonFile, Class<T> classOfObjectToDeserialize)
+            throws IOException, ClassNotFoundException {
+        Class<T[]> arrayClass = (Class<T[]>) Class.forName("[L" + classOfObjectToDeserialize.getName() + ";");
+        T[] objects = listOfObjectsMapper.readValue(jsonFile, arrayClass);
+        return Arrays.asList(objects);
     }
 
     /**

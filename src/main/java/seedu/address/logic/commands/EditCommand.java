@@ -194,17 +194,14 @@ public class EditCommand extends UndoableCommand {
             this.address = address;
         }
 
-        public Optional<Address> getAddress() {
-
-            return Optional.ofNullable(address);
-        }
+        public Optional<Address> getAddress() { return Optional.ofNullable(address); }
 
         public void setDate(DelivDate date) {
             this.date = date;
         }
 
-        public Optional<DelivDate> getDate() {
-            return Optional.ofNullable(date); }
+        public Optional<DelivDate> getDate() { return Optional.ofNullable(date); }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -241,6 +238,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getDate().equals(e.getDate())
                     && getTags().equals(e.getTags());
         }
     }

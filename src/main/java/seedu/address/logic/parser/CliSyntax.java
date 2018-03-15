@@ -13,7 +13,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_TAG = new Prefix("t/");
 
     public static final Prefix PREFIX_PET_PATIENT_NAME = new Prefix("n/");
-    public static final Prefix PREFIX_PET_PATIENT_SPECIES = new Prefix("s/");;
+    public static final Prefix PREFIX_PET_PATIENT_SPECIES = new Prefix("s/");
     public static final Prefix PREFIX_PET_PATIENT_BREED = new Prefix("b/");
     public static final Prefix PREFIX_PET_PATIENT_COLOUR = new Prefix("c/");
     public static final Prefix PREFIX_PET_PATIENT_BLOODTYPE = new Prefix("bt/");

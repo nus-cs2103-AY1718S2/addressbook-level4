@@ -33,7 +33,8 @@ public class UniquePetPatientList implements Iterable<PetPatient> {
     /**
      * Adds a pet patient to the list.
      *
-     * @throws DuplicatePetPatientException if the pet patient to add is a duplicate of an existing pet patient in the list.
+     * @throws DuplicatePetPatientException if the pet patient to add is a duplicate of an existing pet patient
+     * in the list.
      */
     public void add(PetPatient toAdd) throws DuplicatePetPatientException {
         requireNonNull(toAdd);
@@ -46,7 +47,8 @@ public class UniquePetPatientList implements Iterable<PetPatient> {
     /**
      * Replaces the pet patient {@code target} in the list with {@code editedPetPatient}.
      *
-     * @throws DuplicatePetPatientException if the replacement is equivalent to another existing pet patient in the list.
+     * @throws DuplicatePetPatientException if the replacement is equivalent to another existing pet patient
+     * in the list.
      * @throws PetPatientNotFoundException if {@code target} could not be found in the list.
      */
     public void setPerson(PetPatient target, PetPatient editedPetPatient)

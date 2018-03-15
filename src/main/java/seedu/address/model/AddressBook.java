@@ -158,33 +158,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     *
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removePerson(Person key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
-            return true;
-        } else {
-            throw new PersonNotFoundException();
-        }
-    }
-
-    //// pet-patient-level operations
-
-    /**
-     * Adds a pet patient to the address book.
-     * Also checks the new pet patient's tags and updates {@link #petPatientTags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #petPatientTags}.
-     *
-     * @throws DuplicatePetPatientException if an equivalent person already exists.
-     */
-    public void addPetPatient(PetPatient p) throws DuplicatePetPatientException {
-        PetPatient petPatient = syncWithMasterTagList(p);
-        petPatients.add(petPatient);
-    }
-
-    /**
      * Updates the master tag list to include tags in {@code petPatient} that are not in the list.
      *
      * @return a copy of this {@code petPatient} such that every tag in this pet patient points to a Tag object in the
@@ -209,6 +182,33 @@ public class AddressBook implements ReadOnlyAddressBook {
                 petPatient.getColour(),
                 petPatient.getBloodType(),
                 correctTagReferences);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removePerson(Person key) throws PersonNotFoundException {
+        if (persons.remove(key)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
+    //// pet-patient-level operations
+
+    /**
+     * Adds a pet patient to the address book.
+     * Also checks the new pet patient's tags and updates {@link #petPatientTags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #petPatientTags}.
+     *
+     * @throws DuplicatePetPatientException if an equivalent person already exists.
+     */
+    public void addPetPatient(PetPatient p) throws DuplicatePetPatientException {
+        PetPatient petPatient = syncWithMasterTagList(p);
+        petPatients.add(petPatient);
     }
 
     //// tag-level operations

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.BookCardHandle;
+import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.SearchResultsPanelHandle;
@@ -15,6 +16,22 @@ import seedu.address.model.book.Book;
  * A set of assertion methods useful for writing GUI tests.
  */
 public class GuiTestAssert {
+
+    /**
+     * Asserts that {@code detailsPanel} displays the details of {@code expectedBook}.
+     */
+    public static void assertDetailsPanelDisplaysBook(Book expectedBook, BookDetailsPanelHandle detailsPanel) {
+        assertEquals(expectedBook.getTitle().toString(), detailsPanel.getTitle());
+        assertEquals(expectedBook.getIsbn().toString(), detailsPanel.getIsbn());
+        assertEquals(expectedBook.getPublisher().toString(), detailsPanel.getPublisher());
+        assertEquals(expectedBook.getPublicationDate().toString(), detailsPanel.getPublicationDate());
+        assertEquals(expectedBook.getDescription().toString(), detailsPanel.getDescription());
+        assertEquals(expectedBook.getAuthors().stream().map(author -> author.fullName)
+                .collect(Collectors.toList()), detailsPanel.getAuthors());
+        assertEquals(expectedBook.getCategories().stream().map(category -> category.category)
+                .collect(Collectors.toList()), detailsPanel.getCategories());
+    }
+
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */

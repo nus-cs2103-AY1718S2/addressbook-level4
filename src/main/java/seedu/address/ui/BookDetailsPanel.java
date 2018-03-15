@@ -41,6 +41,7 @@ public class BookDetailsPanel extends UiPart<Region> {
     public BookDetailsPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
+        getRoot().setVisible(false);
     }
 
     /** Update this panel to show details about the specified book. */

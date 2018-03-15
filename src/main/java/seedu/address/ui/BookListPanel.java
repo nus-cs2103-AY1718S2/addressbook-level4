@@ -74,7 +74,7 @@ public class BookListPanel extends UiPart<Region> {
 
         // clear book list selection if the user selects an item in the search results
         bookListView.getSelectionModel().clearSelection();
-        scrollTo(0);
+        bookListView.scrollTo(0);
     }
 
     /**

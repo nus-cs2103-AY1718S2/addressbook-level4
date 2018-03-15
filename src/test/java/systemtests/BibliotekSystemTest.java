@@ -1,16 +1,12 @@
 package systemtests;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
+import static seedu.address.ui.testutil.GuiTestAssert.assertDetailsPanelDisplaysBook;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -20,26 +16,24 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.SearchResultsPanelHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
+import seedu.address.model.book.Book;
 import seedu.address.testutil.TypicalBooks;
-import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
 
 /**
@@ -69,7 +63,6 @@ public abstract class BibliotekSystemTest {
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -113,8 +106,8 @@ public abstract class BibliotekSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    public BookDetailsPanelHandle getBookDetailsPanel() {
+        return mainWindowHandle.getBookDetailsPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -136,8 +129,6 @@ public abstract class BibliotekSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -188,85 +179,69 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code BookListPanelHandle}, {@code SearchResultsPanelHandle},
-     * and {@code StatusBarFooterHandle} to remember their current state.
+     * Calls {@code BookListPanelHandle}, {@code SearchResultsPanelHandle},  {@code StatusBarFooterHandle},
+     * and {@code BookDetailsPanelHandle} to remember their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getBookListPanel().rememberSelectedBookCard();
         getSearchResultsPanel().rememberSelectedBookCard();
+        getBookDetailsPanel().rememberIsbn();
     }
 
     /**
-     * Asserts that the previously selected book list card is now deselected and the browser's url
+     * Asserts that the previously selected book list card is now deselected and the book details panel
      * remains displaying the details of the previously selected book.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see BookDetailsPanelHandle#isIsbnChanged()
      */
     protected void assertSelectedBookListCardDeselected() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getBookDetailsPanel().isIsbnChanged());
         assertFalse(getBookListPanel().isAnyCardSelected());
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the book in the book list panel at
+     * Asserts that the book details panel displays the details of the book in the book list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
      * @see BookListPanelHandle#isSelectedBookCardChanged()
      */
     protected void assertSelectedBookListCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardTitle = getBookListPanel().getHandleToSelectedCard().getTitle();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL
-                    + StringUtil.urlEncode(selectedCardTitle).replaceAll("\\+", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.");
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
+        Book selectedBook = getModel().getFilteredBookList().get(expectedSelectedCardIndex.getZeroBased());
+        assertDetailsPanelDisplaysBook(selectedBook, getBookDetailsPanel());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getBookListPanel().getSelectedCardIndex());
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the book in the search results panel at
+     * Asserts that the book details panel displays the details of the book in the search results panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
      * @see SearchResultsPanelHandle#isSelectedBookCardChanged()
      */
     protected void assertSelectedSearchResultsCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardTitle = getSearchResultsPanel().getHandleToSelectedCard().getTitle();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL
-                    + StringUtil.urlEncode(selectedCardTitle).replaceAll("\\+", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.");
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
+        Book selectedBook = getModel().getSearchResultsList().get(expectedSelectedCardIndex.getZeroBased());
+        assertDetailsPanelDisplaysBook(selectedBook, getBookDetailsPanel());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getSearchResultsPanel().getSelectedCardIndex());
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the book list panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * Asserts that the selected card in the book list panel remain unchanged and the book details panel
+     * remains displaying the details of the previously selected book.
+     * @see BookDetailsPanelHandle#isIsbnChanged()
      * @see BookListPanelHandle#isSelectedBookCardChanged()
      */
     protected void assertSelectedBookListCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getBookDetailsPanel().isIsbnChanged());
         assertFalse(getBookListPanel().isSelectedBookCardChanged());
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the search results panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * Asserts that the selected card in the search results panel remain unchanged and the book details panel
+     * remains displaying the details of the previously selected book.
+     * @see BookDetailsPanelHandle#isIsbnChanged()
      * @see SearchResultsPanelHandle#isSelectedBookCardChanged()
      */
     protected void assertSelectedSearchResultsCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getBookDetailsPanel().isIsbnChanged());
         assertFalse(getSearchResultsPanel().isSelectedBookCardChanged());
     }
 
@@ -313,7 +288,7 @@ public abstract class BibliotekSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getBookListPanel(), getModel().getFilteredBookList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertFalse(getBookDetailsPanel().isVisible());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

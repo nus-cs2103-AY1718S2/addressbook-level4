@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 
@@ -92,7 +90,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
-                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_TAGS);
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_INTERVIEW_DATE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -103,7 +102,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
-                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_TAGS);
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_INTERVIEW_DATE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -114,7 +114,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
-                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_TAGS);
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_INTERVIEW_DATE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

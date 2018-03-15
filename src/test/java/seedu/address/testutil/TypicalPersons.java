@@ -1,7 +1,5 @@
 package seedu.address.testutil;
 
-import java.time.LocalDateTime;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMUNICATION_SKILLS_SCORE_AMY;
@@ -30,7 +28,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -38,9 +35,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
 public class TypicalPersons {
-
-    private static final LocalDateTime sampleInterviewDate =
-            LocalDateTime.ofEpochSecond(1540814400, 0, InterviewDate.LOCAL_ZONE_OFFSET);
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")

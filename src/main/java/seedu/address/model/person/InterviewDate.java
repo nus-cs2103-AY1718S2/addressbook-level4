@@ -10,8 +10,8 @@ import java.util.Objects;
  * Guarantees: immutable
  */
 public class InterviewDate {
-    public static final String MESSAGE_INTERVIEW_DATE_XML_ERROR
-            = "Interview date must be in epoch format, failed to parse from XML";
+    public static final String MESSAGE_INTERVIEW_DATE_XML_ERROR =
+            "Interview date must be in epoch format, failed to parse from XML";
     public static final ZoneOffset LOCAL_ZONE_OFFSET = ZoneId.systemDefault().getRules().getOffset(LocalDateTime.now());
 
     public final LocalDateTime dateTime;

@@ -12,6 +12,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.time.LocalDateTime;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -25,8 +27,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
-
-import java.time.LocalDateTime;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for InterviewCommand.
@@ -118,7 +118,8 @@ public class InterviewCommandTest {
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToInterview = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person scheduledPerson = new PersonBuilder(personToInterview).withInterviewDate(VALID_DATETIME).build();
-        // interview -> schedule interview for second person in unfiltered person list / first person in filtered person list
+        // interview -> schedule interview for second person in unfiltered person list /
+        //              first person in filtered person list
         interviewCommand.execute();
         undoRedoStack.push(interviewCommand);
 

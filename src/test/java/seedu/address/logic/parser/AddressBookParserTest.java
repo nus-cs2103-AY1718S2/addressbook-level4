@@ -39,7 +39,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ExpectedGraduationYearBeforeKeywordPredicate;
 import seedu.address.model.person.InterviewDate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
 import seedu.address.testutil.EditPersonDescriptorBuilder;

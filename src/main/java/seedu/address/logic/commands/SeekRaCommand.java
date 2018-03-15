@@ -26,7 +26,7 @@ public class SeekRaCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForRAShownSummary(model.getFilteredPersonList().size()));
     }
 
     @Override

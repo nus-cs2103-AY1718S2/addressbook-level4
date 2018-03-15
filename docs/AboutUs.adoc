@@ -18,15 +18,6 @@ Responsibilities: Logic
 
 '''
 
-=== Ellery Chia
-image::ellery.jpg[width="150", align="left"]
-{empty}[http://github.com/Alaru[github]]
-
-Role: Developer +
-Responsibilities: Storage
-
-'''
-
 === Daniel Tan
 image::daniel.jpg[width="150", align="left"]
 {empty}[http://github.com/JoonKai1995[github]]
@@ -45,3 +36,11 @@ Responsibilities: Model
 
 '''
 
+=== Ellery Chia
+image::ellery.jpg[width="150", align="left"]
+{empty}[http://github.com/Alaru[github]]
+
+Role: Developer +
+Responsibilities: Storage
+
+'''

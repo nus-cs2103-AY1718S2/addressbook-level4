@@ -9,7 +9,12 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
@@ -29,6 +34,31 @@ public class FindCommandParserTest {
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+
+        //-all specifier
+        expectedFindCommand = new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-all Alice Bob", expectedFindCommand);
+
+        //-n specifier
+        expectedFindCommand = new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-n Alice Bob", expectedFindCommand);
+
+        //-p specifier
+        expectedFindCommand = new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-p Alice Bob", expectedFindCommand);
+
+        //-a specifier
+        expectedFindCommand = new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-a Alice Bob", expectedFindCommand);
+
+        //-t specifier
+        expectedFindCommand = new FindCommand(new TagsContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-t Alice Bob", expectedFindCommand);
+
+        //-e specifier
+        expectedFindCommand = new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("alice@example.com",
+                "bob@example.com")));
+        assertParseSuccess(parser, "-e alice@example.com bob@example.com", expectedFindCommand);
     }
 
 }

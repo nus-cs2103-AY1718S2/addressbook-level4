@@ -3,7 +3,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://CS2103JAN2018-F12-B1.github.io/docs/Team.html[se-edu] team. +
+NUS F&T was developed by the https://CS2103JAN2018-F12-B1/teams/developers team. +
 {empty} +
 We are a team based in the http://www.nus.edu.sg[National University of Singapore].
 
@@ -21,33 +21,7 @@ Role: Developer +
 image::liuyiming.png[width="150", align="left"]
 {empty}[http://github.com/A0155428B[github]]
 
-Role: Team Lead +
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
 Role: Developer +
-Responsibilities: Data
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
-
-'''

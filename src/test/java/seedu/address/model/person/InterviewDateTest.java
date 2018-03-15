@@ -6,20 +6,21 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.junit.Test;
 
 public class InterviewDateTest {
 
     private LocalDateTime timeNow = LocalDateTime.now().withNano(0);
-    private long timeNowInEpoch = timeNow.toEpochSecond(InterviewDate.LOCAL_ZONE_OFFSET);
+    private long timeNowInEpoch = timeNow.toEpochSecond(ZoneOffset.UTC);
 
     private final InterviewDate validInterviewDate = new InterviewDate(timeNow);
     private final InterviewDate nullInterviewDate = new InterviewDate();
 
     @Test
     public void setup_sameTimeNow_returnsTrue() {
-        LocalDateTime convertedTime = LocalDateTime.ofEpochSecond(timeNowInEpoch, 0, InterviewDate.LOCAL_ZONE_OFFSET);
+        LocalDateTime convertedTime = LocalDateTime.ofEpochSecond(timeNowInEpoch, 0, ZoneOffset.UTC);
         assertTrue(convertedTime.equals(timeNow));
     }
 

@@ -13,6 +13,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.junit.Test;
 
@@ -24,7 +25,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -34,7 +34,7 @@ import seedu.address.testutil.PersonBuilder;
 public class InterviewCommandTest {
 
     public static final LocalDateTime VALID_DATETIME =
-            LocalDateTime.ofEpochSecond(1540814400, 0, InterviewDate.LOCAL_ZONE_OFFSET);
+            LocalDateTime.ofEpochSecond(1540814400, 0, ZoneOffset.UTC);
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test

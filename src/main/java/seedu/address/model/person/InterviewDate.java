@@ -29,7 +29,7 @@ public class InterviewDate {
      * @param timestamp A epoch timestamp
      */
     public InterviewDate(Long timestamp) {
-        this(LocalDateTime.ofEpochSecond(timestamp, 0, LOCAL_ZONE_OFFSET));
+        this(LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC));
     }
 
     /**
@@ -39,7 +39,7 @@ public class InterviewDate {
     public InterviewDate(LocalDateTime dateTime) {
         this.dateTime = dateTime;
         if (dateTime != null) {
-            this.value = String.valueOf(dateTime.toEpochSecond(LOCAL_ZONE_OFFSET));
+            this.value = String.valueOf(dateTime.toEpochSecond(ZoneOffset.UTC));
         } else {
             this.value = null;
         }

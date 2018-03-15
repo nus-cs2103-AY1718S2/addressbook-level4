@@ -12,6 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TECHNICAL_SKILLS_SCORE
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +39,6 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ExpectedGraduationYearBeforeKeywordPredicate;
-import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -82,7 +82,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_interview() throws Exception {
-        LocalDateTime dateTime = LocalDateTime.ofEpochSecond(1521007200, 0, InterviewDate.LOCAL_ZONE_OFFSET);
+        LocalDateTime dateTime = LocalDateTime.ofEpochSecond(1521036000, 0, ZoneOffset.UTC);
 
         InterviewCommand command = (InterviewCommand) parser.parseCommand(InterviewCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " Mar 14 2018 2pm");

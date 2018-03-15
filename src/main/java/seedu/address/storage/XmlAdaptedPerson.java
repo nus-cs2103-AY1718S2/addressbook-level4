@@ -139,7 +139,6 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Vegetarian.MESSAGE_VEGETARIAN_CONSTRAINTS);
         }
         final Vegetarian vegetarian = new Vegetarian(this.vegetarian);
-        
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, halal, vegetarian, tags);
     }

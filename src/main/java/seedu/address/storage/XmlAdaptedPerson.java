@@ -18,6 +18,7 @@ import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
@@ -46,6 +47,15 @@ public class XmlAdaptedPerson {
     private String interviewDate;
 
     @XmlElement
+    private String technicalSkillsScore;
+    @XmlElement
+    private String communicationSkillsScore;
+    @XmlElement
+    private String problemSolvingSkillsScore;
+    @XmlElement
+    private String experienceScore;
+
+    @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
@@ -58,12 +68,18 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
+                            String technicalSkillsScore, String communicationSkillsScore,
+                            String problemSolvingSkillsScore, String experienceScore,
                             String resume, String interviewDate, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
+        this.technicalSkillsScore = technicalSkillsScore;
+        this.communicationSkillsScore = communicationSkillsScore;
+        this.problemSolvingSkillsScore = problemSolvingSkillsScore;
+        this.experienceScore = experienceScore;
         this.resume = resume;
         this.interviewDate = interviewDate;
         if (tagged != null) {
@@ -82,6 +98,10 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         expectedGraduationYear = source.getExpectedGraduationYear().value;
+        technicalSkillsScore = Double.toString(source.getRating().technicalSkillsScore);
+        communicationSkillsScore = Double.toString(source.getRating().communicationSkillsScore);
+        problemSolvingSkillsScore = Double.toString(source.getRating().problemSolvingSkillsScore);
+        experienceScore = Double.toString(source.getRating().experienceScore);
         resume = source.getResume().value;
         interviewDate = source.getInterviewDate().toString();
         tagged = new ArrayList<>();
@@ -142,6 +162,15 @@ public class XmlAdaptedPerson {
         }
         final ExpectedGraduationYear expectedGraduationYear = new ExpectedGraduationYear(this.expectedGraduationYear);
 
+        if (!Rating.isValidOrDefaultScore(Double.valueOf(technicalSkillsScore))
+                || !Rating.isValidOrDefaultScore(Double.valueOf(communicationSkillsScore))
+                || !Rating.isValidOrDefaultScore(Double.valueOf(problemSolvingSkillsScore))
+                || !Rating.isValidOrDefaultScore(Double.valueOf(experienceScore))) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        final Rating rating = new Rating(Double.valueOf(technicalSkillsScore), Double.valueOf(communicationSkillsScore),
+                Double.valueOf(problemSolvingSkillsScore), Double.valueOf(experienceScore));
+
         if (!isNull(this.resume) && !Resume.isValidResume(this.resume)) {
             throw new IllegalValueException(Resume.MESSAGE_RESUME_CONSTRAINTS);
         }
@@ -157,7 +186,7 @@ public class XmlAdaptedPerson {
         }
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, expectedGraduationYear, resume, interviewDate, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
     }
 
     @Override

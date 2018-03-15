@@ -28,6 +28,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -116,6 +117,7 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         ExpectedGraduationYear updatedExpectedGraduationYear = editPersonDescriptor.getExpectedGraduationYear()
                 .orElse(personToEdit.getExpectedGraduationYear());
+        Rating updatedRating = personToEdit.getRating();
         Resume updatedResume = editPersonDescriptor.getResume().orElse(personToEdit.getResume());
 
         // Doesn't allow editing of interview date
@@ -124,7 +126,7 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedExpectedGraduationYear, updatedResume, interviewDate, updatedTags);
+                updatedExpectedGraduationYear, updatedRating, updatedResume, interviewDate, updatedTags);
     }
 
     @Override

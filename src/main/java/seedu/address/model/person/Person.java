@@ -20,6 +20,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private final ExpectedGraduationYear expectedGraduationYear;
+    private final Rating rating;
     private final Resume resume;
     private final InterviewDate interviewDate;
 
@@ -28,14 +29,16 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address,
-                  ExpectedGraduationYear expectedGraduationYear, Resume resume, InterviewDate interviewDate, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, expectedGraduationYear, resume, interviewDate, tags);
+    public Person(Name name, Phone phone, Email email, Address address, ExpectedGraduationYear expectedGraduationYear,
+                  Rating rating, Resume resume, InterviewDate interviewDate, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
+        this.rating = rating;
         this.resume = resume;
         this.interviewDate = interviewDate;
         // protect internal tags from changes in the arg list
@@ -60,6 +63,10 @@ public class Person {
 
     public ExpectedGraduationYear getExpectedGraduationYear() {
         return expectedGraduationYear;
+    }
+
+    public Rating getRating() {
+        return rating;
     }
 
     public Resume getResume() {
@@ -98,7 +105,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, expectedGraduationYear, resume, interviewDate, tags);
+        return Objects.hash(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
     }
 
     @Override

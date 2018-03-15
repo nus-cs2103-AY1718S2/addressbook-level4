@@ -98,7 +98,8 @@ public class InterviewCommand extends UndoableCommand {
 
         return new Person(personToInterview.getName(), personToInterview.getPhone(), personToInterview.getEmail(),
                 personToInterview.getAddress(), personToInterview.getExpectedGraduationYear(),
-                personToInterview.getResume(), new InterviewDate(dateTime), personToInterview.getTags());
+                personToInterview.getRating(), personToInterview.getResume(), new InterviewDate(dateTime),
+                personToInterview.getTags());
     }
 
     @Override

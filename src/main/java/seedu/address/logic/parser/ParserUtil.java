@@ -14,6 +14,8 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Halal;
+import seedu.address.model.person.Vegetarian;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -137,6 +139,54 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String halal} into an {@code Halal}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code halal} is invalid.
+     */
+    public static Halal parseHalal(String halal) throws IllegalValueException {
+        requireNonNull(halal);
+        String trimmedHalal = halal.trim();
+        if (!Halal.isValidHalal(trimmedHalal)) {
+            throw new IllegalValueException(Halal.MESSAGE_HALAL_CONSTRAINTS);
+        }
+        return new Halal(trimmedHalal);
+    }
+
+    /**
+     * Parses a {@code Optional<String> halal} into an {@code Optional<Halal>} if {@code halal} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Halal> parseHalal(Optional<String> halal) throws IllegalValueException {
+        requireNonNull(halal);
+        return halal.isPresent() ? Optional.of(parseHalal(halal.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String vegetarian} into an {@code Vegetarian}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code vegetarian} is invalid.
+     */
+    public static Vegetarian parseVegetarian(String vegetarian) throws IllegalValueException {
+        requireNonNull(vegetarian);
+        String trimmedVegetarian = vegetarian.trim();
+        if (!Vegetarian.isValidVegetarian(trimmedVegetarian)) {
+            throw new IllegalValueException(Vegetarian.MESSAGE_VEGETARIAN_CONSTRAINTS);
+        }
+        return new Vegetarian(trimmedVegetarian);
+    }
+
+    /**
+     * Parses a {@code Optional<String> vegetarian} into an {@code Optional<Vegetarian>} if {@code vegetarian} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Vegetarian> parseVegetarian(Optional<String> vegetarian) throws IllegalValueException {
+        requireNonNull(vegetarian);
+        return vegetarian.isPresent() ? Optional.of(parseVegetarian(vegetarian.get())) : Optional.empty();
     }
 
     /**

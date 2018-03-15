@@ -19,18 +19,23 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final Halal halal;
+    private final Vegetarian vegetarian;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Halal halal, Vegetarian vegetarian, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.halal = halal;
+        this.vegetarian = vegetarian;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -50,6 +55,10 @@ public class Person {
     public Address getAddress() {
         return address;
     }
+
+    public Halal getHalal() {return halal;}
+
+    public Vegetarian getVegetarian() {return vegetarian;}
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -79,7 +88,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, halal, vegetarian, tags);
     }
 
     @Override
@@ -92,6 +101,10 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Halal")
+                .append(getHalal())
+                .append(" Vegetarian")
+                .append(getVegetarian())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

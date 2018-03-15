@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -41,6 +42,8 @@ public class XmlAdaptedPerson {
     //optional fields
     @XmlElement(nillable = true)
     private String resume;
+    @XmlElement(nillable = true)
+    private String interviewDate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -55,13 +58,14 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
-                            String resume, List<XmlAdaptedTag> tagged) {
+                            String resume, String interviewDate, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
         this.resume = resume;
+        this.interviewDate = interviewDate;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -79,6 +83,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         expectedGraduationYear = source.getExpectedGraduationYear().value;
         resume = source.getResume().value;
+        interviewDate = source.getInterviewDate().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -142,8 +147,17 @@ public class XmlAdaptedPerson {
         }
         final Resume resume = new Resume(this.resume);
 
+        InterviewDate interviewDate = new InterviewDate();
+        if (!isNull(this.interviewDate)) {
+            try {
+                interviewDate = new InterviewDate(Long.parseLong(this.interviewDate, 10));
+            } catch (NumberFormatException nfe) {
+                throw new IllegalValueException(InterviewDate.MESSAGE_INTERVIEW_DATE_XML_ERROR);
+            }
+        }
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, expectedGraduationYear, resume, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, resume, interviewDate, tags);
     }
 
     @Override
@@ -162,6 +176,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
                 && Objects.equals(expectedGraduationYear, otherPerson.expectedGraduationYear)
+                && Objects.equals(interviewDate, otherPerson.interviewDate)
                 && tagged.equals(otherPerson.tagged);
     }
 }

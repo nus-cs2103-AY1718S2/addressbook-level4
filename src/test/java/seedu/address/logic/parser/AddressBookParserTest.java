@@ -7,6 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,12 +26,14 @@ import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.InterviewCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ExpectedGraduationYearBeforeKeywordPredicate;
+import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -70,6 +73,15 @@ public class AddressBookParserTest {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_interview() throws Exception {
+        LocalDateTime dateTime = LocalDateTime.ofEpochSecond(1521007200, 0, InterviewDate.LOCAL_ZONE_OFFSET);
+
+        InterviewCommand command = (InterviewCommand) parser.parseCommand(InterviewCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " Mar 14 2018 2pm");
+        assertEquals(new InterviewCommand(INDEX_FIRST_PERSON, dateTime), command);
     }
 
     @Test

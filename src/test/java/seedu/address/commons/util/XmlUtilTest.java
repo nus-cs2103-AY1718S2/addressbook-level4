@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class XmlUtilTest {
     private static final String VALID_ADDRESS = "4th street";
     private static final String VALID_EXPECTED_GRADUATION_YEAR = "2020";
     private static final String VALID_RESUME = TEST_DATA_FOLDER + "hans.pdf";
+    private static final String VALID_INTERVIEW_DATE = "1540814400";
     private static final List<XmlAdaptedTag> VALID_TAGS =
             Collections.singletonList(new XmlAdaptedTag("friends"));
 
@@ -84,7 +87,7 @@ public class XmlUtilTest {
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_TAGS);
+                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -94,7 +97,7 @@ public class XmlUtilTest {
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_TAGS);
+                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -104,7 +107,7 @@ public class XmlUtilTest {
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_TAGS);
+                VALID_EXPECTED_GRADUATION_YEAR, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

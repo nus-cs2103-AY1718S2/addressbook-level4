@@ -21,6 +21,7 @@ public class Person {
     private final Address address;
     private final ExpectedGraduationYear expectedGraduationYear;
     private final Resume resume;
+    private final InterviewDate interviewDate;
 
     private final UniqueTagList tags;
 
@@ -28,14 +29,15 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  ExpectedGraduationYear expectedGraduationYear, Resume resume, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, expectedGraduationYear, resume, tags);
+                  ExpectedGraduationYear expectedGraduationYear, Resume resume, InterviewDate interviewDate, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, expectedGraduationYear, resume, interviewDate, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
         this.resume = resume;
+        this.interviewDate = interviewDate;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -64,6 +66,8 @@ public class Person {
         return resume;
     }
 
+    public InterviewDate getInterviewDate() { return interviewDate; }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -87,13 +91,14 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear());
+                && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear())
+                && otherPerson.getInterviewDate().equals(this.getInterviewDate());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, expectedGraduationYear, resume, tags);
+        return Objects.hash(name, phone, email, address, expectedGraduationYear, resume, interviewDate, tags);
     }
 
     @Override
@@ -106,7 +111,7 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Expected graudation year: ")
+                .append(" Expected graduation year: ")
                 .append(getExpectedGraduationYear())
                 .append(" Resume: ")
                 .append(getResume())

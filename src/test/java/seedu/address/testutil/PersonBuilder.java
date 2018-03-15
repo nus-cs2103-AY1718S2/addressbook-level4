@@ -2,12 +2,15 @@ package seedu.address.testutil;
 
 import static java.util.Objects.isNull;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -35,6 +38,7 @@ public class PersonBuilder {
     private Address address;
     private ExpectedGraduationYear expectedGraduationYear;
     private Resume resume;
+    private InterviewDate interviewDate;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -44,6 +48,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         expectedGraduationYear = new ExpectedGraduationYear(DEFAULT_EXPECTED_GRADUATION_YEAR);
         resume = new Resume(formPathFromFileName(DEFAULT_RESUME));
+        interviewDate = new InterviewDate();
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -57,6 +62,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         expectedGraduationYear = personToCopy.getExpectedGraduationYear();
         resume = personToCopy.getResume();
+        interviewDate = personToCopy.getInterviewDate();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -115,8 +121,13 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder withInterviewDate(LocalDateTime interviewDate) {
+        this.interviewDate = new InterviewDate(interviewDate);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, expectedGraduationYear, resume, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, resume, interviewDate, tags);
     }
 
     /**

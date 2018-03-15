@@ -13,11 +13,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.appointment.Remark;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.appointment.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -155,14 +155,14 @@ public class ParserUtil {
         LocalDateTime localDateTime = null;
         try {
             localDateTime = LocalDateTime.parse(dateTime, formatter);
-        } catch (DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             throw new IllegalValueException("Please follow the format of yyyy-MM-dd HH:mm");
         }
         return localDateTime;
     }
 
     /**
-     * Parses a {@code Optional<String> dateTime} into an {@code Optional<LocalDatetime>} if {@code dateTime} is present.
+     * Parses {@code Optional<String> dateTime} into an {@code Optional<LocalDatetime>} if {@code dateTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<LocalDateTime> parseDateTime(Optional<String> dateTime) throws IllegalValueException {

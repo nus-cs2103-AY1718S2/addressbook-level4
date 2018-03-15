@@ -12,7 +12,10 @@ import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
-
+/**
+ * Represents an Appointment.
+ * Guarantees: details are present and not null, field values are validated.
+ */
 public class Appointment {
     private final Name owner; //owner of the appointment
     private Remark remark; //remarks

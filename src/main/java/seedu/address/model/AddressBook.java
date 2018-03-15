@@ -173,8 +173,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Updates the master tag list to include tags in {@code appointment} that are not in the list.
      *
-     * @return a copy of this {@code appointment} such that every tag in this appointment points to a Tag object in the master
-     * list.
+     * @return a copy of this {@code appointment} such that every tag in this appointment
+     * points to a Tag object in the master list.
      */
     private Appointment syncWithAppointmentMasterTagList(Appointment appointment) {
         final UniqueTagList appointmentTags = new UniqueTagList(appointment.getType());

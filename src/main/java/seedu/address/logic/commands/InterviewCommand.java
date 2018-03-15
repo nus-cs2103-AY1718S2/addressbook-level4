@@ -30,7 +30,8 @@ public class InterviewCommand extends UndoableCommand {
             + "DATETIME (parse by natural language)\n"
             + "Example: " + COMMAND_WORD + " 1 next Friday at 3pm";
 
-    public static final String MESSAGE_INTERVIEW_PERSON_SUCCESS = "Interview of person named %1$s has been scheduled on %2$s";
+    public static final String MESSAGE_INTERVIEW_PERSON_SUCCESS
+            = "Interview of person named %1$s has been scheduled on %2$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;

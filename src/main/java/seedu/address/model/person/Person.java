@@ -73,7 +73,9 @@ public class Person {
         return resume;
     }
 
-    public InterviewDate getInterviewDate() { return interviewDate; }
+    public InterviewDate getInterviewDate() {
+        return interviewDate;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

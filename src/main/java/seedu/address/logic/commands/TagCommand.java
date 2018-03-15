@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
+import java.util.Arrays;
+
 /**
  * Finds and lists all persons in address book whose tag contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -28,7 +30,8 @@ public class TagCommand extends Command{
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForTagListShownSummary(model.getFilteredPersonList().size(), tagKeywords));
+        return new CommandResult(getMessageForTagListShownSummary
+                                    (model.getFilteredPersonList().size(), Arrays.toString(tagKeywords)));
     }
 
     @Override

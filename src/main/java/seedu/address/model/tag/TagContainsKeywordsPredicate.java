@@ -22,10 +22,14 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        boolean matchedTag = keywords.stream()
-                                .anyMatch(keyword -> person.getTags().contains(keyword));
-        logger.info("Keyword: " + keywords.get(0));
-        return matchedTag;
+        /*figure out why cannot work
+           return keywords.stream()
+                    .anyMatch(keyword -> person.getTags().contains(keyword));
+
+         */
+        return keywords.stream()
+                    .anyMatch(keyword -> person.getTags().stream()
+                        .anyMatch(tag -> tag.tagName.equals(keyword)));
     }
 
     @Override

@@ -25,7 +25,7 @@ public abstract class Command {
     }
 
     // TagCommand
-    public static String getMessageForTagListShownSummary(int displaySize, String[] tagKeywords) {
+    public static String getMessageForTagListShownSummary(int displaySize, String tagKeywords) {
         return String.format(Messages.MESSAGE_TAGS_LISTED_OVERVIEW, displaySize, tagKeywords);
     }
 

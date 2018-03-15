@@ -837,13 +837,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |have a fixed interval backups, that can also be manually set |ensure my data will not be lost.
 |`* *` |user |macro and write custom aliasing for commands |customize my experience.
 |`* *` |user |track price, market cap, and circulating supply from coinmarket |get all my information in one place.
-|`* *`  |user |see <<RSI,RSI>>/<<MACD,MACD>> graphs |analyse price trends for decision-making. 
+|`* *`  |user |see <<RSI,RSI>>/<<MACD,MACD>> graphs |analyse price trends for decision-making.
 |`* *` |user |see Overbought/Oversold lines | do as above.
 |`*` |user |be able to set support and resistance lines | do as above.
-|`*` |user |have candlestick graphs with simple/exponential moving average overlay | do as above. 
+|`*` |user |have candlestick graphs with simple/exponential moving average overlay | do as above.
 |`*` |user |be able to search information on a specific coin |get all my information in one place.
-|`*` |user |have desktop notifications |be informed when something needs my attention. 
-|`*` |user |have a daily/hourly report |keep track of the current state of my accounts. 
+|`*` |user |have desktop notifications |be informed when something needs my attention.
+|`*` |user |have a daily/hourly report |keep track of the current state of my accounts.
 |=======================================================================
 
 [appendix]

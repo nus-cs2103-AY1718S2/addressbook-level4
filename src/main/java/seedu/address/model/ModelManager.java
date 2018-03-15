@@ -39,7 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook, true);
+        this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -108,6 +108,11 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.hasLoggedIn();
     }
 
+    @Override
+    public void setLoginStatus(boolean status){
+        addressBook.setLoginStatus(status);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -142,6 +147,5 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 
 }

@@ -70,4 +70,6 @@ public interface Model {
      */
     boolean hasLoggedIn();
 
+    void setLoginStatus(boolean status);
+
 }

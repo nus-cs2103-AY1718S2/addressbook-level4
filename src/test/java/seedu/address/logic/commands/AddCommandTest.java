@@ -139,6 +139,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void setLoginStatus(boolean status){
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void checkLoginCredentials(Username username, Password password) {
             fail("This method should not be called.");
         }

@@ -30,7 +30,7 @@ public abstract class Command {
      * @param displaySize used to generate summary
      * @return summary message for Resident Assistant (RA) displayed
      */
-    public static String getMessageForRAShownSummary(int displaySize) {
+    public static String getMessageForRaShownSummary(int displaySize) {
         return String.format(Messages.MESSAGE_RA_LISTED_OVERVIEW, displaySize);
     }
 

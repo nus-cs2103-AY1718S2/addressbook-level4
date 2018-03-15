@@ -17,7 +17,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     @Override
-    //test existence of keywords in person's full name and tags.
+    //test existence of keywords in person's full name, address and tags.
     public boolean test(Person person) {
 
         String stringOfTags = getStringOfTags(person);

@@ -16,7 +16,7 @@ public class PhoneContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     @Override
-    //test existence of keywords in person's full name and tags.
+    //test existence of keywords in person's phone.
     public boolean test(Person person) {
 
         return keywords.stream()

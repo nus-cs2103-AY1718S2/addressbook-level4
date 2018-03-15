@@ -66,7 +66,7 @@ public class BookDeserializerTest {
     }
 
     @Test
-    public void deserialize_invalidResponseNoIsbn_throwsIOException() throws Exception {
+    public void deserialize_invalidResponseNoIsbn_throwsException() throws Exception {
         thrown.expect(IOException.class);
         String json = FileUtil.readFromFile(INVALID_RESPONSE_NO_ISBN_FILE);
         mapper.readValue(json, Book.class);

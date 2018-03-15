@@ -16,6 +16,7 @@ import seedu.address.model.book.Isbn;
 import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
 import seedu.address.model.book.Title;
+import seedu.address.model.book.exceptions.InvalidBookException;
 import seedu.address.model.util.BookDataUtil;
 
 /**
@@ -39,7 +40,7 @@ public class BookDeserializer extends StdDeserializer<Book> {
         Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);
 
         if (isbn == null) {
-            throw new IOException("No ISBN is found for the book.");
+            throw new IOException(new InvalidBookException("No ISBN is found for the book."));
         }
 
         return new Book(new Gid(root.id), isbn,

@@ -172,7 +172,7 @@ public class Autocompleter {
     private Set<String> generateNames() {
         Set<String> names = new HashSet<>();
 
-        for(String fullName : this.names) {
+        for (String fullName : this.names) {
             String[] words = fullName.split(" ");
             names.addAll(Arrays.asList(words));
         }

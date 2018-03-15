@@ -5,18 +5,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ActiveListType;
 import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
-import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyBookShelf previousBookShelf;
-    private ReadOnlyBookShelf previousSearchResults;
-    private ActiveListType previousActiveListType;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -26,14 +22,6 @@ public abstract class UndoableCommand extends Command {
     private void saveBookShelfSnapshot() {
         requireNonNull(model);
         this.previousBookShelf = new BookShelf(model.getBookShelf());
-        BookShelf bs = new BookShelf();
-        try {
-            bs.setBooks(model.getSearchResultsList());
-            this.previousSearchResults = bs;
-        } catch (DuplicateBookException e) {
-            // Don't store previousSearchResults
-        }
-        this.previousActiveListType = model.getActiveListType();
     }
 
     /**
@@ -54,22 +42,18 @@ public abstract class UndoableCommand extends Command {
     }
 
     /**
-     * Executes the command.
+     * Executes the command and updates the filtered book
+     * list to show all books.
      */
     protected final void redo() {
         requireNonNull(model);
         try {
-            ActiveListType curActiveList = model.getActiveListType();
-            model.setActiveListType(previousActiveListType);
-            if (previousSearchResults != null) {
-                model.updateSearchResults(previousSearchResults);
-            }
             executeUndoableCommand();
-            model.setActiveListType(curActiveList);
         } catch (CommandException ce) {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
+        model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
     }
 
     @Override

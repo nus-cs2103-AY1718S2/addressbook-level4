@@ -28,7 +28,7 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_ADDING = "Adding the book into your book shelf...";
     public static final String MESSAGE_ADD_FAIL = "Failed to add book into your book shelf. "
-            + "Make sure you are connected to the internet.";
+            + "Make sure you are connected to the Internet.";
     public static final String MESSAGE_SUCCESS = "New book added: %1$s";
     public static final String MESSAGE_DUPLICATE_BOOK = "This book already exists in the book shelf";
     public static final String MESSAGE_WRONG_ACTIVE_LIST = "Items from the current list cannot be added.";

@@ -44,14 +44,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding firstBook to the list -> firstBook added again */
-        /*
-        command = RedoCommand.COMMAND_WORD;
-        model.addBook(firstBook);
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelAfterAdding, expectedResultMessage);
-        */
-
         /* Case: add to empty book shelf -> added */
         deleteAllBooks();
 

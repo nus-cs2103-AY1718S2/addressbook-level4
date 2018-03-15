@@ -90,9 +90,7 @@ public class Book {
         }
 
         Book otherBook = (Book) other;
-        return otherBook.getIsbn().equals(this.getIsbn())
-                && otherBook.getTitle().equals(this.getTitle())
-                && otherBook.getAuthors().equals(this.getAuthors());
+        return otherBook.getIsbn().equals(this.getIsbn());
     }
 
     @Override

@@ -42,15 +42,13 @@ public class BookDeserializer extends StdDeserializer<Book> {
                 new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
     }
 
-    private Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] ii) {
-        if (ii.length < 2) {
-            return new Isbn("");
+    private Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] iiArray) {
+        for (JsonIndustryIdentifiers ii: iiArray) {
+            if (ii.type.equals("ISBN_13")) {
+                return new Isbn(ii.identifier);
+            }
         }
-        if (ii[0].type.equals("ISBN_13")) {
-            return new Isbn(ii[0].identifier);
-        } else {
-            return new Isbn(ii[1].identifier);
-        }
+        return new Isbn("");
     }
 
     private Set<Category> getCategorySet(String[] categories) {

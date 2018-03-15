@@ -86,6 +86,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
     }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

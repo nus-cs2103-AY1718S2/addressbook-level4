@@ -21,6 +21,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private final Subject subject;
+    private final Favourite favourite;
 
     private final UniqueTagList tags;
 
@@ -36,6 +37,22 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.subject = subject;
         this.tags = new UniqueTagList(tags);
+        this.favourite = new Favourite(false); // Default value
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Subject subject, Set<Tag> tags, Favourite fav) {
+        requireAllNonNull(name, phone, email, address, tags, fav);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.subject = subject;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
     }
 
     public Name getName() {
@@ -52,6 +69,21 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Favourite getFavourite() {
+        return favourite;
+    }
+
+    /**
+     * Returns true if Person is in favourites, else returns false.
+     */
+    public boolean isFavourite() {
+        if (favourite.value.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Subject getSubject() {
@@ -104,6 +136,8 @@ public class Person {
                 .append(getSubject())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" Favourite: ")
+                .append(getFavourite());
         return builder.toString();
     }
 

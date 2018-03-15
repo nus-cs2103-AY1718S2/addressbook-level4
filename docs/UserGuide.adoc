@@ -76,7 +76,17 @@ Examples:
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list [-f]`
+
+[TIP]
+Use the -f flag to view all person in favourites
+
+Examples:
+
+* `list -f` +
+List only all person that you added to favourites
+* `list` +
+List all persons
 
 === Editing a person : `edit`
 
@@ -97,6 +107,44 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Adding a person to favourites : `fav`
+
+Adds an existing person in the address book to your favourites. +
+Format: `fav INDEX`
+
+****
+* Add the person at the specified `INDEX` to your favourites.
+* The index refers to the index number in the most recent listing.
+****
+
+Examples:
+
+* `list` +
+`fav 2` +
+Adds the 2nd person in the address book to favourites.
+* `find Betsey` +
+`fav 1` +
+Adds the 1st person in the results of the `find` command to favourites
+
+=== Remove a person from favourites : `unfav`
+
+Removes an existing person in the address book from your favourites. +
+Format: `unfav INDEX`
+
+****
+* Removes the person at specified `INDEX` from your favourites.
+* The index referes to the index number in the most recent listing.
+****
+
+Examples:
+
+* `list` +
+`unfav 2` +
+Removes the 2nd person in the address book from favourites.
+* `find Betsey` +
+`unfav 1` +
+Removes the 1st person in the results of the `find` command from favourites
 
 === Locating persons by name: `find`
 

@@ -50,6 +50,9 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
+        if (person.isFavourite()) {
+            name.setStyle("-fx-text-fill: #f4b342");
+        }
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);

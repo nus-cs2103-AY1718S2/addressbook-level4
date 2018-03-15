@@ -197,13 +197,16 @@ public class MainWindow extends UiPart<Stage> {
 
     //@@author aquarinte
     /**
-     * Change theme of the application (GUI click)
+     * Select theme (via clicking GUI menu)
      */
     @FXML
     public void handleChangeTheme(ActionEvent actionEvent) {
         MenuItem target  = (MenuItem) actionEvent.getSource();
         setTheme(target.getText());
     }
+    /**
+     * Change the theme of the application
+     */
 
     public void setTheme(String theme) {
         String dark = this.getClass().getResource("/view/DarkTheme.css").toExternalForm();
@@ -211,17 +214,18 @@ public class MainWindow extends UiPart<Stage> {
         String extensions = this.getClass().getResource("/view/Extensions.css").toExternalForm();
 
         switch (theme.toLowerCase()) {
-            case "dark":
-                if(!getRoot().getScene().getStylesheets().contains(dark)) {
-                    getRoot().getScene().getStylesheets().clear();
-                    getRoot().getScene().getStylesheets().add(dark);
-                }
-                break;
-            case "light":
-                if(!getRoot().getScene().getStylesheets().contains(light)) {
-                    getRoot().getScene().getStylesheets().clear();
-                    getRoot().getScene().getStylesheets().add(light);
-                }
+        case "dark":
+            if (!getRoot().getScene().getStylesheets().contains(dark)) {
+                getRoot().getScene().getStylesheets().clear();
+                getRoot().getScene().getStylesheets().add(dark);
+            }
+            break;
+
+        case "light":
+            if (!getRoot().getScene().getStylesheets().contains(light)) {
+                getRoot().getScene().getStylesheets().clear();
+                getRoot().getScene().getStylesheets().add(light);
+            }
         }
         getRoot().getScene().getStylesheets().add(extensions);
     }

@@ -7,6 +7,7 @@ import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.Address;
@@ -14,7 +15,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 public class AutocompleterTest {

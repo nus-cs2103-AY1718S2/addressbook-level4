@@ -49,10 +49,11 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Gets the matrix of list of persons with selected fields for calculation
      */
-    public ArrayList<ArrayList<Double>> getPersonAttrMatrix(){
+    @Override
+    public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
+
         return this.addressBook.getPersonAttrMatrix();
     }
-
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {

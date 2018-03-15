@@ -119,8 +119,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Gets the matrix of list of persons with selected fields for calculation
      */
-    public ArrayList<ArrayList<Double>> getPersonAttrMatrix(){
-        ArrayList<ArrayList<Double>> matrix;
+    public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
+        ArrayList<ArrayList<Double>> matrix = new ArrayList<>();
+        ObservableList<Person> list = this.persons.asObservableList();
+
+
+        list.forEach(person -> {
+
+        });
+
+        return matrix;
 
     }
 

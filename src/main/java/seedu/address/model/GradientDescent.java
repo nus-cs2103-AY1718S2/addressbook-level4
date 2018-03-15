@@ -16,10 +16,8 @@ public class GradientDescent {
      * Drives the whole algorithm to solve the problem
      */
     public void solve() {
-        this.model.getPersonAttrMatrix();
-        System.out.println("Solved"
-        );
+        //        ArrayList<ArrayList<Double>> matrix = this.model.getPersonAttrMatrix() ;
+        System.out.println("solved");
+
     }
-
-
 }

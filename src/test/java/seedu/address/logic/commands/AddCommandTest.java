@@ -133,6 +133,11 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
+            return null;
+        }
     }
 
     /**

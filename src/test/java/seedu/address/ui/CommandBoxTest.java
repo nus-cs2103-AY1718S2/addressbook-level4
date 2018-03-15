@@ -17,8 +17,13 @@ import seedu.address.model.ModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
+    private static final String LF = "\n";
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
+    private static final String FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "add";
+    private static final String SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "should not work for now";
+    private static final String COMMAND_THAT_HAS_MULTIPLE_LINES = FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES + LF
+            + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -67,6 +72,14 @@ public class CommandBoxTest extends GuiUnitTest {
 
         guiRobot.push(KeyCode.A);
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+    }
+
+    @Test
+    public void commandBox_handleMultipleLinesCommand() {
+        commandBoxHandle.appendText(FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.ENTER);
+        commandBoxHandle.appendText(SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES);
+        assertInput(COMMAND_THAT_HAS_MULTIPLE_LINES);
     }
 
     @Test
@@ -152,6 +165,13 @@ public class CommandBoxTest extends GuiUnitTest {
      */
     private void assertInputHistory(KeyCode keycode, String expectedCommand) {
         guiRobot.push(keycode);
+        assertEquals(expectedCommand, commandBoxHandle.getInput());
+    }
+
+    /**
+     * Checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
+     */
+    private void assertInput(String expectedCommand) {
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
 }

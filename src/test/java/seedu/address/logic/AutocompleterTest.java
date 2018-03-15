@@ -9,11 +9,11 @@ import org.junit.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.logic.commands.SelectCommand;
 
@@ -33,13 +33,13 @@ public class AutocompleterTest {
     public void completeCommand() {
         if (SelectCommand.COMMAND_WORD.length() > 2) {
             String commandPrefix = SelectCommand.COMMAND_WORD.substring(0, SelectCommand.COMMAND_WORD.length() - 1);
-            assertEquals(SelectCommand.COMMAND_WORD.substring(SelectCommand.COMMAND_WORD.length() - 1),
+            assertEquals(SelectComm and.COMMAND_WORD.substring(SelectCommand.COMMAND_WORD.length() - 1),
                     autocompleter.autocomplete(commandPrefix));
         }
     }
 
     @Test
-    public void completeField() throws  DuplicatePersonException{
+    public void completeField() throws  DuplicatePersonException {
 
         model.addPerson(
                 new Person(new Name("John Doe"), new Phone("98765432"), new Email("johndoe@test.com"), new Address("NUS"), Collections.emptySet()));

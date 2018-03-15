@@ -37,14 +37,14 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private BookDetailsPanel bookDetailsPanel;
     private BookListPanel bookListPanel;
     private SearchResultsPanel searchResultsPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane mainContentPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -120,8 +120,9 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        bookDetailsPanel = new BookDetailsPanel();
+        mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
+        bookDetailsPanel.getRoot().setVisible(false);
 
         bookListPanel = new BookListPanel(logic.getFilteredBookList());
         searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
@@ -188,22 +189,14 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public BookListPanel getBookListPanel() {
-        return this.bookListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
+    private void handleShowHelpRequestEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
 
     @Subscribe
-    private void handleShowBookListRequestEvent(SwitchToBookListRequestEvent event) {
+    private void handleSwitchToBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
             bookListPanel.getRoot().setVisible(true);
@@ -212,9 +205,10 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleShowSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
+    private void handleSwitchToSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
+            searchResultsPanel.scrollToTop();
             bookListPanel.getRoot().setVisible(false);
             searchResultsPanel.getRoot().setVisible(true);
         });

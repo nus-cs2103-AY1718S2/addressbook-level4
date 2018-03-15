@@ -14,17 +14,17 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
-import seedu.address.commons.events.ui.BookPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
-    private BookPanelSelectionChangedEvent selectionChangedEventStub;
+    private BookListSelectionChangedEvent selectionChangedEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new BookPanelSelectionChangedEvent(new BookCard(ARTEMIS, 0));
+        selectionChangedEventStub = new BookListSelectionChangedEvent(new BookCard(ARTEMIS, 0));
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);

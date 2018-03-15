@@ -12,7 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.BookPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Book;
 
@@ -58,15 +58,8 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        browser = null;
-    }
-
     @Subscribe
-    private void handleBookPanelSelectionChangedEvent(BookPanelSelectionChangedEvent event) {
+    private void handleBookPanelSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadBookPage(event.getNewSelection().book);
     }

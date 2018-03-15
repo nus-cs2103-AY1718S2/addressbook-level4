@@ -6,11 +6,11 @@ import seedu.address.ui.BookCard;
 /**
  * Represents a selection change in the Book List Panel
  */
-public class BookPanelSelectionChangedEvent extends BaseEvent {
+public class BookListSelectionChangedEvent extends BaseEvent {
 
     private final BookCard newSelection;
 
-    public BookPanelSelectionChangedEvent(BookCard newSelection) {
+    public BookListSelectionChangedEvent(BookCard newSelection) {
         this.newSelection = newSelection;
     }
 

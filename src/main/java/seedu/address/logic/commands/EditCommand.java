@@ -21,9 +21,9 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Income;
-import seedu.address.model.person.Age;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -221,9 +221,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(income);
         }
 
-        public void setAge(Age age) { this.age = age; }
+        public void setAge(Age age) {
+            this.age = age;
+        }
 
-        public Optional<Age> getAge() { return Optional.ofNullable(age); }
+        public Optional<Age> getAge() {
+            return Optional.ofNullable(age);
+        }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

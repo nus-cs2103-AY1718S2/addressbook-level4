@@ -20,7 +20,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.JumpToBookListIndexRequestEvent;
 import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.BookShelf;
@@ -168,7 +168,7 @@ public class SelectCommandTest {
      */
     private SelectCommand prepareCommand(Index index) {
         SelectCommand selectCommand = new SelectCommand(index);
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        selectCommand.setData(model, new CommandHistory(), new UndoStack());
         return selectCommand;
     }
 }

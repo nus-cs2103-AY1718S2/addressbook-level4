@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -36,11 +35,6 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         /* Case: undo previous selection -> rejected */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
-
-        /* Case: redo selecting last card in the list -> rejected */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: select the middle card in the book list -> selected */

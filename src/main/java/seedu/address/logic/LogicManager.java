@@ -35,13 +35,13 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Model model;
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
-    private final UndoRedoStack undoRedoStack;
+    private final UndoStack undoStack;
 
     public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser();
-        undoRedoStack = new UndoRedoStack();
+        undoStack = new UndoStack();
     }
 
     @Override
@@ -49,9 +49,9 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = bookShelfParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack);
+            command.setData(model, history, undoStack);
             CommandResult result = command.execute();
-            undoRedoStack.push(command);
+            undoStack.push(command);
             return result;
         } finally {
             history.add(commandText);

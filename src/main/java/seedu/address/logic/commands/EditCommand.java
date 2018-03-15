@@ -29,8 +29,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.person.Vegetarian;
+import seedu.address.model.tag.Tag;
+
 
 /**
  * Edits the details of an existing person in the address book.

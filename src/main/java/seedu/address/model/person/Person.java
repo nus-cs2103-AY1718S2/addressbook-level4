@@ -29,7 +29,7 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address,
                   Halal halal, Vegetarian vegetarian, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, halal, vegetarian, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -56,9 +56,13 @@ public class Person {
         return address;
     }
 
-    public Halal getHalal() {return halal;}
+    public Halal getHalal() {
+        return halal;
+    }
 
-    public Vegetarian getVegetarian() {return vegetarian;}
+    public Vegetarian getVegetarian() {
+        return vegetarian;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

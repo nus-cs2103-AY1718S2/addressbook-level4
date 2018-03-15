@@ -13,8 +13,8 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.Halal;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Vegetarian;
 import seedu.address.model.tag.Tag;
 
@@ -181,7 +181,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> vegetarian} into an {@code Optional<Vegetarian>} if {@code vegetarian} is present.
+     * Parses a {@code Optional<String> vegetarian} into an {@code Optional<Vegetarian>}
+     * if {@code vegetarian} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Vegetarian> parseVegetarian(Optional<String> vegetarian) throws IllegalValueException {

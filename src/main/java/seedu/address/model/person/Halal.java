@@ -18,11 +18,11 @@ public class Halal {
      *
      * @param halal A valid halal.
      */
-    public Halal(String halal){
-        if(isNull(halal)){
+    public Halal(String halal) {
+        if (isNull(halal)) {
             this.value = "Non-halal";
-        }else{
-            checkArgument(isValidHalal(halal),MESSAGE_HALAL_CONSTRAINTS);
+        } else {
+            checkArgument(isValidHalal(halal), MESSAGE_HALAL_CONSTRAINTS);
             this.value = halal;
         }
     }
@@ -32,7 +32,7 @@ public class Halal {
      */
     public static boolean isValidHalal(String test) {
         requireNonNull(test);
-        if(test.equals("Halal")||(test.equals("Non-halal"))){
+        if (test.equals("Halal") || (test.equals("Non-halal"))) {
             return true;
         }
         return false;

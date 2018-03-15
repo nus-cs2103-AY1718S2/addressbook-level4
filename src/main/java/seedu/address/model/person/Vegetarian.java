@@ -18,11 +18,11 @@ public class Vegetarian {
      *
      * @param vegetarian A valid vegetarian.
      */
-    public Vegetarian(String vegetarian){
-        if(isNull(vegetarian)){
+    public Vegetarian(String vegetarian) {
+        if (isNull(vegetarian)) {
             this.value = "Non-vegetarian";
-        }else{
-            checkArgument(isValidVegetarian(vegetarian),MESSAGE_VEGETARIAN_CONSTRAINTS);
+        } else {
+            checkArgument(isValidVegetarian(vegetarian), MESSAGE_VEGETARIAN_CONSTRAINTS);
             this.value = vegetarian;
         }
     }
@@ -32,7 +32,7 @@ public class Vegetarian {
      */
     public static boolean isValidVegetarian(String test) {
         requireNonNull(test);
-        if(test.equals("Vegetarian")||(test.equals("Non-vegetarian"))){
+        if (test.equals("Vegetarian") || (test.equals("Non-vegetarian"))) {
             return true;
         }
         return false;

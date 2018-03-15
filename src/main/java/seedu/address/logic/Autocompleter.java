@@ -87,6 +87,9 @@ public class Autocompleter {
                 //so we're trying to match the last word to a name of the adress book
 
                 possibilities = generatePossibleSuffixes(words[words.length - 1], names);
+                if (possibilities.size() == 0) {
+                    possibilities = generatePossibleSuffixes(words[words.length - 1], generateNames());
+                }
             }
         }
         String longestCommonPrefix = "";
@@ -160,5 +163,19 @@ public class Autocompleter {
                 RedoCommand.COMMAND_WORD,
                 SelectCommand.COMMAND_WORD,
                 UndoCommand.COMMAND_WORD));
+    }
+
+    /**
+     *
+     * @return the set of all the different words included in the set of names
+     */
+    private Set<String> generateNames() {
+        Set<String> names = new HashSet<>();
+
+        for(String fullName : this.names) {
+            String[] words = fullName.split(" ");
+            names.addAll(Arrays.asList(words));
+        }
+        return names;
     }
 }

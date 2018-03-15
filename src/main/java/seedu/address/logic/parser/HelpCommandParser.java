@@ -54,7 +54,7 @@ public class HelpCommandParser implements Parser<HelpCommand> {
      * @return String message for invalid command request.
      */
     private String formInvalidMessage(String commandRequest)    {
-        return "Help for '" + commandRequest + "' is unknown or not available";
+        return "Help for '" + commandRequest + "' is unknown or not available.";
     }
 }
 

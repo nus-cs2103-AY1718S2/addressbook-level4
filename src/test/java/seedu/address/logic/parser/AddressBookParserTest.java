@@ -92,9 +92,15 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_help() throws Exception {
+
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_ALIAS) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " add") instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " delete") instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_ALIAS + " find") instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " select") instanceof HelpCommand);
+        assertEquals("Help for '3' is unknown or not available.",
+                parser.parseCommand(HelpCommand.COMMAND_ALIAS + " 3"));
     }
 
     @Test

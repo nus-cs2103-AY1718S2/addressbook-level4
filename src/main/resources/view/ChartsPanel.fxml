@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.CategoryAxis?>
+
+<StackPane styleClass="chart-pane" xmlns:fx="http://javafx.com/fxml/1">
+  <LineChart fx:id="priceChart" title="Prices">
+    <xAxis>
+      <CategoryAxis label="Price History (time)" fx:id="xAxis" />
+    </xAxis>
+    <yAxis>
+      <NumberAxis label="Price (USD)" fx:id="yAxis" />
+    </yAxis>
+  </LineChart>
+</StackPane>

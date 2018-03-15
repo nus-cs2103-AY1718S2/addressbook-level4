@@ -6,4 +6,5 @@
 
 <suppressions>
   <suppress checks="JavadocType" files=".*Test\.java"/>
+  <suppress checks="MemberNameCheck" files="CryptoCompareHistoHourObject.java" />
 </suppressions>

@@ -327,6 +327,14 @@
     -fx-text-fill: white;
 }
 
+.chart-pane, .chart-plot-background {
+    -fx-background-color: #222222;
+}
+
+#priceChart .chart-series-line {
+    -fx-stroke-width: 1px !important;
+}
+
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }

@@ -55,4 +55,27 @@ public class Address {
         return value.hashCode();
     }
 
+    /**
+     * Change address into a form that will be used by
+     *
+     */
+    public String getGoogleMapSearchForm(){
+        String[] words = getWords();
+        return getWordsWithPlusSign(words);
+    }
+
+    private String getWordsWithPlusSign(String[] words) {
+        String googleMapSearchForm = "";
+        for (String word:words) {
+            if (googleMapSearchForm.equals(""))
+                googleMapSearchForm = word;
+            googleMapSearchForm = googleMapSearchForm + "+" + word;
+        }
+        return googleMapSearchForm;
+    }
+
+    private String[] getWords() {
+        return value.split("\\s+");
+    }
+
 }

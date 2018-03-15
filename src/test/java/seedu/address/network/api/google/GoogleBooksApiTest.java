@@ -23,6 +23,8 @@ public class GoogleBooksApiTest {
     private static final String URL_BOOK_DETAILS_OK = String.format(GoogleBooksApi.URL_BOOK_DETAILS, "123");
     private static final String URL_SEARCH_BOOKS_FAIL = String.format(GoogleBooksApi.URL_SEARCH_BOOKS, "");
     private static final String URL_BOOK_DETAILS_FAIL = String.format(GoogleBooksApi.URL_BOOK_DETAILS, "");
+    private static final String URL_SEARCH_BOOKS_BAD_RESPONSE = String.format(GoogleBooksApi.URL_SEARCH_BOOKS, "html");
+    private static final String URL_BOOK_DETAILS_BAD_RESPONSE = String.format(GoogleBooksApi.URL_BOOK_DETAILS, "html");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -49,6 +51,12 @@ public class GoogleBooksApiTest {
     }
 
     @Test
+    public void searchBooks_badResponseType_throwsCompletionException() {
+        thrown.expect(CompletionException.class);
+        googleBooksApi.searchBooks("html").join();
+    }
+
+    @Test
     public void getBookDetails_validId_success() {
         Book book = googleBooksApi.getBookDetails("123").join();
         assertEquals("The Book Without a Title", book.getTitle().title);
@@ -59,6 +67,12 @@ public class GoogleBooksApiTest {
     public void getBookDetails_invalidId_throwsCompletionException() {
         thrown.expect(CompletionException.class);
         googleBooksApi.getBookDetails("").join();
+    }
+
+    @Test
+    public void getBookDetails_badResponseType_throwsCompletionException() {
+        thrown.expect(CompletionException.class);
+        googleBooksApi.getBookDetails("html").join();
     }
 
     /** A stub HttpClient that returns preset responses when given certain urls, and null for other urls. */
@@ -79,6 +93,9 @@ public class GoogleBooksApiTest {
                             FileUtil.readFromFile(BookDeserializerTest.VALID_RESPONSE_FILE)));
                 } else if (url.equals(URL_SEARCH_BOOKS_FAIL) || url.equals(URL_BOOK_DETAILS_FAIL)) {
                     return CompletableFuture.completedFuture(makeResponse(503, "{ \"error\": { \"code\": 503 } }"));
+                } else if (url.equals(URL_SEARCH_BOOKS_BAD_RESPONSE) || url.equals(URL_BOOK_DETAILS_BAD_RESPONSE)) {
+                    return CompletableFuture.completedFuture(
+                            new HttpResponse(503, "text/html;", "{ \"error\": { \"code\": 503 } }"));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

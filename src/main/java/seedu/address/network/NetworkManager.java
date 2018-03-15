@@ -44,13 +44,18 @@ public class NetworkManager extends ComponentManager implements Network {
         googleBooksApi = new GoogleBooksApi(httpClient);
     }
 
+    protected NetworkManager(HttpClient httpClient, GoogleBooksApi googleBooksApi) {
+        this.httpClient = httpClient;
+        this.googleBooksApi = googleBooksApi;
+    }
+
     @Override
     public void stop() {
         httpClient.close();
     }
 
     @Subscribe
-    private void handleGoogleApiSearchRequestEvent(ApiSearchRequestEvent event) {
+    protected void handleGoogleApiSearchRequestEvent(ApiSearchRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         googleBooksApi.searchBooks(event.searchParameters)
                 .thenApply(bookShelf -> {
@@ -65,7 +70,7 @@ public class NetworkManager extends ComponentManager implements Network {
     }
 
     @Subscribe
-    private void handleGoogleApiBookDetailsRequestEvent(ApiBookDetailsRequestEvent event) {
+    protected void handleGoogleApiBookDetailsRequestEvent(ApiBookDetailsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         googleBooksApi.getBookDetails(event.bookId)
                 .thenApply(book -> {

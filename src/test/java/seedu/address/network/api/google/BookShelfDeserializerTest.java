@@ -22,6 +22,8 @@ public class BookShelfDeserializerTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/BookShelfDeserializerTest/");
     public static final File VALID_RESPONSE_FILE = new File(TEST_DATA_FOLDER + "ValidResponse.json");
+    public static final File VALID_RESPONSE_DUPLICATE_BOOKS =
+            new File(TEST_DATA_FOLDER + "ValidResponseDuplicateBooks.json");
     public static final File VALID_RESPONSE_NO_ID_FILE = new File(TEST_DATA_FOLDER + "ValidResponseNoDesc.json");
     public static final File INVALID_RESPONSE_WRONG_TYPE_FILE =
             new File(TEST_DATA_FOLDER + "InvalidResponseWrongType.json");
@@ -45,6 +47,17 @@ public class BookShelfDeserializerTest {
         String json = FileUtil.readFromFile(VALID_RESPONSE_FILE);
         BookShelf bookShelf = mapper.readValue(json, BookShelf.class);
         Book book1 = bookShelf.getBookList().get(0);
+        assertEquals(3, bookShelf.getBookList().size());
+        assertEquals("The Book Without a Title", book1.getTitle().title);
+        assertEquals("This is a valid description.", book1.getDescription().description);
+    }
+
+    @Test
+    public void deserialize_validResponseDuplicateBooks_success() throws Exception {
+        String json = FileUtil.readFromFile(VALID_RESPONSE_DUPLICATE_BOOKS);
+        BookShelf bookShelf = mapper.readValue(json, BookShelf.class);
+        Book book1 = bookShelf.getBookList().get(0);
+        assertEquals(1, bookShelf.getBookList().size());
         assertEquals("The Book Without a Title", book1.getTitle().title);
         assertEquals("This is a valid description.", book1.getDescription().description);
     }

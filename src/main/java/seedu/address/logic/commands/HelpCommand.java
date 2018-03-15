@@ -36,23 +36,23 @@ public class HelpCommand extends Command {
         } else   {
             switch(commandRequest) {
 
-                case AddCommand.COMMAND_WORD:
-                    return new CommandResult(AddCommand.MESSAGE_USAGE);
+            case AddCommand.COMMAND_WORD:
+                return new CommandResult(AddCommand.MESSAGE_USAGE);
 
-                case EditCommand.COMMAND_WORD:
-                    return new CommandResult(EditCommand.MESSAGE_USAGE);
+            case EditCommand.COMMAND_WORD:
+                return new CommandResult(EditCommand.MESSAGE_USAGE);
 
-                case SelectCommand.COMMAND_WORD:
-                    return new CommandResult(SelectCommand.MESSAGE_USAGE);
+            case SelectCommand.COMMAND_WORD:
+                return new CommandResult(SelectCommand.MESSAGE_USAGE);
 
-                case DeleteCommand.COMMAND_WORD:
-                    return new CommandResult(DeleteCommand.MESSAGE_USAGE);
+            case DeleteCommand.COMMAND_WORD:
+                return new CommandResult(DeleteCommand.MESSAGE_USAGE);
 
-                case FindCommand.COMMAND_WORD:
-                    return new CommandResult(FindCommand.MESSAGE_USAGE);
+            case FindCommand.COMMAND_WORD:
+                return new CommandResult(FindCommand.MESSAGE_USAGE);
 
-                default:
-                    return new CommandResult(MESSAGE_USAGE);
+            default:
+                return new CommandResult(MESSAGE_USAGE);
             }
         }
     }

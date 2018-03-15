@@ -15,7 +15,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.model.book.Book;
@@ -80,19 +79,15 @@ public class SearchResultsPanel extends UiPart<Region> {
         });
     }
 
+    protected void clearSelectionAndScrollToTop() {
+        searchResultsListView.getSelectionModel().clearSelection();
+        scrollToTop();
+    }
+
     @Subscribe
     private void handleJumpToResultsListRequestEvent(JumpToSearchResultsIndexRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
-    }
-
-    @Subscribe
-    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
-        // clear search result selection if the user selects an item in the book list
-        searchResultsListView.getSelectionModel().clearSelection();
-        scrollToTop();
     }
 
     /**

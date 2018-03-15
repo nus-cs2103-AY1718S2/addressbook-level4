@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -137,6 +138,32 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String profilePicture} into an {@code ProfilePicture}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code profilePicture} is invalid.
+     */
+    public static ProfilePicture parseProfilePicture(String profilePicture) throws IllegalValueException {
+        requireNonNull(profilePicture);
+        String trimmedProfilePicture = profilePicture.trim();
+        if (!ProfilePicture.isValidProfilePicture(trimmedProfilePicture)) {
+            throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_CONSTRAINTS);
+        }
+        return new ProfilePicture(trimmedProfilePicture);
+    }
+
+    /**
+     * Parses a {@code Optional<String> profilePicture} into an {@code Optional<ProfilePicture>}
+     * if {@code profilePicture} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ProfilePicture> parseProfilePicture(Optional<String> profilePicture)
+            throws IllegalValueException {
+        requireNonNull(profilePicture);
+        return profilePicture.isPresent() ? Optional.of(parseProfilePicture(profilePicture.get())) : Optional.empty();
     }
 
     /**

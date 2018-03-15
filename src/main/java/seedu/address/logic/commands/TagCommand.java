@@ -1,15 +1,14 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
-
 import java.util.Arrays;
+
+import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose tag contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
-public class TagCommand extends Command{
+public class TagCommand extends Command {
 
     public static final String COMMAND_WORD = "tag";
 

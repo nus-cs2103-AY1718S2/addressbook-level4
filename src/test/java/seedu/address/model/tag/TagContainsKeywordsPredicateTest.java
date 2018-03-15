@@ -1,15 +1,15 @@
 package seedu.address.model.tag;
 
-import org.junit.Test;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
 
 public class TagContainsKeywordsPredicateTest {
 
@@ -46,7 +46,7 @@ public class TagContainsKeywordsPredicateTest {
 
         // Multiple keywords
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("friends family").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends", "family").build()));
 
         // Only one matching keyword
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "family"));
@@ -64,7 +64,8 @@ public class TagContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().build()));
 
         // Keywords match phone, email, name and address, but does not match tag
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Alice", "12345", "alice@email.com", "Main", "Street"));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList
+                            ("Alice", "12345", "alice@email.com", "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }

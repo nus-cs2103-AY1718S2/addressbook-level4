@@ -25,7 +25,8 @@ public abstract class Command {
     }
 
     /**
-     * Constructs a feedback message to summarise an operation that displayed a listing of persons with the specified tags.
+     * Constructs a feedback message to summarise an operation that displayed
+     * a listing of persons with the specified tags.
      *
      * @param displaySize indicates the number of people listed, used to generate summary
      * @param tagKeywords the tags searched for, used to generate summary

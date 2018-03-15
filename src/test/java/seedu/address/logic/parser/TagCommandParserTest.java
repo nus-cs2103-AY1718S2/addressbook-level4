@@ -1,14 +1,15 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.TagCommand;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
-
-import java.util.Arrays;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.TagCommand;
+import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 public class TagCommandParserTest {
 
@@ -23,7 +24,8 @@ public class TagCommandParserTest {
     public void parse_validArgs_returnsTagCommand() {
         // no leading and trailing whitespaces
         TagCommand expectedTagCommand =
-                new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends", "owesMoney")), new String[] {"friends", "owesMoney"});
+                new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends", "owesMoney")),
+                                    new String[] {"friends", "owesMoney"});
         assertParseSuccess(parser, "friends owesMoney", expectedTagCommand);
 
         // multiple whitespaces between keywords

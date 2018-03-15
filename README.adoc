@@ -5,7 +5,6 @@ https://travis-ci.org/CS2103JAN2018-F09-B3/main[image:https://travis-ci.org/CS21
 https://ci.appveyor.com/project/ewaldhew/main[image:https://ci.appveyor.com/api/projects/status/anm4ynat6657reac?svg=true[Build Status]]
 https://coveralls.io/github/CS2103JAN2018-F09-B3/main?branch=master[image:https://coveralls.io/repos/github/CS2103JAN2018-F09-B3/main/badge.svg?branch=master[Coverage Status]]
 
-
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
@@ -14,13 +13,29 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+** This is a desktop Crypto Currency management portfolio called CoinBook
+
+** Meant for storing and keeping track of one’s cryptocurrency records
+
+** Has a GUI but most of the user interactions happen using CLI (Command Line Interface)
+
+** Java application  targeted at businessmen or investors who trade heavily and actively in cryptocurrency coins
+
+** Helps user to keep track of trades for multiple coins; useful for frequent trading
+
+** Provides decision making stats to equip user with the information necessary to trade
+
+** User won't have to check patterns and statistics on another platform other than the CoinBook
+
+** Displays price history of coin --> Allows user to see price changes over time
+
+** View current price of crypto coin (based on 24 hour average) and the profit/loss the user stands to make if he sold the coin at the current moment
+
+** Various statistics to aid decision making such as Relative Strength Index(RSI) and Moving average convergence divergence (MACD) charts
+
+** Newsfeed for user to follow the news and happenings surrounding the coin
+
+** Allows the user to compare the price history based on newsfeed of any given coin.
 
 == Site Map
 

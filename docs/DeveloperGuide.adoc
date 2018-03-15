@@ -196,6 +196,7 @@ image::DeletePersonSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
+(needs new image here that includes MatriculationNumber in person)
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
@@ -203,10 +204,15 @@ image::ModelClassDiagram.png[width="800"]
 
 The `Model`,
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the Address Book data.
+* Exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other three components.
+
+The `Person` Class,
+
+* Stores the information of a specific person(student) in the AddressBook
+* Information includes: Name, Matriculation Number, Phone Number, Email, Address and different tags to associate with that person.
 
 [[Design-Storage]]
 === Storage component

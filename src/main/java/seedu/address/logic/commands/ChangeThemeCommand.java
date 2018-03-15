@@ -26,7 +26,7 @@ public class ChangeThemeCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        String result = ui.changeTheme(theme);
+        String result = "";
         return new CommandResult(result);
     }
 }

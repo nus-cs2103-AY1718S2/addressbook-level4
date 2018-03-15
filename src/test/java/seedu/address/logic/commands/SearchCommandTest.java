@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import seedu.address.commons.events.network.ApiSearchRequestEvent;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.SearchCommand.SearchDescriptor;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
@@ -102,7 +102,7 @@ public class SearchCommandTest {
 
     private SearchCommand prepareCommand(SearchDescriptor descriptor) {
         SearchCommand searchCommand = new SearchCommand(descriptor);
-        searchCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        searchCommand.setData(model, new CommandHistory(), new UndoStack());
         return searchCommand;
     }
 }

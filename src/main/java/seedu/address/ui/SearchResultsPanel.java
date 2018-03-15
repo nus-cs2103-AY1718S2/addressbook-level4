@@ -15,8 +15,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.BookPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
+import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.model.book.Book;
 
 /**
@@ -52,7 +52,7 @@ public class SearchResultsPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in search results panel changed to : '" + newValue + "'");
-                        raise(new BookPanelSelectionChangedEvent(newValue));
+                        raise(new SearchResultsSelectionChangedEvent(newValue));
                     }
                 });
     }
@@ -64,6 +64,11 @@ public class SearchResultsPanel extends UiPart<Region> {
         });
     }
 
+    /** Scrolls to the top of the search results list. */
+    protected void scrollToTop() {
+        searchResultsListView.scrollTo(0);
+    }
+
     /**
      * Scrolls to the {@code BookCard} at the {@code index} and selects it.
      */
@@ -72,6 +77,11 @@ public class SearchResultsPanel extends UiPart<Region> {
             searchResultsListView.scrollTo(index);
             searchResultsListView.getSelectionModel().clearAndSelect(index);
         });
+    }
+
+    protected void clearSelectionAndScrollToTop() {
+        searchResultsListView.getSelectionModel().clearSelection();
+        scrollToTop();
     }
 
     @Subscribe

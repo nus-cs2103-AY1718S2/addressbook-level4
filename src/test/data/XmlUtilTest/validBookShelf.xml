@@ -5,18 +5,30 @@
         <description>This is Artemis.</description>
         <authors>Andy Weir</authors>
         <categories>Fiction</categories>
+        <gid>ry3GjwEACAAJ</gid>
+        <isbn>9780525572664</isbn>
+        <publisher></publisher>
+        <publicationDate>2017-11-14</publicationDate>
     </books>
     <books>
         <title>Babylon's Ashes</title>
         <description>This is Babylon's Ashes.</description>
         <authors>James S. A. Corey</authors>
         <categories>Fiction</categories>
+        <gid>3jsYCwAAQBAJ</gid>
+        <isbn>9780316217637</isbn>
+        <publisher>Orbit</publisher>
+        <publicationDate>2016-12-06</publicationDate>
     </books>
     <books>
         <title>The Collapsing Empire</title>
         <description>This is The Collapsing Empire.</description>
         <authors>John Scalzi</authors>
         <categories>Fiction</categories>
+        <gid>2SoaDAAAQBAJ</gid>
+        <isbn>9780765388896</isbn>
+        <publisher>Tor Books</publisher>
+        <publicationDate>2017-03-21</publicationDate>
     </books>
     <books>
         <title>Waking Gods</title>
@@ -24,5 +36,9 @@
         <authors>Sylvain Neuvel</authors>
         <categories>Fiction</categories>
         <categories>Science Fiction</categories>
+        <gid>CIj1DAAAQBAJ</gid>
+        <isbn>9781405921909</isbn>
+        <publisher>Penguin UK</publisher>
+        <publicationDate>2017-04-06</publicationDate>
     </books>
 </bookshelf>

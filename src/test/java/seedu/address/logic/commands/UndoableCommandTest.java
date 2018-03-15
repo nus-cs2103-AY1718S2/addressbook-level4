@@ -36,16 +36,6 @@ public class UndoableCommandTest {
         assertEquals(expectedModel, model);
     }
 
-    @Test
-    public void redo() {
-        showBookAtIndex(model, INDEX_FIRST_BOOK);
-
-        // redo() should cause the model's filtered list to show all books
-        dummyCommand.redo();
-        deleteFirstBook(expectedModel);
-        assertEquals(expectedModel, model);
-    }
-
     /**
      * Deletes the first person in the model's filtered list.
      */

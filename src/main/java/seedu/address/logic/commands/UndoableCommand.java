@@ -9,7 +9,7 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
 
 /**
- * Represents a command which can be undone and redone.
+ * Represents a command which can be undone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyBookShelf previousBookShelf;
@@ -38,21 +38,6 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() {
         requireAllNonNull(model, previousBookShelf);
         model.resetData(previousBookShelf);
-        model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
-    }
-
-    /**
-     * Executes the command and updates the filtered book
-     * list to show all books.
-     */
-    protected final void redo() {
-        requireNonNull(model);
-        try {
-            executeUndoableCommand();
-        } catch (CommandException ce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        }
         model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
     }
 

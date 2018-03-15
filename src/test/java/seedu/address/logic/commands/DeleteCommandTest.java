@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
@@ -20,7 +19,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.UndoStack;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -29,7 +28,7 @@ import seedu.address.model.book.Book;
 import seedu.address.testutil.TypicalBooks;
 
 /**
- * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * Contains integration tests (interaction with the Model and UndoCommand) and unit tests for
  * {@code DeleteCommand}.
  */
 public class DeleteCommandTest {
@@ -112,40 +111,30 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+    public void executeUndo_validIndexUnfilteredList_success() throws Exception {
+        UndoStack undoStack = new UndoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
         Book bookToDelete = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
         Model expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
 
         // delete -> first book deleted
         deleteCommand.execute();
-        undoRedoStack.push(deleteCommand);
+        undoStack.push(deleteCommand);
 
         // undo -> reverts bookshelf back to previous state and filtered book list to show all books
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // redo -> same first book deleted again
-        expectedModel.deleteBook(bookToDelete);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+    public void executeUndo_invalidIndexUnfilteredList_failure() {
+        UndoStack undoStack = new UndoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
-        // execution failed -> deleteCommand not pushed into undoRedoStack
+        // execution failed -> deleteCommand not pushed into undoStack
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-
-        // no commands in undoRedoStack -> undoCommand and redoCommand fail
-        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
     }
 
     /**
@@ -153,13 +142,11 @@ public class DeleteCommandTest {
      * 2. Undo the deletion.
      * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted book in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the book object regardless of indexing.
      */
     @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+    public void executeUndo_validIndexFilteredList_samePersonDeleted() throws Exception {
+        UndoStack undoStack = new UndoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
         Model expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
 
@@ -167,15 +154,13 @@ public class DeleteCommandTest {
         Book bookToDelete = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
         // delete -> deletes second book in unfiltered book list / first book in filtered book list
         deleteCommand.execute();
-        undoRedoStack.push(deleteCommand);
+        undoStack.push(deleteCommand);
 
         // undo -> reverts book shelf back to previous state and filtered book list to show all books
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         expectedModel.deleteBook(bookToDelete);
         assertNotEquals(bookToDelete, model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased()));
-        // redo -> deletes same second book in unfiltered book list
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -209,7 +194,7 @@ public class DeleteCommandTest {
      */
     private DeleteCommand prepareCommand(Index index) {
         DeleteCommand deleteCommand = new DeleteCommand(index);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        deleteCommand.setData(model, new CommandHistory(), new UndoStack());
         return deleteCommand;
     }
 

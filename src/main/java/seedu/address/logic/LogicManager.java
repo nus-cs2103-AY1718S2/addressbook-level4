@@ -8,10 +8,12 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.network.ApiBookDetailsResultEvent;
 import seedu.address.commons.events.network.ApiSearchResultEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
 import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.SearchCommand;
@@ -22,6 +24,7 @@ import seedu.address.model.ActiveListType;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
  * The main LogicManager of the app.
@@ -32,13 +35,13 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Model model;
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
-    private final UndoRedoStack undoRedoStack;
+    private final UndoStack undoStack;
 
     public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser();
-        undoRedoStack = new UndoRedoStack();
+        undoStack = new UndoStack();
     }
 
     @Override
@@ -46,9 +49,9 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = bookShelfParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack);
+            command.setData(model, history, undoStack);
             CommandResult result = command.execute();
-            undoRedoStack.push(command);
+            undoStack.push(command);
             return result;
         } finally {
             history.add(commandText);
@@ -90,6 +93,31 @@ public class LogicManager extends ComponentManager implements Logic {
             break;
         default:
             logger.warning("Unexpected ApiSearchResultEvent outcome.");
+            break;
+        }
+    }
+
+    @Subscribe
+    private void handleApiBookDetailsResultEvent(ApiBookDetailsResultEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switch (event.outcome) {
+        case FAILURE:
+            raise(new NewResultAvailableEvent(AddCommand.MESSAGE_ADD_FAIL));
+            break;
+        case SUCCESS:
+            Platform.runLater(() -> {
+                Book toAdd = event.book;
+                try {
+                    model.addBook(toAdd);
+                    raise(new NewResultAvailableEvent(
+                            String.format(AddCommand.MESSAGE_SUCCESS, toAdd)));
+                } catch (DuplicateBookException e) {
+                    raise(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
+                }
+            });
+            break;
+        default:
+            logger.warning("Unexpected ApiBookDetailsEvent outcome.");
             break;
         }
     }

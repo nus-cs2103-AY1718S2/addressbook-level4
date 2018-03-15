@@ -16,12 +16,12 @@ public class BookCardTest extends GuiUnitTest {
     @Test
     public void display() {
         // no categories
-        Book bookWithNoCategories = new BookBuilder().withCategories(new String[0]).build();
+        Book bookWithNoCategories = new BookBuilder().withCategories().build();
         BookCard bookCard = new BookCard(bookWithNoCategories, 1);
         uiPartRule.setUiPart(bookCard);
         assertCardDisplay(bookCard, bookWithNoCategories, 1);
 
-        // with tags
+        // with categories
         Book bookWithCategories = new BookBuilder().build();
         bookCard = new BookCard(bookWithCategories, 2);
         uiPartRule.setUiPart(bookCard);
@@ -47,7 +47,7 @@ public class BookCardTest extends GuiUnitTest {
         assertFalse(bookCard.equals(0));
 
         // different book, same index -> returns false
-        Book differentBook = new BookBuilder().withTitle("differentTitle").build();
+        Book differentBook = new BookBuilder().withIsbn("111").build();
         assertFalse(bookCard.equals(new BookCard(differentBook, 0)));
 
         // same book, different index -> returns false

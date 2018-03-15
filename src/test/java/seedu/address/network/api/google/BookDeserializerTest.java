@@ -3,6 +3,7 @@ package seedu.address.network.api.google;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,6 +25,8 @@ public class BookDeserializerTest {
     public static final File VALID_RESPONSE_NO_DESC_FILE = new File(TEST_DATA_FOLDER + "ValidResponseNoDesc.json");
     public static final File INVALID_RESPONSE_WRONG_TYPE_FILE =
             new File(TEST_DATA_FOLDER + "InvalidResponseWrongType.json");
+    public static final File INVALID_RESPONSE_NO_ISBN_FILE =
+            new File(TEST_DATA_FOLDER + "InvalidResponseNoIsbn.json");
     public static final File ERROR_RESPONSE_FILE = new File(TEST_DATA_FOLDER + "ErrorResponse.json");
 
     @Rule
@@ -59,6 +62,13 @@ public class BookDeserializerTest {
     public void deserialize_invalidResponseWrongType_throwsJsonMappingException() throws Exception {
         thrown.expect(JsonMappingException.class);
         String json = FileUtil.readFromFile(INVALID_RESPONSE_WRONG_TYPE_FILE);
+        mapper.readValue(json, Book.class);
+    }
+
+    @Test
+    public void deserialize_invalidResponseNoIsbn_throwsException() throws Exception {
+        thrown.expect(IOException.class);
+        String json = FileUtil.readFromFile(INVALID_RESPONSE_NO_ISBN_FILE);
         mapper.readValue(json, Book.class);
     }
 

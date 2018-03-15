@@ -13,7 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.BookPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToBookListIndexRequestEvent;
 import seedu.address.model.book.Book;
 
@@ -46,7 +46,7 @@ public class BookListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in book list panel changed to : '" + newValue + "'");
-                        raise(new BookPanelSelectionChangedEvent(newValue));
+                        raise(new BookListSelectionChangedEvent(newValue));
                     }
                 });
     }
@@ -59,6 +59,11 @@ public class BookListPanel extends UiPart<Region> {
             bookListView.scrollTo(index);
             bookListView.getSelectionModel().clearAndSelect(index);
         });
+    }
+
+    protected void clearSelectionAndScrollToTop() {
+        bookListView.getSelectionModel().clearSelection();
+        bookListView.scrollTo(0);
     }
 
     @Subscribe

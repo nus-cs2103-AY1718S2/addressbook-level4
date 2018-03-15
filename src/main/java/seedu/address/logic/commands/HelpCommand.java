@@ -8,7 +8,6 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
  */
 public class HelpCommand extends Command {
 
-    private String commandRequest = null;
     public static final String COMMAND_ALIAS = "man";
     public static final String COMMAND_WORD = "help";
 
@@ -16,7 +15,7 @@ public class HelpCommand extends Command {
             + "Shows program usage instructions.\n"  + "Example: " + COMMAND_WORD;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
-
+    private String commandRequest = null;
 
 
     //@@author jasmoon

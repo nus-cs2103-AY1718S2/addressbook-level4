@@ -35,7 +35,7 @@ public class AppointmentUtil {
         sb.append(PREFIX_REMARK + appointment.getRemark().value + " ");
         sb.append(PREFIX_DATE + appointment.getFormattedLocalDateTime() + " ");
         appointment.getType().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
+            s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
     }

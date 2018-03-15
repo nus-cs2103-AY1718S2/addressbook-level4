@@ -14,8 +14,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 public class AutocompleterTest {
     private Model model;
@@ -42,7 +42,12 @@ public class AutocompleterTest {
     public void completeField() throws  DuplicatePersonException {
 
         model.addPerson(
-                new Person(new Name("John Doe"), new Phone("98765432"), new Email("johndoe@test.com"), new Address("NUS"), Collections.emptySet()));
+                new Person(
+                        new Name("John Doe"),
+                        new Phone("98765432"),
+                        new Email("johndoe@test.com"),
+                        new Address("NUS"),
+                        Collections.emptySet()));
 
         autocompleter = new Autocompleter(logic);
 

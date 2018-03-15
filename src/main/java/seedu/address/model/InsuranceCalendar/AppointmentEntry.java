@@ -41,6 +41,10 @@ public class AppointmentEntry {
         return appointmentEntry;
     }
 
+    public String getGivenTitle() {
+        return givenTitle;
+    }
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -51,5 +55,21 @@ public class AppointmentEntry {
                 .append(interval.getEndDate().toString());
 
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof AppointmentEntry)) {
+            return false;
+        }
+
+        AppointmentEntry otherAppointment = (AppointmentEntry) other;
+        return otherAppointment.givenTitle.equals(this.getGivenTitle())
+                && otherAppointment.getStartDate().equals(this.getStartDate())
+                && otherAppointment.getEndDate().equals(this.getEndDate());
     }
 }

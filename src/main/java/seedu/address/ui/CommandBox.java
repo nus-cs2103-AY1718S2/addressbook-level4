@@ -1,13 +1,15 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.util.KeyboardShortcutsMapping.COMMAND_SUBMISSION;
+import static seedu.address.ui.util.KeyboardShortcutsMapping.LAST_COMMAND;
+import static seedu.address.ui.util.KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND;
+import static seedu.address.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
+
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -31,11 +33,6 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
-    private final KeyCombination commandSubmissionKeys = new KeyCodeCombination(KeyCode.ENTER);
-    private final KeyCombination previousCommandKeys = new KeyCodeCombination(KeyCode.UP);
-    private final KeyCombination nextCommandKeys = new KeyCodeCombination(KeyCode.DOWN);
-    private final KeyCombination newLinekeys = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
-
     @FXML
     private TextArea commandTextArea;
 
@@ -52,16 +49,16 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
-        if (commandSubmissionKeys.match(keyEvent)) {
+        if (COMMAND_SUBMISSION.match(keyEvent)) {
             keyEvent.consume();
             submitCommand();
-        } else if (previousCommandKeys.match(keyEvent)) {
+        } else if (LAST_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             navigateToPreviousInput();
-        } else if (nextCommandKeys.match(keyEvent)) {
+        } else if (NEXT_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             navigateToNextInput();
-        } else if (newLinekeys.match(keyEvent)) {
+        } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             createNewLine();
         }

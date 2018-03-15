@@ -188,11 +188,13 @@ public class MainApp extends Application {
         ui.start(primaryStage);
     }
 
+    /**
+     * read welcome "username" message
+     */
     private void readWelcomeMessage() {
         try {
-            Runtime.getRuntime().exec( "wscript src\\main\\resources\\scripts\\Welcome.vbs" );
-        }
-        catch( IOException e ) {
+            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
+        } catch (IOException e) {
             System.out.println("Unable to load welcome message.");
         }
     }

@@ -53,19 +53,24 @@ public class BrowserPanel extends UiPart<Region> {
         if (addressValue.indexOf('#') > 2) {
             stringCutIndex = addressValue.indexOf('#') - 2;
             addressWithoutUnit = addressValue.substring(0, stringCutIndex);
+        } else {
+            addressWithoutUnit = addressValue;
         }
-        else addressWithoutUnit = addressValue;
 
         readPersonName(person);
 
         loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
     }
 
+    /**
+     * Run script that read person name
+     * @param person
+     */
     private void readPersonName(Person person) {
         try {
-            Runtime.getRuntime().exec( "wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs" + " " + person.getName().fullName);
-        }
-        catch( IOException e ) {
+            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
+                    + " " + person.getName().fullName);
+        } catch (IOException e) {
             System.out.println("Unable to read person name");
         }
     }

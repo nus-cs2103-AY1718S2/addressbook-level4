@@ -38,7 +38,7 @@ public class Theme {
         boolean isValid = Arrays.stream(themes).anyMatch(themeName::equals);
         return isValid;
     }
-    
+
     public String getThemeName() {
         return themes[Arrays.asList(themesLocation).indexOf(selectedThemePath)];
     }

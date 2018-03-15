@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
@@ -18,7 +17,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.UndoStack;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
@@ -26,7 +25,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 /**
- * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * Contains integration tests (interaction with the Model and UndoCommand) and unit tests for
  * {@code AddCommand}.
  */
 public class AddCommandTest {
@@ -72,39 +71,33 @@ public class AddCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_validIndex_success() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+    public void executeUndo_validIndex_success() throws Exception {
+        UndoStack undoStack = new UndoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
         AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
         ModelManager expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
         prepareSearchResultListInModel(expectedModel);
 
         // add -> first book added
         addCommand.execute();
-        undoRedoStack.push(addCommand);
+        undoStack.push(addCommand);
 
         // undo -> reverts bookshelf back to previous state
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // redo -> same first book added again
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void executeUndoRedo_invalidIndex_failure() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+    public void executeUndo_invalidIndex_failure() throws Exception {
+        UndoStack undoStack = new UndoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getSearchResultsList().size() + 1);
         AddCommand addCommand = prepareCommand(outOfBoundIndex);
 
-        // execution failed -> addCommand not pushed into undoRedoStack
+        // execution failed -> addCommand not pushed into undoStack
         assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
-        // no commands in undoRedoStack -> undoCommand and redoCommand fail
+        // no commands in undoStack -> undoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
     }
 
     @Test
@@ -148,7 +141,7 @@ public class AddCommandTest {
      */
     private AddCommand prepareCommand(Index index) {
         AddCommand addCommand = new AddCommand(index);
-        addCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        addCommand.setData(model, new CommandHistory(), new UndoStack());
         return addCommand;
     }
 

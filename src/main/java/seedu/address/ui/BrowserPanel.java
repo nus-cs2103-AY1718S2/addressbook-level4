@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -55,7 +56,18 @@ public class BrowserPanel extends UiPart<Region> {
         }
         else addressWithoutUnit = addressValue;
 
+        readPersonName(person);
+
         loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
+    }
+
+    private void readPersonName(Person person) {
+        try {
+            Runtime.getRuntime().exec( "wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs" + " " + person.getName().fullName);
+        }
+        catch( IOException e ) {
+            System.out.println("Unable to read person name");
+        }
     }
 
     public void loadPage(String url) {

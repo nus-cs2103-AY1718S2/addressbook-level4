@@ -199,7 +199,7 @@ public class MainWindow extends UiPart<Stage> {
      *
      * Unhide browser and person list panel.
      */
-    void showAfterLogin() {
+    public void showAfterLogin() {
         featuresTabPane.setVisible(true);
         personDetailsPlaceholder.setVisible(true);
         calendarPlaceholder.setVisible(true);

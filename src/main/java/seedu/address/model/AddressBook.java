@@ -76,6 +76,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return hasLoggedIn;
     }
 
+    public void setLoginStatus(boolean status) {
+        hasLoggedIn = status;
+    }
+
 
     /** @@author kaisertanqr
      *

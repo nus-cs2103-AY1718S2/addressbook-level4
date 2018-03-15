@@ -59,7 +59,10 @@ public class MainWindowHandle extends StageHandle {
         return personDetailsPanel;
     }
 
-    public CalendarPanelHandle getCalendarPanel() { return calendarPanel; }
+    public CalendarPanelHandle getCalendarPanel() {
+        return calendarPanel;
+    }
 
     public DailySchedulerPanelHandle getDailySchedulerPanel() { return dailySchedulerPanel; }
+
 }

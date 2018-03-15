@@ -787,8 +787,12 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* visually-oriented so prefers to see maps instead of addresses
+* may take on different user profiles for different users with different contact lists
+* may require to add contacts on the go occasionally quickly
+* may like to be able to communicate with addressees
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app while being accessible easily on the go
 
 [appendix]
 == User Stories

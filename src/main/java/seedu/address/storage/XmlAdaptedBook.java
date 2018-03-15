@@ -12,6 +12,10 @@ import seedu.address.model.book.Author;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
+import seedu.address.model.book.Gid;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.PublicationDate;
+import seedu.address.model.book.Publisher;
 import seedu.address.model.book.Title;
 
 /**
@@ -22,9 +26,17 @@ public class XmlAdaptedBook {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     @XmlElement(required = true)
+    private String gid;
+    @XmlElement(required = true)
+    private String isbn;
+    @XmlElement(required = true)
     private String title;
     @XmlElement(required = true)
     private String description;
+    @XmlElement(required = true)
+    private String publisher;
+    @XmlElement(required = true)
+    private String publicationDate;
 
     @XmlElement
     private List<XmlAdaptedAuthor> authors = new ArrayList<>();
@@ -40,8 +52,9 @@ public class XmlAdaptedBook {
     /**
      * Constructs an {@code XmlAdaptedBook} with the given book details.
      */
-    public XmlAdaptedBook(String title, String description, List<XmlAdaptedAuthor> authors,
-                          List<XmlAdaptedCategory> categories) {
+    public XmlAdaptedBook(String gid, String isbn, String title, String description,
+                          List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
+                          String publisher, String publicationDate) {
         this.title = title;
         this.description = description;
         if (authors != null) {
@@ -50,6 +63,10 @@ public class XmlAdaptedBook {
         if (categories != null) {
             this.categories = new ArrayList<>(categories);
         }
+        this.gid = gid;
+        this.isbn = isbn;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
     }
 
     /**
@@ -58,6 +75,8 @@ public class XmlAdaptedBook {
      * @param source future changes to this will not affect the created XmlAdaptedBook.
      */
     public XmlAdaptedBook(Book source) {
+        gid = source.getGid().gid;
+        isbn = source.getIsbn().isbn;
         title = source.getTitle().title;
         description = source.getDescription().description;
         authors = new ArrayList<>();
@@ -68,6 +87,8 @@ public class XmlAdaptedBook {
         for (Category category : source.getCategories()) {
             categories.add(new XmlAdaptedCategory(category));
         }
+        publisher = source.getPublisher().publisher;
+        publicationDate = source.getPublicationDate().date;
     }
 
     /**
@@ -86,7 +107,8 @@ public class XmlAdaptedBook {
         }
 
         if (this.title == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Title.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Title.class.getSimpleName()));
         }
         final Title title = new Title(this.title);
 
@@ -96,7 +118,32 @@ public class XmlAdaptedBook {
         }
         final Description description = new Description(this.description);
 
-        return new Book(new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories), description);
+        if (this.gid == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Gid.class.getSimpleName()));
+        }
+        final Gid gid = new Gid(this.gid);
+
+        if (this.isbn == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Isbn.class.getSimpleName()));
+        }
+        final Isbn isbn = new Isbn(this.isbn);
+
+        if (this.publisher == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Publisher.class.getSimpleName()));
+        }
+        final Publisher publisher = new Publisher(this.publisher);
+
+        if (this.publicationDate == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    PublicationDate.class.getSimpleName()));
+        }
+        final PublicationDate publicationDate = new PublicationDate(this.publicationDate);
+
+        return new Book(gid, isbn, new HashSet<>(bookAuthors), title,
+                new HashSet<>(bookCategories), description, publisher, publicationDate);
     }
 
     @Override
@@ -113,6 +160,10 @@ public class XmlAdaptedBook {
         return Objects.equals(title, otherBook.title)
                 && Objects.equals(description, otherBook.description)
                 && authors.equals(otherBook.authors)
-                && categories.equals(otherBook.categories);
+                && categories.equals(otherBook.categories)
+                && Objects.equals(gid, otherBook.gid)
+                && Objects.equals(isbn, otherBook.isbn)
+                && Objects.equals(publisher, otherBook.publisher)
+                && Objects.equals(publicationDate, otherBook.publicationDate);
     }
 }

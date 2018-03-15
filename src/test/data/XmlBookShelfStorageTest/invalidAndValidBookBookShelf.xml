@@ -2,8 +2,14 @@
 <bookshelf>
     <!-- Valid Book -->
     <books>
-        <title>Title</title>
-        <description>Description</description>
+        <title>Artemis</title>
+        <description>This is Artemis.</description>
+        <authors>Andy Weir</authors>
+        <categories>Fiction</categories>
+        <gid>ry3GjwEACAAJ</gid>
+        <isbn>9780525572664</isbn>
+        <publisher></publisher>
+        <publicationDate>2017-11-14</publicationDate>
     </books>
     <!-- Book with invalid title field -->
     <books>

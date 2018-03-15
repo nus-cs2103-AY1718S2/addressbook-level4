@@ -47,7 +47,7 @@ public class BookCardTest extends GuiUnitTest {
         assertFalse(bookCard.equals(0));
 
         // different book, same index -> returns false
-        Book differentBook = new BookBuilder().withTitle("differentTitle").build();
+        Book differentBook = new BookBuilder().withIsbn("111").build();
         assertFalse(bookCard.equals(new BookCard(differentBook, 0)));
 
         // same book, different index -> returns false

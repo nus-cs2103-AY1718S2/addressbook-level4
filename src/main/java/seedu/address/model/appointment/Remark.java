@@ -1,12 +1,16 @@
-package seedu.address.model.person;
+package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Appointment's remarks.
+ * Guarantees: mutable; is valid as declared in {@link #isValidRemark(String)}
+ */
 public class Remark {
 
     public static final String MESSAGE_REMARK_CONSTRAINTS =
-            "Remarks can take any values, and it may be blank.";
+            "Remarks can take any values, and it should not be blank. Leave \"nil\" for no remarks.";
 
     /*
      * The first character of the remark must not be a whitespace,
@@ -14,7 +18,7 @@ public class Remark {
      */
     public static final String REMARK_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String value;
+    public String value;
 
     /**
      * Constructs an {@code Remark}.
@@ -22,6 +26,7 @@ public class Remark {
      * @param remark A valid address.
      */
     public Remark(String remark) {
+        requireNonNull(remark);
         checkArgument(isValidRemark(remark), MESSAGE_REMARK_CONSTRAINTS);
         this.value = remark;
     }

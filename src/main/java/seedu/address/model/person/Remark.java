@@ -9,12 +9,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Remark {
 
-    public static final String MESSAGE_PHONE_CONSTRAINTS =
+    public static final String MESSAGE_REMARK_CONSTRAINTS =
             "Person remarks can take any values, can even be blank";
     public final String value;
 
     public Remark(String remark) {
-        //requireNonNull(remark);
+        requireNonNull(remark);
         this.value = remark;
     }
 

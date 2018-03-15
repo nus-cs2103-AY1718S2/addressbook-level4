@@ -47,6 +47,8 @@ public class TestAddEventCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 title/test event loca/NUS, Singapore stime/2017-03-19T08:00:00"
             + " etime/2017-03-19T10:00:00 descrip/this is a test event";
 
+    public static final String MESSAGE_SUCCESS = "Event added!";
+
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
@@ -201,13 +203,14 @@ public class TestAddEventCommand extends Command {
         event.setReminders(reminders);*/
 
         String calendarId = personToAddEvent.getCalendarId();
+        System.out.println(calendarId);
         try {
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.printf("Event created: %s\n", event.getHtmlLink());
-        return new CommandResult("event added.");
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
 }

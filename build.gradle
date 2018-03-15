@@ -166,6 +166,7 @@ task headless << {
 // Makes sure that headless properties are set before running tests
 test.mustRunAfter headless
 
+
 asciidoctor {
     backends 'html5'
     sourceDir 'docs'

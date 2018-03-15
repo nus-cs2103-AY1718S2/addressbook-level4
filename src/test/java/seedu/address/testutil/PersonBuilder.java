@@ -91,6 +91,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Email} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCalendarId(String calendarId) {
+        this.calendarId = calendarId;
+        return this;
+    }
+
     public Person build() {
         return new Person(name, phone, email, address, tags, calendarId);
     }

@@ -13,8 +13,10 @@ import org.junit.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Vegetarian;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedPersonTest {
@@ -109,6 +111,39 @@ public class XmlAdaptedPersonTest {
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
+
+    public void toModelType_invalidHalal_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                        VALID_ADDRESS, INVALID_HALAL, VALID_VEGETARIAN, VALID_TAGS);
+        String expectedMessage = Halal.MESSAGE_HALAL_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullHalal_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, null, VALID_VEGETARIAN, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Halal.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    public void toModelType_invalidVegetarian_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                        VALID_ADDRESS, VALID_HALAL, INVALID_VEGETARIAN, VALID_TAGS);
+        String expectedMessage = Vegetarian.MESSAGE_VEGETARIAN_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullVegetarian_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_HALAL, null, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Vegetarian.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
 
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {

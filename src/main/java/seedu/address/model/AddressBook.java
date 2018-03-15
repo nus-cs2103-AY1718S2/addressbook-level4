@@ -206,7 +206,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 petPatient.getName(),
                 petPatient.getSpecies(),
                 petPatient.getBreed(),
-                petPatient.getColor(),
+                petPatient.getColour(),
                 petPatient.getBloodType(),
                 correctTagReferences);
     }

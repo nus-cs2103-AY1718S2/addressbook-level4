@@ -67,9 +67,7 @@ public class Address {
     private String getWordsWithPlusSign(String[] words) {
         String googleMapSearchForm = "";
         for (String word:words) {
-            if (googleMapSearchForm.equals(""))
-                googleMapSearchForm = word;
-            googleMapSearchForm = googleMapSearchForm + "+" + word;
+            googleMapSearchForm = googleMapSearchForm + word + "+";
         }
         return googleMapSearchForm;
     }

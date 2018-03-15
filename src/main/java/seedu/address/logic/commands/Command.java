@@ -24,6 +24,11 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    // TagCommand
+    public static String getMessageForTagListShownSummary(int displaySize, String[] tagKeywords) {
+        return String.format(Messages.MESSAGE_TAGS_LISTED_OVERVIEW, displaySize, tagKeywords);
+    }
+
     /**
      * Executes the command and returns the result message.
      *

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Medeina - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F14-B2/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -204,7 +204,7 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores Medeina's data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -219,7 +219,7 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save Medeina's Address Book data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -234,13 +234,13 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of Medeina (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of Medeina before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,7 +275,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in Medeina's address book. The current state of Medeina is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
@@ -288,7 +288,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore Medeina to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -299,7 +299,7 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores Medeina to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -329,7 +329,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire Medeina.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -339,12 +339,12 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
+* **Alternative 1 (current choice):** Only include commands that modifies Medeina (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+** Cons: User have no way of skipping such commands if he or she just want to reset the state of Medeina * and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
@@ -493,7 +493,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Medeina depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -541,7 +541,7 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in Medeina's address book.
 +
 ****
 * Hints
@@ -803,15 +803,59 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |create pet patient profile |register its information
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |find a pet patient by name |locate details of pet patient without having to go through the entire list
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add appointments |schedule meeting with owners
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |find owner's contact number |
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |search for an animal's medical history |know next step of treatment
+
+|`* * *` |user |list out appointments for next day |know what to prepare
+
+|`* * *` |user |classify types of appointments |organize the appointments better
+
+|`* * *` |user |cancel an appointment |make space in schedule for other things
+
+|`* * *` |user |see future appointments |know how to plan my works
+
+|`* * *` |user |list out appointments for today |prepare for the work
+
+|`* * *` |user |list out pet patients of a specific species and their owners' contact information |contact them for blood donation
+
+|`* * *` |user |log in with passwords |protect my pet patients' and their respective owners' information
+
+|`* * *` |user |reschedule an appointment |make time for emergency situations
+
+|`* * *` |user |search by owner |retrieve a list of pet patients under a particular owner
+
+|`* * *` |user |create owner profiles |
+
+|`* * *` |user |add in owner details such as contact number |contact them when needed
+
+|`* * *` |user |update pet patients' information |
+
+|`* * *` |user |see owner's name when checking pet patients' profile |know who it belongs to
+
+|`* *` |user |delete a pet patient after certain period |remove entries that I no longer need
+
+|`* *` |user |update status of pet patient (living, deceased) |know the number of pets I am managing now
+
+|`* *` |user |check who is my assistant for the day/particular pet patient |brief them in advance
+
+|`* *` |user |have reminders sms sent to pet owners automatically 2 days before appointment|
+
+|`* *` |user |check services consumed for a particular appointment |know what a pet patient has gone through
+
+|`* *` |user |update my status |be recognized as an official vet after my training
+
+|`* *` |user |transfer a pet patient from my clinic to another in case of emergency|
+
+|`* *` |user |manage the "rooms" in hospital |make space for newly hospitalized pet patient
+
+|`*` |user with many pet patients in the address book |sort pet patients by name |locate a pet patient easily
 |=======================================================================
 
 _{More to be added}_
@@ -819,17 +863,48 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Medeina` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: View full details of an appointment
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list appointments
+2.  Medeina shows a list of appointments for the current month
+3.  User requests to view a specific appointment in the list
+4.  Medeina shows the full details of the specified appointment
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 2b. To retrieve a list of all upcoming appointments, use the command "list -a appointments"
++
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Medeina shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Update pet owner's contact information
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  Medeina shows a list of pet patients with the name "Joseph"
+3.  User requests to view contact information of a specific pet patient
+4.  Medeina shows the pet patient's owner's contact information
+5.  User requests to modify the pet patient's owner's contact information
+6.  Medeina shows the pet patient's updated contact information
 +
 Use case ends.
 
@@ -843,7 +918,154 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Medeina shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given command is invalid.
++
+[none]
+** 5a1. Medeina shows the correct command usage to edit pet patient's information.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Retrieve medical history of a pet patient
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  Medeina shows a list of pet patients with the name "Joseph"
+3.  User requests to view medical history of a specific pet patient
+4.  Medeina shows the pet patient's medical history
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Medeina shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. No medical history (empty).
++
+Use case ends.
+
+[discrete]
+=== Use case: Retrieve information of a particular owner (contact details, pet patients owned by him/her, and appointments made)
+
+*MSS*
+
+1.  User requests to find an owner named "Mavis"
+2.  Medeina shows a list of owners with "Mavis" as part of their name
+3.  User requests to view information of a specific owner
+4.  Medeina shows information about the owner
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Medeina shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Generate a pdf report of a pet patient's medical history and owner's contact information
+
+*MSS*
+
+1.  User requests to find a pet patient with the name "Joseph"
+2.  Medeina shows a list of pet patients with the name "Joseph"
+3.  User requests for a pdf report of a specific pet patient on the list
+4.  Medeina generates a pdf report for the user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Medeina shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Generate a pdf report of a particular owner's full information e.g. contact details, list of pet patients under this owner and their medical histories
+*MSS*
+
+1.  User requests to find an owner with the name "Mavis"
+2.  Medeina shows a list of owners with the name "Mavis"
+3.  User requests for a pdf report of a specific owner on the list
+4.  Medeina generates a pdf report for the user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Medeina shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add tag(s) to a pet owner
+
+*MSS*
+
+1.  User requests to find an owner with the name "Mavis"
+2.  Medeina shows a list of owners with the name "Mavis"
+3.  User requests to add tags to a specific owner on the list
+4.  Medeina shows updated owner information
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Medeina shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given tag(s) is/are invalid.
++
+[none]
+** 3b1. Medeina shows a list of valid tags.
 +
 Use case resumes at step 2.
 
@@ -852,9 +1074,16 @@ _{More to be added}_
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should work on Windows, Linux and macOS as long as it has Java `1.8.0_60` or higher installed.
+.  A user (vet or vet assistant) with above average typing speed for regular English text (i.e. not code, not system administrative commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should be accessible, even without any Internet connection (or with poor Internet connection).
+.  The system should be able to hold the information of at least 1000 patients (pets) and their respective owners without noticeable sluggishness in performance for typical usage.
+.  The system should be stable (runs without crashing, even for extended hours) and responsive (with a maximum lag of 2 seconds) due to the possibility of patient emergencies.
+.  The system should be reliable and accurate (i.e. information keyed in is guaranteed to be saved, information retrieved is guaranteed to be accurate based on what was keyed in previously).
+.  The system must have sufficient security (such as password protection / encrypted storage file) to protect the confidentiality of the patients (pets) and their respective owners. This is also to ensure compliance with PDPA.
+.  Patient's and owner's information should be easily and accurately backed up, with zero errors in the information.
+.  Restoring patient's and their respective owner's information should be an easy process.
+.  The system should have sufficient commands / functions to ensure that information can be maintained and managed easily. Basic operations such as add, delete, find, update must be included for patients and their respective owners.
 
 _{More to be added}_
 

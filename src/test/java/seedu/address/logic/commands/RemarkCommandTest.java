@@ -31,7 +31,6 @@ import seedu.address.testutil.PersonBuilder;
 public class RemarkCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    
     public static final String REMARK_EXAMPLE = "This is a remark";
 
     @Test
@@ -71,7 +70,6 @@ public class RemarkCommandTest {
         Person firstPersonInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withRemark(REMARK_EXAMPLE).build();
-        
         RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON,
                 editedPerson.getRemark().value);
 

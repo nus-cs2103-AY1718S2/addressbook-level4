@@ -38,7 +38,7 @@ Below are some features and capabilities that Bibliotek supports:
 * Track the books you are reading, have read and want to read
 * Update you when books in your watchlist become available in the library
 * Recommend new books based on your reading list
-* Undo/redo your previous actions
+* Undo your previous actions
 
 == Quick Start
 
@@ -163,7 +163,7 @@ Selects the 1st book among books with `HIGH` priority in your book shelf.
 `select 1` +
 Selects the 1st book in the search results.
 
-=== Editing a book : `edit`
+=== Editing a book : `edit` `[coming in v1.2]`
 
 After reading a book, you may want to give the book a rating or set the book as read. Or, you may want
 to change the priority of books to remind yourself what you should read next. These can be done using `edit`. +
@@ -210,7 +210,7 @@ Deletes the 2nd person in the address book.
 Deletes the 1st person in the results of the `find` command.
 
 
-=== Viewing book reviews: `reviews`
+=== Viewing book reviews: `reviews` `[coming in v1.3]`
 
 If a book catches your eyes but you are not sure whether it's worth the read, use
 `reviews` to find out what other readers think. +
@@ -230,7 +230,20 @@ Examples:
 `reviews 1` +
 Shows online reviews of 1st book in the search results.
 
-=== Finding a book in the library: `library`
+=== Listing recently viewed books: `recent` `[coming in v1.3]`
+
+You recently selected a book in one of your searches but did not add it into your
+book shelf, and now you have trouble searching up that book again. No worries, `recent`
+is designed to take care of this. +
+Format: `recent`
+
+****
+* Lists the books you recently selected in reverse chronological order.
+* Limited to books selected since the last start-up of Bibliotek.
+* Limited to the last 50 books.
+****
+
+=== Finding a book in the library: `library` `[coming in v1.4]`
 
 If you want to know whether a book is available in a library, use `library`. +
 Format: `library INDEX`
@@ -248,18 +261,44 @@ Examples:
 `library 1` +
 Search your chosen library for the 1st book in your book shelf.
 
-=== Listing recently viewed books: `recent`
+=== Placing a book on watchlist: `watch` `[coming in v1.4]`
 
-You recently selected a book in one of your searches but did not add it into your
-book shelf, and now you have trouble searching up that book again. No worries, `recent`
-is designed to take care of this. +
-Format: `recent`
+Interested in so many books that searching them up using `library` is time consuming?
+With `watch`, you can automatically get notified when a book in your watchlist
+becomes available at the library, saving you the trouble! +
+Format: `watch INDEX`
 
 ****
-* Lists the books you recently selected in reverse chronological order.
-* Limited to books selected since the last start-up of Bibliotek.
-* Limited to the last 50 books.
+* Adds the book at the specified `INDEX` into your watchlist.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
 ****
+
+[NOTE]
+====
+Bibliotek informs you of the availability of your watchlisted books in the library
+everytime you start up the application.
+====
+
+=== Ordering a book online: `order` `[coming in v1.5]`
+
+If you wish to purchase a book, use `order`. +
+Format: `order INDEX`
+
+****
+* Navigates to the purchase page for the book at the specified `INDEX`.
+* The online shopping site used is the <<settings-order,pre-configured site>>.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+WARNING: You can only perform `order` with Internet connection.
+
+Examples:
+
+* `list` +
+`order 1` +
+Opens the purchase page of the 1st book in your book shelf in your chosen site.
 
 === Listing entered commands : `history`
 
@@ -275,7 +314,6 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
 === Undoing previous command : `undo`
 
 If you regret executing a command, use `undo` to reverse your action. +
@@ -306,38 +344,15 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
-
-If you regret an undone command, use `redo` to reverse the most recent undone command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
 === Clearing all entries : `clear`
 
 Don't need the data in your book shelf anymore? Remove them using `clear`. +
 Format: `clear`
 
-=== Changing settings: `settings`
+=== Changing settings: `settings` `[coming in v1.4]`
 
 [[settings-library]]
-==== Library
+==== Library `[coming in v1.4]`
 
 If you want to search for books in other libraries, you can change your settings. +
 Format: `settings lib/LIBRARY`
@@ -352,6 +367,45 @@ Format: `settings lib/LIBRARY`
 Only some libraries are supported. Do https://f14-b4.netlify.com/contactus[contact us]
 if there are other libraries you wish are supported.
 ====
+
+[[settings-order]]
+==== Online shopping site `[coming in v1.5]`
+
+If you want to purchase books on other online booksellers, you can change your settings. +
+Format: `settings order/SITE`
+
+****
+* Change the online bookseller searched when you perform `order`.
+* Default online book selling site is Book Depository.
+****
+
+[NOTE]
+====
+Only some sites are supported. Do https://f14-b4.netlify.com/contactus[contact us]
+if there are other sites you wish are supported.
+====
+
+==== Command alias `[coming in v1.5]`
+
+If you don't like the word for a command or think it is too long, you can add a
+command alias to make the command more intuitive or reduce typing. +
+Format: `settings alias/COMMAND: ALIAS`
+
+****
+* Change the alias of the given command.
+* Each command can have 1 alias.
+* By default, all commands have no alias.
+****
+
+TIP: Remove the alias using `settings alias/COMMAND:`
+
+Examples:
+
+* `settings alias/add: a` +
+Change the command alias of `add` to `a`.
+
+* `settings alias/add:` +
+Remove the command alias of `add`.
 
 ==== Theme `[coming in v2.0]`
 
@@ -388,7 +442,7 @@ Format: `exit`
 Bibliotek saves data in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Getting book recommendations `[coming in v2.0]`
+=== Getting book recommendations: `suggest` `[coming in v2.0]`
 
 Having problems deciding what to read next? Bibliotek can give you book recommendations
 based on the books in your book shelf. Use `suggest` to obtain your personalized recommendations! +
@@ -396,10 +450,19 @@ Format: `suggest`
 
 TIP: Give appropriate ratings to books you have read to obtain recommendations that are closer to your preferences.
 
+=== Importing books from other E-Readers: `import` `[coming in v2.0]`
+
+If you are using other E-Readers and have many books in your collection that you wish to
+add into your Bibliotek book shelf, `import` is the command you are looking for. +
+Format: `import SOURCE`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Bibliotek folder.
+
+*Q*: Why do my commands keep timing out? +
+*A*: The external service may be down at the moment. You should try again after some time.
 
 *Q*: I have a problem and this guide did not help. +
 *A*: Post in our https://github.com/CS2103JAN2018-F14-B4/main/issues[issues page] and we will try our best to answer your queries.
@@ -410,19 +473,21 @@ TIP: Give appropriate ratings to books you have read to obtain recommendations t
 e.g. `add 1`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
-* *Edit* : `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]` +
-e.g. `edit 2 s/READ r/5`
+//* *Edit* : `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]` +
+//e.g. `edit 2 s/READ r/5`
 * *Exit* : `exit`
 * *Help* : `help`
 * *History* : `history`
-* *Library* : `library INDEX` +
+//* *Import* : `import SOURCE`
+//* *Library* : `library INDEX` +
 * *List* : `list`
-* *Recent* : `recent`
-* *Redo* : `redo`
-* *Reviews* : `reviews INDEX`
+//*Order* : `order INDEX`
+//* *Recent* : `recent`
+//* *Reviews* : `reviews INDEX`
 * *Search* : `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]` +
 e.g. `search t/Babylon's Ashes c/Science Fiction`
 * *Select* : `select INDEX` +
-* *Settings* : `settings ...` +
-e.g. `settings lib/NLB`
+//* *Settings* : `settings ...` +
+//e.g. `settings lib/NLB`
 * *Undo* : `undo`
+//* *Watchlist*: `watch INDEX`

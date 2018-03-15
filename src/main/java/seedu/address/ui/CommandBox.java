@@ -27,7 +27,6 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private Autocompleter autocompleter;
 
     @FXML
     private TextField commandTextField;
@@ -38,7 +37,6 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        autocompleter = new Autocompleter(logic);
     }
 
     /**
@@ -61,7 +59,7 @@ public class CommandBox extends UiPart<Region> {
 
         case TAB:
             keyEvent.consume();
-            autocomplete();
+            commandTextField.appendText(new Autocompleter(logic).autocomplete(commandTextField.getText()));
             break;
 
         default:
@@ -93,13 +91,6 @@ public class CommandBox extends UiPart<Region> {
         }
 
         replaceText(historySnapshot.next());
-    }
-
-    /**
-     * Tries to complete the last word of the text field
-     */
-    private void autocomplete() {
-        commandTextField.appendText(autocompleter.autocomplete(commandTextField.getText()));
     }
 
     /**

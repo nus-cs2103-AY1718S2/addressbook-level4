@@ -37,7 +37,8 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         //1. tokienize
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_INCOME);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_INCOME);
 
         //2. do something I don't know what for yet
         Index index;

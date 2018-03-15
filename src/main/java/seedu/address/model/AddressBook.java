@@ -10,15 +10,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.calendarfx.model.CalendarSource;
-
 import javafx.collections.ObservableList;
-
-import seedu.address.model.InsuranceCalendar.AppointmentEntry;
-import seedu.address.model.InsuranceCalendar.InsuranceCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -32,7 +26,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private final InsuranceCalendar calendar;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -40,10 +33,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */ {
+     */
+    {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        calendar = new InsuranceCalendar();
     }
 
     public AddressBook() {
@@ -83,15 +76,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
-    //// calendar-level operations
-    /**
-     * Adds a appointment entry to the calendar.
-     *
-     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
-     */
-    public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
-        calendar.addAppointment(entry);
-    }
+
     //// person-level operations
 
     /**
@@ -148,7 +133,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences, person.getIncome());
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                correctTagReferences, person.getIncome());
     }
 
     /**
@@ -171,10 +157,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// util methods
-
-    CalendarSource getCalendar() {
-        return calendar.getCalendar();
-    }
 
     @Override
     public String toString() {

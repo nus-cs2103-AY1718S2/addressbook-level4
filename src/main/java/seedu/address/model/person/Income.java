@@ -13,7 +13,7 @@ import java.util.Locale;
  */
 public class Income {
     public static final String MESSAGE_INCOME_CONSTRAINTS =
-            "Person value must be positive numerical numbers, floating point value";
+            "Person value must be positive numerical number, Type: Double";
 
     public final Double value;
 

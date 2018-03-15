@@ -2,8 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -12,7 +10,6 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.InsuranceCalendar.AppointmentEntry;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Income;
@@ -48,58 +45,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String input} into a {@code String}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     */
-    static String parseString(String input) {
-        requireNonNull(input);
-        String trimmedInput = input.trim();
-
-        return trimmedInput;
-    }
-
-    /**
-     * Parses a {@code Optional<String> input} into an {@code Optional<String>} if {@code input} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<String> parseString(Optional<String> input) throws IllegalValueException {
-        requireNonNull(input);
-        return input.isPresent() ? Optional.of(parseString(input.get())) : Optional.empty();
-    }
-
-
-    /**
-     * Parses a {@code String input} into a {@code LocalDate}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code name} is invalid.
-     */
-    static LocalDate parseDate(String input) throws  IllegalValueException {
-        requireNonNull(input);
-        String trimmedInput = input.trim();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
-        LocalDate localDate = LocalDate.parse(trimmedInput, formatter);
-
-        if (localDate == null) {
-            throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_CONSTRAINTS);
-        }
-
-        return localDate;
-    }
-
-    /**
-     * Parses a {@code Optional<String> input} into an {@code Optional<LocalDate>} if {@code input} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<LocalDate> parseDate(Optional<String> input) throws IllegalValueException {
-        requireNonNull(input);
-        return input.isPresent() ? Optional.of(parseDate(input.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String name} into an {@code Name}
+     * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code name} is invalid.

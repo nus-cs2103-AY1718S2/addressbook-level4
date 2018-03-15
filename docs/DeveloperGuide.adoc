@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103JAN2018-T15-B2/main
+:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -781,17 +781,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 == Product Scope
 
 *Target user profile*:
-* Insurance agents who work under a big agency (eg. AIA, AIG)
-* has different categories of contacts to manage (eg. existing client, potential client, client making a claim)
-* Has a need to record various tasks pertaining to the list of contacts kept(eg. arrangement of appointment)
+
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts and related tasks within one app such that it will be more convenient and efficient for the user to carry out his job
-
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 
 [appendix]
 == User Stories
@@ -812,37 +809,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
-|`* *` |Insurance agent with many contacts |Group the contacts into different categories |View the list of contacts by categories
-
-|`* *` |Insurance agent with many contacts |Change the category of a contact |View the list of contacts by categories
-
-|`* * *` |Insurance agent that constantly contacts people |Update contact info |Keep my contact list updated
-
-|`* * *` |Insurance agent that needs to meet clients |Add appointments |Maintain my schedule
-
-|`* * *` |Insurance agent that needs to meet clients |Change the time/date of an existing appointment |Maintain my schedule
-
-|`* * *` |Insurance agent that needs to meet clients |Delete an appointment |Maintain my schedule
-
-|`* * *` |Insurance agent that needs to meet clients |Record client’s income |Prioritize purchasing power
-
-|`* * *` |Insurance agent that needs to meet clients |Record client’s job |Prioritize purchasing power
-
-|`* * *` |Insurance agent |Assign different policies to each contact |Know the policy my client is under
-
-|`* *` |Insurance agent that work for someone |Mark important tasks on my calendar |Don’s miss important meeting or tasks
-
-|`* *` |Insurance agent that needs to meet clients |Know the contact of an appointment |I know immediately who I am meeting and prepare for the appointment
-
-|`* *` |Insurance agent that needs to meet clients |Know which potential customer is likely to spend more |Schedule to meet them as a priority
-
-|`* *` |Insurance agent that needs to meet clients |Know which potential customer is likely to spend more |Schedule to meet them as a priority
-
-|`*` |Insurance agent that work with other agents |give a contact to other agents |share the contact with other agents
-
-
-
 |=======================================================================
 
 _{More to be added}_
@@ -878,49 +844,6 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-[discrete]
-=== Use case: Add appointment
-
-*MSS*
-
-1.  User click on the calendar to specify the date to add
-2.  User requests to add an appointment
-3.  App add an appointment to the calendar
-4.  calendar reflect the new appointment
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a.  No date is selected.
-+
-Use case ends.
-
-* 3a. The given date/timing is occupied.
-+
-[none]
-** 3a1. AddressBook shows a “slot is occupied” error.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Add job of a person
-
-*MSS*
-
-1.  User requests add person
-2.  App takes in a command i/income
-3.  AddressBook adds a person with income
-4.  Use case ends
-
-*Extensions*
-
-[none]
-* 2a. The person should not already exist.
-+
-Use case ends.
-
 _{More to be added}_
 
 [appendix]
@@ -929,10 +852,6 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  A simple and clean GUI interface to facilitate better user experience
-.  Incorporate material design into GUI to make the app more appealing to users
-.  Should have a simple tutorial section to help ramp up new users to the system
-
 
 _{More to be added}_
 
@@ -944,19 +863,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[[client]]Client::
-A person who can be enrolled into the insurance policy or a potential customer
-
-[[colleague]]Colleague::
-A fellow agent who work under the same organization
-
-[[calendar]]Calendar::
-A GUI calendar in the app
-
-[[policies]]Policies::
-Insurance policies the company offers to customers
-
 
 [appendix]
 == Product Survey

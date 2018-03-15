@@ -26,7 +26,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
-    private static final String FXML = "NewMainWindow.fxml";
+    private static final String FXML = "MainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -38,7 +38,6 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-    private CalendarPanel calendarPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -131,9 +130,6 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-
-        calendarPanel = new CalendarPanel(logic.getCalendar());
-        browserPlaceholder.getChildren().add(calendarPanel.getCalendarPage());
     }
 
     void hide() {

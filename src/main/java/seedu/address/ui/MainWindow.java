@@ -226,7 +226,12 @@ public class MainWindow extends UiPart<Stage> {
                 getRoot().getScene().getStylesheets().clear();
                 getRoot().getScene().getStylesheets().add(light);
             }
+            break;
+
+        default:
+            System.out.println("do nothing for now");
         }
+
         getRoot().getScene().getStylesheets().add(extensions);
     }
 }

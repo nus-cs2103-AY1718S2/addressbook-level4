@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -45,4 +46,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+
+    /**
+     * Gets the matrix of list of persons with selected fields for calculation
+     */
+    ArrayList<ArrayList<Double>> getPersonAttrMatrix();
 }

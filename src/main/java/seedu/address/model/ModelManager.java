@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -39,8 +40,19 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
+    //self instantiate new AddressBook and UserPrefs
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
+    }
+
+
+    /**
+     * Gets the matrix of list of persons with selected fields for calculation
+     */
+    @Override
+    public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
+
+        return this.addressBook.getPersonAttrMatrix();
     }
 
     @Override
@@ -54,7 +66,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }

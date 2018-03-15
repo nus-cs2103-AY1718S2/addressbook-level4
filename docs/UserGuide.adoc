@@ -235,6 +235,12 @@ Clears all entries from the address book. +
 Alias: `c` +
 Format: `clear`
 
+=== Sorting all entries : `sort` `[coming in v2.0]`
+
+Sorts all entries from the address book in alphebatical order based on name. +
+Alias: `s` +
+Format: `sort`
+
 === Exiting the program : `exit`
 
 Exits the program. +

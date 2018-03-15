@@ -133,7 +133,8 @@ public class XmlAdaptedPerson {
         final Halal halal = new Halal(this.halal);
 
         if (this.vegetarian == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Vegetarian.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Vegetarian.class.getSimpleName()));
         }
         if (!Vegetarian.isValidVegetarian(this.vegetarian)) {
             throw new IllegalValueException(Vegetarian.MESSAGE_VEGETARIAN_CONSTRAINTS);

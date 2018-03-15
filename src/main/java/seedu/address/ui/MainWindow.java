@@ -234,14 +234,14 @@ public class MainWindow extends UiPart<Stage> {
         }
 
         return "The theme is successfully changed to: "
-                + theme.substring(0,1).toUpperCase() + theme.substring(1).toLowerCase();
+                + theme.substring(0, 1).toUpperCase() + theme.substring(1).toLowerCase();
     }
 
     /**
      * Returns true if none of the current stylesheets contains {@code String} theme
      */
-    public Boolean isCurrentStyleSheet(String theme){
-        if (!getRoot().getScene().getStylesheets().contains(theme)) {
+    public Boolean isCurrentStyleSheet(String theme) {
+        if (getRoot().getScene().getStylesheets().contains(theme)) {
             return true;
         }
         return false;

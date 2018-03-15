@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -112,6 +113,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
+    }
+
+
+    /**
+     * Gets the matrix of list of persons with selected fields for calculation
+     */
+    public ArrayList<ArrayList<Double>> getPersonAttrMatrix(){
+        ArrayList<ArrayList<Double>> matrix;
+        for(int i=0; i< this.persons.asObservableList().size(); i++){
+//            for( int j=0; j< this.persons.asObservableList().)
+        }
     }
 
     /**

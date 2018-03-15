@@ -7,8 +7,10 @@ import java.time.ZoneId;
 import java.util.Map;
 
 import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 
+import javafx.event.EventHandler;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 
 

@@ -16,11 +16,11 @@ endif::[]
 By: `Team F11-B4`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
-Delivery is targeted at restaurants, especially the small ones, which want to have a system to keep track customers’ orders of delivery.
+Delivery is targeted at restaurants, especially for the small-medium ones, which want to have a system to keep track customers’ orders and delivery.
 
-A restaurant can have hundreds of orders a day and it’s quite troublesome for the restaurant to manually keep track all customer information, including their names, contact numbers, addresses, orders and expected time of delivery etc.
+A restaurant can have hundreds of orders a day and it’s extremely troublesome for the restaurant stuff to manually write down all customer information (including their names, contact numbers, addresses, orders and expected time of delivery etc.) and keep track on it.
 
-Hence they need a software to store all personal information and order information in an organised manner.
+Hence, they need a software to store all the information mentioned above in an organised manner.
 
 Delivery is for those who *prefer to use a desktop app for managing orders*. More importantly, Delivery is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Delivery can manage the orders faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
@@ -43,7 +43,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all orders
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 o/chicken rice` : adds an order of chicken rice from customer `John Doe` to the queue.
+* **`add`**`n/John Doe p/98765432 a/John street, block 123, #01-01 o/chicken rice` : adds an order of chicken rice from customer `John Doe` to the queue.
 * **`delete`**`3` : deletes the 3rd order shown in the current list
 * *`exit`* : exits the app
 
@@ -65,6 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
+If you want to find out all the features, or would like to know how to do a certain command, you can click on the help menu button. You can also enter the command help to access the help window. +
 Alias: `h` +
 Format: `help`
 
@@ -72,15 +73,17 @@ Format: `help`
 
 Adds an order to the queue +
 Alias: `a` +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS o/FOOD_ORDER [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER a/ADDRESS o/FOOD_ORDER [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 o/Chicken rice`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal o/Chicken chop`
+* `add n/John Doe p/98765432  a/John street, block 123, #01-01 o/Chicken rice h/HALAL v/VEGETARIAN`
+* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal o/Chicken chop h/HALAL`
+* `a n/John Doe p/98765432  a/John street, block 123, #01-01 o/Chicken rice h/HALAL v/VEGETARIAN`
+* `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal o/Chicken chop h/HALAL`
 
 === Listing all orders : `list`
 
@@ -92,7 +95,7 @@ Format: `list`
 
 Edits an existing order in the queue. +
 Alias: `e` +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/FOOD_ORDER] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [t/FOOD_ORDER] [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
 
 ****
 * Edits the order at the specified `INDEX`. The index refers to the index number shown in the last order listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -104,10 +107,15 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/FOOD_ORDER] [t/T
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the customer from 1st order to be `91234567` and `johndoe@example.com` respectively.
+* `edit 1 p/91234567` +
+Edits the phone number of the customer from 1st order to be `91234567` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the customer from 2nd order to be `Betsy Crower` and clears all existing tags.
+* `e 1 p/91234567` +
+Edits the phone number of the customer from 1st order to be `91234567` respectively.
+* `e 2 n/Betsy Crower t/` +
+Edits the name of the customer from 2nd order to be `Betsy Crower` and clears all existing tags.
+
 
 === Locating orders by name: `find`
 

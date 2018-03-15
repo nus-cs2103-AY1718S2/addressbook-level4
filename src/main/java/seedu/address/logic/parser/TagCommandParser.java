@@ -13,7 +13,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 /**
  * Parses input arguments and creates a new TagCommand object
  */
-public class TagCommandParser {
+public class TagCommandParser implements Parser<TagCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the TagCommand
      * and returns an TagCommand object for execution.

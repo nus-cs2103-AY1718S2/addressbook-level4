@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
  */
 public class Theme {
 
-    public static String[] themes = {"dark", "light"};
-    public static String[] themesLocation = {"/view/DarkTheme.css", "/view/LightTheme.css"};
+    private static String[] themes = {"dark", "light"};
+    private static String[] themesLocation = {"/view/DarkTheme.css", "/view/LightTheme.css"};
 
     public static final String MESSAGE_THEME_CONSTRAINTS = "Please specify one of the following themes:\n"
             + Arrays.stream(themes).collect(Collectors.joining(", "));

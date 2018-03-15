@@ -65,10 +65,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
-=== Logging into the system: `login`
+=== Logging into the system: `login` or `lg`
 
 Logs the user into the IMDB, given a matching username and password.
-Format: `login USERNAME PASSWORD`
+Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
 
 === Adding a person: `add` or `a`
 
@@ -84,10 +84,10 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `a n/Betsy Crowe c/peanuts e/betsycrowe@example.com a/Newgate Prison p/1234567 c/aspirin`
 
-=== Listing all persons : `list` or `l`
+=== Listing all persons : `list` or `ls`
 
 Shows a list of all persons in the IMDB. +
-Format: `list` or `l`
+Format: `list` or `ls`
 
 === Editing a person : `edit` or `e`
 
@@ -299,6 +299,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Login* : `login USERNAME PASSWORD`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
@@ -320,7 +321,8 @@ e.g. `d 3`
 e.g. `e 2 n/James Lee e/jameslee@example.com`
 * *Find* : `f KEYWORD [MORE_KEYWORDS]` +
 e.g. `f James Jake`
-* *List* : `l`
+* *List* : `ls`
+* *Login* : `lg USERNAME PASSWORD`
 * *Help* : `h`
 * *Select* : `s INDEX` +
 e.g.`s 2`

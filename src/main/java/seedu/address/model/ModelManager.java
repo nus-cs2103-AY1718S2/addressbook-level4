@@ -12,6 +12,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.login.Password;
+import seedu.address.model.login.Username;
+import seedu.address.model.login.exceptions.AlreadyLoggedInException;
+import seedu.address.model.login.exceptions.AuthenticationFailedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -36,6 +40,19 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+    }
+
+    /**
+     * Initializes a ModelManager with the given addressBook and userPrefs and a login status
+     */
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, boolean loggedIn) {
+        super();
+        requireAllNonNull(addressBook, userPrefs);
+
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+
+        this.addressBook = new AddressBook(addressBook, true);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -76,9 +93,19 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void checkLoginCredentials(Username username, Password password)
+            throws AlreadyLoggedInException, AuthenticationFailedException  {
+        addressBook.checkLoginCredentials(username, password);
+    }
+
+    @Override
+    public boolean hasLoggedIn() {
+        return addressBook.hasLoggedIn();
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -115,5 +142,6 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
+
 
 }

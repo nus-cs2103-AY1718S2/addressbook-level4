@@ -36,7 +36,13 @@ public class BookDeserializer extends StdDeserializer<Book> {
         JsonRoot root = jp.readValueAs(JsonRoot.class);
         JsonVolumeInfo volumeInfo = root.volumeInfo;
 
-        return new Book(new Gid(root.id), getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers),
+        Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);
+
+        if (isbn == null) {
+            throw new IOException("No ISBN is found for the book.");
+        }
+
+        return new Book(new Gid(root.id), isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
                 getCategorySet(volumeInfo.categories), getDescription(volumeInfo.description),
                 new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
@@ -48,7 +54,7 @@ public class BookDeserializer extends StdDeserializer<Book> {
                 return new Isbn(ii.identifier);
             }
         }
-        return new Isbn("");
+        return null;
     }
 
     private Set<Category> getCategorySet(String[] categories) {

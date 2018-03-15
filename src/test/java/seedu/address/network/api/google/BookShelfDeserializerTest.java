@@ -25,6 +25,8 @@ public class BookShelfDeserializerTest {
     public static final File VALID_RESPONSE_NO_ID_FILE = new File(TEST_DATA_FOLDER + "ValidResponseNoDesc.json");
     public static final File INVALID_RESPONSE_WRONG_TYPE_FILE =
             new File(TEST_DATA_FOLDER + "InvalidResponseWrongType.json");
+    public static final File INVALID_RESPONSE_NO_ISBN_FILE =
+            new File(TEST_DATA_FOLDER + "InvalidResponseNoIsbn.json");
     public static final File ERROR_RESPONSE_FILE = new File(TEST_DATA_FOLDER + "ErrorResponse.json");
 
     @Rule
@@ -59,6 +61,16 @@ public class BookShelfDeserializerTest {
         Book book2 = bookShelf.getBookList().get(1);
         assertEquals("The Book Without a Title 2", book2.getTitle().title);
         assertEquals("", book2.getDescription().description);
+    }
+
+    @Test
+    public void deserialize_invalidResponseNoIsbn_ignoresBookWithoutIsbn() throws Exception {
+        String json = FileUtil.readFromFile(INVALID_RESPONSE_NO_ISBN_FILE);
+        BookShelf bookShelf = mapper.readValue(json, BookShelf.class);
+        Book book1 = bookShelf.getBookList().get(0);
+        assertEquals("The Book Without a Title 2", book1.getTitle().title);
+        Book book2 = bookShelf.getBookList().get(1);
+        assertEquals("The Book Without a Title 3", book2.getTitle().title);
     }
 
     @Test

@@ -49,7 +49,14 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
     private void convertAndAddBook(BookShelf bookShelf, JsonVolume volume, Gid gid) {
         JsonVolumeInfo volumeInfo = volume.volumeInfo;
 
-        Book book = new Book(gid, getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers),
+        Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);
+
+        if (isbn == null) {
+            logger.warning("Found book without ISBN");
+            return;
+        }
+
+        Book book = new Book(gid, isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
                 BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
                 new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
@@ -66,7 +73,7 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
                 return new Isbn(ii.identifier);
             }
         }
-        return new Isbn("");
+        return null;
     }
 
     /** Temporary data holder used for deserialization. */

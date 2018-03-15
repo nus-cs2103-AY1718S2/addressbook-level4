@@ -173,7 +173,8 @@ public abstract class AddressBookSystemTest {
      * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
      * and the person list panel displays the persons in the model correctly.
      */
-    protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage, Model expectedModel) {
+    protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+                                                     Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
@@ -218,11 +219,13 @@ public abstract class AddressBookSystemTest {
         if (selectedCardName.indexOf('#') > 2) {
             stringCutIndex = selectedCardName.indexOf('#') - 2;
             addressWithoutUnit = selectedCardName.substring(0, stringCutIndex);
+        } else {
+            addressWithoutUnit = selectedCardName;
         }
-        else addressWithoutUnit = selectedCardName;
 
         try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + addressWithoutUnit.replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
+            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL
+                    + addressWithoutUnit.replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

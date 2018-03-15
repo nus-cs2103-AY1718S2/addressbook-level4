@@ -7,5 +7,6 @@
         <email isPrivate="false">hans@exam!32ple</email>
         <address isPrivate="false">4th street</address>
         <income isPrivate="false">30000</income>
+        <age isPrivate="false">20</age>
     </persons>
 </addressbook>

@@ -76,6 +76,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Sorts the existing {@code UniquePersonList} of this {@code AddressBook}
+     * with their names in alphabetical order.
+     */
+    public void sort() {
+        requireNonNull(persons);
+        persons.sort();
+    }
+
     //// person-level operations
 
     /**
@@ -132,7 +141,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getMajor(),
+                person.getYear(), correctTagReferences);
     }
 
     /**

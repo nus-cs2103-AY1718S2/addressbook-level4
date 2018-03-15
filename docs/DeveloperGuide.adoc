@@ -817,13 +817,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |basic tags to be assigned automatically |type lesser (e.g. when adding a pet owner, the "Person" tag should be assigned by default)
 
-|`* * *` |user |list out appointments for next day |prepare for the required procedures/diagnosis/consultation 
+|`* * *` |user |list out appointments for next day |prepare for the required procedures/diagnosis/consultation
+
+|`* * *` |user |change the theme of the application |better suit my preference
 
 |`* * *` |user |classify types of appointment |better organize a long list of appointment
 
 |`* * *` |user |cancel an appointment |make space in schedule for other things
 
-|`* * *` |user |see upcoming appointments |prepare/plan in advance 
+|`* * *` |user |see upcoming appointments |prepare/plan in advance
 
 |`* * *` |user |see a list of today's appointment |check on today's schedule
 

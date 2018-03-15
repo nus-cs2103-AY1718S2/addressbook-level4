@@ -1,7 +1,10 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.storage.XmlAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
@@ -31,6 +35,7 @@ public class XmlAdaptedPersonTest {
     private static final String INVALID_PROBLEM_SOLVING_SKILLS_SCORE = "0";
     private static final String INVALID_EXPERIENCE_SCORE = "5.5";
     private static final String INVALID_RESUME = "fileDoesNot.exist";
+    private static final String INVALID_INTERVIEW_DATE = "Tomorrow";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = BENSON.getName().toString();
@@ -186,6 +191,17 @@ public class XmlAdaptedPersonTest {
     }
 
     @Test
+    public void toModelType_invalidInterviewDate_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                        VALID_EXPECTED_GRADUATION_YEAR, VALID_TECHNICAL_SKILLS_SCORE,
+                        VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, INVALID_INTERVIEW_DATE, VALID_TAGS);
+        String expectedMessage = InterviewDate.MESSAGE_INTERVIEW_DATE_XML_ERROR;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
@@ -197,4 +213,16 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 
+    @Test
+    public void equals_sameObject_returnsTrue() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(BENSON);
+        assertTrue(person.equals(person));
+    }
+
+    @Test
+    public void equals_differentValues_returnsFalse() {
+        XmlAdaptedPerson alice = new XmlAdaptedPerson(ALICE);
+        XmlAdaptedPerson benson = new XmlAdaptedPerson(BENSON);
+        assertFalse(alice.equals(benson));
+    }
 }

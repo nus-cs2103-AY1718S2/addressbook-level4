@@ -43,7 +43,9 @@ public class Person {
         return name;
     }
 
-    public Age getAge() { return this.age; }
+    public Age getAge() {
+        return this.age;
+    }
 
     public Phone getPhone() {
         return phone;

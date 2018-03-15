@@ -26,10 +26,10 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, MatriculationNumber matricNumber, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, MatriculationNumber matricNum, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
-        this.matricNumber = matricNumber;
+        this.matricNumber = matricNum;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -41,7 +41,8 @@ public class Person {
         return name;
     }
 
-    public MatriculationNumber getMatricNumber() { return matricNumber; }
+    public MatriculationNumber getMatricNumber() {
+        return matricNumber; }
 
     public Phone getPhone() {
         return phone;

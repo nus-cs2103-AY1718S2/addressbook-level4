@@ -18,7 +18,8 @@ public class FindCommand extends Command {
 
     private final InfoContainsKeywordsPredicate predicate;
 
-    public FindCommand(InfoContainsKeywordsPredicate predicate) { this.predicate = predicate; }
+    public FindCommand(InfoContainsKeywordsPredicate predicate) {
+        this.predicate = predicate; }
 
     @Override
     public CommandResult execute() {

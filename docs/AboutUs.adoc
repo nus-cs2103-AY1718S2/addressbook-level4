@@ -3,53 +3,44 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+Delivery was developed by the https://github.com/orgs/CS2103JAN2018-F11-B4/teams/developers[CS2103-F11-B4] team. +
+We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore]. +
+The initial source code of this project was based on the AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/.
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Wu Hao
+image::wuhao-ooo.png[width="150", align="left"]
+{empty}[https://github.com/Wuhao-ooo[github]]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Roles: +
+- Team lead +
+- Deliverables and deadlines +
+- Scheduling and tracking +
+- Git expert +
+Responsibilities: UI, Model
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Zhang Yijiong
+image::zhangyijiong.png[width="150", align="left"]
+{empty}[https://github.com/ZhangYijiong[github]]
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Roles: +
+- Testing +
+- Code quality +
+Responsibilities: Storage, Commons
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Zhang Zequn
+image::zaczequn.png[width="150", align="left"]
+{empty}[https://github.com/ZacZequn[github]]
 
-Role: Developer +
-Responsibilities: UI
+Roles: +
+- Documentation +
+- Integration +
+- Intellij expert +
+Responsibilities: Logic
 
 '''

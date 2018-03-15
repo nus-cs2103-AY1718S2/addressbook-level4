@@ -16,6 +16,8 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.InsuranceCalendar.AppointmentEntry;
+import seedu.address.model.InsuranceCalendar.InsuranceCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -88,6 +90,16 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ArrayList<AppointmentEntry> getMyCalendarEntries() {
+            return null;
+        }
+
+        @Override
+        public InsuranceCalendar getMyCalendar() {
+            return null;
         }
     }
 

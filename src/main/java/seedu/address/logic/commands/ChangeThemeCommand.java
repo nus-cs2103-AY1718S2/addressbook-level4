@@ -19,20 +19,20 @@ public class ChangeThemeCommand extends Command {
             + "Parameters: THEME NAME\n"
             + "Example: " + COMMAND_WORD + " light";
 
-    private String MESSAGE_SUCCESS;
+    private String result;
 
     private final Theme theme;
 
     public ChangeThemeCommand(Theme theme) {
         requireNonNull(theme);
         this.theme = theme;
-        MESSAGE_SUCCESS = "Current theme: " + theme.getThemeName();
+        result = "Current theme: " + theme.getThemeName();
     }
 
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent(theme));
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(result);
     }
 
     @Override

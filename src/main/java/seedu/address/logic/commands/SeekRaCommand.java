@@ -3,7 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists the Resident Assistant (RA) of an individual RC Student in address book whose name contains any of the argument keywords.
+ * Finds and lists the Resident Assistant (RA) of an individual RC Student
+ * in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class SeekRaCommand extends Command {
@@ -12,7 +13,8 @@ public class SeekRaCommand extends Command {
 
     public static final String COMMAND_ALIAS = "sk";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Seeks the Resident Assistant (RA) of an individual RC student whose name contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Seeks the Resident Assistant (RA) of an individual RC student whose name contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";

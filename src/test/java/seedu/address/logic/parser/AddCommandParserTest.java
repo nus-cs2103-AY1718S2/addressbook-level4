@@ -70,25 +70,25 @@ public class AddCommandParserTest {
 
         // multiple phones - last phone accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + INCOME_DESC_BOB, new
+                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + AGE_DESC_BOB, new
                 AddCommand(expectedPerson));
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + INCOME_DESC_BOB, new
+                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + AGE_DESC_BOB, new
                 AddCommand(expectedPerson));
 
         // multiple addresses - last address accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + INCOME_DESC_BOB, new
+                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + AGE_DESC_BOB, new
                 AddCommand(expectedPerson));
 
         // multiple income - last income accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_AMY
-                + INCOME_DESC_BOB, new AddCommand(expectedPerson));
+                + INCOME_DESC_BOB + AGE_DESC_BOB, new AddCommand(expectedPerson));
 
-        // multiple income - last income accepted
+        // multiple age - last age accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_AMY
                 + AGE_DESC_AMY + AGE_DESC_BOB, new AddCommand(expectedPerson));

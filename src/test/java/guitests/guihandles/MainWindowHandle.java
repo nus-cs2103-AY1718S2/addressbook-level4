@@ -64,5 +64,5 @@ public class MainWindowHandle extends StageHandle {
     }
 
     public DailySchedulerPanelHandle getDailySchedulerPanel() { return dailySchedulerPanel; }
-    
+
 }

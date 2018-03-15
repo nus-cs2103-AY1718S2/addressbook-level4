@@ -1,30 +1,36 @@
-package seedu.address.model.person;
+package seedu.address.logic.commands;
 
-import java.util.List;
-import java.util.function.Predicate;
-
-import seedu.address.commons.util.StringUtil;
+import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 /**
- * Tests that a {@code Person}'s {@code Tags} matches any of the keywords given.
+ * Finds and lists all persons in address book whose tags contain any of the argument keywords.
+ * Keyword matching is case sensitive.
  */
-public class TagContainsKeywordsPredicate implements Predicate<Person> {
-    private final List<String> keywords;
+public class FindWithTagCommand extends Command {
 
-    public TagContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
+    public static final String COMMAND_WORD = "findtag";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose tags contain any of "
+            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " friends owesMoney";
+
+    private final TagContainsKeywordsPredicate predicate;
+
+    public FindWithTagCommand(TagContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
     }
 
     @Override
-    public boolean test(Person person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagsAsString().trim(), keyword));
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof FindWithTagCommand // instanceof handles nulls
+                && this.predicate.equals(((FindWithTagCommand) other).predicate)); // state check
     }
 }

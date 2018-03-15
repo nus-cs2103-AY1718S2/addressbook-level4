@@ -46,4 +46,23 @@ public class Theme {
     public String getThemePath() {
         return selectedThemePath;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Theme // instanceof handles nulls
+                && this.selectedThemePath.equals(((Theme) other).selectedThemePath)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return selectedThemePath.hashCode();
+    }
+
+    /**
+     * Format state as text for viewing.
+     */
+    public String toString() {
+        return '[' + selectedThemePath + ']';
+    }
 }

@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
@@ -197,44 +198,15 @@ public class MainWindow extends UiPart<Stage> {
 
     //@@author aquarinte
     /**
-     * Select theme (via clicking GUI menu)
-     */
-    @FXML
-    public void handleChangeTheme(ActionEvent actionEvent) {
-        MenuItem target  = (MenuItem) actionEvent.getSource();
-        setTheme(target.getText());
-    }
-    /**
      * Change the theme of the application
      */
 
-    public String setTheme(String theme) {
-        String dark = this.getClass().getResource("/view/DarkTheme.css").toExternalForm();
-        String light = this.getClass().getResource("/view/LightTheme.css").toExternalForm();
-
-        switch (theme.toLowerCase()) {
-        case "dark":
-            if (!isCurrentStyleSheet(dark)) {
-                changeStyleSheet(dark);
-            } else {
-                return "The current theme is Dark";
-            }
-            break;
-
-        case "light":
-            if (!isCurrentStyleSheet(light)) {
-                changeStyleSheet(light);
-            } else {
-                return "The current theme is Light";
-            }
-            break;
-
-        default:
-            return "Invalid theme name. Please specify either the 'Dark' theme or the 'Light' theme";
+    @Subscribe
+    public void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        String style = this.getClass().getResource(event.theme.getThemePath()).toExternalForm();
+        if (!isCurrentStyleSheet(style)) {
+            changeStyleSheet(style);
         }
-
-        return "The theme is successfully changed to: "
-                + theme.substring(0, 1).toUpperCase() + theme.substring(1).toLowerCase();
     }
 
     /**

@@ -15,7 +15,7 @@ import seedu.address.model.tag.UniqueTagList;
 
 public class Appointment {
     private final Name owner; //owner of the appointment
-    private Remark remark; //remarks, if any
+    private Remark remark; //remarks
     private LocalDateTime localDateTime; //date of appointment
 
     private final UniqueTagList type; //type of appointment

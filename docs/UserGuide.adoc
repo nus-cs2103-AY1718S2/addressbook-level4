@@ -256,6 +256,11 @@ Clears all entries from the address book. +
 Format: `clear`
 Alias: `c`
 
+=== Switching Theme : `switch`
+
+Switches theme from dark to light or vice versa. Persists across restarts +
+Format: `switch`
+
 === Exiting the program : `exit`
 
 Exits the program. +

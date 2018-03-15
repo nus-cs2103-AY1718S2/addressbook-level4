@@ -17,6 +17,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -26,12 +27,17 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
+    public static final String LIGHT_THEME = "/view/LightTheme.css";
+    public static final String DARK_THEME = "/view/DarkTheme.css";
+
     private static final String FXML = "MainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
+
+    private String theme;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -69,6 +75,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        setDefaultTheme(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -153,11 +160,20 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Sets the default theme based on UserPrefs
+     */
+    private void setDefaultTheme(UserPrefs prefs) {
+        this.theme = prefs.getGuiSettings().getTheme();
+        String fullPath = getClass().getResource(this.theme).toExternalForm();
+        primaryStage.getScene().getStylesheets().add(fullPath);
+    }
+
+    /**
      * Returns the current size and the position of the main Window.
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), this.theme);
     }
 
     /**
@@ -168,6 +184,25 @@ public class MainWindow extends UiPart<Stage> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
+    /**
+     * Switches the current theme
+     */
+    @FXML
+    public void handleSwitchTheme() {
+        String fullPath = getClass().getResource(this.theme).toExternalForm();
+        primaryStage.getScene().getStylesheets().remove(fullPath);
+
+        if (this.theme.equals(LIGHT_THEME)) {
+            this.theme = DARK_THEME;
+        } else {
+            this.theme = LIGHT_THEME;
+        }
+
+        fullPath = getClass().getResource(this.theme).toExternalForm();
+        primaryStage.getScene().getStylesheets().add(fullPath);
+    }
+
 
     void show() {
         primaryStage.show();
@@ -193,5 +228,11 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleSwitchThemeEvent(SwitchThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSwitchTheme();
     }
 }

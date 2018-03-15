@@ -5,6 +5,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMUNICATION_SKILLS_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROBLEM_SOLVING_SKILLS_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TECHNICAL_SKILLS_SCORE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.time.LocalDateTime;
@@ -28,6 +32,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.InterviewCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -36,6 +41,7 @@ import seedu.address.model.person.ExpectedGraduationYearBeforeKeywordPredicate;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Rating;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -93,9 +99,10 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertTrue(parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")))
+                instanceof FindCommand);
+        assertTrue(parser.parseCommand(FindCommand.COMMAND_WORD + " n/foo") instanceof FindCommand);
     }
 
     @Test
@@ -105,6 +112,19 @@ public class AddressBookParserTest {
                 PersonUtil.getFilterCommand(person));
         assertEquals(new FilterCommand(new ExpectedGraduationYearBeforeKeywordPredicate(
                 person.getExpectedGraduationYear().toString())), command);
+    }
+
+    @Test
+    public void parseCommand_rate() throws Exception {
+        final Rating rating = new Rating(4.5, 4,
+                3.5, 4);
+        RateCommand command = (RateCommand) parser.parseCommand(RateCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + PREFIX_TECHNICAL_SKILLS_SCORE + rating.technicalSkillsScore + " "
+                + PREFIX_COMMUNICATION_SKILLS_SCORE + rating.communicationSkillsScore + " "
+                + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + rating.problemSolvingSkillsScore + " "
+                + PREFIX_EXPERIENCE_SCORE + rating.experienceScore);
+        assertEquals(new RateCommand(INDEX_FIRST_PERSON, rating), command);
     }
 
     @Test

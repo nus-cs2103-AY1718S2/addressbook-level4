@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= HR+ Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W14-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W14-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 

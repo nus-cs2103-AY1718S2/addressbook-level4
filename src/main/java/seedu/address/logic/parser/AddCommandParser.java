@@ -23,6 +23,7 @@ import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
@@ -56,6 +57,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             ExpectedGraduationYear expectedGraduationYear = ParserUtil.parseExpectedGraduationYear(argMultimap
                     .getValue(PREFIX_EXPECTED_GRADUATION_YEAR)).get();
 
+            // Add command does not allow adding rating straight away
+            Rating rating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,
+                    Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE);
+
             // Optional fields
             Optional<Resume> resumeOptional = ParserUtil.parseResume(argMultimap.getValue(PREFIX_RESUME));
             Resume resume = resumeOptional.isPresent() ? resumeOptional.get() : new Resume(null);
@@ -66,7 +71,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             // Other fields
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Person person = new Person(name, phone, email, address, expectedGraduationYear, resume, interviewDate, tagList);
+            Person person = new Person(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tagList);
             return new AddCommand(person);
 
         } catch (IllegalValueException ive) {

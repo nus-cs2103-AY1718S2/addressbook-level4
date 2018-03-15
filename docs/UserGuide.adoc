@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= HR+ - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -115,15 +115,17 @@ Schedule the interview of the 1st person to be next Friday at 3pm.
 * `interview 2 Mar 14 2pm` +
 Schedule the interview of the 2nd person to be 14 March at 2pm.
 
-=== Locating persons by name: `find`
+=== Locating persons by field: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose fields contain any of the given keywords. +
+Format:
+Option 1: `find KEYWORD [MORE_KEYWORDS]`
+Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* All fields are searched if no prefix is supplied.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -134,6 +136,10 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find p/999 555` +
+Returns any person having phone number `999` or `555`
+* `find p/999 e/test@example.com`
+Returns any person having phone number `999` and email `test@example.com`
 
 === Filter persons by expected graduation year: `filter`
 
@@ -188,6 +194,23 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Rating a student : `rate`
+
+Rates the student identified by the index number used in the last person listing. +
+Format: `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE`
+
+****
+* Rates the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* The scores should be a number in the range of 1 to 5 (inclusive).
+****
+
+Examples:
+
+* `rate 1 t/4.5 c/3 p/4 e/3.5` +
+Rates the 1st person to have technical skills score of 4.5, communication skills score of 3, problem solving skills of 4, experience score of 3.5.
+* `rate 2 t/3 c/5 p/3.5 e/2` +
+Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2.
 
 === Listing entered commands : `history`
 
@@ -292,6 +315,8 @@ e.g. `filter y/2019`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Rate* : `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE` +
+e.g. `rate 1 t/4.5 c/3 p/4 e/3.5`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

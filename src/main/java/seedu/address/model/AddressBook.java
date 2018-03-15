@@ -121,9 +121,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public ArrayList<ArrayList<Double>> getPersonAttrMatrix(){
         ArrayList<ArrayList<Double>> matrix;
-        for(int i=0; i< this.persons.asObservableList().size(); i++){
-//            for( int j=0; j< this.persons.asObservableList().)
-        }
+
     }
 
     /**

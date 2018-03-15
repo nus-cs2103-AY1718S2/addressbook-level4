@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -43,6 +44,15 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
+
+
+    /**
+     * Gets the matrix of list of persons with selected fields for calculation
+     */
+    public ArrayList<ArrayList<Double>> getPersonAttrMatrix(){
+        return this.addressBook.getPersonAttrMatrix();
+    }
+
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {

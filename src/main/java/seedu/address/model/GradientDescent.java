@@ -8,7 +8,6 @@ public class GradientDescent {
     private final Model model;
 
     public GradientDescent(Model model) {
-
         this.model = model;
 
     }
@@ -17,7 +16,9 @@ public class GradientDescent {
      * Drives the whole algorithm to solve the problem
      */
     public void solve() {
-        System.out.println("Solved");
+        this.model.getPersonAttrMatrix();
+        System.out.println("Solved"
+        );
     }
 
 

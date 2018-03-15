@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -79,13 +80,18 @@ public class ParserUtil {
         String trimmedInput = input.trim();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
-        LocalDate localDate = LocalDate.parse(trimmedInput, formatter);
 
-        if (localDate == null) {
+        try {
+
+            LocalDate localDate = LocalDate.parse(trimmedInput, formatter);
+            return localDate;
+
+        } catch (DateTimeParseException e) {
             throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_CONSTRAINTS);
         }
 
-        return localDate;
+
+
     }
 
     /**

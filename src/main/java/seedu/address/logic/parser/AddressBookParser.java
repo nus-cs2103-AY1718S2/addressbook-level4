@@ -113,6 +113,9 @@ public class AddressBookParser {
         case LoginCommand.COMMAND_WORD:
             return new LoginCommandParser().parse(arguments);
 
+        case LoginCommand.COMMAND_ALIAS:
+            return new LoginCommandParser().parse(arguments);
+
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 

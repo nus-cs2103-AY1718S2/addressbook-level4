@@ -7,6 +7,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class LoginCommand extends Command {
     public static final String COMMAND_WORD = "login";
+    public static final String COMMAND_ALIAS = "lg";
 
     public static final String MESSAGE_LOGIN_SUCCESS = "Successfully logged in!";
     public static final String MESSAGE_LOGIN_FAIL = "Wrong username and password! Please try again.";

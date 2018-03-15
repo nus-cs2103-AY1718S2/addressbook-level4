@@ -59,7 +59,7 @@ public class Address {
      * Change address into a form that will be used by
      *
      */
-    public String getGoogleMapSearchForm(){
+    public String getGoogleMapSearchForm() {
         String[] words = getWords();
         return getWordsWithPlusSign(words);
     }

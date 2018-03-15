@@ -9,12 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Income;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,6 +29,8 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private Double income;
+    @XmlElement(required = true)
+    private Integer age;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -49,12 +46,13 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address,
-                            List<XmlAdaptedTag> tagged, Double income) {
+                            List<XmlAdaptedTag> tagged, Double income, Integer age) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.income = income;
+        this.age = age;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -71,6 +69,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         income = source.getIncome().value;
+        age = source.getAge().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -128,8 +127,16 @@ public class XmlAdaptedPerson {
         }
         final Income income = new Income(this.income);
 
+        if (this.age == null) {
+            throw new IllegalValueException(Age.AGE_CONSTRAINTS);
+        }
+        if (!Age.isValidAge(this.age)) {
+            throw new IllegalArgumentException(Age.AGE_CONSTRAINTS);
+        }
+        final Age age = new Age(this.age);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags, income);
+        return new Person(name, phone, email, address, tags, income, age);
     }
 
     @Override

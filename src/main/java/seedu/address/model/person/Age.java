@@ -7,12 +7,12 @@ public class Age {
     public static final String AGE_CONSTRAINTS =
             "Persons age must be above 0 years old and under 150.";
 
-    public final Integer age;
+    public final Integer value;
 
     public Age(Integer age) {
         requireNonNull(age);
         checkArgument(isValidAge(age), AGE_CONSTRAINTS);
-        this.age = age;
+        this.value = age;
     }
 
     public static boolean isValidAge(Integer age) {
@@ -21,14 +21,14 @@ public class Age {
 
     @Override
     public String toString() {
-        return age.toString();
+        return value.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof Age
-                && this.age == ((Age) other).age);
+                && this.value == ((Age) other).value);
     }
 
 }

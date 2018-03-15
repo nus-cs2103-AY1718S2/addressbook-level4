@@ -112,7 +112,7 @@ Edits the name of the customer from 2nd order to be `Betsy Crower` and clears al
 === Locating orders by name: `find`
 
 Finds orders with their customer names containing any of the given keywords. +
-Alias: `a` +
+Alias: `f` +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -128,6 +128,10 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `f John` +
+Returns `john` and `John Doe`
+* `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting an order : `delete`
@@ -150,6 +154,12 @@ Deletes the 2nd order in the queue.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st order in the results of the `find` command.
+* `l` +
+`d 2` +
+Deletes the 2nd order in the queue.
+* `f Betsy` +
+`d 1` +
+Deletes the 1st order in the results of the `find` command.
 
 === Selecting an order : `select`
 
@@ -171,6 +181,13 @@ Selects the 2nd order in the queue.
 * `find Betsy` +
 `select 1` +
 Selects the 1st order in the results of the `find` command.
+* `l` +
+`s 2` +
+Selects the 2nd order in the queue.
+* `f Betsy` +
+`s 1` +
+Selects the 1st order in the results of the `find` command.
+
 
 === Listing entered commands : `history`
 

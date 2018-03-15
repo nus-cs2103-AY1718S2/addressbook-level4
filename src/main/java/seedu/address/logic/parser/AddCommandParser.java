@@ -50,7 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Income income = ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME)).get();
-            Age age= ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE)).get();
+            Age age = ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Person person = new Person(name, phone, email, address, tagList, income, age);

@@ -33,7 +33,7 @@ public class AutocompleterTest {
     public void completeCommand() {
         if (SelectCommand.COMMAND_WORD.length() > 2) {
             String commandPrefix = SelectCommand.COMMAND_WORD.substring(0, SelectCommand.COMMAND_WORD.length() - 1);
-            assertEquals(SelectComm and.COMMAND_WORD.substring(SelectCommand.COMMAND_WORD.length() - 1),
+            assertEquals(SelectCommand.COMMAND_WORD.substring(SelectCommand.COMMAND_WORD.length() - 1),
                     autocompleter.autocomplete(commandPrefix));
         }
     }

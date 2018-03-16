@@ -62,7 +62,7 @@ Format: `help`
 
 === Adding a person: `add` or `a`
 
-Adds a person to the address book +
+Adds a person to EduBuddy +
 Format: `add n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER` +
 Format: `a n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER`
 
@@ -79,6 +79,11 @@ Examples:
 Shows a list of all students in the EduBuddy. +
 Format: `list` or `l`
 
+=== Sorting students by name : `sort`
+
+Sorts the list of students in EduBuddy by their name in alphabetical order. +
+Format: `sort`
+
 === Editing a student : `edit` or `e`
 Edits an existing student in the EduBuddy. +
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER]` +
@@ -93,11 +98,11 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGIS
 Examples:
 
 * `edit 1 p/91234567` +
-Edits the phone number of the 1st student to be `91234567` respectively.
+Edits the nric number of the 1st student to be `91234567` respectively.
 * `edit 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 * `e 1 p/91234567` +
-Edits the phone number of the 1st student to be `91234567` respectively.
+Edits the nric number of the 1st student to be `91234567` respectively.
 * `e 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 
@@ -140,6 +145,22 @@ Deletes the 2nd student in the EduBuddy.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st student in the results of the `find` command.
+
+=== Deleting a tag : `tagdelete` or `td`
+
+Deletes the specified tag from every student in the EduBuddy. +
+Format: `tagdelete TAGNAME` or `td TAGNAME`
+
+****
+* Deletes the specified tag from every student in the Edubuddy.
+* The tag refers to the index number shown in the most recent listing.
+* The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
+****
+
+Examples:
+
+* `tagdelete Class1A` or `td Class1A` +
+Deletes the 'Class 1A' tag from every student in the EduBuddy.
 
 === Selecting a person : `select` or `s`
 
@@ -230,6 +251,24 @@ Format: `clear` or `c`
 
 Exits the program. +
 Format: `exit`
+
+=== Creating an appointment on the calendar : `create [coming in v2.0]`
+
+Creates an appointment with the student identified by the index number used
+in the last student listing and displays it on the calendar.
+E.g. setting a consultation time slot with students. +
+Format: `create INDEX date/DATE time/TIME`
+
+****
+* Date is in *DDMMYY* format
+* Time is in *24 hour* format
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `create 1 date/01022018 time/1500` +
+Creates an appointment with the 1st student on `01022018` at `1500`
 
 === Saving the data
 

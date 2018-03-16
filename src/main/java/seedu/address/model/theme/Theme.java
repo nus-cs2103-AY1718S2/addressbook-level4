@@ -28,7 +28,7 @@ public class Theme {
     public Theme(String themeName) {
         requireNonNull(themeName);
         checkArgument(isValidThemeName(themeName.toLowerCase()), MESSAGE_THEME_CONSTRAINTS);
-        selectedThemePath = themesLocation[Arrays.asList(themes).indexOf(themeName)];
+        selectedThemePath = themesLocation[Arrays.asList(themes).indexOf(themeName.toLowerCase())];
     }
 
     /**

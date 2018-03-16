@@ -4,5 +4,7 @@
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <halal>Non-halal</halal>
+    <vegetarian>Non-vegetarian</vegetarian>
     <tagged>friends</tagged>
 </person>

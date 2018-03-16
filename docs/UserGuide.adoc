@@ -226,6 +226,21 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from Medeina's address book. +
 Format: `clear` or `cls`
 
+=== Changing theme : `theme` or `t`
+
+Change Medeina's current theme to another pre-loaded theme. +
+Format: `theme THEME_NAME` or `t THEME_NAME`
+
+****
+* THEME_NAME is case insensitive. e.g `DARK` will match `dark`
+* Available themes: `dark` and `light`
+****
+
+Examples:
+
+* `theme dark`
+* `t light`
+
 === Exiting the program : `exit` or `q`
 
 Exits the program. +
@@ -290,3 +305,4 @@ e.g.`select 2` +
 * *History* : `history` or `his`
 * *Undo* : `undo` or `ud`
 * *Redo* : `redo` or `rd`
+* *Change Theme* : `theme THEME_NAME` or `t THEME_NAME`

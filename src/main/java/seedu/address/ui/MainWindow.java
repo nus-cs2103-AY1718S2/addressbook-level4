@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
@@ -193,5 +194,39 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author aquarinte
+    /**
+     * Change the theme of the application
+     */
+
+    @Subscribe
+    public void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        String style = this.getClass().getResource(event.theme.getThemePath()).toExternalForm();
+        if (!isCurrentStyleSheet(style)) {
+            changeStyleSheet(style);
+        }
+    }
+
+    /**
+     * Returns true if none of the current stylesheets contains {@code String} theme
+     */
+    public Boolean isCurrentStyleSheet(String theme) {
+        if (getRoot().getScene().getStylesheets().contains(theme)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes all existing stylesheets and add the given {@code String} theme to style sheets
+     * Re-add Extensions.css to style sheets.
+     */
+    public void changeStyleSheet(String theme) {
+        String extensions = this.getClass().getResource("/view/Extensions.css").toExternalForm();
+        getRoot().getScene().getStylesheets().clear(); //removes all style sheets
+        getRoot().getScene().getStylesheets().add(theme);
+        getRoot().getScene().getStylesheets().add(extensions); //re-add Extensions.css
     }
 }

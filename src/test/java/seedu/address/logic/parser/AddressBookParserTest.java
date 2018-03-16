@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalThemes.DARK;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -29,8 +32,11 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.AppointmentBuilder;
+import seedu.address.testutil.AppointmentUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -216,6 +222,22 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_addAppointmentAlias() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        AddAppointmentCommand command = (AddAppointmentCommand) parser.parseCommand(
+                AppointmentUtil.getAddAppointmentCommandAlias(appointment));
+        assertEquals(new AddAppointmentCommand(appointment), command);
+    }
+
+    @Test
+    public void parseCommand_addAppointment() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        AddAppointmentCommand command = (AddAppointmentCommand) parser.parseCommand(
+                AppointmentUtil.getAddAppointmentCommand(appointment));
+        assertEquals(new AddAppointmentCommand(appointment), command);
+    }
+
+    @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -227,5 +249,12 @@ public class AddressBookParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
+    }
+
+    @Test
+    public void parseCommand_changeTheme() throws Exception {
+        ChangeThemeCommand command = (ChangeThemeCommand) parser.parseCommand(
+                ChangeThemeCommand.COMMAND_WORD + " dark");
+        assertEquals(new ChangeThemeCommand(DARK), command);
     }
 }

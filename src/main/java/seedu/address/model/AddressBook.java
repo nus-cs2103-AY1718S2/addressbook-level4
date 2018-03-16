@@ -11,10 +11,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.UniquePetPatientList;
+import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -26,6 +32,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueAppointmentList appointments;
+    private final UniquePetPatientList petPatients;
+    private final UniqueTagList petPatientTags;
 
         /*
          * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -36,6 +45,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        appointments = new UniqueAppointmentList();
+        petPatients = new UniquePetPatientList();
+        petPatientTags = new UniqueTagList();
     }
 
     public AddressBook() {
@@ -115,6 +127,21 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds an appointment.
+     * Also checks the new appointment's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the appointment to point to those in {@link #tags}.
+     *
+     * @throws DuplicateAppointmentException if an equivalent person already exists.
+     */
+    public void addAppointment(Appointment a) throws DuplicateAppointmentException {
+        Appointment appointment = syncWithAppointmentMasterTagList(a);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any appointment
+        // in the appointment list.
+        appointments.add(appointment);
+    }
+
+    /**
      * Removes all {@code tag}s not used by anyone in this {@code AddressBook}.
      * Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
      */
@@ -152,6 +179,54 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Updates the master tag list to include tags in {@code petPatient} that are not in the list.
+     *
+     * @return a copy of this {@code petPatient} such that every tag in this pet patient points to a Tag object in the
+     * master list.
+     */
+    private PetPatient syncWithMasterTagList (PetPatient petPatient) {
+        final UniqueTagList currentPetPatientTags = new UniqueTagList(petPatient.getTags());
+        petPatientTags.mergeFrom(currentPetPatientTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking person tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        currentPetPatientTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        return new PetPatient(
+                petPatient.getName(),
+                petPatient.getSpecies(),
+                petPatient.getBreed(),
+                petPatient.getColour(),
+                petPatient.getBloodType(),
+                correctTagReferences);
+    }
+
+    /**
+     * Updates the master tag list to include tags in {@code appointment} that are not in the list.
+     *
+     * @return a copy of this {@code appointment} such that every tag in this appointment
+     * points to a Tag object in the master list.
+     */
+    private Appointment syncWithAppointmentMasterTagList(Appointment appointment) {
+        final UniqueTagList appointmentTags = new UniqueTagList(appointment.getType());
+        tags.mergeFrom(appointmentTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking person tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        appointmentTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        return new Appointment(
+                appointment.getOwner(), appointment.getRemark(), appointment.getDateTime(), correctTagReferences);
+    }
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      *
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -162,6 +237,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    //// pet-patient-level operations
+
+    /**
+     * Adds a pet patient to the address book.
+     * Also checks the new pet patient's tags and updates {@link #petPatientTags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #petPatientTags}.
+     *
+     * @throws DuplicatePetPatientException if an equivalent person already exists.
+     */
+    public void addPetPatient(PetPatient p) throws DuplicatePetPatientException {
+        PetPatient petPatient = syncWithMasterTagList(p);
+        petPatients.add(petPatient);
     }
 
     //// tag-level operations

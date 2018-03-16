@@ -58,6 +58,13 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
+    public static final String INVALID_THEME_PINK = "pink";
+    public static final String INVALID_THEME_LIGHTT = "lightt";
+
+    public static final String VALID_THEME_PATH_LIGHT = "/view/LightTheme.css";
+    public static final String VALID_THEME_PATH_DARK = "/view/DarkTheme.css";
+
+
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 

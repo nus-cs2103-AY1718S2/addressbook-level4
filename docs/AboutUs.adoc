@@ -27,29 +27,29 @@ Responsibilities: Logic component, managing documentation
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Chia Le Jing
+image::lejing.jpg[width="150", align="left"]
+{empty}[https://github.com/chialejing[github]] [<<chilejing#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Storage component, managing documentation
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Wynona Kaan
+image::wynonaK.png[width="150", align="left"]
+{empty}[https://github.com/wynonaK[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model Component
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Peng Xuanchang
+image::Robert_Peng.jpg[width="150", align="left"]
+{empty}[http://github.com/Robert-Peng[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: UI Component
 
 '''

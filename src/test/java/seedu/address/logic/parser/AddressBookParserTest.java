@@ -193,7 +193,6 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS + " 3") instanceof UndoCommand);
     }
-    
     @Test
     public void parseCommand_remark() throws Exception {
         final Remark remark = new Remark("This is a remark.");
@@ -201,7 +200,6 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + remark.value);
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
-    
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);

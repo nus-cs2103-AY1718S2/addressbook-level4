@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -164,5 +165,109 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code PetPatientName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static PetPatientName parsePetPatientName(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!PetPatientName.isValidName(trimmedName)) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return new PetPatientName(trimmedName);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PetPatientName> parsePetPatientName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(parsePetPatientName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String species} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseSpecies(String species) {
+        requireNonNull(species);
+        String trimmedSpecies = species.trim();
+        // check for valid species incomplete
+        return trimmedSpecies;
+    }
+
+    /**
+     * Parses a {@code Optional<String> species} into an {@code Optional<String>} if {@code species} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseSpecies(Optional<String> species) throws IllegalValueException {
+        requireNonNull(species);
+        return species.isPresent() ? Optional.of(parseSpecies(species.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String breed} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseBreed(String breed) {
+        requireNonNull(breed);
+        String trimmedBreed = breed.trim();
+        // check for valid breed incomplete
+        return trimmedBreed;
+    }
+
+    /**
+     * Parses a {@code Optional<String> breed} into an {@code Optional<String>} if {@code breed} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseBreed(Optional<String> breed) throws IllegalValueException {
+        requireNonNull(breed);
+        return breed.isPresent() ? Optional.of(parseBreed(breed.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String colour} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseColour(String colour) {
+        requireNonNull(colour);
+        String trimmedColour = colour.trim();
+        // check for valid colour incomplete
+        return trimmedColour;
+    }
+
+    /**
+     * Parses a {@code Optional<String> colour} into an {@code Optional<String>} if {@code colour} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseColour(Optional<String> colour) throws IllegalValueException {
+        requireNonNull(colour);
+        return colour.isPresent() ? Optional.of(parseColour(colour.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String bloodType} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseBloodType(String bloodType) {
+        requireNonNull(bloodType);
+        String trimmedBloodType = bloodType.trim();
+        // check for valid blood type incomplete
+        return trimmedBloodType;
+    }
+
+    /**
+     * Parses a {@code Optional<String> bloodType} into an {@code Optional<String>} if {@code bloodType} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseBloodType(Optional<String> bloodType) throws IllegalValueException {
+        requireNonNull(bloodType);
+        return bloodType.isPresent() ? Optional.of(parseBloodType(bloodType.get())) : Optional.empty();
     }
 }

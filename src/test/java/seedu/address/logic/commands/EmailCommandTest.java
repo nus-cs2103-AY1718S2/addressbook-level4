@@ -30,7 +30,7 @@ public class EmailCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
+    public void execute_validIndexUnfilteredList_success() {
         Person personToEmail = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EmailCommand emailCommand = prepareCommand(INDEX_FIRST_PERSON);
 
@@ -40,7 +40,7 @@ public class EmailCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         EmailCommand emailCommand = prepareCommand(outOfBoundIndex);
 
@@ -48,7 +48,7 @@ public class EmailCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
+    public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person personToEmail = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -71,100 +71,7 @@ public class EmailCommandTest {
 
         assertCommandFailure(emailCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
-    /*
-    @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        // delete -> first person deleted
-        deleteCommand.execute();
-        undoRedoStack.push(deleteCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // redo -> same first person deleted again
-        expectedModel.deletePerson(personToDelete);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-
-    @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
-
-        // execution failed -> deleteCommand not pushed into undoRedoStack
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-        // no commands in undoRedoStack -> undoCommand and redoCommand fail
-        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
-    }
-
-    /**
-     * 1. Deletes a {@code Person} from a filtered list.
-     * 2. Undo the deletion.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted person in the
-     * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the person object regardless of indexing.
-     */ /*
-    @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
-        showPersonAtIndex(model, INDEX_SECOND_PERSON);
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // delete -> deletes second person in unfiltered person list / first person in filtered person list
-        deleteCommand.execute();
-        undoRedoStack.push(deleteCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        expectedModel.deletePerson(personToDelete);
-        assertNotEquals(personToDelete, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        // redo -> deletes same second person in unfiltered person list
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-
-    @Test
-    public void equals() throws Exception {
-        DeleteCommand deleteFirstCommand = prepareCommand(INDEX_FIRST_PERSON);
-        DeleteCommand deleteSecondCommand = prepareCommand(INDEX_SECOND_PERSON);
-
-        // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
-
-        // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = prepareCommand(INDEX_FIRST_PERSON);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
-
-        // one command preprocessed when previously equal -> returns false
-        deleteFirstCommandCopy.preprocessUndoableCommand();
-        assertFalse(deleteFirstCommand.equals(deleteFirstCommandCopy));
-
-        // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
-    }
-    */
     /**
      * Returns a {@code EmailCommand} with the parameter {@code index}.
      */
@@ -176,8 +83,8 @@ public class EmailCommandTest {
 
     /**
      * Executes the given {@code command}, confirms that <br>
-     * - the result message matches {@code expectedMessage} <br>
-     * - the {@code actualModel} matches {@code expectedModel}
+     * - the result message matches {@code expectedResult} <br>
+     * - the {@code expectedResult} matches {@code testCommand}
      */
     private static void assertEmailSuccess(String expectedResult, EmailCommand testCommand) {
         try {

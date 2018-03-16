@@ -144,7 +144,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), correctTagReferences);
+                person.getName(), person.getNric(), correctTagReferences);
     }
 
     /**
@@ -157,6 +157,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    public void sortByName() {
+        persons.sortPersons();
     }
 
     //// tag-level operations
@@ -189,7 +193,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeTagFromPerson(Tag tag, Person person) {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tag)) {
-            Person newPerson = new Person(person.getName(), person.getPhone(),
+            Person newPerson = new Person(person.getName(), person.getNric(),
                     tagList);
             try {
                 updatePerson(person, newPerson);

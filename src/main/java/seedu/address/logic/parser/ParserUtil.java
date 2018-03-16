@@ -11,7 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.Nric;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -66,27 +66,27 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Parses a {@code String nric} into a {@code Nric}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws IllegalValueException if the given {@code nric} is invalid.
      */
-    public static Phone parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+    public static Nric parseNric(String nric) throws IllegalValueException {
+        requireNonNull(nric);
+        String trimmedNric = nric.trim();
+        if (!Nric.isValidNric(trimmedNric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new Nric(trimmedNric);
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code Optional<String> phone} into an {@code Optional<Nric>} if {@code nric} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
+    public static Optional<Nric> parseNric(Optional<String> nric) throws IllegalValueException {
+        requireNonNull(nric);
+        return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
     }
 
 

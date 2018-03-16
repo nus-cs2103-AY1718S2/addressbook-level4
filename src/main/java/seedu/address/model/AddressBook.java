@@ -204,7 +204,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 correctTagReferences);
     }
 
-      /**
+    /**
      * Updates the master tag list to include tags in {@code appointment} that are not in the list.
      *
      * @return a copy of this {@code appointment} such that every tag in this appointment

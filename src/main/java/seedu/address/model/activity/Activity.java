@@ -59,6 +59,7 @@ public class Activity {
     public String getActivityType() {
         return ACTIVITY_TYPE;
     }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

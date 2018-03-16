@@ -19,6 +19,8 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
     @XmlElement(required = true)
     private String location;
 
+    private final String ACTIVITY_TYPE = "EVENT";
+
     /**
      * Constructs an XmlAdaptedEvent.
      * This is the no-arg constructor that is required by JAXB.

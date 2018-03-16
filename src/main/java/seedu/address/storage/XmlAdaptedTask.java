@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class XmlAdaptedTask extends XmlAdaptedActivity {
 
+    private final String  ACTIVITY_TYPE = "TASK";
+
     /**
      * Constructs an XmlAdaptedTask.
      * This is the no-arg constructor that is required by JAXB.

@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * This clas is to store location info in an event
+ * This class is to store location info in an event
  */
 public class Location {
     public static final String MESSAGE_LOCATION_CONSTRAINTS =

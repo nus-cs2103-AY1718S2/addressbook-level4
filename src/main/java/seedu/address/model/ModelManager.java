@@ -17,6 +17,8 @@ import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -72,6 +74,12 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
+        addressBook.addPetPatient(petPatient);
         indicateAddressBookChanged();
     }
 

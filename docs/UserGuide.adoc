@@ -61,6 +61,19 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
+=== Adding a pet patient: `addpetpatient` or `app`
+
+Adds a pet patient to Mediena's address book +
+Format: `addpetpatient n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE [t/TAG]...`
+or `app n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE [t/TAG]...`
+
+[TIP]
+A pet patient can have any number of tags (including 0)
+
+Examples:
+* `addpetpatient n/Jewel s/Cat b/Persian Ragdoll c/Calico bt/AB t/Ragdoll`
+* `app n/Joker s/Cat b/Domestic Shorthair c/White bt/AB t/Shorthair`
+
 === Adding a person: `add` or `a`
 
 Adds a person to Medeina's address book +

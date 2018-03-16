@@ -7,7 +7,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIE
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -17,14 +16,15 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.FilterUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ExpectedGraduationYear;
-import seedu.address.model.person.ExpectedGraduationYearBeforeKeywordPredicate;
 import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
 import seedu.address.model.person.Person;
 
@@ -33,10 +33,12 @@ public class FilterCommandTest {
 
     @Test
     public void equals() {
-        ExpectedGraduationYearBeforeKeywordPredicate firstPredicate =
-                new ExpectedGraduationYearBeforeKeywordPredicate("2020");
-        ExpectedGraduationYearBeforeKeywordPredicate secondPredicate =
-                new ExpectedGraduationYearBeforeKeywordPredicate("2024");
+        ExpectedGraduationYearInKeywordsRangePredicate firstPredicate =
+                new ExpectedGraduationYearInKeywordsRangePredicate(
+                        new ExpectedGraduationYear("2018"), new ExpectedGraduationYear("2020"));
+        ExpectedGraduationYearInKeywordsRangePredicate secondPredicate =
+                new ExpectedGraduationYearInKeywordsRangePredicate(
+                        new ExpectedGraduationYear("2019"), new ExpectedGraduationYear("2019"));
 
         FilterCommand filterFirstCommand = new FilterCommand(firstPredicate);
         FilterCommand filterSecondCommand = new FilterCommand(secondPredicate);
@@ -67,20 +69,23 @@ public class FilterCommandTest {
 
     @Test
     public void execute_moderateGraduationYear_somePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 5);
-        FilterCommand command = prepareCommand("2020");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, CARL, DANIEL, ELLE, FIONA));
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
+        FilterCommand command = prepareCommand("2019-2020");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, CARL, DANIEL,  FIONA));
     }
 
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FilterCommand prepareCommand(String userInput) {
-        FilterCommand command =
-                new FilterCommand(new ExpectedGraduationYearInKeywordsRangePredicate(
-                        new ExpectedGraduationYear(userInput), new ExpectedGraduationYear(userInput)));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
+        try {
+            FilterCommand command =
+                    new FilterCommand(FilterUtil.parseExpectedGraduationYear(userInput));
+            command.setData(model, new CommandHistory(), new UndoRedoStack());
+            return command;
+        } catch (IllegalValueException ive) {
+            throw new AssertionError("This should not be reachable.");
+        }
     }
 
     /**

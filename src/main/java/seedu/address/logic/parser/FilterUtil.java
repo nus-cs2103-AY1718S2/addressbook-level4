@@ -41,7 +41,7 @@ public class FilterUtil {
      * @return a Predicate for filter command
      * @throws IllegalValueException
      */
-    private static Predicate<Person> parseExpectedGraduationYear(String predicateString)
+    public static Predicate<Person> parseExpectedGraduationYear(String predicateString)
             throws IllegalValueException {
         requireNonNull(predicateString);
         String[] predicateStrings = predicateString.split(",");

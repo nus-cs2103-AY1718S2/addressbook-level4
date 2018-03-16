@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -110,7 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void filterFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
-        filteredPersons.setPredicate(predicate.and(currPredicate));
+        filteredPersons.setPredicate(isNull(currPredicate) ? predicate : predicate.and(currPredicate));
     }
 
     @Override

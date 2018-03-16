@@ -98,11 +98,11 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGIS
 Examples:
 
 * `edit 1 p/91234567` +
-Edits the phone number of the 1st student to be `91234567` respectively.
+Edits the nric number of the 1st student to be `91234567` respectively.
 * `edit 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 * `e 1 p/91234567` +
-Edits the phone number of the 1st student to be `91234567` respectively.
+Edits the nric number of the 1st student to be `91234567` respectively.
 * `e 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 

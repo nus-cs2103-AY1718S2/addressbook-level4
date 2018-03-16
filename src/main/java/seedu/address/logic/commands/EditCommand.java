@@ -117,7 +117,8 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         ExpectedGraduationYear updatedExpectedGraduationYear = editPersonDescriptor.getExpectedGraduationYear()
                 .orElse(personToEdit.getExpectedGraduationYear());
-        Rating updatedRating = personToEdit.getRating();
+        // Doesn't allow editing of rating
+        Rating rating = personToEdit.getRating();
         Resume updatedResume = editPersonDescriptor.getResume().orElse(personToEdit.getResume());
 
         // Doesn't allow editing of interview date
@@ -126,7 +127,7 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedExpectedGraduationYear, updatedRating, updatedResume, interviewDate, updatedTags);
+                updatedExpectedGraduationYear, rating, updatedResume, interviewDate, updatedTags);
     }
 
     @Override

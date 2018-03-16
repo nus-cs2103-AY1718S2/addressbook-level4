@@ -43,9 +43,9 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadPersonPage(Person person) {
-        Address titties = person.getAddress();
-        String ass = titties.urlstyle();
-        loadPage(SEARCH_PAGE_URL + ass);
+        Address location = person.getAddress();
+        String append = location.urlstyle();
+        loadPage(SEARCH_PAGE_URL + append);
     }
 
     public void loadPage(String url) {

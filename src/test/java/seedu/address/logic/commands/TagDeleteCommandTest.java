@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -24,8 +22,6 @@ import seedu.address.model.tag.Tag;
 public class TagDeleteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Tag tagToDelete = new Tag("removeTag");
-    private Tag firstTag = new Tag("firstTag");
-    private Tag secondTag = new Tag("secondTag");
 
     @Test
     public void execute_validTagToRemoveEntered_success() throws Exception {

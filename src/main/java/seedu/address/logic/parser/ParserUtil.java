@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -10,6 +13,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.appointment.Remark;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -114,6 +118,57 @@ public class ParserUtil {
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String remark} into an {@code Remark}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code remark} is invalid.
+     */
+    public static Remark parseRemark(String remark) throws IllegalValueException {
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        if (!Remark.isValidRemark(trimmedRemark)) {
+            throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
+        }
+        return new Remark(trimmedRemark);
+    }
+
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String dateTime} into an {@code LocalDateTime} object.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code dateTime} is invalid.
+     */
+    public static LocalDateTime parseDateTime(String dateTime) throws IllegalValueException {
+        requireNonNull(dateTime);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime localDateTime = null;
+        try {
+            localDateTime = LocalDateTime.parse(dateTime, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException("Please follow the format of yyyy-MM-dd HH:mm");
+        }
+        return localDateTime;
+    }
+
+    /**
+     * Parses {@code Optional<String> dateTime} into an {@code Optional<LocalDatetime>} if {@code dateTime} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalDateTime> parseDateTime(Optional<String> dateTime) throws IllegalValueException {
+        requireNonNull(dateTime);
+        return dateTime.isPresent() ? Optional.of(parseDateTime(dateTime.get())) : Optional.empty();
     }
 
     /**

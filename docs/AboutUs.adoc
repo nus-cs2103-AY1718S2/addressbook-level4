@@ -3,33 +3,23 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+Your TA was developed by the https://github.com/CS2103JAN2018-F09-B1[F09-B1] team. +
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Wu Di
+image::wudi.jpg[width="150", align="left"]
+{empty}[https://github.com/WoodySIN[github]]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Developer +
+Responsibilities: Logic
 
 '''
-
-+=== Daniel Tan
-+image::joonkai1995.png[width="150", align="left"]
-+{empty}[http://github.com/JoonKai1995[github]]
+=== Daniel Tan
+image::joonkai1995.png[width="150", align="left"]
+{empty}[http://github.com/JoonKai1995[github]]
 Role: Developer +
 Responsibilities: UI
 
@@ -44,11 +34,11 @@ Responsibilities: Model
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Ellery Chia
+image::ellery.jpg[width="150", align="left"]
+{empty}[http://github.com/Alaru[github]]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Storage
 
 '''

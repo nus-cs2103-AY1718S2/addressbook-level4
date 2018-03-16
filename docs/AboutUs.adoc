@@ -27,7 +27,7 @@ Responsibilities: Ui, Storage
 
 
 '''
-=== Ma Hong Qiang
+=== Ma Hongqiang
 image::mhq199657.png[width="150", align="left"]
 {empty}[http://github.com/mhq199657[github]] [<<#, portfolio>>]
 
@@ -37,7 +37,7 @@ Responsibilities: Logic, Model
 
 '''
 
-=== Ke Xiao Wen
+=== Ke Xiaowen
 image::kexiaowen.png[width="150", align="left"]
 {empty}[http://github.com/kexiaowen[github]] [<<#, portfolio>>]
 

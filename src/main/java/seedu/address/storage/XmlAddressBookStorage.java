@@ -3,6 +3,7 @@ package seedu.address.storage;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -72,7 +73,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * @throws DataConversionException if the file is not in the correct format.
      */
     public AddressBook importAddressBook(String filePath, AddressBook addressBook) throws DataConversionException,
-            FileNotFoundException {
+            IOException {
         requireNonNull(filePath);
 
         File addressBookFile = new File(filePath);

@@ -22,11 +22,12 @@ public class Person {
 
     private final UniqueTagList tags;
     private final Income income;
+    private final Expenditure expenditure;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Income income) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Income income, Expenditure expenditure) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -35,6 +36,7 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.income = income;
+        this.expenditure = expenditure;
     }
 
     public Name getName() {
@@ -55,6 +57,10 @@ public class Person {
 
     public Income getIncome() {
         return this.income;
+    }
+
+    public Expenditure getExpenditure() {
+        return this.expenditure;
     }
 
     /**

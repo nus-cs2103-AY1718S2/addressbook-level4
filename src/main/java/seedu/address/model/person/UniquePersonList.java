@@ -99,7 +99,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Sorts {@code internalList} by name in alphabetical order (case insensitive)
      */
     public void sortPersons() {
-        Comparator<Person> compareName = (person1, person2) -> + person1.getName().toString()
+        Comparator<Person> compareName = (person1, person2) -> +person1.getName().toString()
                 .compareToIgnoreCase(person2.getName().toString());
         internalList.sort(compareName);
     }

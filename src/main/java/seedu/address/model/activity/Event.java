@@ -98,10 +98,14 @@ public class Event extends Activity{
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Task Name")
+        builder.append("Event Name")
                 .append(getName())
-                .append(" Due Date/Time: ")
+                .append("Start Date/Time: ")
                 .append(getDateTime())
+                .append("End Date/Time")
+                .append(getEndDateTime())
+                .append("Venue")
+                .append(getLocation())
                 .append(" Remark: ")
                 .append(getRemark())
                 .append(" Tags: ");

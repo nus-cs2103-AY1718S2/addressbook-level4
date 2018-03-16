@@ -11,7 +11,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     //TODO: Change the file path latter
-    private String deskBoardFilePath = "data/addressbook.xml";
+    private String deskBoardFilePath = "data/deskboard.xml";
     private String deskBoardName = "MyDeskBoard";
 
     public UserPrefs() {

@@ -5,15 +5,16 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 public class Location {
     public static final String MESSAGE_LOCATION_CONSTRAINTS =
-            "Activity names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Activity location should not be blank, or start with white space";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NAME_LOCATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String LOCATION_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String fullName;
+    public final String value
+            ;
 
     /**
      * Constructs a {@code Name}.
@@ -23,32 +24,32 @@ public class Location {
     public Location(String location) {
         requireNonNull(location);
         checkArgument(isValidName(location), MESSAGE_LOCATION_CONSTRAINTS);
-        this.fullName = location;
+        this.value = location;
     }
 
     /**
      * Returns true if a given string is a valid activity name.
      */
     public static boolean isValidName(String test) {
-        return test.matches(NAME_LOCATION_REGEX);
+        return test.matches(LOCATION_VALIDATION_REGEX);
     }
 
 
     @Override
     public String toString() {
-        return fullName;
+        return value;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Name // instanceof handles nulls
-                && this.fullName.equals(((Name) other).fullName)); // state check
+                && this.value.equals(((Name) other).fullName)); // state check
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return value.hashCode();
     }
 
 }

@@ -11,11 +11,6 @@ import seedu.address.testutil.Assert;
 public class VegetarianTest {
 
     @Test
-    public void constructor_null_constructionSuccessValueNull() {
-        assertNull(new Vegetarian(null).value);
-    }
-
-    @Test
     public void constructor_invalidVegetarian_throwsIllegalArgumentException() {
         String invalidVegetarian = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new Vegetarian(invalidVegetarian));

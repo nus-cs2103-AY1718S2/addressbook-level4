@@ -11,11 +11,6 @@ import seedu.address.testutil.Assert;
 public class HalalTest {
 
     @Test
-    public void constructor_null_constructionSuccessValueNull() {
-        assertNull(new Halal(null).value);
-    }
-
-    @Test
     public void constructor_invalidHalal_throwsIllegalArgumentException() {
         String invalidHalal = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new Halal(invalidHalal));

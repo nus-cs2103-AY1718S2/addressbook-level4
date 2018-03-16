@@ -61,11 +61,24 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
+=== Adding a pet patient: `addpetpatient` or `app`
+
+Adds a pet patient to Mediena's address book +
+Format: `addpetpatient n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE [t/TAG]...`
+or `app n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE [t/TAG]...`
+
+[TIP]
+A pet patient can have any number of tags (including 0)
+
+Examples:
+* `addpetpatient n/Jewel s/Cat b/Persian Ragdoll c/Calico bt/AB t/Ragdoll`
+* `app n/Joker s/Cat b/Domestic Shorthair c/White bt/AB t/Shorthair`
+
 === Adding a person: `add` or `a`
 
 Adds a person to Medeina's address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...` +
+or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -75,6 +88,20 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding an appointment: `appointment` or `aa`
+
+Adds an appointment to Medeina's address book +
+Format: `appointment o/OWNER r/REMARK d/DATE [t/TYPE OF APPOINTMENT]...` +
+or `aa o/OWNER r/REMARK d/DATE [t/TYPE OF APPOINTMENT]...`
+
+[TIP]
+An appointment can have multiple types (checkup + vaccination etc.)
+
+Examples:
+
+* `appointment o/John Doe r/Requires homevisit d/2018-12-31 12:30 t/checkup t/vaccination`
+* `aa o/Betsy Crowe r/nil d/2018-12-31 12:30 t/surgery`
+
 === Listing all persons : `list` or `ls`
 
 Shows a list of all persons in Medeina's address book. +
@@ -83,8 +110,8 @@ Format: `list` or `ls`
 === Editing a person : `edit` or `ed`
 
 Edits an existing person in Medeina's address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-or `ed INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...` +
+or `ed INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -226,6 +253,21 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from Medeina's address book. +
 Format: `clear` or `cls`
 
+=== Changing theme : `theme` or `t`
+
+Change Medeina's current theme to another pre-loaded theme. +
+Format: `theme THEME_NAME` or `t THEME_NAME`
+
+****
+* THEME_NAME is case insensitive. e.g `DARK` will match `dark`
+* Available themes: `dark` and `light`
+****
+
+Examples:
+
+* `theme dark`
+* `t light`
+
 === Exiting the program : `exit` or `q`
 
 Exits the program. +
@@ -290,3 +332,4 @@ e.g.`select 2` +
 * *History* : `history` or `his`
 * *Undo* : `undo` or `ud`
 * *Redo* : `redo` or `rd`
+* *Change Theme* : `theme THEME_NAME` or `t THEME_NAME`

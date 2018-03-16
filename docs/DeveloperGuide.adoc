@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F12-B1/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -780,7 +780,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: NUS students
 
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -788,7 +788,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app and helps user to track study progress in NUS.
 
 [appendix]
 == User Stories
@@ -809,9 +809,76 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |clear the address book |remove all entries
+
+|`* * *` |user |edit a person |modify information of the person
+
+|`* *` |user |view all the commands that I have entered |
+
+|`* *` |user |undo my most recent command |change it back
+
+|`* *` |user |reverse the most recent undo command |regret undoing
+
+|`*` |user who wants to know more information about the person |select a person |see the Google search page of this person
+
+|`* * *` |user |look at my timetable |
+
+|`* *` |user |add an event to my calendar |
+
+|`* *` |user |delete an event from my calendar |remove events that I no longer need
+
+|`* *` |user |edit an event in my calendar |modify details of an event
+
+|`* *` |forgetful user |get a message when an event is coming |be reminded of the event
+
+|`* * *` |user |add a module |record the courses I have taken
+
+|`* * *` |user |delete a module |remove modules that I haven't taken yet
+
+|`* *` |user |edit a module |modify the course code
+
+|`* *` |user |list all modules |see all courses I have taken
+
+|`*` |user who has taken many modules |sort all modules by course code |locate a module easily
+
+|`* * *` |user who has taken many modules |find a module by name |find it easily
+
+|`* * *` |user who has taken many modules |find a module by course code |find it easily
+
+|`* * *` |user who has taken many modules |find a module by semester |find it easily
+
+|`* *` |user |select a module |see details of the module
+
+|`* *` |user |calculate my CAP |
+
+|`* *` |user |calculate my module credits |
+
+|`* *` |user |access my IVLE web page |
+
+|`* * *` |busy user |type the command in a shorter way |type it quickly to save time
+
+|`* *` |user who has many different tags for people in the address book |arrange different colors for different tags |easily differentiate tags
+
+|`* *` |user |delete a specific tag from everyone |remove tags that I no longer need
+
+|`* *` |user |add a remark for a specific person |record more detailed information of the person
+
+|`* *` |user |edit a remark for a specific person |
+
+|`* *` |user |delete a remark for a specific person |remove remarks that are no longer useful
+
+|`*` |user |import photos of people in the address book |
+
+|`* *` |new user |set my password |get more security
+
+|`* *` |user |reset my password |
+
+|`*` |user |change the theme of this address book |select the preferred looking
+
+|`*` |user |export a contact |share it with others
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -844,7 +911,63 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Edit module
+
+*MSS*
+
+1.  User requests to list modules
+2.  AddressBook shows a list of modules
+3.  User requests to edit a specific person in the list with new information
+4.  AddressBook updates the module
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Import photo of person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to upload photo to a specific person in the list
+4.  AddressBook request for file location
+5.  User specifies file location
+6.  AddressBook import the photo and attach it to the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given file location is invalid.
++
+** 5a1. AddressBook shows an error message.
++
+Use case resumes at step 4.
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +975,9 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  User should be able to protect his contacts and information with a password.
+.  User should ba able to use the addressbook on both online and offline settings.
+.  User guide should be easy to understand.
 
 [appendix]
 == Glossary

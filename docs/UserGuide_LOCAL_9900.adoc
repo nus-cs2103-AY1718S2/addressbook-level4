@@ -34,7 +34,7 @@ This app will not work with earlier versions of Java 8.
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will list all possible commands and their formats.
+e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
@@ -66,15 +66,15 @@ Format: `help`
 
 Adds a person to the address book +
 Alias: `a` and `+` +
-Format: `add n/NAME m/MATRICULATION NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
@@ -86,7 +86,7 @@ Format: `list`
 
 Edits an existing person in the address book. +
 Alias: `e` +
-Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -103,40 +103,16 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Emailing a person : `email`
-
-Email a person in the address book. This uses your default mail app to email. +
-Format: `email INDEX`
-
-****
-* Emails the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`email 2` +
-Emails the 2nd person in the address book.
-* `find Betsy` +
-`email 1` +
-Emails the 1st person in the results of the `find` command.
-
 === Locating persons by name: `find`
-=== Locating persons by name or by matriculation number: `find`
-
 
 Finds persons whose names contain any of the given keywords. +
-Or, finds a person whose matriculation number corresponds to the given keyword. +
-
 Alias: `f` +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name and the matriculation number is searched.
+* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -144,11 +120,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`.
+Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`.
-* `find A0123456X` +
-Returns any person having the matriculation number A0123456X.
+Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 

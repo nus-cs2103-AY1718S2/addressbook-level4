@@ -28,6 +28,9 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+    /** Sorts the person list by name in alphabetical order */
+    void sortPersonListByName();
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

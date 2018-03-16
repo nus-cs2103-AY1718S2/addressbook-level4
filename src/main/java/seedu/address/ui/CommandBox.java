@@ -4,6 +4,7 @@ import static seedu.address.ui.util.KeyboardShortcutsMapping.COMMAND_SUBMISSION;
 import static seedu.address.ui.util.KeyboardShortcutsMapping.LAST_COMMAND;
 import static seedu.address.ui.util.KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND;
 import static seedu.address.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
+import static seedu.address.ui.util.KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -62,56 +63,21 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         hideSuggestions();
-        switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
+        if (COMMAND_SUBMISSION.match(keyEvent)) {
+            keyEvent.consume();
+            submitCommand();
+        } else if (LAST_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             navigateToPreviousInput();
-            break;
-        case DOWN:
+        } else if (NEXT_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             navigateToNextInput();
-            break;
-        case CONTROL:
+        } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
+            keyEvent.consume();
+            createNewLine();
+        } else if (SHOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             showSuggestions();
-            break;
-        default:
-            // let JavaFx handle the keypress
-            if (COMMAND_SUBMISSION.match(keyEvent)) {
-                keyEvent.consume();
-                submitCommand();
-            } else if (LAST_COMMAND.match(keyEvent)) {
-                keyEvent.consume();
-                navigateToPreviousInput();
-            } else if (NEXT_COMMAND.match(keyEvent)) {
-                keyEvent.consume();
-                navigateToNextInput();
-            } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
-                keyEvent.consume();
-                createNewLine();
-            }
-
-            hideSuggestions();
-            switch (keyEvent.getCode()) {
-            case UP:
-                // As up and down buttons will alter the position of the caret,
-                // consuming it causes the caret's position to remain unchanged
-                keyEvent.consume();
-                navigateToPreviousInput();
-                break;
-            case DOWN:
-                keyEvent.consume();
-                navigateToNextInput();
-                break;
-            case CONTROL:
-                keyEvent.consume();
-                showSuggestions();
-                break;
-            default:
-                // let JavaFx handle the keypress
-            }
         }
     }
 

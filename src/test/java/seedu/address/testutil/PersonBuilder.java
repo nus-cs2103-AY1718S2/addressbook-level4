@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -22,6 +23,8 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final Double DEFAULT_INCOME = 1234.56;
+    public static final Double DEFAULT_ACTUALSPENDING = 1234.56;
+    public static final Double DEFAULT_EXPECTEDSPENDING = 1234.56;
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -29,6 +32,8 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Income income;
+    private Expenditure actualSpending;
+    private Expenditure expectedSpending;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -37,6 +42,8 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         income = new Income(DEFAULT_INCOME);
+        actualSpending = new Expenditure(DEFAULT_ACTUALSPENDING);
+        expectedSpending = new Expenditure(DEFAULT_EXPECTEDSPENDING);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -50,6 +57,8 @@ public class PersonBuilder {
         income = personToCopy.getIncome();
         address = personToCopy.getAddress();
         income = personToCopy.getIncome();
+        actualSpending = personToCopy.getActualSpending();
+        expectedSpending = personToCopy.getExpectedSpending();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -102,7 +111,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, income);
+        return new Person(name, phone, email, address, tags, income, actualSpending, expectedSpending);
     }
 
 }

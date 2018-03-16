@@ -1,9 +1,14 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.util.KeyboardShortcutsMapping.COMMAND_SUBMISSION;
+import static seedu.address.ui.util.KeyboardShortcutsMapping.LAST_COMMAND;
+import static seedu.address.ui.util.KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND;
+import static seedu.address.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
+
+import java.util.logging.Logger;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +17,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -33,6 +38,7 @@ public class CommandBox extends UiPart<Region> {
     private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit",
             "exit", "find", "help", "history", "list", "redo", "select", "undo"};
     private static final int MAX_SUGGESTIONS = 4;
+    private static final String LF = "\n";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -41,12 +47,13 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
     private ContextMenu suggestionPopUp;
+    private TextArea commandTextArea;
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandTextArea.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -73,6 +80,18 @@ public class CommandBox extends UiPart<Region> {
                 break;
             default:
                 // let JavaFx handle the keypress
+        if (COMMAND_SUBMISSION.match(keyEvent)) {
+            keyEvent.consume();
+            submitCommand();
+        } else if (LAST_COMMAND.match(keyEvent)) {
+            keyEvent.consume();
+            navigateToPreviousInput();
+        } else if (NEXT_COMMAND.match(keyEvent)) {
+            keyEvent.consume();
+            navigateToNextInput();
+        } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
+            keyEvent.consume();
+            createNewLine();
         }
     }
 
@@ -93,11 +112,11 @@ public class CommandBox extends UiPart<Region> {
      * Shows suggestions for commands when users type in Command Box
      */
     private void showSuggestions() {
-        String inputText = commandTextField.getText();
+        String inputText = commandTextArea.getText();
         // finds suggestions and displays
         suggestionPopUp = new ContextMenu();
         findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
-        suggestionPopUp.show(commandTextField, Side.BOTTOM, 0, commandTextField.getCaretPosition());
+        suggestionPopUp.show(commandTextArea, Side.BOTTOM, 0, 0);
     }
 
     /**
@@ -159,21 +178,33 @@ public class CommandBox extends UiPart<Region> {
      * positions the caret to the end of the {@code text}.
      */
     private void replaceText(String text) {
-        commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        commandTextArea.setText(text);
+        commandTextArea.positionCaret(commandTextArea.getText().length());
     }
 
     /**
-     * Handles the Enter button pressed event.
+     * Append a line feed character to the command area
+     */
+    private void createNewLine() {
+        int caretPosition = commandTextArea.getCaretPosition();
+        StringBuilder commandTextStringBuilder = new StringBuilder(commandTextArea.getText());
+        commandTextStringBuilder.insert(caretPosition, LF);
+        String newCommandText = commandTextStringBuilder.toString();
+        commandTextArea.setText(newCommandText);
+        commandTextArea.positionCaret(caretPosition + 1);
+    }
+
+    /**
+     * Handles the command submission.
      */
     @FXML
-    private void handleCommandInputChanged() {
+    private void submitCommand() {
         try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
+            CommandResult commandResult = logic.execute(commandTextArea.getText());
             initHistory();
             historySnapshot.next();
             // process result of the command
-            commandTextField.setText("");
+            commandTextArea.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 
@@ -181,7 +212,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
+            logger.info("Invalid command: " + commandTextArea.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }
@@ -200,14 +231,14 @@ public class CommandBox extends UiPart<Region> {
      * Sets the command box style to use the default style.
      */
     private void setStyleToDefault() {
-        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        commandTextArea.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
     /**
      * Sets the command box style to indicate a failed command.
      */
     private void setStyleToIndicateCommandFailure() {
-        ObservableList<String> styleClass = commandTextField.getStyleClass();
+        ObservableList<String> styleClass = commandTextArea.getStyleClass();
 
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;

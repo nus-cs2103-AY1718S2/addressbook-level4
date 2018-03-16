@@ -29,6 +29,8 @@ public class AddressBookParser {
     /**
      * Used for initial separation of command word and args.
      */
+    // TODO: change the regex to (?<commandWord>\S+)(?<arguments>[\\S\\s]*) to make commands with multiple lines work
+    // Also need to change validation regex in Model classes to make the parser work
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     /**

@@ -75,6 +75,20 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding an appointment: `appointment` or `aa`
+
+Adds an appointment to Medeina's address book +
+Format: `appointment o/OWNER r/REMARK d/DATE [t/TYPE OF APPOINTMENT]...` +
+or `aa o/OWNER r/REMARK d/DATE [t/TYPE OF APPOINTMENT]...`
+
+[TIP]
+An appointment can have multiple types (checkup + vaccination etc.)
+
+Examples:
+
+* `appointment o/John Doe r/Requires homevisit d/2018-12-31 12:30 t/checkup t/vaccination`
+* `aa o/Betsy Crowe r/nil d/2018-12-31 12:30 t/surgery`
+
 === Listing all persons : `list` or `ls`
 
 Shows a list of all persons in Medeina's address book. +

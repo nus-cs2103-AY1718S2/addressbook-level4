@@ -3,6 +3,7 @@ package seedu.address.model.activity;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@YuanQLLER
 /**
  * This clas is to store location info in an event
  */

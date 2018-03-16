@@ -24,7 +24,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String phone;
+    private String nric;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -38,9 +38,9 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged) {
         this.name = name;
-        this.phone = phone;
+        this.nric = nric;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -53,7 +53,7 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(Person source) {
         name = source.getName().fullName;
-        phone = source.getNric().value;
+        nric = source.getNric().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -79,16 +79,16 @@ public class XmlAdaptedPerson {
         }
         final Name name = new Name(this.name);
 
-        if (this.phone == null) {
+        if (this.nric == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Nric.class.getSimpleName()));
         }
-        if (!Nric.isValidNric(this.phone)) {
+        if (!Nric.isValidNric(this.nric)) {
             throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
         }
-        final Nric phone = new Nric(this.phone);
+        final Nric nric = new Nric(this.nric);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, tags);
+        return new Person(name, nric, tags);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class XmlAdaptedPerson {
 
         XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
         return Objects.equals(name, otherPerson.name)
-                && Objects.equals(phone, otherPerson.phone)
+                && Objects.equals(nric, otherPerson.nric)
                 && tagged.equals(otherPerson.tagged);
     }
 }

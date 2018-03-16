@@ -17,17 +17,17 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Nric("87438807"),
+            new Person(new Name("Alex Yeoh"), new Nric("S8743880X"),
                 getTagSet("friends")),
-            new Person(new Name("Bernice Yu"), new Nric("99272758"),
+            new Person(new Name("Bernice Yu"), new Nric("S9927275Z"),
                 getTagSet("colleagues", "friends")),
-            new Person(new Name("Charlotte Oliveiro"), new Nric("93210283"),
+            new Person(new Name("Charlotte Oliveiro"), new Nric("S9321028H"),
                 getTagSet("neighbours")),
-            new Person(new Name("David Li"), new Nric("91031282"),
+            new Person(new Name("David Li"), new Nric("S9103128J"),
                 getTagSet("family")),
-            new Person(new Name("Irfan Ibrahim"), new Nric("92492021"),
+            new Person(new Name("Irfan Ibrahim"), new Nric("S9249202K"),
                 getTagSet("classmates")),
-            new Person(new Name("Roy Balakrishnan"), new Nric("92624417"),
+            new Person(new Name("Roy Balakrishnan"), new Nric("S9262441U"),
                 getTagSet("colleagues"))
         };
     }

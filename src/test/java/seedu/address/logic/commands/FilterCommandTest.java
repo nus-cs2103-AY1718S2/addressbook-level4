@@ -23,7 +23,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.ExpectedGraduationYearBeforeKeywordPredicate;
+import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
 import seedu.address.model.person.Person;
 
 public class FilterCommandTest {
@@ -75,7 +77,8 @@ public class FilterCommandTest {
      */
     private FilterCommand prepareCommand(String userInput) {
         FilterCommand command =
-                new FilterCommand(new ExpectedGraduationYearBeforeKeywordPredicate(userInput));
+                new FilterCommand(new ExpectedGraduationYearInKeywordsRangePredicate(
+                        new ExpectedGraduationYear(userInput), new ExpectedGraduationYear(userInput)));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

@@ -107,6 +107,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void filterFilteredPersonList(Predicate<Person> predicate) {
+        requireNonNull(predicate);
+        Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
+        filteredPersons.setPredicate(predicate.and(currPredicate));
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {

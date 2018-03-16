@@ -1,5 +1,9 @@
 package seedu.address.logic.parser;
 
+/**
+ * A range recorder for PredicateParsing
+ * @param <E> a filterable field
+ */
 public class FilterRange<E> {
     private boolean isRange;
     private E lowValue;

@@ -3,16 +3,12 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ExpectedGraduationYear;
-import seedu.address.model.person.ExpectedGraduationYearBeforeKeywordPredicate;
 import seedu.address.model.person.Person;
 
 /**
@@ -47,9 +43,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
             return new FilterCommand(expectedGraduationYearPredicate);
         } catch (ParseException pe) {
             throw pe;
-        }
-
-        catch (IllegalValueException ive) {
+        } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }

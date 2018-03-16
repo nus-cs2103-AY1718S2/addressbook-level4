@@ -61,7 +61,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
+    public void executeZeroKeywordsNoPersonFound() {
         String userInput = " ";
         String[] keywords = userInput.split("\\s+");
         String expectedMessage = String.format(MESSAGE_PERSONS_WITH_TAGS_LISTED_OVERVIEW, 0,
@@ -71,7 +71,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void executeMultipleKeywordsMultiplePersonsFound() {
         String userInput = "family owesMoney";
         String[] keywords = userInput.split("\\s+");
         String expectedMessage = String.format(MESSAGE_PERSONS_WITH_TAGS_LISTED_OVERVIEW, 3,

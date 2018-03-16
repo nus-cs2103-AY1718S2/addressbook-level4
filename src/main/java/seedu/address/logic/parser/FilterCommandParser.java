@@ -34,34 +34,27 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         }
 
         try {
-            ExpectedGraduationYear expectedGraduationYear = ParserUtil.parseExpectedGraduationYear(argMultimap
-                    .getValue(PREFIX_EXPECTED_GRADUATION_YEAR)).get();
+            Predicate<Person> expectedGraduationYearPredicate = FilterUtil.parseExpectedGraduationYear(argMultimap
+                    .getValue(PREFIX_EXPECTED_GRADUATION_YEAR));
             /*
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             //Implement later
-            */
+
             List<Predicate<Person>> predicateList = new ArrayList<>();
             predicateList.add(new ExpectedGraduationYearBeforeKeywordPredicate(expectedGraduationYear.toString()));
             Predicate<Person> allPredicates = combineAllPredicates(predicateList);
-            return new FilterCommand(allPredicates);
-        } catch (IllegalValueException ive) {
+            */
+            return new FilterCommand(expectedGraduationYearPredicate);
+        } catch (ParseException pe) {
+            throw pe;
+        }
+
+        catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
 
-    /**
-     * Combines all the predicates in the predicateList into a single Predicate
-     * @param predicateList a list of non-empty predicates
-     * @return a single Predicate combinging all the predicates in the predicateList
-     */
-    private Predicate<Person> combineAllPredicates(List<Predicate<Person>> predicateList) {
-        assert(predicateList.size() >= 1);
-        Predicate<Person> allPredicates = predicateList.get(0);
-        for (int i = 1; i < predicateList.size(); i++) {
-            allPredicates.and(predicateList.get(i));
-        }
-        return allPredicates;
-    }
+
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given

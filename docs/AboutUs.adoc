@@ -4,14 +4,13 @@
 :stylesDir: stylesheets
 
 Media Socializer was developed by the https://github.com/orgs/CS2103JAN2018-F12-B3/people[F12-B3] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
 === Seunghwan Choi
-image::shadow2496.jpg[width="150", align="left"]
+image::shadow2496.png[width="150", align="left"]
 {empty}[https://github.com/shadow2496[github]] [<<seunghwanchoi#, portfolio>>]
 
 Role: Team Lead +
@@ -20,7 +19,7 @@ Responsibilities: In charge of UI + Code quality + Integration
 '''
 
 === Chuang Cheng Heng
-image::kevinchuangch.jpg[width="150", align="left"]
+image::kevinchuangch.png[width="150", align="left"]
 {empty}[https://github.com/KevinChuangCH[github]] [<<chuangchengheng#, portfolio>>]
 
 Role: Developer +
@@ -29,7 +28,7 @@ Responsibilities: In charge of Logic + Deliverables and deadlines + Scheduling a
 '''
 
 === Tan Wei Jie
-image::nethergale.jpg[width="150", align="left"]
+image::nethergale.png[width="150", align="left"]
 {empty}[https://github.com/Nethergale[github]] [<<tanweijie#, portfolio>>]
 
 Role: Developer +

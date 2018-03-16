@@ -10,7 +10,7 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 import org.junit.Test;
 
 import guitests.GuiRobot;
-import guitests.guihandles.HelpWindowHandle;
+import guitests.guihandles.BrowserWindowHandle;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -77,10 +77,10 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
      * Asserts that the help window is open, and closes it after checking.
      */
     private void assertHelpWindowOpen() {
-        assertTrue(ERROR_MESSAGE, HelpWindowHandle.isWindowPresent());
+        assertTrue(ERROR_MESSAGE, BrowserWindowHandle.isWindowPresent());
         guiRobot.pauseForHuman();
 
-        new HelpWindowHandle(guiRobot.getStage(HelpWindowHandle.HELP_WINDOW_TITLE)).close();
+        new BrowserWindowHandle(guiRobot.getStage(BrowserWindowHandle.HELP_WINDOW_TITLE)).close();
         getMainWindowHandle().focus();
     }
 
@@ -88,7 +88,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
      * Asserts that the help window isn't open.
      */
     private void assertHelpWindowNotOpen() {
-        assertFalse(ERROR_MESSAGE, HelpWindowHandle.isWindowPresent());
+        assertFalse(ERROR_MESSAGE, BrowserWindowHandle.isWindowPresent());
     }
 
 }

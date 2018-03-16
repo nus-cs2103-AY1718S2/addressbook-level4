@@ -167,7 +167,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
+        BrowserWindow helpWindow = new BrowserWindow(BrowserWindow.USERGUIDE_FILE_PATH);
         helpWindow.show();
     }
 

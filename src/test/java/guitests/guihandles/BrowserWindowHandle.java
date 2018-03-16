@@ -6,16 +6,16 @@ import guitests.GuiRobot;
 import javafx.stage.Stage;
 
 /**
- * A handle to the {@code HelpWindow} of the application.
+ * A handle to the {@code BrowserWindow} of the application.
  */
-public class HelpWindowHandle extends StageHandle {
+public class BrowserWindowHandle extends StageHandle {
 
     public static final String HELP_WINDOW_TITLE = "Help";
 
     private static final String HELP_WINDOW_BROWSER_ID = "#browser";
 
-    public HelpWindowHandle(Stage helpWindowStage) {
-        super(helpWindowStage);
+    public BrowserWindowHandle(Stage browserWindowStage) {
+        super(browserWindowStage);
     }
 
     /**

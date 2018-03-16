@@ -32,7 +32,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_listIsSorted_showsSortedList() {
+    public void showsSortedList() {
         assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS_SORT_BY_NAME, expectedModel);
     }
 }

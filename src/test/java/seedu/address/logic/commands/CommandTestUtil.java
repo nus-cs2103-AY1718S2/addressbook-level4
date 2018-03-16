@@ -80,6 +80,13 @@ public class CommandTestUtil {
     public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK; //empty string not allowed for remark
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "twelvemarchtwozerooneeight"; //follows format
 
+    public static final String INVALID_THEME_PINK = "pink";
+    public static final String INVALID_THEME_LIGHTT = "lightt";
+
+    public static final String VALID_THEME_PATH_LIGHT = "/view/LightTheme.css";
+    public static final String VALID_THEME_PATH_DARK = "/view/DarkTheme.css";
+
+
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 

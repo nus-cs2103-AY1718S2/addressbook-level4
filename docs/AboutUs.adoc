@@ -35,12 +35,12 @@ Responsibilities: UI
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Pearlissa Taim
+image::pearlissa.png[width="150", align="left"]
+{empty}[http://github.com/Pearlissa[github]]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model
 
 '''
 

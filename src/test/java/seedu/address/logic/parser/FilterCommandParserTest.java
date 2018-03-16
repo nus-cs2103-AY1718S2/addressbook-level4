@@ -32,6 +32,28 @@ public class FilterCommandParserTest {
                         new FilterRange<ExpectedGraduationYear>(
                                 new ExpectedGraduationYear("2019"), new ExpectedGraduationYear("2021"))));
         assertParseSuccess(parser, " y/2019-2021", expectedFilterCommand);
+    }
+
+    @Test
+    public void parse_invalidArg_throwsParseException() {
+        //Missing input, invalid command format
+        assertParseFailure(parser, "y/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "   y/2025--2025",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "   y/-",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "   y/,",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "   y/,,",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        //Correct command format but invalid expected graduation year
+        assertParseFailure(parser, "   y/2o2o",
+                ExpectedGraduationYear.MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS);
+        assertParseFailure(parser, "   y/2025,,2025",
+                ExpectedGraduationYear.MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS);
+        //Both mistakes occured, detect invalid command format first
+        assertParseFailure(parser, "   y/2025--2025,2o2o",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
 
     }
 }

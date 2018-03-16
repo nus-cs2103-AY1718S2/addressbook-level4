@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class FilterUtil {
         if (predicateString.isPresent()) {
             return parseExpectedGraduationYear(predicateString.get());
         } else {
-            throw new ParseException(FilterCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
     }
 
@@ -47,7 +48,7 @@ public class FilterUtil {
         String[] predicateStrings = predicateString.split(",");
         Arrays.stream(predicateStrings).map(String::trim).toArray(unused -> predicateStrings);
         if (predicateStrings.length == 0) {
-            throw new ParseException(FilterCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
         Predicate<Person> predicate = processExpectedGraduationYearPredicateStrings(predicateStrings);
         return predicate;
@@ -97,7 +98,7 @@ public class FilterUtil {
         if (s.contains("-")) { //It is a range
             String[] range = s.split("-");
             if (range.length != 2) {
-                throw new ParseException(FilterCommand.MESSAGE_USAGE);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT ,FilterCommand.MESSAGE_USAGE));
             } else if (ExpectedGraduationYear.isValidExpectedGraduationYear(range[0].trim())
                     && ExpectedGraduationYear.isValidExpectedGraduationYear(range[1].trim())) {
                 filterRange = new FilterRange<ExpectedGraduationYear>(

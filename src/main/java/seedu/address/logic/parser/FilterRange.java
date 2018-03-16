@@ -10,14 +10,14 @@ public class FilterRange<E> {
     private E highValue;
     private E exactValue;
 
-    FilterRange(E exactValue) {
+    public FilterRange(E exactValue) {
         this.isRange = false;
         this.lowValue = null;
         this.highValue = null;
         this.exactValue = exactValue;
     }
 
-    FilterRange(E lowValue, E highValue) {
+    public FilterRange(E lowValue, E highValue) {
         this.isRange = true;
         this.lowValue = lowValue;
         this.highValue = highValue;

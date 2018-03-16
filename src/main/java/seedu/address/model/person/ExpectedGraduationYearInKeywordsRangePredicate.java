@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import seedu.address.logic.parser.FilterRange;
@@ -13,11 +14,6 @@ public class ExpectedGraduationYearInKeywordsRangePredicate implements Predicate
     public ExpectedGraduationYearInKeywordsRangePredicate(ExpectedGraduationYear low, ExpectedGraduationYear high) {
         this.low = low.value;
         this.high = high.value;
-    }
-
-    public ExpectedGraduationYearInKeywordsRangePredicate(ExpectedGraduationYear exact) {
-        this.low = exact.value;
-        this.high = exact.value;
     }
 
     public ExpectedGraduationYearInKeywordsRangePredicate(FilterRange<ExpectedGraduationYear> filterRange) {

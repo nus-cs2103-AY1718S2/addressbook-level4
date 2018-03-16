@@ -56,12 +56,12 @@ public class FilterCommandTest {
         // null -> returns false
         assertFalse(filterFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different filter command -> returns false
         assertFalse(filterFirstCommand.equals(filterSecondCommand));
     }
 
     @Test
-    public void execute_tooSmallGraduationYear_noPersonFound() {
+    public void execute_noPersonsGraduationYear_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FilterCommand command = prepareCommand("2017");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());

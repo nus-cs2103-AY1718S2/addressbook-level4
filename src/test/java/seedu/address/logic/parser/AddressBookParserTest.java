@@ -110,7 +110,7 @@ public class AddressBookParserTest {
         FilterCommand command = (FilterCommand) parser.parseCommand(
                 PersonUtil.getFilterCommand(person));
         assertEquals(new FilterCommand(new ExpectedGraduationYearInKeywordsRangePredicate(
-                person.getExpectedGraduationYear())), command);
+                person.getExpectedGraduationYear(), person.getExpectedGraduationYear())), command);
     }
 
     @Test

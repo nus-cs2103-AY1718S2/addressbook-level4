@@ -27,7 +27,7 @@ public class FilterUtil {
         }
     }
 
-    public static Predicate<Person> parseExpectedGraduationYear(String predicateString)
+    private static Predicate<Person> parseExpectedGraduationYear(String predicateString)
             throws IllegalValueException {
         requireNonNull(predicateString);
         String[] predicateStrings = predicateString.split(",");
@@ -55,7 +55,7 @@ public class FilterUtil {
         assert(predicateList.size() >= 1);
         Predicate<Person> allPredicates = predicateList.get(0);
         for (int i = 1; i < predicateList.size(); i++) {
-            allPredicates.or(predicateList.get(i));
+            allPredicates = allPredicates.or(predicateList.get(i));
         }
         return allPredicates;
     }

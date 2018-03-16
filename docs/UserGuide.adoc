@@ -61,7 +61,7 @@ Format: `help`
 
 === Adding a person: `add` or `a`
 
-Adds a person to the address book +
+Adds a person to EduBuddy +
 Format: `add n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER` +
 Format: `a n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER`
 
@@ -77,6 +77,11 @@ Examples:
 
 Shows a list of all students in the EduBuddy. +
 Format: `list` or `l`
+
+=== Sorting students by name : `sort`
+
+Sorts the list of students in EduBuddy by their name in alphabetical order. +
+Format: `sort`
 
 === Editing a student : `edit` or `e`
 Edits an existing student in the EduBuddy. +
@@ -245,6 +250,24 @@ Format: `clear` or `c`
 
 Exits the program. +
 Format: `exit`
+
+=== Creating an appointment on the calendar : `create [coming in v2.0]`
+
+Creates an appointment with the student identified by the index number used
+in the last student listing and displays it on the calendar.
+E.g. setting a consultation time slot with students. +
+Format: `create INDEX date/DATE time/TIME`
+
+****
+* Date is in *DDMMYY* format
+* Time is in *24 hour* format
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `create 1 date/01022018 time/1500` +
+Creates an appointment with the 1st student on `01022018` at `1500`
 
 === Saving the data
 

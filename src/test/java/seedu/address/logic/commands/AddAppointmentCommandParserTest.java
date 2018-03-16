@@ -37,8 +37,8 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Appointment expectedAppointment = new AppointmentBuilder().withOwner(VALID_OWNER_JOHNNY).withRemark(VALID_REMARK_JOHNNY)
-                .withDateTime(VALID_DATE_JOHNNY).withTags(VALID_TAG_CHECKUP).build();
+        Appointment expectedAppointment = new AppointmentBuilder().withOwner(VALID_OWNER_JOHNNY)
+                .withRemark(VALID_REMARK_JOHNNY).withDateTime(VALID_DATE_JOHNNY).withTags(VALID_TAG_CHECKUP).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + OWNER_DESC_JOHNNY + REMARK_DESC_JOHNNY

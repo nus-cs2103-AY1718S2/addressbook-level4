@@ -85,7 +85,7 @@ public class XmlDeskBoardStorageTest {
 
         //Modify data, overwrite exiting file, and read back
         original.addActivity(HOON);
-        original.removePerson(ALICE);
+        original.removeActivity(ALICE);
         xmlAddressBookStorage.saveDeskBoard(original, filePath);
         readBack = xmlAddressBookStorage.readDeskBoard(filePath).get();
         assertEquals(original, new DeskBoard(readBack));

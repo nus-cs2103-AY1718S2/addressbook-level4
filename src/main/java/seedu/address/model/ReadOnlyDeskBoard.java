@@ -6,13 +6,13 @@ import seedu.address.model.tag.Tag;
 
 //@@author YuanQQLer
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of an desk board
  */
 public interface ReadOnlyDeskBoard {
 
     /**
-     * Returns an unmodifiable view of the persons list.
-     * This list will not contain any duplicate persons.
+     * Returns an unmodifiable view of the activities list.
+     * This list will not contain any duplicate activities..
      */
     ObservableList<Activity> getActivityList();
 

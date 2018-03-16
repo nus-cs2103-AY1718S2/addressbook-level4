@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -10,8 +11,8 @@ import seedu.address.testutil.Assert;
 public class VegetarianTest {
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Vegetarian(null));
+    public void constructor_null_constructionSuccessValueNull() {
+        assertNull(new Vegetarian(null).value);
     }
 
     @Test

@@ -29,7 +29,7 @@ Responsibilities: In charge of Logic + Deliverables and deadlines + Scheduling a
 '''
 
 === Tan Wei Jie
-image::yijinl.jpg[width="150", align="left"]
+image::nethergale.jpg[width="150", align="left"]
 {empty}[https://github.com/Nethergale[github]] [<<tanweijie#, portfolio>>]
 
 Role: Developer +

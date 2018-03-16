@@ -36,8 +36,8 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
     private static final String LF = "\n";
-    private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit",
-            "exit", "find", "help", "history", "list", "redo", "select", "undo"};
+    private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit", "exit", "find",
+        "help", "history", "list", "redo", "select", "undo"};
     private static final int MAX_SUGGESTIONS = 4;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
@@ -115,10 +115,10 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-        /**
-         * Updates the text field with the previous input in {@code historySnapshot},
-         * if there exists a previous input in {@code historySnapshot}
-         */
+    /**
+     * Updates the text field with the previous input in {@code historySnapshot},
+     * if there exists a previous input in {@code historySnapshot}
+     */
 
     private void navigateToPreviousInput() {
         assert historySnapshot != null;

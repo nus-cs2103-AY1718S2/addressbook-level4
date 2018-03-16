@@ -1,8 +1,10 @@
 package seedu.address.model;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.Person;
@@ -56,4 +58,9 @@ public interface Model {
      * @param tag
      */
     void deleteTag(Tag tag);
+
+    /**
+     * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
+     */
+    void importAddressBook(String filepath) throws DataConversionException, IOException;
 }

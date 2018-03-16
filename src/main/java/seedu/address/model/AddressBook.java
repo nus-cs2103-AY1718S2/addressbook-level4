@@ -98,6 +98,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(person);
     }
 
+    /**
+     * Imports a person to the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     */
+    public void importPerson(Person p) {
+        Person person = syncWithMasterTagList(p);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        persons.importPerson(person);
+    }
+
     //// command-level operations
 
     /**
@@ -180,6 +193,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    public void importTag(Tag t) {
+        tags.importTag(t);
     }
 
     /**

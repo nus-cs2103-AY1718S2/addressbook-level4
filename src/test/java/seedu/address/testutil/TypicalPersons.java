@@ -43,7 +43,6 @@ public class TypicalPersons {
                     "-1", "-1")
             .withResume(formPathFromFileName("alice.pdf"))
             .withTags("friends").build();
-
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withResume(formPathFromFileName(null))
             .withEmail("johnd@example.com").withPhone("98765432").withExpectedGraduationYear("2021")
@@ -109,8 +108,7 @@ public class TypicalPersons {
             .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_BOB)
             .withRating(VALID_TECHNICAL_SKILLS_SCORE_BOB, VALID_COMMUNICATION_SKILLS_SCORE_BOB,
                     VALID_PROBLEM_SOLVING_SKILLS_SCORE_BOB, VALID_EXPERIENCE_SCORE_BOB)
-            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
     public static final String KEYWORD_MATCHING_2019 = "2019"; //A keyword that matches 2020

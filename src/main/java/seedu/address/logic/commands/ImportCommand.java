@@ -2,10 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
 import java.io.IOException;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.storage.XmlFileStorage;
 
 /**
  * Imports data from a xml file and overwrites the current data stored
@@ -19,27 +22,27 @@ public class ImportCommand extends Command {
             + "Parameters: FILE_PATH\n"
             + "Example: " + COMMAND_WORD + " ~/DOWNLOADS/NewDataSet.xml";
 
-    public static final String MESSAGE_SUCCESS = "Data imported successfully from file: %1$s";
+    public static final String MESSAGE_SUCCESS = "Data imported successfully";
     public static final String MESSAGE_INVALID_PATH = "File not found";
     public static final String MESSAGE_INVALID_FILE = "Data configuration failed";
 
     private final String filePath;
 
     public ImportCommand(String filePath) {
-        this.filePath = filePath;
+        this.filePath = filePath.trim();
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
-            XmlAddressBookStorage newDataSet = new XmlAddressBookStorage(filePath);
-            model.resetData(newDataSet.readAddressBook().orElseThrow(() -> new IOException(MESSAGE_INVALID_FILE)));
+            ReadOnlyAddressBook newDataSet = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+            model.resetData(newDataSet);
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException e) {
-            return new CommandResult(MESSAGE_INVALID_PATH);
+            throw new CommandException(MESSAGE_INVALID_PATH);
         } catch (DataConversionException e) {
-            return new CommandResult(MESSAGE_INVALID_FILE);
+            throw new CommandException(MESSAGE_INVALID_FILE);
         }
     }
 }

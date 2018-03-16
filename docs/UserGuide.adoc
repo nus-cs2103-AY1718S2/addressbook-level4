@@ -235,6 +235,16 @@ Clears all entries from the address book. +
 Alias: `c` +
 Format: `clear`
 
+=== Importing data from another file : `import`
+
+Extracting data from an xml formatted file and
+replaces the current stored data. +
+Format: `import FILEPATH`
+
+Examples:
+
+* `import ~/download/NewData.xml`
+
 === Exiting the program : `exit`
 
 Exits the program. +

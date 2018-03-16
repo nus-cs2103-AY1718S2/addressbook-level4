@@ -27,7 +27,7 @@ public class ChartsPanel extends UiPart<Region> {
     private NumberAxis yAxis;
 
     @FXML
-    private LineChart<Double, Double> priceChart;
+    private LineChart<String, Double> priceChart;
 
     private final ArrayList<Date> testDataX = new ArrayList<>(Arrays.asList(
             new Date(1452592800000L),
@@ -61,7 +61,7 @@ public class ChartsPanel extends UiPart<Region> {
      * Add a new plot to the graph
      */
     private void addPlot(ArrayList<Date> xAxis, ArrayList<Double> yAxis) {
-        Series dataSeries = new Series();
+        Series<String, Double> dataSeries = new Series<>();
         dataSeries.setName("Price History Series");
         populateData(dataSeries, xAxis, yAxis);
 
@@ -75,11 +75,11 @@ public class ChartsPanel extends UiPart<Region> {
      * @param xAxis
      * @param yAxis
      */
-    private void populateData(Series dataSeries, ArrayList<Date> xAxis, ArrayList<Double> yAxis) {
+    private void populateData(Series<String, Double> dataSeries, ArrayList<Date> xAxis, ArrayList<Double> yAxis) {
         assert (xAxis.size() == yAxis.size());
         for (int i = 0; i < xAxis.size(); i++) {
             final String date = DateFormat.getInstance().format(xAxis.get(i));
-            dataSeries.getData().add(new Data(date, yAxis.get(i)));
+            dataSeries.getData().add(new Data<>(date, yAxis.get(i)));
         }
     }
 }

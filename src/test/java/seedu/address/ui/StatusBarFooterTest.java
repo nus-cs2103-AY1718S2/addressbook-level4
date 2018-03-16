@@ -31,7 +31,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
-    private static AddressBookChangedEvent EVENT_ADDED;
+    private static AddressBookChangedEvent event_ADDED;
 
     private StatusBarFooterHandle statusBarFooterHandle;
 
@@ -56,7 +56,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
         AddressBook tempAddressBook = new AddressBook();
         tempAddressBook.addPerson(TypicalPersons.ALICE);
-        EVENT_ADDED = new AddressBookChangedEvent(tempAddressBook);
+        event_ADDED = new AddressBookChangedEvent(tempAddressBook);
     }
 
     @Test
@@ -73,9 +73,9 @@ public class StatusBarFooterTest extends GuiUnitTest {
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
 
         // after address book is updated again
-        postNow(EVENT_ADDED);
+        postNow(event_ADDED);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
-                String.format(ITEM_COUNT_STATUS, EVENT_ADDED.data.getPersonList().size()),
+                String.format(ITEM_COUNT_STATUS, event_ADDED.data.getPersonList().size()),
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }
 

@@ -56,9 +56,18 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
 
-Format: `help`
+=== Viewing help : `help` or `man`
+
+Shows the help menu or help for the `COMMAND_WORD` requested.
+
+Format: `help`, `help COMMAND_WORD`, `man` or `man COMMAND_WORD`
+
+Examples:
+
+* `help`
+
+* `man add`
 
 === Adding a person: `add`
 

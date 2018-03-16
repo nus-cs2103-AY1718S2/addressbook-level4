@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Activity's remark in the calendar.
+ * Represents an Activity's remark in the desk board.
  * Guarantees: immutable; is valid as declared in {@link #isValidRemark(String)}
  */
 public class Remark {
@@ -28,7 +28,7 @@ public class Remark {
     }
 
     /**
-     * Returns true if a given string is a valid activity email.
+     * Returns true if a given string is a valid activity remark.
      */
     public static boolean isValidRemark(String test) {
         return test.matches(REMARK_VALIDATION_REGEX);

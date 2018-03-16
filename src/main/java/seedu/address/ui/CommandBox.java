@@ -17,11 +17,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-<<<<<<< HEAD
 import javafx.scene.control.TextArea;
-=======
-import javafx.scene.control.TextField;
->>>>>>> Add auto-completion functionality for commands
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -49,11 +45,7 @@ public class CommandBox extends UiPart<Region> {
     private ListElementPointer historySnapshot;
 
     @FXML
-<<<<<<< HEAD
     private TextArea commandTextArea;
-=======
-    private TextField commandTextField;
->>>>>>> Add auto-completion functionality for commands
     private ContextMenu suggestionPopUp;
 
     public CommandBox(Logic logic) {
@@ -121,19 +113,11 @@ public class CommandBox extends UiPart<Region> {
      * Shows suggestions for commands when users type in Command Box
      */
     private void showSuggestions() {
-<<<<<<< HEAD
         String inputText = commandTextArea.getText();
         // finds suggestions and displays
         suggestionPopUp = new ContextMenu();
         findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
         suggestionPopUp.show(commandTextArea, Side.BOTTOM, 0, 0);
-=======
-        String inputText = commandTextField.getText();
-        // finds suggestions and displays
-        suggestionPopUp = new ContextMenu();
-        findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
-        suggestionPopUp.show(commandTextField, Side.BOTTOM, 0, commandTextField.getCaretPosition());
->>>>>>> Add auto-completion functionality for commands
     }
 
     /**

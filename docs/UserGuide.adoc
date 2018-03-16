@@ -61,9 +61,18 @@ The following are the commands of CLIndar:
 * Parameters can be in any order e.g. if the command specifies `n/NAME d/DATETIME`, `d/DATETIME n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
 
-Format: `help`
+=== Viewing help : `help` or `man`
+
+Shows the help menu or help for the `COMMAND_WORD` requested.
+
+Format: `help`, `help COMMAND_WORD`, `man` or `man COMMAND_WORD`
+
+Examples:
+
+* `help`
+
+* `man add`
 
 === Adding a task: `task`
 

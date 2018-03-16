@@ -92,8 +92,19 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_help() throws Exception {
+
+        //@@author jasmoon
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_ALIAS + " find") instanceof HelpCommand);
+        try {
+            parser.parseCommand(HelpCommand.COMMAND_WORD + " 3");
+            fail("The expected ParseException was not thrown");
+        } catch (ParseException pe) {
+            assertEquals("Help for '3' is unknown or not available.", pe.getMessage());
+        }
+        //need help with this test
+        //HelpCommand command = (HelpCommand) parser.parseCommand(HelpCommand.COMMAND_WORD + " find");
+        //assertEquals(new HelpCommand("find").execute(), command.execute());
     }
 
     @Test

@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 
 import seedu.address.logic.parser.FilterRange;

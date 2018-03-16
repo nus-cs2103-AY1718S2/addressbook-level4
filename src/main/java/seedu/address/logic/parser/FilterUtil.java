@@ -98,7 +98,7 @@ public class FilterUtil {
         if (s.contains("-")) { //It is a range
             String[] range = s.split("-");
             if (range.length != 2) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT ,FilterCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
             } else if (ExpectedGraduationYear.isValidExpectedGraduationYear(range[0].trim())
                     && ExpectedGraduationYear.isValidExpectedGraduationYear(range[1].trim())) {
                 filterRange = new FilterRange<ExpectedGraduationYear>(

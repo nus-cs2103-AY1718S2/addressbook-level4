@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;

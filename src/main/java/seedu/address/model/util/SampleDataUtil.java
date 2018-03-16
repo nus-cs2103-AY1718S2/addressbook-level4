@@ -6,8 +6,8 @@ import java.util.Set;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
@@ -17,17 +17,17 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"),
+            new Person(new Name("Alex Yeoh"), new Nric("87438807"),
                 getTagSet("friends")),
-            new Person(new Name("Bernice Yu"), new Phone("99272758"),
+            new Person(new Name("Bernice Yu"), new Nric("99272758"),
                 getTagSet("colleagues", "friends")),
-            new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"),
+            new Person(new Name("Charlotte Oliveiro"), new Nric("93210283"),
                 getTagSet("neighbours")),
-            new Person(new Name("David Li"), new Phone("91031282"),
+            new Person(new Name("David Li"), new Nric("91031282"),
                 getTagSet("family")),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"),
+            new Person(new Name("Irfan Ibrahim"), new Nric("92492021"),
                 getTagSet("classmates")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"),
+            new Person(new Name("Roy Balakrishnan"), new Nric("92624417"),
                 getTagSet("colleagues"))
         };
     }

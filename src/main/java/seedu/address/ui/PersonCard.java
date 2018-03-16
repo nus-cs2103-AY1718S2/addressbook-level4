@@ -46,7 +46,7 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
+        phone.setText(person.getNric().value);
         setTags(person);
     }
 

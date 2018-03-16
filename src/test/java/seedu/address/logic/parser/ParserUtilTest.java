@@ -19,7 +19,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.Nric;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 
@@ -98,34 +98,34 @@ public class ParserUtilTest {
 
     @Test
     public void parsePhone_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((Optional<String>) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseNric((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseNric((Optional<String>) null));
     }
 
     @Test
     public void parsePhone_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(INVALID_PHONE));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(Optional.of(INVALID_PHONE)));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseNric(INVALID_PHONE));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseNric(Optional.of(INVALID_PHONE)));
     }
 
     @Test
     public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+        assertFalse(ParserUtil.parseNric(Optional.empty()).isPresent());
     }
 
     @Test
     public void parsePhone_validValueWithoutWhitespace_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(VALID_PHONE));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(VALID_PHONE)));
+        Nric expectedPhone = new Nric(VALID_PHONE);
+        assertEquals(expectedPhone, ParserUtil.parseNric(VALID_PHONE));
+        assertEquals(Optional.of(expectedPhone), ParserUtil.parseNric(Optional.of(VALID_PHONE)));
     }
 
     @Test
     public void parsePhone_validValueWithWhitespace_returnsTrimmedPhone() throws Exception {
         String phoneWithWhitespace = WHITESPACE + VALID_PHONE + WHITESPACE;
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(phoneWithWhitespace));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(phoneWithWhitespace)));
+        Nric expectedPhone = new Nric(VALID_PHONE);
+        assertEquals(expectedPhone, ParserUtil.parseNric(phoneWithWhitespace));
+        assertEquals(Optional.of(expectedPhone), ParserUtil.parseNric(Optional.of(phoneWithWhitespace)));
     }
 
     @Test

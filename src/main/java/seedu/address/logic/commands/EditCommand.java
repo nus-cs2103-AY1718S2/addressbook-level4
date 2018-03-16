@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -18,8 +18,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -37,12 +37,12 @@ public class EditCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_NRIC + "PHONE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
+            + PREFIX_NRIC + "91234567 "
             + "Example: " + COMMAND_ALIAS + " 1 "
-            + PREFIX_PHONE + "91234567";
+            + PREFIX_NRIC + "91234567";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -99,7 +99,7 @@ public class EditCommand extends UndoableCommand {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Nric updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedTags);
@@ -130,7 +130,7 @@ public class EditCommand extends UndoableCommand {
      */
     public static class EditPersonDescriptor {
         private Name name;
-        private Phone phone;
+        private Nric phone;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -160,11 +160,11 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Phone phone) {
+        public void setPhone(Nric phone) {
             this.phone = phone;
         }
 
-        public Optional<Phone> getPhone() {
+        public Optional<Nric> getPhone() {
             return Optional.ofNullable(phone);
         }
 

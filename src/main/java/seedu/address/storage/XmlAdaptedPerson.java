@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -53,7 +53,7 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(Person source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
+        phone = source.getNric().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -80,12 +80,12 @@ public class XmlAdaptedPerson {
         final Name name = new Name(this.name);
 
         if (this.phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Nric.class.getSimpleName()));
         }
-        if (!Phone.isValidPhone(this.phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+        if (!Nric.isValidNric(this.phone)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
         }
-        final Phone phone = new Phone(this.phone);
+        final Nric phone = new Nric(this.phone);
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, tags);

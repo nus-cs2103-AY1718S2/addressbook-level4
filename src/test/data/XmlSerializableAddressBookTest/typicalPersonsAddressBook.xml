@@ -4,34 +4,34 @@
 <addressbook>
     <persons>
         <name>Alice Pauline</name>
-        <phone>85355255</phone>
+        <nric>85355255</nric>
         <tagged>friends</tagged>
     </persons>
     <persons>
         <name>Benson Meier</name>
-        <phone>98765432</phone>
+        <nric>98765432</nric>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
     <persons>
         <name>Carl Kurz</name>
-        <phone>95352563</phone>
+        <nric>95352563</nric>
     </persons>
     <persons>
         <name>Daniel Meier</name>
-        <phone>87652533</phone>
+        <nric>87652533</nric>
     </persons>
     <persons>
         <name>Elle Meyer</name>
-        <phone>9482224</phone>
+        <nric>9482224</nric>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
-        <phone>9482427</phone>
+        <nric>9482427</nric>
     </persons>
     <persons>
         <name>George Best</name>
-        <phone>9482442</phone>
+        <nric>9482442</nric>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>

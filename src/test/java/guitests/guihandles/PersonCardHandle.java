@@ -13,12 +13,12 @@ import javafx.scene.layout.Region;
 public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
-    private static final String PHONE_FIELD_ID = "#phone";
+    private static final String NRIC_FIELD_ID = "#nric";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
     private final Label nameLabel;
-    private final Label phoneLabel;
+    private final Label nricLabel;
     private final List<Label> tagLabels;
 
     public PersonCardHandle(Node cardNode) {
@@ -26,7 +26,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
-        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
+        this.nricLabel = getChildNode(NRIC_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -45,7 +45,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     }
 
     public String getPhone() {
-        return phoneLabel.getText();
+        return nricLabel.getText();
     }
 
     public List<String> getTags() {

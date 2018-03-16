@@ -17,11 +17,13 @@ import seedu.address.testutil.PersonBuilder;
 public class PersonCardTest extends GuiUnitTest {
 
     @Test
+
     public void display() {
         // no tags
         Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
         PersonCard personCard = new PersonCard(personWithNoTags, 1);
         uiPartRule.setUiPart(personCard);
+
         assertCardDisplay(personCard, personWithNoTags, 1);
 
         // with tags

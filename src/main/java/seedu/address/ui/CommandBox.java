@@ -1,12 +1,17 @@
 package seedu.address.ui;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -27,6 +32,7 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
     private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit",
             "exit", "find", "help", "history", "list", "redo", "select", "undo"};
+    private static final int MAX_SUGGESTIONS = 4;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -34,7 +40,7 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
-    private SuggestionPopUp suggestionPopUp;
+    private ContextMenu suggestionPopUp;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -87,12 +93,43 @@ public class CommandBox extends UiPart<Region> {
      * Shows suggestions for commands when users type in Command Box
      */
     private void showSuggestions() {
-        suggestionPopUp = new SuggestionPopUp();
         String inputText = commandTextField.getText();
-        suggestionPopUp.findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
-        suggestionPopUp.getItems().addAll((List) suggestionPopUp.getSuggestions());
+        // finds suggestions and displays
+        suggestionPopUp = new ContextMenu();
+        findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
         suggestionPopUp.show(commandTextField, Side.BOTTOM, 0, commandTextField.getCaretPosition());
-        suggestionPopUp.setAutoHide(true);
+    }
+
+    /**
+     * Finds possible suggestions from {@code inputText} and
+     * list of valid suggestions {@code textList}.
+     */
+    public void findSuggestions(String inputText, List<String> textList) {
+        Collections.sort(textList);
+
+        for (String suggestion : textList) {
+            if (suggestion.startsWith(inputText)) {
+                addSuggestion(suggestion);
+            }
+
+            if (suggestionPopUp.getItems().size() == MAX_SUGGESTIONS) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Adds a suggestion to suggestion list
+     */
+    private void addSuggestion(String suggestion) {
+        MenuItem item = new MenuItem(suggestion);
+        item.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                replaceText(item.getText());
+            }
+        });
+        suggestionPopUp.getItems().add(item);
     }
 
     /**

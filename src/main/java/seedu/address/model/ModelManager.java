@@ -101,6 +101,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void sortPersonListByName() {
+        addressBook.sortByName();
+    }
+
+    @Override
     public void deleteTag(Tag tag) {
         try {
             addressBook.removeTag(tag);

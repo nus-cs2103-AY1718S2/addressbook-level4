@@ -140,6 +140,22 @@ Deletes the 2nd student in the EduBuddy.
 `delete 1` +
 Deletes the 1st student in the results of the `find` command.
 
+=== Deleting a tag : `tagdelete` or `td`
+
+Deletes the specified tag from every student in the EduBuddy. +
+Format: `tagdelete TAGNAME` or `td TAGNAME`
+
+****
+* Deletes the specified tag from every student in the Edubuddy.
+* The tag refers to the index number shown in the most recent listing.
+* The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
+****
+
+Examples:
+
+* `tagdelete Class1A` or `td Class1A` +
+Deletes the 'Class 1A' tag from every student in the EduBuddy.
+
 === Selecting a person : `select` or `s`
 
 Selects the student identified by the index number used in the last student listing. +

@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -40,6 +43,14 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_UNUSED = "unused";
+    public static final String VALID_TAG_CHECKUP = "checkup";
+    public static final String VALID_TAG_VACCINATION = "vaccination";
+    public static final String VALID_OWNER_JOHNNY = "Johnny Sim";
+    public static final String VALID_OWNER_TIMMY = "Timmy Sim";
+    public static final String VALID_REMARK_JOHNNY = "Requires homevisit";
+    public static final String VALID_REMARK_TIMMY = "old age";
+    public static final String VALID_DATE_JOHNNY = "2018-12-31 12:30";
+    public static final String VALID_DATE_TIMMY = "2018-10-12 12:15";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -51,12 +62,23 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String TAG_DESC_CHECKUP = " " + PREFIX_TAG + VALID_TAG_CHECKUP;
+    public static final String TAG_DESC_VACCINATION = " " + PREFIX_TAG + VALID_TAG_VACCINATION;
+    public static final String OWNER_DESC_JOHNNY = " " + PREFIX_OWNER + VALID_OWNER_JOHNNY;
+    public static final String OWNER_DESC_TIMMY = " " + PREFIX_OWNER + VALID_OWNER_TIMMY;
+    public static final String REMARK_DESC_JOHNNY = " " + PREFIX_REMARK + VALID_REMARK_JOHNNY;
+    public static final String REMARK_DESC_TIMMY = " " + PREFIX_REMARK + VALID_REMARK_TIMMY;
+    public static final String DATE_DESC_JOHNNY = " " + PREFIX_DATE + VALID_DATE_JOHNNY;
+    public static final String DATE_DESC_TIMMY = " " + PREFIX_DATE + VALID_DATE_TIMMY;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_OWNER_DESC = " " + PREFIX_OWNER + "James&"; // '&' not allowed in names
+    public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK; //empty string not allowed for remark
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "twelvemarchtwozerooneeight"; //follows format
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

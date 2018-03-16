@@ -72,7 +72,7 @@ Examples:
 
 * `help`
 
-* `man add`
+* `man task`
 
 === Adding a task: `task`
 

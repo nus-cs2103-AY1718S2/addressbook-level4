@@ -87,8 +87,9 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: mixed case command word -> selected */
+        /* Case: mixed case command word -> success */
         assertCommandSuccess("SeLeCt 1", INDEX_FIRST_PERSON);
+
 
         /* Case: select from empty address book -> rejected */
         deleteAllPersons();

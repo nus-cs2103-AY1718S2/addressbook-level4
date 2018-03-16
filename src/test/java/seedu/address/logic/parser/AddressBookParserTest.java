@@ -193,7 +193,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS + " 3") instanceof UndoCommand);
     }
-      
+    
     @Test
     public void parseCommand_remark() throws Exception {
         final Remark remark = new Remark("This is a remark.");

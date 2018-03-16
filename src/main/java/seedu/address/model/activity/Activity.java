@@ -9,7 +9,7 @@ import java.util.Set;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
-//@@YuanQLLER
+//@@author YuanQQLer
 /**
  * Represents a Activity in the desk board.
  * Guarantees: details are present and not null, field values are validated, immutable.

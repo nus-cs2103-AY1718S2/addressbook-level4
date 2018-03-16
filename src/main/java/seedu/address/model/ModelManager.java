@@ -16,6 +16,7 @@ import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
+//@@author YuanQQLer
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.

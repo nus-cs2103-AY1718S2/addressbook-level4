@@ -18,6 +18,7 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author YuanQQLer
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)

@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -113,6 +114,30 @@ public class ParserUtil {
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String rating} into an {@code Rating}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code rating} is invalid.
+     */
+    public static Rating parseRating(String rating) throws IllegalValueException {
+        requireNonNull(rating);
+        Integer trimmedRating = Integer.parseInt(rating.trim());
+        if (!Rating.isValidInputRating(trimmedRating)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return new Rating(trimmedRating.toString());
+    }
+
+    /**
+     * Parses a {@code Optional<String> value} into an {@code Optional<Rating>} if {@code address} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Rating> parseRating(Optional<String> value) throws IllegalValueException {
+        requireNonNull(value);
+        return value.isPresent() ? Optional.of(parseRating(value.get())) : Optional.empty();
     }
 
     /**

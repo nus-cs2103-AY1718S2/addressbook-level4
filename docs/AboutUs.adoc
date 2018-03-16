@@ -3,53 +3,43 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+E.T. (Employees Tracker) was developed by the W15-B1 team. +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Li Yufei
+image::crizyli.png[width="150", align="left"]
+{empty} [https://github.com/crizyli[github]]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: - +
+Responsibilities: Add lock & unlock command, import Google API
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Yang Yuqing
+image::yoochard.png[width="150", align="left"]
+{empty} [https://github.com/yoochard[github]]
+
+Role: - +
+Responsibilities: Add sort command and adjust UI
+
+'''
+
+=== Gilbert Emerson
+image::emer7.png[width="150", align="left"]
+{empty}[http://github.com/emer7[github]]
+
+Role: - +
+Responsibilities: Implement enhanced feature search and new feature review
+
+'''
+
+=== Ho Bing Xuan
+image::izhobx.jpg[width="150", align="left"]
+{empty}[https://github.com/IzHoBX[github]]
 
 Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
+Responsibilities: Rating feature, notifications on timetable entry deadlines, email command, enhanced person identifying
 
 '''

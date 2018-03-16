@@ -18,7 +18,7 @@ public class MatriculationNumber {
     public final String value;
 
     /**
-     * Constructs a {@code Phone}.
+     * Constructs a {@code MatriculationNumber}.
      *
      * @param matricNumber A valid matriculation number.
      */
@@ -29,7 +29,7 @@ public class MatriculationNumber {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person matriculation number.
      */
     public static boolean isValidMatricNumber(String test) {
         if (test.length() != 9) {

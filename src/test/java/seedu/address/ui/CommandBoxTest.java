@@ -84,7 +84,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_showSuggestions() {
+    public void commandBox_handleShowingSuggestions() {
         guiRobot.push(KeyCode.CONTROL, KeyCode.SPACE);
         guiRobot.push(KeyCode.DOWN);
         guiRobot.push(KeyCode.ENTER);

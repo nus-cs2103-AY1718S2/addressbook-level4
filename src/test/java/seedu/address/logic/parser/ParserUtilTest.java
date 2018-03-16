@@ -120,8 +120,8 @@ public class ParserUtilTest {
     public void parsePhone_validValueWithWhitespace_returnsTrimmedNric() throws Exception {
         String nricWithWhitespace = WHITESPACE + VALID_NRIC + WHITESPACE;
         Nric expectedNric = new Nric(VALID_NRIC);
-        assertEquals(expectedNric, ParserUtil.parseNric( nricWithWhitespace));
-        assertEquals(Optional.of(expectedNric), ParserUtil.parseNric(Optional.of( nricWithWhitespace)));
+        assertEquals(expectedNric, ParserUtil.parseNric(nricWithWhitespace));
+        assertEquals(Optional.of(expectedNric), ParserUtil.parseNric(Optional.of(nricWithWhitespace)));
     }
 
     @Test

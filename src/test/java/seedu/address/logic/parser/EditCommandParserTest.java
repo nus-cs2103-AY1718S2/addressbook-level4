@@ -70,7 +70,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "1" + INVALID_NRIC_DESC, Nric.MESSAGE_NRIC_CONSTRAINTS); // invalid phone
+        assertParseFailure(parser, "1" + INVALID_NRIC_DESC, Nric.MESSAGE_NRIC_CONSTRAINTS); // invalid nric
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone

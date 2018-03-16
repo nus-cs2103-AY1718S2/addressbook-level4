@@ -105,23 +105,23 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+    public void parseNric_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseNric(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parsePhone_validValueWithoutWhitespace_returnsPhone() throws Exception {
-        Nric expectedPhone = new Nric(VALID_NRIC);
-        assertEquals(expectedPhone, ParserUtil.parseNric(VALID_NRIC));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parseNric(Optional.of(VALID_NRIC)));
+    public void parseNric_validValueWithoutWhitespace_returnsPhone() throws Exception {
+        Nric expectedNric = new Nric(VALID_NRIC);
+        assertEquals(expectedNric, ParserUtil.parseNric(VALID_NRIC));
+        assertEquals(Optional.of(expectedNric), ParserUtil.parseNric(Optional.of(VALID_NRIC)));
     }
 
     @Test
-    public void parsePhone_validValueWithWhitespace_returnsTrimmedPhone() throws Exception {
-        String phoneWithWhitespace = WHITESPACE + VALID_NRIC + WHITESPACE;
-        Nric expectedPhone = new Nric(VALID_NRIC);
-        assertEquals(expectedPhone, ParserUtil.parseNric(phoneWithWhitespace));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parseNric(Optional.of(phoneWithWhitespace)));
+    public void parsePhone_validValueWithWhitespace_returnsTrimmedNric() throws Exception {
+        String nricWithWhitespace = WHITESPACE + VALID_NRIC + WHITESPACE;
+        Nric expectedNric = new Nric(VALID_NRIC);
+        assertEquals(expectedNric, ParserUtil.parseNric( nricWithWhitespace));
+        assertEquals(Optional.of(expectedNric), ParserUtil.parseNric(Optional.of( nricWithWhitespace)));
     }
 
     @Test

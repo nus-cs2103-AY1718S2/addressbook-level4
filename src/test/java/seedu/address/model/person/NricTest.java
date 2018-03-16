@@ -34,6 +34,6 @@ public class NricTest {
         assertFalse(Nric.isValidNric("9312 1534")); // spaces within digits
 
         // valid phone numbers
-        assertTrue(Nric.isValidNric("S93121534Z"));
+        assertTrue(Nric.isValidNric("S9312154Z"));
     }
 }

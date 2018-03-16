@@ -99,10 +99,10 @@ public class EditCommand extends UndoableCommand {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Nric updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getNric());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedTags);
+        return new Person(updatedName, updatedNric, updatedTags);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class EditCommand extends UndoableCommand {
      */
     public static class EditPersonDescriptor {
         private Name name;
-        private Nric phone;
+        private Nric nric;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -141,7 +141,7 @@ public class EditCommand extends UndoableCommand {
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
-            setNric(toCopy.phone);
+            setNric(toCopy.nric);
             setTags(toCopy.tags);
         }
 
@@ -149,7 +149,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.nric, this.tags);
         }
 
         public void setName(Name name) {
@@ -160,12 +160,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setNric(Nric phone) {
-            this.phone = phone;
+        public void setNric(Nric nric) {
+            this.nric = nric;
         }
 
-        public Optional<Nric> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<Nric> getNric() {
+            return Optional.ofNullable(nric);
         }
 
 
@@ -205,7 +205,7 @@ public class EditCommand extends UndoableCommand {
             EditPersonDescriptor e = (EditPersonDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
+                    && getNric().equals(e.getNric())
                     && getTags().equals(e.getTags());
         }
     }

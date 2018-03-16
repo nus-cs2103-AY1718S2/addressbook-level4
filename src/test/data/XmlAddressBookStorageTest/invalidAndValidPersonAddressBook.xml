@@ -3,15 +3,11 @@
     <!-- Valid Person -->
     <persons>
         <name>Hans Muster</name>
-        <nric isPrivate="false">9482424</nric>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <nric isPrivate="false">S9482424Z</nric>
     </persons>
     <!-- Person with invalid nric field -->
     <persons>
         <name>Hans Muster</name>
         <nric isPrivate="false">948asdf2424</nric>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
     </persons>
 </addressbook>

@@ -47,7 +47,7 @@ Responsibilities: Dev Ops + Threading
 
 === Peng Xuanchang
 image::Robert_Peng.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/Robert-Peng[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI

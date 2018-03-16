@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -30,6 +31,7 @@ public class FilterUtil {
             throws IllegalValueException {
         requireNonNull(predicateString);
         String[] predicateStrings = predicateString.split(",");
+        Arrays.stream(predicateStrings).map(String::trim).toArray(unused -> predicateStrings);
         if(predicateStrings.length==0) {
             throw new ParseException(FilterCommand.MESSAGE_USAGE);
         }
@@ -53,7 +55,7 @@ public class FilterUtil {
         assert(predicateList.size() >= 1);
         Predicate<Person> allPredicates = predicateList.get(0);
         for (int i = 1; i < predicateList.size(); i++) {
-            allPredicates.and(predicateList.get(i));
+            allPredicates.or(predicateList.get(i));
         }
         return allPredicates;
     }

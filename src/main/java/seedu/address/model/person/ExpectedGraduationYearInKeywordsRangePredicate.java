@@ -23,7 +23,7 @@ public class ExpectedGraduationYearInKeywordsRangePredicate implements Predicate
             this.high = filterRange.getHighValue().value;
         } else {
             this.low = filterRange.getExactValue().value;
-            this.high = filterRange.getHighValue().value;
+            this.high = filterRange.getExactValue().value;
         }
     }
 

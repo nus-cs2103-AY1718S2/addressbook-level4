@@ -31,11 +31,11 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
         }
 
-        if (!Theme.isValidThemeName(splitArgs[0])) {
+        if (!Theme.isValidThemeName(splitArgs[0].toLowerCase())) {
             throw new ParseException(Theme.MESSAGE_THEME_CONSTRAINTS);
         }
 
-        return new ChangeThemeCommand(new Theme(splitArgs[0]));
+        return new ChangeThemeCommand(new Theme(splitArgs[0].toLowerCase()));
     }
 
 }

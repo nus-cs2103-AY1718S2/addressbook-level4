@@ -1,7 +1,6 @@
 package seedu.address.model.theme;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_THEME_PINK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_THEME_PATH_DARK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_THEME_PATH_LIGHT;

@@ -44,7 +44,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).ifPresent(editPersonDescriptor::setPhone);
+            ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).ifPresent(editPersonDescriptor::setNric);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

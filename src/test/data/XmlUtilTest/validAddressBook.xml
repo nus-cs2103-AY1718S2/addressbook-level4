@@ -2,56 +2,38 @@
 <addressbook>
     <persons>
         <name>Hans Muster</name>
-        <nric isPrivate="false">9482424</nric>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <nric isPrivate="false">S9482424Z</nric>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
-        <nric isPrivate="false">87249245</nric>
-        <email isPrivate="false">ruth@example.com</email>
-        <address isPrivate="false">81th street</address>
+        <nric isPrivate="false">S8724924Z</nric>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
-        <nric isPrivate="false">95352563</nric>
-        <email isPrivate="false">heinz@example.com</email>
-        <address isPrivate="false">wall street</address>
+        <nric isPrivate="false">S9535256Z</nric>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
-        <nric isPrivate="false">87652533</nric>
-        <email isPrivate="false">cornelia@example.com</email>
-        <address isPrivate="false">10th street</address>
+        <nric isPrivate="false">S8765253Z</nric>
     </persons>
     <persons>
         <name>Werner Meyer</name>
-        <nric isPrivate="false">9482224</nric>
-        <email isPrivate="false">werner@example.com</email>
-        <address isPrivate="false">michegan ave</address>
+        <nric isPrivate="false">S9482224Z</nric>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
-        <nric isPrivate="false">9482427</nric>
-        <email isPrivate="false">lydia@example.com</email>
-        <address isPrivate="false">little tokyo</address>
+        <nric isPrivate="false">S9482427Z</nric>
     </persons>
     <persons>
         <name>Anna Best</name>
-        <nric isPrivate="false">9482442</nric>
-        <email isPrivate="false">anna@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <nric isPrivate="false">S9482442Z</nric>
     </persons>
     <persons>
         <name>Stefan Meier</name>
-        <nric isPrivate="false">8482424</nric>
-        <email isPrivate="false">stefan@example.com</email>
-        <address isPrivate="false">little india</address>
+        <nric isPrivate="false">S8482424Z</nric>
     </persons>
     <persons>
         <name>Martin Mueller</name>
-        <nric isPrivate="false">8482131</nric>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">chicago ave</address>
+        <nric isPrivate="false">S8482131Z</nric>
     </persons>
 </addressbook>

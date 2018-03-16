@@ -25,7 +25,6 @@ public class XmlAdaptedPerson {
     private String name;
     @XmlElement(required = true)
     private String nric;
-
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 

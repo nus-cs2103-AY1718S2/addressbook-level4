@@ -31,7 +31,7 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder(Person person) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
-        descriptor.setPhone(person.getNric());
+        descriptor.setNric(person.getNric());
         descriptor.setTags(person.getTags());
     }
 
@@ -46,8 +46,8 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Nric} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Nric(phone));
+    public EditPersonDescriptorBuilder withPhone(String nric) {
+        descriptor.setNric(new Nric(nric));
         return this;
     }
 

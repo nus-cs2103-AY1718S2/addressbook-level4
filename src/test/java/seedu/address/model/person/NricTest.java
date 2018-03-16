@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
-public class PhoneTest {
+public class NricTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -16,8 +16,8 @@ public class PhoneTest {
 
     @Test
     public void constructor_invalidPhone_throwsIllegalArgumentException() {
-        String invalidPhone = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Nric(invalidPhone));
+        String invalidNric = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Nric(invalidNric));
     }
 
     @Test
@@ -34,8 +34,6 @@ public class PhoneTest {
         assertFalse(Nric.isValidNric("9312 1534")); // spaces within digits
 
         // valid phone numbers
-        assertTrue(Nric.isValidNric("911")); // exactly 3 numbers
-        assertTrue(Nric.isValidNric("93121534"));
-        assertTrue(Nric.isValidNric("124293842033123")); // long phone numbers
+        assertTrue(Nric.isValidNric("S93121534Z"));
     }
 }

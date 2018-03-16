@@ -141,7 +141,7 @@ public class EditCommand extends UndoableCommand {
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
-            setPhone(toCopy.phone);
+            setNric(toCopy.phone);
             setTags(toCopy.tags);
         }
 
@@ -160,7 +160,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Nric phone) {
+        public void setNric(Nric phone) {
             this.phone = phone;
         }
 

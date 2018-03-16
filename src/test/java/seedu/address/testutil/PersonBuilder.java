@@ -15,16 +15,16 @@ import seedu.address.model.util.SampleDataUtil;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_NRIC = "S8535525Z";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
-    private Nric phone;
+    private Nric nric;
     private Set<Tag> tags;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Nric(DEFAULT_PHONE);
+        nric = new Nric(DEFAULT_NRIC);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -33,7 +33,7 @@ public class PersonBuilder {
      */
     public PersonBuilder(Person personToCopy) {
         name = personToCopy.getName();
-        phone = personToCopy.getNric();
+        nric = personToCopy.getNric();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -56,14 +56,14 @@ public class PersonBuilder {
     /**
      * Sets the {@code Nric} of the {@code Person} that we are building.
      */
-    public PersonBuilder withPhone(String phone) {
-        this.phone = new Nric(phone);
+    public PersonBuilder withNric(String nric) {
+        this.nric = new Nric(nric);
         return this;
     }
 
 
     public Person build() {
-        return new Person(name, phone, tags);
+        return new Person(name, nric, tags);
     }
 
 }

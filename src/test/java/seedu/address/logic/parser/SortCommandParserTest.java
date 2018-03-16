@@ -1,10 +1,11 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.SortCommand;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.SortCommand;
 
 /**
  * Test scope: To test SortCommandParser.

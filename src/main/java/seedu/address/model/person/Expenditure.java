@@ -9,11 +9,11 @@ import java.util.Locale;
 
 /**
  * Represents a Person's value in the address book
- * Guarantees: immutable; is valid as declare in {@link #isValidExpenditure(Double)}}
+ * Guarantees: immutable; is valid as declare in {@link #isValid(Double)}}
  */
 public class Expenditure {
-    public static final String MESSAGE_INCOME_CONSTRAINTS =
-            "Person value must be positive numerical number, Type: Double";
+    public static final String MESSAGE_EXPENDITURE_CONSTRAINTS =
+            "Person's expenditure must be positive numerical number, Type: Double";
 
     public final Double value;
 
@@ -21,17 +21,22 @@ public class Expenditure {
      * @param value a valid value
      */
     public Expenditure(Double value) {
-        requireNonNull(value);
-        checkArgument(this.isValidExpenditure(value), this.MESSAGE_INCOME_CONSTRAINTS);
-        this.value = value;
+        if (value == null) {
+            this.value = 0.0;
+        } else {
+            checkArgument(this.isValid(value), this.MESSAGE_EXPENDITURE_CONSTRAINTS);
+            this.value = value;
+        }
+
     }
 
     /**
      * checks if the expenditure is valid
+     *
      * @param expenditure
      * @return
      */
-    public static boolean isValidExpenditure(Double expenditure) {
+    public static boolean isValid(Double expenditure) {
         requireNonNull(expenditure);
         return (expenditure >= 0);
     }

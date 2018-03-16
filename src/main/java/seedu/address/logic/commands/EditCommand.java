@@ -1,8 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTEDSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -22,6 +24,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -46,6 +49,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_INCOME + "INCOME] "
+            + "[" + PREFIX_ACTUALSPENDING + "ACTUALSPENDING] "
+            + "[" + PREFIX_EXPECTEDSPENDING + "EXPECTEDSPENDING] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -111,8 +116,13 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Income updatedIncome = editPersonDescriptor.getIncome().orElse(personToEdit.getIncome());
+        Expenditure updatedActualSpending = editPersonDescriptor.getActualSpending()
+                .orElse((personToEdit.getActualSpending()));
+        Expenditure updatedExpectedSpending = editPersonDescriptor.getExpectedSpending()
+                .orElse((personToEdit.getExpectedSpending()));
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedIncome);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                updatedIncome, updatedActualSpending, updatedExpectedSpending);
     }
 
     @Override
@@ -145,6 +155,8 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
         private Income income;
+        private Expenditure actualSpending;
+        private Expenditure expectedSpending;
 
         public EditPersonDescriptor() {
         }
@@ -160,14 +172,16 @@ public class EditCommand extends UndoableCommand {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setIncome(toCopy.income);
-
+            setActualSpending(toCopy.actualSpending);
+            setExpectedSpending(toCopy.expectedSpending);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags, this.income);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags,
+                    this.income, this.actualSpending, this.expectedSpending);
         }
 
         public void setName(Name name) {
@@ -210,6 +224,22 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(income);
         }
 
+        public void setActualSpending(Expenditure actualSpending) {
+            this.actualSpending = actualSpending;
+        }
+
+        public Optional<Expenditure> getActualSpending() {
+            return Optional.ofNullable(expectedSpending);
+        }
+
+        public void setExpectedSpending(Expenditure expectedSpending) {
+            this.expectedSpending = expectedSpending;
+        }
+
+        public Optional<Expenditure> getExpectedSpending() {
+            return Optional.ofNullable(expectedSpending);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -248,5 +278,7 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags());
         }
+
+
     }
 }

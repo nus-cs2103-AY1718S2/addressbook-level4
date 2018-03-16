@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -34,6 +35,10 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private Double income;
+    @XmlElement(required = true)
+    private Double actualSpending;
+    @XmlElement(required = true)
+    private Double expectedSpending;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -49,12 +54,15 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address,
-                            List<XmlAdaptedTag> tagged, Double income) {
+                            List<XmlAdaptedTag> tagged, Double income, Double actualSpending,
+                            Double expectedSpending) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.income = income;
+        this.actualSpending = actualSpending;
+        this.expectedSpending = expectedSpending;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -71,6 +79,8 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         income = source.getIncome().value;
+        actualSpending = source.getActualSpending().value;
+        expectedSpending = source.getActualSpending().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -115,7 +125,7 @@ public class XmlAdaptedPerson {
         if (this.address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
-        if (!Address.isValidAddress(this.address)) {
+        if (!Address.isValid(this.address)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
         final Address address = new Address(this.address);
@@ -123,13 +133,29 @@ public class XmlAdaptedPerson {
         if (this.income == null) {
             throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
         }
-        if (!Income.isValidIncome(this.income)) {
+        if (!Income.isValid(this.income)) {
             throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
         }
         final Income income = new Income(this.income);
 
+        if (this.actualSpending == null) {
+            throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
+        }
+        if (!Expenditure.isValid(this.actualSpending)) {
+            throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
+        }
+        final Expenditure actualSpending = new Expenditure(this.actualSpending);
+
+        if (this.expectedSpending == null) {
+            throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
+        }
+        if (!Expenditure.isValid(this.expectedSpending)) {
+            throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
+        }
+        final Expenditure expectedSpending = new Expenditure(this.expectedSpending);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags, income);
+        return new Person(name, phone, email, address, tags, income, actualSpending, expectedSpending);
     }
 
     @Override

@@ -32,14 +32,6 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         try {
             Predicate<Person> expectedGraduationYearPredicate = FilterUtil.parseExpectedGraduationYear(argMultimap
                     .getValue(PREFIX_EXPECTED_GRADUATION_YEAR));
-            /*
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            //Implement later
-
-            List<Predicate<Person>> predicateList = new ArrayList<>();
-            predicateList.add(new ExpectedGraduationYearBeforeKeywordPredicate(expectedGraduationYear.toString()));
-            Predicate<Person> allPredicates = combineAllPredicates(predicateList);
-            */
             return new FilterCommand(expectedGraduationYearPredicate);
         } catch (ParseException pe) {
             throw pe;

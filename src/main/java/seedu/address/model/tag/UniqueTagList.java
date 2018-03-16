@@ -98,7 +98,7 @@ public class UniqueTagList implements Iterable<Tag> {
     public void importTag(Tag toAdd) {
         requireNonNull(toAdd);
         if (!contains(toAdd)) {
-            internalList.add(toAdd);;
+            internalList.add(toAdd);
         }
 
         assert CollectionUtil.elementsAreUnique(internalList);

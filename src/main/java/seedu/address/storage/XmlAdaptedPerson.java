@@ -162,7 +162,9 @@ public class XmlAdaptedPerson {
         }
         final ExpectedGraduationYear expectedGraduationYear = new ExpectedGraduationYear(this.expectedGraduationYear);
 
-        if (!Rating.isValidOrDefaultScore(Double.valueOf(technicalSkillsScore))
+        if (technicalSkillsScore == null || communicationSkillsScore == null
+                || technicalSkillsScore == null || experienceScore == null
+                || !Rating.isValidOrDefaultScore(Double.valueOf(technicalSkillsScore))
                 || !Rating.isValidOrDefaultScore(Double.valueOf(communicationSkillsScore))
                 || !Rating.isValidOrDefaultScore(Double.valueOf(problemSolvingSkillsScore))
                 || !Rating.isValidOrDefaultScore(Double.valueOf(experienceScore))) {

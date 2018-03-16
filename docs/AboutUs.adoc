@@ -12,6 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::kush1509.png[width="150", align="left"]
 {empty}[http://github.com/kush1509[github]] [<<johndoe#, portfolio>>]
 
+
 Role: Team Lead +
 Responsibilities: Logic
 
@@ -21,6 +22,7 @@ Responsibilities: Logic
 image::KevinCJH.jpg[width="150", align="left"]
 {empty}[http://github.com/KevinCJH[github]] [<<johndoe#, portfolio>>]
 
+
 Role: Developer +
 Responsibilities: UI
 
@@ -29,6 +31,7 @@ Responsibilities: UI
 === DO ANDRE KHOI NGUYEN
 image::trafalgarandre.jpg[width="150", align="left"]
 {empty}[http://github.com/trafalgarandre[github]] [<<johndoe#, portfolio>>]
+
 
 Role: Developer +
 Responsibilities: Model

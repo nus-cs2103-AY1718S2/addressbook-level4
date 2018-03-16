@@ -2,7 +2,7 @@
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 image:https://travis-ci.org/CS2103JAN2018-W09-B2/main.svg?branch=master["Build Status", link="https://travis-ci.org/CS2103JAN2018-W09-B2/main"]
-image:https://coveralls.io/repos/github/CS2103JAN2018-W09-B2/main/badge.svg?branch=master["Coverage Status", link="https://coveralls.io/repos/github/CS2103JAN2018-W09-B2/main"]
+image:https://coveralls.io/repos/github/CS2103JAN2018-W09-B2/main/badge.svg?branch=master["Coverage Status", link="https://coveralls.io/github/CS2103JAN2018-W09-B2/main"]
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
@@ -12,20 +12,22 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using 
-CI.
+
+*Welcome to contactHeRo!*
+
+contactHeRo is a desktop contact management application designed for Human Resources Managers at companies, especially those responsible for recruitment.
+
+We understand that recruiters have a lot of contacts to
+manage which include contact details and profiles of potential employees. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
+
+contactHeRo has a GUI(Graphical User Interface) but most of the user interactions happen using a CLI (Command Line Interface).
+
+So what are you waiting for? Head over to our <<UserGuide#, User Guide>> to get started!
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
@@ -34,5 +36,7 @@ CI.
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 * Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]
+* The original project: AddressBook-Level4, is created by https://github.com/se-edu/[SE-EDU] initiative
+
 
 == Licence : link:LICENSE[MIT]

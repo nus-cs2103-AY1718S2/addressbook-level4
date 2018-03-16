@@ -14,6 +14,7 @@ import seedu.address.model.tag.UniqueTagList;
 /**
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
+ * Two persons can have the same profilePicture
  */
 public class Person implements ReadOnlyPerson {
 
@@ -21,6 +22,7 @@ public class Person implements ReadOnlyPerson {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final ProfilePicture profilePicture;
 
     private ObjectProperty<Name> nameProperty;
     private ObjectProperty<Phone> phoneProperty;
@@ -32,8 +34,8 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, ProfilePicture profilePicture, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, profilePicture, tags);
         this.name = name;
         this.nameProperty = new SimpleObjectProperty<>(name);
         this.phone = phone;
@@ -42,6 +44,7 @@ public class Person implements ReadOnlyPerson {
         this.emailProperty = new SimpleObjectProperty<>(email);
         this.address = address;
         this.addressProperty = new SimpleObjectProperty<>(address);
+        this.profilePicture = profilePicture;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -60,6 +63,10 @@ public class Person implements ReadOnlyPerson {
 
     public Address getAddress() {
         return address;
+    }
+
+    public ProfilePicture getProfilePicture() {
+        return profilePicture;
     }
 
     /**
@@ -84,13 +91,14 @@ public class Person implements ReadOnlyPerson {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getProfilePicture().equals(this.getProfilePicture());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, profilePicture, tags);
     }
 
     @Override
@@ -103,6 +111,8 @@ public class Person implements ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Profile Picture: ")
+                .append(getProfilePicture())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

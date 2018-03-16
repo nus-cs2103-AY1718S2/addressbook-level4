@@ -71,6 +71,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 [TIP]
 A person can have any number of tags (including 0)
 
+[NOTE]
+The tags "lecturer", "TA" "student" and "T1" will appear red, yellow, blue and green respectively.
+
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`

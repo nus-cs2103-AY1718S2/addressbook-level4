@@ -15,27 +15,28 @@ import org.junit.Test;
 import seedu.organizer.logic.CommandHistory;
 import seedu.organizer.logic.UndoRedoStack;
 import seedu.organizer.logic.commands.exceptions.CommandException;
-import seedu.organizer.model.task.NameContainsKeywordsPredicate;
+import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
 
+//@@author guekling
 /**
- * Contains integration tests (interaction with the Model) for {@code FindNameCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindMultipleFieldsCommand}.
  */
-public class FindNameCommandTestTest extends FindCommandTest<FindNameCommand> {
+public class FindMultipleFieldsCommandTest extends FindCommandTest<FindMultipleFieldsCommand> {
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+        MultipleFieldsContainsKeywordsPredicate firstPredicate =
+                new MultipleFieldsContainsKeywordsPredicate(Collections.singletonList("first"));
+        MultipleFieldsContainsKeywordsPredicate secondPredicate =
+                new MultipleFieldsContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FindNameCommand findFirstCommand = new FindNameCommand(firstPredicate);
-        FindNameCommand findSecondCommand = new FindNameCommand(secondPredicate);
+        FindMultipleFieldsCommand findFirstCommand = new FindMultipleFieldsCommand(firstPredicate);
+        FindMultipleFieldsCommand findSecondCommand = new FindMultipleFieldsCommand(secondPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindNameCommand findFirstCommandCopy = new FindNameCommand(firstPredicate);
+        FindMultipleFieldsCommand findFirstCommandCopy = new FindMultipleFieldsCommand(firstPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -51,23 +52,24 @@ public class FindNameCommandTestTest extends FindCommandTest<FindNameCommand> {
     @Test
     public void execute_zeroKeywords_noTaskFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 0);
-        FindNameCommand command = prepareCommand(" ");
+        FindMultipleFieldsCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multipleTasksFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
-        FindNameCommand command = prepareCommand("Prepare breakfast Project Revision");
+        FindMultipleFieldsCommand command = prepareCommand("Toast Project Revision");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(REVISION, PROJECT, PREPAREBREAKFAST));
     }
 
     /**
-     * Parses {@code userInput} into a {@code FindNameCommand}.
+     * Parses {@code userInput} into a {@code FindMultipleFieldsCommand}.
      */
-    private FindNameCommand prepareCommand(String userInput) {
-        FindNameCommand command =
-                new FindNameCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FindMultipleFieldsCommand prepareCommand(String userInput) {
+        FindMultipleFieldsCommand command =
+            new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(Arrays.asList(userInput.split
+            ("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

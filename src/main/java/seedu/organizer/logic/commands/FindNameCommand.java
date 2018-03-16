@@ -4,12 +4,12 @@ import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in organizer book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Keyword matching is not case sensitive.
  */
 public class FindNameCommand extends Command {
 
-    public static final String COMMAND_WORD = "findn/";
-    public static final String COMMAND_ALIAS = "fn/";
+    public static final String COMMAND_WORD = "findn";
+    public static final String COMMAND_ALIAS = "fn";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks whose names contain any of "
             + "the specified keywords (not case-sensitive) and displays them as a list with index numbers.\n"

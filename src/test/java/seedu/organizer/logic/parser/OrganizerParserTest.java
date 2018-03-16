@@ -21,6 +21,7 @@ import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.logic.commands.ExitCommand;
 import seedu.organizer.logic.commands.FindDescriptionCommand;
+import seedu.organizer.logic.commands.FindMultipleFieldsCommand;
 import seedu.organizer.logic.commands.FindNameCommand;
 import seedu.organizer.logic.commands.HelpCommand;
 import seedu.organizer.logic.commands.HistoryCommand;
@@ -32,6 +33,7 @@ import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.logic.parser.exceptions.ParseException;
 import seedu.organizer.model.task.DescriptionContainsKeywordsPredicate;
+import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
@@ -89,6 +91,20 @@ public class OrganizerParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
+
+    //@@author guekling
+    @Test
+    public void parseCommand_find() throws Exception {
+        List<String> keywords = Arrays.asList("Study", "es2660", "update");
+        FindMultipleFieldsCommand command = (FindMultipleFieldsCommand) parser.parseCommand(
+                FindMultipleFieldsCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        FindMultipleFieldsCommand commandAlias = (FindMultipleFieldsCommand) parser.parseCommand(
+                FindMultipleFieldsCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(keywords)),
+            commandAlias);
+    }
+    //@@author
 
     @Test
     public void parseCommand_findName() throws Exception {

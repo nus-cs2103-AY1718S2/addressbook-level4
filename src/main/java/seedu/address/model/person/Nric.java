@@ -11,8 +11,8 @@ public class Nric {
 
 
     public static final String MESSAGE_NRIC_CONSTRAINTS =
-            "Nric should start with a S, should be at 7 digits long" +
-                    " and should end with a capital letter.";
+            "Nric should start with a S, should be at 7 digits long"
+                    + " and should end with a capital letter.";
     public static final String NRIC_VALIDATION_REGEX = "[S]\\d{7,}[A-Z]";
     public final String value;
 

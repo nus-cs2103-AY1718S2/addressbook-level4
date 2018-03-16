@@ -17,18 +17,16 @@ Role: Developer +
 Responsibilities: Logic
 
 '''
-
 === Daniel Tan
-image::daniel.jpg[width="150", align="left"]
+image::joonkai1995.png[width="150", align="left"]
 {empty}[http://github.com/JoonKai1995[github]]
-
 Role: Developer +
 Responsibilities: UI
 
 '''
 
 === Pearlissa Taim
-image::pearlissa.jpg[width="150", align="left"]
+image::pearlissa.png[width="150", align="left"]
 {empty}[http://github.com/Pearlissa[github]]
 
 Role: Developer +

@@ -2,12 +2,14 @@ package seedu.address.testutil;
 
 import static java.util.Objects.isNull;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -41,6 +43,7 @@ public class PersonBuilder {
     private ExpectedGraduationYear expectedGraduationYear;
     private Rating rating;
     private Resume resume;
+    private InterviewDate interviewDate;
 
     private Set<Tag> tags;
 
@@ -55,7 +58,7 @@ public class PersonBuilder {
                 Double.valueOf(DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_EXPERIENCE_SCORE));
         resume = new Resume(formPathFromFileName(DEFAULT_RESUME));
-
+        interviewDate = new InterviewDate();
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -70,7 +73,7 @@ public class PersonBuilder {
         expectedGraduationYear = personToCopy.getExpectedGraduationYear();
         rating = personToCopy.getRating();
         resume = personToCopy.getResume();
-
+        interviewDate = personToCopy.getInterviewDate();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -141,8 +144,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code InterviewDate} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withInterviewDate(LocalDateTime interviewDate) {
+        this.interviewDate = new InterviewDate(interviewDate);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, expectedGraduationYear, rating, resume, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
     }
 
     /**

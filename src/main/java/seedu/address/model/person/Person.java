@@ -22,16 +22,17 @@ public class Person {
     private final ExpectedGraduationYear expectedGraduationYear;
     private final Rating rating;
     private final Resume resume;
+    private final InterviewDate interviewDate;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address,
-                  ExpectedGraduationYear expectedGraduationYear, Rating rating,
-                  Resume resume, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, expectedGraduationYear, rating, resume, tags);
+    public Person(Name name, Phone phone, Email email, Address address, ExpectedGraduationYear expectedGraduationYear,
+                  Rating rating, Resume resume, InterviewDate interviewDate, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -39,6 +40,7 @@ public class Person {
         this.expectedGraduationYear = expectedGraduationYear;
         this.rating = rating;
         this.resume = resume;
+        this.interviewDate = interviewDate;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -71,6 +73,10 @@ public class Person {
         return resume;
     }
 
+    public InterviewDate getInterviewDate() {
+        return interviewDate;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -94,13 +100,14 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear());
+                && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear())
+                && otherPerson.getInterviewDate().equals(this.getInterviewDate());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, expectedGraduationYear, rating, resume, tags);
+        return Objects.hash(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
     }
 
     @Override

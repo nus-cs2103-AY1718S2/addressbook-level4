@@ -98,6 +98,23 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Schedule interview for a person : `interview`
+
+Schedule interview of an existing person in the address book. +
+Format: `interview INDEX DATETIME`
+
+****
+* Schedule interview for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* `DATETIME` is the English representation of the date and time
+****
+
+Examples:
+
+* `interview 1 next Friday at 3pm` +
+Schedule the interview of the 1st person to be next Friday at 3pm.
+* `interview 2 Mar 14 2pm` +
+Schedule the interview of the 2nd person to be 14 March at 2pm.
+
 === Locating persons by field: `find`
 
 Finds persons whose fields contain any of the given keywords. +

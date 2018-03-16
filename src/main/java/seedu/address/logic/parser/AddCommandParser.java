@@ -19,6 +19,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -48,24 +49,32 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         try {
-            //compulsory fields
+            // Compulsory fields
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             ExpectedGraduationYear expectedGraduationYear = ParserUtil.parseExpectedGraduationYear(argMultimap
                     .getValue(PREFIX_EXPECTED_GRADUATION_YEAR)).get();
-            // add command does not allow adding rating straight away
+
+            // Add command does not allow adding rating straight away
             Rating rating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,
                     Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE);
-            //optional fields
+
+            // Optional fields
             Optional<Resume> resumeOptional = ParserUtil.parseResume(argMultimap.getValue(PREFIX_RESUME));
             Resume resume = resumeOptional.isPresent() ? resumeOptional.get() : new Resume(null);
+
+            // Fixed fields
+            InterviewDate interviewDate = new InterviewDate();
+
+            // Other fields
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Person person = new Person(name, phone, email, address, expectedGraduationYear, rating, resume, tagList);
-
+            Person person = new Person(name, phone, email, address, expectedGraduationYear,
+                    rating, resume, interviewDate, tagList);
             return new AddCommand(person);
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

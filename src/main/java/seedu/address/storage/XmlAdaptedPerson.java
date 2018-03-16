@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -31,6 +32,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String birthday;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -44,11 +47,13 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address,
+                            String birthday, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.birthday = birthday;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -64,6 +69,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        birthday = source.getBirthday().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -113,8 +119,17 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        if (this.birthday == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Birthday.class.getSimpleName()));
+        }
+        if (!Birthday.isValidBirthday(this.birthday)) {
+            throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        final Birthday birthday = new Birthday(this.birthday);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, birthday, tags);
     }
 
     @Override
@@ -132,6 +147,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(birthday, otherPerson.birthday)
                 && tagged.equals(otherPerson.tagged);
     }
 }

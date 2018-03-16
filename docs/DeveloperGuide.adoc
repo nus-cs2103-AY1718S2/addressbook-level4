@@ -809,9 +809,76 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |clear the address book |remove all entries
+
+|`* * *` |user |edit a person |modify information of the person
+
+|`* *` |user |view all the commands that I have entered |
+
+|`* *` |user |undo my most recent command |change it back
+
+|`* *` |user |reverse the most recent undo command |regret undoing
+
+|`*` |user who wants to know more information about the person |select a person |see the Google search page of this person
+
+|`* * *` |user |look at my timetable |
+
+|`* *` |user |add an event to my calendar |
+
+|`* *` |user |delete an event from my calendar |remove events that I no longer need
+
+|`* *` |user |edit an event in my calendar |modify details of an event
+
+|`* *` |forgetful user |get a message when an event is coming |be reminded of the event
+
+|`* * *` |user |add a module |record the courses I have taken
+
+|`* * *` |user |delete a module |remove modules that I haven't taken yet
+
+|`* *` |user |edit a module |modify the course code
+
+|`* *` |user |list all modules |see all courses I have taken
+
+|`*` |user who has taken many modules |sort all modules by course code |locate a module easily
+
+|`* * *` |user who has taken many modules |find a module by name |find it easily
+
+|`* * *` |user who has taken many modules |find a module by course code |find it easily
+
+|`* * *` |user who has taken many modules |find a module by semester |find it easily
+
+|`* *` |user |select a module |see details of the module
+
+|`* *` |user |calculate my CAP |
+
+|`* *` |user |calculate my module credits |
+
+|`* *` |user |access my IVLE web page |
+
+|`* * *` |busy user |type the command in a shorter way |type it quickly to save time
+
+|`* *` |user who has many different tags for people in the address book |arrange different colors for different tags |easily differentiate tags
+
+|`* *` |user |delete a specific tag from everyone |remove tags that I no longer need
+
+|`* *` |user |add a remark for a specific person |record more detailed information of the person
+
+|`* *` |user |edit a remark for a specific person |
+
+|`* *` |user |delete a remark for a specific person |remove remarks that are no longer useful
+
+|`*` |user |import photos of people in the address book |
+
+|`* *` |new user |set my password |get more security
+
+|`* *` |user |reset my password |
+
+|`*` |user |change the theme of this address book |select the preferred looking
+
+|`*` |user |export a contact |share it with others
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases

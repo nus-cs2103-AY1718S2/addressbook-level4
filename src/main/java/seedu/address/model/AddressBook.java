@@ -98,6 +98,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(person);
     }
 
+    /**
+     * Imports a person to the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     */
     public void importPerson(Person p) {
         Person person = syncWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.

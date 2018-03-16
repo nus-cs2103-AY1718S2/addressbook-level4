@@ -41,7 +41,7 @@ image::wynonaK.png[width="150", align="left"]
 {empty}[https://github.com/wynonaK[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Model
+Responsibilities: Model Component
 
 '''
 

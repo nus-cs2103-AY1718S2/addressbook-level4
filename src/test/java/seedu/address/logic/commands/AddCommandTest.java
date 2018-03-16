@@ -110,7 +110,7 @@ public class AddCommandTest {
         public void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
             fail("This method should not be called.");
         }
-  
+
         @Override
         public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
             fail("This method should not be called.");

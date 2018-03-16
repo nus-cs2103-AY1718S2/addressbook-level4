@@ -18,9 +18,9 @@ Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Chang Ho Huan
+image::chh.jpg[width="150", align="left"]
+{empty}[http://github.com/Soilchang[github]] [<<Chang Ho Huan#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: UI

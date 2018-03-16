@@ -15,18 +15,18 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Activity {
 
+    private static final String  ACTIVITY_TYPE = "BASE TYPE";
+
     private final Name name;
     private final DateTime dateTime;
     private final Remark remark;
 
     private final UniqueTagList tags;
 
-    private static final String  ACTIVITY_TYPE = "BASE TYPE";
-
     /**
      * Every field must be present and not null.
      */
-    public Activity(Name name, DateTime dateTime,Remark remark, Set<Tag> tags) {
+    public Activity(Name name, DateTime dateTime, Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, dateTime, remark, tags);
         this.name = name;
         this.dateTime = dateTime;

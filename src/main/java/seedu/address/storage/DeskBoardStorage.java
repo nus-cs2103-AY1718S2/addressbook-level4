@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.DeskBoard;
+import seedu.address.model.ReadOnlyDeskBoard;
 
 /**
  * Represents a storage for {@link DeskBoard}.

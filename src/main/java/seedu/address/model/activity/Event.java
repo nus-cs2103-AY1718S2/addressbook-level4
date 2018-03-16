@@ -1,11 +1,13 @@
 package seedu.address.model.activity;
 
-import seedu.address.model.tag.Tag;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Date;
 import java.util.Set;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import seedu.address.model.tag.Tag;
+
+
 // @@YuanQLLer
 /**
  * Represents a Task in the desk board.
@@ -20,16 +22,18 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
  * REMARK: Submit through a pull request in git hub.
  * ************************************************ *
  */
-public class Event extends Activity{
+public class Event extends Activity {
+
+    private static final String  ACTIVITY_TYPE = "EVENT";
 
     private final DateTime endDateTime;
     private final Location location;
-    private static final String  ACTIVITY_TYPE = "EVENT";
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Name name, DateTime startDateTime,DateTime endDateTime, Location location, Remark remark, Set<Tag> tags) {
+    public Event(
+            Name name, DateTime startDateTime, DateTime endDateTime, Location location, Remark remark, Set<Tag> tags) {
         super(name, startDateTime, remark, tags);
         requireAllNonNull(endDateTime);
         this.endDateTime = endDateTime;

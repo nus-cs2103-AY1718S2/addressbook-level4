@@ -54,7 +54,7 @@ public class TagCommandTest {
         assertFalse(tagFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(tagFirstCommand.equals(null));
+        assertFalse(tagFirstCommand == null);
 
         // different person -> returns false
         assertFalse(tagFirstCommand.equals(tagSecondCommand));

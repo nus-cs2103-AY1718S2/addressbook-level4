@@ -9,9 +9,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,9 +35,6 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit",
-            "exit", "find", "help", "history", "list", "redo", "select", "undo"};
-    private static final int MAX_SUGGESTIONS = 4;
     private static final String LF = "\n";
     private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit",
             "exit", "find", "help", "history", "list", "redo", "select", "undo"};
@@ -51,8 +45,6 @@ public class CommandBox extends UiPart<Region> {
     private ListElementPointer historySnapshot;
 
     @FXML
-    private TextField commandTextField;
-    private ContextMenu suggestionPopUp;
     private TextArea commandTextArea;
     private ContextMenu suggestionPopUp;
 
@@ -87,45 +79,47 @@ public class CommandBox extends UiPart<Region> {
                 break;
             default:
                 // let JavaFx handle the keypress
-        if (COMMAND_SUBMISSION.match(keyEvent)) {
-            keyEvent.consume();
-            submitCommand();
-        } else if (LAST_COMMAND.match(keyEvent)) {
-            keyEvent.consume();
-            navigateToPreviousInput();
-        } else if (NEXT_COMMAND.match(keyEvent)) {
-            keyEvent.consume();
-            navigateToNextInput();
-        } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
-            keyEvent.consume();
-            createNewLine();
-        }
+                if (COMMAND_SUBMISSION.match(keyEvent)) {
+                    keyEvent.consume();
+                    submitCommand();
+                } else if (LAST_COMMAND.match(keyEvent)) {
+                    keyEvent.consume();
+                    navigateToPreviousInput();
+                } else if (NEXT_COMMAND.match(keyEvent)) {
+                    keyEvent.consume();
+                    navigateToNextInput();
+                } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
+                    keyEvent.consume();
+                    createNewLine();
+                }
 
-        hideSuggestions();
-        switch (keyEvent.getCode()) {
-            case UP:
-                // As up and down buttons will alter the position of the caret,
-                // consuming it causes the caret's position to remain unchanged
-                keyEvent.consume();
-                navigateToPreviousInput();
-                break;
-            case DOWN:
-                keyEvent.consume();
-                navigateToNextInput();
-                break;
-            case CONTROL:
-                keyEvent.consume();
-                showSuggestions();
-                break;
-            default:
-                // let JavaFx handle the keypress
+                hideSuggestions();
+                switch (keyEvent.getCode()) {
+                    case UP:
+                        // As up and down buttons will alter the position of the caret,
+                        // consuming it causes the caret's position to remain unchanged
+                        keyEvent.consume();
+                        navigateToPreviousInput();
+                        break;
+                    case DOWN:
+                        keyEvent.consume();
+                        navigateToNextInput();
+                        break;
+                    case CONTROL:
+                        keyEvent.consume();
+                        showSuggestions();
+                        break;
+                    default:
+                        // let JavaFx handle the keypress
+                }
         }
     }
 
-    /**
-     * Updates the text field with the previous input in {@code historySnapshot},
-     * if there exists a previous input in {@code historySnapshot}
-     */
+        /**
+         * Updates the text field with the previous input in {@code historySnapshot},
+         * if there exists a previous input in {@code historySnapshot}
+         */
+
     private void navigateToPreviousInput() {
         assert historySnapshot != null;
         if (!historySnapshot.hasPrevious()) {

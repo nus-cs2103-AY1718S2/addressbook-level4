@@ -50,6 +50,6 @@ image::Robert_Peng.jpg[width="150", align="left"]
 {empty}[http://github.com/Robert-Peng[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: UI Component
 
 '''

@@ -30,7 +30,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         String command = "   " + FilterCommand.COMMAND_WORD + " "
                 + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019 + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, CARL, ELLE, FIONA); // their graduation year is before or equal 2019
+        ModelHelper.setFilteredList(expectedModel, CARL, FIONA); // their graduation year is before or equal 2019
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -42,7 +42,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: filter person where person list is not displaying the person we are finding -> 5 person found */
-        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2020";
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2017-2020";
         ModelHelper.setFilteredList(expectedModel, ALICE, CARL, DANIEL, ELLE, FIONA);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -56,7 +56,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         /* Case: filter multiple persons in address book, 2 keywords -> 3 persons found */
         command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2018" + " "
                 + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019;
-        ModelHelper.setFilteredList(expectedModel, CARL, ELLE, FIONA); //only last keyword effective
+        ModelHelper.setFilteredList(expectedModel, CARL, FIONA); //only last keyword effective
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -74,7 +74,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         /* Case: filter same persons in address book after deleting 1 of them -> 2 person found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertFalse(getModel().getAddressBook().getPersonList().contains(CARL));
-        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019;
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2017-2019";
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, ELLE, FIONA);
         assertCommandSuccess(command, expectedModel);
@@ -84,7 +84,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         showAllPersons();
         selectPerson(Index.fromOneBased(4));
         assertTrue(getPersonListPanel().getHandleToSelectedCard().getName().equals(ELLE.getName().fullName));
-        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019;
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2017-2019";
         ModelHelper.setFilteredList(expectedModel, ELLE, FIONA);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();

@@ -124,7 +124,7 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find email of task in organizer book -> 0 persons found */
-        command = FindNameCommand.COMMAND_WORD + " " + HOMEWORK.getDeadline().value;
+        command = FindNameCommand.COMMAND_WORD + " " + HOMEWORK.getDeadline().toString();
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

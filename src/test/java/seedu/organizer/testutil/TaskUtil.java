@@ -35,7 +35,7 @@ public class TaskUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + task.getName().fullName + " ");
         sb.append(PREFIX_PRIORITY + task.getPriority().value + " ");
-        sb.append(PREFIX_DEADLINE + task.getDeadline().value + " ");
+        sb.append(PREFIX_DEADLINE + task.getDeadline().toString() + " ");
         sb.append(PREFIX_DESCRIPTION + task.getDescription().value + " ");
         task.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")

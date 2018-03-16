@@ -3,6 +3,8 @@ package seedu.organizer.model.task;
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
+import java.time.LocalDate;
+
 //@@author guekling
 /**
  * Represents a Task's deadline in the organizer book.
@@ -19,7 +21,7 @@ public class Deadline {
      */
     public static final String DEADLINE_VALIDATION_REGEX = "\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])";
 
-    public final String value;
+    public final LocalDate date;
 
     /**
      * Constructs an {@code Deadline}.
@@ -29,7 +31,7 @@ public class Deadline {
     public Deadline(String deadline) {
         requireNonNull(deadline);
         checkArgument(isValidDeadline(deadline), MESSAGE_DEADLINE_CONSTRAINTS);
-        this.value = deadline;
+        this.date = LocalDate.parse(deadline);
     }
 
     /**
@@ -41,18 +43,18 @@ public class Deadline {
 
     @Override
     public String toString() {
-        return value;
+        return date.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Deadline // instanceof handles nulls
-                && this.value.equals(((Deadline) other).value)); // state check
+                && this.date.equals(((Deadline) other).date)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return date.hashCode();
     }
 }

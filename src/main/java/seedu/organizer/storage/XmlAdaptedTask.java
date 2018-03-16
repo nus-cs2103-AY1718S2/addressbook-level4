@@ -69,7 +69,7 @@ public class XmlAdaptedTask {
     public XmlAdaptedTask(Task source) {
         name = source.getName().fullName;
         priority = source.getPriority().value;
-        deadline = source.getDeadline().value;
+        deadline = source.getDeadline().toString();
         description = source.getDescription().value;
         status = source.getStatus().value;
         tagged = new ArrayList<>();

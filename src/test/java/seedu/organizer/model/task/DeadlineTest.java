@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
+
 import org.junit.Test;
 
 import seedu.organizer.testutil.Assert;
@@ -58,7 +60,7 @@ public class DeadlineTest {
     @Test
     public void hashCode_equals() {
         Deadline testDeadline = new Deadline("2018-09-09");
-        String testDeadlineValue = "2018-09-09";
+        LocalDate testDeadlineValue = LocalDate.parse("2018-09-09");
         assertEquals(testDeadline.hashCode(), testDeadlineValue.hashCode());
     }
 }

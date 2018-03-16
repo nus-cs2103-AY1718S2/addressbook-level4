@@ -135,14 +135,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-
-        /* Case: missing deadline -> added */
-        toAdd = new TaskBuilder().withName(VALID_NAME_EXAM).withPriority
-                (VALID_PRIORITY_EXAM).withDeadline("").withDescription(VALID_DESCRIPTION_EXAM)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DESCRIPTION_DESC_EXAM
-                + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
         //@@author
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
@@ -172,6 +164,11 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_EXAM;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing deadline -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DESCRIPTION_DESC_EXAM
+                + TAG_DESC_FRIEND;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */

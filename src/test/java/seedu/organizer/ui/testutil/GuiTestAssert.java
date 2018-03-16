@@ -40,7 +40,7 @@ public class GuiTestAssert {
         assertEquals(expectedTask.getName().fullName, actualCard.getName());
         assertEquals("[" + expectedTask.getStatus().toString() + "]", actualCard.getStatus());
         assertEquals(expectedTask.getPriority().value, actualCard.getPriority());
-        assertEquals(expectedTask.getDeadline().value, actualCard.getDeadline());
+        assertEquals(expectedTask.getDeadline().toString(), actualCard.getDeadline());
         assertEquals(expectedTask.getDescription().value, actualCard.getDescription());
         assertTagsEqual(expectedTask, actualCard);
     }

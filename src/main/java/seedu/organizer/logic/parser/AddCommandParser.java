@@ -37,7 +37,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                                             PREFIX_DEADLINE, PREFIX_DESCRIPTION,
                                             PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DEADLINE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -51,13 +51,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 priority = ParserUtil.parsePriority(Priority.LOWEST_PRIORITY_LEVEL);
             }
+            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
             //@@author guekling
-            Deadline deadline;
-            if (arePrefixesPresent(argMultimap, PREFIX_DEADLINE)) {
-                deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
-            } else {
-                deadline = ParserUtil.parseDeadline("");
-            }
             Description description;
             if (arePrefixesPresent(argMultimap, PREFIX_DESCRIPTION)) {
                 description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)).get();

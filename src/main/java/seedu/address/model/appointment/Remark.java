@@ -5,7 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Appointment's remarks.
- * Guarantees: mutable; is valid as declared in {@link #isValidRemark(String)}
+ * Guarantees: is valid as declared in {@link #isValidRemark(String)}
  */
 public class Remark {
 

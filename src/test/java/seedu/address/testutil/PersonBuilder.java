@@ -103,6 +103,22 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code income} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withActualSpending(Double actualSpending) {
+        this.actualSpending = new Expenditure(actualSpending);
+        return this;
+    }
+
+    /**
+     * Sets the {@code income} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withExpectedSpending(Double expectedSpending) {
+        this.expectedSpending = new Expenditure(expectedSpending);
+        return this;
+    }
+
+    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withEmail(String email) {

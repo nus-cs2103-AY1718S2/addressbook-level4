@@ -187,9 +187,11 @@ public class ParserUtil {
      * Parses a {@code Optional<String> value} into an {@code Optional<value>} if {@code value} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Expenditure> parseActualSpending(Optional<String> actualSpending) throws IllegalValueException {
+    public static Optional<Expenditure> parseActualSpending(Optional<String> actualSpending)
+            throws IllegalValueException {
         requireNonNull(actualSpending);
-        return actualSpending.isPresent() ? Optional.of(parseActualSpending(actualSpending.get())) : Optional.empty();
+        return actualSpending.isPresent()
+                ? Optional.of(parseActualSpending(actualSpending.get())) : Optional.empty();
     }
 
     /**
@@ -212,9 +214,11 @@ public class ParserUtil {
      * Parses a {@code Optional<String> value} into an {@code Optional<value>} if {@code value} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Expenditure> parseExpectedSpending(Optional<String> expectedSpending) throws IllegalValueException {
+    public static Optional<Expenditure> parseExpectedSpending(Optional<String> expectedSpending)
+            throws IllegalValueException {
         requireNonNull(expectedSpending);
-        return expectedSpending.isPresent() ? Optional.of(parseExpectedSpending(expectedSpending.get())) : Optional.empty();
+        return expectedSpending.isPresent()
+                ? Optional.of(parseExpectedSpending(expectedSpending.get())) : Optional.empty();
     }
 
     /**

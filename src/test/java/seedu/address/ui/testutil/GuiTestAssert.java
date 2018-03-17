@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.PatientCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.patient.Patient;
@@ -17,7 +17,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
+    public static void assertCardEquals(PatientCardHandle expectedCard, PatientCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
         assertEquals(expectedCard.getEmail(), actualCard.getEmail());
@@ -34,7 +34,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPatient}.
      */
-    public static void assertCardDisplaysPerson(Patient expectedPatient, PersonCardHandle actualCard) {
+    public static void assertCardDisplaysPerson(Patient expectedPatient, PatientCardHandle actualCard) {
         assertEquals(expectedPatient.getName().fullName, actualCard.getName());
         assertEquals(expectedPatient.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPatient.getEmail().value, actualCard.getEmail());

@@ -20,18 +20,18 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PatientCard>> {
     }
 
     /**
-     * Returns a handle to the selected {@code PersonCardHandle}.
+     * Returns a handle to the selected {@code PatientCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
-    public PersonCardHandle getHandleToSelectedCard() {
+    public PatientCardHandle getHandleToSelectedCard() {
         List<PatientCard> personList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (personList.size() != 1) {
             throw new AssertionError("Patient list size expected 1.");
         }
 
-        return new PersonCardHandle(personList.get(0).getRoot());
+        return new PatientCardHandle(personList.get(0).getRoot());
     }
 
     /**
@@ -75,17 +75,17 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PatientCard>> {
     /**
      * Returns the patient card handle of a patient associated with the {@code index} in the list.
      */
-    public PersonCardHandle getPersonCardHandle(int index) {
+    public PatientCardHandle getPersonCardHandle(int index) {
         return getPersonCardHandle(getRootNode().getItems().get(index).patient);
     }
 
     /**
-     * Returns the {@code PersonCardHandle} of the specified {@code patient} in the list.
+     * Returns the {@code PatientCardHandle} of the specified {@code patient} in the list.
      */
-    public PersonCardHandle getPersonCardHandle(Patient patient) {
-        Optional<PersonCardHandle> handle = getRootNode().getItems().stream()
+    public PatientCardHandle getPersonCardHandle(Patient patient) {
+        Optional<PatientCardHandle> handle = getRootNode().getItems().stream()
                 .filter(card -> card.patient.equals(patient))
-                .map(card -> new PersonCardHandle(card.getRoot()))
+                .map(card -> new PatientCardHandle(card.getRoot()))
                 .findFirst();
         return handle.orElseThrow(() -> new IllegalArgumentException("Patient does not exist."));
     }

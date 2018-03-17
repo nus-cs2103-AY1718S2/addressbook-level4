@@ -17,51 +17,51 @@ public class PatientCardTest extends GuiUnitTest {
     public void display() {
         // no tags
         Patient patientWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        PersonCard personCard = new PersonCard(patientWithNoTags, 1);
-        uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, patientWithNoTags, 1);
+        PatientCard patientCard = new PatientCard(patientWithNoTags, 1);
+        uiPartRule.setUiPart(patientCard);
+        assertCardDisplay(patientCard, patientWithNoTags, 1);
 
         // with tags
         Patient patientWithTags = new PersonBuilder().build();
-        personCard = new PersonCard(patientWithTags, 2);
-        uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, patientWithTags, 2);
+        patientCard = new PatientCard(patientWithTags, 2);
+        uiPartRule.setUiPart(patientCard);
+        assertCardDisplay(patientCard, patientWithTags, 2);
     }
 
     @Test
     public void equals() {
         Patient patient = new PersonBuilder().build();
-        PersonCard personCard = new PersonCard(patient, 0);
+        PatientCard patientCard = new PatientCard(patient, 0);
 
         // same patient, same index -> returns true
-        PersonCard copy = new PersonCard(patient, 0);
-        assertTrue(personCard.equals(copy));
+        PatientCard copy = new PatientCard(patient, 0);
+        assertTrue(patientCard.equals(copy));
 
         // same object -> returns true
-        assertTrue(personCard.equals(personCard));
+        assertTrue(patientCard.equals(patientCard));
 
         // null -> returns false
-        assertFalse(personCard.equals(null));
+        assertFalse(patientCard.equals(null));
 
         // different types -> returns false
-        assertFalse(personCard.equals(0));
+        assertFalse(patientCard.equals(0));
 
         // different patient, same index -> returns false
         Patient differentPatient = new PersonBuilder().withName("differentName").build();
-        assertFalse(personCard.equals(new PersonCard(differentPatient, 0)));
+        assertFalse(patientCard.equals(new PatientCard(differentPatient, 0)));
 
         // same patient, different index -> returns false
-        assertFalse(personCard.equals(new PersonCard(patient, 1)));
+        assertFalse(patientCard.equals(new PatientCard(patient, 1)));
     }
 
     /**
-     * Asserts that {@code personCard} displays the details of {@code expectedPatient} correctly and matches
+     * Asserts that {@code patientCard} displays the details of {@code expectedPatient} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(PersonCard personCard, Patient expectedPatient, int expectedId) {
+    private void assertCardDisplay(PatientCard patientCard, Patient expectedPatient, int expectedId) {
         guiRobot.pauseForHuman();
 
-        PersonCardHandle personCardHandle = new PersonCardHandle(personCard.getRoot());
+        PersonCardHandle personCardHandle = new PersonCardHandle(patientCard.getRoot());
 
         // verify id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());

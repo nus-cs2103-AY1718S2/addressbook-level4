@@ -5,17 +5,17 @@ import java.util.Optional;
 
 import javafx.scene.control.ListView;
 import seedu.address.model.patient.Patient;
-import seedu.address.ui.PersonCard;
+import seedu.address.ui.PatientCard;
 
 /**
- * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
+ * Provides a handle for {@code PersonListPanel} containing the list of {@code PatientCard}.
  */
-public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
+public class PersonListPanelHandle extends NodeHandle<ListView<PatientCard>> {
     public static final String PERSON_LIST_VIEW_ID = "#personListView";
 
-    private Optional<PersonCard> lastRememberedSelectedPersonCard;
+    private Optional<PatientCard> lastRememberedSelectedPersonCard;
 
-    public PersonListPanelHandle(ListView<PersonCard> personListPanelNode) {
+    public PersonListPanelHandle(ListView<PatientCard> personListPanelNode) {
         super(personListPanelNode);
     }
 
@@ -25,7 +25,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
     public PersonCardHandle getHandleToSelectedCard() {
-        List<PersonCard> personList = getRootNode().getSelectionModel().getSelectedItems();
+        List<PatientCard> personList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (personList.size() != 1) {
             throw new AssertionError("Patient list size expected 1.");
@@ -45,7 +45,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      * Returns true if a card is currently selected.
      */
     public boolean isAnyCardSelected() {
-        List<PersonCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+        List<PatientCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCardsList.size() > 1) {
             throw new AssertionError("Card list size expected 0 or 1.");
@@ -58,8 +58,8 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      * Navigates the listview to display and select the patient.
      */
     public void navigateToCard(Patient patient) {
-        List<PersonCard> cards = getRootNode().getItems();
-        Optional<PersonCard> matchingCard = cards.stream().filter(card -> card.patient.equals(patient)).findFirst();
+        List<PatientCard> cards = getRootNode().getItems();
+        Optional<PatientCard> matchingCard = cards.stream().filter(card -> card.patient.equals(patient)).findFirst();
 
         if (!matchingCard.isPresent()) {
             throw new IllegalArgumentException("Patient does not exist.");
@@ -91,17 +91,17 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
-     * Selects the {@code PersonCard} at {@code index} in the list.
+     * Selects the {@code PatientCard} at {@code index} in the list.
      */
     public void select(int index) {
         getRootNode().getSelectionModel().select(index);
     }
 
     /**
-     * Remembers the selected {@code PersonCard} in the list.
+     * Remembers the selected {@code PatientCard} in the list.
      */
     public void rememberSelectedPersonCard() {
-        List<PersonCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+        List<PatientCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
             lastRememberedSelectedPersonCard = Optional.empty();
@@ -111,11 +111,11 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
-     * Returns true if the selected {@code PersonCard} is different from the value remembered by the most recent
+     * Returns true if the selected {@code PatientCard} is different from the value remembered by the most recent
      * {@code rememberSelectedPersonCard()} call.
      */
     public boolean isSelectedPersonCardChanged() {
-        List<PersonCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+        List<PatientCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
             return lastRememberedSelectedPersonCard.isPresent();

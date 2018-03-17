@@ -8,34 +8,34 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Favourite;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.subject.Subject;
+import seedu.address.model.programminglanguage.ProgrammingLanguage;
+import seedu.address.model.student.Address;
+import seedu.address.model.student.Email;
+import seedu.address.model.student.Favourite;
+import seedu.address.model.student.Name;
+import seedu.address.model.student.Phone;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.exceptions.DuplicateStudentException;
+import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Add a person to favourites
+ * Add a student to favourites
  */
 public class FavouriteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "fav";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a person to favourites. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a student to favourites. "
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SUCCESS = "Person added to favourites: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_SUCCESS = "Student added to favourites: %1$s";
+    public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book.";
 
     private final Index targetIndex;
 
-    private Person personToFavourite;
-    private Person editedPerson;
+    private Student studentToFavourite;
+    private Student editedStudent;
 
     public FavouriteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -43,35 +43,35 @@ public class FavouriteCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        requireAllNonNull(personToFavourite, editedPerson);
+        requireAllNonNull(studentToFavourite, editedStudent);
 
         try {
-            model.updatePerson(personToFavourite, editedPerson);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            model.updateStudent(studentToFavourite, editedStudent);
+        } catch (StudentNotFoundException pnfe) {
+            throw new AssertionError("The target student cannot be missing");
+        } catch (DuplicateStudentException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedStudent));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Student> lastShownList = model.getFilteredStudentList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size() || targetIndex.getZeroBased() < 0) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
 
-        personToFavourite = lastShownList.get(targetIndex.getZeroBased());
-        editedPerson = createEditedPerson(personToFavourite);
+        studentToFavourite = lastShownList.get(targetIndex.getZeroBased());
+        editedStudent = createEditedStudent(studentToFavourite);
     }
 
     /**
-     * Create and return a copy of the target {@Code Person} to favourite with its' Favourite attribute set to true.
+     * Create and return a copy of the target {@Code Student} to favourite with its' Favourite attribute set to true.
      */
-    private static Person createEditedPerson(Person target) {
+    private static Student createEditedStudent(Student target) {
         assert target != null;
 
         Name name = target.getName();
@@ -79,9 +79,9 @@ public class FavouriteCommand extends UndoableCommand {
         Email email = target.getEmail();
         Address address = target.getAddress();
         Set<Tag> tags = target.getTags();
-        Subject subject = target.getSubject();
+        ProgrammingLanguage programmingLanguage = target.getProgrammingLanguage();
         Favourite fav = new Favourite(true);
 
-        return new Person(name, phone, email, address, subject, tags, fav);
+        return new Student(name, phone, email, address, programmingLanguage, tags, fav);
     }
 }

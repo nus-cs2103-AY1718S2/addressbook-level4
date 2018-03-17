@@ -24,7 +24,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.IMDBBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class IMDBTest {
@@ -34,7 +34,7 @@ public class IMDBTest {
 
     private final IMDB IMDB = new IMDB();
     private final IMDB IMDBWithAmyAndBob =
-            new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+            new IMDBBuilder().withPerson(AMY).withPerson(BOB).build();
 
     @Test
     public void constructor() {
@@ -46,7 +46,7 @@ public class IMDBTest {
     public void removeTag_unusedTag_addressBookUnchanged() {
         IMDBWithAmyAndBob.removeTag(new Tag(UNUSED_TAG));
 
-        IMDB expectedIMDB = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        IMDB expectedIMDB = new IMDBBuilder().withPerson(AMY).withPerson(BOB).build();
 
         assertEquals(IMDBWithAmyAndBob, expectedIMDB);
 
@@ -58,7 +58,7 @@ public class IMDBTest {
 
         Patient amyWithoutFriendTag = new PersonBuilder(AMY).build();
         Patient bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        IMDB expectedIMDB = new AddressBookBuilder().withPerson(amyWithoutFriendTag)
+        IMDB expectedIMDB = new IMDBBuilder().withPerson(amyWithoutFriendTag)
                 .withPerson(bobWithoutFriendTag).build();
 
         assertEquals(IMDBWithAmyAndBob, expectedIMDB);

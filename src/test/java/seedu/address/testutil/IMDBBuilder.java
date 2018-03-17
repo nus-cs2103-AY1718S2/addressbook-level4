@@ -9,24 +9,24 @@ import seedu.address.model.tag.Tag;
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code IMDB ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code IMDB ab = new IMDBBuilder().withPerson("John", "Doe").withTag("Friend").build();}
  */
-public class AddressBookBuilder {
+public class IMDBBuilder {
 
     private IMDB IMDB;
 
-    public AddressBookBuilder() {
+    public IMDBBuilder() {
         IMDB = new IMDB();
     }
 
-    public AddressBookBuilder(IMDB IMDB) {
+    public IMDBBuilder(IMDB IMDB) {
         this.IMDB = IMDB;
     }
 
     /**
      * Adds a new {@code Patient} to the {@code IMDB} that we are building.
      */
-    public AddressBookBuilder withPerson(Patient patient) {
+    public IMDBBuilder withPerson(Patient patient) {
         try {
             IMDB.addPerson(patient);
         } catch (DuplicatePatientException dpe) {
@@ -38,7 +38,7 @@ public class AddressBookBuilder {
     /**
      * Parses {@code tagName} into a {@code Tag} and adds it to the {@code IMDB} that we are building.
      */
-    public AddressBookBuilder withTag(String tagName) {
+    public IMDBBuilder withTag(String tagName) {
         try {
             IMDB.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {

@@ -57,7 +57,7 @@ public class UniqueAliasList {
     /**
      * Imports an Alias to the list if the Alias is not a duplicate of an existing Alias in the list.
      */
-    public void importAlias(Alias toAdd) throws DuplicateAliasException {
+    public void importAlias(Alias toAdd) {
         requireNonNull(toAdd);
         if (!contains(toAdd.aliasName)) {
             hashList.put(toAdd.aliasName, toAdd.command);

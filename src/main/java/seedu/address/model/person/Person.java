@@ -1,3 +1,4 @@
+
 package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -53,6 +54,7 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.rating = rating;
+        this.calendarId = "";
     }
   
   /**

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
-import seedu.address.model.patient.Person;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.UniquePersonList;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -55,8 +55,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setPersons(List<Person> persons) throws DuplicatePatientException {
-        this.persons.setPersons(persons);
+    public void setPersons(List<Patient> patients) throws DuplicatePatientException {
+        this.persons.setPersons(patients);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -73,82 +73,82 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
-        List<Person> syncedPersonList = newData.getPersonList().stream()
+        List<Patient> syncedPatientList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
         setAppointments(new HashSet<>(newData.getAppointmentList()));
 
         try {
-            setPersons(syncedPersonList);
+            setPersons(syncedPatientList);
         } catch (DuplicatePatientException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
 
-    //// person-level operations
+    //// patient-level operations
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a patient to the address book.
+     * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the patient to point to those in {@link #tags}.
      *
-     * @throws DuplicatePatientException if an equivalent person already exists.
+     * @throws DuplicatePatientException if an equivalent patient already exists.
      */
-    public void addPerson(Person p) throws DuplicatePatientException {
-        Person person = syncWithMasterTagList(p);
+    public void addPerson(Patient p) throws DuplicatePatientException {
+        Patient patient = syncWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.add(person);
+        // This can cause the tags master list to have additional tags that are not tagged to any patient
+        // in the patient list.
+        persons.add(patient);
     }
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
-     * @throws DuplicatePatientException if updating the person's details causes the person to be equivalent to
+     * @throws DuplicatePatientException if updating the patient's details causes the patient to be equivalent to
      *      another existing person in the list.
      * @throws PatientNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncWithMasterTagList(Person)
+     * @see #syncWithMasterTagList(Patient)
      */
-    public void updatePerson(Person target, Person editedPerson)
+    public void updatePerson(Patient target, Patient editedPatient)
             throws DuplicatePatientException, PatientNotFoundException {
-        requireNonNull(editedPerson);
+        requireNonNull(editedPatient);
 
-        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+        Patient syncedEditedPatient = syncWithMasterTagList(editedPatient);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.setPerson(target, syncedEditedPerson);
+        // This can cause the tags master list to have additional tags that are not tagged to any patient
+        // in the patient list.
+        persons.setPerson(target, syncedEditedPatient);
     }
 
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     *  Updates the master tag list to include tags in {@code patient} that are not in the list.
+     *  @return a copy of this {@code patient} such that every tag in this patient points to a Tag object in the master
      *  list.
      */
-    private Person syncWithMasterTagList(Person person) {
-        final UniqueTagList personTags = new UniqueTagList(person.getTags());
+    private Patient syncWithMasterTagList(Patient patient) {
+        final UniqueTagList personTags = new UniqueTagList(patient.getTags());
         tags.mergeFrom(personTags);
 
         // Create map with values = tag object references in the master list
-        // used for checking person tag references
+        // used for checking patient tag references
         final Map<Tag, Tag> masterTagObjects = new HashMap<>();
         tags.forEach(tag -> masterTagObjects.put(tag, tag));
 
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        // Rebuild the list of patient tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        return new Patient(
+                patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(), correctTagReferences);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PatientNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(Person key) throws PatientNotFoundException {
+    public boolean removePerson(Patient key) throws PatientNotFoundException {
         if (persons.remove(key)) {
             return true;
         } else {
@@ -167,16 +167,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Remove {@code tag} from {@code person}
+     * Remove {@code tag} from {@code patient}
      */
-    private void removeTagFromPerson (Tag tag, Person person) throws PatientNotFoundException {
-        Set<Tag> personTags = new HashSet<>(person.getTags());
+    private void removeTagFromPerson (Tag tag, Patient patient) throws PatientNotFoundException {
+        Set<Tag> personTags = new HashSet<>(patient.getTags());
 
         if (personTags.remove(tag)) {
-            Person updatedPerson = new Person(person.getName(), person.getPhone(),
-                    person.getEmail(), person.getAddress(), personTags);
+            Patient updatedPatient = new Patient(patient.getName(), patient.getPhone(),
+                    patient.getEmail(), patient.getAddress(), personTags);
             try {
-                updatePerson(person, updatedPerson);
+                updatePerson(patient, updatedPatient);
             } catch (DuplicatePatientException dpe) {
                 throw new PatientNotFoundException();
             }
@@ -187,9 +187,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Loops through all persons in this {@code AddressBook} and removes {@code tag}.
      */
     public void removeTag(Tag tag) {
-        for (Person person: persons) {
+        for (Patient patient : persons) {
             try {
-                removeTagFromPerson(tag, person);
+                removeTagFromPerson(tag, patient);
             } catch (PatientNotFoundException e) {
                 e.printStackTrace();
             }
@@ -205,7 +205,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Person> getPersonList() {
+    public ObservableList<Patient> getPersonList() {
         return persons.asObservableList();
     }
 

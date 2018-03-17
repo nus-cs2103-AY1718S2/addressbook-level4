@@ -7,37 +7,37 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.patient.Person;
+import seedu.address.model.patient.Patient;
 
 /**
- * A utility class for Person.
+ * A utility class for Patient.
  */
 public class PersonUtil {
 
     /**
-     * Returns an add command string for adding the {@code person}.
+     * Returns an add command string for adding the {@code patient}.
      */
-    public static String getAddCommand(Person person) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+    public static String getAddCommand(Patient patient) {
+        return AddCommand.COMMAND_WORD + " " + getPersonDetails(patient);
     }
 
     /**
-     * Returns an add command string (using add command alias) for adding the {@code person}.
+     * Returns an add command string (using add command alias) for adding the {@code patient}.
      */
-    public static String getAddCommandAlias(Person person) {
-        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
+    public static String getAddCommandAlias(Patient patient) {
+        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(patient);
     }
 
     /**
-     * Returns the part of command string for the given {@code person}'s details.
+     * Returns the part of command string for the given {@code patient}'s details.
      */
-    public static String getPersonDetails(Person person) {
+    public static String getPersonDetails(Patient patient) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + person.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + person.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        person.getTags().stream().forEach(
+        sb.append(PREFIX_NAME + patient.getName().fullName + " ");
+        sb.append(PREFIX_PHONE + patient.getPhone().value + " ");
+        sb.append(PREFIX_EMAIL + patient.getEmail().value + " ");
+        sb.append(PREFIX_ADDRESS + patient.getAddress().value + " ");
+        patient.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();

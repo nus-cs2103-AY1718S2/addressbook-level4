@@ -5,11 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.patient.Person;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Patient}.
  */
 public class PersonCard extends UiPart<Region> {
 
@@ -23,7 +23,7 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final Person person;
+    public final Patient patient;
 
     @FXML
     private HBox cardPane;
@@ -40,16 +40,16 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonCard(Person person, int displayedIndex) {
+    public PersonCard(Patient patient, int displayedIndex) {
         super(FXML);
-        this.person = person;
+        this.patient = patient;
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+        name.setText(patient.getName().fullName);
+        phone.setText(patient.getPhone().value);
+        address.setText(patient.getAddress().value);
+        email.setText(patient.getEmail().value);
 
-        initTagLabels(person);
+        initTagLabels(patient);
     }
 
     @Override
@@ -67,18 +67,18 @@ public class PersonCard extends UiPart<Region> {
         // state check
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+                && patient.equals(card.patient);
     }
 
     /**
-     * create tag labels for person, change tag color based on the hex string
-     * @param person
+     * create tag labels for patient, change tag color based on the hex string
+     * @param patient
      */
-    private void initTagLabels(Person person) {
+    private void initTagLabels(Patient patient) {
         //Solution below adopted from https://assylias.wordpress.com/2013/12/08/383/ and
         //https://www.javaworld.com/article/2074537/core-java/tostring--
         //hexadecimal-representation-of-identity-hash-codes.html
-        for (Tag tag : person.getTags()) {
+        for (Tag tag : patient.getTags()) {
             Label newLabel = new Label(tag.tagName);
             newLabel.setStyle("-fx-background-color: #" + convertHashCodeToHexString(tag.tagName));
             tags.getChildren().add(newLabel);

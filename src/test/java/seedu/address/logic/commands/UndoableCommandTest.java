@@ -13,7 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.patient.Person;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 public class UndoableCommandTest {
@@ -47,7 +47,7 @@ public class UndoableCommandTest {
     }
 
     /**
-     * Deletes the first person in the model's filtered list.
+     * Deletes the first patient in the model's filtered list.
      */
     class DummyCommand extends UndoableCommand {
         DummyCommand(Model model) {
@@ -56,11 +56,11 @@ public class UndoableCommandTest {
 
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
-            Person personToDelete = model.getFilteredPersonList().get(0);
+            Patient patientToDelete = model.getFilteredPersonList().get(0);
             try {
-                model.deletePerson(personToDelete);
+                model.deletePerson(patientToDelete);
             } catch (PatientNotFoundException pnfe) {
-                fail("Impossible: personToDelete was retrieved from model.");
+                fail("Impossible: patientToDelete was retrieved from model.");
             }
             return new CommandResult("");
         }

@@ -17,27 +17,27 @@ import seedu.address.model.patient.exceptions.PatientNotFoundException;
  *
  * Supports a minimal set of list operations.
  *
- * @see Person#equals(Object)
+ * @see Patient#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniquePersonList implements Iterable<Person> {
+public class UniquePersonList implements Iterable<Patient> {
 
-    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Patient> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent patient as the given argument.
      */
-    public boolean contains(Person toCheck) {
+    public boolean contains(Patient toCheck) {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
 
     /**
-     * Adds a person to the list.
+     * Adds a patient to the list.
      *
-     * @throws DuplicatePatientException if the person to add is a duplicate of an existing person in the list.
+     * @throws DuplicatePatientException if the patient to add is a duplicate of an existing patient in the list.
      */
-    public void add(Person toAdd) throws DuplicatePatientException {
+    public void add(Patient toAdd) throws DuplicatePatientException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicatePatientException();
@@ -46,33 +46,33 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the patient {@code target} in the list with {@code editedPatient}.
      *
-     * @throws DuplicatePatientException if the replacement is equivalent to another existing person in the list.
+     * @throws DuplicatePatientException if the replacement is equivalent to another existing patient in the list.
      * @throws PatientNotFoundException if {@code target} could not be found in the list.
      */
-    public void setPerson(Person target, Person editedPerson)
+    public void setPerson(Patient target, Patient editedPatient)
             throws DuplicatePatientException, PatientNotFoundException {
-        requireNonNull(editedPerson);
+        requireNonNull(editedPatient);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new PatientNotFoundException();
         }
 
-        if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {
+        if (!target.equals(editedPatient) && internalList.contains(editedPatient)) {
             throw new DuplicatePatientException();
         }
 
-        internalList.set(index, editedPerson);
+        internalList.set(index, editedPatient);
     }
 
     /**
-     * Removes the equivalent person from the list.
+     * Removes the equivalent patient from the list.
      *
-     * @throws PatientNotFoundException if no such person could be found in the list.
+     * @throws PatientNotFoundException if no such patient could be found in the list.
      */
-    public boolean remove(Person toRemove) throws PatientNotFoundException {
+    public boolean remove(Patient toRemove) throws PatientNotFoundException {
         requireNonNull(toRemove);
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
@@ -85,11 +85,11 @@ public class UniquePersonList implements Iterable<Person> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setPersons(List<Person> persons) throws DuplicatePatientException {
-        requireAllNonNull(persons);
+    public void setPersons(List<Patient> patients) throws DuplicatePatientException {
+        requireAllNonNull(patients);
         final UniquePersonList replacement = new UniquePersonList();
-        for (final Person person : persons) {
-            replacement.add(person);
+        for (final Patient patient : patients) {
+            replacement.add(patient);
         }
         setPersons(replacement);
     }
@@ -97,12 +97,12 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Person> asObservableList() {
+    public ObservableList<Patient> asObservableList() {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<Patient> iterator() {
         return internalList.iterator();
     }
 

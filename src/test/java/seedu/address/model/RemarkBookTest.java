@@ -1,8 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalActivities.ALICE;
+import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +40,7 @@ public class RemarkBookTest {
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        DeskBoard newData = getTypicalAddressBook();
+        DeskBoard newData = getTypicalDeskBoard();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
     }

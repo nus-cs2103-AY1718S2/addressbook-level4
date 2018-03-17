@@ -1,38 +1,39 @@
 package seedu.address.testutil;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import seedu.address.model.activity.*;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Event;
+import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
-/**
- * A utility class to help with building Activity objects.
- */
-public class PersonBuilder {
+import java.util.HashSet;
+import java.util.Set;
 
-    public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_TAGS = "friends";
+public class EventBuilder extends ActivityBuilder{
+
+    public static final String DEFAULT_NAME = "CIP";
+    public static final String DEFAULT_DATETIME = "04/04/2018 08:10";
+    public static final String DEFAULT_REMARK = "123, Jurong West Ave 6";
+    public static final String DEFAULT_TAGS = "optional";
 
     private Name name;
     private DateTime dateTime;
     private Remark remark;
     private Set<Tag> tags;
 
-    public PersonBuilder() {
+    public EventBuilder() {
         name = new Name(DEFAULT_NAME);
-        dateTime = new DateTime(DEFAULT_PHONE);
-        remark = new Remark(DEFAULT_ADDRESS);
+        dateTime = new DateTime(DEFAULT_DATETIME);
+        remark = new Remark(DEFAULT_REMARK);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
     /**
-     * Initializes the PersonBuilder with the data of {@code activityToCopy}.
+     * Initializes the ActivityBuilder with the data of {@code activityToCopy}.
      */
-    public PersonBuilder(Activity activityToCopy) {
+    public EventBuilder(Activity activityToCopy) {
         name = activityToCopy.getName();
         dateTime = activityToCopy.getDateTime();
         remark = activityToCopy.getRemark();
@@ -42,7 +43,7 @@ public class PersonBuilder {
     /**
      * Sets the {@code Name} of the {@code Activity} that we are building.
      */
-    public PersonBuilder withName(String name) {
+    public EventBuilder withName(String name) {
         this.name = new Name(name);
         return this;
     }
@@ -50,7 +51,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Activity} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public EventBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
@@ -58,16 +59,16 @@ public class PersonBuilder {
     /**
      * Sets the {@code Remark} of the {@code Activity} that we are building.
      */
-    public PersonBuilder withAddress(String address) {
-        this.remark = new Remark(address);
+    public EventBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
         return this;
     }
 
     /**
      * Sets the {@code DateTime} of the {@code Activity} that we are building.
      */
-    public PersonBuilder withPhone(String phone) {
-        this.dateTime = new DateTime(phone);
+    public EventBuilder withDateTime(String dateTime) {
+        this.dateTime = new DateTime(dateTime);
         return this;
     }
 

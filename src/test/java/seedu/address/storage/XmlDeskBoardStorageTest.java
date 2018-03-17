@@ -2,10 +2,10 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalActivities.ALICE;
+import static seedu.address.testutil.TypicalActivities.HOON;
+import static seedu.address.testutil.TypicalActivities.IDA;
+import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.io.IOException;
 
@@ -75,7 +75,7 @@ public class XmlDeskBoardStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
-        DeskBoard original = getTypicalAddressBook();
+        DeskBoard original = getTypicalDeskBoard();
         XmlDeskBoardStorage xmlAddressBookStorage = new XmlDeskBoardStorage(filePath);
 
         //Save in new file and read back

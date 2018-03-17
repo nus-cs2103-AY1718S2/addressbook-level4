@@ -3,8 +3,8 @@ package seedu.address.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACTIVITY;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalActivities.ALICE;
+import static seedu.address.testutil.TypicalActivities.BENSON;
 
 import java.util.Arrays;
 
@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.DeskBoardBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -28,7 +28,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        DeskBoard addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        DeskBoard addressBook = new DeskBoardBuilder().withActivity(ALICE).withActivity(BENSON).build();
         DeskBoard differentAddressBook = new DeskBoard();
         UserPrefs userPrefs = new UserPrefs();
 

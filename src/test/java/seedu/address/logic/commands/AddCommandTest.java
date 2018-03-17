@@ -24,7 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.ActivityBuilder;
 
 public class AddCommandTest {
 
@@ -40,7 +40,7 @@ public class AddCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Activity validActivity = new PersonBuilder().build();
+        Activity validActivity = new ActivityBuilder().build();
 
         CommandResult commandResult = getAddCommandForPerson(validActivity, modelStub).execute();
 
@@ -51,7 +51,7 @@ public class AddCommandTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Activity validActivity = new PersonBuilder().build();
+        Activity validActivity = new ActivityBuilder().build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -61,8 +61,8 @@ public class AddCommandTest {
 
     @Test
     public void equals() {
-        Activity alice = new PersonBuilder().withName("Alice").build();
-        Activity bob = new PersonBuilder().withName("Bob").build();
+        Activity alice = new ActivityBuilder().withName("Alice").build();
+        Activity bob = new ActivityBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 

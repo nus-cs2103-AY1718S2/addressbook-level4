@@ -9,20 +9,20 @@ import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
 import seedu.address.model.activity.Activity;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.ActivityBuilder;
 
 public class ActivityCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
         // no tags
-        Activity activityWithNoTags = new PersonBuilder().withTags(new String[0]).build();
+        Activity activityWithNoTags = new ActivityBuilder().withTags(new String[0]).build();
         ActivityCard activityCard = new ActivityCard(activityWithNoTags, 1);
         uiPartRule.setUiPart(activityCard);
         assertCardDisplay(activityCard, activityWithNoTags, 1);
 
         // with tags
-        Activity activityWithTags = new PersonBuilder().build();
+        Activity activityWithTags = new ActivityBuilder().build();
         activityCard = new ActivityCard(activityWithTags, 2);
         uiPartRule.setUiPart(activityCard);
         assertCardDisplay(activityCard, activityWithTags, 2);
@@ -30,7 +30,7 @@ public class ActivityCardTest extends GuiUnitTest {
 
     @Test
     public void equals() {
-        Activity activity = new PersonBuilder().build();
+        Activity activity = new ActivityBuilder().build();
         ActivityCard activityCard = new ActivityCard(activity, 0);
 
         // same activity, same index -> returns true
@@ -47,7 +47,7 @@ public class ActivityCardTest extends GuiUnitTest {
         assertFalse(activityCard.equals(0));
 
         // different activity, same index -> returns false
-        Activity differentActivity = new PersonBuilder().withName("differentName").build();
+        Activity differentActivity = new ActivityBuilder().withName("differentName").build();
         assertFalse(activityCard.equals(new ActivityCard(differentActivity, 0)));
 
         // same activity, different index -> returns false

@@ -82,7 +82,7 @@ Format: `help`
 
 === Adding a task: `add` or `a`
 
-Adds a person to the PrioriTask +
+Adds a task to the PrioriTask +
 Format: `add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…​`
 
 Examples:
@@ -328,10 +328,6 @@ _{ coming in v2.0 }_
 _{ coming in v2.0 }_
 
 === Locating tasks by tag `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
-=== Locating tasks by description `[coming in v2.0]`
 
 _{ coming in v2.0 }_
 

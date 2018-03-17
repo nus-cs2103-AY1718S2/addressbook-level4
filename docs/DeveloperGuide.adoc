@@ -793,7 +793,34 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: helps busy university students keep track of their tasks and priorities
+*Value proposition*:
+
+Helps busy university students keep track of their tasks and priorities
+
+*Feature contribution*:
+
+* Agus Sentosa Hermawan
+** Major : Subtasks parameter
+*** Allows tasks to be split into subtasks for better management
+** Minor : Toggle command
+*** Allows tasks to be marked as completed
+* Dominic Kenn Lim
+** Major : User login
+*** Allows multiple users to access their private tasks within the same machine
+** Minor : Priority autosorting and autoupdate
+*** Allows application to automatically manage task priority levels so that the user does not have to
+* Natania Djohaari
+** Major : Announcement / Notification
+*** Helps users be reminded of the latest upcoming deadline
+** Minor : Date added parameter
+*** Allows users to recall when the task was created
+*** Supports application function of priority autoupdating
+* Yeo Guek Ling
+** Major : Calendar
+*** Allows users to be able to have a more concise view of task deadlines
+** Minor : Find name / description command
+*** Allows users to be able to search the organizer for tasks even when they have forgotten the task's name
+
 
 [appendix]
 == User Stories

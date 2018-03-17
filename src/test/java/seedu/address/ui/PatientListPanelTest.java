@@ -27,10 +27,10 @@ public class PatientListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PATIENTS);
-        uiPartRule.setUiPart(personListPanel);
+        PatientListPanel patientListPanel = new PatientListPanel(TYPICAL_PATIENTS);
+        uiPartRule.setUiPart(patientListPanel);
 
-        personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
+        personListPanelHandle = new PersonListPanelHandle(getChildNode(patientListPanel.getRoot(),
                 PersonListPanelHandle.PERSON_LIST_VIEW_ID));
     }
 

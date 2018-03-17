@@ -20,14 +20,14 @@ import seedu.address.model.patient.Patient;
 /**
  * Panel containing the list of persons.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class PatientListPanel extends UiPart<Region> {
+    private static final String FXML = "PatientListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(PatientListPanel.class);
 
     @FXML
     private ListView<PatientCard> personListView;
 
-    public PersonListPanel(ObservableList<Patient> patientList) {
+    public PatientListPanel(ObservableList<Patient> patientList) {
         super(FXML);
         setConnections(patientList);
         registerAsAnEventHandler(this);

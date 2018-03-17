@@ -8,7 +8,7 @@ import seedu.address.model.patient.Patient;
 import seedu.address.ui.PatientCard;
 
 /**
- * Provides a handle for {@code PersonListPanel} containing the list of {@code PatientCard}.
+ * Provides a handle for {@code PatientListPanel} containing the list of {@code PatientCard}.
  */
 public class PersonListPanelHandle extends NodeHandle<ListView<PatientCard>> {
     public static final String PERSON_LIST_VIEW_ID = "#personListView";

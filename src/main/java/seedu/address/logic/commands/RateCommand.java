@@ -36,9 +36,10 @@ public class RateCommand extends UndoableCommand {
             + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + "4 "
             + PREFIX_EXPERIENCE_SCORE + "3.5";
 
-    public static final String MESSAGE_RATE_PERSON_SUCCESS = "Rated %1$s:\n"
+    public static final String MESSAGE_RATE_PERSON_SUCCESS = "Rated %1$s: \n"
             + "Technical skills: %2$s, Communication skills: %3$s, "
-            + "Problem solving skills: %4$s, Experience: %5$s";
+            + "Problem solving skills: %4$s, Experience: %5$s \n"
+            + "Overall: %6$s";
 
     private final Index index;
     private final Rating rating;
@@ -76,7 +77,8 @@ public class RateCommand extends UndoableCommand {
                 ratedPerson.getRating().getTechnicalSkillsScore(),
                 ratedPerson.getRating().getCommunicationSkillsScore(),
                 ratedPerson.getRating().getProblemSolvingSkillsScore(),
-                ratedPerson.getRating().getExperienceScore()));
+                ratedPerson.getRating().getExperienceScore(),
+                String.format("%.2f", ratedPerson.getRating().getOverallScore())));
     }
 
     @Override

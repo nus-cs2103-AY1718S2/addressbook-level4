@@ -14,12 +14,14 @@ public class Rating {
     public static final double DEFAULT_SCORE = -1;
     public static final double MAXIMUM_SCORE = 5;
     public static final double MINIMUM_SCORE = 1;
+    private static final double NUMBER_OF_SCORES = 4.0;
 
 
     public final double technicalSkillsScore;
     public final double communicationSkillsScore;
     public final double problemSolvingSkillsScore;
     public final double experienceScore;
+    public final double overallScore;
 
     /**
      * Constructs a {@code Rating}.
@@ -36,6 +38,8 @@ public class Rating {
         this.communicationSkillsScore = communicationSkillsScore;
         this.problemSolvingSkillsScore = problemSolvingSkillsScore;
         this.experienceScore = experienceScore;
+        this.overallScore = calculateOverallScore(technicalSkillsScore,
+                communicationSkillsScore, problemSolvingSkillsScore, experienceScore);
     }
 
     public double getTechnicalSkillsScore() {
@@ -52,6 +56,16 @@ public class Rating {
 
     public double getExperienceScore() {
         return experienceScore;
+    }
+
+    public double getOverallScore() {
+        return overallScore;
+    }
+
+    private static double calculateOverallScore(double technicalSkillsScore, double communicationSkillsScore,
+                                         double problemSolvingSkillsScore, double experienceScore) {
+        return (technicalSkillsScore + communicationSkillsScore + problemSolvingSkillsScore
+            + experienceScore) / NUMBER_OF_SCORES;
     }
 
     @Override

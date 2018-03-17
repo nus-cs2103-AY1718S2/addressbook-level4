@@ -14,6 +14,8 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -140,29 +142,56 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
+     * Parses a {@code String group} into a {@code Group}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code tag} is invalid.
+     * @throws IllegalValueException if the given {@code group} is invalid.
      */
-    public static Tag parseTag(String tag) throws IllegalValueException {
-        requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
+    public static Group parseGroup(String group) throws IllegalValueException {
+        requireNonNull(group);
+        String trimmedGroup = group.trim();
+        if (!Tag.isValidTagName(trimmedGroup)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
-        return new Tag(trimmedTag);
+        return new Group(trimmedGroup);
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses {@code Collection<String> groups} into a {@code Set<Group>}.
      */
-    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
+    public static Set<Group> parseGroups(Collection<String> groups) throws IllegalValueException {
+        requireNonNull(groups);
+        final Set<Group> groupSet = new HashSet<>();
+        for (String groupName : groups) {
+            groupSet.add(parseGroup(groupName));
         }
-        return tagSet;
+        return groupSet;
+    }
+
+    /**
+     * Parses a {@code String pref} into a {@code Preference}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code preference} is invalid.
+     */
+    public static Preference parsePreference(String pref) throws IllegalValueException {
+        requireNonNull(pref);
+        String trimmedPreference = pref.trim();
+        if (!Tag.isValidTagName(trimmedPreference)) {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
+        }
+        return new Preference(trimmedPreference);
+    }
+
+    /**
+     * Parses {@code Collection<String> preferences} into a {@code Set<Perference>}.
+     */
+    public static Set<Preference> parsePreferences(Collection<String> preferences) throws IllegalValueException {
+        requireNonNull(preferences);
+        final Set<Preference> preferenceSet = new HashSet<>();
+        for (String prefName : preferences) {
+            preferenceSet.add(parsePreference(prefName));
+        }
+        return preferenceSet;
     }
 }

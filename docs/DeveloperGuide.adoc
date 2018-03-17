@@ -577,7 +577,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.groupName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
@@ -1067,19 +1067,19 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Find persons by tags
+=== Use case: Find persons by groups
 
 *MSS*
 
-1.	User requests to find persons with specific tags
-2.	ContactSails shows list of persons with specified tags
+1.	User requests to find persons with specific groups
+2.	ContactSails shows list of persons with specified groups
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User does not specify any tag
+* 1a. User does not specify any group
 +
 [none]
 ** 1a1. ContactSails shows an error message
@@ -1087,7 +1087,7 @@ Use case ends.
 Use case ends.
 
 [none]
-* 1b. ContactSails does not have any tags specified by user
+* 1b. ContactSails does not have any groups specified by user
 +
 [none]
 ** 1b1. ContactSails shows empty list
@@ -1095,21 +1095,49 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Remove specific tag
+=== Use case: Find persons by preferences
 
 *MSS*
 
-1.  User requests to remove a tag
-2.  ContactSails shows a list of all the tags used in the application
-3.  User enters the tag they want to remove
-4.  ContactSails removes the specific tag from all contacts who have this tag assigned to them
+1.	User requests to find persons with specific preferences
+2.	ContactSails shows list of persons with specified preferences
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. There are no tags
+* 1a. User does not specify any preference
++
+[none]
+** 1a1. ContactSails shows an error message
++
+Use case ends.
+
+[none]
+* 1b. ContactSails does not have any preference specified by user
++
+[none]
+** 1b1. ContactSails shows empty list
++
+Use case ends.
+
+[discrete]
+=== Use case: Remove specific group
+
+*MSS*
+
+1.  User requests to remove a group
+2.  ContactSails shows a list of all the groups used in the application
+3.  User enters the group they want to remove
+4.  ContactSails removes the specific group from all contacts who have this group assigned to them
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no group
 +
 [none]
 ** 2a1. ContactSails shows an error message
@@ -1117,7 +1145,37 @@ Use case ends.
 Use case ends.
 
 [none]
-* 3a. User enters invalid tag
+* 3a. User enters invalid group
++
+[none]
+** 3a1. ContactSails shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Remove specific preference
+
+*MSS*
+
+1.  User requests to remove a preference
+2.  ContactSails shows a list of all the preferences used in the application
+3.  User enters the preference they want to remove
+4.  ContactSails removes the specific preference from all contacts who have this group assigned to them
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no preference
++
+[none]
+** 2a1. ContactSails shows an error message
++
+Use case ends.
+
+[none]
+* 3a. User enters invalid preference
 +
 [none]
 ** 3a1. ContactSails shows an error message
@@ -1240,8 +1298,11 @@ People whose details are present in my address book
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
-[[tags]] Tags::
-A label attached to a person's contact information for the purpose of grouping or give more details about that person
+[[groups]] Group::
+A label attached to a person's contact information for the purpose of grouping persons
+
+[[preferences]] Preference::
+A label attached to a person's contact information for the purpose of providing more specific details of person's interests
 
 [[tasks]] Tasks::
 A deadline, reminder, or a general note that can be added to keep track of things needed to be done

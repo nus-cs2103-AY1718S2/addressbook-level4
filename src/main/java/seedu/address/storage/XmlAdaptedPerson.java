@@ -14,7 +14,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 
 /**
  * JAXB-friendly version of the Person.
@@ -22,6 +23,8 @@ import seedu.address.model.tag.Tag;
 public class XmlAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String DUPLICATE_GROUPS_MESSAGE_FORMAT = "Person has duplicate groups!";
+    public static final String DUPLICATE_PREFERENCES_MESSAGE_FORMAT = "Person has duplicate preferences!";
 
     @XmlElement(required = true)
     private String name;
@@ -33,7 +36,8 @@ public class XmlAdaptedPerson {
     private String address;
 
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedGroup> groups = new ArrayList<>();
+    private List<XmlAdaptedPreference> preferences = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -44,13 +48,17 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedGroup> groups,
+                            List<XmlAdaptedPreference> preferences) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        if (tagged != null) {
-            this.tagged = new ArrayList<>(tagged);
+        if (groups != null) {
+            this.groups = new ArrayList<>(groups);
+        }
+        if (preferences != null) {
+            this.preferences = new ArrayList<>(preferences);
         }
     }
 
@@ -64,9 +72,14 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
+        groups = new ArrayList<>();
+        for (Group group : source.getGroupTags()) {
+            groups.add(new XmlAdaptedGroup(group));
+        }
+
+        preferences = new ArrayList<>();
+        for (Preference pref : source.getPreferenceTags()) {
+            preferences.add(new XmlAdaptedPreference(pref));
         }
     }
 
@@ -76,9 +89,22 @@ public class XmlAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
+        final List<Group> personGroups = new ArrayList<>();
+        for (XmlAdaptedGroup group : groups) {
+            Group groupToAdd = group.toModelType();
+            if (personGroups.contains(groupToAdd)) {
+                throw new IllegalValueException(DUPLICATE_GROUPS_MESSAGE_FORMAT);
+            }
+            personGroups.add(group.toModelType());
+        }
+
+        final List<Preference> personPreferences = new ArrayList<>();
+        for (XmlAdaptedPreference pref: preferences) {
+            Preference prefToAdd = pref.toModelType();
+            if (personPreferences.contains(prefToAdd)) {
+                throw new IllegalValueException(DUPLICATE_PREFERENCES_MESSAGE_FORMAT);
+            }
+            personPreferences.add(prefToAdd);
         }
 
         if (this.name == null) {
@@ -113,8 +139,9 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
-        final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        final Set<Group> groups = new HashSet<>(personGroups);
+        final Set<Preference> preferences = new HashSet<>(personPreferences);
+        return new Person(name, phone, email, address, groups, preferences);
     }
 
     @Override
@@ -132,6 +159,6 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
-                && tagged.equals(otherPerson.tagged);
+                && groups.equals(otherPerson.groups);
     }
 }

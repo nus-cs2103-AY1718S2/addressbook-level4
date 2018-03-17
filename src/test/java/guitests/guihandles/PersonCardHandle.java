@@ -16,14 +16,16 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
-    private static final String TAGS_FIELD_ID = "#tags";
+    private static final String GROUPS_FIELD_ID = "#groups";
+    private static final String PREFERENCES_FIELD_ID = "#preferences";
 
     private final Label idLabel;
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
     private final Label emailLabel;
-    private final List<Label> tagLabels;
+    private final List<Label> groupLabels;
+    private final List<Label> preferenceLabels;
 
     public PersonCardHandle(Node cardNode) {
         super(cardNode);
@@ -34,8 +36,15 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
 
-        Region tagsContainer = getChildNode(TAGS_FIELD_ID);
-        this.tagLabels = tagsContainer
+        Region groupsContainer = getChildNode(GROUPS_FIELD_ID);
+        this.groupLabels = groupsContainer
+                .getChildrenUnmodifiable()
+                .stream()
+                .map(Label.class::cast)
+                .collect(Collectors.toList());
+
+        Region preferencesContainer = getChildNode(PREFERENCES_FIELD_ID);
+        this.preferenceLabels = preferencesContainer
                 .getChildrenUnmodifiable()
                 .stream()
                 .map(Label.class::cast)
@@ -62,8 +71,15 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return emailLabel.getText();
     }
 
-    public List<String> getTags() {
-        return tagLabels
+    public List<String> getGroups() {
+        return groupLabels
+                .stream()
+                .map(Label::getText)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getPreferences() {
+        return preferenceLabels
                 .stream()
                 .map(Label::getText)
                 .collect(Collectors.toList());

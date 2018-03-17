@@ -20,7 +20,9 @@ public class XmlSerializableAddressBook {
     @XmlElement
     private List<XmlAdaptedPerson> persons;
     @XmlElement
-    private List<XmlAdaptedTag> tags;
+    private List<XmlAdaptedGroup> groups;
+    @XmlElement
+    private List<XmlAdaptedPreference> preferences;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -28,7 +30,8 @@ public class XmlSerializableAddressBook {
      */
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
-        tags = new ArrayList<>();
+        groups = new ArrayList<>();
+        preferences = new ArrayList<>();
     }
 
     /**
@@ -37,20 +40,27 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
-        tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        groups.addAll(src.getGroupList().stream().map(XmlAdaptedGroup::new).collect(Collectors.toList()));
+        preferences.addAll(src.getPreferenceList().stream().map(XmlAdaptedPreference::new)
+                .collect(Collectors.toList()));
     }
 
     /**
      * Converts this addressbook into the model's {@code AddressBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     * {@code XmlAdaptedPerson} or {@code XmlAdaptedGroup} or {@code XmlAdaptedPreference}.
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
-        for (XmlAdaptedTag t : tags) {
-            addressBook.addTag(t.toModelType());
+        for (XmlAdaptedGroup g: groups) {
+            addressBook.addGroup(g.toModelType());
         }
+
+        for (XmlAdaptedPreference pref: preferences) {
+            addressBook.addPreference(pref.toModelType());
+        }
+
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
@@ -68,6 +78,6 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && groups.equals(otherAb.groups);
     }
 }

@@ -2,9 +2,10 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PREFERENCE;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.Person;
@@ -30,8 +31,11 @@ public class PersonUtil {
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        person.getTags().stream().forEach(
-            s -> sb.append(PREFIX_TAG + s.tagName + " ")
+        person.getGroupTags().stream().forEach(
+            s -> sb.append(PREFIX_GROUP + s.tagName + " ")
+        );
+        person.getPreferenceTags().stream().forEach(
+            s -> sb.append(PREFIX_PREFERENCE + s.tagName + " ")
         );
         return sb.toString();
     }

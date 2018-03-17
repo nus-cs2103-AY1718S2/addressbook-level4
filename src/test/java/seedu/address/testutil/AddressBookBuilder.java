@@ -4,12 +4,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withGroups("Friend").build();}
  */
 public class AddressBookBuilder {
 
@@ -36,13 +37,25 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
+     * Parses {@code groupName} into a {@code Group} and adds it to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withTag(String tagName) {
+    public AddressBookBuilder withGroup(String groupName) {
         try {
-            addressBook.addTag(new Tag(tagName));
+            addressBook.addGroup(new Group(groupName));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tagName is expected to be valid.");
+            throw new IllegalArgumentException("groupName is expected to be valid.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses {@code prefName} into a {@code Preference} and adds it to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withPreference(String prefName) {
+        try {
+            addressBook.addPreference(new Preference(prefName));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("prefName is expected to be valid.");
         }
         return this;
     }

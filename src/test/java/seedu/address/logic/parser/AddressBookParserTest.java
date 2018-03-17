@@ -22,7 +22,8 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.FindGroupCommand;
+import seedu.address.logic.commands.FindPreferenceCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -30,9 +31,10 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.GroupsContainKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.TagsContainKeywordsPredicate;
+import seedu.address.model.person.PreferencesContainKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -131,20 +133,41 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_findtag() throws Exception {
+    public void parseCommand_findGroups() throws Exception {
         List<String> keywords = Arrays.asList("friends", "family", "neighbours");
-        FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindTagCommand(new TagsContainKeywordsPredicate(keywords)), command);
+        FindGroupCommand command = (FindGroupCommand) parser.parseCommand(
+                FindGroupCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new FindGroupCommand(new GroupsContainKeywordsPredicate(keywords)), command);
     }
 
     @Test
-    public void parseCommand_findtagAlias() throws Exception {
+    public void parseCommand_findGroupAlias() throws Exception {
         List<String> keywords = Arrays.asList("friends", "family", "neighbours");
-        FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindTagCommand(new TagsContainKeywordsPredicate(keywords)), command);
+        FindGroupCommand command = (FindGroupCommand) parser.parseCommand(
+                FindGroupCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new FindGroupCommand(new GroupsContainKeywordsPredicate(keywords)), command);
     }
+
+    @Test
+    public void parseCommand_findPreference() throws Exception {
+        List<String> keywords = Arrays.asList("shoes", "computers", "necklaces");
+        FindPreferenceCommand command = (FindPreferenceCommand) parser.parseCommand(
+                FindPreferenceCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new FindPreferenceCommand(new PreferencesContainKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_findPreferenceAlias() throws Exception {
+        List<String> keywords = Arrays.asList("shoes", "computers", "necklaces");
+        FindPreferenceCommand command = (FindPreferenceCommand) parser.parseCommand(
+                FindPreferenceCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new FindPreferenceCommand(new PreferencesContainKeywordsPredicate(keywords)), command);
+    }
+
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);

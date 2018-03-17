@@ -24,7 +24,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -136,7 +137,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTag(Tag targetTag) throws Exception {
+        public void deleteGroup(Group targetGroup) throws Exception {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePreference(Preference targetPreference) throws Exception {
             fail("This method should not be called.");
         }
     }

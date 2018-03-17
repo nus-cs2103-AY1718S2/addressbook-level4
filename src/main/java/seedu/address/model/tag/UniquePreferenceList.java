@@ -13,79 +13,80 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
 /**
- * A list of tags that enforces no nulls and uniqueness between its elements.
+ * A list of preference tags that enforces no nulls and uniqueness between its elements.
  *
  * Supports minimal set of list operations for the app's features.
  *
- * @see Tag#equals(Object)
+ * @see Preference#equals(Object)
  */
-public class UniqueTagList implements Iterable<Tag> {
+public class UniquePreferenceList implements Iterable<Preference> {
 
-    private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Preference> internalList = FXCollections.observableArrayList();
 
     /**
-     * Constructs empty TagList.
+     * Constructs empty PreferenceList.
      */
-    public UniqueTagList() {}
+    public UniquePreferenceList() {}
 
     /**
-     * Creates a UniqueTagList using given tags.
+     * Creates a UniquePreferenceList using given preference tags.
      * Enforces no nulls.
      */
-    public UniqueTagList(Set<Tag> tags) {
-        requireAllNonNull(tags);
-        internalList.addAll(tags);
+    public UniquePreferenceList(Set<Preference> preferenceTags) {
+        requireAllNonNull(preferenceTags);
+        internalList.addAll(preferenceTags);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Returns all tags in this list as a Set.
+     * Returns all preference tags in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
-    public Set<Tag> toSet() {
+    public Set<Preference> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new HashSet<>(internalList);
     }
 
     /**
-     * Replaces the Tags in this list with those in the argument tag list.
+     * Replaces the Preferences in this list with those in the argument preference tag list.
      */
-    public void setTags(Set<Tag> tags) {
-        requireAllNonNull(tags);
-        internalList.setAll(tags);
+    public void setTags(Set<Preference> preferenceTags) {
+        requireAllNonNull(preferenceTags);
+        internalList.setAll(preferenceTags);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Ensures every tag in the argument list exists in this object.
+     * Ensures every preference in the argument list exists in this object.
      */
-    public void mergeFrom(UniqueTagList from) {
-        final Set<Tag> alreadyInside = this.toSet();
+    public void mergeFrom(UniquePreferenceList from) {
+        final Set<Preference> alreadyInside = this.toSet();
         from.internalList.stream()
-                .filter(tag -> !alreadyInside.contains(tag))
+                .filter(preferenceTag -> !alreadyInside.contains(preferenceTag))
                 .forEach(internalList::add);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Returns true if the list contains an equivalent Tag as the given argument.
+     * Returns true if the list contains an equivalent Preference as the given argument.
      */
-    public boolean contains(Tag toCheck) {
+    public boolean contains(Preference toCheck) {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
 
     /**
-     * Adds a Tag to the list.
+     * Adds a Preference to the list.
      *
-     * @throws DuplicateTagException if the Tag to add is a duplicate of an existing Tag in the list.
+     * @throws DuplicatePreferenceException if the Preference to add is a duplicate of an
+     * existing Preference in the list.
      */
-    public void add(Tag toAdd) throws DuplicateTagException {
+    public void add(Preference toAdd) throws DuplicatePreferenceException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicateTagException();
+            throw new DuplicatePreferenceException();
         }
         internalList.add(toAdd);
 
@@ -93,9 +94,9 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     /**
-     * Removes tag from list if it exists
+     * Removes preference from list if it exists
      */
-    public void remove(Tag toRemove) {
+    public void remove(Preference toRemove) {
         requireNonNull(toRemove);
         if (contains(toRemove)) {
             internalList.remove(toRemove);
@@ -103,7 +104,7 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     @Override
-    public Iterator<Tag> iterator() {
+    public Iterator<Preference> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.iterator();
     }
@@ -111,7 +112,7 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Tag> asObservableList() {
+    public ObservableList<Preference> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return FXCollections.unmodifiableObservableList(internalList);
     }
@@ -120,15 +121,15 @@ public class UniqueTagList implements Iterable<Tag> {
     public boolean equals(Object other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         return other == this // short circuit if same object
-                || (other instanceof UniqueTagList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueTagList) other).internalList));
+                || (other instanceof UniquePreferenceList // instanceof handles nulls
+                && this.internalList.equals(((UniquePreferenceList) other).internalList));
     }
 
     /**
      * Returns true if the element in this list is equal to the elements in {@code other}.
      * The elements do not have to be in the same order.
      */
-    public boolean equalsOrderInsensitive(UniqueTagList other) {
+    public boolean equalsOrderInsensitive(UniquePreferenceList other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
@@ -143,10 +144,9 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
-    public static class DuplicateTagException extends DuplicateDataException {
-        protected DuplicateTagException() {
-            super("Operation would result in duplicate tags");
+    public static class DuplicatePreferenceException extends DuplicateDataException {
+        protected DuplicatePreferenceException() {
+            super("Operation would result in duplicate preferences");
         }
     }
-
 }

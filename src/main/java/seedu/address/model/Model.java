@@ -6,7 +6,8 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 
 /**
  * The API of the Model component.
@@ -48,7 +49,12 @@ public interface Model {
 
 
     /**
-     * Deletes given Tag
+     * Deletes given Group
      */
-    void deleteTag(Tag targetTag) throws Exception;
+    void deleteGroup(Group targetGroup) throws Exception;
+
+    /**
+     * Deletes given Preference
+     */
+    void deletePreference(Preference targetPreference) throws Exception;
 }

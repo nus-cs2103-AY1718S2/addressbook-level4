@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -21,58 +21,59 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.TagsContainKeywordsPredicate;
+import seedu.address.model.person.PreferencesContainKeywordsPredicate;
 
-public class FindTagCommandTest {
+public class FindPreferenceCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
-        TagsContainKeywordsPredicate firstPredicate =
-                new TagsContainKeywordsPredicate(Collections.singletonList("first"));
-        TagsContainKeywordsPredicate secondPredicate =
-                new TagsContainKeywordsPredicate(Collections.singletonList("second"));
+        PreferencesContainKeywordsPredicate firstPredicate =
+                new PreferencesContainKeywordsPredicate(Collections.singletonList("first"));
+        PreferencesContainKeywordsPredicate secondPredicate =
+                new PreferencesContainKeywordsPredicate(Collections.singletonList("second"));
 
-        FindTagCommand findTagFirstCommand = new FindTagCommand(firstPredicate);
-        FindTagCommand findTagSecondCommand = new FindTagCommand(secondPredicate);
+        FindPreferenceCommand findPreferenceFirstCommand = new FindPreferenceCommand(firstPredicate);
+        FindPreferenceCommand findPreferenceSecondCommand = new FindPreferenceCommand(secondPredicate);
 
         // same object -> returns true
-        assertTrue(findTagFirstCommand.equals(findTagFirstCommand));
+        assertTrue(findPreferenceFirstCommand.equals(findPreferenceFirstCommand));
 
         // same values -> returns true
-        FindTagCommand findTagFirstCommandCopy = new FindTagCommand(firstPredicate);
-        assertTrue(findTagFirstCommand.equals(findTagFirstCommandCopy));
+        FindPreferenceCommand findPreferenceFirstCommandCopy = new FindPreferenceCommand(firstPredicate);
+        assertTrue(findPreferenceFirstCommand.equals(findPreferenceFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(findTagFirstCommand.equals(1));
+        assertFalse(findPreferenceFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(findTagFirstCommand.equals(null));
+        assertFalse(findPreferenceFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(findTagFirstCommand.equals(findTagSecondCommand));
+        assertFalse(findPreferenceFirstCommand.equals(findPreferenceSecondCommand));
     }
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindTagCommand command = prepareCommand(" ");
+        FindPreferenceCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
-        FindTagCommand command = prepareCommand("Neighbours OwesMoney");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, ELLE));
+        FindPreferenceCommand command = prepareCommand("videoGames shoes");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON));
     }
 
     /**
-     * Parses {@code userInput} into a {@code FindTagCommand}.
+     * Parses {@code userInput} into a {@code FindPreferenceCommand}.
      */
-    private FindTagCommand prepareCommand(String userInput) {
-        FindTagCommand command =
-                new FindTagCommand(new TagsContainKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FindPreferenceCommand prepareCommand(String userInput) {
+        FindPreferenceCommand command =
+                new FindPreferenceCommand(new PreferencesContainKeywordsPredicate(Arrays.asList(userInput
+                        .split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -83,7 +84,8 @@ public class FindTagCommandTest {
      *     - the {@code FilteredList<Person>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindTagCommand command, String expectedMessage, List<Person> expectedList) {
+    private void assertCommandSuccess(FindPreferenceCommand command, String expectedMessage,
+                                      List<Person> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 

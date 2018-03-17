@@ -7,49 +7,65 @@
         <phone>85355255</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
-        <tagged>friends</tagged>
+        <groups>friends</groups>
+        <preferences>shoes</preferences>
+        <preferences>necklaces</preferences>
     </persons>
     <persons>
         <name>Benson Meier</name>
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <groups>twitter</groups>
+        <groups>friends</groups>
+        <preferences>videoGames</preferences>
     </persons>
     <persons>
         <name>Carl Kurz</name>
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
+        <groups>friends</groups>
+        <preferences>computers</preferences>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
+        <groups>friends</groups>
+        <preferences>computers</preferences>
     </persons>
     <persons>
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
-        <tagged>owesMoney</tagged>
-        <tagged>neighbours</tagged>
+        <groups>neighbours</groups>
+        <groups>twitter</groups>
+        <preferences>computers</preferences>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
+        <groups>friends</groups>
+        <preferences>computers</preferences>
     </persons>
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <address>4th street</address>
+        <groups>friends</groups>
+        <preferences>computers</preferences>
     </persons>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
-    <tags>neighbours</tags>
+    <groups>friends</groups>
+    <groups>neighbours</groups>
+    <groups>twitter</groups>
+    <preferences>shoes</preferences>
+    <preferences>necklaces</preferences>
+    <preferences>videoGames</preferences>
+    <preferences>computers</preferences>
 </addressbook>

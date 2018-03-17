@@ -10,7 +10,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -36,7 +37,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
-        descriptor.setTags(person.getTags());
+        descriptor.setGroupTags(person.getGroupTags());
+        descriptor.setPreferenceTags(person.getPreferenceTags());
     }
 
     /**
@@ -72,12 +74,22 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
-        Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
-        descriptor.setTags(tagSet);
+    public EditPersonDescriptorBuilder withGroups(String... groups) {
+        Set<Group> groupSet = Stream.of(groups).map(Group::new).collect(Collectors.toSet());
+        descriptor.setGroupTags(groupSet);
+        return this;
+    }
+
+    /**
+     * Parses the {@code preferences} into a {@code Set<Preference>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withPreferences(String... preferences) {
+        Set<Preference> preferenceSet = Stream.of(preferences).map(Preference::new).collect(Collectors.toSet());
+        descriptor.setPreferenceTags(preferenceSet);
         return this;
     }
 

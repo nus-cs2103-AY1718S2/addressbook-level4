@@ -40,7 +40,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.getSearchPageUrl());
+        URL expectedPersonUrl = new URL("https://calendar.google.com/calendar/embed?src=" +
+                "8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com&ctz=Asia%2FSingapore");
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());

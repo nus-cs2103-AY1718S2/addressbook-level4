@@ -56,7 +56,7 @@ public class Person {
         this.rating = rating;
         this.calendarId = "";
     }
-  
+
   /**
    * All fields specified
    */

@@ -103,7 +103,7 @@ public class PersonBuilder {
         this.calendarId = calendarId;
         return this;
     }
-    
+
     /**
      * Sets the {@code Rating} of the {@code Person} that we are building.
      */

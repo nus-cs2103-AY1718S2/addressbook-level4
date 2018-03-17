@@ -47,7 +47,11 @@ public class RateCommandTest {
                 COMMUNICATION_SKILLS_SCORE, PROBLEM_SOLVING_SKILLS_SCORE, EXPERIENCE_SCORE).build();
 
         RateCommand rateCommand = prepareCommand(INDEX_FIRST_PERSON, ratedPerson.getRating());
-        String expectedMessage = String.format(RateCommand.MESSAGE_RATE_PERSON_SUCCESS, ratedPerson);
+        String expectedMessage = String.format(RateCommand.MESSAGE_RATE_PERSON_SUCCESS,
+                ratedPerson.getName(), ratedPerson.getRating().getTechnicalSkillsScore(),
+                ratedPerson.getRating().getCommunicationSkillsScore(),
+                ratedPerson.getRating().getProblemSolvingSkillsScore(),
+                ratedPerson.getRating().getExperienceScore());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, ratedPerson);
@@ -64,7 +68,12 @@ public class RateCommandTest {
                 COMMUNICATION_SKILLS_SCORE, PROBLEM_SOLVING_SKILLS_SCORE, EXPERIENCE_SCORE).build();
 
         RateCommand rateCommand = prepareCommand(INDEX_FIRST_PERSON, ratedPerson.getRating());
-        String expectedMessage = String.format(RateCommand.MESSAGE_RATE_PERSON_SUCCESS, ratedPerson);
+        String expectedMessage = String.format(RateCommand.MESSAGE_RATE_PERSON_SUCCESS,
+                ratedPerson.getName(),
+                ratedPerson.getRating().getTechnicalSkillsScore(),
+                ratedPerson.getRating().getCommunicationSkillsScore(),
+                ratedPerson.getRating().getProblemSolvingSkillsScore(),
+                ratedPerson.getRating().getExperienceScore());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, ratedPerson);

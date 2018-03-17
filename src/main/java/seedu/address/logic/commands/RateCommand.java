@@ -24,7 +24,7 @@ public class RateCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "rate";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ":Rates a candidate.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " :Rates a candidate.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_TECHNICAL_SKILLS_SCORE + "TECHNICAL SKILLS SCORE "
             + PREFIX_COMMUNICATION_SKILLS_SCORE + "COMMUNICATION SKILLS SCORE "
@@ -36,8 +36,9 @@ public class RateCommand extends UndoableCommand {
             + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + "4 "
             + PREFIX_EXPERIENCE_SCORE + "3.5";
 
-    public static final String MESSAGE_RATE_PERSON_SUCCESS = "Rated Person: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_RATE_PERSON_SUCCESS = "Rated %1$s:\n"
+            + "Technical skills: %2$s, Communication skills: %3$s, "
+            + "Problem solving skills: %4$s, Experience: %5$s";
 
     private final Index index;
     private final Rating rating;
@@ -71,7 +72,11 @@ public class RateCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_RATE_PERSON_SUCCESS, ratedPerson));
+        return new CommandResult(String.format(MESSAGE_RATE_PERSON_SUCCESS, ratedPerson.getName(),
+                ratedPerson.getRating().getTechnicalSkillsScore(),
+                ratedPerson.getRating().getCommunicationSkillsScore(),
+                ratedPerson.getRating().getProblemSolvingSkillsScore(),
+                ratedPerson.getRating().getExperienceScore()));
     }
 
     @Override

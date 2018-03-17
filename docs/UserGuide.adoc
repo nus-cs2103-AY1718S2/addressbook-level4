@@ -202,7 +202,7 @@ Format: `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROB
 
 ****
 * Rates the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* The scores should be a number in the range of 1 to 5 (inclusive).
+* The scores should be a number in the range of 1 to 5 (inclusive). Scores are rounded to two decimal places.
 ****
 
 Examples:

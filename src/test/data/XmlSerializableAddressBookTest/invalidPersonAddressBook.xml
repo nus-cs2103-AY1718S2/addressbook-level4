@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
-    <!-- Person with invalid phone field -->
+    <!-- Person with invalid nric field -->
     <persons>
         <name>Hans Muster</name>
-        <phone isPrivate="false">9482ab424</phone>
+        <nric isPrivate="false">9482ab424</nric>
     </persons>
 </addressbook>

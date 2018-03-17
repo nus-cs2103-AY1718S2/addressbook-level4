@@ -53,6 +53,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Parameters can be in any order e.g. if the command specifies `n/NAME ic/S9500186H`, `ic/S9500186H n/NAME` is also acceptable.
 * Items in square brackets are optional. e.g `n/NAME [t/CLASS]` can be used as `n/John Doe t/1A` or as `n/John Doe`.
+* Command input is not case sensitive, e.g 'fInD Alex' , 'find alex' works the same.
 ====
 
 === Viewing help : `help`
@@ -61,7 +62,7 @@ Format: `help`
 
 === Adding a person: `add` or `a`
 
-Adds a person to the address book +
+Adds a person to EduBuddy +
 Format: `add n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER` +
 Format: `a n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER`
 
@@ -75,11 +76,16 @@ Examples:
 
 === Listing all student : `list` or `l`
 
-Shows a list of all students in the EduBuddy. +
+Shows a list of all students in EduBuddy. +
 Format: `list` or `l`
 
+=== Sorting students by name : `sort`
+
+Sorts the list of students in EduBuddy by their name in alphabetical order. +
+Format: `sort`
+
 === Editing a student : `edit` or `e`
-Edits an existing student in the EduBuddy. +
+Edits an existing student in EduBuddy. +
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER]` +
         `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER]`
 
@@ -92,11 +98,11 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGIS
 Examples:
 
 * `edit 1 p/91234567` +
-Edits the phone number of the 1st student to be `91234567` respectively.
+Edits the nric number of the 1st student to be `91234567` respectively.
 * `edit 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 * `e 1 p/91234567` +
-Edits the phone number of the 1st student to be `91234567` respectively.
+Edits the nric number of the 1st student to be `91234567` respectively.
 * `e 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 
@@ -122,7 +128,7 @@ Returns any student having names `Betsy`, `Tim`, or `John`
 
 === Deleting a student : `delete` or `d`
 
-Deletes the specified student from the EduBuddy. +
+Deletes the specified student from EduBuddy. +
 Format: `delete INDEX` or `d INDEX`
 
 ****
@@ -135,10 +141,26 @@ Examples:
 
 * `list` +
 `d 2` +
-Deletes the 2nd student in the EduBuddy.
+Deletes the 2nd student in EduBuddy.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st student in the results of the `find` command.
+
+=== Deleting a tag : `tagdelete` or `td`
+
+Deletes the specified tag from every student in EduBuddy. +
+Format: `tagdelete TAGNAME` or `td TAGNAME`
+
+****
+* Deletes the specified tag from every student in Edubuddy.
+* The tag refers to the index number shown in the most recent listing.
+* The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
+****
+
+Examples:
+
+* `tagdelete Class1A` or `td Class1A` +
+Deletes the 'Class 1A' tag from every student in the EduBuddy.
 
 === Selecting a person : `select` or `s`
 
@@ -155,7 +177,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd student in the EduBuddy.
+Selects the 2nd student in EduBuddy.
 * `find Betsy` +
 `s 1` +
 Selects the 1st student in the results of the `find` command.
@@ -173,7 +195,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
-Restores the EduBuddy to the state before the previous _undoable_ command was executed. +
+Restores EduBuddy to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u`
 
 [NOTE]
@@ -222,13 +244,31 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` or `c`
 
-Clears all entries from the EduBuddy. +
+Clears all entries from EduBuddy. +
 Format: `clear` or `c`
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
+
+=== Creating an appointment on the calendar : `create [coming in v2.0]`
+
+Creates an appointment with the student identified by the index number used
+in the last student listing and displays it on the calendar.
+E.g. setting a consultation time slot with students. +
+Format: `create INDEX date/DATE time/TIME`
+
+****
+* Date is in *DDMMYY* format
+* Time is in *24 hour* format
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `create 1 date/01022018 time/1500` +
+Creates an appointment with the 1st student on `01022018` at `1500`
 
 === Saving the data
 

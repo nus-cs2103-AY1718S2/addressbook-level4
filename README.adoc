@@ -1,4 +1,5 @@
 = EduBuddy
+
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-T09-B1/main[image:https://travis-ci.org/CS2103JAN2018-T09-B1/main.svg?branch=master[Build Status]]

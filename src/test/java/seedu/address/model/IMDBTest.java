@@ -27,54 +27,54 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
 
-public class AddressBookTest {
+public class IMDBTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AddressBook addressBook = new AddressBook();
-    private final AddressBook addressBookWithAmyAndBob =
+    private final IMDB IMDB = new IMDB();
+    private final IMDB IMDBWithAmyAndBob =
             new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getPersonList());
-        assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), IMDB.getPersonList());
+        assertEquals(Collections.emptyList(), IMDB.getTagList());
     }
 
     @Test
     public void removeTag_unusedTag_addressBookUnchanged() {
-        addressBookWithAmyAndBob.removeTag(new Tag(UNUSED_TAG));
+        IMDBWithAmyAndBob.removeTag(new Tag(UNUSED_TAG));
 
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        IMDB expectedIMDB = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
 
-        assertEquals(addressBookWithAmyAndBob, expectedAddressBook);
+        assertEquals(IMDBWithAmyAndBob, expectedIMDB);
 
     }
 
     @Test
     public void removeTag_multiplePersonsTag_tagRemoved() {
-        addressBookWithAmyAndBob.removeTag(new Tag(VALID_TAG_FRIEND));
+        IMDBWithAmyAndBob.removeTag(new Tag(VALID_TAG_FRIEND));
 
         Patient amyWithoutFriendTag = new PersonBuilder(AMY).build();
         Patient bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(amyWithoutFriendTag)
+        IMDB expectedIMDB = new AddressBookBuilder().withPerson(amyWithoutFriendTag)
                 .withPerson(bobWithoutFriendTag).build();
 
-        assertEquals(addressBookWithAmyAndBob, expectedAddressBook);
+        assertEquals(IMDBWithAmyAndBob, expectedIMDB);
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        addressBook.resetData(null);
+        IMDB.resetData(null);
     }
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = getTypicalAddressBook();
-        addressBook.resetData(newData);
-        assertEquals(newData, addressBook);
+        IMDB newData = getTypicalAddressBook();
+        IMDB.resetData(newData);
+        assertEquals(newData, IMDB);
     }
 
     @Test
@@ -82,33 +82,33 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Patient> newPatients = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPatients, newTags);
+        IMDBStub newData = new IMDBStub(newPatients, newTags);
 
         thrown.expect(AssertionError.class);
-        addressBook.resetData(newData);
+        IMDB.resetData(newData);
     }
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getPersonList().remove(0);
+        IMDB.getPersonList().remove(0);
     }
 
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getTagList().remove(0);
+        IMDB.getTagList().remove(0);
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose patients and tags lists can violate interface constraints.
+     * A stub ReadOnlyIMDB whose patients and tags lists can violate interface constraints.
      */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
+    private static class IMDBStub implements ReadOnlyIMDB {
         private final ObservableList<Patient> patients = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Patient> patients, Collection<? extends Tag> tags) {
+        IMDBStub(Collection<Patient> patients, Collection<? extends Tag> tags) {
             this.patients.setAll(patients);
             this.tags.setAll(tags);
             this.appointments.setAll(appointments);

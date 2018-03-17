@@ -35,20 +35,20 @@ public class TestUtil {
      * Returns the middle index of the patient in the {@code model}'s patient list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getPersonList().size() / 2);
+        return Index.fromOneBased(model.getIMDB().getPersonList().size() / 2);
     }
 
     /**
      * Returns the last index of the patient in the {@code model}'s patient list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getPersonList().size());
+        return Index.fromOneBased(model.getIMDB().getPersonList().size());
     }
 
     /**
      * Returns the patient in the {@code model}'s patient list at {@code index}.
      */
     public static Patient getPerson(Model model, Index index) {
-        return model.getAddressBook().getPersonList().get(index.getZeroBased());
+        return model.getIMDB().getPersonList().get(index.getZeroBased());
     }
 }

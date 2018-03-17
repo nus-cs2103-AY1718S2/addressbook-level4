@@ -21,7 +21,7 @@ public class ViewAppointmentCommandTest {
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getIMDB(), new UserPrefs());
         viewAppointmentCommand = new ViewAppointmentCommand();
         viewAppointmentCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }

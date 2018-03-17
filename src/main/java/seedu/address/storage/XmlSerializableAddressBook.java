@@ -8,11 +8,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.IMDB;
+import seedu.address.model.ReadOnlyIMDB;
 
 /**
- * An Immutable AddressBook that is serializable to XML format
+ * An Immutable IMDB that is serializable to XML format
  */
 @XmlRootElement(name = "addressbook")
 public class XmlSerializableAddressBook {
@@ -37,7 +37,7 @@ public class XmlSerializableAddressBook {
     /**
      * Conversion
      */
-    public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
+    public XmlSerializableAddressBook(ReadOnlyIMDB src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
@@ -46,24 +46,24 @@ public class XmlSerializableAddressBook {
     }
 
     /**
-     * Converts this addressbook into the model's {@code AddressBook} object.
+     * Converts this addressbook into the model's {@code IMDB} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
      */
-    public AddressBook toModelType() throws IllegalValueException {
-        AddressBook addressBook = new AddressBook();
+    public IMDB toModelType() throws IllegalValueException {
+        IMDB IMDB = new IMDB();
         for (XmlAdaptedTag t : tags) {
-            addressBook.addTag(t.toModelType());
+            IMDB.addTag(t.toModelType());
         }
         for (XmlAdaptedPerson p : persons) {
-            addressBook.addPerson(p.toModelType());
+            IMDB.addPerson(p.toModelType());
         }
 
         for (XmlAdaptedAppointment appt : appointments) {
-            addressBook.addAppointment(appt.toModelType());
+            IMDB.addAppointment(appt.toModelType());
         }
-        return addressBook;
+        return IMDB;
     }
 
     @Override

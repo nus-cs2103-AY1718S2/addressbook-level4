@@ -19,7 +19,7 @@ public class ViewAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        ObservableList<Appointment> appointmentList = model.getAddressBook().getAppointmentList();
+        ObservableList<Appointment> appointmentList = model.getIMDB().getAppointmentList();
         logger.info("--get appointment list---");
         printOutAppointmentInLog(appointmentList);
         return new CommandResult(MESSAGE_SUCCESS);

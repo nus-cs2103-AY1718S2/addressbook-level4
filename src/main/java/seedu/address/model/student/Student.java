@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
+import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,6 +23,7 @@ public class Student {
     private final Address address;
     private final ProgrammingLanguage programmingLanguage;
     private final Favourite favourite;
+    private final Dashboard dashboard;
 
     private final UniqueTagList tags;
 
@@ -39,6 +41,7 @@ public class Student {
         this.programmingLanguage = programmingLanguage;
         this.tags = new UniqueTagList(tags);
         this.favourite = new Favourite(false); // Default value
+        this.dashboard = new Dashboard();
     }
 
     /**
@@ -55,6 +58,7 @@ public class Student {
         this.programmingLanguage = programmingLanguage;
         this.tags = new UniqueTagList(tags);
         this.favourite = fav;
+        this.dashboard = new Dashboard();
     }
 
     public Name getName() {
@@ -75,6 +79,10 @@ public class Student {
 
     public Favourite getFavourite() {
         return favourite;
+    }
+
+    public Dashboard getDashboard() {
+        return dashboard;
     }
 
     /**
@@ -115,13 +123,14 @@ public class Student {
                 && otherStudent.getPhone().equals(this.getPhone())
                 && otherStudent.getEmail().equals(this.getEmail())
                 && otherStudent.getAddress().equals(this.getAddress())
-                && otherStudent.getProgrammingLanguage().equals(this.getProgrammingLanguage());
+                && otherStudent.getProgrammingLanguage().equals(this.getProgrammingLanguage())
+                && otherStudent.getDashboard().equals(this.getDashboard());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, programmingLanguage, dashboard);
     }
 
     @Override
@@ -139,7 +148,9 @@ public class Student {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         builder.append(" Favourite: ")
-                .append(getFavourite());
+                .append(getFavourite())
+                .append("Dashboard: ")
+                .append(getDashboard());
         return builder.toString();
     }
 

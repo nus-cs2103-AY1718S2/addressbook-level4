@@ -147,7 +147,7 @@ Returns `john` and `John Doe`
 `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by groups: `findgroup`
+=== Locating persons by groups: `findgroup` `v1.2`
 
 Finds persons whose groups matches any of the given keywords. +
 Format: `findgroup KEYWORD [MORE_KEYWORDS]` +
@@ -170,7 +170,7 @@ Returns `John Doe`
 `fg neighbours friends colleagues` +
 Returns any person having groups `neighbours`, `friends`, or `colleagues`
 
-=== Locating persons by preferences: `findpref`
+=== Locating persons by preferences: `findpref` `v1.2`
 
 Finds persons whose preferences matches any of the given keywords. +
 Format: `findpref KEYWORD [MORE_KEYWORDS]` +

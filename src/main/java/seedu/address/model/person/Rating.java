@@ -4,6 +4,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import seedu.address.commons.util.DoubleUtil;
+
 /**
  * Represents a candidate's rating after an interview.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -34,12 +36,12 @@ public class Rating {
                   double experienceScore) {
         requireAllNonNull(technicalSkillsScore, communicationSkillsScore, problemSolvingSkillsScore,
                 experienceScore);
-        this.technicalSkillsScore = technicalSkillsScore;
-        this.communicationSkillsScore = communicationSkillsScore;
-        this.problemSolvingSkillsScore = problemSolvingSkillsScore;
-        this.experienceScore = experienceScore;
-        this.overallScore = calculateOverallScore(technicalSkillsScore,
-                communicationSkillsScore, problemSolvingSkillsScore, experienceScore);
+        this.technicalSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(technicalSkillsScore);
+        this.communicationSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(communicationSkillsScore);
+        this.problemSolvingSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(problemSolvingSkillsScore);
+        this.experienceScore = DoubleUtil.roundToTwoDecimalPlaces(experienceScore);
+        this.overallScore = calculateOverallScore(this.technicalSkillsScore,
+                this.communicationSkillsScore, this.problemSolvingSkillsScore, this.experienceScore);
     }
 
     public double getTechnicalSkillsScore() {
@@ -62,10 +64,27 @@ public class Rating {
         return overallScore;
     }
 
-    private static double calculateOverallScore(double technicalSkillsScore, double communicationSkillsScore,
+    /**
+     * Returns the average of {@code technicalSkillsScore}, {@code communicationSkillsScore},
+     * {@code problemSolvingSkillsScore} and {@code experienceScore}, rounded to two decimal places
+     */
+    public static double calculateOverallScore(double technicalSkillsScore, double communicationSkillsScore,
                                          double problemSolvingSkillsScore, double experienceScore) {
-        return (technicalSkillsScore + communicationSkillsScore + problemSolvingSkillsScore
-            + experienceScore) / NUMBER_OF_SCORES;
+        return DoubleUtil.roundToTwoDecimalPlaces((technicalSkillsScore + communicationSkillsScore
+                + problemSolvingSkillsScore + experienceScore) / NUMBER_OF_SCORES);
+    }
+
+    /**
+     * Returns the average of {@code technicalSkillsScore}, {@code communicationSkillsScore},
+     * {@code problemSolvingSkillsScore} and {@code experienceScore}, rounded to two decimal places as a String
+     */
+    public static String calculateOverallScore(String technicalSkillsScore, String communicationSkillsScore,
+                                                String problemSolvingSkillsScore, String experienceScore) {
+        double overallScore = DoubleUtil.roundToTwoDecimalPlaces((Double.parseDouble(technicalSkillsScore)
+                + Double.parseDouble(communicationSkillsScore)
+                + Double.parseDouble(problemSolvingSkillsScore)
+                + Double.parseDouble(experienceScore)) / NUMBER_OF_SCORES);
+        return Double.toString(overallScore);
     }
 
     @Override

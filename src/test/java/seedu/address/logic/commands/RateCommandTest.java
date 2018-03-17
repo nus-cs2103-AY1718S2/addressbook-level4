@@ -52,7 +52,7 @@ public class RateCommandTest {
                 ratedPerson.getRating().getCommunicationSkillsScore(),
                 ratedPerson.getRating().getProblemSolvingSkillsScore(),
                 ratedPerson.getRating().getExperienceScore(),
-                String.format("%.2f", ratedPerson.getRating().getOverallScore()));
+                ratedPerson.getRating().getOverallScore());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, ratedPerson);
@@ -75,7 +75,7 @@ public class RateCommandTest {
                 ratedPerson.getRating().getCommunicationSkillsScore(),
                 ratedPerson.getRating().getProblemSolvingSkillsScore(),
                 ratedPerson.getRating().getExperienceScore(),
-                String.format("%.2f", ratedPerson.getRating().getOverallScore()));
+                ratedPerson.getRating().getOverallScore());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, ratedPerson);

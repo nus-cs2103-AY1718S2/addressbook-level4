@@ -54,6 +54,8 @@ public class XmlAdaptedPerson {
     private String problemSolvingSkillsScore;
     @XmlElement
     private String experienceScore;
+    @XmlElement
+    private String overallScore;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -80,6 +82,8 @@ public class XmlAdaptedPerson {
         this.communicationSkillsScore = communicationSkillsScore;
         this.problemSolvingSkillsScore = problemSolvingSkillsScore;
         this.experienceScore = experienceScore;
+        this.overallScore = Rating.calculateOverallScore(technicalSkillsScore, communicationSkillsScore,
+                problemSolvingSkillsScore, experienceScore);
         this.resume = resume;
         this.interviewDate = interviewDate;
         if (tagged != null) {
@@ -102,6 +106,7 @@ public class XmlAdaptedPerson {
         communicationSkillsScore = Double.toString(source.getRating().communicationSkillsScore);
         problemSolvingSkillsScore = Double.toString(source.getRating().problemSolvingSkillsScore);
         experienceScore = Double.toString(source.getRating().experienceScore);
+        overallScore = Double.toString(source.getRating().overallScore);
         resume = source.getResume().value;
         interviewDate = source.getInterviewDate().toString();
         tagged = new ArrayList<>();

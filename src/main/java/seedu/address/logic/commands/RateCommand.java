@@ -78,7 +78,7 @@ public class RateCommand extends UndoableCommand {
                 ratedPerson.getRating().getCommunicationSkillsScore(),
                 ratedPerson.getRating().getProblemSolvingSkillsScore(),
                 ratedPerson.getRating().getExperienceScore(),
-                String.format("%.2f", ratedPerson.getRating().getOverallScore())));
+                ratedPerson.getRating().getOverallScore()));
     }
 
     @Override

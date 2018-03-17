@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.PatientCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.PatientListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.patient.Patient;
 
@@ -44,28 +44,28 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code patients} correctly and
+     * Asserts that the list in {@code patientListPanelHandle} displays the details of {@code patients} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, Patient... patients) {
+    public static void assertListMatching(PatientListPanelHandle patientListPanelHandle, Patient... patients) {
         for (int i = 0; i < patients.length; i++) {
-            assertCardDisplaysPerson(patients[i], personListPanelHandle.getPersonCardHandle(i));
+            assertCardDisplaysPerson(patients[i], patientListPanelHandle.getPersonCardHandle(i));
         }
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code patients} correctly and
+     * Asserts that the list in {@code patientListPanelHandle} displays the details of {@code patients} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<Patient> patients) {
-        assertListMatching(personListPanelHandle, patients.toArray(new Patient[0]));
+    public static void assertListMatching(PatientListPanelHandle patientListPanelHandle, List<Patient> patients) {
+        assertListMatching(patientListPanelHandle, patients.toArray(new Patient[0]));
     }
 
     /**
-     * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
+     * Asserts the size of the list in {@code patientListPanelHandle} equals to {@code size}.
      */
-    public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
-        int numberOfPeople = personListPanelHandle.getListSize();
+    public static void assertListSize(PatientListPanelHandle patientListPanelHandle, int size) {
+        int numberOfPeople = patientListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
     }
 

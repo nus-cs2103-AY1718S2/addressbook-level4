@@ -10,12 +10,12 @@ import seedu.address.ui.PatientCard;
 /**
  * Provides a handle for {@code PatientListPanel} containing the list of {@code PatientCard}.
  */
-public class PersonListPanelHandle extends NodeHandle<ListView<PatientCard>> {
+public class PatientListPanelHandle extends NodeHandle<ListView<PatientCard>> {
     public static final String PERSON_LIST_VIEW_ID = "#personListView";
 
     private Optional<PatientCard> lastRememberedSelectedPersonCard;
 
-    public PersonListPanelHandle(ListView<PatientCard> personListPanelNode) {
+    public PatientListPanelHandle(ListView<PatientCard> personListPanelNode) {
         super(personListPanelNode);
     }
 

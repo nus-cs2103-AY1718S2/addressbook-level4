@@ -35,7 +35,7 @@ public class XmlIMDBStorageTest {
     }
 
     private java.util.Optional<ReadOnlyIMDB> readAddressBook(String filePath) throws Exception {
-        return new XmlAddressBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath));
+        return new XmlIMDBStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath));
     }
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -76,7 +76,7 @@ public class XmlIMDBStorageTest {
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
         IMDB original = getTypicalAddressBook();
-        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        XmlIMDBStorage xmlAddressBookStorage = new XmlIMDBStorage(filePath);
 
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
@@ -103,7 +103,7 @@ public class XmlIMDBStorageTest {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
         String backupFilePath = filePath + ".backup";
         IMDB original = getTypicalAddressBook();
-        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        XmlIMDBStorage xmlAddressBookStorage = new XmlIMDBStorage(filePath);
 
         //Backup in new file and read back
         xmlAddressBookStorage.backupAddressBook(original);
@@ -136,7 +136,7 @@ public class XmlIMDBStorageTest {
      */
     private void saveAddressBook(ReadOnlyIMDB addressBook, String filePath) {
         try {
-            new XmlAddressBookStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+            new XmlIMDBStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
@@ -147,7 +147,7 @@ public class XmlIMDBStorageTest {
      */
     private void backupAddressBook(ReadOnlyIMDB addressBook, String filePath) {
         try {
-            new XmlAddressBookStorage(filePath).backupAddressBook(addressBook);
+            new XmlIMDBStorage(filePath).backupAddressBook(addressBook);
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

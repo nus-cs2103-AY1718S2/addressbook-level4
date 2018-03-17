@@ -10,7 +10,7 @@ import seedu.address.model.ReadOnlyIMDB;
 /**
  * Represents a storage for {@link IMDB}.
  */
-public interface AddressBookStorage {
+public interface IMDBStorage {
 
     /**
      * Returns the file path of the data file.

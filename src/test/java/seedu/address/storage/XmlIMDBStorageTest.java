@@ -63,7 +63,7 @@ public class XmlIMDBStorageTest {
     @Test
     public void readAddressBook_invalidPersonAddressBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readAddressBook("invalidPersonAddressBook.xml");
+        readAddressBook("invalidPatientIMDB.xml");
     }
 
     @Test

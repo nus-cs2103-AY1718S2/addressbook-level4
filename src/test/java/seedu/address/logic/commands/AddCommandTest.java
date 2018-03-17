@@ -25,7 +25,7 @@ import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PatientBuilder;
 
 public class AddCommandTest {
 
@@ -41,7 +41,7 @@ public class AddCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Patient validPatient = new PersonBuilder().build();
+        Patient validPatient = new PatientBuilder().build();
 
         CommandResult commandResult = getAddCommandForPerson(validPatient, modelStub).execute();
 
@@ -52,7 +52,7 @@ public class AddCommandTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Patient validPatient = new PersonBuilder().build();
+        Patient validPatient = new PatientBuilder().build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -62,8 +62,8 @@ public class AddCommandTest {
 
     @Test
     public void equals() {
-        Patient alice = new PersonBuilder().withName("Alice").build();
-        Patient bob = new PersonBuilder().withName("Bob").build();
+        Patient alice = new PatientBuilder().withName("Alice").build();
+        Patient bob = new PatientBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 

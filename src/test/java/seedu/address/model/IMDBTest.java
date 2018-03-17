@@ -25,7 +25,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.IMDBBuilder;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PatientBuilder;
 
 public class IMDBTest {
 
@@ -56,8 +56,8 @@ public class IMDBTest {
     public void removeTag_multiplePersonsTag_tagRemoved() {
         IMDBWithAmyAndBob.removeTag(new Tag(VALID_TAG_FRIEND));
 
-        Patient amyWithoutFriendTag = new PersonBuilder(AMY).build();
-        Patient bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Patient amyWithoutFriendTag = new PatientBuilder(AMY).build();
+        Patient bobWithoutFriendTag = new PatientBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         IMDB expectedIMDB = new IMDBBuilder().withPerson(amyWithoutFriendTag)
                 .withPerson(bobWithoutFriendTag).build();
 

@@ -46,7 +46,7 @@ import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class EditCommandSystemTest extends IMDBSystemTest {
@@ -63,7 +63,7 @@ public class EditCommandSystemTest extends IMDBSystemTest {
         Index index = INDEX_FIRST_PERSON;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
                 + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
-        Patient editedPatient = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Patient editedPatient = new PatientBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedPatient);
 
@@ -88,13 +88,13 @@ public class EditCommandSystemTest extends IMDBSystemTest {
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
         Patient patientToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
-        editedPatient = new PersonBuilder(patientToEdit).withTags(VALID_TAG_FRIEND).build();
+        editedPatient = new PatientBuilder(patientToEdit).withTags(VALID_TAG_FRIEND).build();
         assertCommandSuccess(command, index, editedPatient);
 
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
-        editedPatient = new PersonBuilder(patientToEdit).withTags().build();
+        editedPatient = new PatientBuilder(patientToEdit).withTags().build();
         assertCommandSuccess(command, index, editedPatient);
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
@@ -105,7 +105,7 @@ public class EditCommandSystemTest extends IMDBSystemTest {
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
         patientToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
-        editedPatient = new PersonBuilder(patientToEdit).withName(VALID_NAME_BOB).build();
+        editedPatient = new PatientBuilder(patientToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedPatient);
 
         /* Case: filtered patient list, edit index within bounds of address book but out of bounds of patient list

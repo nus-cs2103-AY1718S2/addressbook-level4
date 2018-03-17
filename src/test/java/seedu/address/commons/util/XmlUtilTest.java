@@ -19,7 +19,7 @@ import seedu.address.storage.XmlAdaptedPatient;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableIMDB;
 import seedu.address.testutil.IMDBBuilder;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.TestUtil;
 
 public class XmlUtilTest {
@@ -130,7 +130,7 @@ public class XmlUtilTest {
 
         IMDBBuilder builder = new IMDBBuilder(new IMDB());
         dataToWrite = new XmlSerializableIMDB(
-                builder.withPerson(new PersonBuilder().build()).withTag("Friends").build());
+                builder.withPerson(new PatientBuilder().build()).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableIMDB.class);

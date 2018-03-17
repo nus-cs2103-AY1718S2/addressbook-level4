@@ -9,20 +9,20 @@ import org.junit.Test;
 
 import guitests.guihandles.PatientCardHandle;
 import seedu.address.model.patient.Patient;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PatientBuilder;
 
 public class PatientCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
         // no tags
-        Patient patientWithNoTags = new PersonBuilder().withTags(new String[0]).build();
+        Patient patientWithNoTags = new PatientBuilder().withTags(new String[0]).build();
         PatientCard patientCard = new PatientCard(patientWithNoTags, 1);
         uiPartRule.setUiPart(patientCard);
         assertCardDisplay(patientCard, patientWithNoTags, 1);
 
         // with tags
-        Patient patientWithTags = new PersonBuilder().build();
+        Patient patientWithTags = new PatientBuilder().build();
         patientCard = new PatientCard(patientWithTags, 2);
         uiPartRule.setUiPart(patientCard);
         assertCardDisplay(patientCard, patientWithTags, 2);
@@ -30,7 +30,7 @@ public class PatientCardTest extends GuiUnitTest {
 
     @Test
     public void equals() {
-        Patient patient = new PersonBuilder().build();
+        Patient patient = new PatientBuilder().build();
         PatientCard patientCard = new PatientCard(patient, 0);
 
         // same patient, same index -> returns true
@@ -47,7 +47,7 @@ public class PatientCardTest extends GuiUnitTest {
         assertFalse(patientCard.equals(0));
 
         // different patient, same index -> returns false
-        Patient differentPatient = new PersonBuilder().withName("differentName").build();
+        Patient differentPatient = new PatientBuilder().withName("differentName").build();
         assertFalse(patientCard.equals(new PatientCard(differentPatient, 0)));
 
         // same patient, different index -> returns false

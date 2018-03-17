@@ -37,7 +37,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class IMDBParserTest {
@@ -48,14 +48,14 @@ public class IMDBParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Patient patient = new PersonBuilder().build();
+        Patient patient = new PatientBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(patient));
         assertEquals(new AddCommand(patient), command);
     }
 
     @Test
     public void parseCommand_addCommandAlias() throws Exception {
-        Patient patient = new PersonBuilder().build();
+        Patient patient = new PatientBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandAlias(patient));
         assertEquals(new AddCommand(patient), command);
     }
@@ -88,7 +88,7 @@ public class IMDBParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Patient patient = new PersonBuilder().build();
+        Patient patient = new PatientBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(patient));
@@ -97,7 +97,7 @@ public class IMDBParserTest {
 
     @Test
     public void parseCommand_editCommandAlias() throws Exception {
-        Patient patient = new PersonBuilder().build();
+        Patient patient = new PatientBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(patient));

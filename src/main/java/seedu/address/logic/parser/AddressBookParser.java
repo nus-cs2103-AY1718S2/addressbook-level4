@@ -21,6 +21,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -133,6 +134,12 @@ public class AddressBookParser {
 
         case RemarkCommand.COMMAND_ALIAS:
             return new RemarkCommandParser().parse(arguments);
+
+        case ViewAppointmentCommand.COMMAND_WORD:
+            return new ViewAppointmentCommand();
+
+        case ViewAppointmentCommand.COMMAND_ALIAS:
+            return new ViewAppointmentCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

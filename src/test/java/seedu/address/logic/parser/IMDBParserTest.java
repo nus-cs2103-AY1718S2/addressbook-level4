@@ -38,7 +38,7 @@ import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PatientBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.PatientUtil;
 
 public class IMDBParserTest {
     @Rule
@@ -49,14 +49,14 @@ public class IMDBParserTest {
     @Test
     public void parseCommand_add() throws Exception {
         Patient patient = new PatientBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(patient));
+        AddCommand command = (AddCommand) parser.parseCommand(PatientUtil.getAddCommand(patient));
         assertEquals(new AddCommand(patient), command);
     }
 
     @Test
     public void parseCommand_addCommandAlias() throws Exception {
         Patient patient = new PatientBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandAlias(patient));
+        AddCommand command = (AddCommand) parser.parseCommand(PatientUtil.getAddCommandAlias(patient));
         assertEquals(new AddCommand(patient), command);
     }
 
@@ -91,7 +91,7 @@ public class IMDBParserTest {
         Patient patient = new PatientBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(patient));
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PatientUtil.getPersonDetails(patient));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
@@ -100,7 +100,7 @@ public class IMDBParserTest {
         Patient patient = new PatientBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(patient));
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PatientUtil.getPersonDetails(patient));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 

@@ -26,13 +26,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPatients.ALICE;
+import static seedu.address.testutil.TypicalPatients.AMY;
+import static seedu.address.testutil.TypicalPatients.BOB;
+import static seedu.address.testutil.TypicalPatients.CARL;
+import static seedu.address.testutil.TypicalPatients.HOON;
+import static seedu.address.testutil.TypicalPatients.IDA;
+import static seedu.address.testutil.TypicalPatients.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PatientBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.PatientUtil;
 
 public class AddCommandSystemTest extends IMDBSystemTest {
 
@@ -135,14 +135,14 @@ public class AddCommandSystemTest extends IMDBSystemTest {
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate patient -> rejected */
-        command = PersonUtil.getAddCommand(HOON);
+        command = PatientUtil.getAddCommand(HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate patient except with different tags -> rejected */
-        // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
+        // "friends" is an existing tag used in the default model, see TypicalPatients#ALICE
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
         // IMDB#addPerson(Patient)
-        command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
+        command = PatientUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: missing name -> rejected */
@@ -162,7 +162,7 @@ public class AddCommandSystemTest extends IMDBSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "adds " + PersonUtil.getPersonDetails(toAdd);
+        command = "adds " + PatientUtil.getPersonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
@@ -202,7 +202,7 @@ public class AddCommandSystemTest extends IMDBSystemTest {
      * @see IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(Patient toAdd) {
-        assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
+        assertCommandSuccess(PatientUtil.getAddCommand(toAdd), toAdd);
     }
 
     /**

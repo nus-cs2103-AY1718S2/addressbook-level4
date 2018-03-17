@@ -22,7 +22,7 @@ import seedu.address.model.patient.exceptions.DuplicatePatientException;
 /**
  * A utility class containing a list of {@code Patient} objects to be used in tests.
  */
-public class TypicalPersons {
+public class TypicalPatients {
 
     public static final Patient ALICE = new PatientBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
@@ -58,7 +58,7 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    private TypicalPatients() {} // prevents instantiation
 
     /**
      * Returns an {@code IMDB} with all the typical persons.

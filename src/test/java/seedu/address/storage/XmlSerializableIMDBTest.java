@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.IMDB;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalPatients;
 
 public class XmlSerializableIMDBTest {
 
@@ -29,7 +29,7 @@ public class XmlSerializableIMDBTest {
         XmlSerializableIMDB dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
                 XmlSerializableIMDB.class);
         IMDB IMDBFromFile = dataFromFile.toModelType();
-        IMDB typicalPersonsIMDB = TypicalPersons.getTypicalAddressBook();
+        IMDB typicalPersonsIMDB = TypicalPatients.getTypicalAddressBook();
         assertEquals(IMDBFromFile, typicalPersonsIMDB);
     }
 

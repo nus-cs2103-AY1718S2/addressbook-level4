@@ -26,9 +26,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPatients.AMY;
+import static seedu.address.testutil.TypicalPatients.BOB;
+import static seedu.address.testutil.TypicalPatients.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PatientBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.PatientUtil;
 
 public class EditCommandSystemTest extends IMDBSystemTest {
 
@@ -174,7 +174,7 @@ public class EditCommandSystemTest extends IMDBSystemTest {
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a patient with new values same as another patient's values -> rejected */
-        executeCommand(PersonUtil.getAddCommand(BOB));
+        executeCommand(PatientUtil.getAddCommand(BOB));
         assertTrue(getModel().getIMDB().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
         assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));

@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.LoginCommand.TEST_PASSWORD;
 import static seedu.address.logic.commands.LoginCommand.TEST_USERNAME;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
 import org.junit.Rule;
 import org.junit.Test;

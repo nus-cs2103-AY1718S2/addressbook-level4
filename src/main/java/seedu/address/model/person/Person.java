@@ -19,12 +19,13 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private Rating rating;
 
     private final UniqueTagList tags;
     private final String calendarId;
 
     /**
-     * Every field must be present and not null.
+     * All fields except Rating is not provided
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String calendarId) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -34,8 +35,41 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+
         this.calendarId = calendarId;
+        this.rating = new Rating();
     }
+
+    /**
+     * Only rating specified.
+     * Note: To remove when test cases are integrated to Calendar feature
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.rating = rating;
+    }
+  
+  /**
+   * All fields specified
+   */
+  public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags, String calendarId) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.calendarId = calendarId;
+        this.rating = rating;
+    }
+
 
     public Name getName() {
         return name;
@@ -47,6 +81,14 @@ public class Person {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public String getRatingDisplay() {
+        return rating.getRatingDisplay();
     }
 
     public Address getAddress() {
@@ -98,6 +140,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Rating: ")
+                .append(getRatingDisplay())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
@@ -106,6 +150,11 @@ public class Person {
     public String getPersonUrl() {
         return "https://calendar.google.com/calendar/embed?src="
                 + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
+    }
+
+
+    public void setRating(String newRating) {
+        rating = new Rating(newRating);
     }
 
 }

@@ -99,6 +99,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void sort(String field) {
+        addressBook.sort(field);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {

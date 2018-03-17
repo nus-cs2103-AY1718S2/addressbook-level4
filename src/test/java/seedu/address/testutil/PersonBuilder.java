@@ -8,6 +8,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,11 +23,13 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_CALENDARID = "null";
+    public static final String DEFAULT_RATING = "-1";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private Rating rating;
     private Set<Tag> tags;
     private String calendarId;
 
@@ -35,6 +38,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        rating = new Rating(DEFAULT_RATING);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         calendarId = this.DEFAULT_CALENDARID;
     }
@@ -47,6 +51,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        rating = personToCopy.getRating();
         tags = new HashSet<>(personToCopy.getTags());
 
     }
@@ -98,9 +103,17 @@ public class PersonBuilder {
         this.calendarId = calendarId;
         return this;
     }
+    
+    /**
+     * Sets the {@code Rating} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRating(String rating) {
+        this.rating = new Rating(rating);
+        return this;
+    }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, calendarId);
+        return new Person(name, phone, email, address, rating, tags, calendarId);
     }
 
 }

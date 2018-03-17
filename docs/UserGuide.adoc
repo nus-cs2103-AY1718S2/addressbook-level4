@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= E.T. (Employee Tracker) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,14 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/crizyli/main
+:repoURL: https://github.com/CS2103JAN2018-W15-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+
+By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Employee Tracker (ET) is for managers who *prefer to use a desktop app for managing his/her subordinates*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -78,10 +79,25 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+****
+* List command will shows you a list of persons, as shown in Figure 3.3.
+* Each entry of the list contains information of a person.
+* In each entry, from top to down, is the name, tags, phone number, address, email address and rating of that person.
+****
+
+[NOTE]
+====
+Rating will be shown as `-` if the person is yet to be rated.
+====
+
+image::Ui.png[width="790"]
+_Figure 3.3: List of persons_
+
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/RATING] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -97,6 +113,34 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Rating a person : `rate`
+
+Updates the rating of an existing person in the address book. +
+Format: `rate INDEX RATING`
+
+****
+* Rates the person at the specified `INDEX`. The index refers to the index number shown in the last persons listing. The index *must be a positive integer* 1, 2, 3, ...
+* Both INDEX and RATING must be provided.
+* Existing rating will be updated to the input RATING.
+* RATING must be a positive integer between 1 and 5, i.e. 1, 2, 3, 4 or 5.
+****
+
+[NOTE]
+====
+* A person will have a null rating by default upon added. This implies that the person is yet to be rated.
+* Null rating is shown as `-`.
+* You cannot assign null rating to a person. If you want to revert a person back to null rating, please refer to <<Undoing previous command : `undo`>>
+====
+
+Examples:
+
+* `list` +
+`rate 1 5` +
+Gives the 1st person in the last persons listing a 5-stars rating.
+* `find Alex` +
+`rate 2 2` +
+Gives the 2nd person in the list of Alex(s) a 2-star rating.
 
 === Locating persons by name: `find`
 
@@ -217,6 +261,43 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
+=== Lock the AddressBook: `lock`
+
+Lock the address book +
+Format: `lock [PASSWORD]`
+
+****
+* Lock the address book with the specified PASSWORD.
+* If PASSWORD is not provided, then no password for this lock.
+* The PASSWORD is a String that can contain any character.
+****
+
+Examples:
+
+* `lock 123` +
+Lock the address book with password: 123
+* `lock` +
+Lock the address book without password
+
+
+=== Unlock the AddressBook: `unlock`
+
+Unlock the address book +
+Format: `unlock [PASSWORD]`
+
+****
+* Unlock the address book with the PASSWORD if last lock command provided a password.
+* If no password needed, just enter unlock.
+* The PASSWORD is a String that can contain any character.
+****
+
+Examples:
+
+* `unlock 123` +
+Unlock the address book with password: 123 (the last lock command provided)
+* `unlock` +
+Unlock the address book, which is locked without password.
 
 === Clearing all entries : `clear`
 

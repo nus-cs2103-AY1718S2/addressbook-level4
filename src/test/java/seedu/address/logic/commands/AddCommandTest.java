@@ -130,6 +130,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sort(String field) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }

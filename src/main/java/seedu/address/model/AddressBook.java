@@ -132,8 +132,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                correctTagReferences, person.getCalendarId());
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getRating(),
+                correctTagReferences);
     }
 
     /**
@@ -184,5 +184,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
+    }
+    /** sort the existing persons in specific field*/
+    public void sort(String field) {
+        persons.sort(field);
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>010199</birthday>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>friends</tags>
+</addressbook>

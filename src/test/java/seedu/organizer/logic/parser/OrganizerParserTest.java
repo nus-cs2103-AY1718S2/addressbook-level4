@@ -20,6 +20,7 @@ import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.logic.commands.ExitCommand;
+import seedu.organizer.logic.commands.FindDeadlineCommand;
 import seedu.organizer.logic.commands.FindDescriptionCommand;
 import seedu.organizer.logic.commands.FindMultipleFieldsCommand;
 import seedu.organizer.logic.commands.FindNameCommand;
@@ -32,6 +33,7 @@ import seedu.organizer.logic.commands.ToggleCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.logic.parser.exceptions.ParseException;
+import seedu.organizer.model.task.DeadlineContainsKeywordsPredicate;
 import seedu.organizer.model.task.DescriptionContainsKeywordsPredicate;
 import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
@@ -129,6 +131,19 @@ public class OrganizerParserTest {
             .collect(Collectors.joining(" ")));
         assertEquals(new FindDescriptionCommand(new DescriptionContainsKeywordsPredicate(keywords)), command);
         assertEquals(new FindDescriptionCommand(new DescriptionContainsKeywordsPredicate(keywords)), commandAlias);
+    }
+
+    @Test
+    public void parseCommand_findDeadline() throws Exception {
+        List<String> keywords = Arrays.asList("2018-04-03", "2019-01-01", "2018-03-17");
+        FindDeadlineCommand command = (FindDeadlineCommand) parser.parseCommand(
+                FindDeadlineCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        FindDeadlineCommand commandAlias = (FindDeadlineCommand) parser.parseCommand(
+                FindDeadlineCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new FindDeadlineCommand(new DeadlineContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindDeadlineCommand(new DeadlineContainsKeywordsPredicate(keywords)), commandAlias);
     }
     //@@author
 

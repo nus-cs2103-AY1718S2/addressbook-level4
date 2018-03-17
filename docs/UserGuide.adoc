@@ -122,11 +122,12 @@ Edits the name of the 2nd task to be `CS2101 Final Assignment` and clears all ex
 
 === Locating tasks: `find` or `f`
 
-Finds tasks whose names or descriptions contain any of the given keywords. +
+Finds tasks whose names, descriptions or deadlines contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `Developer` will match `developer`
+* Keywords for deadlines should be in the format of YYYY-MM-DD.
 * The order of the keywords does not matter. e.g. `Guide Developer` will match `Developer Guide`
 * Only the name and description are searched.
 * Only full words will be matched e.g. `Guide` will not match `Guides`
@@ -179,6 +180,25 @@ Examples:
 Returns tasks with descriptions `Study midterms` and `study chapter 2`.
 * fdes `Study Update Chapter` +
 Returns any task having descriptions containing words `Study`, `Update`, or `Chapter`.
+
+=== Locating tasks by deadline: `findd` or `fd`
+
+Find tasks whose deadlines contain any of the given keywords. +
+Format: `findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORD [MORE_KEYWORDS]`
+
+****
+* Keywords should be in the format of YYYY-MM-DD.
+* The order of the keywords does not matter. e.g. `2018-03-17 2018-09-09` will match `2018-09-09 2018-03-17`
+* Only the deadline is searched.
+* Only full keywords will be matched e.g. `2018` will not match `2018-03-17`
+****
+
+Examples:
+
+* findd `2018-03-17` +
+Returns tasks with deadlines `2018-03-17`.
+* fd `2018-03-17 2018-09-04 2018-03-21` +
+Returns any task having deadlines `2018-03-17`, `2018-09-04`, or `2018-03-21`.
 
 === Deleting a task : `delete` or `d`
 
@@ -323,10 +343,6 @@ _{ coming in v2.0 }_
 * Delete either a tag, deadline, or description from a particular task.
 ****
 
-=== Locating tasks by deadline `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
 === Locating tasks by tag `[coming in v2.0]`
 
 _{ coming in v2.0 }_
@@ -377,10 +393,14 @@ e.g. `add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​` +
 e.g. `edit 1 p/9 d/2018-12-30`
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `find CS2103 update 2018-03-17`
 * *Find Name* : `findn KEYWORD [MORE_KEYWORDS]` or `fn KEYWORD [MORE_KEYWORDS]` +
 e.g. `findn Developer User`
 * *Find Description* : `finddes KEYWORD [MORE_KEYWORDS]` or `fdes KEYWORDS [MORE_KEYWORDS]` +
 e.g. `finddes study update`
+* *Find Deadline* : `findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORDS [MORE_KEYWORDS]` +
+e.g. `findd 2018-03-17 2018-09-07`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

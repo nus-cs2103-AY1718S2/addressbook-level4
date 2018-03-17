@@ -13,7 +13,6 @@ import seedu.organizer.testutil.TaskBuilder;
 
 //@@author guekling
 public class MultipleFieldsContainsKeywordsPredicateTest {
-
     @Test
     public void equals() {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
@@ -83,6 +82,24 @@ public class MultipleFieldsContainsKeywordsPredicateTest {
     }
 
     @Test
+    public void test_deadlineContainsKeywords_returnsTrue() {
+        // One keyword
+        MultipleFieldsContainsKeywordsPredicate predicate = new MultipleFieldsContainsKeywordsPredicate(
+            Collections.singletonList("2018-03-17"));
+        assertTrue(predicate.test(new TaskBuilder().withDeadline("2018-03-17").build()));
+
+        // Multiple keywords
+        predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("2018-09-09", "2019-01-01"));
+        assertTrue(predicate.test(new TaskBuilder().withDeadline("2018-09-09").build()));
+        assertTrue(predicate.test(new TaskBuilder().withDeadline("2019-01-01").build()));
+
+        // Only one matching keyword
+        predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("2018-09-09", "2019-01-01"));
+        assertTrue(predicate.test(new TaskBuilder().withDeadline("2018-09-09").build()));
+        assertFalse(predicate.test(new TaskBuilder().withDeadline("2018-03-17").build()));
+    }
+
+    @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         MultipleFieldsContainsKeywordsPredicate predicate = new MultipleFieldsContainsKeywordsPredicate(Collections
@@ -93,8 +110,8 @@ public class MultipleFieldsContainsKeywordsPredicateTest {
         predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("Grocery"));
         assertFalse(predicate.test(new TaskBuilder().withName("Study Exam").build()));
 
-        // Keywords match priority and deadline, but does not match name and description
-        predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("2", "2018-11-11"));
+        // Keywords match priority, but does not match name, description and deadline
+        predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("2"));
         assertFalse(predicate.test(new TaskBuilder().withName("Study").withPriority("2")
                 .withDeadline("2018-11-11").withDescription("Chapter 1").build()));
     }
@@ -110,10 +127,28 @@ public class MultipleFieldsContainsKeywordsPredicateTest {
         predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("CS2103"));
         assertFalse(predicate.test(new TaskBuilder().withDescription("CS2101 CS2103T").build()));
 
-        // Keywords match priority and deadline, but does not match name and description
-        predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("2", "2018-11-11"));
+        // Keywords match priority, but does not match name, description and deadline
+        predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("2"));
         assertFalse(predicate.test(new TaskBuilder().withName("Study").withPriority("2")
-            .withDeadline("2018-11-11").withDescription("Chapter 1").build()));
+                .withDeadline("2018-11-11").withDescription("Chapter 1").build()));
+    }
+
+    @Test
+    public void test_deadlineDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        MultipleFieldsContainsKeywordsPredicate predicate = new MultipleFieldsContainsKeywordsPredicate(
+            Collections.emptyList());
+        assertFalse(predicate.test(new TaskBuilder().withDeadline("2018-03-17").build()));
+
+        // Non-matching keyword
+        predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("2018-03-17"));
+        assertFalse(predicate.test(new TaskBuilder().withDeadline("2018-09-09").build()));
+        assertFalse(predicate.test(new TaskBuilder().withDeadline("2019-01-01").build()));
+
+        // Keywords match priority, but does not match name, description and deadline
+        predicate = new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("2"));
+        assertFalse(predicate.test(new TaskBuilder().withName("Study").withPriority("2")
+                .withDeadline("2018-11-11").withDescription("Chapter 1").build()));
     }
 
 }

@@ -9,19 +9,34 @@ import seedu.organizer.commons.util.StringUtil;
 
 //@@author guekling
 /**
- * Tests that a {@code Task}'s {@code Name} and {@code Description} matches any of the keywords given.
+ * Tests that a {@code Task}'s {@code Name}, {@code Description} and {@code Deadline} matches any of the keywords given.
  */
 public class MultipleFieldsContainsKeywordsPredicate implements Predicate<Task> {
     private final List<String> nameKeywords;
     private final List<String> descriptionKeywords;
+    private final List<String> deadlineKeywords;
     private final List<String> keywords;
 
 
     public MultipleFieldsContainsKeywordsPredicate(List<String> keywords) {
         this.nameKeywords = keywords;
         this.descriptionKeywords = keywords;
-        this.keywords = Stream.concat(nameKeywords.stream(), descriptionKeywords.stream()).collect(Collectors.toList
-                ());
+        this.deadlineKeywords = keywords;
+
+        this.keywords = concatKeywords();
+    }
+
+    /**
+     * Concatenate the list of keywords from {@code Name}, {@code Description} and {@code Deadline}.
+     *
+     * @return A list of concatenated String containing the keywords from {@code Name}, {@code Description} and
+     * {@code Deadline}.
+     */
+    private List<String> concatKeywords() {
+        Stream<String> nameDescriptionStreams = Stream.concat(nameKeywords.stream(), descriptionKeywords.stream());
+        List<String> concatenatedLists = Stream.concat(nameDescriptionStreams, deadlineKeywords.stream()).collect
+                (Collectors.toList());
+        return concatenatedLists;
     }
 
     @Override
@@ -29,7 +44,9 @@ public class MultipleFieldsContainsKeywordsPredicate implements Predicate<Task> 
         return nameKeywords.stream().anyMatch(nameKeyword -> StringUtil.containsWordIgnoreCase(task.getName().fullName,
                 nameKeyword))
                 || descriptionKeywords.stream().anyMatch(descriptionKeyword -> StringUtil.containsWordIgnoreCase(
-                    task.getDescription().value, descriptionKeyword));
+                    task.getDescription().value, descriptionKeyword))
+                || deadlineKeywords.stream().anyMatch(deadlineKeyword -> StringUtil.containsWordIgnoreCase(
+                task.getDeadline().toString(), deadlineKeyword));
     }
 
     @Override

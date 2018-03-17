@@ -15,28 +15,28 @@ import org.junit.Test;
 import seedu.organizer.logic.CommandHistory;
 import seedu.organizer.logic.UndoRedoStack;
 import seedu.organizer.logic.commands.exceptions.CommandException;
-import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
+import seedu.organizer.model.task.DeadlineContainsKeywordsPredicate;
 
 //@@author guekling
 /**
- * Contains integration tests (interaction with the Model) for {@code FindMultipleFieldsCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindDeadlineCommand}.
  */
-public class FindMultipleFieldsCommandTest extends FindCommandTest<FindMultipleFieldsCommand> {
+public class FindDeadlineCommandTest extends FindCommandTest<FindDeadlineCommand> {
     @Test
     public void equals() {
-        MultipleFieldsContainsKeywordsPredicate firstPredicate =
-                new MultipleFieldsContainsKeywordsPredicate(Collections.singletonList("first"));
-        MultipleFieldsContainsKeywordsPredicate secondPredicate =
-                new MultipleFieldsContainsKeywordsPredicate(Collections.singletonList("second"));
+        DeadlineContainsKeywordsPredicate firstPredicate =
+                new DeadlineContainsKeywordsPredicate(Collections.singletonList("2018-08-09"));
+        DeadlineContainsKeywordsPredicate secondPredicate =
+                new DeadlineContainsKeywordsPredicate(Collections.singletonList("2018-03-02"));
 
-        FindMultipleFieldsCommand findFirstCommand = new FindMultipleFieldsCommand(firstPredicate);
-        FindMultipleFieldsCommand findSecondCommand = new FindMultipleFieldsCommand(secondPredicate);
+        FindDeadlineCommand findFirstCommand = new FindDeadlineCommand(firstPredicate);
+        FindDeadlineCommand findSecondCommand = new FindDeadlineCommand(secondPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindMultipleFieldsCommand findFirstCommandCopy = new FindMultipleFieldsCommand(firstPredicate);
+        FindDeadlineCommand findFirstCommandCopy = new FindDeadlineCommand(firstPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -52,24 +52,23 @@ public class FindMultipleFieldsCommandTest extends FindCommandTest<FindMultipleF
     @Test
     public void execute_zeroKeywords_noTaskFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 0);
-        FindMultipleFieldsCommand command = prepareCommand(" ");
+        FindDeadlineCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multipleTasksFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
-        FindMultipleFieldsCommand command = prepareCommand("Toast Project 2018-04-05");
+        FindDeadlineCommand command = prepareCommand("2018-04-05 2018-09-14 2018-11-12");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(REVISION, PROJECT, PREPAREBREAKFAST));
     }
 
     /**
-     * Parses {@code userInput} into a {@code FindMultipleFieldsCommand}.
+     * Parses {@code userInput} into a {@code FindDeadlineCommand}.
      */
-    private FindMultipleFieldsCommand prepareCommand(String userInput) {
-        FindMultipleFieldsCommand command =
-            new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(Arrays.asList(userInput.split
-            ("\\s+"))));
+    private FindDeadlineCommand prepareCommand(String userInput) {
+        FindDeadlineCommand command =
+                new FindDeadlineCommand(new DeadlineContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

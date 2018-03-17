@@ -10,13 +10,13 @@ import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
 
 //@@author guekling
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new FindMultipleFieldsCommand object
  */
 public class FindMultipleFieldsCommandParser implements Parser<FindMultipleFieldsCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an FindCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the FindMultipleFieldsCommand
+     * and returns an FindMultipleFieldsCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindMultipleFieldsCommand parse(String args) throws ParseException {

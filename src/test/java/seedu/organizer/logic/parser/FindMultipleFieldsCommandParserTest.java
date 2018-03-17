@@ -27,10 +27,10 @@ public class FindMultipleFieldsCommandParserTest {
         // no leading and trailing whitespaces
         FindMultipleFieldsCommand expectedFindMultipleFieldsCommand =
             new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(Arrays.asList("CS2102",
-            "script")));
-        assertParseSuccess(parser, "CS2102 script", expectedFindMultipleFieldsCommand);
+            "script", "2018-03-17")));
+        assertParseSuccess(parser, "CS2102 script 2018-03-17", expectedFindMultipleFieldsCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n CS2102 \n \t script  \t", expectedFindMultipleFieldsCommand);
+        assertParseSuccess(parser, " \n CS2102 \n \t script \n \t 2018-03-17 \t", expectedFindMultipleFieldsCommand);
     }
 }

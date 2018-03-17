@@ -110,7 +110,7 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void importAddressBook_nonExistentFile_FileNotFoundException() throws Exception {
+    public void importAddressBook_nonExistentFile_fileNotFoundException() throws Exception {
         thrown.expect(FileNotFoundException.class);
         String filePath = TEST_DATA_FOLDER + "nonExistentAddressBook.xml";
         AddressBook original = new AddressBook();

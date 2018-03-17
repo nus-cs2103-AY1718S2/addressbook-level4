@@ -16,7 +16,7 @@ import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Person;
 import seedu.address.model.patient.UniquePersonList;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
-import seedu.address.model.patient.exceptions.PersonNotFoundException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -108,12 +108,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicatePatientException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PatientNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncWithMasterTagList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePatientException, PersonNotFoundException {
+            throws DuplicatePatientException, PatientNotFoundException {
         requireNonNull(editedPerson);
 
         Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
@@ -146,13 +146,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * @throws PatientNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(Person key) throws PersonNotFoundException {
+    public boolean removePerson(Person key) throws PatientNotFoundException {
         if (persons.remove(key)) {
             return true;
         } else {
-            throw new PersonNotFoundException();
+            throw new PatientNotFoundException();
         }
     }
 
@@ -169,7 +169,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Remove {@code tag} from {@code person}
      */
-    private void removeTagFromPerson (Tag tag, Person person) throws PersonNotFoundException {
+    private void removeTagFromPerson (Tag tag, Person person) throws PatientNotFoundException {
         Set<Tag> personTags = new HashSet<>(person.getTags());
 
         if (personTags.remove(tag)) {
@@ -178,7 +178,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             try {
                 updatePerson(person, updatedPerson);
             } catch (DuplicatePatientException dpe) {
-                throw new PersonNotFoundException();
+                throw new PatientNotFoundException();
             }
         }
     }
@@ -190,7 +190,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         for (Person person: persons) {
             try {
                 removeTagFromPerson(tag, person);
-            } catch (PersonNotFoundException e) {
+            } catch (PatientNotFoundException e) {
                 e.printStackTrace();
             }
         }

@@ -21,7 +21,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Person;
-import seedu.address.model.patient.exceptions.PersonNotFoundException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -132,7 +132,7 @@ public class CommandTestUtil {
         Person firstPerson = model.getFilteredPersonList().get(0);
         try {
             model.deletePerson(firstPerson);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (PatientNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
     }

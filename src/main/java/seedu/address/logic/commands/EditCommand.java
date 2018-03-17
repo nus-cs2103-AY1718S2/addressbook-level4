@@ -25,7 +25,7 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Person;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
-import seedu.address.model.patient.exceptions.PersonNotFoundException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -77,7 +77,7 @@ public class EditCommand extends UndoableCommand {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePatientException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (PatientNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

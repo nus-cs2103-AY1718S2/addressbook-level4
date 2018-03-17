@@ -44,7 +44,7 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Person;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
-import seedu.address.model.patient.exceptions.PersonNotFoundException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -213,7 +213,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             expectedModel.updatePerson(
                     expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()), editedPerson);
             expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        } catch (DuplicatePatientException | PersonNotFoundException e) {
+        } catch (DuplicatePatientException | PatientNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
         }

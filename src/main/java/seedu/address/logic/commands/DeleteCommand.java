@@ -9,7 +9,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.Person;
-import seedu.address.model.patient.exceptions.PersonNotFoundException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -40,7 +40,7 @@ public class DeleteCommand extends UndoableCommand {
         requireNonNull(personToDelete);
         try {
             model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (PatientNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 

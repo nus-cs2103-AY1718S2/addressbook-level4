@@ -10,7 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
-import seedu.address.model.patient.exceptions.PersonNotFoundException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -49,15 +49,15 @@ public class UniquePersonList implements Iterable<Person> {
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePatientException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PatientNotFoundException if {@code target} could not be found in the list.
      */
     public void setPerson(Person target, Person editedPerson)
-            throws DuplicatePatientException, PersonNotFoundException {
+            throws DuplicatePatientException, PatientNotFoundException {
         requireNonNull(editedPerson);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new PatientNotFoundException();
         }
 
         if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {
@@ -70,13 +70,13 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Removes the equivalent person from the list.
      *
-     * @throws PersonNotFoundException if no such person could be found in the list.
+     * @throws PatientNotFoundException if no such person could be found in the list.
      */
-    public boolean remove(Person toRemove) throws PersonNotFoundException {
+    public boolean remove(Person toRemove) throws PatientNotFoundException {
         requireNonNull(toRemove);
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
-            throw new PersonNotFoundException();
+            throw new PatientNotFoundException();
         }
         return personFoundAndDeleted;
     }

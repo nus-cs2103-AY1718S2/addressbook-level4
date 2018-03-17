@@ -14,7 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.IMDBChangedEvent;
 import seedu.address.model.patient.Person;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
-import seedu.address.model.patient.exceptions.PersonNotFoundException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -61,7 +61,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(Person target) throws PersonNotFoundException {
+    public synchronized void deletePerson(Person target) throws PatientNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
@@ -75,7 +75,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePatientException, PersonNotFoundException {
+            throws DuplicatePatientException, PatientNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);

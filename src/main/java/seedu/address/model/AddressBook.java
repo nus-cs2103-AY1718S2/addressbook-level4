@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
-import seedu.address.model.patient.UniquePersonList;
+import seedu.address.model.patient.UniquePatientList;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -26,7 +26,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
+    private final UniquePatientList persons;
     private final UniqueTagList tags;
     private final UniqueAppointmentList appointments;
 
@@ -38,7 +38,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        persons = new UniquePatientList();
         tags = new UniqueTagList();
         appointments = new UniqueAppointmentList();
     }

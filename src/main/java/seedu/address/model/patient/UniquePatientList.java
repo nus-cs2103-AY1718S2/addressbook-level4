@@ -20,7 +20,7 @@ import seedu.address.model.patient.exceptions.PatientNotFoundException;
  * @see Patient#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniquePersonList implements Iterable<Patient> {
+public class UniquePatientList implements Iterable<Patient> {
 
     private final ObservableList<Patient> internalList = FXCollections.observableArrayList();
 
@@ -81,13 +81,13 @@ public class UniquePersonList implements Iterable<Patient> {
         return personFoundAndDeleted;
     }
 
-    public void setPersons(UniquePersonList replacement) {
+    public void setPersons(UniquePatientList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
 
     public void setPersons(List<Patient> patients) throws DuplicatePatientException {
         requireAllNonNull(patients);
-        final UniquePersonList replacement = new UniquePersonList();
+        final UniquePatientList replacement = new UniquePatientList();
         for (final Patient patient : patients) {
             replacement.add(patient);
         }
@@ -109,8 +109,8 @@ public class UniquePersonList implements Iterable<Patient> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                || (other instanceof UniquePatientList // instanceof handles nulls
+                        && this.internalList.equals(((UniquePatientList) other).internalList));
     }
 
     @Override

@@ -18,7 +18,7 @@ import seedu.address.model.ReadOnlyIMDB;
 public class XmlSerializableAddressBook {
 
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedPatient> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
     @XmlElement
@@ -39,7 +39,7 @@ public class XmlSerializableAddressBook {
      */
     public XmlSerializableAddressBook(ReadOnlyIMDB src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPatient::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         appointments.addAll(src.getAppointmentList().stream().map(XmlAdaptedAppointment::new)
             .collect(Collectors.toList()));
@@ -49,14 +49,14 @@ public class XmlSerializableAddressBook {
      * Converts this addressbook into the model's {@code IMDB} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     * {@code XmlAdaptedPatient} or {@code XmlAdaptedTag}.
      */
     public IMDB toModelType() throws IllegalValueException {
         IMDB IMDB = new IMDB();
         for (XmlAdaptedTag t : tags) {
             IMDB.addTag(t.toModelType());
         }
-        for (XmlAdaptedPerson p : persons) {
+        for (XmlAdaptedPatient p : persons) {
             IMDB.addPerson(p.toModelType());
         }
 

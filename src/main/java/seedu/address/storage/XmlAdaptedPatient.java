@@ -19,7 +19,7 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly version of the Patient.
  */
-public class XmlAdaptedPerson {
+public class XmlAdaptedPatient {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Patient's %s field is missing!";
 
@@ -36,15 +36,15 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedPatient.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPatient() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given patient details.
+     * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPatient(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -57,9 +57,9 @@ public class XmlAdaptedPerson {
     /**
      * Converts a given Patient into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedPatient
      */
-    public XmlAdaptedPerson(Patient source) {
+    public XmlAdaptedPatient(Patient source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -123,11 +123,11 @@ public class XmlAdaptedPerson {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedPerson)) {
+        if (!(other instanceof XmlAdaptedPatient)) {
             return false;
         }
 
-        XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
+        XmlAdaptedPatient otherPerson = (XmlAdaptedPatient) other;
         return Objects.equals(name, otherPerson.name)
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)

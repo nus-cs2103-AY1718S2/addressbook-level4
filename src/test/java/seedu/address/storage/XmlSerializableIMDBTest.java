@@ -26,8 +26,8 @@ public class XmlSerializableIMDBTest {
 
     @Test
     public void toModelType_typicalPersonsFile_success() throws Exception {
-        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
-                XmlSerializableAddressBook.class);
+        XmlSerializableIMDB dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+                XmlSerializableIMDB.class);
         IMDB IMDBFromFile = dataFromFile.toModelType();
         IMDB typicalPersonsIMDB = TypicalPersons.getTypicalAddressBook();
         assertEquals(IMDBFromFile, typicalPersonsIMDB);
@@ -35,16 +35,16 @@ public class XmlSerializableIMDBTest {
 
     @Test
     public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
-        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_PERSON_FILE,
-                XmlSerializableAddressBook.class);
+        XmlSerializableIMDB dataFromFile = XmlUtil.getDataFromFile(INVALID_PERSON_FILE,
+                XmlSerializableIMDB.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
     }
 
     @Test
     public void toModelType_invalidTagFile_throwsIllegalValueException() throws Exception {
-        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_TAG_FILE,
-                XmlSerializableAddressBook.class);
+        XmlSerializableIMDB dataFromFile = XmlUtil.getDataFromFile(INVALID_TAG_FILE,
+                XmlSerializableIMDB.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
     }

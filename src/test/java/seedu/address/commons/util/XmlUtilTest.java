@@ -17,7 +17,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.IMDB;
 import seedu.address.storage.XmlAdaptedPatient;
 import seedu.address.storage.XmlAdaptedTag;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableIMDB;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TestUtil;
@@ -70,7 +70,7 @@ public class XmlUtilTest {
 
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
-        IMDB dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableAddressBook.class).toModelType();
+        IMDB dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableIMDB.class).toModelType();
         assertEquals(9, dataFromFile.getPersonList().size());
         assertEquals(0, dataFromFile.getTagList().size());
     }
@@ -123,17 +123,17 @@ public class XmlUtilTest {
     @Test
     public void saveDataToFile_validFile_dataSaved() throws Exception {
         TEMP_FILE.createNewFile();
-        XmlSerializableAddressBook dataToWrite = new XmlSerializableAddressBook(new IMDB());
+        XmlSerializableIMDB dataToWrite = new XmlSerializableIMDB(new IMDB());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
+        XmlSerializableIMDB dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableIMDB.class);
         assertEquals(dataToWrite, dataFromFile);
 
         AddressBookBuilder builder = new AddressBookBuilder(new IMDB());
-        dataToWrite = new XmlSerializableAddressBook(
+        dataToWrite = new XmlSerializableIMDB(
                 builder.withPerson(new PersonBuilder().build()).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
+        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableIMDB.class);
         assertEquals(dataToWrite, dataFromFile);
     }
 

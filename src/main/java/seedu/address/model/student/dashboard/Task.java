@@ -6,9 +6,9 @@ package seedu.address.model.student.dashboard;
  */
 public class Task {
 
-    private String name;
-    private String desc;
-    private boolean completed;
+    private final String name;
+    private final String desc;
+    private final boolean completed;
 
     public Task(String name, String desc) {
         this.name = name;

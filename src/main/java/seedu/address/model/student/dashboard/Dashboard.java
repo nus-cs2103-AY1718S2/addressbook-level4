@@ -12,9 +12,9 @@ import seedu.address.model.student.Student;
  */
 public class Dashboard {
 
-    private List<Milestone> milestoneList;
-    private List<Homework> homeworkList;
-    private Student student;
+    private final List<Milestone> milestoneList;
+    private final List<Homework> homeworkList;
+    private final Student student;
 
     /**
      * Constructs a {@code Dashboard}

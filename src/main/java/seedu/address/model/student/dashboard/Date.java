@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  */
 public class Date {
 
-    private LocalDateTime value;
+    private final LocalDateTime value;
 
     public Date(LocalDateTime value) {
         this.value = value;

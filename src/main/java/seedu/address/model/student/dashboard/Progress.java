@@ -8,9 +8,9 @@ import java.util.Objects;
  */
 public class Progress {
 
-    private int totalTasks;
-    private int numCompletedTasks;
-    private int progressValueInPercent;
+    private final int totalTasks;
+    private final int numCompletedTasks;
+    private final int progressValueInPercent;
 
     public Progress() {
         totalTasks = 0;

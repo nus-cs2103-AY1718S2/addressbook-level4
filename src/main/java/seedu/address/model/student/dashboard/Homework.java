@@ -8,9 +8,9 @@ import java.util.Objects;
  */
 public class Homework {
 
-    private String desc;
-    private Date dueDate;
-    private boolean completed;
+    private final String desc;
+    private final Date dueDate;
+    private final boolean completed;
 
     public Homework(String desc, Date dueDate) {
         this.desc = desc;

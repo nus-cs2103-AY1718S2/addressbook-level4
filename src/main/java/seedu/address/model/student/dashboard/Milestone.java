@@ -10,10 +10,10 @@ import java.util.Objects;
  */
 public class Milestone {
 
-    private Date dueDate;
-    private List<Task> taskList;
-    private Progress progress;
-    private String objective;
+    private final Date dueDate;
+    private final List<Task> taskList;
+    private final Progress progress;
+    private final String objective;
 
     public Milestone(Date dueDate, String objective) {
         this.dueDate = dueDate;

@@ -5,12 +5,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Person;
+import seedu.address.model.student.Student;
 
 /**
- * Tests that a {@code Person}'s {@code Tag} matches any of the keywords given.
+ * Tests that a {@code Student}'s {@code Tag} matches any of the keywords given.
  */
-public class TagContainsKeywordsPredicate implements Predicate<Person> {
+public class TagContainsKeywordsPredicate implements Predicate<Student> {
     private final List<String> keywords;
 
     public TagContainsKeywordsPredicate(List<String> keywords) {
@@ -18,10 +18,11 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     @Override
-    public boolean test(Person person) {
-        Set<Tag> tagList = person.getTags();
-        for (Tag personsTag: tagList) {
-            if (keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(personsTag.tagName, keyword))) {
+    public boolean test(Student student) {
+        Set<Tag> tagList = student.getTags();
+        for (Tag studentsTag: tagList) {
+            if (keywords.stream().anyMatch(keyword ->
+                    StringUtil.containsWordIgnoreCase(studentsTag.tagName, keyword))) {
                 return true;
             }
         }

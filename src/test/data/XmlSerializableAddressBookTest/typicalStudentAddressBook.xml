@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- AddressBook save file which contains the same Student values as in
+{@code TypicalStudents#getTypicalAddressBook()}-->
+<addressbook>
+    <students>
+        <name>Alice Pauline</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <tagged>friends</tagged>
+		<programmingLanguage>Java</programmingLanguage>
+    </students>
+    <students>
+        <name>Benson Meier</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+		<programmingLanguage>Java</programmingLanguage>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </students>
+    <students>
+        <name>Carl Kurz</name>
+        <phone>95352563</phone>
+        <email>heinz@example.com</email>
+        <address>wall street</address>
+		<programmingLanguage>Java</programmingLanguage>
+    </students>
+    <students>
+        <name>Daniel Meier</name>
+        <phone>87652533</phone>
+        <email>cornelia@example.com</email>
+        <address>10th street</address>
+		<programmingLanguage>Java</programmingLanguage>
+    </students>
+    <students>
+        <name>Elle Meyer</name>
+        <phone>9482224</phone>
+        <email>werner@example.com</email>
+        <address>michegan ave</address>
+		<programmingLanguage>Java</programmingLanguage>
+    </students>
+    <students>
+        <name>Fiona Kunz</name>
+        <phone>9482427</phone>
+        <email>lydia@example.com</email>
+        <address>little tokyo</address>
+		<programmingLanguage>Java</programmingLanguage>
+    </students>
+    <students>
+        <name>George Best</name>
+        <phone>9482442</phone>
+        <email>anna@example.com</email>
+        <address>4th street</address>
+		<programmingLanguage>Java</programmingLanguage>
+    </students>
+    <tags>friends</tags>
+    <tags>owesMoney</tags>
+</addressbook>

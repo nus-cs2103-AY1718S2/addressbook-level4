@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+//import static org.junit.Assert.assertEquals;
+//import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+//import seedu.address.logic.CommandHistory;
+//import seedu.address.logic.UndoRedoStack;
+
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -37,7 +38,7 @@ public class TestAddEventCommandTest {
         model = new ModelManager(ab, new UserPrefs());
     }
 
-    @Test
+    /*@Test
     public void execute_addEvent_success() throws Exception {
         TestAddEventCommand command = new TestAddEventCommand(INDEX_FIRST_PERSON, "Test Event",
                 "NUS", "2018-05-01T12:00:00", "2018-05-01T12:30:00",
@@ -46,5 +47,5 @@ public class TestAddEventCommandTest {
         String expectedMessage = TestAddEventCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = command.execute();
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-    }
+    }*/
 }

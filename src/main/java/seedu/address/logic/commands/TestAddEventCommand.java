@@ -203,7 +203,6 @@ public class TestAddEventCommand extends Command {
         event.setReminders(reminders);*/
 
         String calendarId = personToAddEvent.getCalendarId();
-        System.out.println(calendarId);
         try {
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {

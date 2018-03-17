@@ -103,11 +103,11 @@ public class IMDB implements ReadOnlyIMDB {
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * Replaces the given patient {@code target} in the list with {@code editedPerson}.
      * {@code IMDB}'s tag list will be updated with the tags of {@code editedPerson}.
      *
      * @throws DuplicatePatientException if updating the patient's details causes the patient to be equivalent to
-     *      another existing person in the list.
+     *      another existing patient in the list.
      * @throws PatientNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncWithMasterTagList(Patient)

@@ -57,10 +57,11 @@ public class Person {
         this.calendarId = "";
     }
 
-  /**
-   * All fields specified
-   */
-  public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags, String calendarId) {
+    /**
+    * All fields specified
+    */
+    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags,
+                  String calendarId) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;

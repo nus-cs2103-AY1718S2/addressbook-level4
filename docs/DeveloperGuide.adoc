@@ -804,9 +804,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student with friends |search friends who have taken or are taking similar modules |know who I can group with or approach for help
 
-|`* * *` |student with friends |find my friend’s timetables |can find common studying time with them
+|`* * *` |student with friends |find my friend’s timetables |find common studying time with them
 
-|`* * *` |busy student |have my own shortforms of commands |I can type more quickly and in my own style
+|`* * *` |busy student |have my own shortforms of commands |type more quickly and in my own style
 
 |`* * *` |user |add a new person |
 

@@ -9,7 +9,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.patient.exceptions.DuplicatePersonException;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PersonNotFoundException;
 
 /**
@@ -35,12 +35,12 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Adds a person to the list.
      *
-     * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
+     * @throws DuplicatePatientException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(Person toAdd) throws DuplicatePersonException {
+    public void add(Person toAdd) throws DuplicatePatientException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicatePersonException();
+            throw new DuplicatePatientException();
         }
         internalList.add(toAdd);
     }
@@ -48,11 +48,11 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
+     * @throws DuplicatePatientException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     public void setPerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
+            throws DuplicatePatientException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
         int index = internalList.indexOf(target);
@@ -61,7 +61,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {
-            throw new DuplicatePersonException();
+            throw new DuplicatePatientException();
         }
 
         internalList.set(index, editedPerson);
@@ -85,7 +85,7 @@ public class UniquePersonList implements Iterable<Person> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setPersons(List<Person> persons) throws DuplicatePersonException {
+    public void setPersons(List<Person> persons) throws DuplicatePatientException {
         requireAllNonNull(persons);
         final UniquePersonList replacement = new UniquePersonList();
         for (final Person person : persons) {

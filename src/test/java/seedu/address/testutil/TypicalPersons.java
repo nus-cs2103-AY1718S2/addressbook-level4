@@ -17,7 +17,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.patient.Person;
-import seedu.address.model.patient.exceptions.DuplicatePersonException;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -68,7 +68,7 @@ public class TypicalPersons {
         for (Person person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);
-            } catch (DuplicatePersonException e) {
+            } catch (DuplicatePatientException e) {
                 throw new AssertionError("not possible");
             }
         }

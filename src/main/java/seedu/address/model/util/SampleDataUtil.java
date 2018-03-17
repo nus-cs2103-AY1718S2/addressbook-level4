@@ -10,7 +10,7 @@ import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Person;
 import seedu.address.model.patient.Phone;
-import seedu.address.model.patient.exceptions.DuplicatePersonException;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -47,7 +47,7 @@ public class SampleDataUtil {
                 sampleAb.addPerson(samplePerson);
             }
             return sampleAb;
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicatePatientException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
     }

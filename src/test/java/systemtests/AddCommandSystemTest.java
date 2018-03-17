@@ -47,7 +47,7 @@ import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Person;
 import seedu.address.model.patient.Phone;
-import seedu.address.model.patient.exceptions.DuplicatePersonException;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -214,7 +214,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         try {
             expectedModel.addPerson(toAdd);
-        } catch (DuplicatePersonException dpe) {
+        } catch (DuplicatePatientException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);

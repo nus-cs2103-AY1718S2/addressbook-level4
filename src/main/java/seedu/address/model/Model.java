@@ -4,7 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.patient.Person;
-import seedu.address.model.patient.exceptions.DuplicatePersonException;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -25,17 +25,17 @@ public interface Model {
     void deletePerson(Person target) throws PersonNotFoundException;
 
     /** Adds the given person */
-    void addPerson(Person person) throws DuplicatePersonException;
+    void addPerson(Person person) throws DuplicatePatientException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+     * @throws DuplicatePatientException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+            throws DuplicatePatientException, PersonNotFoundException;
 
     /** Removes {@code tag} from all Persons */
     void deleteTag(Tag tag);

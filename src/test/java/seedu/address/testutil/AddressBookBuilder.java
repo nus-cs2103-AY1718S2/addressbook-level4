@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.patient.Person;
-import seedu.address.model.patient.exceptions.DuplicatePersonException;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,7 +29,7 @@ public class AddressBookBuilder {
     public AddressBookBuilder withPerson(Person person) {
         try {
             addressBook.addPerson(person);
-        } catch (DuplicatePersonException dpe) {
+        } catch (DuplicatePatientException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
         }
         return this;

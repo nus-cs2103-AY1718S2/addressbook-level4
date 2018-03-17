@@ -15,7 +15,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Person;
 import seedu.address.model.patient.UniquePersonList;
-import seedu.address.model.patient.exceptions.DuplicatePersonException;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -55,7 +55,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setPersons(List<Person> persons) throws DuplicatePersonException {
+    public void setPersons(List<Person> persons) throws DuplicatePatientException {
         this.persons.setPersons(persons);
     }
 
@@ -80,7 +80,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             setPersons(syncedPersonList);
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicatePatientException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
@@ -92,9 +92,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
      *
-     * @throws DuplicatePersonException if an equivalent person already exists.
+     * @throws DuplicatePatientException if an equivalent person already exists.
      */
-    public void addPerson(Person p) throws DuplicatePersonException {
+    public void addPerson(Person p) throws DuplicatePatientException {
         Person person = syncWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
@@ -106,14 +106,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+     * @throws DuplicatePatientException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncWithMasterTagList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
+            throws DuplicatePatientException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
         Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
@@ -177,7 +177,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     person.getEmail(), person.getAddress(), personTags);
             try {
                 updatePerson(person, updatedPerson);
-            } catch (DuplicatePersonException dpe) {
+            } catch (DuplicatePatientException dpe) {
                 throw new PersonNotFoundException();
             }
         }

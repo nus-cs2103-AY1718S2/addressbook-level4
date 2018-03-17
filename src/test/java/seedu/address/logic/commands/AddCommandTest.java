@@ -22,7 +22,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.patient.Person;
-import seedu.address.model.patient.exceptions.DuplicatePersonException;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -98,7 +98,7 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
+        public void addPerson(Person person) throws DuplicatePatientException {
             fail("This method should not be called.");
         }
 
@@ -125,7 +125,7 @@ public class AddCommandTest {
 
         @Override
         public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
+                throws DuplicatePatientException {
             fail("This method should not be called.");
         }
 
@@ -142,12 +142,12 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicatePatientException when trying to add a person.
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addPerson(Person person) throws DuplicatePatientException {
+            throw new DuplicatePatientException();
         }
 
         @Override
@@ -163,7 +163,7 @@ public class AddCommandTest {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
+        public void addPerson(Person person) throws DuplicatePatientException {
             requireNonNull(person);
             personsAdded.add(person);
         }

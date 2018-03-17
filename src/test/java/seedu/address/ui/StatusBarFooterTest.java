@@ -18,14 +18,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.IMDBChangedEvent;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
     private static final String STUB_SAVE_LOCATION = "Stub";
     private static final String RELATIVE_PATH = "./";
-    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(
+    private static final IMDBChangedEvent EVENT_STUB = new IMDBChangedEvent(
             new AddressBookBuilder().withPerson(ALICE).build());
 
     private static final int INITIAL_TOTAL_PERSONS = 0;

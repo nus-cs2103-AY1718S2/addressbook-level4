@@ -1,4 +1,4 @@
-= Ez2rSchdlr - Developer Guide
+= EducateBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -818,13 +818,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 |`* * *` |user |delete a lesson for a student |remove lessons that the student cancels
 
-|`* * *` |user |edit a lesson for a student |keep track of timing changes
+|`* *` |user |edit a lesson for a student |keep track of timing changes
 
 |`* * *` |user with a filled timetable |check free slot |easily find a free timeslot to allocate to students
 
 |`* * *` |user with a filled timetable |sync with cloud storage calenders |easily sync my timetable to my schedule
 
 |`* *` |tutor |sort the contact list by subject | easily recognise which and how many students are taking a particular subject
+
+|`* * *` |user |add a student to favourites |keep track of that student
+
+|`* * *` |user |list students added to favourites |view students I'm keeping tack
+
+|`* * *` |user |search a student by label |
+
+|`* * *` |user |view the address of a student in the maps |know where the student lives
+
+|`* * *` |user |add a subject for a student |
+
+|`* * *` |user |get an overview of my student's progress |so that I can tutor them better
+
+|`* * *` |user |add a subject for a student |
+
+|`* * *` |user |type little but get the command I want |to save time
+
+|`*` |user |send emails to my student |
+
+|`*` |user |submit feedback to the developers |to improve my user experience
 
 |`* *` |user |view hours spent teaching |see how much money I should collect
 

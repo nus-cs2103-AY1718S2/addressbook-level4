@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= TravelBanker - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -68,7 +68,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -787,8 +787,20 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* has a need to manage finances with fellow contacts
+* has a need to keep track of personal balance
+* has a need to keep track of transactions between contacts
+* travels with a group and lends money/borrows money.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* manage contacts faster than a typical mouse/GUI driven app
+* easily keep track of balances and debts between contacts
+* easily see your overall balance
+* easily see contacts that owe you money
+* easily see contacts to which you are in debt
+* easily keep track of transactions between contacts
+* easily update balance once debts are paid
 
 [appendix]
 == User Stories
@@ -809,9 +821,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
 
-_{More to be added}_
+|`* * *` |user | add/update/settle an amount of money that a contact owes me |
+|`* * *` |user | check my overall balance |
+|`* * *` |user | see which contacts owe me money |
+|`* * *` |user | see to which of my contacts do I owe money |
+|`* *` |user | see for which items do I owe a contact / a contact owes me |
+|`* ` |user | select the currency that I am owed |
+|`* ` |user | convert my balance into a different currency |
+|`*` |user | calculate the amount I am owed with an applied interest rate |
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -844,7 +863,44 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: To Split a Bill Among Multiple People
+
+*MSS*
+
+1.  User requests to new a bill
+2.  AddressBook shows the new bill
+3.  User requests selects who the bill will be splited among
+4.  AddressBook shows who the bill will be splited among in the contact details
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified people does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: To See Who Owes Me Money
+
+*MSS*
+
+1.  User requests to see people who owes the user Money
+2.  AddressBook shows the list of people
++
+Use case ends.
+
+*Extensions*
+
+* 1a. No people owe the user money.
++
+[none]
+** 1a1. AddressBook shows an message showing that the list is empty.
++
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +908,10 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  The system should respond within 3 seconds, even for more intensive procedures such as balance calculation.
+.  The system should update its records immediately after the user makes an update.
+.  The system should provide helpful and clear messages to the user when errors occur.
+.  The system should preserve all data and user preferences when software updates are installed.
 
 [appendix]
 == Glossary

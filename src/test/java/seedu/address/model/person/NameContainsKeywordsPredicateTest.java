@@ -40,7 +40,7 @@ public class NameContainsKeywordsPredicateTest {
 
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
-        // Zero keywords
+        // Zero keyword
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.emptyList());
         assertTrue(predicate.test(new PersonBuilder().withName("Alice").build()));
 
@@ -50,7 +50,7 @@ public class NameContainsKeywordsPredicateTest {
 
         // Multiple keywords
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").build()));
 
         // Mixed-case keyword
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("aLIce bOB"));

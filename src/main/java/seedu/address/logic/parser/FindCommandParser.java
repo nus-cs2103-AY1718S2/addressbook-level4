@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ContainKeywordsPredicate;
+import seedu.address.model.person.FieldContainKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -38,7 +38,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        return new FindCommand(new ContainKeywordsPredicate(nameKeywords, tagKeywords));
+        return new FindCommand(new FieldContainKeywordsPredicate(nameKeywords, tagKeywords));
     }
 
     /**

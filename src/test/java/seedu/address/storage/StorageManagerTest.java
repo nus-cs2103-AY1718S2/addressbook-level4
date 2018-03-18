@@ -30,7 +30,7 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        XmlIMDBStorage addressBookStorage = new XmlIMDBStorage(getTempFilePath("ab"));
+        XmlImdbStorage addressBookStorage = new XmlImdbStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
     }
@@ -58,7 +58,7 @@ public class StorageManagerTest {
     public void addressBookReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link XmlIMDBStorage} class.
+         * {@link XmlImdbStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link XmlImdbStorageTest} class.
          */
         Imdb original = getTypicalAddressBook();
@@ -75,7 +75,7 @@ public class StorageManagerTest {
     @Test
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
-        Storage storage = new StorageManager(new XmlIMDBStorageExceptionThrowingStub("dummy"),
+        Storage storage = new StorageManager(new XmlImdbStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));
         storage.handleAddressBookChangedEvent(new ImdbChangedEvent(new Imdb()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
@@ -85,9 +85,9 @@ public class StorageManagerTest {
     /**
      * A Stub class to throw an exception when the save method is called
      */
-    class XmlIMDBStorageExceptionThrowingStub extends XmlIMDBStorage {
+    class XmlImdbStorageExceptionThrowingStub extends XmlImdbStorage {
 
-        public XmlIMDBStorageExceptionThrowingStub(String filePath) {
+        public XmlImdbStorageExceptionThrowingStub(String filePath) {
             super(filePath);
         }
 

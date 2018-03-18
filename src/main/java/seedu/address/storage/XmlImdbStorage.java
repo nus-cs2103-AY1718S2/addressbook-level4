@@ -17,13 +17,13 @@ import seedu.address.model.ReadOnlyImdb;
 /**
  * A class to access Imdb data stored as an xml file on the hard disk.
  */
-public class XmlIMDBStorage implements IMDBStorage {
+public class XmlImdbStorage implements ImdbStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlIMDBStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlImdbStorage.class);
 
     private String filePath;
 
-    public XmlIMDBStorage(String filePath) {
+    public XmlImdbStorage(String filePath) {
         this.filePath = filePath;
     }
 

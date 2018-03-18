@@ -20,13 +20,13 @@ import seedu.address.model.UserPrefs;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private IMDBStorage IMDBStorage;
+    private ImdbStorage ImdbStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(IMDBStorage IMDBStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(ImdbStorage ImdbStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.IMDBStorage = IMDBStorage;
+        this.ImdbStorage = ImdbStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -52,34 +52,34 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public String getAddressBookFilePath() {
-        return IMDBStorage.getAddressBookFilePath();
+        return ImdbStorage.getAddressBookFilePath();
     }
 
     @Override
     public Optional<ReadOnlyImdb> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(IMDBStorage.getAddressBookFilePath());
+        return readAddressBook(ImdbStorage.getAddressBookFilePath());
     }
 
     @Override
     public Optional<ReadOnlyImdb> readAddressBook(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return IMDBStorage.readAddressBook(filePath);
+        return ImdbStorage.readAddressBook(filePath);
     }
 
     @Override
     public void saveAddressBook(ReadOnlyImdb addressBook) throws IOException {
-        saveAddressBook(addressBook, IMDBStorage.getAddressBookFilePath());
+        saveAddressBook(addressBook, ImdbStorage.getAddressBookFilePath());
     }
 
     @Override
     public void saveAddressBook(ReadOnlyImdb addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        IMDBStorage.saveAddressBook(addressBook, filePath);
+        ImdbStorage.saveAddressBook(addressBook, filePath);
     }
 
     @Override
     public void backupAddressBook(ReadOnlyImdb addressBook) throws IOException {
-        IMDBStorage.backupAddressBook(addressBook);
+        ImdbStorage.backupAddressBook(addressBook);
     }
 
     @Override

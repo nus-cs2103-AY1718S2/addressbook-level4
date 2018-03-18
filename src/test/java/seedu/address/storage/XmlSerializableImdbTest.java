@@ -28,9 +28,9 @@ public class XmlSerializableImdbTest {
     public void toModelType_typicalPersonsFile_success() throws Exception {
         XmlSerializableImdb dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
                 XmlSerializableImdb.class);
-        Imdb ImdbFromFile = dataFromFile.toModelType();
+        Imdb imdbFromFile = dataFromFile.toModelType();
         Imdb typicalPersonsImdb = TypicalPatients.getTypicalAddressBook();
-        assertEquals(ImdbFromFile, typicalPersonsImdb);
+        assertEquals(imdbFromFile, typicalPersonsImdb);
     }
 
     @Test

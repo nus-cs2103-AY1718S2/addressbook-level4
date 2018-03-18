@@ -42,7 +42,7 @@ public class UniqueAliasList {
     }
 
     /**
-     * Adds a Alias to the list.
+     * Adds an Alias to the list.
      *
      * @throws DuplicateAliasException if the Alias to add is a duplicate of an existing Alias in the list.
      */
@@ -52,6 +52,16 @@ public class UniqueAliasList {
             throw new DuplicateAliasException();
         }
         hashList.put(toAdd.aliasName, toAdd.command);
+    }
+
+    /**
+     * Imports an Alias to the list if the Alias is not a duplicate of an existing Alias in the list.
+     */
+    public void importAlias(Alias toAdd) {
+        requireNonNull(toAdd);
+        if (!contains(toAdd.aliasName)) {
+            hashList.put(toAdd.aliasName, toAdd.command);
+        }
     }
 
     /**

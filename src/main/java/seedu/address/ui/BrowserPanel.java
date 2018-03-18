@@ -12,15 +12,17 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.Person;
+import seedu.address.commons.events.ui.ActivityPanelSelectionChangedEvent;
+import seedu.address.model.activity.Activity;
 
 /**
  * The Browser Panel of the App.
  */
+//TODO: Replace this panel in the future.
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    //TODO: URL may need to be  change
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
@@ -41,8 +43,8 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    private void loadPersonPage(Activity activity) {
+        loadPage(SEARCH_PAGE_URL + activity.getName().fullName);
     }
 
     public void loadPage(String url) {
@@ -65,8 +67,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handlePersonPanelSelectionChangedEvent(ActivityPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadPersonPage(event.getNewSelection().activity);
     }
 }

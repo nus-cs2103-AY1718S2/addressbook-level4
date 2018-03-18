@@ -2,26 +2,26 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACTIVITY;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.DeskBoard;
+import seedu.address.model.ReadOnlyDeskBoard;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyAddressBook previousAddressBook;
+    private ReadOnlyDeskBoard previousDeskBoard;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
      * Stores the current state of {@code model#addressBook}.
      */
-    private void saveAddressBookSnapshot() {
+    private void saveDeskBoardSnapshot() {
         requireNonNull(model);
-        this.previousAddressBook = new AddressBook(model.getAddressBook());
+        this.previousDeskBoard = new DeskBoard(model.getDeskBoard());
     }
 
     /**
@@ -31,18 +31,18 @@ public abstract class UndoableCommand extends Command {
     protected void preprocessUndoableCommand() throws CommandException {}
 
     /**
-     * Reverts the AddressBook to the state before this command
-     * was executed and updates the filtered person list to
+     * Reverts the DeskBoard to the state before this command
+     * was executed and updates the filtered activity list to
      * show all persons.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        requireAllNonNull(model, previousDeskBoard);
+        model.resetData(previousDeskBoard);
+        model.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
     }
 
     /**
-     * Executes the command and updates the filtered person
+     * Executes the command and updates the filtered activity
      * list to show all persons.
      */
     protected final void redo() {
@@ -53,12 +53,12 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
     }
 
     @Override
     public final CommandResult execute() throws CommandException {
-        saveAddressBookSnapshot();
+        saveDeskBoardSnapshot();
         preprocessUndoableCommand();
         return executeUndoableCommand();
     }

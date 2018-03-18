@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.LoginManager.NO_USER;
+import static seedu.address.logic.LoginManager.DOCTOR;
+import static seedu.address.logic.LoginManager.MEDICAL_STAFF;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +25,9 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAppointmentCommand;
+
+import seedu.address.logic.LoginManager;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -42,6 +48,8 @@ public class ImdbParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public Command parseCommand(String userInput) throws ParseException {
+        int state = LoginManager.getUserState();
+
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -49,101 +57,222 @@ public class ImdbParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+        if (state == NO_USER){
+            switch (commandWord){
+                case ExitCommand.COMMAND_ALIAS:
+                    return new ExitCommand();
 
-        case AddCommand.COMMAND_ALIAS:
-            return new AddCommandParser().parse(arguments);
+                case HelpCommand.COMMAND_WORD:
+                    return new HelpCommand();
 
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+                case HelpCommand.COMMAND_ALIAS:
+                    return new HelpCommand();
 
-        case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments);
+                case LoginCommand.COMMAND_WORD:
+                    return new LoginCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(arguments);
+                case LoginCommand.COMMAND_ALIAS:
+                    return new LoginCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
+                default:
+                    throw new ParseException("Not logged in!");
+            }
+        } else if (state == DOCTOR){
+            switch (commandWord) {
 
-        case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+                case AddCommand.COMMAND_WORD:
+                    return new AddCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_ALIAS:
-            return new DeleteCommandParser().parse(arguments);
+                case AddCommand.COMMAND_ALIAS:
+                    return new AddCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+                case EditCommand.COMMAND_WORD:
+                    return new EditCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
+                case EditCommand.COMMAND_ALIAS:
+                    return new EditCommandParser().parse(arguments);
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+                case SelectCommand.COMMAND_WORD:
+                    return new SelectCommandParser().parse(arguments);
 
-        case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
+                case SelectCommand.COMMAND_ALIAS:
+                    return new SelectCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+                case DeleteCommand.COMMAND_WORD:
+                    return new DeleteCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
+                case DeleteCommand.COMMAND_ALIAS:
+                    return new DeleteCommandParser().parse(arguments);
 
-        case HistoryCommand.COMMAND_WORD:
-            return new HistoryCommand();
+                case ClearCommand.COMMAND_WORD:
+                    return new ClearCommand();
 
-        case HistoryCommand.COMMAND_ALIAS:
-            return new HistoryCommand();
+                case ClearCommand.COMMAND_ALIAS:
+                    return new ClearCommand();
 
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
+                case FindCommand.COMMAND_WORD:
+                    return new FindCommandParser().parse(arguments);
 
-        case ExitCommand.COMMAND_ALIAS:
-            return new ExitCommand();
+                case FindCommand.COMMAND_ALIAS:
+                    return new FindCommandParser().parse(arguments);
 
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
+                case ListCommand.COMMAND_WORD:
+                    return new ListCommand();
 
-        case HelpCommand.COMMAND_ALIAS:
-            return new HelpCommand();
+                case ListCommand.COMMAND_ALIAS:
+                    return new ListCommand();
 
-        case LoginCommand.COMMAND_WORD:
-            return new LoginCommandParser().parse(arguments);
+                case HistoryCommand.COMMAND_WORD:
+                    return new HistoryCommand();
 
-        case LoginCommand.COMMAND_ALIAS:
-            return new LoginCommandParser().parse(arguments);
+                case HistoryCommand.COMMAND_ALIAS:
+                    return new HistoryCommand();
 
-        case UndoCommand.COMMAND_WORD:
-            return new UndoCommand();
+                case ExitCommand.COMMAND_WORD:
+                    return new ExitCommand();
 
-        case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+                case ExitCommand.COMMAND_ALIAS:
+                    return new ExitCommand();
 
-        case RedoCommand.COMMAND_WORD:
-            return new RedoCommand();
+                case HelpCommand.COMMAND_WORD:
+                    return new HelpCommand();
 
-        case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
+                case HelpCommand.COMMAND_ALIAS:
+                    return new HelpCommand();
 
-        case RemarkCommand.COMMAND_WORD:
-            return new RemarkCommandParser().parse(arguments);
+                case LoginCommand.COMMAND_WORD:
+                    return new LoginCommandParser().parse(arguments);
 
-        case RemarkCommand.COMMAND_ALIAS:
-            return new RemarkCommandParser().parse(arguments);
+                case LoginCommand.COMMAND_ALIAS:
+                    return new LoginCommandParser().parse(arguments);
 
-        case ViewAppointmentCommand.COMMAND_WORD:
-            return new ViewAppointmentCommand();
+                case UndoCommand.COMMAND_WORD:
+                    return new UndoCommand();
 
-        case ViewAppointmentCommand.COMMAND_ALIAS:
-            return new ViewAppointmentCommand();
+                case UndoCommand.COMMAND_ALIAS:
+                    return new UndoCommand();
 
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+                case RedoCommand.COMMAND_WORD:
+                    return new RedoCommand();
+
+                case RedoCommand.COMMAND_ALIAS:
+                    return new RedoCommand();
+
+                case RemarkCommand.COMMAND_WORD:
+                    return new RemarkCommandParser().parse(arguments);
+
+                case RemarkCommand.COMMAND_ALIAS:
+                    return new RemarkCommandParser().parse(arguments);
+
+                case ViewAppointmentCommand.COMMAND_WORD:
+                    return new ViewAppointmentCommand();
+
+                case ViewAppointmentCommand.COMMAND_ALIAS:
+                    return new ViewAppointmentCommand();
+
+                default:
+                    throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
+        } else if (state == MEDICAL_STAFF) {
+            switch (commandWord) {
+
+                case AddCommand.COMMAND_WORD:
+                    return new AddCommandParser().parse(arguments);
+
+                case AddCommand.COMMAND_ALIAS:
+                    return new AddCommandParser().parse(arguments);
+
+                case EditCommand.COMMAND_WORD:
+                    return new EditCommandParser().parse(arguments);
+
+                case EditCommand.COMMAND_ALIAS:
+                    return new EditCommandParser().parse(arguments);
+
+                case SelectCommand.COMMAND_WORD:
+                    return new SelectCommandParser().parse(arguments);
+
+                case SelectCommand.COMMAND_ALIAS:
+                    return new SelectCommandParser().parse(arguments);
+
+                case DeleteCommand.COMMAND_WORD:
+                    return new DeleteCommandParser().parse(arguments);
+
+                case DeleteCommand.COMMAND_ALIAS:
+                    return new DeleteCommandParser().parse(arguments);
+
+                case ClearCommand.COMMAND_WORD:
+                    return new ClearCommand();
+
+                case ClearCommand.COMMAND_ALIAS:
+                    return new ClearCommand();
+
+                case FindCommand.COMMAND_WORD:
+                    return new FindCommandParser().parse(arguments);
+
+                case FindCommand.COMMAND_ALIAS:
+                    return new FindCommandParser().parse(arguments);
+
+                case ListCommand.COMMAND_WORD:
+                    return new ListCommand();
+
+                case ListCommand.COMMAND_ALIAS:
+                    return new ListCommand();
+
+                case HistoryCommand.COMMAND_WORD:
+                    return new HistoryCommand();
+
+                case HistoryCommand.COMMAND_ALIAS:
+                    return new HistoryCommand();
+
+                case ExitCommand.COMMAND_WORD:
+                    return new ExitCommand();
+
+                case ExitCommand.COMMAND_ALIAS:
+                    return new ExitCommand();
+
+                case HelpCommand.COMMAND_WORD:
+                    return new HelpCommand();
+
+                case HelpCommand.COMMAND_ALIAS:
+                    return new HelpCommand();
+
+                case LoginCommand.COMMAND_WORD:
+                    return new LoginCommandParser().parse(arguments);
+
+                case LoginCommand.COMMAND_ALIAS:
+                    return new LoginCommandParser().parse(arguments);
+
+                case UndoCommand.COMMAND_WORD:
+                    return new UndoCommand();
+
+                case UndoCommand.COMMAND_ALIAS:
+                    return new UndoCommand();
+
+                case RedoCommand.COMMAND_WORD:
+                    return new RedoCommand();
+
+                case RedoCommand.COMMAND_ALIAS:
+                    return new RedoCommand();
+
+                case RemarkCommand.COMMAND_WORD:
+                    return new RemarkCommandParser().parse(arguments);
+
+                case RemarkCommand.COMMAND_ALIAS:
+                    return new RemarkCommandParser().parse(arguments);
+
+                case ViewAppointmentCommand.COMMAND_WORD:
+                    return new ViewAppointmentCommand();
+
+                case ViewAppointmentCommand.COMMAND_ALIAS:
+                    return new ViewAppointmentCommand();
+
+                default:
+                    throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
+        } else {
+            // should never get here, this is just for bug detection
+            throw new ParseException("Invalid State!");
         }
     }
-
 }

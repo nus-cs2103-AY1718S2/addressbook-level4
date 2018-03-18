@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-T09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team NUSCouples`      Since: `Feb 2018`      Licence: `NUS School Of Computing `
 
 == Setting up
 
@@ -782,12 +782,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile:*
 
-* is currently a student of NUS
-* is in a relationship with a student of NUS
-* needs to remember special moments
-* needs to remember special dates
-* needs to schedule meetings
-* needs to find a good time to meet
+* is currently a student in a relationship with another student in NUS
+* needs to remember special dates and moments
+* needs to schedule meetings to find a good time to meet
 * prefer desktop apps over other types
 * can type fast
 * prefer typing over mouse input
@@ -817,11 +814,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |new user |have commands that are intuitive and easy to remember |
-
-|`* * *` |user who perfers typing over using the mouse |be able to control almost everything from the CLI |
-
-|`* * *` |experienced user |have shortcut keys| do the same thing in a shorter time |
+|`* * *` |experienced user |have shortcut keys| do the same thing in a shorter time
 
 |`* * *` |pair of NUS students in a relationship |view my partner's NUS timetable for the week |keep track of my partner's free time
 
@@ -846,7 +839,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-_{More to be added}_
+
 
 [appendix]
 == Use Cases
@@ -954,7 +947,7 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+
 
 [appendix]
 == Non Functional Requirements
@@ -966,8 +959,10 @@ _{More to be added}_
 .  Should be able to handle any invalid inputs.
 .  Should respond to user inputs within 2 seconds.
 .  Should be able to work on both 32-bit and 64-bit environments.
+.  A new user can have commands that are intuitive and easy to remember.
+.  A user who prefers typing over using the mouse be able to control almost everything from the CLI.
 
-_{More to be added}_
+
 
 [appendix]
 == Glossary

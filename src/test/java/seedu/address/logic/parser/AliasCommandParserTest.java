@@ -1,7 +1,5 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND;
 import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION;
@@ -34,9 +32,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_REDO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_SELECT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_UNDO;
+
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseAliasWord;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
@@ -52,7 +53,6 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
-
 import seedu.address.model.alias.Alias;
 import seedu.address.testutil.AliasBuilder;
 

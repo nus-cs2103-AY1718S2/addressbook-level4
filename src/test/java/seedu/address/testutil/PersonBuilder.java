@@ -38,7 +38,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
-        dateAdded = createDate();
+        dateAdded = new DateAdded(DEFAULT_DATE_ADDED);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -50,7 +50,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
-        dateAdded = createDate();
+        dateAdded = personToCopy.getDateAdded();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -106,10 +106,11 @@ public class PersonBuilder {
      * Creates and returns a {@code DateAdded} with the dateAdded attribute representing the current date
      * @return current date in the following format: dd/MM/yyyy
      */
-    public DateAdded createDate() {
+    public PersonBuilder generateDate() {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
-        return new DateAdded(dateFormatter.format(calendar.getTime()));
+        this.dateAdded =  new DateAdded(dateFormatter.format(calendar.getTime()));
+        return this;
     }
 
     public Person build() {

@@ -1,6 +1,8 @@
 package seedu.address.model.student.dashboard;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Represents a homework in a Student's Dashboard
@@ -33,6 +35,13 @@ public class Homework {
         boolean copyIsCompleted = toCopy.isCompleted();
 
         return new Homework(copyDesc, copyDate, copyIsCompleted);
+    }
+
+    /**
+     * Creates and returns a deep copy of the list of Homework.
+     */
+    public static List<Homework> copyHomeworkList(List<Homework> listToCopy) {
+        return listToCopy.stream().map(Homework::copyHomework).collect(Collectors.toList());
     }
 
     public String getDesc() {

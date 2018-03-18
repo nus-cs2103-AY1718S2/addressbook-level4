@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -37,7 +36,7 @@ public class AddMilestoneCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a milestone to a Student's Dashboard."
             + " Parameters: "
-            + PREFIX_INDEX + "INDEX "
+            + PREFIX_INDEX + "STUDENT'S INDEX "
             + PREFIX_DATE + "DATE "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
             + "Example: " + COMMAND_WORD +" "
@@ -72,7 +71,7 @@ public class AddMilestoneCommand extends UndoableCommand {
             throw new AssertionError("The target student cannot be missing");
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, editedStudent));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, newMilestone));
     }
 
     @Override
@@ -102,30 +101,16 @@ public class AddMilestoneCommand extends UndoableCommand {
         ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
         Favourite fav = studentToEdit.getFavourite();
         List<Milestone> milestoneList = studentToEdit.getDashboard().getMilestoneList().size() > 0
-                ? copyMilestoneList(studentToEdit.getDashboard().getMilestoneList())
+                ? Milestone.copyMilestoneList(studentToEdit.getDashboard().getMilestoneList())
                 : new ArrayList<>();
         List<Homework> homeworkList = studentToEdit.getDashboard().getHomeworkList().size() > 0
-                ? copyHomeworkList(studentToEdit.getDashboard().getHomeworkList())
+                ? Homework.copyHomeworkList(studentToEdit.getDashboard().getHomeworkList())
                 : new ArrayList<>();
 
         milestoneList.add(newMilestone);
         Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
 
         return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
-    }
-
-    /**
-     * Creates and returns a deep copy of a list of Milestone.
-     */
-    private List<Milestone> copyMilestoneList(List<Milestone> listToCopy) {
-        return listToCopy.stream().map(Milestone::copyMilestone).collect(Collectors.toList());
-    }
-
-    /**
-     * Creates and returns a deep copy of a list of Homework.
-     */
-    private List<Homework> copyHomeworkList(List<Homework> listToCopy) {
-        return listToCopy.stream().map(Homework::copyHomework).collect(Collectors.toList());
     }
 
     @Override

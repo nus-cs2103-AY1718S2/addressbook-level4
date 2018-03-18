@@ -45,6 +45,13 @@ public class Milestone {
         return new Milestone(copyDueDate, copyTaskList, copyProgress, copyDescription);
     }
 
+    /**
+     * Creates and returns a deep copy of the list of Milestone.
+     */
+    public static List<Milestone> copyMilestoneList(List<Milestone> listToCopy) {
+        return listToCopy.stream().map(Milestone::copyMilestone).collect(Collectors.toList());
+    }
+
     public Date getDueDate() {
         return dueDate;
     }

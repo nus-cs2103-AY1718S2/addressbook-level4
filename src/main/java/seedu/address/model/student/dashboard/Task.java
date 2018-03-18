@@ -49,10 +49,10 @@ public class Task {
         builder.append("Name: ")
                 .append(name)
                 .append(" ||")
-                .append("Desc: ")
+                .append(" Desc: ")
                 .append(description)
                 .append(" ||")
-                .append("Completed: ")
+                .append(" Completed: ")
                 .append(isCompleted);
         return builder.toString();
     }

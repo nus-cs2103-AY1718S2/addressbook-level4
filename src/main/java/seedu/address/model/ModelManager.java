@@ -24,7 +24,7 @@ import seedu.address.model.tag.Tag;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final Imdb Imdb;
+    private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
 
     /**
@@ -36,8 +36,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
-        this.Imdb = new Imdb(addressBook);
-        filteredPatients = new FilteredList<>(this.Imdb.getPersonList());
+        this.imdb = new Imdb(addressBook);
+        filteredPatients = new FilteredList<>(this.imdb.getPersonList());
     }
 
     public ModelManager() {
@@ -46,29 +46,29 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void resetData(ReadOnlyImdb newData) {
-        Imdb.resetData(newData);
+        imdb.resetData(newData);
         indicateAddressBookChanged();
     }
 
     @Override
     public ReadOnlyImdb getImdb() {
-        return Imdb;
+        return imdb;
     }
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
-        raise(new ImdbChangedEvent(Imdb));
+        raise(new ImdbChangedEvent(imdb));
     }
 
     @Override
     public synchronized void deletePerson(Patient target) throws PatientNotFoundException {
-        Imdb.removePerson(target);
+        imdb.removePerson(target);
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addPerson(Patient patient) throws DuplicatePatientException {
-        Imdb.addPerson(patient);
+        imdb.addPerson(patient);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -78,7 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicatePatientException, PatientNotFoundException {
         requireAllNonNull(target, editedPatient);
 
-        Imdb.updatePerson(target, editedPatient);
+        imdb.updatePerson(target, editedPatient);
         indicateAddressBookChanged();
     }
 
@@ -87,7 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Removes {@code tag} from all Persons
      */
     public void deleteTag(Tag tag) {
-        Imdb.removeTag(tag);
+        imdb.removeTag(tag);
     }
 
     //=========== Filtered Patient List Accessors =============================================================
@@ -121,7 +121,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return Imdb.equals(other.Imdb)
+        return imdb.equals(other.imdb)
                 && filteredPatients.equals(other.filteredPatients);
     }
 

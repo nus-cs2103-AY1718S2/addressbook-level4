@@ -10,12 +10,29 @@ public class Homework {
 
     private final String desc;
     private final Date dueDate;
-    private final boolean completed;
+    private final boolean isCompleted;
 
     public Homework(String desc, Date dueDate) {
         this.desc = desc;
         this.dueDate = dueDate;
-        this.completed = false;
+        this.isCompleted = false;
+    }
+
+    public Homework(String desc, Date dueDate, boolean isCompleted) {
+        this.desc = desc;
+        this.dueDate = dueDate;
+        this.isCompleted = isCompleted;
+    }
+
+    /**
+     * Creates and return a deep copy of the {@code toCopy} Homework
+     */
+    public static Homework copyHomework(Homework toCopy) {
+        String copyDesc = new String(toCopy.getDesc());
+        Date copyDate = new Date(toCopy.getDueDate().getValue());
+        boolean copyIsCompleted = toCopy.isCompleted();
+
+        return new Homework(copyDesc, copyDate, copyIsCompleted);
     }
 
     public String getDesc() {
@@ -27,7 +44,7 @@ public class Homework {
     }
 
     public boolean isCompleted() {
-        return completed;
+        return isCompleted;
     }
 
     @Override
@@ -36,16 +53,16 @@ public class Homework {
                 || (obj instanceof Homework // instanceof handles null
                 && this.desc.equals(((Homework) obj).getDesc())
                 && this.dueDate.equals(((Homework) obj).getDueDate())
-                && this.completed == ((Homework) obj).isCompleted());
+                && this.isCompleted == ((Homework) obj).isCompleted());
     }
 
     @Override
     public String toString() {
-        return "Desc: " + desc + " Due Date: " + dueDate.toString() + "Completed: " + completed;
+        return "Desc: " + desc + " Due Date: " + dueDate.toString() + "Completed: " + isCompleted;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(desc, dueDate, completed);
+        return Objects.hash(desc, dueDate, isCompleted);
     }
 }

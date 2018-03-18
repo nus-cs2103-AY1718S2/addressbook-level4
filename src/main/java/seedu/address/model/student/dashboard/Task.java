@@ -8,12 +8,18 @@ public class Task {
 
     private final String name;
     private final String desc;
-    private final boolean completed;
+    private final boolean isCompleted;
 
     public Task(String name, String desc) {
         this.name = name;
         this.desc = desc;
-        completed = false;
+        isCompleted = false;
+    }
+
+    public Task(String name, String desc, boolean isCompleted) {
+        this.name = name;
+        this.desc = desc;
+        this.isCompleted = isCompleted;
     }
 
     public String getName() {
@@ -25,7 +31,7 @@ public class Task {
     }
 
     public boolean isCompleted() {
-        return completed;
+        return isCompleted;
     }
 
     @Override
@@ -34,7 +40,7 @@ public class Task {
                 || (obj instanceof Task // instanceof checks null
                 && this.name.equals(((Task) obj).getName())
                 && this.desc.equals(((Task) obj).getDesc())
-                && this.completed == ((Task) obj).isCompleted());
+                && this.isCompleted == ((Task) obj).isCompleted());
     }
 
     @Override
@@ -45,7 +51,7 @@ public class Task {
                 .append("Desc: ")
                 .append(desc)
                 .append("Completed: ")
-                .append(completed);
+                .append(isCompleted);
         return builder.toString();
     }
 }

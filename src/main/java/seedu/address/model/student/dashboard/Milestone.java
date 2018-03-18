@@ -3,6 +3,7 @@ package seedu.address.model.student.dashboard;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Represents a milestone in a Student's dashboard
@@ -20,6 +21,28 @@ public class Milestone {
         this.objective = objective;
         progress = new Progress();
         taskList = new ArrayList<>();
+    }
+
+    public Milestone(Date dueDate, List<Task> taskList, Progress progress, String objective) {
+        this.dueDate = dueDate;
+        this.taskList = taskList;
+        this.progress = progress;
+        this.objective = objective;
+    }
+
+    /**
+     * Creates and return a deep copy of the {@code toCopy} Milestone
+     */
+    public static Milestone copyMilestone(Milestone toCopy) {
+        Date copyDueDate = new Date(toCopy.getDueDate().getValue());
+        List<Task> copyTaskList = toCopy.getTaskList().stream()
+                .map(task -> new Task(task.getName(), task.getDesc(), task.isCompleted()))
+                .collect(Collectors.toList());
+        Progress copyProgress = new Progress(toCopy.getProgress().getTotalTasks(),
+                toCopy.getProgress().getNumCompletedTasks());
+        String copyObjective = new String(toCopy.getObjective());
+
+        return new Milestone(copyDueDate, copyTaskList, copyProgress, copyObjective);
     }
 
     public Date getDueDate() {
@@ -53,11 +76,11 @@ public class Milestone {
         StringBuilder builder = new StringBuilder();
         builder.append("Objective: ")
                 .append(objective)
-                .append("Due Date: ")
+                .append(" Due Date: ")
                 .append(dueDate)
-                .append("Progress: ")
+                .append(" Progress: ")
                 .append(progress)
-                .append("Tasks: ");
+                .append(" Tasks: ");
         taskList.forEach(builder::append);
         return builder.toString();
     }

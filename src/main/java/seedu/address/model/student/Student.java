@@ -61,6 +61,23 @@ public class Student {
         this.dashboard = new Dashboard();
     }
 
+    /**
+     * Every field must be present and not null.
+     */
+    public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
+                   Set<Tag> tags, Favourite fav, Dashboard dashboard) {
+        requireAllNonNull(name, phone, email, address, tags, fav);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
+        this.dashboard = dashboard;
+    }
+
     public Name getName() {
         return name;
     }
@@ -143,13 +160,13 @@ public class Student {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" programminglanguage: ")
+                .append(" Programming Language: ")
                 .append(getProgrammingLanguage())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         builder.append(" Favourite: ")
                 .append(getFavourite())
-                .append("Dashboard: ")
+                .append(" Dashboard: ")
                 .append(getDashboard());
         return builder.toString();
     }

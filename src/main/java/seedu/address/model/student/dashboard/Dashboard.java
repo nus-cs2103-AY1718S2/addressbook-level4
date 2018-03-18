@@ -1,6 +1,7 @@
 package seedu.address.model.student.dashboard;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,12 +22,20 @@ public class Dashboard {
         homeworkList = new ArrayList<>();
     }
 
+    /**
+     * Constructs a {@code Dashboard}
+     */
+    public Dashboard(List<Milestone> milestoneList, List<Homework> homeworkList) {
+        this.milestoneList = milestoneList;
+        this.homeworkList = homeworkList;
+    }
+
     public List<Milestone> getMilestoneList() {
-        return milestoneList;
+        return Collections.unmodifiableList(milestoneList);
     }
 
     public List<Homework> getHomeworkList() {
-        return homeworkList;
+        return Collections.unmodifiableList(homeworkList);
     }
 
     @Override

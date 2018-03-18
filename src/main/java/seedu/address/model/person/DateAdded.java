@@ -9,7 +9,7 @@ import static java.util.Objects.requireNonNull;
 public class DateAdded {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Invalid date input";
+            "Date input should be in the format: dd/MM/yyyy";
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.

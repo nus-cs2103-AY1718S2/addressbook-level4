@@ -119,7 +119,7 @@ public class RemoveTagCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof RemoveTagCommand)) {
             return false;
         }
 

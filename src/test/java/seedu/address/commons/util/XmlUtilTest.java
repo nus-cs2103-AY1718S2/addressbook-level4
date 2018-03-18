@@ -18,7 +18,7 @@ import seedu.address.model.Imdb;
 import seedu.address.storage.XmlAdaptedPatient;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableImdb;
-import seedu.address.testutil.IMDBBuilder;
+import seedu.address.testutil.ImdbBuilder;
 import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.TestUtil;
 
@@ -128,7 +128,7 @@ public class XmlUtilTest {
         XmlSerializableImdb dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableImdb.class);
         assertEquals(dataToWrite, dataFromFile);
 
-        IMDBBuilder builder = new IMDBBuilder(new Imdb());
+        ImdbBuilder builder = new ImdbBuilder(new Imdb());
         dataToWrite = new XmlSerializableImdb(
                 builder.withPerson(new PatientBuilder().build()).withTag("Friends").build());
 

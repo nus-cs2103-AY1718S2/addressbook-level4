@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
-import seedu.address.testutil.IMDBBuilder;
+import seedu.address.testutil.ImdbBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -28,7 +28,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        Imdb Imdb = new IMDBBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        Imdb Imdb = new ImdbBuilder().withPerson(ALICE).withPerson(BENSON).build();
         Imdb differentImdb = new Imdb();
         UserPrefs userPrefs = new UserPrefs();
 

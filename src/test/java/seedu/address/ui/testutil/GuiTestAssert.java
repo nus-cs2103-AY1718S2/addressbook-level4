@@ -16,11 +16,10 @@ import seedu.address.model.person.Person;
  * A set of assertion methods useful for writing GUI tests.
  */
 public class GuiTestAssert {
+    private static final String LABEL_DEFAULT_STYLE = "label";
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    private static final String LABEL_DEFAULT_STYLE = "label";
-
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
@@ -50,27 +49,27 @@ public class GuiTestAssert {
      */
     private static String getTagColorStyleFor(String tagName) {
         switch (tagName) {
-            case "classmates":
-            case "owesMoney":
-                return "brown";
+        case "classmates":
+        case "owesMoney":
+            return "brown";
 
-            case "colleagues":
-            case "neighbours":
-                return "green";
+        case "colleagues":
+        case "neighbours":
+            return "green";
 
-            case "family":
-            case "friend":
-                return "orange";
+        case "family":
+        case "friend":
+            return "orange";
 
-            case "friends":
-                return "yellow";
+        case "friends":
+            return "yellow";
 
-            case "husband":
-                return "red";
+        case "husband":
+            return "red";
 
-            default:
-                fail(tagName + " does not have a color assigned.");
-                return "";
+        default:
+            fail(tagName + " does not have a color assigned.");
+            return "";
         }
     }
 

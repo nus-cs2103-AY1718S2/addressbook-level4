@@ -48,7 +48,7 @@ public class EditCommandParserTest {
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
     private EditCommandParser parser = new EditCommandParser();
 
@@ -82,38 +82,50 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "1" + INVALID_PREPARATION_TIME_DESC, PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS); // invalid preparationTime
-        assertParseFailure(parser, "1" + INVALID_INGREDIENT_DESC, Ingredient.MESSAGE_INGREDIENT_CONSTRAINTS); // invalid ingredient
-        assertParseFailure(parser, "1" + INVALID_INSTRUCTION_DESC, Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS); // invalid recipe
+        assertParseFailure(parser, "1" + INVALID_PREPARATION_TIME_DESC,
+            PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS); // invalid preparationTime
+        assertParseFailure(parser, "1" + INVALID_INGREDIENT_DESC,
+            Ingredient.MESSAGE_INGREDIENT_CONSTRAINTS); // invalid ingredient
+        assertParseFailure(parser, "1" + INVALID_INSTRUCTION_DESC,
+            Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS); // invalid recipe
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid preparationTime followed by valid ingredient
-        assertParseFailure(parser, "1" + INVALID_PREPARATION_TIME_DESC + INGREDIENT_DESC_AMY, PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
+        assertParseFailure(parser, "1" + INVALID_PREPARATION_TIME_DESC + INGREDIENT_DESC_AMY,
+            PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
 
-        // valid preparationTime followed by invalid preparationTime. The test case for invalid preparationTime followed by valid preparationTime
+        // valid preparationTime followed by invalid preparationTime.
+        // The test case for invalid preparationTime followed by valid preparationTime
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-        assertParseFailure(parser, "1" + PREPARATION_TIME_DESC_BOB + INVALID_PREPARATION_TIME_DESC, PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
+        assertParseFailure(parser, "1" + PREPARATION_TIME_DESC_BOB + INVALID_PREPARATION_TIME_DESC,
+            PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Recipe} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser,
+            "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser,
+            "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser,
+            "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_INGREDIENT_DESC + VALID_INSTRUCTION_AMY + VALID_PREPARATION_TIME_AMY,
-                Name.MESSAGE_NAME_CONSTRAINTS);
+        assertParseFailure(parser,
+            "1" + INVALID_NAME_DESC + INVALID_INGREDIENT_DESC
+                + VALID_INSTRUCTION_AMY + VALID_PREPARATION_TIME_AMY,
+            Name.MESSAGE_NAME_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_RECIPE;
         String userInput = targetIndex.getOneBased() + PREPARATION_TIME_DESC_BOB + TAG_DESC_HUSBAND
-                + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND;
+            + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND;
 
         EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+            .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_AMY)
+            .withInstruction(VALID_INSTRUCTION_AMY)
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -124,7 +136,8 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_FIRST_RECIPE;
         String userInput = targetIndex.getOneBased() + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_AMY;
 
-        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withPreparationTime(VALID_PREPARATION_TIME_BOB)
+        EditRecipeDescriptor descriptor =
+            new EditRecipeDescriptorBuilder().withPreparationTime(VALID_PREPARATION_TIME_BOB)
                 .withIngredient(VALID_INGREDIENT_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -168,12 +181,15 @@ public class EditCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_RECIPE;
-        String userInput = targetIndex.getOneBased()  + PREPARATION_TIME_DESC_AMY + INSTRUCTION_DESC_AMY + INGREDIENT_DESC_AMY
-                + TAG_DESC_FRIEND + PREPARATION_TIME_DESC_AMY + INSTRUCTION_DESC_AMY + INGREDIENT_DESC_AMY + TAG_DESC_FRIEND
-                + PREPARATION_TIME_DESC_BOB + INSTRUCTION_DESC_BOB + INGREDIENT_DESC_BOB + TAG_DESC_HUSBAND;
+        String userInput = targetIndex.getOneBased() + PREPARATION_TIME_DESC_AMY + INSTRUCTION_DESC_AMY
+            + INGREDIENT_DESC_AMY + TAG_DESC_FRIEND + PREPARATION_TIME_DESC_AMY + INSTRUCTION_DESC_AMY
+            + INGREDIENT_DESC_AMY + TAG_DESC_FRIEND + PREPARATION_TIME_DESC_BOB + INSTRUCTION_DESC_BOB
+            + INGREDIENT_DESC_BOB + TAG_DESC_HUSBAND;
 
-        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withPreparationTime(VALID_PREPARATION_TIME_BOB)
-                .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
+        EditRecipeDescriptor descriptor =
+            new EditRecipeDescriptorBuilder().withPreparationTime(VALID_PREPARATION_TIME_BOB)
+                .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB)
+                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -185,15 +201,18 @@ public class EditCommandParserTest {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_RECIPE;
         String userInput = targetIndex.getOneBased() + INVALID_PREPARATION_TIME_DESC + PREPARATION_TIME_DESC_BOB;
-        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withPreparationTime(VALID_PREPARATION_TIME_BOB).build();
+        EditRecipeDescriptor descriptor =
+            new EditRecipeDescriptorBuilder().withPreparationTime(VALID_PREPARATION_TIME_BOB).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + INGREDIENT_DESC_BOB + INVALID_PREPARATION_TIME_DESC + INSTRUCTION_DESC_BOB
+        userInput =
+            targetIndex.getOneBased() + INGREDIENT_DESC_BOB + INVALID_PREPARATION_TIME_DESC + INSTRUCTION_DESC_BOB
                 + PREPARATION_TIME_DESC_BOB;
-        descriptor = new EditRecipeDescriptorBuilder().withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB)
-                .withInstruction(VALID_INSTRUCTION_BOB).build();
+        descriptor = new EditRecipeDescriptorBuilder().withPreparationTime(VALID_PREPARATION_TIME_BOB)
+            .withIngredient(VALID_INGREDIENT_BOB)
+            .withInstruction(VALID_INSTRUCTION_BOB).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

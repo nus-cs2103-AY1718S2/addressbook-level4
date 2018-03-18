@@ -32,6 +32,6 @@ public class InstructionTest {
         // valid instructions
         assertTrue(Instruction.isValidInstuction("Blk 456, Den Road, #01-355"));
         assertTrue(Instruction.isValidInstuction("-")); // one character
-        assertTrue(Instruction.isValidInstuction("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long recipe
+        assertTrue(Instruction.isValidInstuction("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA"));
     }
 }

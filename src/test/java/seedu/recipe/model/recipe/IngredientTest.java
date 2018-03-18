@@ -55,7 +55,8 @@ public class IngredientTest {
         assertTrue(Ingredient.isValidIngredient("test@localhost"));   // alphabets only
         assertTrue(Ingredient.isValidIngredient("!#$%&'*+/=?`{|}~^.-@example.org")); // special characters local part
         assertTrue(Ingredient.isValidIngredient("123@145"));  // numeric local part and domain name
-        assertTrue(Ingredient.isValidIngredient("a1+be!@example1.com")); // mixture of alphanumeric and special characters
+        // mixture of alphanumeric and special characters
+        assertTrue(Ingredient.isValidIngredient("a1+be!@example1.com"));
         assertTrue(Ingredient.isValidIngredient("peter_jack@very-very-very-long-example.com"));   // long domain name
         assertTrue(Ingredient.isValidIngredient("if.you.dream.it_you.can.do.it@example.com"));    // long local part
     }

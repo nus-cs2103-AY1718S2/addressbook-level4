@@ -105,8 +105,10 @@ public class ParserUtilTest {
 
     @Test
     public void parsePreparationTime_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePreparationTime(INVALID_PREPARATION_TIME));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePreparationTime(Optional.of(INVALID_PREPARATION_TIME)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+            ParserUtil.parsePreparationTime(INVALID_PREPARATION_TIME));
+        Assert.assertThrows(IllegalValueException.class, () ->
+            ParserUtil.parsePreparationTime(Optional.of(INVALID_PREPARATION_TIME)));
     }
 
     @Test
@@ -118,7 +120,8 @@ public class ParserUtilTest {
     public void parsePreparationTime_validValueWithoutWhitespace_returnsPreparationTime() throws Exception {
         PreparationTime expectedPreparationTime = new PreparationTime(VALID_PREPARATION_TIME);
         assertEquals(expectedPreparationTime, ParserUtil.parsePreparationTime(VALID_PREPARATION_TIME));
-        assertEquals(Optional.of(expectedPreparationTime), ParserUtil.parsePreparationTime(Optional.of(VALID_PREPARATION_TIME)));
+        assertEquals(Optional.of(expectedPreparationTime),
+            ParserUtil.parsePreparationTime(Optional.of(VALID_PREPARATION_TIME)));
     }
 
     @Test
@@ -126,7 +129,8 @@ public class ParserUtilTest {
         String preparationTimeWithWhitespace = WHITESPACE + VALID_PREPARATION_TIME + WHITESPACE;
         PreparationTime expectedPreparationTime = new PreparationTime(VALID_PREPARATION_TIME);
         assertEquals(expectedPreparationTime, ParserUtil.parsePreparationTime(preparationTimeWithWhitespace));
-        assertEquals(Optional.of(expectedPreparationTime), ParserUtil.parsePreparationTime(Optional.of(preparationTimeWithWhitespace)));
+        assertEquals(Optional.of(expectedPreparationTime),
+            ParserUtil.parsePreparationTime(Optional.of(preparationTimeWithWhitespace)));
     }
 
     @Test
@@ -138,7 +142,8 @@ public class ParserUtilTest {
     @Test
     public void parseInstruction_invalidValue_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseInstruction(INVALID_INSTRUCTION));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseInstruction(Optional.of(INVALID_INSTRUCTION)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+            ParserUtil.parseInstruction(Optional.of(INVALID_INSTRUCTION)));
     }
 
     @Test
@@ -158,7 +163,8 @@ public class ParserUtilTest {
         String instructionWithWhitespace = WHITESPACE + VALID_INSTRUCTION + WHITESPACE;
         Instruction expectedInstruction = new Instruction(VALID_INSTRUCTION);
         assertEquals(expectedInstruction, ParserUtil.parseInstruction(instructionWithWhitespace));
-        assertEquals(Optional.of(expectedInstruction), ParserUtil.parseInstruction(Optional.of(instructionWithWhitespace)));
+        assertEquals(Optional.of(expectedInstruction),
+            ParserUtil.parseInstruction(Optional.of(instructionWithWhitespace)));
     }
 
     @Test
@@ -170,7 +176,8 @@ public class ParserUtilTest {
     @Test
     public void parseIngredient_invalidValue_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseIngredient(INVALID_INGREDIENT));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseIngredient(Optional.of(INVALID_INGREDIENT)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+            ParserUtil.parseIngredient(Optional.of(INVALID_INGREDIENT)));
     }
 
     @Test
@@ -190,7 +197,8 @@ public class ParserUtilTest {
         String ingredientWithWhitespace = WHITESPACE + VALID_INGREDIENT + WHITESPACE;
         Ingredient expectedIngredient = new Ingredient(VALID_INGREDIENT);
         assertEquals(expectedIngredient, ParserUtil.parseIngredient(ingredientWithWhitespace));
-        assertEquals(Optional.of(expectedIngredient), ParserUtil.parseIngredient(Optional.of(ingredientWithWhitespace)));
+        assertEquals(Optional.of(expectedIngredient),
+            ParserUtil.parseIngredient(Optional.of(ingredientWithWhitespace)));
     }
 
     @Test

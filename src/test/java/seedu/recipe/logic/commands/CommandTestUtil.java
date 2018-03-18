@@ -52,9 +52,11 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_PREPARATION_TIME_DESC = " " + PREFIX_PREPARATION_TIME + "911a"; // 'a' not allowed in preparationTimes
+    // 'a' not allowed in preparationTimes
+    public static final String INVALID_PREPARATION_TIME_DESC = " " + PREFIX_PREPARATION_TIME + "911a";
     public static final String INVALID_INGREDIENT_DESC = " " + PREFIX_INGREDIENT + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_INSTRUCTION_DESC = " " + PREFIX_INSTRUCTION; // empty string not allowed for instructions
+    // empty string not allowed for instructions
+    public static final String INVALID_INSTRUCTION_DESC = " " + PREFIX_INSTRUCTION;
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -65,11 +67,11 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditRecipeDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+            .withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY)
+            .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditRecipeDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+            .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB)
+            .withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**
@@ -78,7 +80,7 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel}
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
+                                            Model expectedModel) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);

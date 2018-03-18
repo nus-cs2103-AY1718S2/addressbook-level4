@@ -50,11 +50,13 @@ public class TypicalRecipes {
             .withIngredient("hans@example.com").withInstruction("chicago ave").build();
 
     // Manually added - Recipe's details found in {@code CommandTestUtil}
-    public static final Recipe AMY = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_AMY)
-            .withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final Recipe BOB = new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_BOB)
-            .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+    public static final Recipe AMY = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(
+        VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY)
+        .withTags(VALID_TAG_FRIEND).build();
+    public static final Recipe BOB =
+        new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_BOB)
+            .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB)
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

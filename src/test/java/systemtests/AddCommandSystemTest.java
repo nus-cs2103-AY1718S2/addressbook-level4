@@ -80,31 +80,36 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a recipe with all fields same as another recipe in the recipe book except name -> added */
-        toAdd = new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY)
-                .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY
-                + TAG_DESC_FRIEND;
+        toAdd = new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_AMY)
+            .withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND)
+            .build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
+            + INSTRUCTION_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a recipe with all fields same as another recipe in the recipe book except preparationTime -> added */
-        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_AMY)
-                .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY
-                + TAG_DESC_FRIEND;
+        /* Case: add a recipe with all fields same as another recipe in the recipe book except preparationTime
+        -> added */
+        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_BOB)
+            .withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND)
+            .build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_AMY
+            + INSTRUCTION_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a recipe with all fields same as another recipe in the recipe book except ingredient -> added */
-        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_BOB)
-                .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_AMY
-                + TAG_DESC_FRIEND;
+        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_AMY)
+            .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND)
+            .build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_BOB
+            + INSTRUCTION_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a recipe with all fields same as another recipe in the recipe book except recipe -> added */
-        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY)
-                .withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_BOB
-                + TAG_DESC_FRIEND;
+        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_AMY)
+            .withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_FRIEND)
+            .build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
+            + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty recipe book -> added */
@@ -113,8 +118,8 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
 
         /* Case: add a recipe with tags, command with parameters in random order -> added */
         toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PREPARATION_TIME_DESC_BOB + INSTRUCTION_DESC_BOB + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND + INGREDIENT_DESC_BOB;
+        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PREPARATION_TIME_DESC_BOB + INSTRUCTION_DESC_BOB
+            + NAME_DESC_BOB + TAG_DESC_HUSBAND + INGREDIENT_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a recipe, missing tags -> added */
@@ -166,24 +171,28 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
+            + INSTRUCTION_DESC_AMY;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid preparation time -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PREPARATION_TIME_DESC + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PREPARATION_TIME_DESC + INGREDIENT_DESC_AMY
+            + INSTRUCTION_DESC_AMY;
         assertCommandFailure(command, PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
 
         /* Case: invalid ingredient -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INVALID_INGREDIENT_DESC + INSTRUCTION_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INVALID_INGREDIENT_DESC
+            + INSTRUCTION_DESC_AMY;
         assertCommandFailure(command, Ingredient.MESSAGE_INGREDIENT_CONSTRAINTS);
 
         /* Case: invalid recipe -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY + INVALID_INSTRUCTION_DESC;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
+            + INVALID_INSTRUCTION_DESC;
         assertCommandFailure(command, Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY
-                + INVALID_TAG_DESC;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
+            + INSTRUCTION_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 

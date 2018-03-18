@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_INTERVAL;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.InsuranceCalendar.AppointmentEntry;
+import seedu.address.model.insuranceCalendar.AppointmentEntry;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 
 /**

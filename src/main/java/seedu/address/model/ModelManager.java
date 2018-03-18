@@ -14,7 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.InsuranceCalendar.AppointmentEntry;
+import seedu.address.model.insuranceCalendar.AppointmentEntry;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;

@@ -1,4 +1,4 @@
-package seedu.address.model.InsuranceCalendar;
+package seedu.address.model.insuranceCalendar;
 
 import static java.util.Objects.requireNonNull;
 

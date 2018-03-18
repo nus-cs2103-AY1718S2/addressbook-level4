@@ -16,7 +16,7 @@ import com.calendarfx.model.Interval;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.InsuranceCalendar.AppointmentEntry;
+import seedu.address.model.insuranceCalendar.AppointmentEntry;
 
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object

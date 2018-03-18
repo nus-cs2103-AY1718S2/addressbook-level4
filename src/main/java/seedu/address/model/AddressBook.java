@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.InsuranceCalendar.AppointmentEntry;
-import seedu.address.model.InsuranceCalendar.InsuranceCalendar;
+import seedu.address.model.insuranceCalendar.AppointmentEntry;
+import seedu.address.model.insuranceCalendar.InsuranceCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;

@@ -6,7 +6,7 @@ import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
 
-import seedu.address.model.InsuranceCalendar.AppointmentEntry;
+import seedu.address.model.insuranceCalendar.AppointmentEntry;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;

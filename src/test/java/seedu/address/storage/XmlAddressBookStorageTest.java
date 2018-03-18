@@ -3,10 +3,12 @@ package seedu.address.storage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.junit.Rule;
@@ -96,6 +98,38 @@ public class XmlAddressBookStorageTest {
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
 
+    }
+
+    @Test
+    public void importAddressBook_invalidFileFormat_throwDataConversionException() throws Exception {
+        thrown.expect(DataConversionException.class);
+        String filePath = TEST_DATA_FOLDER + "invalidFileFormatAddressBook.xml";
+        AddressBook original = new AddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.importAddressBook(filePath, original);
+    }
+
+    @Test
+    public void importAddressBook_nonExistentFile_fileNotFoundException() throws Exception {
+        thrown.expect(FileNotFoundException.class);
+        String filePath = TEST_DATA_FOLDER + "nonExistentAddressBook.xml";
+        AddressBook original = new AddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.importAddressBook(filePath, original);
+    }
+
+    @Test
+    public void importAddressBook_validFile_success() throws Exception {
+        String filePath = TEST_DATA_FOLDER + "validAddressBook.xml";
+        AddressBook original = new AddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+
+        // Import file into existing address book
+        xmlAddressBookStorage.importAddressBook(filePath, original);
+        AddressBook expected = original;
+        expected.importPerson(ALICE);
+        expected.importPerson(BENSON);
+        assertEquals(original, expected);
     }
 
     @Test

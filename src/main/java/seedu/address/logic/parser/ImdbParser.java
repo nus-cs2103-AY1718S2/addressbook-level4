@@ -123,7 +123,10 @@ public class ImdbParser {
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 
-        case UndoCommand.COMMAND_ALIAS:
+        case UndoCommand.COMMAND_ALIAS1:
+            return new UndoCommand();
+
+        case UndoCommand.COMMAND_ALIAS2:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:

@@ -234,8 +234,14 @@ public class ImdbParserTest {
     }
 
     @Test
-    public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
+    public void parseCommand_undoCommandAlias_returnsUndoCommand1() throws Exception {
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS1) instanceof UndoCommand);
+        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_undoCommandAlias_returnsUndoCommand2() throws Exception {
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS2) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 

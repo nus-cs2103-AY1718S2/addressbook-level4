@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,9 +13,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.storage.XmlAddressBookStorage;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -73,11 +79,34 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void addAlias(Alias alias) throws DuplicateAliasException {
+        addressBook.addAlias(alias);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteTag(Tag tag) {
+        addressBook.removeTag(tag);
+    }
+
+    /**
+     * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
+     * @param filepath
+     */
+    @Override
+    public void importAddressBook(String filepath) throws DataConversionException, IOException {
+        requireNonNull(filepath);
+        XmlAddressBookStorage importedAddressBook = new XmlAddressBookStorage(filepath);
+        importedAddressBook.importAddressBook(filepath, this.addressBook);
         indicateAddressBookChanged();
     }
 

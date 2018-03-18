@@ -3,51 +3,49 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+StardyTogether was developed by team W11-B4. +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Joanne Ong
+image::joanne.jpg[width="150", align="left"]
+{empty}[https://github.com/joanneong[github]] [<<johndoe#, portfolio>>]
 
 Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Ong Jing Yin
+image::jing.jpg[width="150", align="left"]
+{empty}[http://github.com/jingyinno[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Logic
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Low Cai Jun
+image::caijun.jpg[width="150", align="left"]
+{empty}[http://github.com/caijun7[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Model
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
+=== Wayne Neo Wei Zhe
+image::wayne.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Storage
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Lee Yong Ler
+image::yongler.jpg[width="150", align="left"]
+{empty}[http://github.com/yeggasd[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI

@@ -54,7 +54,7 @@ public class FilterCommandTest {
         assertFalse(filterFirstCommand.equals(2020));
 
         // null -> returns false
-        assertFalse(filterFirstCommand.equals(null));
+        assertFalse(filterFirstCommand == null);
 
         // different filter command -> returns false
         assertFalse(filterFirstCommand.equals(filterSecondCommand));

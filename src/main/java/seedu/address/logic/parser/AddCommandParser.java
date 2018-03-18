@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
@@ -19,6 +20,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -26,6 +28,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
+import sun.net.www.ParseUtil;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -40,10 +43,10 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_RESUME, PREFIX_TAG);
+                        PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR, PREFIX_RESUME, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap,
-                PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_EXPECTED_GRADUATION_YEAR)
+                PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -56,6 +59,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             ExpectedGraduationYear expectedGraduationYear = ParserUtil.parseExpectedGraduationYear(argMultimap
                     .getValue(PREFIX_EXPECTED_GRADUATION_YEAR)).get();
+            Major major = ParserUtil.parseMajor(argMultimap.getValue(PREFIX_MAJOR)).get();
 
             // Add command does not allow adding rating straight away
             Rating rating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,
@@ -72,7 +76,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Person person = new Person(name, phone, email, address, expectedGraduationYear,
-                    rating, resume, interviewDate, tagList);
+                    major, rating, resume, interviewDate, tagList);
             return new AddCommand(person);
 
         } catch (IllegalValueException ive) {

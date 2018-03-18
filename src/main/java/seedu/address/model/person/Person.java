@@ -20,6 +20,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private final ExpectedGraduationYear expectedGraduationYear;
+    private final Major major;
     private final Rating rating;
     private final Resume resume;
     private final InterviewDate interviewDate;
@@ -30,7 +31,7 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, ExpectedGraduationYear expectedGraduationYear,
-                  Rating rating, Resume resume, InterviewDate interviewDate, Set<Tag> tags) {
+                  Major major, Rating rating, Resume resume, InterviewDate interviewDate, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
 
         this.name = name;
@@ -38,6 +39,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
+        this.major = major;
         this.rating = rating;
         this.resume = resume;
         this.interviewDate = interviewDate;
@@ -64,6 +66,8 @@ public class Person {
     public ExpectedGraduationYear getExpectedGraduationYear() {
         return expectedGraduationYear;
     }
+
+    public Major getMajor() { return major; }
 
     public Rating getRating() {
         return rating;
@@ -101,13 +105,15 @@ public class Person {
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
                 && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear())
+                && otherPerson.getMajor().equals(this.getMajor())
                 && otherPerson.getInterviewDate().equals(this.getInterviewDate());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
+        return Objects.hash(name, phone, email, address, expectedGraduationYear,
+                major, rating, resume, interviewDate, tags);
     }
 
     @Override
@@ -122,6 +128,8 @@ public class Person {
                 .append(getAddress())
                 .append(" Expected graduation year: ")
                 .append(getExpectedGraduationYear())
+                .append(" Major: ")
+                .append(getMajor())
                 .append(" Resume: ")
                 .append(getResume())
                 .append(" Tags: ");

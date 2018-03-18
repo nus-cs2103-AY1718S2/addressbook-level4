@@ -9,6 +9,7 @@ import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -29,6 +30,7 @@ public class PersonBuilder {
     private static final String DEFAULT_EMAIL = "alice@gmail.com";
     private static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     private static final String DEFAULT_EXPECTED_GRADUATION_YEAR = "2020";
+    private static final String DEFAULT_MAJOR = "Computer Science";
     private static final String DEFAULT_TECHNICAL_SKILLS_SCORE = "-1";
     private static final String DEFAULT_COMMUNICATION_SKILLS_SCORE = "-1";
     private static final String DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE = "-1";
@@ -41,6 +43,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private ExpectedGraduationYear expectedGraduationYear;
+    private Major major;
     private Rating rating;
     private Resume resume;
     private InterviewDate interviewDate;
@@ -53,6 +56,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         expectedGraduationYear = new ExpectedGraduationYear(DEFAULT_EXPECTED_GRADUATION_YEAR);
+        major = new Major(DEFAULT_MAJOR);
         rating = new Rating(Double.valueOf(DEFAULT_TECHNICAL_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_COMMUNICATION_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE),
@@ -71,6 +75,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         expectedGraduationYear = personToCopy.getExpectedGraduationYear();
+        major = personToCopy.getMajor();
         rating = personToCopy.getRating();
         resume = personToCopy.getResume();
         interviewDate = personToCopy.getInterviewDate();
@@ -125,6 +130,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Major} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMajor(String major) {
+        this.major = new Major(major);
+        return this;
+    }
+
+    /**
      * Sets the {@code Rating} of the {@code Person} that we are building.
      */
     public PersonBuilder withRating(String technicalSkillsScore, String communicationSkillsScore,
@@ -153,7 +166,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, expectedGraduationYear, rating, resume, interviewDate, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, major, rating, resume, interviewDate, tags);
     }
 
     /**

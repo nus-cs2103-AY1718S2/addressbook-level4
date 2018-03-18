@@ -93,7 +93,7 @@ public class Date {
     public boolean equals(Object obj) {
         return this == obj // short circuit if same object
                 || (obj instanceof Date
-                && obj.equals(this));
+                && this.value.equals(((Date) obj).getValue()));
     }
 
     @Override

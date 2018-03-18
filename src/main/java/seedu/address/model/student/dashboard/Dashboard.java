@@ -49,10 +49,25 @@ public class Dashboard {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Milestones: ");
-        milestoneList.forEach(builder::append);
-        builder.append("Homework List: ");
-        homeworkList.forEach(builder::append);
+        int index;
+
+        builder.append("Milestones:\n");
+        index = 1;
+        for (Milestone milestone : milestoneList) {
+            builder.append(index++)
+                    .append(". ")
+                    .append(milestone)
+                    .append("\n");
+        }
+        builder.append("Homework List:\n");
+        index = 1;
+        for (Homework homework : homeworkList) {
+            builder.append(index++)
+                    .append(". ")
+                    .append(homework)
+                    .append("\n");
+        }
+
         return builder.toString();
     }
 

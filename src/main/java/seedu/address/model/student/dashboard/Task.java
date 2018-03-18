@@ -48,8 +48,10 @@ public class Task {
         final StringBuilder builder = new StringBuilder();
         builder.append("Name: ")
                 .append(name)
+                .append(" ||")
                 .append("Desc: ")
                 .append(desc)
+                .append(" ||")
                 .append("Completed: ")
                 .append(isCompleted);
         return builder.toString();

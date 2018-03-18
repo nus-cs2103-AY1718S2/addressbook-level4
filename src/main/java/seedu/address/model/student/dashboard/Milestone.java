@@ -74,14 +74,24 @@ public class Milestone {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
+        int index = 1;
+
         builder.append("Objective: ")
                 .append(objective)
+                .append(" ||")
                 .append(" Due Date: ")
                 .append(dueDate)
+                .append(" ||")
                 .append(" Progress: ")
                 .append(progress)
-                .append(" Tasks: ");
-        taskList.forEach(builder::append);
+                .append("\n")
+                .append("Tasks: ");
+        for (Task task : taskList) {
+            builder.append(index++)
+                    .append(" - ")
+                    .append(task)
+                    .append("\n");
+        }
         return builder.toString();
     }
 

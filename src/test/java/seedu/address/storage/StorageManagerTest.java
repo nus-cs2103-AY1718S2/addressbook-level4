@@ -14,7 +14,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.ReadOnlyIMDB;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
@@ -59,12 +59,12 @@ public class StorageManagerTest {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link XmlIMDBStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlIMDBStorageTest} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlImdbStorageTest} class.
          */
-        IMDB original = getTypicalAddressBook();
+        Imdb original = getTypicalAddressBook();
         storageManager.saveAddressBook(original);
         ReadOnlyIMDB retrieved = storageManager.readAddressBook().get();
-        assertEquals(original, new IMDB(retrieved));
+        assertEquals(original, new Imdb(retrieved));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlIMDBStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));
-        storage.handleAddressBookChangedEvent(new ImdbChangedEvent(new IMDB()));
+        storage.handleAddressBookChangedEvent(new ImdbChangedEvent(new Imdb()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 

@@ -38,7 +38,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, patientToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getIMDB(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
         expectedModel.deletePerson(patientToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -61,7 +61,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, patientToDelete);
 
-        Model expectedModel = new ModelManager(model.getIMDB(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
         expectedModel.deletePerson(patientToDelete);
         showNoPerson(expectedModel);
 
@@ -74,7 +74,7 @@ public class DeleteCommandTest {
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getIMDB().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getImdb().getPersonList().size());
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
@@ -88,7 +88,7 @@ public class DeleteCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Patient patientToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getIMDB(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
 
         // delete -> first patient deleted
         deleteCommand.execute();
@@ -131,7 +131,7 @@ public class DeleteCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getIMDB(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Patient patientToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());

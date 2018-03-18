@@ -20,7 +20,7 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyIMDB;
@@ -54,7 +54,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing IMDB ]===========================");
+        logger.info("=============================[ Initializing Imdb ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -91,15 +91,15 @@ public class MainApp extends Application {
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample IMDB");
+                logger.info("Data file not found. Will be starting with a sample Imdb");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty IMDB");
-            initialData = new IMDB();
+            logger.warning("Data file not in the correct format. Will be starting with an empty Imdb");
+            initialData = new Imdb();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty IMDB");
-            initialData = new IMDB();
+            logger.warning("Problem while reading from the file. Will be starting with an empty Imdb");
+            initialData = new Imdb();
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -163,7 +163,7 @@ public class MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty IMDB");
+            logger.warning("Problem while reading from the file. Will be starting with an empty Imdb");
             initializedPrefs = new UserPrefs();
         }
 
@@ -183,7 +183,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting IMDB " + MainApp.VERSION);
+        logger.info("Starting Imdb " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 

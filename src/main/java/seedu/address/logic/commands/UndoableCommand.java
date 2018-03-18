@@ -5,7 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.ReadOnlyIMDB;
 
 /**
@@ -21,7 +21,7 @@ public abstract class UndoableCommand extends Command {
      */
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
-        this.previousAddressBook = new IMDB(model.getIMDB());
+        this.previousAddressBook = new Imdb(model.getImdb());
     }
 
     /**
@@ -31,7 +31,7 @@ public abstract class UndoableCommand extends Command {
     protected void preprocessUndoableCommand() throws CommandException {}
 
     /**
-     * Reverts the IMDB to the state before this command
+     * Reverts the Imdb to the state before this command
      * was executed and updates the filtered patient list to
      * show all persons.
      */

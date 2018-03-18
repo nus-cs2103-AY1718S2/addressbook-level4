@@ -3,7 +3,7 @@ package seedu.address.model.util;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.ReadOnlyIMDB;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.Email;
@@ -14,7 +14,7 @@ import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code IMDB} with sample data.
+ * Contains utility methods for populating {@code Imdb} with sample data.
  */
 public class SampleDataUtil {
     public static Patient[] getSamplePersons() {
@@ -42,7 +42,7 @@ public class SampleDataUtil {
 
     public static ReadOnlyIMDB getSampleAddressBook() {
         try {
-            IMDB sampleAb = new IMDB();
+            Imdb sampleAb = new Imdb();
             for (Patient samplePatient : getSamplePersons()) {
                 sampleAb.addPerson(samplePatient);
             }

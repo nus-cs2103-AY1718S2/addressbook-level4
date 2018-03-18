@@ -11,12 +11,12 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.testutil.TypicalPatients;
 
-public class XmlSerializableIMDBTest {
+public class XmlSerializableImdbTest {
 
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableIMDBTest/");
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableImdbTest/");
     private static final File TYPICAL_PERSONS_FILE = new File(TEST_DATA_FOLDER + "typicalPatientIMDB.xml");
     private static final File INVALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "invalidPatientIMDB.xml");
     private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagIMDB.xml");
@@ -28,9 +28,9 @@ public class XmlSerializableIMDBTest {
     public void toModelType_typicalPersonsFile_success() throws Exception {
         XmlSerializableIMDB dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
                 XmlSerializableIMDB.class);
-        IMDB IMDBFromFile = dataFromFile.toModelType();
-        IMDB typicalPersonsIMDB = TypicalPatients.getTypicalAddressBook();
-        assertEquals(IMDBFromFile, typicalPersonsIMDB);
+        Imdb ImdbFromFile = dataFromFile.toModelType();
+        Imdb typicalPersonsImdb = TypicalPatients.getTypicalAddressBook();
+        assertEquals(ImdbFromFile, typicalPersonsImdb);
     }
 
     @Test

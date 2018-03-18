@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.tag.Tag;
@@ -9,26 +9,26 @@ import seedu.address.model.tag.Tag;
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code IMDB ab = new IMDBBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code Imdb ab = new IMDBBuilder().withPerson("John", "Doe").withTag("Friend").build();}
  */
 public class IMDBBuilder {
 
-    private IMDB IMDB;
+    private Imdb Imdb;
 
     public IMDBBuilder() {
-        IMDB = new IMDB();
+        Imdb = new Imdb();
     }
 
-    public IMDBBuilder(IMDB IMDB) {
-        this.IMDB = IMDB;
+    public IMDBBuilder(Imdb Imdb) {
+        this.Imdb = Imdb;
     }
 
     /**
-     * Adds a new {@code Patient} to the {@code IMDB} that we are building.
+     * Adds a new {@code Patient} to the {@code Imdb} that we are building.
      */
     public IMDBBuilder withPerson(Patient patient) {
         try {
-            IMDB.addPerson(patient);
+            Imdb.addPerson(patient);
         } catch (DuplicatePatientException dpe) {
             throw new IllegalArgumentException("patient is expected to be unique.");
         }
@@ -36,18 +36,18 @@ public class IMDBBuilder {
     }
 
     /**
-     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code IMDB} that we are building.
+     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code Imdb} that we are building.
      */
     public IMDBBuilder withTag(String tagName) {
         try {
-            IMDB.addTag(new Tag(tagName));
+            Imdb.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tagName is expected to be valid.");
         }
         return this;
     }
 
-    public IMDB build() {
-        return IMDB;
+    public Imdb build() {
+        return Imdb;
     }
 }

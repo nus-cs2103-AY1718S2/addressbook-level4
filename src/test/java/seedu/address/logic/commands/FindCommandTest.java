@@ -17,7 +17,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -85,14 +85,14 @@ public class FindCommandTest {
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>
      *     - the {@code FilteredList<Patient>} is equal to {@code expectedList}<br>
-     *     - the {@code IMDB} in model remains the same after executing the {@code command}
+     *     - the {@code Imdb} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<Patient> expectedList) {
-        IMDB expectedIMDB = new IMDB(model.getIMDB());
+        Imdb expectedImdb = new Imdb(model.getImdb());
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedIMDB, model.getIMDB());
+        assertEquals(expectedImdb, model.getImdb());
     }
 }

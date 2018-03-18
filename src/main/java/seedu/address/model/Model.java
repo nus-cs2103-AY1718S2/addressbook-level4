@@ -18,8 +18,8 @@ public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyIMDB newData);
 
-    /** Returns the IMDB */
-    ReadOnlyIMDB getIMDB();
+    /** Returns the Imdb */
+    ReadOnlyIMDB getImdb();
 
     /** Deletes the given patient. */
     void deletePerson(Patient target) throws PatientNotFoundException;

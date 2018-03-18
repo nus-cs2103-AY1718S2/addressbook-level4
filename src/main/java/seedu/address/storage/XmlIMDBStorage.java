@@ -15,7 +15,7 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyIMDB;
 
 /**
- * A class to access IMDB data stored as an xml file on the hard disk.
+ * A class to access Imdb data stored as an xml file on the hard disk.
  */
 public class XmlIMDBStorage implements IMDBStorage {
 
@@ -48,7 +48,7 @@ public class XmlIMDBStorage implements IMDBStorage {
         File addressBookFile = new File(filePath);
 
         if (!addressBookFile.exists()) {
-            logger.info("IMDB file "  + addressBookFile + " not found");
+            logger.info("Imdb file "  + addressBookFile + " not found");
             return Optional.empty();
         }
 

@@ -730,7 +730,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 
 . Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/patient/Person.java[`Person`].
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the patient will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `IMDB.xml` so that the application will load the sample data when you launch it.)
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `Imdb.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
@@ -741,7 +741,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsIMDB.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsImdb.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
 Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/patient/Person.java[`Person`].
@@ -815,7 +815,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `IMDB` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Imdb` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Update record of patient's visit
@@ -826,7 +826,7 @@ Precondition: User is logged in
 
 1.  User requests to update patient’s record of visit
 2.  User inputs NRIC of patient, date and time of visit and additional remarks
-3.  IMDB shows a success message
+3.  Imdb shows a success message
 +
 Use case ends
 
@@ -836,9 +836,9 @@ Use case ends
 * 2a. The patient does not exist
 +
 [none]
-** 2a1. IMDB detects that the patient does not exist
-** 2a2. IMDB shows an error message
-** 2a3. IMDB requests for user to input NRIC of patient
+** 2a1. Imdb detects that the patient does not exist
+** 2a2. Imdb shows an error message
+** 2a3. Imdb requests for user to input NRIC of patient
 ** 2a4. User inputs NRIC of patient
 ** Steps 2a1-2a4 are repeated until the patient exists
 +
@@ -850,9 +850,9 @@ Use case resumes from step 3
 *MSS*
 
 1.  User requests to login to system
-2.  IMDB requests user to input username and password
+2.  Imdb requests user to input username and password
 3.  User inputs username and password
-4.  IMDB shows a success message
+4.  Imdb shows a success message
 +
 Use case ends
 
@@ -862,8 +862,8 @@ Use case ends
 * 3a. Username and password do not match
 +
 [none]
-** 3a1. IMDB shows an error message
-** 3a2. IMDB requests user to input username and password
+** 3a1. Imdb shows an error message
+** 3a2. Imdb requests user to input username and password
 ** 3a3. User inputs username and password
 ** Steps 3a1-3a3 are repeated until username and password match
 +
@@ -877,9 +877,9 @@ Preconditions: User is logged in
 *MSS*
 
 1.  User requests to update patient details
-2.  IMDB requests user to input NRIC of the patient and details that need to be edited
+2.  Imdb requests user to input NRIC of the patient and details that need to be edited
 3.  User inputs NRIC and patient detail that need to be edited
-4.  IMDB shows a success message and display the patient details
+4.  Imdb shows a success message and display the patient details
 +
 Use case ends
 
@@ -889,8 +889,8 @@ Use case ends
 * 3a. Patient cannot be found in the system
 +
 [none]
-** 3a1. IMDB shows an error message
-** 3a2. IMDB requests user to input NRIC and patient detail that need to be edited
+** 3a1. Imdb shows an error message
+** 3a2. Imdb requests user to input NRIC and patient detail that need to be edited
 ** 3a3. User inputs NRIC and patient detail that need to be edited
 ** Steps 3a1-3a3 are repeated until the inputs are valid
 +
@@ -899,8 +899,8 @@ Use case resumes from step 4
 * 3b. Input format is incorrect
 +
 [none]
-** 3b1. IMDB shows an error message
-** 3b2. IMDB requests user to input NRIC and patient detail that need to be edited
+** 3b1. Imdb shows an error message
+** 3b2. Imdb requests user to input NRIC and patient detail that need to be edited
 ** 3b3. User inputs NRIC and patient detail that need to be edited
 ** Steps 3b1-3b3 are repeated until the inputs are valid
 +
@@ -914,11 +914,11 @@ Preconditions: User is logged in
 *MSS*
 
 1.  User request to view health profile of the patient
-2.  IMDB request user to input NRIC of patient
+2.  Imdb request user to input NRIC of patient
 3.  User inputs NRIC of patient
-4.  IMDB display health profile of the patient
+4.  Imdb display health profile of the patient
 5.  User inputs details that need to be updated in health profile of the patient
-6.  IMDB shows a success message and display the patient details
+6.  Imdb shows a success message and display the patient details
 +
 Use case ends
 
@@ -928,8 +928,8 @@ Use case ends
 * 3a. Patient cannot be found in the system
 +
 [none]
-** 3a1. IMDB shows an error message
-** 3a2. IMDB requests user to input NRIC
+** 3a1. Imdb shows an error message
+** 3a2. Imdb requests user to input NRIC
 ** 3a3. User inputs NRIC
 ** Steps 3a1-3a3 are repeated until the inputs are valid
 +
@@ -938,8 +938,8 @@ Use case resumes from step 4
 * 5a. Input format is incorrect
 +
 [none]
-** 5a1. IMDB shows an error message
-** 5a2. IMDB requests user to input details that need to be edited
+** 5a1. Imdb shows an error message
+** 5a2. Imdb requests user to input details that need to be edited
 ** 5a3. User inputs details that need to be edited
 ** Steps 5a1-5a3 are repeated until the inputs are valid
 +
@@ -953,9 +953,9 @@ Preconditions: User is logged in
 *MSS*
 
 1.  User requests to add remarks to a patient
-2.  IMDB requests user to input NRIC of the patient and the remarks
+2.  Imdb requests user to input NRIC of the patient and the remarks
 3.  User inputs NRIC and the remarks
-4.  IMDB shows a success message and displays the added remarks
+4.  Imdb shows a success message and displays the added remarks
 +
 Use case ends
 
@@ -965,8 +965,8 @@ Use case ends
 * 3a. Patient cannot be found in the system
 +
 [none]
-** 3a1. IMDB shows an error message
-** 3a2. IMDB requests user to input NRIC and remarks
+** 3a1. Imdb shows an error message
+** 3a2. Imdb requests user to input NRIC and remarks
 ** 3a3. User inputs NRIC and remarks
 ** Steps 3a1-3a3 are repeated until the inputs are valid
 +
@@ -975,8 +975,8 @@ Use case resumes from step 4
 * 3b. Input format is incorrect
 +
 [none]
-** 3b1. IMDB shows an error message
-** 3b2. IMDB requests user to input NRIC and remarks
+** 3b1. Imdb shows an error message
+** 3b2. Imdb requests user to input NRIC and remarks
 ** 3b3. User inputs NRIC and remarks
 ** Steps 3b1-3b3 are repeated until the inputs are valid.
 +
@@ -990,8 +990,8 @@ Preconditions: User is logged in
 *MSS*
 
 1.  User requests to search for schedule
-2.  IMDB requests user to input NRIC of the patient
-3.  IMDB displays schedule of patient
+2.  Imdb requests user to input NRIC of the patient
+3.  Imdb displays schedule of patient
 +
 Use case ends
 
@@ -1001,8 +1001,8 @@ Use case ends
 * 2a. Patient cannot be found in the system
 +
 [none]
-** 2a1. IMDB shows an error message
-** 2a2. IMDB requests user to input NRIC
+** 2a1. Imdb shows an error message
+** 2a2. Imdb requests user to input NRIC
 ** 2a3. User inputs NRIC
 ** Steps 2a1-2a3 are repeated until the inputs are valid
 +
@@ -1011,8 +1011,8 @@ Use case resumes from step 3
 * 2b. Input format is incorrect
 +
 [none]
-** 2b1. IMDB shows an error message
-** 2b2. IMDB requests user to input NRIC
+** 2b1. Imdb shows an error message
+** 2b2. Imdb requests user to input NRIC
 ** 2b3. User inputs NRIC
 ** Steps 2b1-2b3 are repeated until the inputs are valid
 +
@@ -1026,8 +1026,8 @@ Preconditions: User is logged in, patient details are on screen
 *MSS*
 
 1.  User requests to use a filter
-2.  IMDB requests user to input filter number
-3.  IMDB displays filtered patient details only
+2.  Imdb requests user to input filter number
+3.  Imdb displays filtered patient details only
 +
 Use case ends
 
@@ -1037,8 +1037,8 @@ Use case ends
 * 2a. Filter number does not exist
 +
 [none]
-** 2a1. IMDB shows an error message
-** 2a2. IMDB requests user to input filter number
+** 2a1. Imdb shows an error message
+** 2a2. Imdb requests user to input filter number
 ** 2a3. User inputs filter number
 ** Steps 2a1-2a3 are repeated until the inputs are valid
 +
@@ -1052,8 +1052,8 @@ Preconditions: User is logged in
 *MSS*
 
 1.  User requests to print patient records
-2.  IMDB requests user to input NRIC of the patient
-3.  IMDB exports a formatted record of the patient that can be printed
+2.  Imdb requests user to input NRIC of the patient
+3.  Imdb exports a formatted record of the patient that can be printed
 +
 Use case ends
 
@@ -1063,8 +1063,8 @@ Use case ends
 * 2a. Patient cannot be found in the system
 +
 [none]
-** 2a1. IMDB shows an error message
-** 2a2. IMDB requests user to input NRIC
+** 2a1. Imdb shows an error message
+** 2a2. Imdb requests user to input NRIC
 ** 2a3. User inputs NRIC
 ** Steps 2a1-2a3 are repeated until the inputs are valid
 +

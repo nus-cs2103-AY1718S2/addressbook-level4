@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.ReadOnlyIMDB;
 
 /**
- * Represents a storage for {@link IMDB}.
+ * Represents a storage for {@link Imdb}.
  */
 public interface IMDBStorage {
 
@@ -18,7 +18,7 @@ public interface IMDBStorage {
     String getAddressBookFilePath();
 
     /**
-     * Returns IMDB data as a {@link ReadOnlyIMDB}.
+     * Returns Imdb data as a {@link ReadOnlyIMDB}.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.

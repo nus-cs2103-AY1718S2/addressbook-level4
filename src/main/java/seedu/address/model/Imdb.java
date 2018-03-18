@@ -24,7 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
-public class IMDB implements ReadOnlyIMDB {
+public class Imdb implements ReadOnlyIMDB {
 
     private final UniquePatientList persons;
     private final UniqueTagList tags;
@@ -43,12 +43,12 @@ public class IMDB implements ReadOnlyIMDB {
         appointments = new UniqueAppointmentList();
     }
 
-    public IMDB() {}
+    public Imdb() {}
 
     /**
-     * Creates an IMDB using the Persons and Tags in the {@code toBeCopied}
+     * Creates an Imdb using the Persons and Tags in the {@code toBeCopied}
      */
-    public IMDB(ReadOnlyIMDB toBeCopied) {
+    public Imdb(ReadOnlyIMDB toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -68,7 +68,7 @@ public class IMDB implements ReadOnlyIMDB {
     }
 
     /**
-     * Resets the existing data of this {@code IMDB} with {@code newData}.
+     * Resets the existing data of this {@code Imdb} with {@code newData}.
      */
     public void resetData(ReadOnlyIMDB newData) {
         requireNonNull(newData);
@@ -104,7 +104,7 @@ public class IMDB implements ReadOnlyIMDB {
 
     /**
      * Replaces the given patient {@code target} in the list with {@code editedPerson}.
-     * {@code IMDB}'s tag list will be updated with the tags of {@code editedPerson}.
+     * {@code Imdb}'s tag list will be updated with the tags of {@code editedPerson}.
      *
      * @throws DuplicatePatientException if updating the patient's details causes the patient to be equivalent to
      *      another existing patient in the list.
@@ -145,8 +145,8 @@ public class IMDB implements ReadOnlyIMDB {
     }
 
     /**
-     * Removes {@code key} from this {@code IMDB}.
-     * @throws PatientNotFoundException if the {@code key} is not in this {@code IMDB}.
+     * Removes {@code key} from this {@code Imdb}.
+     * @throws PatientNotFoundException if the {@code key} is not in this {@code Imdb}.
      */
     public boolean removePerson(Patient key) throws PatientNotFoundException {
         if (persons.remove(key)) {
@@ -184,7 +184,7 @@ public class IMDB implements ReadOnlyIMDB {
     }
 
     /**
-     * Loops through all persons in this {@code IMDB} and removes {@code tag}.
+     * Loops through all persons in this {@code Imdb} and removes {@code tag}.
      */
     public void removeTag(Tag tag) {
         for (Patient patient : persons) {
@@ -222,10 +222,10 @@ public class IMDB implements ReadOnlyIMDB {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof IMDB // instanceof handles nulls
-                && this.persons.equals(((IMDB) other).persons)
-                && this.tags.equalsOrderInsensitive(((IMDB) other).tags)
-                && this.appointments.equalsOrderInsensitive(((IMDB) other).appointments));
+                || (other instanceof Imdb // instanceof handles nulls
+                && this.persons.equals(((Imdb) other).persons)
+                && this.tags.equalsOrderInsensitive(((Imdb) other).tags)
+                && this.appointments.equalsOrderInsensitive(((Imdb) other).appointments));
     }
 
     @Override

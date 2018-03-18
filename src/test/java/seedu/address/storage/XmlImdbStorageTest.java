@@ -16,11 +16,11 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.ReadOnlyIMDB;
 
-public class XmlIMDBStorageTest {
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlIMDBStorageTest/");
+public class XmlImdbStorageTest {
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlImdbStorageTest/");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -75,26 +75,26 @@ public class XmlIMDBStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
-        IMDB original = getTypicalAddressBook();
+        Imdb original = getTypicalAddressBook();
         XmlIMDBStorage xmlAddressBookStorage = new XmlIMDBStorage(filePath);
 
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         ReadOnlyIMDB readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
-        assertEquals(original, new IMDB(readBack));
+        assertEquals(original, new Imdb(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
-        assertEquals(original, new IMDB(readBack));
+        assertEquals(original, new Imdb(readBack));
 
         //Save and read without specifying file path
         original.addPerson(IDA);
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
-        assertEquals(original, new IMDB(readBack));
+        assertEquals(original, new Imdb(readBack));
 
     }
 
@@ -102,20 +102,20 @@ public class XmlIMDBStorageTest {
     public void readAndBackupAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
         String backupFilePath = filePath + ".backup";
-        IMDB original = getTypicalAddressBook();
+        Imdb original = getTypicalAddressBook();
         XmlIMDBStorage xmlAddressBookStorage = new XmlIMDBStorage(filePath);
 
         //Backup in new file and read back
         xmlAddressBookStorage.backupAddressBook(original);
         ReadOnlyIMDB readBack = xmlAddressBookStorage.readAddressBook(backupFilePath).get();
-        assertEquals(original, new IMDB(readBack));
+        assertEquals(original, new Imdb(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
         xmlAddressBookStorage.backupAddressBook(original);
         readBack = xmlAddressBookStorage.readAddressBook(backupFilePath).get();
-        assertEquals(original, new IMDB(readBack));
+        assertEquals(original, new Imdb(readBack));
 
     }
 
@@ -156,7 +156,7 @@ public class XmlIMDBStorageTest {
     @Test
     public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(new IMDB(), null);
+        saveAddressBook(new Imdb(), null);
     }
 
 }

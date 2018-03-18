@@ -18,7 +18,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyIMDB;
 import seedu.address.model.patient.Patient;
@@ -113,7 +113,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyIMDB getIMDB() {
+        public ReadOnlyIMDB getImdb() {
             fail("This method should not be called.");
             return null;
         }
@@ -151,8 +151,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyIMDB getIMDB() {
-            return new IMDB();
+        public ReadOnlyIMDB getImdb() {
+            return new Imdb();
         }
     }
 
@@ -169,8 +169,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyIMDB getIMDB() {
-            return new IMDB();
+        public ReadOnlyIMDB getImdb() {
+            return new Imdb();
         }
     }
 

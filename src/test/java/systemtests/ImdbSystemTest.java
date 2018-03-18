@@ -37,7 +37,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPatients;
 import seedu.address.ui.BrowserPanel;
@@ -45,10 +45,10 @@ import seedu.address.ui.CommandBox;
 import seedu.address.ui.ResultDisplay;
 
 /**
- * A system test class for IMDB, which provides access to handles of GUI components and helper methods
+ * A system test class for Imdb, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
-public abstract class IMDBSystemTest {
+public abstract class ImdbSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
@@ -93,7 +93,7 @@ public abstract class IMDBSystemTest {
     /**
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
-    protected IMDB getInitialData() {
+    protected Imdb getInitialData() {
         return TypicalPatients.getTypicalAddressBook();
     }
 
@@ -152,7 +152,7 @@ public abstract class IMDBSystemTest {
      */
     protected void showAllPersons() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertEquals(getModel().getIMDB().getPersonList().size(), getModel().getFilteredPersonList().size());
+        assertEquals(getModel().getImdb().getPersonList().size(), getModel().getFilteredPersonList().size());
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class IMDBSystemTest {
      */
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assertTrue(getModel().getFilteredPersonList().size() < getModel().getIMDB().getPersonList().size());
+        assertTrue(getModel().getFilteredPersonList().size() < getModel().getImdb().getPersonList().size());
     }
 
     /**
@@ -176,7 +176,7 @@ public abstract class IMDBSystemTest {
      */
     protected void deleteAllPersons() {
         executeCommand(ClearCommand.COMMAND_WORD);
-        assertEquals(0, getModel().getIMDB().getPersonList().size());
+        assertEquals(0, getModel().getImdb().getPersonList().size());
     }
 
     /**
@@ -189,7 +189,7 @@ public abstract class IMDBSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getIMDB(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getImdb(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
@@ -295,7 +295,7 @@ public abstract class IMDBSystemTest {
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
-            assertEquals(String.format(RECORD_NUMBER_STATUS, getModel().getIMDB().getPersonList().size()),
+            assertEquals(String.format(RECORD_NUMBER_STATUS, getModel().getImdb().getPersonList().size()),
                     getStatusBarFooter().getRecordNumber());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
@@ -315,7 +315,7 @@ public abstract class IMDBSystemTest {
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
 
-        final int totalRecords = testApp.getModel().getIMDB().getPersonList().size();
+        final int totalRecords = testApp.getModel().getImdb().getPersonList().size();
         assertEquals(String.format(RECORD_NUMBER_STATUS, totalRecords), statusBarFooterHandle.getRecordNumber());
 
         assertFalse(statusBarFooterHandle.isSaveLocationChanged());

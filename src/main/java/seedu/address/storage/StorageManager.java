@@ -15,7 +15,7 @@ import seedu.address.model.ReadOnlyIMDB;
 import seedu.address.model.UserPrefs;
 
 /**
- * Manages storage of IMDB data in local storage.
+ * Manages storage of Imdb data in local storage.
  */
 public class StorageManager extends ComponentManager implements Storage {
 
@@ -48,7 +48,7 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
 
-    // ================ IMDB methods ==============================
+    // ================ Imdb methods ==============================
 
     @Override
     public String getAddressBookFilePath() {

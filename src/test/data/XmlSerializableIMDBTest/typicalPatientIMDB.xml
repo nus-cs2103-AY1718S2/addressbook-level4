@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- IMDB save file which contains the same Patient values as in
+<!-- Imdb save file which contains the same Patient values as in
 {@code TypicalPersons#getTypicalAddressBook()}-->
 <addressbook>
     <patients>

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 
@@ -31,10 +31,10 @@ public class TypicalAppointments {
     private TypicalAppointments() {}
 
     /**
-     * Returns an {@code IMDB} with all the typical appointments.
+     * Returns an {@code Imdb} with all the typical appointments.
      */
-    public static IMDB getTypicalAddressBook() {
-        IMDB ab = new IMDB();
+    public static Imdb getTypicalAddressBook() {
+        Imdb ab = new Imdb();
 
         for (Appointment appointment : getTypicalAppointment()) {
             try {

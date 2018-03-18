@@ -8,11 +8,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.ReadOnlyIMDB;
 
 /**
- * An Immutable IMDB that is serializable to XML format
+ * An Immutable Imdb that is serializable to XML format
  */
 @XmlRootElement(name = "addressbook")
 public class XmlSerializableIMDB {
@@ -46,24 +46,24 @@ public class XmlSerializableIMDB {
     }
 
     /**
-     * Converts this addressbook into the model's {@code IMDB} object.
+     * Converts this addressbook into the model's {@code Imdb} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedPatient} or {@code XmlAdaptedTag}.
      */
-    public IMDB toModelType() throws IllegalValueException {
-        IMDB IMDB = new IMDB();
+    public Imdb toModelType() throws IllegalValueException {
+        Imdb Imdb = new Imdb();
         for (XmlAdaptedTag t : tags) {
-            IMDB.addTag(t.toModelType());
+            Imdb.addTag(t.toModelType());
         }
         for (XmlAdaptedPatient p : persons) {
-            IMDB.addPerson(p.toModelType());
+            Imdb.addPerson(p.toModelType());
         }
 
         for (XmlAdaptedAppointment appt : appointments) {
-            IMDB.addAppointment(appt.toModelType());
+            Imdb.addAppointment(appt.toModelType());
         }
-        return IMDB;
+        return Imdb;
     }
 
     @Override

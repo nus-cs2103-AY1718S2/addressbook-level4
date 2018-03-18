@@ -11,7 +11,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.IMDB;
+import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyIMDB;
@@ -73,11 +73,11 @@ public class TestApp extends MainApp {
     /**
      * Returns a defensive copy of the address book data stored inside the storage file.
      */
-    public IMDB readStorageAddressBook() {
+    public Imdb readStorageAddressBook() {
         try {
-            return new IMDB(storage.readAddressBook().get());
+            return new Imdb(storage.readAddressBook().get());
         } catch (DataConversionException dce) {
-            throw new AssertionError("Data is not in the IMDB format.");
+            throw new AssertionError("Data is not in the Imdb format.");
         } catch (IOException ioe) {
             throw new AssertionError("Storage file cannot be found.");
         }
@@ -94,7 +94,7 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getIMDB()), new UserPrefs());
+        Model copy = new ModelManager((model.getImdb()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }

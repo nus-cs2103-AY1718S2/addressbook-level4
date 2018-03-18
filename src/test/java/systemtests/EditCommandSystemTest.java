@@ -49,7 +49,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PatientUtil;
 
-public class EditCommandSystemTest extends IMDBSystemTest {
+public class EditCommandSystemTest extends ImdbSystemTest {
 
     @Test
     public void edit() throws Exception {
@@ -112,7 +112,7 @@ public class EditCommandSystemTest extends IMDBSystemTest {
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getIMDB().getPersonList().size();
+        int invalidIndex = getModel().getImdb().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -175,7 +175,7 @@ public class EditCommandSystemTest extends IMDBSystemTest {
 
         /* Case: edit a patient with new values same as another patient's values -> rejected */
         executeCommand(PatientUtil.getAddCommand(BOB));
-        assertTrue(getModel().getIMDB().getPersonList().contains(BOB));
+        assertTrue(getModel().getImdb().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
         assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -241,9 +241,9 @@ public class EditCommandSystemTest extends IMDBSystemTest {
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
-     * {@code IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see IMDBSystemTest#assertSelectedCardChanged(Index)
+     * {@code ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see ImdbSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
@@ -267,8 +267,8 @@ public class EditCommandSystemTest extends IMDBSystemTest {
      * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
-     * {@code IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

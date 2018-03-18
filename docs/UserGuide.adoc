@@ -17,11 +17,11 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Integrated Medical DataBase (IMDB) is an application for the management of health records digitally.
-Of note is the fact that IMDB is *optimized for those who prefer to work with a Command Line Interface* (CLI)
+Integrated Medical DataBase (Imdb) is an application for the management of health records digitally.
+Of note is the fact that Imdb is *optimized for those who prefer to work with a Command Line Interface* (CLI)
 while still having the benefits of a Graphical User Interface (GUI).
 This makes it perfect for doctors or staff who can type faster than they can navigate with a mouse.
-If you are a medical staff who can type fast, IMDB can get your patient management tasks done faster than traditional pen and paper or even normal GUI apps.
+If you are a medical staff who can type fast, Imdb can get your patient management tasks done faster than traditional pen and paper or even normal GUI apps.
 Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
@@ -33,7 +33,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your IMDB.
+.  Copy the file to the folder you want to use as the home folder for your Imdb.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -43,7 +43,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the IMDB.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Imdb.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -67,12 +67,12 @@ Format: `help` or `h`
 
 === Logging into the system: `login` or `lg`
 
-Logs the user into the IMDB, given a matching username and password.
+Logs the user into the Imdb, given a matching username and password.
 Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
 
 === Adding a patient: `add` or `a`
 
-Adds a patient to the IMDB +
+Adds a patient to the Imdb +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/CONDITION]...` or
         `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/CONDITION]...`
 
@@ -86,12 +86,12 @@ Examples:
 
 === Listing all patients : `list` or `ls`
 
-Shows a list of all patients in the IMDB. +
+Shows a list of all patients in the Imdb. +
 Format: `list` or `ls`
 
 === Editing a patient : `edit` or `e`
 
-Edits an existing patient in the IMDB. +
+Edits an existing patient in the Imdb. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CONDITION]...` or
         `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CONDITION]...`
 
@@ -132,7 +132,7 @@ Returns any patient having names `Betsy`, `Tim`, or `John`
 
 === Deleting a patient : `delete` or `d`
 
-Deletes the specified patient from the IMDB. +
+Deletes the specified patient from the Imdb. +
 Format: `delete INDEX` or `d`
 
 ****
@@ -145,7 +145,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd patient in the IMDB.
+Deletes the 2nd patient in the Imdb.
 * `find Betsy` +
 `d 1` +
 Deletes the 1st patient in the results of the `find` command.
@@ -165,7 +165,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd patient in the IMDB.
+Selects the 2nd patient in the Imdb.
 * `find Betsy` +
 `s 1` +
 Selects the 1st patient in the results of the `find` command.
@@ -203,12 +203,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
-Restores the IMDB to the state before the previous _undoable_ command was executed. +
+Restores the Imdb to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the IMDB's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the Imdb's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -252,12 +252,12 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === View patient appointments: `viewappt`
 
-Shows a list of patient appointments in the IMDB.
+Shows a list of patient appointments in the Imdb.
 Format: `viewappt` or `va`
 
 === Clearing all entries : `clear` or `c`
 
-Clears all entries from the IMDB. +
+Clears all entries from the Imdb. +
 Format: `clear` or `c`
 
 === Exiting the program : `exit` or `x`
@@ -267,7 +267,7 @@ Format: `exit` or `x`
 
 === Saving the data
 
-IMDB data are saved in the hard disk automatically after any command that changes the data. +
+Imdb data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -279,13 +279,13 @@ Data encryption will be implemented in v2.0 to improve security and ensure confi
 // tag::centraliseddatabase[]
 === Centralised database `[coming in v2.0]`
 
-IMDB will be able to switch from standalone mode to server/client mode in v2.0 to centralise the database at the server in the main branch.
+Imdb will be able to switch from standalone mode to server/client mode in v2.0 to centralise the database at the server in the main branch.
 // end::centraliseddatabase[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous IMDB folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Imdb folder.
 
 == Command Summary
 

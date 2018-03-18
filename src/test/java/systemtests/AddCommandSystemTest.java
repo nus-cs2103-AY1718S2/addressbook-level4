@@ -52,7 +52,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PatientUtil;
 
-public class AddCommandSystemTest extends IMDBSystemTest {
+public class AddCommandSystemTest extends ImdbSystemTest {
 
     @Test
     public void add() throws Exception {
@@ -141,7 +141,7 @@ public class AddCommandSystemTest extends IMDBSystemTest {
         /* Case: add a duplicate patient except with different tags -> rejected */
         // "friends" is an existing tag used in the default model, see TypicalPatients#ALICE
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
-        // IMDB#addPerson(Patient)
+        // Imdb#addPerson(Patient)
         command = PatientUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
@@ -198,8 +198,8 @@ public class AddCommandSystemTest extends IMDBSystemTest {
      * 5. Browser url and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(Patient toAdd) {
         assertCommandSuccess(PatientUtil.getAddCommand(toAdd), toAdd);
@@ -246,8 +246,8 @@ public class AddCommandSystemTest extends IMDBSystemTest {
      * 4. {@code Model}, {@code Storage} and {@code PatientListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

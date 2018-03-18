@@ -17,7 +17,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
-public class SelectCommandSystemTest extends IMDBSystemTest {
+public class SelectCommandSystemTest extends ImdbSystemTest {
     @Test
     public void select() {
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
@@ -57,7 +57,7 @@ public class SelectCommandSystemTest extends IMDBSystemTest {
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getIMDB().getPersonList().size();
+        int invalidIndex = getModel().getImdb().getPersonList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: filtered patient list, select index within bounds of address book and patient list -> selected */
@@ -107,9 +107,9 @@ public class SelectCommandSystemTest extends IMDBSystemTest {
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see IMDBSystemTest#assertSelectedCardChanged(Index)
+     * {@code ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see ImdbSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
@@ -138,8 +138,8 @@ public class SelectCommandSystemTest extends IMDBSystemTest {
      * 4. {@code Model}, {@code Storage} and {@code PatientListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see IMDBSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ImdbSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

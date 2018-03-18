@@ -1,12 +1,12 @@
 package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_AMY;
-import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_BOB;
-import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INSTRUCTION_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INGREDIENT_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INSTRUCTION_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_PREPARATION_TIME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -15,10 +15,10 @@ import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_AMY;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_BOB;
@@ -36,8 +36,8 @@ import org.junit.Test;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.logic.commands.EditCommand;
 import seedu.recipe.logic.commands.EditCommand.EditRecipeDescriptor;
-import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
+import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.tag.Tag;

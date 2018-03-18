@@ -1,9 +1,9 @@
 package seedu.recipe.testutil;
 
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_AMY;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_AMY;

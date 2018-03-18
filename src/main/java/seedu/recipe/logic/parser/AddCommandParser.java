@@ -1,8 +1,8 @@
 package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
@@ -13,11 +13,11 @@ import java.util.stream.Stream;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.logic.commands.AddCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
-import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
+import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.PreparationTime;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.tag.Tag;
 
 /**

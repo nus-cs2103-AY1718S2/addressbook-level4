@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.recipe.logic.commands.EditCommand.EditRecipeDescriptor;
-import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
+import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.PreparationTime;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.tag.Tag;
 
 /**

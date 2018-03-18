@@ -3,7 +3,6 @@ package seedu.recipe.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.recipe.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
 

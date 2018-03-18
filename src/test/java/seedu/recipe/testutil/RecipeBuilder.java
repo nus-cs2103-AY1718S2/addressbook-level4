@@ -3,8 +3,8 @@ package seedu.recipe.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
+import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;

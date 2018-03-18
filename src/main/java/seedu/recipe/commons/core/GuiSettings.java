@@ -1,6 +1,6 @@
 package seedu.recipe.commons.core;
 
-import java.awt.Point;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.Objects;
 

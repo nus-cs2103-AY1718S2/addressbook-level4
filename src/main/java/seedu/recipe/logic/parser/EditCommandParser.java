@@ -2,8 +2,8 @@ package seedu.recipe.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;

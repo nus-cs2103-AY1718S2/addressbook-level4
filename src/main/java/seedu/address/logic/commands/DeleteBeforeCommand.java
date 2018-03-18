@@ -48,19 +48,7 @@ public class  DeleteBeforeCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() {
-        try {
-            model.deletePersons(model.getFilteredPersonList());
-            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Must have a least one person in the list");
-        }
-        return new CommandResult(
-                String.format(MESSAGE_DELETE_PERSONS_SUCCESS, totalPersonsDeleted, inputTags, inputDate));
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(predicate);
         model.updateFilteredPersonList(predicate);
         totalPersonsDeleted = model.getFilteredPersonList().size();
@@ -69,6 +57,15 @@ public class  DeleteBeforeCommand extends UndoableCommand {
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
             throw new CommandException(Messages.MESSAGE_PERSONS_NOT_FOUND);
         }
+
+        try {
+            model.deletePersons(model.getFilteredPersonList());
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Must have a least one person in the list");
+        }
+        return new CommandResult(
+                String.format(MESSAGE_DELETE_PERSONS_SUCCESS, totalPersonsDeleted, inputTags, inputDate));
     }
 
     @Override

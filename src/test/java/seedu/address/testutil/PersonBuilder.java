@@ -70,6 +70,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Set a empty set {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withoutTags() {
+        this.tags = SampleDataUtil.getTagSet();
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
     public PersonBuilder withAddress(String address) {
@@ -100,7 +108,6 @@ public class PersonBuilder {
         this.balance = new Money(balance);
         return this;
     }
-
 
     public Person build() {
         return new Person(name, phone, email, address, balance, tags);

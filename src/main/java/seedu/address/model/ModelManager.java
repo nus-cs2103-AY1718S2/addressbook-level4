@@ -46,7 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyRecipeBook newData) {
         recipeBook.resetData(newData);
-        indicateAddressBookChanged();
+        indicateRecipeBookChanged();
     }
 
     @Override
@@ -55,21 +55,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
+    private void indicateRecipeBookChanged() {
         raise(new RecipeBookChangedEvent(recipeBook));
     }
 
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         recipeBook.removePerson(target);
-        indicateAddressBookChanged();
+        indicateRecipeBookChanged();
     }
 
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         recipeBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+        indicateRecipeBookChanged();
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         recipeBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+        indicateRecipeBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================

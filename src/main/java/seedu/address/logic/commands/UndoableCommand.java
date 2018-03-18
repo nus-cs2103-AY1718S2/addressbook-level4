@@ -12,16 +12,16 @@ import seedu.address.model.RecipeBook;
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyRecipeBook previousAddressBook;
+    private ReadOnlyRecipeBook previousRecipeBook;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
      * Stores the current state of {@code model#addressBook}.
      */
-    private void saveAddressBookSnapshot() {
+    private void saveRecipeBookSnapshot() {
         requireNonNull(model);
-        this.previousAddressBook = new RecipeBook(model.getRecipeBook());
+        this.previousRecipeBook = new RecipeBook(model.getRecipeBook());
     }
 
     /**
@@ -36,8 +36,8 @@ public abstract class UndoableCommand extends Command {
      * show all persons.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
+        requireAllNonNull(model, previousRecipeBook);
+        model.resetData(previousRecipeBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
@@ -58,7 +58,7 @@ public abstract class UndoableCommand extends Command {
 
     @Override
     public final CommandResult execute() throws CommandException {
-        saveAddressBookSnapshot();
+        saveRecipeBookSnapshot();
         preprocessUndoableCommand();
         return executeUndoableCommand();
     }

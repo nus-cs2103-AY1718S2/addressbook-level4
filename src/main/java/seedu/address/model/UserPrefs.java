@@ -11,7 +11,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookName = "MyRecipeBook";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -29,19 +29,19 @@ public class UserPrefs {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
-    public String getAddressBookFilePath() {
+    public String getRecipeBookFilePath() {
         return addressBookFilePath;
     }
 
-    public void setAddressBookFilePath(String addressBookFilePath) {
+    public void setRecipeBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
     }
 
-    public String getAddressBookName() {
+    public String getRecipeBookName() {
         return addressBookName;
     }
 
-    public void setAddressBookName(String addressBookName) {
+    public void setRecipeBookName(String addressBookName) {
         this.addressBookName = addressBookName;
     }
 

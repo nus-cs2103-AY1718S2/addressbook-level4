@@ -2,7 +2,7 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalRecipeBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +39,8 @@ public class RecipeBookTest {
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        RecipeBook newData = getTypicalAddressBook();
+    public void resetData_withValidReadOnlyRecipeBook_replacesData() {
+        RecipeBook newData = getTypicalRecipeBook();
         recipeBook.resetData(newData);
         assertEquals(newData, recipeBook);
     }

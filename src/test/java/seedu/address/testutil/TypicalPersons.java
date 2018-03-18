@@ -63,7 +63,7 @@ public class TypicalPersons {
     /**
      * Returns an {@code RecipeBook} with all the typical persons.
      */
-    public static RecipeBook getTypicalAddressBook() {
+    public static RecipeBook getTypicalRecipeBook() {
         RecipeBook ab = new RecipeBook();
         for (Person person : getTypicalPersons()) {
             try {

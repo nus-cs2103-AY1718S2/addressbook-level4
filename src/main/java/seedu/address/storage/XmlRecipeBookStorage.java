@@ -17,7 +17,7 @@ import seedu.address.model.ReadOnlyRecipeBook;
 /**
  * A class to access RecipeBook data stored as an xml file on the hard disk.
  */
-public class XmlRecipeBookStorage implements AddressBookStorage {
+public class XmlRecipeBookStorage implements RecipeBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlRecipeBookStorage.class);
 
@@ -27,21 +27,21 @@ public class XmlRecipeBookStorage implements AddressBookStorage {
         this.filePath = filePath;
     }
 
-    public String getAddressBookFilePath() {
+    public String getRecipeBookFilePath() {
         return filePath;
     }
 
     @Override
-    public Optional<ReadOnlyRecipeBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(filePath);
+    public Optional<ReadOnlyRecipeBook> readRecipeBook() throws DataConversionException, IOException {
+        return readRecipeBook(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}
+     * Similar to {@link #readRecipeBook()}
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyRecipeBook> readAddressBook(String filePath) throws DataConversionException,
+    public Optional<ReadOnlyRecipeBook> readRecipeBook(String filePath) throws DataConversionException,
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
@@ -52,9 +52,9 @@ public class XmlRecipeBookStorage implements AddressBookStorage {
             return Optional.empty();
         }
 
-        XmlSerializableRecipeBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        XmlSerializableRecipeBook xmlRecipeBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
         try {
-            return Optional.of(xmlAddressBook.toModelType());
+            return Optional.of(xmlRecipeBook.toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -62,15 +62,15 @@ public class XmlRecipeBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyRecipeBook addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+    public void saveRecipeBook(ReadOnlyRecipeBook addressBook) throws IOException {
+        saveRecipeBook(addressBook, filePath);
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyRecipeBook)}
+     * Similar to {@link #saveRecipeBook(ReadOnlyRecipeBook)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveAddressBook(ReadOnlyRecipeBook addressBook, String filePath) throws IOException {
+    public void saveRecipeBook(ReadOnlyRecipeBook addressBook, String filePath) throws IOException {
         requireNonNull(addressBook);
         requireNonNull(filePath);
 

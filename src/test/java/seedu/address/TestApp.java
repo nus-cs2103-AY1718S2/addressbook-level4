@@ -65,17 +65,17 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
-        userPrefs.setAddressBookFilePath(saveFileLocation);
-        userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
+        userPrefs.setRecipeBookFilePath(saveFileLocation);
+        userPrefs.setRecipeBookName(ADDRESS_BOOK_NAME);
         return userPrefs;
     }
 
     /**
      * Returns a defensive copy of the address book data stored inside the storage file.
      */
-    public RecipeBook readStorageAddressBook() {
+    public RecipeBook readStorageRecipeBook() {
         try {
-            return new RecipeBook(storage.readAddressBook().get());
+            return new RecipeBook(storage.readRecipeBook().get());
         } catch (DataConversionException dce) {
             throw new AssertionError("Data is not in the RecipeBook format.");
         } catch (IOException ioe) {
@@ -87,7 +87,7 @@ public class TestApp extends MainApp {
      * Returns the file path of the storage file.
      */
     public String getStorageSaveLocation() {
-        return storage.getAddressBookFilePath();
+        return storage.getRecipeBookFilePath();
     }
 
     /**

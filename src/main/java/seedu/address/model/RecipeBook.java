@@ -72,7 +72,7 @@ public class RecipeBook implements ReadOnlyRecipeBook {
         try {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("AddressBooks should not have duplicate persons");
+            throw new AssertionError("RecipeBooks should not have duplicate persons");
         }
     }
 

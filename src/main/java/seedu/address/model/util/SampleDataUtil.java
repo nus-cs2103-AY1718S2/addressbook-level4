@@ -40,7 +40,7 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyRecipeBook getSampleAddressBook() {
+    public static ReadOnlyRecipeBook getSampleRecipeBook() {
         try {
             RecipeBook sampleAb = new RecipeBook();
             for (Person samplePerson : getSamplePersons()) {

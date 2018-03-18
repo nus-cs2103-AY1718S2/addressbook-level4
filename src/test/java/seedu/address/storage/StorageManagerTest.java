@@ -3,7 +3,7 @@ package seedu.address.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalRecipeBook;
 
 import java.io.IOException;
 
@@ -61,23 +61,23 @@ public class StorageManagerTest {
          * {@link XmlRecipeBookStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link XmlRecipeBookStorageTest} class.
          */
-        RecipeBook original = getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyRecipeBook retrieved = storageManager.readAddressBook().get();
+        RecipeBook original = getTypicalRecipeBook();
+        storageManager.saveRecipeBook(original);
+        ReadOnlyRecipeBook retrieved = storageManager.readRecipeBook().get();
         assertEquals(original, new RecipeBook(retrieved));
     }
 
     @Test
-    public void getAddressBookFilePath() {
-        assertNotNull(storageManager.getAddressBookFilePath());
+    public void getRecipeBookFilePath() {
+        assertNotNull(storageManager.getRecipeBookFilePath());
     }
 
     @Test
-    public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
+    public void handleRecipeBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlRecipeBookStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));
-        storage.handleAddressBookChangedEvent(new RecipeBookChangedEvent(new RecipeBook()));
+        storage.handleRecipeBookChangedEvent(new RecipeBookChangedEvent(new RecipeBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
@@ -92,7 +92,7 @@ public class StorageManagerTest {
         }
 
         @Override
-        public void saveAddressBook(ReadOnlyRecipeBook addressBook, String filePath) throws IOException {
+        public void saveRecipeBook(ReadOnlyRecipeBook addressBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.RecipeBookBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -28,7 +28,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        RecipeBook recipeBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        RecipeBook recipeBook = new RecipeBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         RecipeBook differentRecipeBook = new RecipeBook();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -59,7 +59,7 @@ public class ModelManagerTest {
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookName("differentName");
+        differentUserPrefs.setRecipeBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(recipeBook, differentUserPrefs)));
     }
 }

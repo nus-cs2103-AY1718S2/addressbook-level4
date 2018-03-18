@@ -39,7 +39,7 @@ public class RecipeBookParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AddressBookParser parser = new AddressBookParser();
+    private final RecipeBookParser parser = new RecipeBookParser();
 
     @Test
     public void parseCommand_add() throws Exception {

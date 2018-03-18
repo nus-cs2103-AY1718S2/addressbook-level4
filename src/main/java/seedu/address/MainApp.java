@@ -26,7 +26,7 @@ import seedu.address.model.ReadOnlyRecipeBook;
 import seedu.address.model.RecipeBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.RecipeBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -61,8 +61,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new XmlRecipeBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        RecipeBookStorage recipeBookStorage = new XmlRecipeBookStorage(userPrefs.getRecipeBookFilePath());
+        storage = new StorageManager(recipeBookStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -89,11 +89,11 @@ public class MainApp extends Application {
         Optional<ReadOnlyRecipeBook> addressBookOptional;
         ReadOnlyRecipeBook initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
+            addressBookOptional = storage.readRecipeBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample RecipeBook");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleRecipeBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty RecipeBook");
             initialData = new RecipeBook();

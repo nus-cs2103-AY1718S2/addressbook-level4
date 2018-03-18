@@ -20,13 +20,13 @@ import seedu.address.model.UserPrefs;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
+    private RecipeBookStorage recipeBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(RecipeBookStorage recipeBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.addressBookStorage = addressBookStorage;
+        this.recipeBookStorage = recipeBookStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -51,39 +51,39 @@ public class StorageManager extends ComponentManager implements Storage {
     // ================ RecipeBook methods ==============================
 
     @Override
-    public String getAddressBookFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+    public String getRecipeBookFilePath() {
+        return recipeBookStorage.getRecipeBookFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyRecipeBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(addressBookStorage.getAddressBookFilePath());
+    public Optional<ReadOnlyRecipeBook> readRecipeBook() throws DataConversionException, IOException {
+        return readRecipeBook(recipeBookStorage.getRecipeBookFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyRecipeBook> readAddressBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyRecipeBook> readRecipeBook(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
+        return recipeBookStorage.readRecipeBook(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyRecipeBook addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
+    public void saveRecipeBook(ReadOnlyRecipeBook addressBook) throws IOException {
+        saveRecipeBook(addressBook, recipeBookStorage.getRecipeBookFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyRecipeBook addressBook, String filePath) throws IOException {
+    public void saveRecipeBook(ReadOnlyRecipeBook addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveAddressBook(addressBook, filePath);
+        recipeBookStorage.saveRecipeBook(addressBook, filePath);
     }
 
 
     @Override
     @Subscribe
-    public void handleAddressBookChangedEvent(RecipeBookChangedEvent event) {
+    public void handleRecipeBookChangedEvent(RecipeBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
-            saveAddressBook(event.data);
+            saveRecipeBook(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

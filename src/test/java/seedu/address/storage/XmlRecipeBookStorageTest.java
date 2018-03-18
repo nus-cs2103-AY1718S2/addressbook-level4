@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalRecipeBook;
 
 import java.io.IOException;
 
@@ -29,13 +29,13 @@ public class XmlRecipeBookStorageTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() throws Exception {
+    public void readRecipeBook_nullFilePath_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         readRecipeBook(null);
     }
 
     private java.util.Optional<ReadOnlyRecipeBook> readRecipeBook(String filePath) throws Exception {
-        return new XmlRecipeBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath));
+        return new XmlRecipeBookStorage(filePath).readRecipeBook(addToTestDataPathIfNotNull(filePath));
     }
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -61,64 +61,64 @@ public class XmlRecipeBookStorageTest {
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataConversionException() throws Exception {
+    public void readRecipeBook_invalidPersonRecipeBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
         readRecipeBook("invalidPersonRecipeBook.xml");
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() throws Exception {
+    public void readRecipeBook_invalidAndValidPersonRecipeBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
         readRecipeBook("invalidAndValidPersonRecipeBook.xml");
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
+    public void readAndSaveRecipeBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempRecipeBook.xml";
-        RecipeBook original = getTypicalAddressBook();
+        RecipeBook original = getTypicalRecipeBook();
         XmlRecipeBookStorage xmlRecipeBookStorage = new XmlRecipeBookStorage(filePath);
 
         //Save in new file and read back
-        xmlRecipeBookStorage.saveAddressBook(original, filePath);
-        ReadOnlyRecipeBook readBack = xmlRecipeBookStorage.readAddressBook(filePath).get();
+        xmlRecipeBookStorage.saveRecipeBook(original, filePath);
+        ReadOnlyRecipeBook readBack = xmlRecipeBookStorage.readRecipeBook(filePath).get();
         assertEquals(original, new RecipeBook(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
-        xmlRecipeBookStorage.saveAddressBook(original, filePath);
-        readBack = xmlRecipeBookStorage.readAddressBook(filePath).get();
+        xmlRecipeBookStorage.saveRecipeBook(original, filePath);
+        readBack = xmlRecipeBookStorage.readRecipeBook(filePath).get();
         assertEquals(original, new RecipeBook(readBack));
 
         //Save and read without specifying file path
         original.addPerson(IDA);
-        xmlRecipeBookStorage.saveAddressBook(original); //file path not specified
-        readBack = xmlRecipeBookStorage.readAddressBook().get(); //file path not specified
+        xmlRecipeBookStorage.saveRecipeBook(original); //file path not specified
+        readBack = xmlRecipeBookStorage.readRecipeBook().get(); //file path not specified
         assertEquals(original, new RecipeBook(readBack));
 
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+    public void saveRecipeBook_nullRecipeBook_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(null, "SomeFile.xml");
+        saveRecipeBook(null, "SomeFile.xml");
     }
 
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyRecipeBook addressBook, String filePath) {
+    private void saveRecipeBook(ReadOnlyRecipeBook addressBook, String filePath) {
         try {
-            new XmlRecipeBookStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+            new XmlRecipeBookStorage(filePath).saveRecipeBook(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveRecipeBook_nullFilePath_throwsNullPointerException() throws IOException {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(new RecipeBook(), null);
+        saveRecipeBook(new RecipeBook(), null);
     }
 
 

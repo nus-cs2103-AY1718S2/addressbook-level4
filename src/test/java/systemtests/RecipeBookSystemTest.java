@@ -83,7 +83,7 @@ public abstract class RecipeBookSystemTest {
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
     protected RecipeBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+        return TypicalPersons.getTypicalRecipeBook();
     }
 
     /**
@@ -178,7 +178,7 @@ public abstract class RecipeBookSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getRecipeBook(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getRecipeBook(), testApp.readStorageRecipeBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 

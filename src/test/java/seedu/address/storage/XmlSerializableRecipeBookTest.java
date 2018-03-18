@@ -29,7 +29,7 @@ public class XmlSerializableRecipeBookTest {
         XmlSerializableRecipeBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
                 XmlSerializableRecipeBook.class);
         RecipeBook recipeBookFromFile = dataFromFile.toModelType();
-        RecipeBook typicalPersonsRecipeBook = TypicalPersons.getTypicalAddressBook();
+        RecipeBook typicalPersonsRecipeBook = TypicalPersons.getTypicalRecipeBook();
         assertEquals(recipeBookFromFile, typicalPersonsRecipeBook);
     }
 

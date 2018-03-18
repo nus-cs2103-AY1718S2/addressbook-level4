@@ -43,7 +43,6 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
-        System.out.print("adssadsadsadsadsadsadsadasdsadsadasd");
         appointmentEntries.addAll(src.getMyCalendarEntries().stream().map(XmlAdptedAppointmentEntry::new)
                 .collect(Collectors.toList()));
     }

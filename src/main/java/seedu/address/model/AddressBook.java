@@ -11,9 +11,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.calendarfx.model.CalendarSource;
+
 import javafx.collections.ObservableList;
+import seedu.address.model.InsuranceCalendar.AppointmentEntry;
+import seedu.address.model.InsuranceCalendar.InsuranceCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -29,17 +34,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private InsuranceCalendar calendar;
 
-    /*
+     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */
-    {
+     */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-    }
+        calendar = new InsuranceCalendar(); }
 
     public AddressBook() {
     }
@@ -82,7 +86,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
-
+    //// calendar-level operations
+    /**
+     * Adds a appointment entry to the calendar.
+     *
+     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     */
+    public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
+        calendar.addAppointment(entry);
+    }
     //// person-level operations
 
     /**
@@ -163,6 +175,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// util methods
+
+    CalendarSource getCalendar() {
+        return calendar.getCalendar();
+    }
 
     @Override
     public String toString() {

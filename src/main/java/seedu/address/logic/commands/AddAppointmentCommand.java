@@ -22,7 +22,7 @@ public class AddAppointmentCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_START_INTERVAL + "START DATE "
             + PREFIX_END_INTERVAL + "END DATE "
-            + "Example: " + COMMAND_WORD + " "
+            + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Meet John "
             + PREFIX_START_INTERVAL + "14/08/2018 "
             + PREFIX_END_INTERVAL + "14/08/2018";

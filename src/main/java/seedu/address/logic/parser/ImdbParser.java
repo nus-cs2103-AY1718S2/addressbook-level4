@@ -27,7 +27,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses user input.
  */
-public class IMDBParser {
+public class ImdbParser {
 
     /**
      * Used for initial separation of command word and args.

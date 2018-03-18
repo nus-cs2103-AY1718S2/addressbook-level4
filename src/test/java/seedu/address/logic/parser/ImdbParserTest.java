@@ -40,11 +40,11 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PatientUtil;
 
-public class IMDBParserTest {
+public class ImdbParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final IMDBParser parser = new IMDBParser();
+    private final ImdbParser parser = new ImdbParser();
 
     @Test
     public void parseCommand_add() throws Exception {

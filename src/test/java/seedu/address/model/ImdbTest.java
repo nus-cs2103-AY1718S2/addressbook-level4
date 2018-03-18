@@ -32,49 +32,49 @@ public class ImdbTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final Imdb Imdb = new Imdb();
-    private final Imdb ImdbWithAmyAndBob =
+    private final Imdb imdb = new Imdb();
+    private final Imdb imdbWithAmyAndBob =
             new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), Imdb.getPersonList());
-        assertEquals(Collections.emptyList(), Imdb.getTagList());
+        assertEquals(Collections.emptyList(), imdb.getPersonList());
+        assertEquals(Collections.emptyList(), imdb.getTagList());
     }
 
     @Test
     public void removeTag_unusedTag_addressBookUnchanged() {
-        ImdbWithAmyAndBob.removeTag(new Tag(UNUSED_TAG));
+        imdbWithAmyAndBob.removeTag(new Tag(UNUSED_TAG));
 
         Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
 
-        assertEquals(ImdbWithAmyAndBob, expectedImdb);
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
 
     }
 
     @Test
     public void removeTag_multiplePersonsTag_tagRemoved() {
-        ImdbWithAmyAndBob.removeTag(new Tag(VALID_TAG_FRIEND));
+        imdbWithAmyAndBob.removeTag(new Tag(VALID_TAG_FRIEND));
 
         Patient amyWithoutFriendTag = new PatientBuilder(AMY).build();
         Patient bobWithoutFriendTag = new PatientBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         Imdb expectedImdb = new ImdbBuilder().withPerson(amyWithoutFriendTag)
                 .withPerson(bobWithoutFriendTag).build();
 
-        assertEquals(ImdbWithAmyAndBob, expectedImdb);
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        Imdb.resetData(null);
+        imdb.resetData(null);
     }
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
         Imdb newData = getTypicalAddressBook();
-        Imdb.resetData(newData);
-        assertEquals(newData, Imdb);
+        imdb.resetData(newData);
+        assertEquals(newData, imdb);
     }
 
     @Test
@@ -85,19 +85,19 @@ public class ImdbTest {
         ImdbStub newData = new ImdbStub(newPatients, newTags);
 
         thrown.expect(AssertionError.class);
-        Imdb.resetData(newData);
+        imdb.resetData(newData);
     }
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        Imdb.getPersonList().remove(0);
+        imdb.getPersonList().remove(0);
     }
 
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        Imdb.getTagList().remove(0);
+        imdb.getTagList().remove(0);
     }
 
     /**

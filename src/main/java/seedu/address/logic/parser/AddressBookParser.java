@@ -23,7 +23,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.UniqueAliasList;
 
-
 /**
  * Parses user input.
  */
@@ -99,5 +98,4 @@ public class AddressBookParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
 }

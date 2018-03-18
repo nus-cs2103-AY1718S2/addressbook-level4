@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+         minWidth="450" minHeight="600">
+    <icons>
+        <Image url="@/images/address_book_32.png" />
+    </icons>
+    <scene>
+        <Scene>
+<AnchorPane prefHeight="704.0" prefWidth="1155.0" styleClass="background" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+
+        <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+
+        <StackPane fx:id="commandBoxPlaceholder" layoutX="634.0" layoutY="574.0" prefHeight="40.0" prefWidth="643.0"
+                   styleClass="pane-with-border" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="512.0"
+                   AnchorPane.rightAnchor="0.0">
+            <padding>
+                <Insets bottom="5" left="10" right="10" top="5"/>
+            </padding>
+        </StackPane>
+
+        <StackPane fx:id="resultDisplayPlaceholder" layoutX="654.0" layoutY="580.0" prefHeight="137.0" prefWidth="643.0"
+                   styleClass="pane-with-border" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="512.0"
+                   AnchorPane.rightAnchor="0.0" VBox.vgrow="NEVER">
+            <padding>
+                <Insets bottom="5" left="10" right="10" top="5"/>
+            </padding>
+        </StackPane>
+
+        <SplitPane id="splitPane" dividerPositions="0.2966175195143105" layoutX="6.0" layoutY="6.0" prefHeight="453.0"
+                   prefWidth="1155.0" AnchorPane.bottomAnchor="226.0" AnchorPane.leftAnchor="0.0"
+                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+            <items>
+                <VBox fx:id="personList" minWidth="336.0" prefHeight="392.0" prefWidth="336.0"
+                      SplitPane.resizableWithParent="false">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10"/>
+                    </padding>
+                    <children>
+                        <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                    </children>
+                </VBox>
+
+                <StackPane fx:id="browserPlaceholder" prefHeight="434.0" prefWidth="809.0">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10"/>
+                    </padding>
+                </StackPane>
+            </items>
+        </SplitPane>
+
+        <StackPane fx:id="statusbarPlaceholder" layoutX="116.0" layoutY="761.0" prefHeight="33.0" prefWidth="1155.0"
+                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+    </children>
+
+</AnchorPane>
+        </Scene>
+        </scene>
+        </fx:root>

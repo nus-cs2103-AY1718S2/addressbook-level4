@@ -2,12 +2,8 @@ package seedu.address.model;
 
 import java.util.function.Predicate;
 
-import com.calendarfx.model.CalendarSource;
-
 import javafx.collections.ObservableList;
-import seedu.address.model.InsuranceCalendar.AppointmentEntry;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -30,9 +26,6 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
-    /** Adds the given appointment entry */
-    void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException;
-
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -51,8 +44,5 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
-
-    /** returns the calendar in the addressbook */
-    CalendarSource getCalendar();
 
 }

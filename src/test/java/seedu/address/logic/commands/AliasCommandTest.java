@@ -9,9 +9,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
@@ -79,6 +81,11 @@ public class AliasCommandTest {
 
         @Override
         public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void importAddressBook(String filepath) throws DataConversionException, IOException {
             fail("This method should not be called.");
         }
 

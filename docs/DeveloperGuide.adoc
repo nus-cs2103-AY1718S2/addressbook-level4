@@ -798,14 +798,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [width="59%",cols="22%,<23%,<25%",options="header",]
 |=======================================================================
 |Name |Major enhancement(s) |Minor enhancement(s)
-|someone#0 |
-*MAJOR ENHANCEMENT*
 
-DESCRIPTION HERE |
+|Jacqueline |
+*Make command syntax more user friendly and closer to natural language*
 
-*MINOR ENHANCEMENT*
+To enhance user experience and usage efficiency by improving the command syntax to be more intuitive and simple to use |
 
-DESCRIPTION HERE
+*Add support to change theme*
+
+This allows Vets to change the application's appearance to better suit their preferences and working environement (e.g. dark theme for night time)
 
 |someone#1 |
 *MAJOR ENHANCEMENT*
@@ -833,6 +834,7 @@ Vets and their assistants will be able to see their appointments in calender vie
 *Add NRIC field in Owner’s profile*
 
 The NRIC field will help the veterinarians and their assistants to better locate an owner using their unique ID.
+
 |=======================================================================
 
 [appendix]

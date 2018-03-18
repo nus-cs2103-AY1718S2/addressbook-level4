@@ -17,7 +17,7 @@ public class Person {
 
     private final Name name;
     private final Phone phone;
-    private final Email email;
+    private final Ingredient ingredient;
     private final Instruction instruction;
 
     private final UniqueTagList tags;
@@ -25,11 +25,11 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Instruction instruction, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, instruction, tags);
+    public Person(Name name, Phone phone, Ingredient ingredient, Instruction instruction, Set<Tag> tags) {
+        requireAllNonNull(name, phone, ingredient, instruction, tags);
         this.name = name;
         this.phone = phone;
-        this.email = email;
+        this.ingredient = ingredient;
         this.instruction = instruction;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
@@ -43,8 +43,8 @@ public class Person {
         return phone;
     }
 
-    public Email getEmail() {
-        return email;
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 
     public Instruction getInstruction() {
@@ -72,14 +72,14 @@ public class Person {
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
-                && otherPerson.getEmail().equals(this.getEmail())
+                && otherPerson.getIngredient().equals(this.getIngredient())
                 && otherPerson.getInstruction().equals(this.getInstruction());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, instruction, tags);
+        return Objects.hash(name, phone, ingredient, instruction, tags);
     }
 
     @Override
@@ -88,8 +88,8 @@ public class Person {
         builder.append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
-                .append(" Email: ")
-                .append(getEmail())
+                .append(" Ingredient: ")
+                .append(getIngredient())
                 .append(" Instruction: ")
                 .append(getInstruction())
                 .append(" Tags: ");

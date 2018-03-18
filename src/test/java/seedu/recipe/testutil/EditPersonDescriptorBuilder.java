@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.recipe.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.recipe.model.recipe.Instruction;
-import seedu.recipe.model.recipe.Email;
+import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Person;
 import seedu.recipe.model.recipe.Phone;
@@ -34,7 +34,7 @@ public class EditPersonDescriptorBuilder {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
-        descriptor.setEmail(person.getEmail());
+        descriptor.setIngredient(person.getIngredient());
         descriptor.setInstruction(person.getInstruction());
         descriptor.setTags(person.getTags());
     }
@@ -56,10 +56,10 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Ingredient} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
+    public EditPersonDescriptorBuilder withIngredient(String ingredient) {
+        descriptor.setIngredient(new Ingredient(ingredient));
         return this;
     }
 

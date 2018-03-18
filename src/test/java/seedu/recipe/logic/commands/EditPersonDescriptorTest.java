@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.recipe.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -43,8 +43,8 @@ public class EditPersonDescriptorTest {
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withPhone(VALID_PHONE_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different email -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withEmail(VALID_EMAIL_BOB).build();
+        // different ingredient -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withIngredient(VALID_INGREDIENT_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different recipe -> returns false

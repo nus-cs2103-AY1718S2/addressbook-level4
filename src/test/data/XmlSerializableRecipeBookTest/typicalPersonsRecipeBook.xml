@@ -5,14 +5,14 @@
     <persons>
         <name>Alice Pauline</name>
         <phone>85355255</phone>
-        <email>alice@example.com</email>
+        <ingredient>alice@example.com</ingredient>
         <instruction>123, Jurong West Ave 6, #08-111</instruction>
         <tagged>friends</tagged>
     </persons>
     <persons>
         <name>Benson Meier</name>
         <phone>98765432</phone>
-        <email>johnd@example.com</email>
+        <ingredient>johnd@example.com</ingredient>
         <instruction>311, Clementi Ave 2, #02-25</instruction>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
@@ -20,31 +20,31 @@
     <persons>
         <name>Carl Kurz</name>
         <phone>95352563</phone>
-        <email>heinz@example.com</email>
+        <ingredient>heinz@example.com</ingredient>
         <instruction>wall street</instruction>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
-        <email>cornelia@example.com</email>
+        <ingredient>cornelia@example.com</ingredient>
         <instruction>10th street</instruction>
     </persons>
     <persons>
         <name>Elle Meyer</name>
         <phone>9482224</phone>
-        <email>werner@example.com</email>
+        <ingredient>werner@example.com</ingredient>
         <instruction>michegan ave</instruction>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
-        <email>lydia@example.com</email>
+        <ingredient>lydia@example.com</ingredient>
         <instruction>little tokyo</instruction>
     </persons>
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
-        <email>anna@example.com</email>
+        <ingredient>anna@example.com</ingredient>
         <instruction>4th street</instruction>
     </persons>
     <tags>friends</tags>

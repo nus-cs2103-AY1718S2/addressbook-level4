@@ -1,7 +1,7 @@
 package seedu.recipe.testutil;
 
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
@@ -28,7 +28,7 @@ public class PersonUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
+        sb.append(PREFIX_INGREDIENT + person.getIngredient().value + " ");
         sb.append(PREFIX_INSTRUCTION + person.getInstruction().value + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")

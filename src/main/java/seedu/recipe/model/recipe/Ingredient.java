@@ -4,13 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's email in the recipe book.
- * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
+ * Represents a Person's ingredient in the recipe book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidIngredient(String)}
  */
-public class Email {
+public class Ingredient {
 
     private static  final String SPECIAL_CHARACTERS = "!#$%&'*+/=?`{|}~^.-";
-    public static final String MESSAGE_EMAIL_CONSTRAINTS = "Person emails should be of the format local-part@domain "
+    public static final String MESSAGE_INGREDIENT_CONSTRAINTS = "Person ingredients should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "
             + "the parentheses, (" + SPECIAL_CHARACTERS + ") .\n"
@@ -24,27 +24,27 @@ public class Email {
     private static final String DOMAIN_FIRST_CHARACTER_REGEX = "[^\\W_]"; // alphanumeric characters except underscore
     private static final String DOMAIN_MIDDLE_REGEX = "[a-zA-Z0-9.-]*"; // alphanumeric, period and hyphen
     private static final String DOMAIN_LAST_CHARACTER_REGEX = "[^\\W_]$";
-    public static final String EMAIL_VALIDATION_REGEX = LOCAL_PART_REGEX + "@"
+    public static final String INGREDIENT_VALIDATION_REGEX = LOCAL_PART_REGEX + "@"
             + DOMAIN_FIRST_CHARACTER_REGEX + DOMAIN_MIDDLE_REGEX + DOMAIN_LAST_CHARACTER_REGEX;
 
     public final String value;
 
     /**
-     * Constructs an {@code Email}.
+     * Constructs an {@code Ingredient}.
      *
-     * @param email A valid email recipe.
+     * @param ingredient A valid ingredient recipe.
      */
-    public Email(String email) {
-        requireNonNull(email);
-        checkArgument(isValidEmail(email), MESSAGE_EMAIL_CONSTRAINTS);
-        this.value = email;
+    public Ingredient(String ingredient) {
+        requireNonNull(ingredient);
+        checkArgument(isValidIngredient(ingredient), MESSAGE_INGREDIENT_CONSTRAINTS);
+        this.value = ingredient;
     }
 
     /**
-     * Returns if a given string is a valid recipe email.
+     * Returns if a given string is a valid recipe ingredient.
      */
-    public static boolean isValidEmail(String test) {
-        return test.matches(EMAIL_VALIDATION_REGEX);
+    public static boolean isValidIngredient(String test) {
+        return test.matches(INGREDIENT_VALIDATION_REGEX);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class Email {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Email // instanceof handles nulls
-                && this.value.equals(((Email) other).value)); // state check
+                || (other instanceof Ingredient // instanceof handles nulls
+                && this.value.equals(((Ingredient) other).value)); // state check
     }
 
     @Override

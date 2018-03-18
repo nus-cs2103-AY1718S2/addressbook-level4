@@ -2,7 +2,7 @@ package seedu.recipe.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
@@ -19,8 +19,8 @@ import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.util.CollectionUtil;
 import seedu.recipe.logic.commands.exceptions.CommandException;
+import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
-import seedu.recipe.model.recipe.Email;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Person;
 import seedu.recipe.model.recipe.Phone;
@@ -41,12 +41,12 @@ public class EditCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_INGREDIENT + "INGREDIENT] "
             + "[" + PREFIX_INSTRUCTION + "INSTRUCTION] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_INGREDIENT + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -104,11 +104,11 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Ingredient updatedIngredient = editPersonDescriptor.getIngredient().orElse(personToEdit.getIngredient());
         Instruction updatedInstruction = editPersonDescriptor.getInstruction().orElse(personToEdit.getInstruction());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedInstruction, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedIngredient, updatedInstruction, updatedTags);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
-        private Email email;
+        private Ingredient ingredient;
         private Instruction instruction;
         private Set<Tag> tags;
 
@@ -150,7 +150,7 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
-            setEmail(toCopy.email);
+            setIngredient(toCopy.ingredient);
             setInstruction(toCopy.instruction);
             setTags(toCopy.tags);
         }
@@ -159,7 +159,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.instruction, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.ingredient, this.instruction, this.tags);
         }
 
         public void setName(Name name) {
@@ -178,12 +178,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setIngredient(Ingredient ingredient) {
+            this.ingredient = ingredient;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Ingredient> getIngredient() {
+            return Optional.ofNullable(ingredient);
         }
 
         public void setInstruction(Instruction instruction) {
@@ -228,7 +228,7 @@ public class EditCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
+                    && getIngredient().equals(e.getIngredient())
                     && getInstruction().equals(e.getInstruction())
                     && getTags().equals(e.getTags());
         }

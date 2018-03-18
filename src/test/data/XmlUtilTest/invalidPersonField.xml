@@ -3,7 +3,7 @@
 <recipe>
     <name>Hans Muster</name>
     <phone>9482asf424</phone>
-    <email>hans@example</email>
+    <ingredient>hans@example</ingredient>
     <instruction>4th street</instruction>
     <tagged>friends</tagged>
 </recipe>

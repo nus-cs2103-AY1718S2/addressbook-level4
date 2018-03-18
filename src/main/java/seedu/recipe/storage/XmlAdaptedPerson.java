@@ -9,8 +9,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.recipe.commons.exceptions.IllegalValueException;
+import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
-import seedu.recipe.model.recipe.Email;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Person;
 import seedu.recipe.model.recipe.Phone;
@@ -28,7 +28,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
-    private String email;
+    private String ingredient;
     @XmlElement(required = true)
     private String instruction;
 
@@ -44,10 +44,10 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given recipe details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String instruction, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String ingredient, String instruction, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
-        this.email = email;
+        this.ingredient = ingredient;
         this.instruction = instruction;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
@@ -62,7 +62,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson(Person source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
-        email = source.getEmail().value;
+        ingredient = source.getIngredient().value;
         instruction = source.getInstruction().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -97,13 +97,13 @@ public class XmlAdaptedPerson {
         }
         final Phone phone = new Phone(this.phone);
 
-        if (this.email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        if (this.ingredient == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Ingredient.class.getSimpleName()));
         }
-        if (!Email.isValidEmail(this.email)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        if (!Ingredient.isValidIngredient(this.ingredient)) {
+            throw new IllegalValueException(Ingredient.MESSAGE_INGREDIENT_CONSTRAINTS);
         }
-        final Email email = new Email(this.email);
+        final Ingredient ingredient = new Ingredient(this.ingredient);
 
         if (this.instruction == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Instruction.class.getSimpleName()));
@@ -114,7 +114,7 @@ public class XmlAdaptedPerson {
         final Instruction instruction = new Instruction(this.instruction);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, instruction, tags);
+        return new Person(name, phone, ingredient, instruction, tags);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class XmlAdaptedPerson {
         XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
         return Objects.equals(name, otherPerson.name)
                 && Objects.equals(phone, otherPerson.phone)
-                && Objects.equals(email, otherPerson.email)
+                && Objects.equals(ingredient, otherPerson.ingredient)
                 && Objects.equals(instruction, otherPerson.instruction)
                 && tagged.equals(otherPerson.tagged);
     }

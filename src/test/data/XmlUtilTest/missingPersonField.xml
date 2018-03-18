@@ -2,7 +2,7 @@
 <!-- Person with missing name field -->
 <recipe>
     <phone>9482424</phone>
-    <email>hans@example</email>
+    <ingredient>hans@example</ingredient>
     <instruction>4th street</instruction>
     <tagged>friends</tagged>
 </recipe>

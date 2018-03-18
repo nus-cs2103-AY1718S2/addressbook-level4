@@ -18,8 +18,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.recipe.commons.exceptions.IllegalValueException;
+import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
-import seedu.recipe.model.recipe.Email;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
@@ -29,13 +29,13 @@ public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_INSTRUCTION = " ";
-    private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_INGREDIENT = "example.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_INSTRUCTION = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_INGREDIENT = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -163,35 +163,35 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseEmail_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((Optional<String>) null));
+    public void parseIngredient_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseIngredient((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseIngredient((Optional<String>) null));
     }
 
     @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(INVALID_EMAIL));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(Optional.of(INVALID_EMAIL)));
+    public void parseIngredient_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseIngredient(INVALID_INGREDIENT));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseIngredient(Optional.of(INVALID_INGREDIENT)));
     }
 
     @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+    public void parseIngredient_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseIngredient(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseEmail_validValueWithoutWhitespace_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(VALID_EMAIL)));
+    public void parseIngredient_validValueWithoutWhitespace_returnsIngredient() throws Exception {
+        Ingredient expectedIngredient = new Ingredient(VALID_INGREDIENT);
+        assertEquals(expectedIngredient, ParserUtil.parseIngredient(VALID_INGREDIENT));
+        assertEquals(Optional.of(expectedIngredient), ParserUtil.parseIngredient(Optional.of(VALID_INGREDIENT)));
     }
 
     @Test
-    public void parseEmail_validValueWithWhitespace_returnsTrimmedEmail() throws Exception {
-        String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
+    public void parseIngredient_validValueWithWhitespace_returnsTrimmedIngredient() throws Exception {
+        String ingredientWithWhitespace = WHITESPACE + VALID_INGREDIENT + WHITESPACE;
+        Ingredient expectedIngredient = new Ingredient(VALID_INGREDIENT);
+        assertEquals(expectedIngredient, ParserUtil.parseIngredient(ingredientWithWhitespace));
+        assertEquals(Optional.of(expectedIngredient), ParserUtil.parseIngredient(Optional.of(ingredientWithWhitespace)));
     }
 
     @Test

@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.recipe.model.recipe.Instruction;
-import seedu.recipe.model.recipe.Email;
+import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Person;
 import seedu.recipe.model.recipe.Phone;
@@ -18,20 +18,20 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    public static final String DEFAULT_INGREDIENT = "alice@gmail.com";
     public static final String DEFAULT_INSTRUCTION = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
     private Phone phone;
-    private Email email;
+    private Ingredient ingredient;
     private Instruction instruction;
     private Set<Tag> tags;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
+        ingredient = new Ingredient(DEFAULT_INGREDIENT);
         instruction = new Instruction(DEFAULT_INSTRUCTION);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
@@ -42,7 +42,7 @@ public class PersonBuilder {
     public PersonBuilder(Person personToCopy) {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
-        email = personToCopy.getEmail();
+        ingredient = personToCopy.getIngredient();
         instruction = personToCopy.getInstruction();
         tags = new HashSet<>(personToCopy.getTags());
     }
@@ -80,15 +80,15 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Recipe} that we are building.
+     * Sets the {@code Ingredient} of the {@code Recipe} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
+    public PersonBuilder withIngredient(String ingredient) {
+        this.ingredient = new Ingredient(ingredient);
         return this;
     }
 
     public Person build() {
-        return new Person(name, phone, email, instruction, tags);
+        return new Person(name, phone, ingredient, instruction, tags);
     }
 
 }

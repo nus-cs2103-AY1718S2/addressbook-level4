@@ -10,8 +10,8 @@ import java.util.Set;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.StringUtil;
+import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
-import seedu.recipe.model.recipe.Email;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
@@ -116,27 +116,27 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
+     * Parses a {@code String ingredient} into an {@code Ingredient}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code email} is invalid.
+     * @throws IllegalValueException if the given {@code ingredient} is invalid.
      */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+    public static Ingredient parseIngredient(String ingredient) throws IllegalValueException {
+        requireNonNull(ingredient);
+        String trimmedIngredient = ingredient.trim();
+        if (!Ingredient.isValidIngredient(trimmedIngredient)) {
+            throw new IllegalValueException(Ingredient.MESSAGE_INGREDIENT_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new Ingredient(trimmedIngredient);
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> ingredient} into an {@code Optional<Ingredient>} if {@code ingredient} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    public static Optional<Ingredient> parseIngredient(Optional<String> ingredient) throws IllegalValueException {
+        requireNonNull(ingredient);
+        return ingredient.isPresent() ? Optional.of(parseIngredient(ingredient.get())) : Optional.empty();
     }
 
     /**

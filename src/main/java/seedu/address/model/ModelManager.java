@@ -12,9 +12,13 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -74,12 +78,23 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
+        addressBook.addPetPatient(petPatient);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+        addressBook.addAppointment(appointment);
     }
 
     @Override

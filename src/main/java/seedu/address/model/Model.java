@@ -3,9 +3,13 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -40,6 +44,9 @@ public interface Model {
     /** Removes the specific {@code tag} from all {@code persons} with that tag **/
     void deleteTag(Tag tag);
 
+    /** Adds the given appointment */
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -48,5 +55,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException;
 
 }

@@ -801,43 +801,49 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to instructions when I forget command syntax, or how to use the App
 
-|`* * *` |user |create pet patient profile |register its information
+|`* * *` |user |add a pet patient |register its information
 
-|`* * *` |user |find a pet patient by name |locate details of pet patient without having to go through the entire list
+|`* * *` |user |find a pet patient by name |easily locate its information without having to go through a long list of pet patients
 
-|`* * *` |user |add appointments |schedule meeting with owners
+|`* * *` |user |add appointment |schedule meetings with pet patients and their owners
 
-|`* * *` |user |find owner's contact number |
+|`* * *` |user |edit pet owner's contact information |update any change in contact information (e.g. changed hand phone number, change of address)
 
-|`* * *` |user |search for an animal's medical history |know next step of treatment
+|`* * *` |user |search for a pet patient's medical history |know the next step of treatment
 
-|`* * *` |user |list out appointments for next day |know what to prepare
+|`* * *` |user |create and modify tags |standardize tags used in the application
 
-|`* * *` |user |classify types of appointments |organize the appointments better
+|`* * *` |user |basic tags to be assigned automatically |type lesser (e.g. when adding a pet owner, the "Person" tag should be assigned by default)
+
+|`* * *` |user |list out appointments for next day |prepare for the required procedures/diagnosis/consultation
+
+|`* * *` |user |change the theme of the application |better suit my preference
+
+|`* * *` |user |classify types of appointment |better organize a long list of appointment
 
 |`* * *` |user |cancel an appointment |make space in schedule for other things
 
-|`* * *` |user |see future appointments |know how to plan my works
+|`* * *` |user |see upcoming appointments |prepare/plan in advance
 
-|`* * *` |user |list out appointments for today |prepare for the work
+|`* * *` |user |see a list of today's appointment |check on today's schedule
 
-|`* * *` |user |list out pet patients of a specific species and their owners' contact information |contact them for blood donation
+|`* * *` |user |filter pet patients by species and blood type |contact them for blood donation during emergencies
 
-|`* * *` |user |log in with passwords |protect my pet patients' and their respective owners' information
+|`* * *` |user |log in with password |protect my pet patients' and their respective owners' information
 
 |`* * *` |user |reschedule an appointment |make time for emergency situations
 
-|`* * *` |user |search by owner |retrieve a list of pet patients under a particular owner
+|`* * *` |user |search by pet owner's name |retrieve a list of pet patients under a particular owner
 
-|`* * *` |user |create owner profiles |
+|`* * *` |user |add a pet owner |maintain contact information and register a pet patient under him or her
 
 |`* * *` |user |add in owner details such as contact number |contact them when needed
 
 |`* * *` |user |update pet patients' information |
 
-|`* * *` |user |see owner's name when checking pet patients' profile |know who it belongs to
+|`* * *` |user |see pet owner's name when checking pet patients' profile |know who it belongs to
 
 |`* *` |user |delete a pet patient after certain period |remove entries that I no longer need
 

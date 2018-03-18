@@ -72,7 +72,10 @@ public class ImdbParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_ALIAS:
+        case DeleteCommand.COMMAND_ALIAS1:
+            return new DeleteCommandParser().parse(arguments);
+
+        case DeleteCommand.COMMAND_ALIAS2:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
@@ -120,13 +123,19 @@ public class ImdbParser {
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 
-        case UndoCommand.COMMAND_ALIAS:
+        case UndoCommand.COMMAND_ALIAS1:
+            return new UndoCommand();
+
+        case UndoCommand.COMMAND_ALIAS2:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
-        case RedoCommand.COMMAND_ALIAS:
+        case RedoCommand.COMMAND_ALIAS1:
+            return new RedoCommand();
+
+        case RedoCommand.COMMAND_ALIAS2:
             return new RedoCommand();
 
         case RemarkCommand.COMMAND_WORD:

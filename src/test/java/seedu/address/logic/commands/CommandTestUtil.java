@@ -67,6 +67,22 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
+    public static final String VALID_ALIAS_ADD = "add1";
+    public static final String VALID_ALIAS_ALIAS = "alias1";
+    public static final String VALID_ALIAS_CLEAR = "clear1";
+    public static final String VALID_ALIAS_DELETE = "delete1";
+    public static final String VALID_ALIAS_EDIT = "edit1";
+    public static final String VALID_ALIAS_EXIT = "exit1";
+    public static final String VALID_ALIAS_FIND = "find1";
+    public static final String VALID_ALIAS_HELP = "help1";
+    public static final String VALID_ALIAS_HISTORY = "history1";
+    public static final String VALID_ALIAS_LIST = "list1";
+    public static final String VALID_ALIAS_REDO = "redo1";
+    public static final String VALID_ALIAS_SELECT = "select1";
+    public static final String VALID_ALIAS_UNDO = "undo1";
+
+    public static final String INVALID_ALIAS_DESC = "alias!";
+
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 

@@ -30,7 +30,7 @@ public interface Storage extends RecipeBookStorage, UserPrefsStorage {
     void saveRecipeBook(ReadOnlyRecipeBook recipeBook) throws IOException;
 
     /**
-     * Saves the current version of the Instruction Book to the hard disk.
+     * Saves the current version of the Recipe Book to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */

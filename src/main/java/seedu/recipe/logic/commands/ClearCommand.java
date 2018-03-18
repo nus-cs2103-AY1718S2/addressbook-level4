@@ -10,7 +10,7 @@ import seedu.recipe.model.RecipeBook;
 public class ClearCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Instruction book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Recipe book has been cleared!";
 
 
     @Override

@@ -3,10 +3,8 @@ package seedu.address.logic.parser;
 import org.junit.Test;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND;
 import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION;
-
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_CLEAR;

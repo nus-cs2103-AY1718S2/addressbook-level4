@@ -1,6 +1,6 @@
 package systemtests;
 
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.recipe.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,10 +8,10 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
-import seedu.address.model.RecipeBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.util.SampleDataUtil;
-import seedu.address.testutil.TestUtil;
+import seedu.recipe.model.RecipeBook;
+import seedu.recipe.model.person.Person;
+import seedu.recipe.model.util.SampleDataUtil;
+import seedu.recipe.testutil.TestUtil;
 
 public class SampleDataTest extends RecipeBookSystemTest {
     /**
@@ -44,7 +44,7 @@ public class SampleDataTest extends RecipeBookSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
+    public void recipeBook_dataFileDoesNotExist_loadSampleData() {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
         assertListMatching(getPersonListPanel(), expectedList);
     }

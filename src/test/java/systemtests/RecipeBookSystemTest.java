@@ -4,11 +4,11 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.recipe.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
+import static seedu.recipe.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.recipe.ui.UiPart.FXML_FILE_FOLDER;
+import static seedu.recipe.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,19 +28,19 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
-import seedu.address.TestApp;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.model.Model;
-import seedu.address.model.RecipeBook;
-import seedu.address.testutil.TypicalPersons;
-import seedu.address.ui.BrowserPanel;
-import seedu.address.ui.CommandBox;
+import seedu.recipe.MainApp;
+import seedu.recipe.TestApp;
+import seedu.recipe.commons.core.EventsCenter;
+import seedu.recipe.commons.core.index.Index;
+import seedu.recipe.logic.commands.ClearCommand;
+import seedu.recipe.logic.commands.FindCommand;
+import seedu.recipe.logic.commands.ListCommand;
+import seedu.recipe.logic.commands.SelectCommand;
+import seedu.recipe.model.Model;
+import seedu.recipe.model.RecipeBook;
+import seedu.recipe.testutil.TypicalPersons;
+import seedu.recipe.ui.BrowserPanel;
+import seedu.recipe.ui.CommandBox;
 
 /**
  * A system test class for RecipeBook, which provides access to handles of GUI components and helper methods
@@ -137,7 +137,7 @@ public abstract class RecipeBookSystemTest {
     }
 
     /**
-     * Displays all persons in the address book.
+     * Displays all persons in the recipe book.
      */
     protected void showAllPersons() {
         executeCommand(ListCommand.COMMAND_WORD);
@@ -161,7 +161,7 @@ public abstract class RecipeBookSystemTest {
     }
 
     /**
-     * Deletes all persons in the address book.
+     * Deletes all persons in the recipe book.
      */
     protected void deleteAllPersons() {
         executeCommand(ClearCommand.COMMAND_WORD);

@@ -1,25 +1,25 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
-import static seedu.address.testutil.TestUtil.getLastIndex;
-import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.recipe.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.recipe.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
+import static seedu.recipe.testutil.TestUtil.getLastIndex;
+import static seedu.recipe.testutil.TestUtil.getMidIndex;
+import static seedu.recipe.testutil.TestUtil.getPerson;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.recipe.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.commons.core.Messages;
+import seedu.recipe.commons.core.index.Index;
+import seedu.recipe.logic.commands.DeleteCommand;
+import seedu.recipe.logic.commands.RedoCommand;
+import seedu.recipe.logic.commands.UndoCommand;
+import seedu.recipe.model.Model;
+import seedu.recipe.model.person.Person;
+import seedu.recipe.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends RecipeBookSystemTest {
 
@@ -59,13 +59,13 @@ public class DeleteCommandSystemTest extends RecipeBookSystemTest {
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered person list, delete index within bounds of address book and person list -> deleted */
+        /* Case: filtered person list, delete index within bounds of recipe book and person list -> deleted */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         Index index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered person list, delete index within bounds of address book but out of bounds of person list
+        /* Case: filtered person list, delete index within bounds of recipe book but out of bounds of person list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
@@ -113,7 +113,7 @@ public class DeleteCommandSystemTest extends RecipeBookSystemTest {
     }
 
     /**
-     * Removes the {@code Person} at the specified {@code index} in {@code model}'s address book.
+     * Removes the {@code Person} at the specified {@code index} in {@code model}'s recipe book.
      * @return the removed person
      */
     private Person removePerson(Model model, Index index) {

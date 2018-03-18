@@ -2,52 +2,52 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.recipe.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.recipe.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.recipe.testutil.TypicalPersons.AMY;
+import static seedu.recipe.testutil.TypicalPersons.BOB;
+import static seedu.recipe.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.recipe.commons.core.Messages;
+import seedu.recipe.commons.core.index.Index;
+import seedu.recipe.logic.commands.EditCommand;
+import seedu.recipe.logic.commands.RedoCommand;
+import seedu.recipe.logic.commands.UndoCommand;
+import seedu.recipe.model.Model;
+import seedu.recipe.model.person.Address;
+import seedu.recipe.model.person.Email;
+import seedu.recipe.model.person.Name;
+import seedu.recipe.model.person.Person;
+import seedu.recipe.model.person.Phone;
+import seedu.recipe.model.person.exceptions.DuplicatePersonException;
+import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.tag.Tag;
+import seedu.recipe.testutil.PersonBuilder;
+import seedu.recipe.testutil.PersonUtil;
 
 public class EditCommandSystemTest extends RecipeBookSystemTest {
 
@@ -99,7 +99,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered person list, edit index within bounds of address book and person list -> edited */
+        /* Case: filtered person list, edit index within bounds of recipe book and person list -> edited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
@@ -108,7 +108,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedPerson);
 
-        /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
+        /* Case: filtered person list, edit index within bounds of recipe book but out of bounds of person list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
@@ -165,7 +165,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC,
                 Email.MESSAGE_EMAIL_CONSTRAINTS);
 
-        /* Case: invalid address -> rejected */
+        /* Case: invalid recipe -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC,
                 Address.MESSAGE_ADDRESS_CONSTRAINTS);
 

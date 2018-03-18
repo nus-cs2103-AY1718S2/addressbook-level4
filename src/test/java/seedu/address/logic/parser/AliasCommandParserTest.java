@@ -2,55 +2,19 @@ package seedu.address.logic.parser;
 
 import org.junit.Test;
 
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ALIAS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ALIAS;
-
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_CLEAR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_DELETE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_DELETE;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_EDIT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_EDIT;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_EXIT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_EXIT;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_FIND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_FIND;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_HELP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HELP;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_HISTORY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HISTORY;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_IMPORT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_IMPORT;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_LIST;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_REDO;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_REDO;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_SELECT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_SELECT;
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_UNDO;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_UNDO;
-
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND;
+import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION;
+import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseAliasWord;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.model.alias.Alias.MESSAGE_ALIAS_CONSTRAINTS;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AliasCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ImportCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.*;
 
 import seedu.address.logic.commands.AliasCommand;
+import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
 import seedu.address.testutil.AliasBuilder;
 
@@ -153,5 +117,42 @@ public class AliasCommandParserTest {
         Alias expectedUndoAlias = new AliasBuilder().withCommand(UndoCommand.COMMAND_WORD).withAlias(VALID_ALIAS_UNDO).build();
 
         assertParseSuccess(parser, ALIAS_DESC_UNDO, new AliasCommand(expectedUndoAlias));
+    }
+
+    @Test
+    public void parse_AliasWordAlias_failure() {
+        //test alias word to be a command word failure
+        assertParseAliasWord(parser, parser.getCommands());
+    }
+
+//    @Test
+//    public void parse_AliasFormatAlias_failure() {
+//        //test invalid alias word format with valid command word failure
+//        Alias alias = new AliasBuilder().withCommand(AddCommand.COMMAND_WORD).withAlias(INVALID_ALIAS_DESC).build();
+//        Command command = new AliasCommand(alias);
+//        assertCommandFailure(command, (Model) alias, MESSAGE_ALIAS_CONSTRAINTS);
+//    }
+
+    @Test
+    public void parse_commandWordAlias_failure() {
+        //test invalid command word with valid alias word failure
+        String command = INVALID_COMMAND_DESC + " " + VALID_ALIAS_ADD;
+        String message = String.format(MESSAGE_INVALID_COMMAND, MESSAGE_INVALID_COMMAND_DESCRIPTION);
+        assertParseFailure(parser, command, message);
+    }
+
+    @Test
+    public void parse_compulsoryArgumentMissing_failure() {
+        Alias expectedAlias = new AliasBuilder().withCommand(INVALID_COMMAND_DESC).withAlias(VALID_ALIAS_ADD).build();
+
+        String message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE);
+
+        //missing command/alias word argument
+        String missingArgumentCommand = AddCommand.COMMAND_WORD;
+        assertParseFailure(parser, missingArgumentCommand, message);
+
+        //missing both arguments
+        String noArgumentCommand = "";
+        assertParseFailure(parser, noArgumentCommand, message);
     }
 }

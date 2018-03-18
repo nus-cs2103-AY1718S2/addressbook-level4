@@ -40,23 +40,24 @@ public class AliasCommandParser implements Parser<AliasCommand> {
     public AliasCommand parse(String args) throws ParseException {
         args = args.trim();
         String[] trimmedArgs = args.split("\\s+");
-        String command = trimmedArgs[0];
-        String alias = trimmedArgs[1];
         if (trimmedArgs.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
-        } else if (!commands.contains(command)) {
+        } else if (!commands.contains(trimmedArgs[0])) {
             throw new ParseException(
                     String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
                             AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
-        } else if (commands.contains(alias)) {
+        } else if (commands.contains(trimmedArgs[1])) {
             throw new ParseException(
                     String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
                             AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION));
         }
 
-        Alias aliasCreated = new Alias(command, alias);
+        Alias aliasCreated = new Alias(trimmedArgs[0], trimmedArgs[1]);
         return new AliasCommand(aliasCreated);
     }
 
+    public List<String> getCommands() {
+        return commands;
+    }
 }

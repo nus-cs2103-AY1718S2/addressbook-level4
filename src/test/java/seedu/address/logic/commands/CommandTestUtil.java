@@ -98,6 +98,8 @@ public class CommandTestUtil {
     public static final String ALIAS_DESC_UNDO = UndoCommand.COMMAND_WORD + " " + VALID_ALIAS_UNDO;
 
     public static final String INVALID_ALIAS_DESC = "alias!";
+    public static final String INVALID_COMMAND_DESC = "invalid";
+
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

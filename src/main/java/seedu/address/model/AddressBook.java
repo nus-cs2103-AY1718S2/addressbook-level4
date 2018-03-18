@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.SecurityUtil;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.UniqueAliasList;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
@@ -30,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueAliasList aliases;
+    private final byte[] password;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -44,7 +46,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         aliases = new UniqueAliasList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+        password = SecurityUtil.hashPassword("test");
+    }
+
+    public AddressBook(String password) {
+        this.password = SecurityUtil.hashPassword(password);
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -255,6 +263,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return aliases.getAliasObservableList();
     }
 
+    @Override
+    public byte[] getPassword() {
+        return password;
+    }
 
     @Override
     public boolean equals(Object other) {

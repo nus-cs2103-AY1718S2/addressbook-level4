@@ -126,7 +126,9 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, DateAdded.class.getSimpleName()));
         }
-        assert(DateAdded.isValidDate(dateAdded));
+        if (!DateAdded.isValidDate(this.dateAdded)) {
+            throw new IllegalValueException(DateAdded.MESSAGE_DATE_CONSTRAINTS);
+        }
         final DateAdded dateAdded = new DateAdded(this.dateAdded);
 
         final Set<Tag> tags = new HashSet<>(personTags);

@@ -59,8 +59,8 @@ public class UniqueAliasList {
      */
     public void importAlias(Alias toAdd) {
         requireNonNull(toAdd);
-        if (!contains(toAdd.aliasName)) {
-            hashList.put(toAdd.aliasName, toAdd.command);
+        if (!contains(toAdd.getAlias())) {
+            hashList.put(toAdd.getAlias(), toAdd.getCommand());
         }
     }
 

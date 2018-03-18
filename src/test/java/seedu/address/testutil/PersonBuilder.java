@@ -9,8 +9,8 @@ import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
-import seedu.address.model.person.Major;
 import seedu.address.model.person.InterviewDate;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -165,8 +165,12 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Builds and returns a {@code Person}.
+     */
     public Person build() {
-        return new Person(name, phone, email, address, expectedGraduationYear, major, rating, resume, interviewDate, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear,
+                major, rating, resume, interviewDate, tags);
     }
 
     /**

@@ -67,7 +67,9 @@ public class Person {
         return expectedGraduationYear;
     }
 
-    public Major getMajor() { return major; }
+    public Major getMajor() {
+        return major;
+    }
 
     public Rating getRating() {
         return rating;

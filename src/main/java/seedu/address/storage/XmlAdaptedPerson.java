@@ -14,8 +14,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
-import seedu.address.model.person.Major;
 import seedu.address.model.person.InterviewDate;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -202,7 +202,8 @@ public class XmlAdaptedPerson {
         }
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, expectedGraduationYear, major, rating, resume, interviewDate, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear,
+                major, rating, resume, interviewDate, tags);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class XmlSerializableImdbTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableImdbTest/");
     private static final File TYPICAL_PERSONS_FILE = new File(TEST_DATA_FOLDER + "typicalPatientIMDB.xml");
-    private static final File INVALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "invalidPatientIMDB.xml");
+    private static final File INVALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "invalidPatientImdb.xml");
     private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagIMDB.xml");
 
     @Rule

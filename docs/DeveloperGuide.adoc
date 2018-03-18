@@ -869,9 +869,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student with friends |search friends who have taken or are taking similar modules |know who I can group with or approach for help
 
-|`* * *` |student with friends |find my friend’s timetables |can find common studying time with them
+|`* * *` |student with friends |find my friend’s timetables |find common studying time with them
 
-|`* * *` |user |add tasks |keep track of what I need to do
+|`* * *` |busy student |have my own shortforms of commands |type more quickly and in my own style
 
 |`* * *` |user |add a new person |
 
@@ -882,8 +882,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user who is concerned about privacy |have my data encrypted |ensure that no one can access my data without my permission
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`* *` |student with friends |tag my friends in my tasks, so that we can share important information |
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 

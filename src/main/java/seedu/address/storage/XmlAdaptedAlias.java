@@ -35,8 +35,8 @@ public class XmlAdaptedAlias {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedAlias(Alias source) {
-        command = source.command;
-        aliasName = source.aliasName;
+        command = source.getCommand();
+        aliasName = source.getAlias();
     }
 
     /**

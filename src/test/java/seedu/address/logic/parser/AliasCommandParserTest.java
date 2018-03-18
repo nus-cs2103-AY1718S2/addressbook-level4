@@ -9,12 +9,10 @@ import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseAliasWord;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.model.alias.Alias.MESSAGE_ALIAS_CONSTRAINTS;
 
 import seedu.address.logic.commands.*;
 
 import seedu.address.logic.commands.AliasCommand;
-import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
 import seedu.address.testutil.AliasBuilder;
 
@@ -143,8 +141,6 @@ public class AliasCommandParserTest {
 
     @Test
     public void parse_compulsoryArgumentMissing_failure() {
-        Alias expectedAlias = new AliasBuilder().withCommand(INVALID_COMMAND_DESC).withAlias(VALID_ALIAS_ADD).build();
-
         String message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE);
 
         //missing command/alias word argument

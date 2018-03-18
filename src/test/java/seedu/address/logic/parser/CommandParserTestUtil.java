@@ -3,9 +3,6 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
-
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;

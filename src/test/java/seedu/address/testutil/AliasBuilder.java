@@ -2,9 +2,6 @@ package seedu.address.testutil;
 
 import seedu.address.model.alias.Alias;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * A utility class to help with building Alias objects.
  */

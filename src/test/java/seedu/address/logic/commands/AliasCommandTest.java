@@ -18,7 +18,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -99,7 +98,7 @@ public class AliasCommandTest {
      * A Model stub that always accept the person being added.
      */
     private class ModelStubAcceptingAliasAdded extends ModelStub {
-        final ArrayList<Alias> aliasesAdded = new ArrayList<>();
+        private final ArrayList<Alias> aliasesAdded = new ArrayList<>();
 
         @Override
         public void addAlias(Alias alias) {

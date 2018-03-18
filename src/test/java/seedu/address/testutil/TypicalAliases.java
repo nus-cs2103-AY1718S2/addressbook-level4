@@ -3,8 +3,6 @@ package seedu.address.testutil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

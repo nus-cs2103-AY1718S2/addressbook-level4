@@ -145,6 +145,11 @@ public class AddCommandTest {
         public void addAlias(Alias alias) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void importAddressBook(String filepath) {
+            fail("This method should not be called.");
+        }
     }
 
     /**

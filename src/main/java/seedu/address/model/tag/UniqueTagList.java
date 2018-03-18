@@ -92,6 +92,18 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Adds a Tag to the list if the Tag is not a duplicate of an existing Tag in the list
+     */
+    public void importTag(Tag toAdd) {
+        requireNonNull(toAdd);
+        if (!contains(toAdd)) {
+            internalList.add(toAdd);
+        }
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
     @Override
     public Iterator<Tag> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);

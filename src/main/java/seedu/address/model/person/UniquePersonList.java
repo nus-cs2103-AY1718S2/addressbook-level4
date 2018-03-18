@@ -46,6 +46,16 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Adds a person to the list if the person is not a duplicate of an existing person in the list
+     */
+    public void importPerson(Person toAdd) {
+        requireNonNull(toAdd);
+        if (!contains(toAdd)) {
+            internalList.add(toAdd);
+        }
+    }
+
+    /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.

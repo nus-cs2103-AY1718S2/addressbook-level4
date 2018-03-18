@@ -64,6 +64,22 @@ public class XmlSerializableAddressBook {
         return addressBook;
     }
 
+    /**
+     * Adds {@code person}s and {@code tag}s from this addressbook into the existing {@code AddressBook}.
+     *
+     * @throws IllegalValueException if there were any data constraints violated or duplicates in the
+     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     */
+    public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValueException {
+        for (XmlAdaptedTag t : tags) {
+            addressBook.importTag(t.toModelType());
+        }
+        for (XmlAdaptedPerson p : persons) {
+            addressBook.importPerson(p.toModelType());
+        }
+        return addressBook;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

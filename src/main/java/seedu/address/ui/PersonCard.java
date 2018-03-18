@@ -64,7 +64,6 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     *
      * @param tagName
      * @return colorStyle for {@code tagName}'s label.
      */

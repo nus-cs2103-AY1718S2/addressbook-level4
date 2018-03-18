@@ -73,7 +73,7 @@ public class DeleteCommandSystemTest extends ImdbSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* --------------------- Performing delete operation while a patient card is selected ------------------------ */
+        /* --------------------- Performing delete operation while a patient card is selected ----------------------- */
 
         /* Case: delete the selected patient -> patient list panel selects the patient before the deleted patient */
         showAllPersons();

@@ -825,14 +825,15 @@ DESCRIPTION HERE |
 
 DESCRIPTION HERE
 
-|someone#3 |
-*MAJOR ENHANCEMENT*
+|Peng Xuanchang |
+*Integrating CalenderFX as framework for Calender view*
 
-DESCRIPTION HERE |
+Vets and their assistants will be able to see their appointments in calender view integrated in the software. |
 
-*MINOR ENHANCEMENT*
+*Add NRIC field in Owner’s profile*
 
-DESCRIPTION HERE
+The NRIC field will help the veterinarians and their assistants to better locate an owner using their unique ID.
+
 |=======================================================================
 
 [appendix]

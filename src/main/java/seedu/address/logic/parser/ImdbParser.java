@@ -72,7 +72,10 @@ public class ImdbParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_ALIAS:
+        case DeleteCommand.COMMAND_ALIAS1:
+            return new DeleteCommandParser().parse(arguments);
+
+        case DeleteCommand.COMMAND_ALIAS2:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:

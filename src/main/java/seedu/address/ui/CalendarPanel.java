@@ -3,8 +3,7 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import com.calendarfx.model.CalendarSource;
-import com.calendarfx.view.page.MonthPage;
-import com.calendarfx.view.page.PageBase;
+import com.calendarfx.view.CalendarView;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -17,15 +16,31 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 public class CalendarPanel {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private PageBase calendarPage;
+    private CalendarView calendarPage;
 
     public CalendarPanel(CalendarSource calendar) {
-        calendarPage = new MonthPage();
+        calendarPage = new CalendarView();
         calendarPage.getCalendarSources().setAll(calendar);
-
-
-
+        configurCalendarPage();
         //registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Configure the calendarView to fit the browser panel.
+     */
+    void configurCalendarPage() {
+        calendarPage.setShowAddCalendarButton(false);
+        calendarPage.setShowDeveloperConsole(false);
+        calendarPage.setShowPageSwitcher(true);
+        calendarPage.setShowPageToolBarControls(true);
+        calendarPage.setShowPrintButton(false);
+        calendarPage.setShowSearchField(false);
+        calendarPage.setShowSearchResultsTray(false);
+        calendarPage.setShowSourceTray(false);
+        calendarPage.setShowToolBar(false);
+        calendarPage.showMonthPage();
+
+
     }
 
 
@@ -35,7 +50,7 @@ public class CalendarPanel {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
     }
 
-    public PageBase getCalendarPage() {
+    public CalendarView getCalendarPage() {
         return calendarPage;
     }
 }

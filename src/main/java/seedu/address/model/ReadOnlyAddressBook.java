@@ -1,6 +1,11 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
+
+import seedu.address.model.InsuranceCalendar.AppointmentEntry;
+import seedu.address.model.InsuranceCalendar.InsuranceCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -20,5 +25,20 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate tags.
      */
     ObservableList<Tag> getTagList();
+
+    /**
+     * Returns an unmodifiable view of the appointment entry list.
+     * This list will not contain any duplicate lists.
+     */
+    ArrayList<AppointmentEntry> getMyCalendarEntries();
+
+    /**
+     * Returns an unmodifiable view of Insurance calendar.
+     *
+     */
+    InsuranceCalendar getMyCalendar();
+
+
+
 
 }

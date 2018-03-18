@@ -2,9 +2,7 @@ package seedu.address.model.InsuranceCalendar;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Map;
+import java.util.ArrayList;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
@@ -16,17 +14,18 @@ import seedu.address.model.person.exceptions.DuplicateAppointmentException;
  * The calendar in the address book.
  *
  */
-
 public class InsuranceCalendar {
 
     private CalendarSource calendarSource;
     private Calendar calendar;
+    private ArrayList<AppointmentEntry> appointmentEntries;
 
     public InsuranceCalendar() {
 
         calendar = new Calendar();
         calendarSource = new CalendarSource();
         calendarSource.getCalendars().add(calendar);
+        appointmentEntries = new ArrayList<>();
     }
 
     /**
@@ -39,6 +38,7 @@ public class InsuranceCalendar {
             throw new DuplicateAppointmentException();
         }
         calendar.addEntry(entry.getAppointmentEntry());
+        appointmentEntries.add(entry);
     }
 
     /**
@@ -46,13 +46,14 @@ public class InsuranceCalendar {
      */
     public boolean contains(AppointmentEntry toCheck) {
         requireNonNull(toCheck);
-        LocalDate startDate = toCheck.getStartDate();
-        LocalDate endDate = toCheck.getEndDate();
-        Map foundAppointments = calendar.findEntries(startDate, endDate, ZoneId.of("Asia/Singapore"));
-        return foundAppointments.containsValue(toCheck.getAppointmentEntry());
+        return appointmentEntries.contains(toCheck);
     }
 
     public CalendarSource getCalendar() {
         return calendarSource;
+    }
+
+    public ArrayList<AppointmentEntry> getAppointmentEntries() {
+        return appointmentEntries;
     }
 }

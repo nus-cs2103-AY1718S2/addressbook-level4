@@ -62,7 +62,7 @@ public class TypicalPersonsWithAutoDateGeneration {
     /**
      * Returns an {@code AddressBook} with all the typical persons with auto date generation.
      */
-    public static AddressBook getTypicalAddressBook() {
+    public static AddressBook getTypicalAddressBookWithAutoDateGeneration() {
         AddressBook ab = new AddressBook();
         for (Person person : getTypicalPersonsWithAutoDateGeneration()) {
             try {

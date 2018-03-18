@@ -15,7 +15,8 @@ public class RemarkCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "remark";
     public static final String COMMAND_ALIAS = "rk";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark for a patient specified in the INDEX. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Edits the remark for a patient specified in the INDEX. "
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_REMARK + "REMARK] ";
 

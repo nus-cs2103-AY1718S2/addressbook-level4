@@ -796,6 +796,43 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: Help students manage the humongous amount of events that they might have
 
+*Feature contribution*
+
+* Detail field for person (minor):
+** Detail for person is additional information such as remark, hobbies, comments, etc 
+** Detail allows user to add information that does not fall unser categories such as phone, email, etc 
+** Detail allows storing person information to become more flexible
+
+* Timetable link field for person (minor):
+** Timetable link for person is an NUSMods website link 
+** Timetable link displays the actual link of NUSMods website shown when person is selected  
+** Timetable link allows user to manage NUSMods link of person
+
+* Customizable tags color (minor):
+** User can set color of specific tags
+** Customizable tags color allows user to better personalise the application
+
+* Dark color theme for application bar and background (minor):
+** Application bar and background are changed to dark grey color 
+** Dark color theme makes the application comfortable to use in different light conditions
+
+* Personal To-do list (major):
+** User can add to-dos, notes, upcomming tasks and organize them in the todo-list 
+** To-do list serves to remind user of important tasks, events in group projects 
+
+* Meetup Time Generator (major):
+** Generator parses information from persons' NUSMods timetables and generate a suitable project meetup time  
+** Meetup Time Generator allows user to quickly decide meetup time without manually checcking timetables
+
+* Meetup Calendar (major):
+** User can add meetups with specific start, end time and display meetups on the calendar 
+** Meetup Calendar allows user to visualise and remember upcomming group events/meetups
+
+* Organize persons in groups (major):
+** User can store specific persons in project groups
+** User can have a group list and display persons in each group
+** Groups allows user to manage persons based on the project groups they belongs to
+
 
 [appendix]
 == User Stories

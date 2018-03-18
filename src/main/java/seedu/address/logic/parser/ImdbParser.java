@@ -3,8 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.LoginManager.NO_USER;
-import static seedu.address.logic.LoginManager.DOCTOR;
-import static seedu.address.logic.LoginManager.MEDICAL_STAFF;
+import static seedu.address.logic.LoginManager.DOCTOR_LOGIN;
+import static seedu.address.logic.LoginManager.MEDICAL_STAFF_LOGIN;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,7 +78,7 @@ public class ImdbParser {
                 default:
                     throw new ParseException("Not logged in!");
             }
-        } else if (state == DOCTOR){
+        } else if (state == DOCTOR_LOGIN){
             switch (commandWord) {
 
                 case AddCommand.COMMAND_WORD:
@@ -174,7 +174,7 @@ public class ImdbParser {
                 default:
                     throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
-        } else if (state == MEDICAL_STAFF) {
+        } else if (state == MEDICAL_STAFF_LOGIN) {
             switch (commandWord) {
 
                 case AddCommand.COMMAND_WORD:

@@ -62,7 +62,7 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         ImdbStorage imdbStorage = new XmlImdbStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(ImdbStorage, userPrefsStorage);
+        storage = new StorageManager(imdbStorage, userPrefsStorage);
 
         initLogging(config);
 

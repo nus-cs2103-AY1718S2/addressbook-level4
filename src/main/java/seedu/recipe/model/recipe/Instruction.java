@@ -16,7 +16,7 @@ public class Instruction {
      * The first character of the recipe must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String INSTRUCTION_VALIDATION_REGEX = "\\s*\\S+(\\s?\\S)*\\s*";
+    public static final String INSTRUCTION_VALIDATION_REGEX = "\\s*\\S+[\\s?\\S]*\\s*";
 
     public final String value;
 

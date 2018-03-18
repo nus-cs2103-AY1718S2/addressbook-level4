@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CommandParserTestUtil.createDate;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -43,14 +44,14 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new PersonBuilder().withDateAdded(createDate()).build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
     }
 
     @Test
     public void parseCommand_addAlias() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new PersonBuilder().withDateAdded(createDate()).build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddAlias(person));
         assertEquals(new AddCommand(person), command);
     }

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Fastis-Meetup Manager - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble

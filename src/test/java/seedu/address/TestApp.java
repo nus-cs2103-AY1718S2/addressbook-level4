@@ -17,7 +17,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyImdb;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlSerializableIMDB;
+import seedu.address.storage.XmlSerializableImdb;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
@@ -46,7 +46,7 @@ public class TestApp extends MainApp {
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
-            createDataFileWithData(new XmlSerializableIMDB(this.initialDataSupplier.get()),
+            createDataFileWithData(new XmlSerializableImdb(this.initialDataSupplier.get()),
                     this.saveFileLocation);
         }
     }

@@ -17,7 +17,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.Imdb;
 import seedu.address.storage.XmlAdaptedPatient;
 import seedu.address.storage.XmlAdaptedTag;
-import seedu.address.storage.XmlSerializableIMDB;
+import seedu.address.storage.XmlSerializableImdb;
 import seedu.address.testutil.IMDBBuilder;
 import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.TestUtil;
@@ -70,7 +70,7 @@ public class XmlUtilTest {
 
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
-        Imdb dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableIMDB.class).toModelType();
+        Imdb dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableImdb.class).toModelType();
         assertEquals(9, dataFromFile.getPersonList().size());
         assertEquals(0, dataFromFile.getTagList().size());
     }
@@ -123,17 +123,17 @@ public class XmlUtilTest {
     @Test
     public void saveDataToFile_validFile_dataSaved() throws Exception {
         TEMP_FILE.createNewFile();
-        XmlSerializableIMDB dataToWrite = new XmlSerializableIMDB(new Imdb());
+        XmlSerializableImdb dataToWrite = new XmlSerializableImdb(new Imdb());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        XmlSerializableIMDB dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableIMDB.class);
+        XmlSerializableImdb dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableImdb.class);
         assertEquals(dataToWrite, dataFromFile);
 
         IMDBBuilder builder = new IMDBBuilder(new Imdb());
-        dataToWrite = new XmlSerializableIMDB(
+        dataToWrite = new XmlSerializableImdb(
                 builder.withPerson(new PatientBuilder().build()).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableIMDB.class);
+        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableImdb.class);
         assertEquals(dataToWrite, dataFromFile);
     }
 

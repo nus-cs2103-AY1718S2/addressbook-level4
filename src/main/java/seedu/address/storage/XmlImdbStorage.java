@@ -52,7 +52,7 @@ public class XmlImdbStorage implements ImdbStorage {
             return Optional.empty();
         }
 
-        XmlSerializableIMDB xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        XmlSerializableImdb xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
@@ -81,7 +81,7 @@ public class XmlImdbStorage implements ImdbStorage {
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableIMDB(addressBook));
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableImdb(addressBook));
     }
 
 }

@@ -15,7 +15,7 @@ import seedu.address.model.ReadOnlyImdb;
  * An Immutable Imdb that is serializable to XML format
  */
 @XmlRootElement(name = "addressbook")
-public class XmlSerializableIMDB {
+public class XmlSerializableImdb {
 
     @XmlElement
     private List<XmlAdaptedPatient> persons;
@@ -25,10 +25,10 @@ public class XmlSerializableIMDB {
     private List<XmlAdaptedAppointment> appointments;
 
     /**
-     * Creates an empty XmlSerializableIMDB.
+     * Creates an empty XmlSerializableImdb.
      * This empty constructor is required for marshalling.
      */
-    public XmlSerializableIMDB() {
+    public XmlSerializableImdb() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         appointments = new ArrayList<>();
@@ -37,7 +37,7 @@ public class XmlSerializableIMDB {
     /**
      * Conversion
      */
-    public XmlSerializableIMDB(ReadOnlyImdb src) {
+    public XmlSerializableImdb(ReadOnlyImdb src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPatient::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
@@ -72,11 +72,11 @@ public class XmlSerializableIMDB {
             return true;
         }
 
-        if (!(other instanceof XmlSerializableIMDB)) {
+        if (!(other instanceof XmlSerializableImdb)) {
             return false;
         }
 
-        XmlSerializableIMDB otherAb = (XmlSerializableIMDB) other;
+        XmlSerializableImdb otherAb = (XmlSerializableImdb) other;
         return persons.equals(otherAb.persons) && tags.equals(otherAb.tags)
                 && appointments.equals(otherAb.appointments);
     }

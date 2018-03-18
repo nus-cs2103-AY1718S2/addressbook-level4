@@ -126,7 +126,7 @@ public class AddCommandSystemTest extends ImdbSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(IDA);
 
-        /* ------------------------ Perform add operation while a patient card is selected --------------------------- */
+        /* ------------------------ Perform add operation while a patient card is selected -------------------------- */
 
         /* Case: selects first card in the patient list, add a patient -> added, card selection remains unchanged */
         selectPerson(Index.fromOneBased(1));

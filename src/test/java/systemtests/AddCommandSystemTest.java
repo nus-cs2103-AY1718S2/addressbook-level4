@@ -104,7 +104,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withActualSpending(VALID_ACTUALSPENDING_AMY).withExpectedSpending(VALID_EXPECTEDSPENDING_AMY)
                 .build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND + INCOME_DESC_AMY+ ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
+                + TAG_DESC_FRIEND + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */
@@ -113,7 +113,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withActualSpending(VALID_ACTUALSPENDING_AMY).withExpectedSpending(VALID_EXPECTEDSPENDING_AMY)
                 .build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND + INCOME_DESC_AMY+ ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
+                + TAG_DESC_FRIEND + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
@@ -122,7 +122,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withActualSpending(VALID_ACTUALSPENDING_AMY).withExpectedSpending(VALID_EXPECTEDSPENDING_AMY)
                 .build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
-                + TAG_DESC_FRIEND + INCOME_DESC_AMY+ ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
+                + TAG_DESC_FRIEND + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -133,7 +133,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
                 + TAG_DESC_HUSBAND + EMAIL_DESC_BOB
-                + INCOME_DESC_BOB+ ACTUALSPENDING_DESC_BOB + EXPECTEDSPENDING_DESC_BOB;
+                + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB + EXPECTEDSPENDING_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person, missing tags -> added */
@@ -190,27 +190,27 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid name -> rejected */
         command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + INCOME_DESC_AMY;
+                + ADDRESS_DESC_AMY + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + INCOME_DESC_AMY;
+                + ADDRESS_DESC_AMY + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid email -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC
-                + ADDRESS_DESC_AMY + INCOME_DESC_AMY;
+                + ADDRESS_DESC_AMY + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + INVALID_ADDRESS_DESC + INCOME_DESC_AMY;
+                + INVALID_ADDRESS_DESC + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + INVALID_TAG_DESC + INCOME_DESC_AMY;
+                + INVALID_TAG_DESC + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 

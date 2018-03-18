@@ -229,7 +229,7 @@ public class EditCommand extends UndoableCommand {
         }
 
         public Optional<Expenditure> getActualSpending() {
-            return Optional.ofNullable(expectedSpending);
+            return Optional.ofNullable(actualSpending);
         }
 
         public void setExpectedSpending(Expenditure expectedSpending) {

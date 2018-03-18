@@ -280,6 +280,24 @@ Lock the address book with password: 123
 * `lock` +
 Lock the address book without password
 
+=== Sort the employees by any existing field: `sort`
+
+Sort existing employees by any field +
+Format: `sort FIELD`
+
+****
+* Sort the employees by any existing field in alphabetical order, note that rate field will be sorted in descending order
+* The field entered must be one of the following: name, phone, email, address, rate, tag
+* Sorting is case-insensitive
+****
+
+Examples:
+
+* `sort name` +
+Sort the employees by name in alphabetical order (case-insensitive).
+* `lock rate` +
+Sort the employees by rating in descending order.
+
 
 === Unlock the AddressBook: `unlock`
 

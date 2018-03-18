@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -41,10 +40,10 @@ public class ContactDetailsDisplay extends UiPart<Region> {
      *Shows the contact details of the person
      */
     private void showPersonDetails(Person person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        name.setText(person.getName().fullName);
+        phone.setText(person.getPhone().value);
+        address.setText(person.getAddress().value);
+        email.setText(person.getEmail().value);
     }
 
     @Subscribe

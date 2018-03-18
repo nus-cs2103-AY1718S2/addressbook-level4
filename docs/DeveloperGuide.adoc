@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Smart Insurance Collection - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble

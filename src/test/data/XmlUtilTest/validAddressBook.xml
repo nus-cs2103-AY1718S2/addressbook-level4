@@ -5,14 +5,14 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
-        <dateAdded isPrivate="false">02/02/2018</dateAdded>
+        <dateAdded isPrivate="false">01/01/2018</dateAdded>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
-        <dateAdded isPrivate="false">01/01/2018</dateAdded>
+        <dateAdded isPrivate="false">02/02/2018</dateAdded>
     </persons>
     <persons>
         <name>Heinz Kurz</name>

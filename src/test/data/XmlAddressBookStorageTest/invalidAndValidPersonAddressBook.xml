@@ -6,7 +6,7 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
-        <dateAdded isPrivate="false">02/02/2018</dateAdded>
+        <dateAdded isPrivate="false">01/01/2018</dateAdded>
     </persons>
     <!-- Person with invalid phone field -->
     <persons>
@@ -14,6 +14,6 @@
         <phone isPrivate="false">948asdf2424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
-        <dateAdded isPrivate="false">02/02/2018</dateAdded>
+        <dateAdded isPrivate="false">01/01/2018</dateAdded>
     </persons>
 </addressbook>

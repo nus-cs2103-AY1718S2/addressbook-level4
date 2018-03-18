@@ -52,18 +52,18 @@ public class XmlSerializableImdb {
      * {@code XmlAdaptedPatient} or {@code XmlAdaptedTag}.
      */
     public Imdb toModelType() throws IllegalValueException {
-        Imdb Imdb = new Imdb();
+        Imdb imdb = new Imdb();
         for (XmlAdaptedTag t : tags) {
-            Imdb.addTag(t.toModelType());
+            imdb.addTag(t.toModelType());
         }
         for (XmlAdaptedPatient p : patients) {
-            Imdb.addPerson(p.toModelType());
+            imdb.addPerson(p.toModelType());
         }
 
         for (XmlAdaptedAppointment appt : appointments) {
-            Imdb.addAppointment(appt.toModelType());
+            imdb.addAppointment(appt.toModelType());
         }
-        return Imdb;
+        return imdb;
     }
 
     @Override

@@ -130,7 +130,7 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any patient having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a patient : `delete` or `d`
+=== Deleting a patient : `delete` or `d` or `rm`
 
 Deletes the specified patient from the Imdb. +
 Format: `delete INDEX` or `d`
@@ -236,7 +236,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo` or `u`
+=== Undoing previous command : `undo` or `u` or `z`
 
 Restores the Imdb to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u`
@@ -262,7 +262,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo` or `r`
+=== Redoing the previously undone command : `redo` or `r` or `y`
 
 Reverses the most recent `undo` command. +
 Format: `redo` or `r`
@@ -350,7 +350,7 @@ e.g.`remark 1 r/Likes to drink coffee.`
 * *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/CONDITION]...`
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/peanuts c/aspirin`
 * *Clear* : `c`
-* *Delete* : `d INDEX` +
+* *Delete* : `d INDEX` or `rm INDEX` +
 e.g. `d 3`
 * *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/CONDITION]...` +
 e.g. `e 2 n/James Lee e/jameslee@example.com`
@@ -365,5 +365,5 @@ e.g.`s 2`
 e.g.`rk 1 r/Likes to drink coffee.`
 * *View Appointment* : `va`
 * *History* : `hi`
-* *Undo* : `u`
-* *Redo* : `r`
+* *Undo* : `u` or `z`
+* *Redo* : `r` or `y`

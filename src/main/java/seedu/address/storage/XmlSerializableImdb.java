@@ -14,7 +14,7 @@ import seedu.address.model.ReadOnlyImdb;
 /**
  * An Immutable Imdb that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "imdb")
 public class XmlSerializableImdb {
 
     @XmlElement

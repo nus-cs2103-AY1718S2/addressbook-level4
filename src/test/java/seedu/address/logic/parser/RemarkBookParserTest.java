@@ -34,6 +34,7 @@ import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
 import seedu.address.testutil.ActivityUtil;
+import seedu.address.testutil.TaskBuilder;
 
 public class RemarkBookParserTest {
     @Rule
@@ -43,7 +44,7 @@ public class RemarkBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Activity activity = new ActivityBuilder().build();
+        Activity activity = new TaskBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(ActivityUtil.getAddCommand(activity));
         assertEquals(new AddCommand(activity), command);
     }
@@ -69,7 +70,7 @@ public class RemarkBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Activity activity = new ActivityBuilder().build();
+        Activity activity = new TaskBuilder().build();
         EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(activity).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_ACTIVITY.getOneBased() + " " + ActivityUtil.getActivityDetails(activity));

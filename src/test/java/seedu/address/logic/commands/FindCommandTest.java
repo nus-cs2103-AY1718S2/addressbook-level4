@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_ACTIVITY_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalActivities.CARL;
-import static seedu.address.testutil.TypicalActivities.ELLE;
-import static seedu.address.testutil.TypicalActivities.FIONA;
+import static seedu.address.testutil.TypicalActivities.QUIZ;
+import static seedu.address.testutil.TypicalActivities.CIP1;
+import static seedu.address.testutil.TypicalActivities.EXAM1;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.util.Arrays;
@@ -68,7 +68,7 @@ public class FindCommandTest {
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_ACTIVITY_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(QUIZ, CIP1, EXAM1));
     }
 
     /**

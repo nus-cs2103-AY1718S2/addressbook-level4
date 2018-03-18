@@ -14,6 +14,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
 import seedu.address.testutil.ActivityBuilder;
+import seedu.address.testutil.TaskBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
@@ -29,7 +30,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() throws Exception {
-        Activity validActivity = new ActivityBuilder().build();
+        Activity validActivity = new TaskBuilder().build();
 
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
         expectedModel.addActivity(validActivity);

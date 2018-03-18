@@ -29,8 +29,11 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.Task;
 import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
+import seedu.address.testutil.EventBuilder;
+import seedu.address.testutil.TaskBuilder;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
@@ -41,7 +44,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Activity editedActivity = new ActivityBuilder().build();
+        Activity editedActivity = new TaskBuilder().build();
         EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
 
@@ -58,7 +61,7 @@ public class EditCommandTest {
         Index indexLastPerson = Index.fromOneBased(model.getFilteredActivityList().size());
         Activity lastActivity = model.getFilteredActivityList().get(indexLastPerson.getZeroBased());
 
-        ActivityBuilder personInList = new ActivityBuilder(lastActivity);
+        TaskBuilder personInList = new TaskBuilder(lastActivity);
         Activity editedActivity = personInList.withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
 
@@ -91,7 +94,7 @@ public class EditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         Activity activityInFilteredList = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        Activity editedActivity = new ActivityBuilder(activityInFilteredList).withName(VALID_NAME_BOB).build();
+        Activity editedActivity = new TaskBuilder(activityInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY,
                 new EditActivityDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
@@ -155,7 +158,7 @@ public class EditCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Activity editedActivity = new ActivityBuilder().build();
+        Activity editedActivity = new TaskBuilder().build();
         Activity activityToEdit = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
         EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
@@ -202,7 +205,7 @@ public class EditCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Activity editedActivity = new ActivityBuilder().build();
+        Activity editedActivity = new TaskBuilder().build();
         EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());

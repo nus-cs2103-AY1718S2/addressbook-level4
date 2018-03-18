@@ -3,8 +3,8 @@ package seedu.address.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACTIVITY;
-import static seedu.address.testutil.TypicalActivities.ALICE;
-import static seedu.address.testutil.TypicalActivities.BENSON;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT2;
 
 import java.util.Arrays;
 
@@ -28,7 +28,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        DeskBoard addressBook = new DeskBoardBuilder().withActivity(ALICE).withActivity(BENSON).build();
+        DeskBoard addressBook = new DeskBoardBuilder().withActivity(ASSIGNMENT1).withActivity(ASSIGNMENT2).build();
         DeskBoard differentAddressBook = new DeskBoard();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -50,7 +50,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
+        String[] keywords = ASSIGNMENT1.getName().fullName.split("\\s+");
         modelManager.updateFilteredActivityList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 

@@ -23,12 +23,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalActivities.ALICE;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 import static seedu.address.testutil.TypicalActivities.AMY;
 import static seedu.address.testutil.TypicalActivities.BOB;
-import static seedu.address.testutil.TypicalActivities.CARL;
-import static seedu.address.testutil.TypicalActivities.HOON;
-import static seedu.address.testutil.TypicalActivities.IDA;
+import static seedu.address.testutil.TypicalActivities.QUIZ;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
+import static seedu.address.testutil.TypicalActivities.DEMO1;
 import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -44,6 +44,7 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.ActivityUtil;
+import seedu.address.testutil.TaskBuilder;
 
 public class AddCommandSystemTest extends RemarkBookSystemTest {
 
@@ -73,28 +74,28 @@ public class AddCommandSystemTest extends RemarkBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a activity with all fields same as another activity in the address book except name -> added */
-        toAdd = new ActivityBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_AMY)
+        toAdd = new TaskBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_AMY)
                 .withRemark(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a activity with all fields same as another activity in the address book except phone -> added */
-        toAdd = new ActivityBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_BOB)
+        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_BOB)
                 .withRemark(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a activity with all fields same as another activity in the address book except email -> added */
-        toAdd = new ActivityBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
+        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
                 .withRemark(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a activity with all fields same as another activity in the address book except address -> added */
-        toAdd = new ActivityBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
+        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
                 .withRemark(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
                 + TAG_DESC_FRIEND;
@@ -102,7 +103,7 @@ public class AddCommandSystemTest extends RemarkBookSystemTest {
 
         /* Case: add to empty address book -> added */
         deleteAllPersons();
-        assertCommandSuccess(ALICE);
+        assertCommandSuccess(ASSIGNMENT1);
 
         /* Case: add a activity with tags, command with parameters in random order -> added */
         toAdd = BOB;
@@ -111,31 +112,31 @@ public class AddCommandSystemTest extends RemarkBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a activity, missing tags -> added */
-        assertCommandSuccess(HOON);
+        assertCommandSuccess(ASSIGNMENT3);
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
         /* Case: filters the activity list before adding -> added */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(IDA);
+        assertCommandSuccess(DEMO1);
 
         /* ------------------------ Perform add operation while a activity card is selected --------------------------- */
 
         /* Case: selects first card in the activity list, add a activity -> added, card selection remains unchanged */
         selectPerson(Index.fromOneBased(1));
-        assertCommandSuccess(CARL);
+        assertCommandSuccess(QUIZ);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate activity -> rejected */
-        command = ActivityUtil.getAddCommand(HOON);
+        command = ActivityUtil.getAddCommand(ASSIGNMENT3);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate activity except with different tags -> rejected */
-        // "friends" is an existing tag used in the default model, see TypicalActivities#ALICE
+        // "friends" is an existing tag used in the default model, see TypicalActivities#ASSIGNMENT1
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
         // DeskBoard#addActivity(Activity)
-        command = ActivityUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
+        command = ActivityUtil.getAddCommand(ASSIGNMENT3) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: missing name -> rejected */

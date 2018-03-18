@@ -40,11 +40,13 @@ import seedu.address.model.activity.Remark;
 import seedu.address.model.activity.Name;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.ActivityUtil;
+import seedu.address.testutil.TaskBuilder;
 
 public class EditCommandSystemTest extends RemarkBookSystemTest {
 
@@ -60,7 +62,7 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
         Index index = INDEX_FIRST_ACTIVITY;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
                 + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
-        Activity editedActivity = new ActivityBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
+        Activity editedActivity = new TaskBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
                 .withRemark(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedActivity);
 
@@ -85,13 +87,13 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
         index = INDEX_FIRST_ACTIVITY;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
         Activity activityToEdit = getModel().getFilteredActivityList().get(index.getZeroBased());
-        editedActivity = new ActivityBuilder(activityToEdit).withTags(VALID_TAG_FRIEND).build();
+        editedActivity = new TaskBuilder(activityToEdit).withTags(VALID_TAG_FRIEND).build();
         assertCommandSuccess(command, index, editedActivity);
 
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_ACTIVITY;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
-        editedActivity = new ActivityBuilder(activityToEdit).withTags().build();
+        editedActivity = new TaskBuilder(activityToEdit).withTags().build();
         assertCommandSuccess(command, index, editedActivity);
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
@@ -102,7 +104,7 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
         assertTrue(index.getZeroBased() < getModel().getFilteredActivityList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
         activityToEdit = getModel().getFilteredActivityList().get(index.getZeroBased());
-        editedActivity = new ActivityBuilder(activityToEdit).withName(VALID_NAME_BOB).build();
+        editedActivity = new TaskBuilder(activityToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedActivity);
 
         /* Case: filtered activity list, edit index within bounds of address book but out of bounds of activity list

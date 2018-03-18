@@ -1,7 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalActivities.ALICE;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.util.ArrayList;
@@ -47,9 +47,9 @@ public class RemarkBookTest {
 
     @Test
     public void resetData_withDuplicatePersons_throwsAssertionError() {
-        // Repeat ALICE twice
-        List<Activity> newActivities = Arrays.asList(ALICE, ALICE);
-        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        // Repeat ASSIGNMENT1 twice
+        List<Activity> newActivities = Arrays.asList(ASSIGNMENT1, ASSIGNMENT1);
+        List<Tag> newTags = new ArrayList<>(ASSIGNMENT1.getTags());
         DeskBoardStub newData = new DeskBoardStub(newActivities, newTags);
 
         thrown.expect(AssertionError.class);

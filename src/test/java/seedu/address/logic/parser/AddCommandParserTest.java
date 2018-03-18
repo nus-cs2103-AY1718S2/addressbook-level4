@@ -36,13 +36,14 @@ import seedu.address.model.activity.*;
 import seedu.address.model.activity.DateTime;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.ActivityBuilder;
+import seedu.address.testutil.TaskBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Activity expectedActivity = new ActivityBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
+        Activity expectedActivity = new TaskBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
                 .withRemark(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
@@ -66,7 +67,7 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedActivity));
 
         // multiple tags - all accepted
-        Activity expectedActivityMultipleTags = new ActivityBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
+        Activity expectedActivityMultipleTags = new TaskBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
                 .withRemark(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
@@ -76,7 +77,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Activity expectedActivity = new ActivityBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
+        Activity expectedActivity = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
                 .withRemark(VALID_ADDRESS_AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY,
                 new AddCommand(expectedActivity));

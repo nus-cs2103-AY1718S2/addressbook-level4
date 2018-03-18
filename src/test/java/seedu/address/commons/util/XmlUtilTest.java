@@ -20,6 +20,7 @@ import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableDeskBoard;
 import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.DeskBoardBuilder;
+import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TestUtil;
 
 public class XmlUtilTest {
@@ -130,7 +131,7 @@ public class XmlUtilTest {
 
         DeskBoardBuilder builder = new DeskBoardBuilder(new DeskBoard());
         dataToWrite = new XmlSerializableDeskBoard(
-                builder.withActivity(new ActivityBuilder().build()).withTag("Friends").build());
+                builder.withActivity(new TaskBuilder().build()).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableDeskBoard.class);

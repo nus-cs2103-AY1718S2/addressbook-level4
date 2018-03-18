@@ -33,9 +33,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.AliasBuilder;
 import seedu.address.testutil.AliasUtil;
+import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 

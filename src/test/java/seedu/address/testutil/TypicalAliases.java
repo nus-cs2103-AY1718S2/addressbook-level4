@@ -1,13 +1,12 @@
 package seedu.address.testutil;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.alias.Alias;
-import seedu.address.model.alias.exceptions.DuplicateAliasException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.AddressBook;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
 /**
  * A utility class containing a list of {@code Alias} objects to be used in tests.

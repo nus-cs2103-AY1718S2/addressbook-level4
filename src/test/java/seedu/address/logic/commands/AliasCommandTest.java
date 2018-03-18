@@ -1,23 +1,20 @@
 package seedu.address.logic.commands;
 
-import javafx.collections.ObservableList;
-import org.junit.Test;
-
 import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import org.junit.Test;
+
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.alias.Alias;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.alias.Alias;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;

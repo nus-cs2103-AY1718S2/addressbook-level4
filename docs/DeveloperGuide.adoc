@@ -798,14 +798,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [width="59%",cols="22%,<23%,<25%",options="header",]
 |=======================================================================
 |Name |Major enhancement(s) |Minor enhancement(s)
-|Jacqueline |
+|Jacqueline Cheong|
 *Make command syntax more user friendly and closer to natural language*
 
 To enhance user experience and usage efficiency by improving the command syntax to be more intuitive and simple to use |
 
 *Add support to change theme*
 
-This allows Vets to change the application's appearance to better suit their preferences and working environement (e.g. dark theme for night time)
+This allows Vets to change the application's appearance to better suit their preferences and working environment (e.g. dark theme for night time)
 
 |someone#1 |
 *MAJOR ENHANCEMENT*
@@ -816,14 +816,14 @@ DESCRIPTION HERE |
 
 DESCRIPTION HERE
 
-|someone#2 |
-*MAJOR ENHANCEMENT*
+|Wynona Kaan |
+*Appointment class and all relevant features*
 
-DESCRIPTION HERE |
+Commands such as add, remove, edit, find, as well as storage, for Vet and assistants, to handle appointments. |
 
-*MINOR ENHANCEMENT*
+*Remove tags from all person objects*
 
-DESCRIPTION HERE
+Allows for a particular tag to be removed from all objects, depending on what needs to be removed.
 
 |Peng Xuanchang |
 *Integrating CalenderFX as framework for Calender view*

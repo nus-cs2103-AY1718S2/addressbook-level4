@@ -798,6 +798,8 @@ A typical user from our target user profile:
 
 *Value proposition*: consolidation platform for all contacts from different platforms for users to communicate with customers more easily, analyse and apply their marketing strategies more effectively and efficiently.
 
+*Feature Contribution*
+
 1. Aadyaa Maddi
 * Major Feature: Ability to manage customer orders.
 ** Orders can be added, edited, and deleted.
@@ -808,6 +810,20 @@ A typical user from our target user profile:
 ** Major Feature: For salespersons, this feature will be essential to have as they would want to keep track of what their customers are ordering and what they have ordered already.
 If customers have any issues regarding their orders, salespersons will be able to view all the relevant information in a single place.
 ** Minor Feature: Since ContactSails has a lot of personal details of customers, the owner of the address book would want to encrypt the application data file to prevent outside access to sensitive information.
+
+2. Alicia Ho Sor Sian
+* Major Feature: Ability to manage events which are displayed in a calendar.
+** Allows users to add, edit or delete events, which can represent meetings or deadlines including order deliveries.
+** Once set, the event will be displayed in ContactSails' calendar, which shows all incoming events for the current month and after.
+** Orders set by users will automatically appear in the calendar without the user having to create an event for it.
+* Minor Feature: Classifying tags into two categories, groups and preferences
+** Create 2 distinct categories of tags representing groups that a contact belongs to and preferences that a contact has.
+** Each category is displayed at a separate location in the Ui.
+* How the above features fit into the product scope:
+** Major Feature: The calendar can remind salespersons any impending meetings or deadlines especially order deliveries to save time in planning their next course of action carefully.
+It provides a quicker way to manage events compared to using other calendar applications that mainly relies on GUI input.
+** Minor Feature: Groups can be used to indicate which social media platform does the salesperson use to communicate with a particular contact, while preferences indicates the products and services a contact usually purchases.
+Using separate labels for groups and preferences placed at separate locations in the Ui display gives a more organised display of a contact's information, allowing salespersons to derive important information of their contacts quickly.
 
 [appendix]
 == User Stories

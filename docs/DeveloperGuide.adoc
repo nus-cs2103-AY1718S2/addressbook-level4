@@ -795,63 +795,61 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Feature contribution*:
 
 1. Ang Yee Chin
-
-Major Feature: UI Scheme
-
-* Revamps the interface to make it more intuitive and clean
-* Makes the design responsive so that the application page looks good on devices with any screen size
-* Integrates a PDF viewer to display applicants' resumes
-* Adds a calendar that displays scheduled interviews
-
-Minor Features:
-
-* Adds a `comments` field that allows recruiters to provide additional information
-* Creates radar graphs to help visualise applicants' performance in interviews
-* Adds a `profile picture` field for applicants
-
-//-
-
++
+* Major Feature: UI Scheme
++
+** Revamps the interface to make it more intuitive and clean
+** Makes the design responsive so that the application page looks good on devices with any screen size
+** Integrates a PDF viewer to display applicants' resumes
+** Adds a calendar that displays scheduled interviews
++
+* Minor Features:
++
+** Adds a `comments` field that allows recruiters to provide additional information
+** Creates radar graphs to help visualise applicants' performance in interviews
+** Adds a `profile picture` field for applicants
++
 2. Ke Xiaowen
-
-Major Feature: Rating
-
-* Rates an applicant based on technical, communication, problem solving skills and experience after an interview
-* Allows editing of rating scores
-* Supports deletion of ratings
-* Displays overall ratings for rated applicants
-* Offers keyboard shortcuts to auto-fill prefixes
-
-Minor Features:
-
-* Adds a `job applied` field for applicants
-* Adds a `university` field for applicants
-
++
+* Major Feature: Rating
++
+** Rates an applicant based on technical, communication, problem solving skills and experience after an interview
+** Allows editing of rating scores
+** Supports deletion of ratings
+** Displays overall ratings for rated applicants
+** Offers keyboard shortcuts to auto-fill prefixes
++
+* Minor Features:
++
+** Adds a `job applied` field for applicants
+** Adds a `university` field for applicants
++
 3. Ma Hongqiang
-
-Major Feature: Filter
-
-* Supports filtering based on the current view of listed persons
-* Allows users to filter fields whose values are either finite or have natural ordering
-* Supports filtering multiple fields at the same time
-
-Minor Features:
-
-* Adds a `expected graduation year` field for applicants
-* Adds a `resume` field for applicants
-
++
+* Major Feature: Filter
++
+** Supports filtering based on the current view of listed persons
+** Allows users to filter fields whose values are either finite or have natural ordering
+** Supports filtering multiple fields at the same time
++
+* Minor Features:
++
+** Adds a `expected graduation year` field for applicants
+** Adds a `resume` field for applicants
++
 4. Tan Heng Yeow
-
-Major Feature: Find
-
-* Allows users to find all fields that match the exact keyword inputted
-* Supports finding all fields that contain the keyword input
-* Adds a fuzzy find function that enables users to find all fields that are a fuzzy match of the keyword inputted
-* Highlights the search keyword in results if found
-
-Minor Features:
-
-* Adds a `major` field for applicants
-* Adds a `cGPA` field for applicants
++
+* Major Feature: Find
++
+** Allows users to find all fields that match the exact keyword inputted
+** Supports finding all fields that contain the keyword input
+** Adds a fuzzy find function that enables users to find all fields that are a fuzzy match of the keyword inputted
+** Highlights the search keyword in results if found
++
+* Minor Features:
++
+** Adds a `major` field for applicants
+** Adds a `cGPA` field for applicants
 
 [appendix]
 == User Stories

@@ -77,6 +77,9 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.importPerson(p.toModelType());
         }
+        for (XmlAdaptedAlias a : aliases) {
+            addressBook.importAlias(a.toModelType());
+        }
         return addressBook;
     }
 

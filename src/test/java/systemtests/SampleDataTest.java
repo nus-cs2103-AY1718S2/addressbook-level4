@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import org.junit.Test;
 
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.util.SampleDataUtil;
 import seedu.recipe.testutil.TestUtil;
 
@@ -45,7 +45,7 @@ public class SampleDataTest extends RecipeBookSystemTest {
 
     @Test
     public void recipeBook_dataFileDoesNotExist_loadSampleData() {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
-        assertListMatching(getPersonListPanel(), expectedList);
+        Recipe[] expectedList = SampleDataUtil.getSampleRecipes();
+        assertListMatching(getRecipeListPanel(), expectedList);
     }
 }

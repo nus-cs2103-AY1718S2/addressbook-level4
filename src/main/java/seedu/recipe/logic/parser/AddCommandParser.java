@@ -16,7 +16,7 @@ import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
 
@@ -46,9 +46,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             Instruction instruction = ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Person person = new Person(name, phone, ingredient, instruction, tagList);
+            Recipe recipe = new Recipe(name, phone, ingredient, instruction, tagList);
 
-            return new AddCommand(person);
+            return new AddCommand(recipe);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

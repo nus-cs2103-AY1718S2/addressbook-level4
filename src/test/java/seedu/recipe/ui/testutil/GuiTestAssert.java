@@ -5,10 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.RecipeCardHandle;
+import guitests.guihandles.RecipeListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -17,7 +17,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
+    public static void assertCardEquals(RecipeCardHandle expectedCard, RecipeCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getInstruction(), actualCard.getInstruction());
         assertEquals(expectedCard.getIngredient(), actualCard.getIngredient());
@@ -27,40 +27,40 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     * Asserts that {@code actualCard} displays the details of {@code expectedRecipe}.
      */
-    public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getIngredient().value, actualCard.getIngredient());
-        assertEquals(expectedPerson.getInstruction().value, actualCard.getInstruction());
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+    public static void assertCardDisplaysRecipe(Recipe expectedRecipe, RecipeCardHandle actualCard) {
+        assertEquals(expectedRecipe.getName().fullName, actualCard.getName());
+        assertEquals(expectedRecipe.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedRecipe.getIngredient().value, actualCard.getIngredient());
+        assertEquals(expectedRecipe.getInstruction().value, actualCard.getInstruction());
+        assertEquals(expectedRecipe.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code recipeListPanelHandle} displays the details of {@code recipes} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, Person... persons) {
-        for (int i = 0; i < persons.length; i++) {
-            assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
+    public static void assertListMatching(RecipeListPanelHandle recipeListPanelHandle, Recipe... recipes) {
+        for (int i = 0; i < recipes.length; i++) {
+            assertCardDisplaysRecipe(recipes[i], recipeListPanelHandle.getRecipeCardHandle(i));
         }
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code recipeListPanelHandle} displays the details of {@code recipes} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<Person> persons) {
-        assertListMatching(personListPanelHandle, persons.toArray(new Person[0]));
+    public static void assertListMatching(RecipeListPanelHandle recipeListPanelHandle, List<Recipe> recipes) {
+        assertListMatching(recipeListPanelHandle, recipes.toArray(new Recipe[0]));
     }
 
     /**
-     * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
+     * Asserts the size of the list in {@code recipeListPanelHandle} equals to {@code size}.
      */
-    public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
-        int numberOfPeople = personListPanelHandle.getListSize();
+    public static void assertListSize(RecipeListPanelHandle recipeListPanelHandle, int size) {
+        int numberOfPeople = recipeListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
     }
 

@@ -1,7 +1,7 @@
 package systemtests;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.recipe.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.recipe.testutil.TypicalRecipes.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -38,13 +38,13 @@ public class ClearCommandSystemTest extends RecipeBookSystemTest {
 
         /* Case: selects first card in recipe list and clears recipe book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original recipe book
-        selectPerson(Index.fromOneBased(1));
+        selectRecipe(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
         /* Case: filters the recipe list before clearing -> entire recipe book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original recipe book
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showRecipesWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 

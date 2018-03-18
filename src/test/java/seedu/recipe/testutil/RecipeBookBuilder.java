@@ -2,14 +2,14 @@ package seedu.recipe.testutil;
 
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.recipe.Person;
-import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 import seedu.recipe.model.tag.Tag;
 
 /**
  * A utility class to help with building RecipeBook objects.
  * Example usage: <br>
- *     {@code RecipeBook ab = new RecipeBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code RecipeBook ab = new RecipeBookBuilder().withRecipe("John", "Doe").withTag("Friend").build();}
  */
 public class RecipeBookBuilder {
 
@@ -24,12 +24,12 @@ public class RecipeBookBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code RecipeBook} that we are building.
+     * Adds a new {@code Recipe} to the {@code RecipeBook} that we are building.
      */
-    public RecipeBookBuilder withPerson(Person person) {
+    public RecipeBookBuilder withRecipe(Recipe recipe) {
         try {
-            recipeBook.addPerson(person);
-        } catch (DuplicatePersonException dpe) {
+            recipeBook.addRecipe(recipe);
+        } catch (DuplicateRecipeException dpe) {
             throw new IllegalArgumentException("recipe is expected to be unique.");
         }
         return this;

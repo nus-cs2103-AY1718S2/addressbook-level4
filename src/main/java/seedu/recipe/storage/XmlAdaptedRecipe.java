@@ -12,16 +12,16 @@ import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
 
 /**
- * JAXB-friendly version of the Person.
+ * JAXB-friendly version of the Recipe.
  */
-public class XmlAdaptedPerson {
+public class XmlAdaptedRecipe {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Recipe's %s field is missing!";
 
     @XmlElement(required = true)
     private String name;
@@ -36,15 +36,15 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedRecipe.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedRecipe() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given recipe details.
+     * Constructs an {@code XmlAdaptedRecipe} with the given recipe details.
      */
-    public XmlAdaptedPerson(String name, String phone, String ingredient, String instruction, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedRecipe(String name, String phone, String ingredient, String instruction, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.ingredient = ingredient;
@@ -55,11 +55,11 @@ public class XmlAdaptedPerson {
     }
 
     /**
-     * Converts a given Person into this class for JAXB use.
+     * Converts a given Recipe into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedRecipe
      */
-    public XmlAdaptedPerson(Person source) {
+    public XmlAdaptedRecipe(Recipe source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         ingredient = source.getIngredient().value;
@@ -71,14 +71,14 @@ public class XmlAdaptedPerson {
     }
 
     /**
-     * Converts this jaxb-friendly adapted recipe object into the model's Person object.
+     * Converts this jaxb-friendly adapted recipe object into the model's Recipe object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted recipe
      */
-    public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
+    public Recipe toModelType() throws IllegalValueException {
+        final List<Tag> recipeTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
+            recipeTags.add(tag.toModelType());
         }
 
         if (this.name == null) {
@@ -113,8 +113,8 @@ public class XmlAdaptedPerson {
         }
         final Instruction instruction = new Instruction(this.instruction);
 
-        final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, ingredient, instruction, tags);
+        final Set<Tag> tags = new HashSet<>(recipeTags);
+        return new Recipe(name, phone, ingredient, instruction, tags);
     }
 
     @Override
@@ -123,15 +123,15 @@ public class XmlAdaptedPerson {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedPerson)) {
+        if (!(other instanceof XmlAdaptedRecipe)) {
             return false;
         }
 
-        XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
-        return Objects.equals(name, otherPerson.name)
-                && Objects.equals(phone, otherPerson.phone)
-                && Objects.equals(ingredient, otherPerson.ingredient)
-                && Objects.equals(instruction, otherPerson.instruction)
-                && tagged.equals(otherPerson.tagged);
+        XmlAdaptedRecipe otherRecipe = (XmlAdaptedRecipe) other;
+        return Objects.equals(name, otherRecipe.name)
+                && Objects.equals(phone, otherRecipe.phone)
+                && Objects.equals(ingredient, otherRecipe.ingredient)
+                && Objects.equals(instruction, otherRecipe.instruction)
+                && tagged.equals(otherRecipe.tagged);
     }
 }

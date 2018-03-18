@@ -3,7 +3,7 @@ package seedu.recipe.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalRecipeBook;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import java.io.IOException;
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <recipebook>
-    <!-- Valid Person -->
-    <persons>
+    <!-- Valid Recipe -->
+    <recipes>
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
-    </persons>
-    <!-- Person with invalid phone field -->
-    <persons>
+    </recipes>
+    <!-- Recipe with invalid phone field -->
+    <recipes>
         <name>Hans Muster</name>
         <phone isPrivate="false">948asdf2424</phone>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
-    </persons>
+    </recipes>
 </recipebook>

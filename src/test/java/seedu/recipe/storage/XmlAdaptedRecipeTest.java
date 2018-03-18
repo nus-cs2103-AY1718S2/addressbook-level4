@@ -1,8 +1,8 @@
 package seedu.recipe.storage;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.recipe.storage.XmlAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.recipe.testutil.TypicalPersons.BENSON;
+import static seedu.recipe.storage.XmlAdaptedRecipe.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.recipe.testutil.TypicalRecipes.BENSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.testutil.Assert;
 
-public class XmlAdaptedPersonTest {
+public class XmlAdaptedRecipeTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_INSTRUCTION = " ";
@@ -33,78 +33,78 @@ public class XmlAdaptedPersonTest {
             .collect(Collectors.toList());
 
     @Test
-    public void toModelType_validPersonDetails_returnsPerson() throws Exception {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(BENSON);
-        assertEquals(BENSON, person.toModelType());
+    public void toModelType_validRecipeDetails_returnsRecipe() throws Exception {
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(BENSON);
+        assertEquals(BENSON, recipe.toModelType());
     }
 
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
-        XmlAdaptedPerson person =
-                new XmlAdaptedPerson(INVALID_NAME, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(INVALID_NAME, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
         String expectedMessage = Name.MESSAGE_NAME_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(null, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(null, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
     @Test
     public void toModelType_invalidPhone_throwsIllegalValueException() {
-        XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_NAME, INVALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(VALID_NAME, INVALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
         String expectedMessage = Phone.MESSAGE_PHONE_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, null, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, null, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
     @Test
     public void toModelType_invalidIngredient_throwsIllegalValueException() {
-        XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, INVALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(VALID_NAME, VALID_PHONE, INVALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
         String expectedMessage = Ingredient.MESSAGE_INGREDIENT_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
     @Test
     public void toModelType_nullIngredient_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, null, VALID_INSTRUCTION, VALID_TAGS);
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_PHONE, null, VALID_INSTRUCTION, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Ingredient.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
     @Test
     public void toModelType_invalidInstruction_throwsIllegalValueException() {
-        XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_INGREDIENT, INVALID_INSTRUCTION, VALID_TAGS);
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(VALID_NAME, VALID_PHONE, VALID_INGREDIENT, INVALID_INSTRUCTION, VALID_TAGS);
         String expectedMessage = Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
     @Test
     public void toModelType_nullInstruction_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_INGREDIENT, null, VALID_TAGS);
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_PHONE, VALID_INGREDIENT, null, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Instruction.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
-        XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, invalidTags);
-        Assert.assertThrows(IllegalValueException.class, person::toModelType);
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(VALID_NAME, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, invalidTags);
+        Assert.assertThrows(IllegalValueException.class, recipe::toModelType);
     }
 
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <recipebook>
-    <!-- Person with invalid name field -->
-    <persons>
+    <!-- Recipe with invalid name field -->
+    <recipes>
         <name>Ha!ns Mu@ster</name>
         <phone isPrivate="false">9482424</phone>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
-    </persons>
+    </recipes>
 </recipebook>

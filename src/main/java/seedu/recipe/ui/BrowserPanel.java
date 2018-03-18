@@ -12,8 +12,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.recipe.MainApp;
 import seedu.recipe.commons.core.LogsCenter;
-import seedu.recipe.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
+import seedu.recipe.model.recipe.Recipe;
 
 /**
  * The Browser Panel of the App.
@@ -41,8 +41,8 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    private void loadRecipePage(Recipe recipe) {
+        loadPage(SEARCH_PAGE_URL + recipe.getName().fullName);
     }
 
     public void loadPage(String url) {
@@ -65,8 +65,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleRecipePanelSelectionChangedEvent(RecipePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadRecipePage(event.getNewSelection().recipe);
     }
 }

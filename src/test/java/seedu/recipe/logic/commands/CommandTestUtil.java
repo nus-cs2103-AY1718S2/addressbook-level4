@@ -20,9 +20,9 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.RecipeBook;
 import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;
-import seedu.recipe.model.recipe.Person;
-import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
-import seedu.recipe.testutil.EditPersonDescriptorBuilder;
+import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
+import seedu.recipe.testutil.EditRecipeDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -60,14 +60,14 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditCommand.EditRecipeDescriptor DESC_AMY;
+    public static final EditCommand.EditRecipeDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+        DESC_AMY = new EditRecipeDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+        DESC_BOB = new EditRecipeDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
@@ -98,7 +98,7 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         RecipeBook expectedRecipeBook = new RecipeBook(actualModel.getRecipeBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<Recipe> expectedFilteredList = new ArrayList<>(actualModel.getFilteredRecipeList());
 
         try {
             command.execute();
@@ -106,7 +106,7 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedRecipeBook, actualModel.getRecipeBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredList, actualModel.getFilteredRecipeList());
         }
     }
 
@@ -114,25 +114,25 @@ public class CommandTestUtil {
      * Updates {@code model}'s filtered list to show only the recipe at the given {@code targetIndex} in the
      * {@code model}'s recipe book.
      */
-    public static void showPersonAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+    public static void showRecipeAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredRecipeList().size());
 
-        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        Recipe recipe = model.getFilteredRecipeList().get(targetIndex.getZeroBased());
+        final String[] splitName = recipe.getName().fullName.split("\\s+");
+        model.updateFilteredRecipeList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredRecipeList().size());
     }
 
     /**
      * Deletes the first recipe in {@code model}'s filtered list from {@code model}'s recipe book.
      */
-    public static void deleteFirstPerson(Model model) {
-        Person firstPerson = model.getFilteredPersonList().get(0);
+    public static void deleteFirstRecipe(Model model) {
+        Recipe firstRecipe = model.getFilteredRecipeList().get(0);
         try {
-            model.deletePerson(firstPerson);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+            model.deleteRecipe(firstRecipe);
+        } catch (RecipeNotFoundException pnfe) {
+            throw new AssertionError("Recipe in filtered list must exist in model.", pnfe);
         }
     }
 

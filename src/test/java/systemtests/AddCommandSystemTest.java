@@ -26,13 +26,13 @@ import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.recipe.testutil.TypicalPersons.ALICE;
-import static seedu.recipe.testutil.TypicalPersons.AMY;
-import static seedu.recipe.testutil.TypicalPersons.BOB;
-import static seedu.recipe.testutil.TypicalPersons.CARL;
-import static seedu.recipe.testutil.TypicalPersons.HOON;
-import static seedu.recipe.testutil.TypicalPersons.IDA;
-import static seedu.recipe.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.recipe.testutil.TypicalRecipes.ALICE;
+import static seedu.recipe.testutil.TypicalRecipes.AMY;
+import static seedu.recipe.testutil.TypicalRecipes.BOB;
+import static seedu.recipe.testutil.TypicalRecipes.CARL;
+import static seedu.recipe.testutil.TypicalRecipes.HOON;
+import static seedu.recipe.testutil.TypicalRecipes.IDA;
+import static seedu.recipe.testutil.TypicalRecipes.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -45,12 +45,12 @@ import seedu.recipe.model.Model;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Phone;
-import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 import seedu.recipe.model.tag.Tag;
-import seedu.recipe.testutil.PersonBuilder;
-import seedu.recipe.testutil.PersonUtil;
+import seedu.recipe.testutil.RecipeBuilder;
+import seedu.recipe.testutil.RecipeUtil;
 
 public class AddCommandSystemTest extends RecipeBookSystemTest {
 
@@ -63,7 +63,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         /* Case: add a recipe without tags to a non-empty recipe book, command with leading spaces and trailing spaces
          * -> added
          */
-        Person toAdd = AMY;
+        Recipe toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + INGREDIENT_DESC_AMY + "   " + INSTRUCTION_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
@@ -75,40 +75,40 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
-        model.addPerson(toAdd);
+        model.addRecipe(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a recipe with all fields same as another recipe in the recipe book except name -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withIngredient(VALID_INGREDIENT_AMY)
+        toAdd = new RecipeBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withIngredient(VALID_INGREDIENT_AMY)
                 .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a recipe with all fields same as another recipe in the recipe book except phone -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withIngredient(VALID_INGREDIENT_AMY)
+        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withIngredient(VALID_INGREDIENT_AMY)
                 .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a recipe with all fields same as another recipe in the recipe book except ingredient -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withIngredient(VALID_INGREDIENT_BOB)
+        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withIngredient(VALID_INGREDIENT_BOB)
                 .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a recipe with all fields same as another recipe in the recipe book except recipe -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withIngredient(VALID_INGREDIENT_AMY)
+        toAdd = new RecipeBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withIngredient(VALID_INGREDIENT_AMY)
                 .withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_BOB
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty recipe book -> added */
-        deleteAllPersons();
+        deleteAllRecipes();
         assertCommandSuccess(ALICE);
 
         /* Case: add a recipe with tags, command with parameters in random order -> added */
@@ -123,27 +123,27 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
         /* Case: filters the recipe list before adding -> added */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showRecipesWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(IDA);
 
         /* ------------------------ Perform add operation while a recipe card is selected --------------------------- */
 
         /* Case: selects first card in the recipe list, add a recipe -> added, card selection remains unchanged */
-        selectPerson(Index.fromOneBased(1));
+        selectRecipe(Index.fromOneBased(1));
         assertCommandSuccess(CARL);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate recipe -> rejected */
-        command = PersonUtil.getAddCommand(HOON);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        command = RecipeUtil.getAddCommand(HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_RECIPE);
 
         /* Case: add a duplicate recipe except with different tags -> rejected */
-        // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
+        // "friends" is an existing tag used in the default model, see TypicalRecipes#ALICE
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
-        // RecipeBook#addPerson(Person)
-        command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        // RecipeBook#addRecipe(Recipe)
+        command = RecipeUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_RECIPE);
 
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY;
@@ -162,7 +162,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "adds " + PersonUtil.getPersonDetails(toAdd);
+        command = "adds " + RecipeUtil.getRecipeDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
@@ -193,7 +193,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing {@code AddCommand} with the details of
      * {@code toAdd}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
+     * 4. {@code Model}, {@code Storage} and {@code RecipeListPanel} equal to the corresponding components in
      * the current model added with {@code toAdd}.<br>
      * 5. Browser url and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
@@ -201,20 +201,20 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
      * {@code RecipeBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see RecipeBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(Person toAdd) {
-        assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
+    private void assertCommandSuccess(Recipe toAdd) {
+        assertCommandSuccess(RecipeUtil.getAddCommand(toAdd), toAdd);
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(Person)}. Executes {@code command}
+     * Performs the same verification as {@code assertCommandSuccess(Recipe)}. Executes {@code command}
      * instead.
-     * @see AddCommandSystemTest#assertCommandSuccess(Person)
+     * @see AddCommandSystemTest#assertCommandSuccess(Recipe)
      */
-    private void assertCommandSuccess(String command, Person toAdd) {
+    private void assertCommandSuccess(String command, Recipe toAdd) {
         Model expectedModel = getModel();
         try {
-            expectedModel.addPerson(toAdd);
-        } catch (DuplicatePersonException dpe) {
+            expectedModel.addRecipe(toAdd);
+        } catch (DuplicateRecipeException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
@@ -223,12 +223,12 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Person)} except asserts that
+     * Performs the same verification as {@code assertCommandSuccess(String, Recipe)} except asserts that
      * the,<br>
      * 1. Result display box displays {@code expectedResultMessage}.<br>
-     * 2. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
+     * 2. {@code Model}, {@code Storage} and {@code RecipeListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
-     * @see AddCommandSystemTest#assertCommandSuccess(String, Person)
+     * @see AddCommandSystemTest#assertCommandSuccess(String, Recipe)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
@@ -243,7 +243,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
      * 1. Command box displays {@code command}.<br>
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage} and {@code RecipeListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code RecipeBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>

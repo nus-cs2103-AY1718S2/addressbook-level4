@@ -12,15 +12,15 @@ import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import org.junit.Test;
 
-import seedu.recipe.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.recipe.testutil.EditPersonDescriptorBuilder;
+import seedu.recipe.logic.commands.EditCommand.EditRecipeDescriptor;
+import seedu.recipe.testutil.EditRecipeDescriptorBuilder;
 
-public class EditPersonDescriptorTest {
+public class EditRecipeDescriptorTest {
 
     @Test
     public void equals() {
         // same values -> returns true
-        EditPersonDescriptor descriptorWithSameValues = new EditPersonDescriptor(DESC_AMY);
+        EditRecipeDescriptor descriptorWithSameValues = new EditRecipeDescriptor(DESC_AMY);
         assertTrue(DESC_AMY.equals(descriptorWithSameValues));
 
         // same object -> returns true
@@ -36,23 +36,23 @@ public class EditPersonDescriptorTest {
         assertFalse(DESC_AMY.equals(DESC_BOB));
 
         // different name -> returns false
-        EditPersonDescriptor editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
+        EditRecipeDescriptor editedAmy = new EditRecipeDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different phone -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withPhone(VALID_PHONE_BOB).build();
+        editedAmy = new EditRecipeDescriptorBuilder(DESC_AMY).withPhone(VALID_PHONE_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different ingredient -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withIngredient(VALID_INGREDIENT_BOB).build();
+        editedAmy = new EditRecipeDescriptorBuilder(DESC_AMY).withIngredient(VALID_INGREDIENT_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different recipe -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withInstruction(VALID_INSTRUCTION_BOB).build();
+        editedAmy = new EditRecipeDescriptorBuilder(DESC_AMY).withInstruction(VALID_INSTRUCTION_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
+        editedAmy = new EditRecipeDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
     }
 }

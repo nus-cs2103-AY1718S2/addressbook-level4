@@ -3,9 +3,9 @@ package seedu.recipe.logic.commands;
 import static seedu.recipe.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.recipe.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalRecipeBook;
+import static seedu.recipe.logic.commands.CommandTestUtil.deleteFirstRecipe;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,8 +24,8 @@ public class UndoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_RECIPE);
+    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_RECIPE);
 
     @Before
     public void setUp() {
@@ -44,7 +44,7 @@ public class UndoCommandTest {
 
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
-        deleteFirstPerson(expectedModel);
+        deleteFirstRecipe(expectedModel);
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in undoStack

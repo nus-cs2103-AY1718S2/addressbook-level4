@@ -21,10 +21,10 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ReadOnlyRecipeBook;
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.recipe.Person;
-import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
-import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
-import seedu.recipe.testutil.PersonBuilder;
+import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
+import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
+import seedu.recipe.testutil.RecipeBuilder;
 
 public class AddCommandTest {
 
@@ -32,37 +32,37 @@ public class AddCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullRecipe_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_recipeAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingRecipeAdded modelStub = new ModelStubAcceptingRecipeAdded();
+        Recipe validRecipe = new RecipeBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddCommandForRecipe(validRecipe, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validRecipe), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validRecipe), modelStub.recipesAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateRecipe_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateRecipeException();
+        Recipe validRecipe = new RecipeBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_RECIPE);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddCommandForRecipe(validRecipe, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Recipe alice = new RecipeBuilder().withName("Alice").build();
+        Recipe bob = new RecipeBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -86,8 +86,8 @@ public class AddCommandTest {
     /**
      * Generates a new AddCommand with the details of the given recipe.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand getAddCommandForRecipe(Recipe recipe, Model model) {
+        AddCommand command = new AddCommand(recipe);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -97,7 +97,7 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
+        public void addRecipe(Recipe recipe) throws DuplicateRecipeException {
             fail("This method should not be called.");
         }
 
@@ -113,35 +113,35 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
+        public void deleteRecipe(Recipe target) throws RecipeNotFoundException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
+        public void updateRecipe(Recipe target, Recipe editedRecipe)
+                throws DuplicateRecipeException {
             fail("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Person> getFilteredPersonList() {
+        public ObservableList<Recipe> getFilteredRecipeList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
+        public void updateFilteredRecipeList(Predicate<Recipe> predicate) {
             fail("This method should not be called.");
         }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a recipe.
+     * A Model stub that always throw a DuplicateRecipeException when trying to add a recipe.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateRecipeException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addRecipe(Recipe recipe) throws DuplicateRecipeException {
+            throw new DuplicateRecipeException();
         }
 
         @Override
@@ -153,13 +153,13 @@ public class AddCommandTest {
     /**
      * A Model stub that always accept the recipe being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingRecipeAdded extends ModelStub {
+        final ArrayList<Recipe> recipesAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addRecipe(Recipe recipe) throws DuplicateRecipeException {
+            requireNonNull(recipe);
+            recipesAdded.add(recipe);
         }
 
         @Override

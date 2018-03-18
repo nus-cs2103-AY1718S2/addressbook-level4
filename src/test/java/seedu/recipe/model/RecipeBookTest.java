@@ -1,8 +1,8 @@
 package seedu.recipe.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.recipe.testutil.TypicalPersons.ALICE;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalRecipeBook;
+import static seedu.recipe.testutil.TypicalRecipes.ALICE;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.tag.Tag;
 
 public class RecipeBookTest {
@@ -28,7 +28,7 @@ public class RecipeBookTest {
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), recipeBook.getPersonList());
+        assertEquals(Collections.emptyList(), recipeBook.getRecipeList());
         assertEquals(Collections.emptyList(), recipeBook.getTagList());
     }
 
@@ -46,20 +46,20 @@ public class RecipeBookTest {
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsAssertionError() {
+    public void resetData_withDuplicateRecipes_throwsAssertionError() {
         // Repeat ALICE twice
-        List<Person> newPersons = Arrays.asList(ALICE, ALICE);
+        List<Recipe> newRecipes = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        RecipeBookStub newData = new RecipeBookStub(newPersons, newTags);
+        RecipeBookStub newData = new RecipeBookStub(newRecipes, newTags);
 
         thrown.expect(AssertionError.class);
         recipeBook.resetData(newData);
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getRecipeList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        recipeBook.getPersonList().remove(0);
+        recipeBook.getRecipeList().remove(0);
     }
 
     @Test
@@ -69,20 +69,20 @@ public class RecipeBookTest {
     }
 
     /**
-     * A stub ReadOnlyRecipeBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyRecipeBook whose recipes and tags lists can violate interface constraints.
      */
     private static class RecipeBookStub implements ReadOnlyRecipeBook {
-        private final ObservableList<Person> persons = FXCollections.observableArrayList();
+        private final ObservableList<Recipe> recipes = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        RecipeBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
-            this.persons.setAll(persons);
+        RecipeBookStub(Collection<Recipe> recipes, Collection<? extends Tag> tags) {
+            this.recipes.setAll(recipes);
             this.tags.setAll(tags);
         }
 
         @Override
-        public ObservableList<Person> getPersonList() {
-            return persons;
+        public ObservableList<Recipe> getRecipeList() {
+            return recipes;
         }
 
         @Override

@@ -3,7 +3,7 @@ package seedu.recipe.ui;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.recipe.testutil.EventsUtil.postNow;
-import static seedu.recipe.testutil.TypicalPersons.ALICE;
+import static seedu.recipe.testutil.TypicalRecipes.ALICE;
 import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.recipe.ui.UiPart.FXML_FILE_FOLDER;
 
@@ -14,17 +14,17 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.recipe.MainApp;
-import seedu.recipe.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
-    private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private RecipePanelSelectionChangedEvent selectionChangedEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        selectionChangedEventStub = new RecipePanelSelectionChangedEvent(new RecipeCard(ALICE, 0));
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -40,9 +40,9 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a recipe
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
+        URL expectedRecipeUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        assertEquals(expectedRecipeUrl, browserPanelHandle.getLoadedUrl());
     }
 }

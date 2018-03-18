@@ -2,12 +2,12 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX;
 import static seedu.recipe.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.recipe.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.recipe.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.recipe.logic.commands.SelectCommand.MESSAGE_SELECT_RECIPE_SUCCESS;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
+import static seedu.recipe.testutil.TypicalRecipes.KEYWORD_MATCHING_MEIER;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipes;
 
 import org.junit.Test;
 
@@ -25,13 +25,13 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
         /* Case: select the first card in the recipe list, command with leading spaces and trailing spaces
          * -> selected
          */
-        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + "   ";
-        assertCommandSuccess(command, INDEX_FIRST_PERSON);
+        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased() + "   ";
+        assertCommandSuccess(command, INDEX_FIRST_RECIPE);
 
         /* Case: select the last card in the recipe list -> selected */
-        Index personCount = Index.fromOneBased(getTypicalPersons().size());
-        command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
-        assertCommandSuccess(command, personCount);
+        Index recipeCount = Index.fromOneBased(getTypicalRecipes().size());
+        command = SelectCommand.COMMAND_WORD + " " + recipeCount.getOneBased();
+        assertCommandSuccess(command, recipeCount);
 
         /* Case: undo previous selection -> rejected */
         command = UndoCommand.COMMAND_WORD;
@@ -44,7 +44,7 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: select the middle card in the recipe list -> selected */
-        Index middleIndex = Index.fromOneBased(personCount.getOneBased() / 2);
+        Index middleIndex = Index.fromOneBased(recipeCount.getOneBased() / 2);
         command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
 
@@ -56,13 +56,13 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
         /* Case: filtered recipe list, select index within bounds of recipe book but out of bounds of recipe list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getRecipeBook().getPersonList().size();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        showRecipesWithName(KEYWORD_MATCHING_MEIER);
+        int invalidIndex = getModel().getRecipeBook().getRecipeList().size();
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
 
         /* Case: filtered recipe list, select index within bounds of recipe book and recipe list -> selected */
         Index validIndex = Index.fromOneBased(1);
-        assertTrue(validIndex.getZeroBased() < getModel().getFilteredPersonList().size());
+        assertTrue(validIndex.getZeroBased() < getModel().getFilteredRecipeList().size());
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 
@@ -77,8 +77,8 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredPersonList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        invalidIndex = getModel().getFilteredRecipeList().size() + 1;
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
@@ -92,9 +92,9 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: select from empty recipe book -> rejected */
-        deleteAllPersons();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
-                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        deleteAllRecipes();
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased(),
+                MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
     }
 
     /**
@@ -103,7 +103,7 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing select command with the
      * {@code expectedSelectedCardIndex} of the selected recipe.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage} and {@code RecipeListPanel} remain unchanged.<br>
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
@@ -114,8 +114,8 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
-                MESSAGE_SELECT_PERSON_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+                MESSAGE_SELECT_RECIPE_SUCCESS, expectedSelectedCardIndex.getOneBased());
+        int preExecutionSelectedCardIndex = getRecipeListPanel().getSelectedCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
@@ -135,7 +135,7 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
      * 1. Command box displays {@code command}.<br>
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage} and {@code RecipeListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code RecipeBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>

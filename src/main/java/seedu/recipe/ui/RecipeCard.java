@@ -5,14 +5,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Recipe}.
  */
-public class PersonCard extends UiPart<Region> {
+public class RecipeCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "RecipeListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -22,7 +22,7 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on RecipeBook level 4</a>
      */
 
-    public final Person person;
+    public final Recipe recipe;
 
     @FXML
     private HBox cardPane;
@@ -39,15 +39,15 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonCard(Person person, int displayedIndex) {
+    public RecipeCard(Recipe recipe, int displayedIndex) {
         super(FXML);
-        this.person = person;
+        this.recipe = recipe;
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        instruction.setText(person.getInstruction().value);
-        ingredient.setText(person.getIngredient().value);
-        initTags(person);
+        name.setText(recipe.getName().fullName);
+        phone.setText(recipe.getPhone().value);
+        instruction.setText(recipe.getInstruction().value);
+        ingredient.setText(recipe.getIngredient().value);
+        initTags(recipe);
     }
 
     //@@author RyanAngJY
@@ -65,8 +65,8 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Creates the tag labels for {@code recipe}.
      */
-    private void initTags(Person person) {
-        person.getTags().forEach(tag -> {
+    private void initTags(Recipe recipe) {
+        recipe.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             String labelBackgroundColor = getTagColorStyleFor(tag.tagName);
             UiUtil.setLabelColor(tagLabel, labelBackgroundColor);
@@ -83,13 +83,13 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof RecipeCard)) {
             return false;
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
+        RecipeCard card = (RecipeCard) other;
         return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+                && recipe.equals(card.recipe);
     }
 }

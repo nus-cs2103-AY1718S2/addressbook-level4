@@ -6,7 +6,7 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.recipe.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.recipe.model.Model.PREDICATE_SHOW_ALL_RECIPES;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,10 +22,10 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Phone;
-import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
-import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
+import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -48,67 +48,67 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_INGREDIENT + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_RECIPE_SUCCESS = "Edited Recipe: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This recipe already exists in the recipe book.";
+    public static final String MESSAGE_DUPLICATE_RECIPE = "This recipe already exists in the recipe book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditRecipeDescriptor editRecipeDescriptor;
 
-    private Person personToEdit;
-    private Person editedPerson;
+    private Recipe recipeToEdit;
+    private Recipe editedRecipe;
 
     /**
      * @param index of the recipe in the filtered recipe list to edit
-     * @param editPersonDescriptor details to edit the recipe with
+     * @param editRecipeDescriptor details to edit the recipe with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditRecipeDescriptor editRecipeDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editRecipeDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editRecipeDescriptor = new EditRecipeDescriptor(editRecipeDescriptor);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
+            model.updateRecipe(recipeToEdit, editedRecipe);
+        } catch (DuplicateRecipeException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_RECIPE);
+        } catch (RecipeNotFoundException pnfe) {
             throw new AssertionError("The target recipe cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        model.updateFilteredRecipeList(PREDICATE_SHOW_ALL_RECIPES);
+        return new CommandResult(String.format(MESSAGE_EDIT_RECIPE_SUCCESS, editedRecipe));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Recipe> lastShownList = model.getFilteredRecipeList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
         }
 
-        personToEdit = lastShownList.get(index.getZeroBased());
-        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        recipeToEdit = lastShownList.get(index.getZeroBased());
+        editedRecipe = createEditedRecipe(recipeToEdit, editRecipeDescriptor);
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Recipe} with the details of {@code recipeToEdit}
+     * edited with {@code editRecipeDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Recipe createEditedRecipe(Recipe recipeToEdit, EditRecipeDescriptor editRecipeDescriptor) {
+        assert recipeToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Ingredient updatedIngredient = editPersonDescriptor.getIngredient().orElse(personToEdit.getIngredient());
-        Instruction updatedInstruction = editPersonDescriptor.getInstruction().orElse(personToEdit.getInstruction());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Name updatedName = editRecipeDescriptor.getName().orElse(recipeToEdit.getName());
+        Phone updatedPhone = editRecipeDescriptor.getPhone().orElse(recipeToEdit.getPhone());
+        Ingredient updatedIngredient = editRecipeDescriptor.getIngredient().orElse(recipeToEdit.getIngredient());
+        Instruction updatedInstruction = editRecipeDescriptor.getInstruction().orElse(recipeToEdit.getInstruction());
+        Set<Tag> updatedTags = editRecipeDescriptor.getTags().orElse(recipeToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedIngredient, updatedInstruction, updatedTags);
+        return new Recipe(updatedName, updatedPhone, updatedIngredient, updatedInstruction, updatedTags);
     }
 
     @Override
@@ -126,28 +126,28 @@ public class EditCommand extends UndoableCommand {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor)
-                && Objects.equals(personToEdit, e.personToEdit);
+                && editRecipeDescriptor.equals(e.editRecipeDescriptor)
+                && Objects.equals(recipeToEdit, e.recipeToEdit);
     }
 
     /**
      * Stores the details to edit the recipe with. Each non-empty field value will replace the
      * corresponding field value of the recipe.
      */
-    public static class EditPersonDescriptor {
+    public static class EditRecipeDescriptor {
         private Name name;
         private Phone phone;
         private Ingredient ingredient;
         private Instruction instruction;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditRecipeDescriptor() {}
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditRecipeDescriptor(EditRecipeDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setIngredient(toCopy.ingredient);
@@ -219,12 +219,12 @@ public class EditCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditRecipeDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditRecipeDescriptor e = (EditRecipeDescriptor) other;
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())

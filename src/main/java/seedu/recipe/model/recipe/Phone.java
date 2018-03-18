@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's phone number in the recipe book.
+ * Represents a Recipe's phone number in the recipe book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {

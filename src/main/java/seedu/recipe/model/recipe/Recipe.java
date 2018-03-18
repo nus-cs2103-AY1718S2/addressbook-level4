@@ -10,10 +10,10 @@ import seedu.recipe.model.tag.Tag;
 import seedu.recipe.model.tag.UniqueTagList;
 
 /**
- * Represents a Person in the recipe book.
+ * Represents a Recipe in the recipe book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public class Recipe {
 
     private final Name name;
     private final Phone phone;
@@ -25,7 +25,7 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Ingredient ingredient, Instruction instruction, Set<Tag> tags) {
+    public Recipe(Name name, Phone phone, Ingredient ingredient, Instruction instruction, Set<Tag> tags) {
         requireAllNonNull(name, phone, ingredient, instruction, tags);
         this.name = name;
         this.phone = phone;
@@ -65,15 +65,15 @@ public class Person {
             return true;
         }
 
-        if (!(other instanceof Person)) {
+        if (!(other instanceof Recipe)) {
             return false;
         }
 
-        Person otherPerson = (Person) other;
-        return otherPerson.getName().equals(this.getName())
-                && otherPerson.getPhone().equals(this.getPhone())
-                && otherPerson.getIngredient().equals(this.getIngredient())
-                && otherPerson.getInstruction().equals(this.getInstruction());
+        Recipe otherRecipe = (Recipe) other;
+        return otherRecipe.getName().equals(this.getName())
+                && otherRecipe.getPhone().equals(this.getPhone())
+                && otherRecipe.getIngredient().equals(this.getIngredient())
+                && otherRecipe.getInstruction().equals(this.getInstruction());
     }
 
     @Override

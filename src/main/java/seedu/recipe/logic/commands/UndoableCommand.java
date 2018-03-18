@@ -2,7 +2,7 @@ package seedu.recipe.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.recipe.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.recipe.model.Model.PREDICATE_SHOW_ALL_RECIPES;
 
 import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.ReadOnlyRecipeBook;
@@ -33,17 +33,17 @@ public abstract class UndoableCommand extends Command {
     /**
      * Reverts the RecipeBook to the state before this command
      * was executed and updates the filtered recipe list to
-     * show all persons.
+     * show all recipes.
      */
     protected final void undo() {
         requireAllNonNull(model, previousRecipeBook);
         model.resetData(previousRecipeBook);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredRecipeList(PREDICATE_SHOW_ALL_RECIPES);
     }
 
     /**
      * Executes the command and updates the filtered recipe
-     * list to show all persons.
+     * list to show all recipes.
      */
     protected final void redo() {
         requireNonNull(model);
@@ -53,7 +53,7 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredRecipeList(PREDICATE_SHOW_ALL_RECIPES);
     }
 
     @Override

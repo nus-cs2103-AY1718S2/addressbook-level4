@@ -15,11 +15,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.storage.XmlAdaptedPerson;
+import seedu.recipe.storage.XmlAdaptedRecipe;
 import seedu.recipe.storage.XmlAdaptedTag;
 import seedu.recipe.storage.XmlSerializableRecipeBook;
 import seedu.recipe.testutil.RecipeBookBuilder;
-import seedu.recipe.testutil.PersonBuilder;
+import seedu.recipe.testutil.RecipeBuilder;
 import seedu.recipe.testutil.TestUtil;
 
 public class XmlUtilTest {
@@ -28,9 +28,9 @@ public class XmlUtilTest {
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
     private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validRecipeBook.xml");
-    private static final File MISSING_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingPersonField.xml");
-    private static final File INVALID_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidPersonField.xml");
-    private static final File VALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "validPerson.xml");
+    private static final File MISSING_RECIPE_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingRecipeField.xml");
+    private static final File INVALID_RECIPE_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidRecipeField.xml");
+    private static final File VALID_RECIPE_FILE = new File(TEST_DATA_FOLDER + "validRecipe.xml");
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempRecipeBook.xml"));
 
     private static final String INVALID_PHONE = "9482asf424";
@@ -71,35 +71,35 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         RecipeBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableRecipeBook.class).toModelType();
-        assertEquals(9, dataFromFile.getPersonList().size());
+        assertEquals(9, dataFromFile.getRecipeList().size());
         assertEquals(0, dataFromFile.getTagList().size());
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithMissingPersonField_validResult() throws Exception {
-        XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
-                MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
-        XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
+    public void xmlAdaptedRecipeFromFile_fileWithMissingRecipeField_validResult() throws Exception {
+        XmlAdaptedRecipe actualRecipe = XmlUtil.getDataFromFile(
+                MISSING_RECIPE_FIELD_FILE, XmlAdaptedRecipeWithRootElement.class);
+        XmlAdaptedRecipe expectedRecipe = new XmlAdaptedRecipe(
                 null, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+        assertEquals(expectedRecipe, actualRecipe);
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithInvalidPersonField_validResult() throws Exception {
-        XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
-                INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
-        XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
+    public void xmlAdaptedRecipeFromFile_fileWithInvalidRecipeField_validResult() throws Exception {
+        XmlAdaptedRecipe actualRecipe = XmlUtil.getDataFromFile(
+                INVALID_RECIPE_FIELD_FILE, XmlAdaptedRecipeWithRootElement.class);
+        XmlAdaptedRecipe expectedRecipe = new XmlAdaptedRecipe(
                 VALID_NAME, INVALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+        assertEquals(expectedRecipe, actualRecipe);
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithValidPerson_validResult() throws Exception {
-        XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
-                VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
-        XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
+    public void xmlAdaptedRecipeFromFile_fileWithValidRecipe_validResult() throws Exception {
+        XmlAdaptedRecipe actualRecipe = XmlUtil.getDataFromFile(
+                VALID_RECIPE_FILE, XmlAdaptedRecipeWithRootElement.class);
+        XmlAdaptedRecipe expectedRecipe = new XmlAdaptedRecipe(
                 VALID_NAME, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+        assertEquals(expectedRecipe, actualRecipe);
     }
 
     @Test
@@ -130,7 +130,7 @@ public class XmlUtilTest {
 
         RecipeBookBuilder builder = new RecipeBookBuilder(new RecipeBook());
         dataToWrite = new XmlSerializableRecipeBook(
-                builder.withPerson(new PersonBuilder().build()).withTag("Friends").build());
+                builder.withRecipe(new RecipeBuilder().build()).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableRecipeBook.class);
@@ -138,9 +138,9 @@ public class XmlUtilTest {
     }
 
     /**
-     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedPerson}
+     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedRecipe}
      * objects.
      */
     @XmlRootElement(name = "recipe")
-    private static class XmlAdaptedPersonWithRootElement extends XmlAdaptedPerson {}
+    private static class XmlAdaptedRecipeWithRootElement extends XmlAdaptedRecipe {}
 }

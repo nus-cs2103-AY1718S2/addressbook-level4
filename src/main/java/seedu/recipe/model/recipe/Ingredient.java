@@ -4,13 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's ingredient in the recipe book.
+ * Represents a Recipe's ingredient in the recipe book.
  * Guarantees: immutable; is valid as declared in {@link #isValidIngredient(String)}
  */
 public class Ingredient {
 
     private static  final String SPECIAL_CHARACTERS = "!#$%&'*+/=?`{|}~^.-";
-    public static final String MESSAGE_INGREDIENT_CONSTRAINTS = "Person ingredients should be of the format local-part@domain "
+    public static final String MESSAGE_INGREDIENT_CONSTRAINTS = "Recipe ingredients should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "
             + "the parentheses, (" + SPECIAL_CHARACTERS + ") .\n"

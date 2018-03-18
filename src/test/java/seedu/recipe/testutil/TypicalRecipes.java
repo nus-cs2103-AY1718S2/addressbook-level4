@@ -16,66 +16,66 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.recipe.Person;
-import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 
 /**
- * A utility class containing a list of {@code Person} objects to be used in tests.
+ * A utility class containing a list of {@code Recipe} objects to be used in tests.
  */
-public class TypicalPersons {
+public class TypicalRecipes {
 
-    public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
+    public static final Recipe ALICE = new RecipeBuilder().withName("Alice Pauline")
             .withInstruction("123, Jurong West Ave 6, #08-111").withIngredient("alice@example.com")
             .withPhone("85355255")
             .withTags("friends").build();
-    public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
+    public static final Recipe BENSON = new RecipeBuilder().withName("Benson Meier")
             .withInstruction("311, Clementi Ave 2, #02-25")
             .withIngredient("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends").build();
-    public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
+    public static final Recipe CARL = new RecipeBuilder().withName("Carl Kurz").withPhone("95352563")
             .withIngredient("heinz@example.com").withInstruction("wall street").build();
-    public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
+    public static final Recipe DANIEL = new RecipeBuilder().withName("Daniel Meier").withPhone("87652533")
             .withIngredient("cornelia@example.com").withInstruction("10th street").build();
-    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final Recipe ELLE = new RecipeBuilder().withName("Elle Meyer").withPhone("9482224")
             .withIngredient("werner@example.com").withInstruction("michegan ave").build();
-    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final Recipe FIONA = new RecipeBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withIngredient("lydia@example.com").withInstruction("little tokyo").build();
-    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final Recipe GEORGE = new RecipeBuilder().withName("George Best").withPhone("9482442")
             .withIngredient("anna@example.com").withInstruction("4th street").build();
 
     // Manually added
-    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final Recipe HOON = new RecipeBuilder().withName("Hoon Meier").withPhone("8482424")
             .withIngredient("stefan@example.com").withInstruction("little india").build();
-    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final Recipe IDA = new RecipeBuilder().withName("Ida Mueller").withPhone("8482131")
             .withIngredient("hans@example.com").withInstruction("chicago ave").build();
 
-    // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+    // Manually added - Recipe's details found in {@code CommandTestUtil}
+    public static final Recipe AMY = new RecipeBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+    public static final Recipe BOB = new RecipeBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    private TypicalRecipes() {} // prevents instantiation
 
     /**
-     * Returns an {@code RecipeBook} with all the typical persons.
+     * Returns an {@code RecipeBook} with all the typical recipes.
      */
     public static RecipeBook getTypicalRecipeBook() {
         RecipeBook ab = new RecipeBook();
-        for (Person person : getTypicalPersons()) {
+        for (Recipe recipe : getTypicalRecipes()) {
             try {
-                ab.addPerson(person);
-            } catch (DuplicatePersonException e) {
+                ab.addRecipe(recipe);
+            } catch (DuplicateRecipeException e) {
                 throw new AssertionError("not possible");
             }
         }
         return ab;
     }
 
-    public static List<Person> getTypicalPersons() {
+    public static List<Recipe> getTypicalRecipes() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }

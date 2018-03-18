@@ -12,30 +12,30 @@ import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.commons.util.XmlUtil;
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.testutil.TypicalPersons;
+import seedu.recipe.testutil.TypicalRecipes;
 
 public class XmlSerializableRecipeBookTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableRecipeBookTest/");
-    private static final File TYPICAL_PERSONS_FILE = new File(TEST_DATA_FOLDER + "typicalPersonsRecipeBook.xml");
-    private static final File INVALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "invalidPersonRecipeBook.xml");
+    private static final File TYPICAL_RECIPES_FILE = new File(TEST_DATA_FOLDER + "typicalRecipesRecipeBook.xml");
+    private static final File INVALID_RECIPE_FILE = new File(TEST_DATA_FOLDER + "invalidRecipeRecipeBook.xml");
     private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagRecipeBook.xml");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void toModelType_typicalPersonsFile_success() throws Exception {
-        XmlSerializableRecipeBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+    public void toModelType_typicalRecipesFile_success() throws Exception {
+        XmlSerializableRecipeBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_RECIPES_FILE,
                 XmlSerializableRecipeBook.class);
         RecipeBook recipeBookFromFile = dataFromFile.toModelType();
-        RecipeBook typicalPersonsRecipeBook = TypicalPersons.getTypicalRecipeBook();
-        assertEquals(recipeBookFromFile, typicalPersonsRecipeBook);
+        RecipeBook typicalRecipesRecipeBook = TypicalRecipes.getTypicalRecipeBook();
+        assertEquals(recipeBookFromFile, typicalRecipesRecipeBook);
     }
 
     @Test
-    public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
-        XmlSerializableRecipeBook dataFromFile = XmlUtil.getDataFromFile(INVALID_PERSON_FILE,
+    public void toModelType_invalidRecipeFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableRecipeBook dataFromFile = XmlUtil.getDataFromFile(INVALID_RECIPE_FILE,
                 XmlSerializableRecipeBook.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();

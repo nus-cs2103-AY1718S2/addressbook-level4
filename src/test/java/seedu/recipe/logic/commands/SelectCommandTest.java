@@ -4,11 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.recipe.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalRecipeBook;
+import static seedu.recipe.logic.commands.CommandTestUtil.showRecipeAtIndex;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_SECOND_RECIPE;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_THIRD_RECIPE;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,48 +41,48 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
+        Index lastRecipeIndex = Index.fromOneBased(model.getFilteredRecipeList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
-        assertExecutionSuccess(INDEX_THIRD_PERSON);
-        assertExecutionSuccess(lastPersonIndex);
+        assertExecutionSuccess(INDEX_FIRST_RECIPE);
+        assertExecutionSuccess(INDEX_THIRD_RECIPE);
+        assertExecutionSuccess(lastRecipeIndex);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
-        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredRecipeList().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showRecipeAtIndex(model, INDEX_FIRST_RECIPE);
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionSuccess(INDEX_FIRST_RECIPE);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showRecipeAtIndex(model, INDEX_FIRST_RECIPE);
 
-        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundsIndex = INDEX_SECOND_RECIPE;
         // ensures that outOfBoundIndex is still in bounds of recipe book list
-        assertTrue(outOfBoundsIndex.getZeroBased() < model.getRecipeBook().getPersonList().size());
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getRecipeBook().getRecipeList().size());
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_RECIPE);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_RECIPE);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_RECIPE);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -104,7 +104,7 @@ public class SelectCommandTest {
 
         try {
             CommandResult commandResult = selectCommand.execute();
-            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_RECIPE_SUCCESS, index.getOneBased()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);

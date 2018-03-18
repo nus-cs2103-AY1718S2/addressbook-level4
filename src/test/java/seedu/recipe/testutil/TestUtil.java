@@ -6,7 +6,7 @@ import java.io.IOException;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.model.Model;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 
 /**
  * A utility class for test cases.
@@ -35,20 +35,20 @@ public class TestUtil {
      * Returns the middle index of the recipe in the {@code model}'s recipe list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getRecipeBook().getPersonList().size() / 2);
+        return Index.fromOneBased(model.getRecipeBook().getRecipeList().size() / 2);
     }
 
     /**
      * Returns the last index of the recipe in the {@code model}'s recipe list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getRecipeBook().getPersonList().size());
+        return Index.fromOneBased(model.getRecipeBook().getRecipeList().size());
     }
 
     /**
      * Returns the recipe in the {@code model}'s recipe list at {@code index}.
      */
-    public static Person getPerson(Model model, Index index) {
-        return model.getRecipeBook().getPersonList().get(index.getZeroBased());
+    public static Recipe getRecipe(Model model, Index index) {
+        return model.getRecipeBook().getRecipeList().get(index.getZeroBased());
     }
 }

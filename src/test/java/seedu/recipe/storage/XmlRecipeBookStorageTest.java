@@ -2,10 +2,10 @@ package seedu.recipe.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.recipe.testutil.TypicalPersons.ALICE;
-import static seedu.recipe.testutil.TypicalPersons.HOON;
-import static seedu.recipe.testutil.TypicalPersons.IDA;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalRecipeBook;
+import static seedu.recipe.testutil.TypicalRecipes.ALICE;
+import static seedu.recipe.testutil.TypicalRecipes.HOON;
+import static seedu.recipe.testutil.TypicalRecipes.IDA;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import java.io.IOException;
 
@@ -61,15 +61,15 @@ public class XmlRecipeBookStorageTest {
     }
 
     @Test
-    public void readRecipeBook_invalidPersonRecipeBook_throwDataConversionException() throws Exception {
+    public void readRecipeBook_invalidRecipeRecipeBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readRecipeBook("invalidPersonRecipeBook.xml");
+        readRecipeBook("invalidRecipeRecipeBook.xml");
     }
 
     @Test
-    public void readRecipeBook_invalidAndValidPersonRecipeBook_throwDataConversionException() throws Exception {
+    public void readRecipeBook_invalidAndValidRecipeRecipeBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readRecipeBook("invalidAndValidPersonRecipeBook.xml");
+        readRecipeBook("invalidAndValidRecipeRecipeBook.xml");
     }
 
     @Test
@@ -84,14 +84,14 @@ public class XmlRecipeBookStorageTest {
         assertEquals(original, new RecipeBook(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addPerson(HOON);
-        original.removePerson(ALICE);
+        original.addRecipe(HOON);
+        original.removeRecipe(ALICE);
         xmlRecipeBookStorage.saveRecipeBook(original, filePath);
         readBack = xmlRecipeBookStorage.readRecipeBook(filePath).get();
         assertEquals(original, new RecipeBook(readBack));
 
         //Save and read without specifying file path
-        original.addPerson(IDA);
+        original.addRecipe(IDA);
         xmlRecipeBookStorage.saveRecipeBook(original); //file path not specified
         readBack = xmlRecipeBookStorage.readRecipeBook().get(); //file path not specified
         assertEquals(original, new RecipeBook(readBack));

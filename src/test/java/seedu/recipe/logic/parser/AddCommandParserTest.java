@@ -37,54 +37,54 @@ import seedu.recipe.logic.commands.AddCommand;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
-import seedu.recipe.testutil.PersonBuilder;
+import seedu.recipe.testutil.RecipeBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Recipe expectedRecipe = new RecipeBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + INGREDIENT_DESC_BOB
-                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
 
         // multiple names - last name accepted
         assertParseSuccess(parser, NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB + INGREDIENT_DESC_BOB
-                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
 
         // multiple phones - last phone accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + INGREDIENT_DESC_BOB
-                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
 
         // multiple ingredients - last ingredient accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INGREDIENT_DESC_AMY + INGREDIENT_DESC_BOB
-                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
 
         // multiple instructions - last recipe accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_AMY
-                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
 
         // multiple tags - all accepted
-        Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Recipe expectedRecipeMultipleTags = new RecipeBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddCommand(expectedPersonMultipleTags));
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddCommand(expectedRecipeMultipleTags));
     }
 
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+        Recipe expectedRecipe = new RecipeBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY,
-                new AddCommand(expectedPerson));
+                new AddCommand(expectedRecipe));
     }
 
     @Test

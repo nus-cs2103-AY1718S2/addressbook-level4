@@ -7,7 +7,7 @@ import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 
 /**
  * Selects a recipe identified using it's last displayed index from the recipe book.
@@ -21,7 +21,7 @@ public class SelectCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
+    public static final String MESSAGE_SELECT_RECIPE_SUCCESS = "Selected Recipe: %1$s";
 
     private final Index targetIndex;
 
@@ -32,14 +32,14 @@ public class SelectCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Recipe> lastShownList = model.getFilteredRecipeList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_SELECT_RECIPE_SUCCESS, targetIndex.getOneBased()));
 
     }
 

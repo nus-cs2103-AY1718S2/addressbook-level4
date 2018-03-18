@@ -18,7 +18,7 @@ import seedu.recipe.model.RecipeBook;
 public class XmlSerializableRecipeBook {
 
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedRecipe> recipes;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -27,7 +27,7 @@ public class XmlSerializableRecipeBook {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableRecipeBook() {
-        persons = new ArrayList<>();
+        recipes = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
@@ -36,7 +36,7 @@ public class XmlSerializableRecipeBook {
      */
     public XmlSerializableRecipeBook(ReadOnlyRecipeBook src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+        recipes.addAll(src.getRecipeList().stream().map(XmlAdaptedRecipe::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -44,15 +44,15 @@ public class XmlSerializableRecipeBook {
      * Converts this recipebook into the model's {@code RecipeBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     * {@code XmlAdaptedRecipe} or {@code XmlAdaptedTag}.
      */
     public RecipeBook toModelType() throws IllegalValueException {
         RecipeBook recipeBook = new RecipeBook();
         for (XmlAdaptedTag t : tags) {
             recipeBook.addTag(t.toModelType());
         }
-        for (XmlAdaptedPerson p : persons) {
-            recipeBook.addPerson(p.toModelType());
+        for (XmlAdaptedRecipe p : recipes) {
+            recipeBook.addRecipe(p.toModelType());
         }
         return recipeBook;
     }
@@ -68,6 +68,6 @@ public class XmlSerializableRecipeBook {
         }
 
         XmlSerializableRecipeBook otherAb = (XmlSerializableRecipeBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return recipes.equals(otherAb.recipes) && tags.equals(otherAb.tags);
     }
 }

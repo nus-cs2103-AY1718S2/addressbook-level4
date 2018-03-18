@@ -2,10 +2,10 @@ package seedu.recipe.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.recipe.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.recipe.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalRecipeBook;
+import static seedu.recipe.logic.commands.CommandTestUtil.deleteFirstRecipe;
+import static seedu.recipe.logic.commands.CommandTestUtil.showRecipeAtIndex;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import org.junit.Test;
 
@@ -13,8 +13,8 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.UserPrefs;
-import seedu.recipe.model.recipe.Person;
-import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
@@ -25,12 +25,12 @@ public class UndoableCommandTest {
     @Test
     public void executeUndo() throws Exception {
         dummyCommand.execute();
-        deleteFirstPerson(expectedModel);
+        deleteFirstRecipe(expectedModel);
         assertEquals(expectedModel, model);
 
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showRecipeAtIndex(model, INDEX_FIRST_RECIPE);
 
-        // undo() should cause the model's filtered list to show all persons
+        // undo() should cause the model's filtered list to show all recipes
         dummyCommand.undo();
         expectedModel = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
         assertEquals(expectedModel, model);
@@ -38,11 +38,11 @@ public class UndoableCommandTest {
 
     @Test
     public void redo() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showRecipeAtIndex(model, INDEX_FIRST_RECIPE);
 
-        // redo() should cause the model's filtered list to show all persons
+        // redo() should cause the model's filtered list to show all recipes
         dummyCommand.redo();
-        deleteFirstPerson(expectedModel);
+        deleteFirstRecipe(expectedModel);
         assertEquals(expectedModel, model);
     }
 
@@ -56,11 +56,11 @@ public class UndoableCommandTest {
 
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
-            Person personToDelete = model.getFilteredPersonList().get(0);
+            Recipe recipeToDelete = model.getFilteredRecipeList().get(0);
             try {
-                model.deletePerson(personToDelete);
-            } catch (PersonNotFoundException pnfe) {
-                fail("Impossible: personToDelete was retrieved from model.");
+                model.deleteRecipe(recipeToDelete);
+            } catch (RecipeNotFoundException pnfe) {
+                fail("Impossible: recipeToDelete was retrieved from model.");
             }
             return new CommandResult("");
         }

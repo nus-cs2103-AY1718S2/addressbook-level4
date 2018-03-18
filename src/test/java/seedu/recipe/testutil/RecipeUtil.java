@@ -7,30 +7,30 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.recipe.logic.commands.AddCommand;
-import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Recipe;
 
 /**
- * A utility class for Person.
+ * A utility class for Recipe.
  */
-public class PersonUtil {
+public class RecipeUtil {
 
     /**
      * Returns an add command string for adding the {@code recipe}.
      */
-    public static String getAddCommand(Person person) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+    public static String getAddCommand(Recipe recipe) {
+        return AddCommand.COMMAND_WORD + " " + getRecipeDetails(recipe);
     }
 
     /**
      * Returns the part of command string for the given {@code recipe}'s details.
      */
-    public static String getPersonDetails(Person person) {
+    public static String getRecipeDetails(Recipe recipe) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + person.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + person.getPhone().value + " ");
-        sb.append(PREFIX_INGREDIENT + person.getIngredient().value + " ");
-        sb.append(PREFIX_INSTRUCTION + person.getInstruction().value + " ");
-        person.getTags().stream().forEach(
+        sb.append(PREFIX_NAME + recipe.getName().fullName + " ");
+        sb.append(PREFIX_PHONE + recipe.getPhone().value + " ");
+        sb.append(PREFIX_INGREDIENT + recipe.getIngredient().value + " ");
+        sb.append(PREFIX_INSTRUCTION + recipe.getInstruction().value + " ");
+        recipe.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();

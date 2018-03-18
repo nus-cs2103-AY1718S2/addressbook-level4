@@ -27,21 +27,21 @@ import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_SECOND_RECIPE;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_THIRD_RECIPE;
 
 import org.junit.Test;
 
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.logic.commands.EditCommand;
-import seedu.recipe.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.recipe.logic.commands.EditCommand.EditRecipeDescriptor;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
-import seedu.recipe.testutil.EditPersonDescriptorBuilder;
+import seedu.recipe.testutil.EditRecipeDescriptorBuilder;
 
 public class EditCommandParserTest {
 
@@ -94,7 +94,7 @@ public class EditCommandParserTest {
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
         assertParseFailure(parser, "1" + PHONE_DESC_BOB + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
-        // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
+        // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Recipe} being edited,
         // parsing it together with a valid tag results in error
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
@@ -107,11 +107,11 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
+        Index targetIndex = INDEX_SECOND_RECIPE;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
                 + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -121,10 +121,10 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_RECIPE;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + INGREDIENT_DESC_AMY;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
+        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withIngredient(VALID_INGREDIENT_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -134,45 +134,45 @@ public class EditCommandParserTest {
     @Test
     public void parse_oneFieldSpecified_success() {
         // name
-        Index targetIndex = INDEX_THIRD_PERSON;
+        Index targetIndex = INDEX_THIRD_RECIPE;
         String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
+        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withName(VALID_NAME_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // phone
         userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
+        descriptor = new EditRecipeDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // ingredient
         userInput = targetIndex.getOneBased() + INGREDIENT_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withIngredient(VALID_INGREDIENT_AMY).build();
+        descriptor = new EditRecipeDescriptorBuilder().withIngredient(VALID_INGREDIENT_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // recipe
         userInput = targetIndex.getOneBased() + INSTRUCTION_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withInstruction(VALID_INSTRUCTION_AMY).build();
+        descriptor = new EditRecipeDescriptorBuilder().withInstruction(VALID_INSTRUCTION_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-        descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
+        descriptor = new EditRecipeDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_RECIPE;
         String userInput = targetIndex.getOneBased()  + PHONE_DESC_AMY + INSTRUCTION_DESC_AMY + INGREDIENT_DESC_AMY
                 + TAG_DESC_FRIEND + PHONE_DESC_AMY + INSTRUCTION_DESC_AMY + INGREDIENT_DESC_AMY + TAG_DESC_FRIEND
                 + PHONE_DESC_BOB + INSTRUCTION_DESC_BOB + INGREDIENT_DESC_BOB + TAG_DESC_HUSBAND;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
+        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -183,16 +183,16 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidValueFollowedByValidValue_success() {
         // no other valid values specified
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_RECIPE;
         String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
         userInput = targetIndex.getOneBased() + INGREDIENT_DESC_BOB + INVALID_PHONE_DESC + INSTRUCTION_DESC_BOB
                 + PHONE_DESC_BOB;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).withIngredient(VALID_INGREDIENT_BOB)
+        descriptor = new EditRecipeDescriptorBuilder().withPhone(VALID_PHONE_BOB).withIngredient(VALID_INGREDIENT_BOB)
                 .withInstruction(VALID_INSTRUCTION_BOB).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -200,10 +200,10 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_resetTags_success() {
-        Index targetIndex = INDEX_THIRD_PERSON;
+        Index targetIndex = INDEX_THIRD_RECIPE;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
+        EditRecipeDescriptor descriptor = new EditRecipeDescriptorBuilder().withTags().build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

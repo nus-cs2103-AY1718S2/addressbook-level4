@@ -4,13 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's name in the recipe book.
+ * Represents a Recipe's name in the recipe book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Recipe names should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
      * The first character of the recipe must not be a whitespace,

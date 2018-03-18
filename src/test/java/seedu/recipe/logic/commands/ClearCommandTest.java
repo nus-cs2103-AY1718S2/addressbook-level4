@@ -1,7 +1,7 @@
 package seedu.recipe.logic.commands;
 
 import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalRecipeBook;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import org.junit.Test;
 

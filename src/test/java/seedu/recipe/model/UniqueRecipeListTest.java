@@ -4,16 +4,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.recipe.model.recipe.UniquePersonList;
+import seedu.recipe.model.recipe.UniqueRecipeList;
 
-public class UniquePersonListTest {
+public class UniqueRecipeListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        UniquePersonList uniquePersonList = new UniquePersonList();
+        UniqueRecipeList uniqueRecipeList = new UniqueRecipeList();
         thrown.expect(UnsupportedOperationException.class);
-        uniquePersonList.asObservableList().remove(0);
+        uniqueRecipeList.asObservableList().remove(0);
     }
 }

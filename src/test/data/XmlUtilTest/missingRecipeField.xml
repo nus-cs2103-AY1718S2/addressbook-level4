@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- Person with missing name field -->
+<!-- Recipe with missing name field -->
 <recipe>
     <phone>9482424</phone>
     <ingredient>hans@example</ingredient>

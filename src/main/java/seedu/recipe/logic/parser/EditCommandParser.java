@@ -16,7 +16,7 @@ import java.util.Set;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.logic.commands.EditCommand;
-import seedu.recipe.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.recipe.logic.commands.EditCommand.EditRecipeDescriptor;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.tag.Tag;
 
@@ -43,22 +43,22 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        EditRecipeDescriptor editRecipeDescriptor = new EditRecipeDescriptor();
         try {
-            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
-            ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).ifPresent(editPersonDescriptor::setIngredient);
-            ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).ifPresent(editPersonDescriptor::setInstruction);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editRecipeDescriptor::setName);
+            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editRecipeDescriptor::setPhone);
+            ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).ifPresent(editRecipeDescriptor::setIngredient);
+            ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).ifPresent(editRecipeDescriptor::setInstruction);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editRecipeDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
+        if (!editRecipeDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        return new EditCommand(index, editRecipeDescriptor);
     }
 
     /**

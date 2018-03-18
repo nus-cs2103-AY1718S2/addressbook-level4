@@ -8,8 +8,8 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.model.recipe.Person;
-import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 
 /**
  * Adds a recipe to the recipe book.
@@ -34,26 +34,26 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New recipe added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This recipe already exists in the recipe book";
+    public static final String MESSAGE_DUPLICATE_RECIPE = "This recipe already exists in the recipe book";
 
-    private final Person toAdd;
+    private final Recipe toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddCommand to add the specified {@code Recipe}
      */
-    public AddCommand(Person person) {
-        requireNonNull(person);
-        toAdd = person;
+    public AddCommand(Recipe recipe) {
+        requireNonNull(recipe);
+        toAdd = recipe;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addPerson(toAdd);
+            model.addRecipe(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (DuplicateRecipeException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_RECIPE);
         }
 
     }

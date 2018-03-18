@@ -12,9 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.recipe.commons.core.ComponentManager;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.model.RecipeBookChangedEvent;
-import seedu.recipe.model.recipe.Person;
-import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
-import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
+import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
 
 /**
  * Represents the in-memory model of the recipe book data.
@@ -24,7 +24,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final RecipeBook recipeBook;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Recipe> filteredRecipes;
 
     /**
      * Initializes a ModelManager with the given recipeBook and userPrefs.
@@ -36,7 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with recipe book: " + recipeBook + " and user prefs " + userPrefs);
 
         this.recipeBook = new RecipeBook(recipeBook);
-        filteredPersons = new FilteredList<>(this.recipeBook.getPersonList());
+        filteredRecipes = new FilteredList<>(this.recipeBook.getRecipeList());
     }
 
     public ModelManager() {
@@ -60,42 +60,42 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(Person target) throws PersonNotFoundException {
-        recipeBook.removePerson(target);
+    public synchronized void deleteRecipe(Recipe target) throws RecipeNotFoundException {
+        recipeBook.removeRecipe(target);
         indicateRecipeBookChanged();
     }
 
     @Override
-    public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        recipeBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public synchronized void addRecipe(Recipe recipe) throws DuplicateRecipeException {
+        recipeBook.addRecipe(recipe);
+        updateFilteredRecipeList(PREDICATE_SHOW_ALL_RECIPES);
         indicateRecipeBookChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
+    public void updateRecipe(Recipe target, Recipe editedRecipe)
+            throws DuplicateRecipeException, RecipeNotFoundException {
+        requireAllNonNull(target, editedRecipe);
 
-        recipeBook.updatePerson(target, editedPerson);
+        recipeBook.updateRecipe(target, editedRecipe);
         indicateRecipeBookChanged();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Recipe List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Recipe} backed by the internal list of
      * {@code recipeBook}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<Recipe> getFilteredRecipeList() {
+        return FXCollections.unmodifiableObservableList(filteredRecipes);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredRecipeList(Predicate<Recipe> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredRecipes.setPredicate(predicate);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return recipeBook.equals(other.recipeBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredRecipes.equals(other.filteredRecipes);
     }
 
 }

@@ -1,9 +1,9 @@
 package seedu.recipe.logic.commands;
 
 import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.recipe.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.recipe.testutil.TypicalPersons.getTypicalRecipeBook;
+import static seedu.recipe.logic.commands.CommandTestUtil.showRecipeAtIndex;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showRecipeAtIndex(model, INDEX_FIRST_RECIPE);
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

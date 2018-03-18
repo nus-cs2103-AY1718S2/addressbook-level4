@@ -4,7 +4,7 @@ import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.events.BaseEvent;
 
 /**
- * Indicates a request to jump to the list of persons
+ * Indicates a request to jump to the list of recipes
  */
 public class JumpToListRequestEvent extends BaseEvent {
 

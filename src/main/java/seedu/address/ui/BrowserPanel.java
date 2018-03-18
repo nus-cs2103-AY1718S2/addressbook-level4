@@ -12,9 +12,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Person;
+import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
+import seedu.address.model.student.Address;
+import seedu.address.model.student.Student;
 
 /**
  * The Browser Panel of the App.
@@ -42,10 +42,10 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        Address titties = person.getAddress();
-        String ass = titties.urlstyle();
-        loadPage(SEARCH_PAGE_URL + ass);
+    private void loadStudentPage(Student student) {
+        Address location = student.getAddress();
+        String append = location.urlstyle();
+        loadPage(SEARCH_PAGE_URL + append);
     }
 
     public void loadPage(String url) {
@@ -68,8 +68,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleStudentPanelSelectionChangedEvent(StudentPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadStudentPage(event.getNewSelection().student);
     }
 }

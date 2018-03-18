@@ -60,61 +60,61 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a student: `add`
 
-Adds a person to the address book +
+Adds a student to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SUBJECT [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A student can have any number of tags (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/English`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 s/CompSci t/criminal t/NoLife`
 
-=== Listing all persons : `list`
+=== Listing all students : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all students in the address book. +
 Format: `list [-f]`
 
 [TIP]
-Use the -f flag to view all person in favourites
+Use the -f flag to view all student in favourites
 
 Examples:
 
 * `list -f` +
-List only all person that you added to favourites
+List only all student that you added to favourites
 * `list` +
-List all persons
+List all students
 
-=== Editing a person : `edit`
+=== Editing a student : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing student in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the student will be removed i.e adding of tags is not cumulative.
+* You can remove all the student's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
-=== Adding a person to favourites : `fav`
+=== Adding a student to favourites : `fav`
 
-Adds an existing person in the address book to your favourites. +
+Adds an existing student in the address book to your favourites. +
 Format: `fav INDEX`
 
 ****
-* Add the person at the specified `INDEX` to your favourites.
+* Add the student at the specified `INDEX` to your favourites.
 * The index refers to the index number in the most recent listing.
 ****
 
@@ -122,18 +122,18 @@ Examples:
 
 * `list` +
 `fav 2` +
-Adds the 2nd person in the address book to favourites.
+Adds the 2nd student in the address book to favourites.
 * `find Betsey` +
 `fav 1` +
-Adds the 1st person in the results of the `find` command to favourites
+Adds the 1st student in the results of the `find` command to favourites
 
-=== Remove a person from favourites : `unfav`
+=== Remove a student from favourites : `unfav`
 
-Removes an existing person in the address book from your favourites. +
+Removes an existing student in the address book from your favourites. +
 Format: `unfav INDEX`
 
 ****
-* Removes the person at specified `INDEX` from your favourites.
+* Removes the student at specified `INDEX` from your favourites.
 * The index referes to the index number in the most recent listing.
 ****
 
@@ -141,14 +141,14 @@ Examples:
 
 * `list` +
 `unfav 2` +
-Removes the 2nd person in the address book from favourites.
+Removes the 2nd student in the address book from favourites.
 * `find Betsey` +
 `unfav 1` +
-Removes the 1st person in the results of the `find` command from favourites
+Removes the 1st student in the results of the `find` command from favourites
 
-=== Locating persons by name: `find`
+=== Locating students by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds students whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -164,11 +164,11 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any student having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by tags: `findTag`
+=== Locating students by tags: `findTag`
 
-Finds persons whose labels contain any of the given keywords. +
+Finds students whose labels contain any of the given keywords. +
 Format: `findTag KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -181,19 +181,19 @@ Format: `findTag KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-When your AddressBook has a person named John Doe, which you have tagged t/friends and t/owesMoney, and a person named Betsy which you have tagged t/owesMoney and t/poor,
+When your AddressBook has a student named John Doe, which you have tagged t/friends and t/owesMoney, and a student named Betsy which you have tagged t/owesMoney and t/poor,
 * `findTag friends` +
 Returns `John Doe`
 * `findTag friends owesMoney` +
-Returns any person having tags `friends`, `owesMoney`, i.e. `John Doe` and `Betsy`
+Returns any student having tags `friends`, `owesMoney`, i.e. `John Doe` and `Betsy`
 
-=== Deleting a person : `delete`
+=== Deleting a student : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified student from the address book. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the student at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -202,18 +202,18 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd student in the address book.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st student in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a student : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the student identified by the index number used in the last student listing, and display their address on google maps. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the student at the specified `INDEX` and loads their location on Google Maps.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -222,10 +222,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd student in the address book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st student in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -307,10 +307,6 @@ There is no need to save manually.
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
-
-=== Getting the location of the student: `double-click`
-
-Double-click on any contact in your contacts list
 
 == FAQ
 

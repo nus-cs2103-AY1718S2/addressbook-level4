@@ -798,6 +798,17 @@ A typical user from our target user profile:
 
 *Value proposition*: consolidation platform for all contacts from different platforms for users to communicate with customers more easily, analyse and apply their marketing strategies more effectively and efficiently.
 
+1. Aadyaa Maddi
+* Major Feature: Ability to manage customer orders.
+** Orders can be added, edited, and deleted.
+** A list of current orders can be viewed.
+** Orders can also be marked as ongoing or fulfilled.
+* Minor Feature: Encryption of application data.
+* How the above features fit into the product scope:
+** Major Feature: For salespersons, this feature will be essential to have as they would want to keep track of what their customers are ordering and what they have ordered already.
+If customers have any issues regarding their orders, salespersons will be able to view all the relevant information in a single place.
+** Minor Feature: Since ContactSails has a lot of personal details of customers, the owner of the address book would want to encrypt the application data file to prevent outside access to sensitive information.
+
 [appendix]
 == User Stories
 

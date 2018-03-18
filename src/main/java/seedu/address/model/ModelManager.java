@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -93,6 +95,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deletePreference(Preference targetPreference) throws PreferenceNotFoundException {
         addressBook.removePreference(targetPreference);
+    }
+
+    @Override
+    public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
+        addressBook.addOrderToOrderList(orderToAdd);
+        indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================

@@ -23,6 +23,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -199,7 +200,7 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Group> groupTags = FXCollections.observableArrayList();
         private final ObservableList<Preference> prefTags = FXCollections.observableArrayList();
-
+        private final ObservableList<Order> orders = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Group> groups,
                         Collection<? extends Preference> preferences) {
@@ -223,6 +224,9 @@ public class AddressBookTest {
             return prefTags;
         }
 
+        @Override
+        public ObservableList<Order> getOrderList() {
+            return orders;
+        }
     }
-
 }

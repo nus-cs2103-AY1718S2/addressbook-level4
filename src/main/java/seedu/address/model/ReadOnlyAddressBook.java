@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Group;
 import seedu.address.model.tag.Preference;
@@ -27,4 +28,10 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate preferences.
      */
     ObservableList<Preference> getPreferenceList();
+
+    /**
+     * Returns an unmodifiable view of the orders list.
+     * This list will not contain any duplicate orders.
+     */
+    ObservableList<Order> getOrderList();
 }

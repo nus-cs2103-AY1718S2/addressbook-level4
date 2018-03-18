@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -145,10 +146,15 @@ public class AddCommandTest {
         public void deletePreference(Preference targetPreference) throws Exception {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void addOrderToOrderList(Order orderToAdd) {
+            fail("This method should not be called.");
+        }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throws a DuplicatePersonException when trying to add a person.
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
@@ -163,7 +169,7 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accepts the person being added.
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
@@ -179,5 +185,4 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
-
 }

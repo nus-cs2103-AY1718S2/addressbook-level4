@@ -121,7 +121,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         deleteAllPersons();
         assertCommandSuccess(ALICE);
 
-        /* Case: add a person with groups and tags, command with parameters in random order -> added */
+        /* Case: add a person with groups and preferences, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + GROUP_DESC_FRIEND + GROUP_DESC_COLLEAGUES + PHONE_DESC_BOB
                 + ADDRESS_DESC_BOB + NAME_DESC_BOB + PREFERENCE_DESC_COMPUTERS + EMAIL_DESC_BOB;

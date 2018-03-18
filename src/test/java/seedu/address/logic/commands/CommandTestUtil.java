@@ -4,11 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER_INFORMATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PREFERENCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_QUANTITY;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +47,15 @@ public class CommandTestUtil {
     public static final String VALID_PREFERENCE_COMPUTERS = "computers";
     public static final String VALID_PREFERENCE_SHOES = "shoes";
 
+    public static final String VALID_ORDER_INFORMATION_CHOC = "Chocolates";
+    public static final String VALID_PRICE_CHOC = "10.00";
+    public static final String VALID_QUANTITY_CHOC = "15";
+    public static final String VALID_DELIVERY_DATE_CHOC = "12-08-2018";
+    public static final String VALID_ORDER_INFORMATION_BOOKS = "Books";
+    public static final String VALID_PRICE_BOOKS = "15.00";
+    public static final String VALID_QUANTITY_BOOKS = "3";
+    public static final String VALID_DELIVERY_DATE_BOOKS = "04-12-2018";
+
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
@@ -57,6 +70,17 @@ public class CommandTestUtil {
     public static final String PREFERENCE_DESC_COMPUTERS = " " + PREFIX_PREFERENCE + VALID_PREFERENCE_COMPUTERS;
     public static final String PREFERENCE_DESC_SHOES = " " + PREFIX_PREFERENCE + VALID_PREFERENCE_SHOES;
 
+    public static final String ORDER_INFORMATION_DESC_CHOC = " " + PREFIX_ORDER_INFORMATION
+            + VALID_ORDER_INFORMATION_CHOC;
+    public static final String PRICE_DESC_CHOC = " " + PREFIX_PRICE + VALID_PRICE_CHOC;
+    public static final String QUANTITY_DESC_CHOC = " " + PREFIX_QUANTITY + VALID_QUANTITY_CHOC;
+    public static final String DELIVERY_DATE_DESC_CHOC = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_CHOC;
+    public static final String ORDER_INFORMATION_DESC_BOOKS = " " + PREFIX_ORDER_INFORMATION
+            + VALID_ORDER_INFORMATION_BOOKS;
+    public static final String PRICE_DESC_BOOKS = " " + PREFIX_PRICE + VALID_PRICE_BOOKS;
+    public static final String QUANTITY_DESC_BOOKS = " " + PREFIX_QUANTITY + VALID_QUANTITY_BOOKS;
+    public static final String DELIVERY_DATE_DESC_BOOKS = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_BOOKS;
+
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
@@ -65,6 +89,13 @@ public class CommandTestUtil {
     public static final String INVALID_PREFERENCE_DESC =
             " " + PREFIX_PREFERENCE + "computers*"; // '*' not allowed in preferences
 
+
+    public static final String INVALID_ORDER_INFORMATION_DESC = " "
+            + PREFIX_ORDER_INFORMATION + "&Books"; // '&' not allowed in order information
+    public static final String INVALID_PRICE_DESC = " " + PREFIX_PRICE + "jdw11"; // 'jdw' not allowed in prices
+    public static final String INVALID_QUANTITY_DESC = " "
+            + PREFIX_QUANTITY + "-11"; // '-' sign not allowed in quantities
+    public static final String INVALID_DELIVERY_DATE_DESC = " " + PREFIX_DELIVERY_DATE + "20-45-10000"; // illegal date
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

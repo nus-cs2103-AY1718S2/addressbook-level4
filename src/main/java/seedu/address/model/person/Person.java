@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
+
 import seedu.address.model.tag.Group;
 import seedu.address.model.tag.Preference;
 import seedu.address.model.tag.UniqueGroupList;
@@ -24,6 +27,7 @@ public class Person {
 
     private final UniqueGroupList groupTags;
     private final UniquePreferenceList prefTags;
+    private final UniqueOrderList orders;
 
     /**
      * Every field must be present and not null.
@@ -35,9 +39,27 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
-        // protect internal tags from changes in the arg list
+        // protect internal groups from changes in the arg list
         this.groupTags = new UniqueGroupList(groupTags);
+        // protect internal preferences from changes in the arg list
         this.prefTags = new UniquePreferenceList(prefTags);
+        // protect internal orders from changes in the arg list
+        this.orders = new UniqueOrderList();
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Set<Group> groupTags,
+                  Set<Preference> prefTags, Set<Order> orders) {
+        requireAllNonNull(name, phone, email, address, groupTags, prefTags, orders);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal groups from changes in the arg list
+        this.groupTags = new UniqueGroupList(groupTags);
+        // protect internal preferences from changes in the arg list
+        this.prefTags = new UniquePreferenceList(prefTags);
+        // protect internal orders from changes in the arg list
+        this.orders = new UniqueOrderList(orders);
     }
 
     public Name getName() {
@@ -83,6 +105,21 @@ public class Person {
      */
     public void removePreferenceTag(Preference prefToRemove) {
         prefTags.remove(prefToRemove);
+    }
+
+    /**
+     * Returns an immutable order set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Order> getOrders() {
+        return Collections.unmodifiableSet(orders.toSet());
+    }
+
+    /**
+     * Removes given order if found in order set.
+     */
+    public void removeOrder(Order orderToRemove) {
+        orders.remove(orderToRemove);
     }
 
     @Override

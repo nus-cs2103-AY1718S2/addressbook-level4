@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -32,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniquePreferenceList prefTags;
     private final UniqueGroupList groupTags;
+    private final UniqueOrderList orders;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -44,6 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         prefTags = new UniquePreferenceList();
         groupTags = new UniqueGroupList();
+        orders = new UniqueOrderList();
     }
 
     public AddressBook() {}
@@ -70,6 +74,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.prefTags.setTags(prefTags);
     }
 
+    public void setOrders(Set<Order> orders) {
+        this.orders.setOrders(orders);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -80,6 +88,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
+
+        setOrders(new HashSet<>(newData.getOrderList()));
 
         try {
             setPersons(syncedPersonList);
@@ -245,13 +255,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         setPreferenceTags(newList.toSet());
     }
 
+    //// order-level operations
+
+    /**
+     * Adds order to list of orders.
+     */
+    public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
+        orders.add(orderToAdd);
+    }
+
     //// util methods
 
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + groupTags.asObservableList().size() +  " groups, "
-                + prefTags.asObservableList().size() + " preferences";
-        // TODO: refine later
+                + prefTags.asObservableList().size() + " preferences, " + orders.asObservableList().size() + " orders";
     }
 
     @Override
@@ -267,6 +285,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Preference> getPreferenceList() {
         return prefTags.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Order> getOrderList() {
+        return orders.asObservableList();
     }
 
     @Override

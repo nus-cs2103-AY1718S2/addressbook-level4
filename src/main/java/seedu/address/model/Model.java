@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -47,7 +49,6 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-
     /**
      * Deletes given Group
      */
@@ -57,4 +58,9 @@ public interface Model {
      * Deletes given Preference
      */
     void deletePreference(Preference targetPreference) throws Exception;
+
+    /**
+     * Adds order to list of orders.
+     */
+    void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException;
 }

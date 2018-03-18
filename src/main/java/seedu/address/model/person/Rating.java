@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
@@ -36,6 +37,10 @@ public class Rating {
                   double experienceScore) {
         requireAllNonNull(technicalSkillsScore, communicationSkillsScore, problemSolvingSkillsScore,
                 experienceScore);
+        checkArgument(isValidOrDefaultScore(technicalSkillsScore), MESSAGE_RATING_CONSTRAINTS);
+        checkArgument(isValidOrDefaultScore(communicationSkillsScore), MESSAGE_RATING_CONSTRAINTS);
+        checkArgument(isValidOrDefaultScore(problemSolvingSkillsScore), MESSAGE_RATING_CONSTRAINTS);
+        checkArgument(isValidOrDefaultScore(experienceScore), MESSAGE_RATING_CONSTRAINTS);
         this.technicalSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(technicalSkillsScore);
         this.communicationSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(communicationSkillsScore);
         this.problemSolvingSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(problemSolvingSkillsScore);

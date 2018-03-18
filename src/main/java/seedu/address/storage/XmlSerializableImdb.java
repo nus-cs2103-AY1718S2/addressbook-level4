@@ -18,7 +18,7 @@ import seedu.address.model.ReadOnlyImdb;
 public class XmlSerializableImdb {
 
     @XmlElement
-    private List<XmlAdaptedPatient> persons;
+    private List<XmlAdaptedPatient> patients;
     @XmlElement
     private List<XmlAdaptedTag> tags;
     @XmlElement
@@ -29,7 +29,7 @@ public class XmlSerializableImdb {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableImdb() {
-        persons = new ArrayList<>();
+        patients = new ArrayList<>();
         tags = new ArrayList<>();
         appointments = new ArrayList<>();
     }
@@ -39,7 +39,7 @@ public class XmlSerializableImdb {
      */
     public XmlSerializableImdb(ReadOnlyImdb src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPatient::new).collect(Collectors.toList()));
+        patients.addAll(src.getPersonList().stream().map(XmlAdaptedPatient::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         appointments.addAll(src.getAppointmentList().stream().map(XmlAdaptedAppointment::new)
             .collect(Collectors.toList()));
@@ -56,7 +56,7 @@ public class XmlSerializableImdb {
         for (XmlAdaptedTag t : tags) {
             Imdb.addTag(t.toModelType());
         }
-        for (XmlAdaptedPatient p : persons) {
+        for (XmlAdaptedPatient p : patients) {
             Imdb.addPerson(p.toModelType());
         }
 
@@ -77,7 +77,7 @@ public class XmlSerializableImdb {
         }
 
         XmlSerializableImdb otherAb = (XmlSerializableImdb) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags)
+        return patients.equals(otherAb.patients) && tags.equals(otherAb.tags)
                 && appointments.equals(otherAb.appointments);
     }
 }

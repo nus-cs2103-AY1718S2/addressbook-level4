@@ -116,7 +116,7 @@ public class EditCommandSystemTest extends ImdbSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* --------------------- Performing edit operation while a patient card is selected -------------------------- */
+        /* --------------------- Performing edit operation while a patient card is selected ------------------------- */
 
         /* Case: selects first card in the patient list, edit a patient -> edited, card selection remains unchanged but
          * browser url changes

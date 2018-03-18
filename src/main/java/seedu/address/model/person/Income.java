@@ -22,7 +22,7 @@ public class Income {
      */
     public Income(Double value) {
         requireNonNull(value);
-        checkArgument(this.isValidIncome(value), this.MESSAGE_INCOME_CONSTRAINTS);
+        checkArgument(this.isValid(value), this.MESSAGE_INCOME_CONSTRAINTS);
         this.value = value;
     }
 
@@ -32,7 +32,7 @@ public class Income {
      * @param income
      * @return
      */
-    public static boolean isValidIncome(Double income) {
+    public static boolean isValid(Double income) {
         requireNonNull(income);
         return (income >= 0);
     }

@@ -6,4 +6,6 @@
     <address>4th street</address>
     <income>200000.0</income>
     <tagged>friends</tagged>
+    <actualSpending>0</actualSpending>
+    <expectedSpending>0</expectedSpending>
 </person>

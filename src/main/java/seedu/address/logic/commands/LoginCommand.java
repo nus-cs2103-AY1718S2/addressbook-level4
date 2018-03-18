@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -29,9 +30,11 @@ public class LoginCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-        throw new CommandException("Username: " + username + ", Password: " + password);
+    public CommandResult execute() throws CommandException{
+        LoginManager.authenticate(username, password);
 
+        throw new CommandException("Username: " + username + ", Password: " + password +
+                ", State: " + LoginManager.getUserState());
     }
 
     @Override

@@ -27,21 +27,21 @@ public class XmlOrganizerStorage implements OrganizerStorage {
         this.filePath = filePath;
     }
 
-    public String getAddressBookFilePath() {
+    public String getOrganizerFilePath() {
         return filePath;
     }
 
     @Override
-    public Optional<ReadOnlyOrganizer> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(filePath);
+    public Optional<ReadOnlyOrganizer> readOrganizer() throws DataConversionException, IOException {
+        return readOrganizer(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}
+     * Similar to {@link #readOrganizer()}
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyOrganizer> readAddressBook(String filePath) throws DataConversionException,
+    public Optional<ReadOnlyOrganizer> readOrganizer(String filePath) throws DataConversionException,
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
@@ -62,15 +62,15 @@ public class XmlOrganizerStorage implements OrganizerStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyOrganizer addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+    public void saveOrganizer(ReadOnlyOrganizer addressBook) throws IOException {
+        saveOrganizer(addressBook, filePath);
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyOrganizer)}
+     * Similar to {@link #saveOrganizer(ReadOnlyOrganizer)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveAddressBook(ReadOnlyOrganizer addressBook, String filePath) throws IOException {
+    public void saveOrganizer(ReadOnlyOrganizer addressBook, String filePath) throws IOException {
         requireNonNull(addressBook);
         requireNonNull(filePath);
 

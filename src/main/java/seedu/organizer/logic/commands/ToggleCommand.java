@@ -9,6 +9,7 @@ import seedu.organizer.commons.core.Messages;
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.DateAdded;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
@@ -77,11 +78,13 @@ public class ToggleCommand extends UndoableCommand {
         Name updatedName = taskToEdit.getName();
         Priority updatedPriority = taskToEdit.getPriority();
         Deadline updatedDeadline = taskToEdit.getDeadline();
+        DateAdded oldDateAdded = taskToEdit.getDateAdded();
         Description updatedDescription = taskToEdit.getDescription();
         Set<Tag> updatedTags = taskToEdit.getTags();
         Status updatedStatus = taskToEdit.getStatus().getInverse();
 
-        return new Task(updatedName, updatedPriority, updatedDeadline, updatedDescription, updatedStatus, updatedTags);
+        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded,
+                updatedDescription, updatedStatus, updatedTags);
     }
 
     @Override

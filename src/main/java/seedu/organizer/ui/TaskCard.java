@@ -41,6 +41,8 @@ public class TaskCard extends UiPart<Region> {
     @FXML
     private Label deadline;
     @FXML
+    private Label dateadded;
+    @FXML
     private FlowPane tags;
 
     public TaskCard(Task task, int displayedIndex) {
@@ -49,9 +51,10 @@ public class TaskCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(task.getName().fullName);
         status.setText("[" + task.getStatus() + "]");
-        priority.setText(task.getPriority().value);
-        description.setText(task.getDescription().value);
-        deadline.setText(task.getDeadline().toString());
+        priority.setText("Priority : " + task.getPriority().value);
+        description.setText("Description : " + task.getDescription().value);
+        deadline.setText("Deadline : " + task.getDeadline().toString());
+        dateadded.setText("Date Added : " + task.getDateAdded().toString());
         initTags(task);
     }
 

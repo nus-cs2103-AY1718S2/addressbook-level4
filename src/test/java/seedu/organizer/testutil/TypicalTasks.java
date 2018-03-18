@@ -24,38 +24,46 @@ import seedu.organizer.model.task.exceptions.DuplicateTaskException;
  */
 public class TypicalTasks {
     public static final Task GROCERY = new TaskBuilder().withName("Grocery")
-            .withDescription("Go to NTUC").withDeadline("2018-03-11")
-            .withPriority("0")
+            .withDescription("Go to NTUC").withDeadline("2019-03-11")
+            .withDateAdded("2018-03-18").withPriority("0")
             .withTags("friends").build();
     public static final Task SPRINGCLEAN = new TaskBuilder().withName("Spring cleaning")
             .withDescription("Clean the entire house except the study room")
-            .withDeadline("2018-09-08").withPriority("1")
+            .withDeadline("2019-09-08").withDateAdded("2018-03-18").withPriority("1")
             .withTags("owesMoney", "friends")
             .withStatus(true).build();
     public static final Task PREPAREBREAKFAST = new TaskBuilder().withName("Prepare breakfast").withPriority("2")
-            .withDeadline("2018-11-12").withDescription("French Toast with coffee").build();
+            .withDeadline("2019-11-12").withDateAdded("2018-03-18")
+            .withDescription("French Toast with coffee").build();
     public static final Task HOMEWORK = new TaskBuilder().withName("Do homework").withPriority("3")
-            .withDeadline("2018-03-21").withDescription("CS2103T, CS2101 and MA1101R").withStatus(true).build();
+            .withDeadline("2019-03-21").withDateAdded("2018-03-18")
+            .withDescription("CS2103T, CS2101 and MA1101R").withStatus(true).build();
     public static final Task PROJECT = new TaskBuilder().withName("Do project").withPriority("4")
-            .withDeadline("2018-09-14").withDescription("Finish writing script for OP1").build();
+            .withDeadline("2019-09-14").withDateAdded("2018-03-18")
+            .withDescription("Finish writing script for OP1").build();
     public static final Task REVISION = new TaskBuilder().withName("Revision").withPriority("5")
-            .withDeadline("2018-04-05").withDescription("Revise for CS2106 midterms").withStatus(true).build();
+            .withDeadline("2019-04-05").withDateAdded("2018-03-18")
+            .withDescription("Revise for CS2106 midterms").withStatus(true).build();
     public static final Task MOCKEXAM = new TaskBuilder().withName("Mock exam").withPriority("6")
-            .withDeadline("2018-05-23").withDescription("Mock exam for CS1101S - Revise!").build();
+            .withDeadline("2019-05-23").withDateAdded("2018-03-18")
+            .withDescription("Mock exam for CS1101S - Revise!").build();
 
     // Manually added
     public static final Task MAKEPRESENT = new TaskBuilder().withName("Make present").withPriority("7")
-            .withDeadline("2018-08-06").withDescription("Make photo frame for Denise").build();
+            .withDeadline("2019-08-06").withDateAdded("2018-03-18")
+            .withDescription("Make photo frame for Denise").build();
     public static final Task INTERVIEWPREP = new TaskBuilder().withName("Interview prep").withPriority("8")
-            .withDeadline("2018-04-05").withDescription("Prepare technical questions").build();
+            .withDeadline("2019-04-05").withDateAdded("2018-03-18")
+            .withDescription("Prepare technical questions").build();
 
     // Manually added - Task's details found in {@code CommandTestUtil}
     public static final Task EXAM = new TaskBuilder().withName(VALID_NAME_EXAM).withPriority(VALID_PRIORITY_EXAM)
-            .withDeadline(VALID_DEADLINE_EXAM).withDescription(VALID_DESCRIPTION_EXAM)
+            .withDeadline(VALID_DEADLINE_EXAM).withDateAdded("2018-03-18")
+            .withDescription(VALID_DESCRIPTION_EXAM)
             .withTags(VALID_TAG_FRIEND).build();
     public static final Task STUDY = new TaskBuilder().withName(VALID_NAME_STUDY).withPriority(VALID_PRIORITY_STUDY)
-            .withDeadline(VALID_DEADLINE_STUDY).withDescription(VALID_DESCRIPTION_STUDY).withTags(VALID_TAG_HUSBAND,
-                    VALID_TAG_FRIEND)
+            .withDeadline(VALID_DEADLINE_STUDY).withDateAdded("2018-03-18")
+            .withDescription(VALID_DESCRIPTION_STUDY).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
     public static final String KEYWORD_MATCHING_REVISION = "Revision"; // A keyword that matches REVISION

@@ -95,6 +95,7 @@ public class ToggleCommandTest {
                 task.getName(),
                 task.getPriority(),
                 task.getDeadline(),
+                task.getDateAdded(),
                 task.getDescription(),
                 task.getStatus().getInverse(),
                 task.getTags()

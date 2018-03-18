@@ -3,6 +3,8 @@ package seedu.organizer.model.task;
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,8 +34,10 @@ public class UniqueTaskList implements Iterable<Task> {
         return internalList.contains(toCheck);
     }
 
+    //@@author dominickenn
     /**
      * Adds a task to the list.
+     * Updates priority level if task is not completed
      *
      * @throws DuplicateTaskException if the task to add is a duplicate of an existing task in the list.
      */
@@ -42,9 +46,11 @@ public class UniqueTaskList implements Iterable<Task> {
         if (contains(toAdd)) {
             throw new DuplicateTaskException();
         }
+        toAdd = updatePriority(toAdd);
         internalList.add(toAdd);
         sortTasks();
     }
+    //@@author
 
     /**
      * Replaces the task {@code target} in the list with {@code editedTask}.
@@ -120,11 +126,50 @@ public class UniqueTaskList implements Iterable<Task> {
         return internalList.hashCode();
     }
 
-    //@@dominickenn
+    //@@author dominickenn
     /**
      * Sorts all tasks in uniqueTaskList according to priority
      */
     private void sortTasks() {
         internalList.sort(Task.priorityComparator());
+    }
+
+    /**
+     * Updates task with updated priority level with respect to deadline
+     * Priority level remains the same if task has just been created
+     * Priority level is at maximum if current date is the deadline
+     */
+    public static Task updatePriority(Task task) {
+        Task newTask;
+        Priority newPriority;
+        LocalDate currentDate = LocalDate.now();
+        LocalDate dateAdded = task.getDateAdded().date;
+        LocalDate deadline = task.getDeadline().date;
+        Priority curPriority = task.getPriority();
+
+        int priorityDifferenceFromMax = Integer.parseInt(Priority.HIGHEST_SETTABLE_PRIORITY_LEVEL)
+                                        - Integer.parseInt(curPriority.value);
+        long dayDifferenceCurrentToDeadline = Duration.between(currentDate.atStartOfDay(),
+                                                            deadline.atStartOfDay()).toDays();
+        long dayDifferenceAddedToDeadline = Duration.between(dateAdded.atStartOfDay(),
+                                                            deadline.atStartOfDay()).toDays();
+
+        if (dateAdded.isEqual(LocalDate.now())) {
+            newTask = new Task(task.getName(), task.getPriority(), task.getDeadline(), task.getDateAdded(),
+                    task.getDescription(), task.getStatus(), task.getTags());
+        } else if (currentDate.isBefore(deadline)) {
+            int priorityToIncrease = (int) (priorityDifferenceFromMax
+                    * ((double) dayDifferenceCurrentToDeadline / (double) dayDifferenceAddedToDeadline));
+            newPriority = new Priority(String.valueOf(Integer.parseInt(curPriority.value) + priorityToIncrease));
+            newTask = new Task(task.getName(), newPriority, task.getDeadline(), task.getDateAdded(),
+                    task.getDescription(), task.getStatus(), task.getTags());
+        } else {
+            newPriority = new Priority(Priority.HIGHEST_SETTABLE_PRIORITY_LEVEL);
+            newTask = new Task(task.getName(), newPriority, task.getDeadline(), task.getDateAdded(),
+                    task.getDescription(), task.getStatus(), task.getTags());
+        }
+
+        requireNonNull(newTask);
+        return newTask;
     }
 }

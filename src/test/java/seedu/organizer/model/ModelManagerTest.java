@@ -54,10 +54,10 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager(organizer, userPrefs);
         modelManager.deleteTag(new Tag(VALID_TAG_FRIEND));
 
-        Task amyWithoutFriendTag = new TaskBuilder(EXAM).withTags().build();
-        Task bobWithoutFriendTag = new TaskBuilder(STUDY).withTags(VALID_TAG_HUSBAND).build();
-        Organizer expectedOrganizer = new OrganizerBuilder().withTask(amyWithoutFriendTag)
-                .withTask(bobWithoutFriendTag).build();
+        Task examWithoutFriendTag = new TaskBuilder(EXAM).withTags().build();
+        Task studyWithoutFriendTag = new TaskBuilder(STUDY).withTags(VALID_TAG_HUSBAND).build();
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(examWithoutFriendTag)
+                .withTask(studyWithoutFriendTag).build();
 
         assertEquals(new ModelManager(expectedOrganizer, userPrefs), modelManager);
     }

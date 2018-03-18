@@ -5,7 +5,8 @@
     <tasks>
         <name>Grocery</name>
         <priority>0</priority>
-        <deadline>2018-03-11</deadline>
+        <deadline>2019-03-11</deadline>
+        <dateadded>2018-03-18</dateadded>
         <description isPrivate="false">Go to NTUC</description>
         <status>false</status>
         <tagged>friends</tagged>
@@ -13,7 +14,8 @@
     <tasks>
         <name>Spring cleaning</name>
         <priority>1</priority>
-        <deadline>2018-09-08</deadline>
+        <deadline>2019-09-08</deadline>
+        <dateadded>2018-03-18</dateadded>
         <description>Clean the entire house except the study room</description>
         <status>true</status>
         <tagged>owesMoney</tagged>
@@ -22,35 +24,40 @@
     <tasks>
         <name>Prepare breakfast</name>
         <priority>2</priority>
-        <deadline>2018-11-12</deadline>
+        <deadline>2019-11-12</deadline>
+        <dateadded>2018-03-18</dateadded>
         <description>French Toast with coffee</description>
         <status>false</status>
     </tasks>
     <tasks>
         <name>Do homework</name>
         <priority>3</priority>
-        <deadline>2018-03-21</deadline>
+        <deadline>2019-03-21</deadline>
+        <dateadded>2018-03-18</dateadded>
         <description>CS2103T, CS2101 and MA1101R</description>
         <status>true</status>
     </tasks>
     <tasks>
         <name>Do project</name>
         <priority>4</priority>
-        <deadline>2018-09-14</deadline>
+        <deadline>2019-09-14</deadline>
+        <dateadded>2018-03-18</dateadded>
         <description>Finish writing script for OP1</description>
         <status>false</status>
     </tasks>
     <tasks>
         <name>Revision</name>
         <priority>5</priority>
-        <deadline>2018-04-05</deadline>
+        <deadline>2019-04-05</deadline>
+        <dateadded>2018-03-18</dateadded>
         <description>Revise for CS2106 midterms</description>
         <status>true</status>
     </tasks>
     <tasks>
         <name>Mock exam</name>
         <priority>6</priority>
-        <deadline>2018-05-23</deadline>
+        <deadline>2019-05-23</deadline>
+        <dateadded>2018-03-18</dateadded>
         <description>Mock exam for CS1101S - Revise!</description>
         <status>false</status>
     </tasks>

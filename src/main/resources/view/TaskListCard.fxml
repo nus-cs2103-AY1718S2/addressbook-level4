@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -33,6 +33,7 @@
       <Label fx:id="priority" styleClass="cell_small_label" text="\$priority" />
       <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
       <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
+      <Label fx:id="dateadded" styleClass="cell_small_label" text="\$dateadded" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

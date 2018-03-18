@@ -3,10 +3,11 @@ package seedu.organizer.model.task;
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
+//@@author dominickenn
 /**
  * Represents a Task's priority level in the organizer.
- * Lowest Priority : 0
- * Highest Priority : 9
+ * Lowest Settable Priority : 0
+ * Highest Settable Priority : 9
  * Guarantees: immutable; is valid as declared in {@link #isValidPriority(String)}
  */
 public class Priority {
@@ -15,6 +16,7 @@ public class Priority {
             "Priority numbers can only be 0 to 9, 0 being the lowest priority, and 9 being the highest priority";
     public static final String PRIORITY_VALIDATION_REGEX = "\\d{1}";
     public static final String LOWEST_PRIORITY_LEVEL = "0";
+    public static final String HIGHEST_SETTABLE_PRIORITY_LEVEL = "9";
     public final String value;
 
     /**

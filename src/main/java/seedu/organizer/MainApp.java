@@ -89,7 +89,7 @@ public class MainApp extends Application {
         Optional<ReadOnlyOrganizer> organizerOptional;
         ReadOnlyOrganizer initialData;
         try {
-            organizerOptional = storage.readAddressBook();
+            organizerOptional = storage.readOrganizer();
             if (!organizerOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample Organizer");
             }

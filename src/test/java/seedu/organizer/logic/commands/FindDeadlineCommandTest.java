@@ -59,7 +59,7 @@ public class FindDeadlineCommandTest extends FindCommandTest<FindDeadlineCommand
     @Test
     public void execute_multipleKeywords_multipleTasksFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
-        FindDeadlineCommand command = prepareCommand("2018-04-05 2018-09-14 2018-11-12");
+        FindDeadlineCommand command = prepareCommand("2019-04-05 2019-09-14 2019-11-12");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(REVISION, PROJECT, PREPAREBREAKFAST));
     }
 

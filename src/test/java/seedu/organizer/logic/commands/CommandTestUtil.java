@@ -36,9 +36,9 @@ public class CommandTestUtil {
     public static final String VALID_PRIORITY_EXAM = "9";
     public static final String VALID_PRIORITY_STUDY = "0";
     public static final String VALID_PRIORITY_REVISION = "5";
-    public static final String VALID_DEADLINE_EXAM = "2018-03-27";
-    public static final String VALID_DEADLINE_STUDY = "2018-09-11";
-    public static final String VALID_DEADLINE_REVISION = "2018-04-05";
+    public static final String VALID_DEADLINE_EXAM = "2019-04-05";
+    public static final String VALID_DEADLINE_STUDY = "2019-09-11";
+    public static final String VALID_DEADLINE_REVISION = "2019-04-05";
     public static final String VALID_DESCRIPTION_EXAM = "CS2103T Exam";
     public static final String VALID_DESCRIPTION_STUDY = "Study for CS2103T Exam";
     public static final String VALID_DESCRIPTION_REVISION = " Revise for CS2106 midterms";

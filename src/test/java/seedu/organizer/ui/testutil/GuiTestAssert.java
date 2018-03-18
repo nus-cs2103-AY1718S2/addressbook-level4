@@ -36,12 +36,13 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
      */
-    public static void assertCardDisplaysPerson(Task expectedTask, TaskCardHandle actualCard) {
+    public static void assertCardDisplaysTask(Task expectedTask, TaskCardHandle actualCard) {
         assertEquals(expectedTask.getName().fullName, actualCard.getName());
         assertEquals("[" + expectedTask.getStatus().toString() + "]", actualCard.getStatus());
-        assertEquals(expectedTask.getPriority().value, actualCard.getPriority());
-        assertEquals(expectedTask.getDeadline().toString(), actualCard.getDeadline());
-        assertEquals(expectedTask.getDescription().value, actualCard.getDescription());
+        assertEquals("Priority : " + expectedTask.getPriority().value, actualCard.getPriority());
+        assertEquals("Deadline : " + expectedTask.getDeadline().toString(), actualCard.getDeadline());
+        assertEquals("Date Added : " + expectedTask.getDateAdded().toString(), actualCard.getDateAdded());
+        assertEquals("Description : " + expectedTask.getDescription().value, actualCard.getDescription());
         assertTagsEqual(expectedTask, actualCard);
     }
 
@@ -51,7 +52,7 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(TaskListPanelHandle taskListPanelHandle, Task... tasks) {
         for (int i = 0; i < tasks.length; i++) {
-            assertCardDisplaysPerson(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
+            assertCardDisplaysTask(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
         }
     }
 

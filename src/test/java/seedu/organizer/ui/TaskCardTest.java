@@ -3,7 +3,7 @@ package seedu.organizer.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.organizer.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.organizer.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 
 import org.junit.Test;
 
@@ -66,7 +66,7 @@ public class TaskCardTest extends GuiUnitTest {
         // verify id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", taskCardHandle.getId());
 
-        // verify task details are displayed correctly
-        assertCardDisplaysPerson(expectedTask, taskCardHandle);
+        // verify task name is displayed correctly
+        assertCardDisplaysTask(expectedTask, taskCardHandle);
     }
 }

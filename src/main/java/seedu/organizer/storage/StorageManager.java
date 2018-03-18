@@ -51,39 +51,39 @@ public class StorageManager extends ComponentManager implements Storage {
     // ================ Organizer methods ==============================
 
     @Override
-    public String getAddressBookFilePath() {
-        return organizerStorage.getAddressBookFilePath();
+    public String getOrganizerFilePath() {
+        return organizerStorage.getOrganizerFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyOrganizer> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(organizerStorage.getAddressBookFilePath());
+    public Optional<ReadOnlyOrganizer> readOrganizer() throws DataConversionException, IOException {
+        return readOrganizer(organizerStorage.getOrganizerFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyOrganizer> readAddressBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyOrganizer> readOrganizer(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return organizerStorage.readAddressBook(filePath);
+        return organizerStorage.readOrganizer(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyOrganizer addressBook) throws IOException {
-        saveAddressBook(addressBook, organizerStorage.getAddressBookFilePath());
+    public void saveOrganizer(ReadOnlyOrganizer organizer) throws IOException {
+        saveOrganizer(organizer, organizerStorage.getOrganizerFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyOrganizer addressBook, String filePath) throws IOException {
+    public void saveOrganizer(ReadOnlyOrganizer organizer, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        organizerStorage.saveAddressBook(addressBook, filePath);
+        organizerStorage.saveOrganizer(organizer, filePath);
     }
 
 
     @Override
     @Subscribe
-    public void handleAddressBookChangedEvent(OrganizerChangedEvent event) {
+    public void handleOrganizerChangedEvent(OrganizerChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
-            saveAddressBook(event.data);
+            saveOrganizer(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

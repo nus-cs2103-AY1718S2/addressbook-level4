@@ -15,7 +15,7 @@ public interface OrganizerStorage {
     /**
      * Returns the file path of the data file.
      */
-    String getAddressBookFilePath();
+    String getOrganizerFilePath();
 
     /**
      * Returns Organizer data as a {@link ReadOnlyOrganizer}.
@@ -23,23 +23,23 @@ public interface OrganizerStorage {
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyOrganizer> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyOrganizer> readOrganizer() throws DataConversionException, IOException;
 
     /**
-     * @see #getAddressBookFilePath()
+     * @see #getOrganizerFilePath()
      */
-    Optional<ReadOnlyOrganizer> readAddressBook(String filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyOrganizer> readOrganizer(String filePath) throws DataConversionException, IOException;
 
     /**
      * Saves the given {@link ReadOnlyOrganizer} to the storage.
      * @param addressBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyOrganizer addressBook) throws IOException;
+    void saveOrganizer(ReadOnlyOrganizer addressBook) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyOrganizer)
+     * @see #saveOrganizer(ReadOnlyOrganizer)
      */
-    void saveAddressBook(ReadOnlyOrganizer addressBook, String filePath) throws IOException;
+    void saveOrganizer(ReadOnlyOrganizer addressBook, String filePath) throws IOException;
 
 }

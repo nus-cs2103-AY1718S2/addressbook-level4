@@ -35,7 +35,7 @@ public class XmlOrganizerStorageTest {
     }
 
     private java.util.Optional<ReadOnlyOrganizer> readAddressBook(String filePath) throws Exception {
-        return new XmlOrganizerStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath));
+        return new XmlOrganizerStorage(filePath).readOrganizer(addToTestDataPathIfNotNull(filePath));
     }
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -79,21 +79,21 @@ public class XmlOrganizerStorageTest {
         XmlOrganizerStorage xmlAddressBookStorage = new XmlOrganizerStorage(filePath);
 
         //Save in new file and read back
-        xmlAddressBookStorage.saveAddressBook(original, filePath);
-        ReadOnlyOrganizer readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
+        xmlAddressBookStorage.saveOrganizer(original, filePath);
+        ReadOnlyOrganizer readBack = xmlAddressBookStorage.readOrganizer(filePath).get();
         assertEquals(original, new Organizer(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.addTask(MAKEPRESENT);
         original.removeTask(GROCERY);
-        xmlAddressBookStorage.saveAddressBook(original, filePath);
-        readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
+        xmlAddressBookStorage.saveOrganizer(original, filePath);
+        readBack = xmlAddressBookStorage.readOrganizer(filePath).get();
         assertEquals(original, new Organizer(readBack));
 
         //Save and read without specifying file path
         original.addTask(INTERVIEWPREP);
-        xmlAddressBookStorage.saveAddressBook(original); //file path not specified
-        readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
+        xmlAddressBookStorage.saveOrganizer(original); //file path not specified
+        readBack = xmlAddressBookStorage.readOrganizer().get(); //file path not specified
         assertEquals(original, new Organizer(readBack));
 
     }
@@ -109,7 +109,7 @@ public class XmlOrganizerStorageTest {
      */
     private void saveAddressBook(ReadOnlyOrganizer addressBook, String filePath) {
         try {
-            new XmlOrganizerStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+            new XmlOrganizerStorage(filePath).saveOrganizer(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

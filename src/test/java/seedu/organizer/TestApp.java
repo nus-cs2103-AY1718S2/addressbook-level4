@@ -32,7 +32,7 @@ public class TestApp extends MainApp {
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
-    protected static final String ADDRESS_BOOK_NAME = "Test";
+    protected static final String ORGANIZER_NAME = "Test";
     protected Supplier<ReadOnlyOrganizer> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
@@ -66,16 +66,16 @@ public class TestApp extends MainApp {
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocation);
-        userPrefs.setOrganizerName(ADDRESS_BOOK_NAME);
+        userPrefs.setOrganizerName(ORGANIZER_NAME);
         return userPrefs;
     }
 
     /**
-     * Returns a defensive copy of the organizer book data stored inside the storage file.
+     * Returns a defensive copy of the organizer data stored inside the storage file.
      */
-    public Organizer readStorageAddressBook() {
+    public Organizer readStorageOrganizer() {
         try {
-            return new Organizer(storage.readAddressBook().get());
+            return new Organizer(storage.readOrganizer().get());
         } catch (DataConversionException dce) {
             throw new AssertionError("Data is not in the Organizer format.");
         } catch (IOException ioe) {
@@ -87,7 +87,7 @@ public class TestApp extends MainApp {
      * Returns the file path of the storage file.
      */
     public String getStorageSaveLocation() {
-        return storage.getAddressBookFilePath();
+        return storage.getOrganizerFilePath();
     }
 
     /**

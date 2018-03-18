@@ -84,7 +84,7 @@ public class AddCommandParserTest {
                 .withDeadline(VALID_DEADLINE_EXAM).withDescription(VALID_DESCRIPTION_EXAM).withTags().build();
         assertParseSuccess(parser, NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_EXAM,
                 new AddCommand(expectedNoTagTask));
-        //@@dominickenn
+        //@@author dominickenn
         // no priority
         Task expectedNoPriorityTask = new TaskBuilder().withName(VALID_NAME_EXAM)
                 .withPriority(Priority.LOWEST_PRIORITY_LEVEL).withDeadline(VALID_DEADLINE_EXAM)

@@ -112,7 +112,7 @@ public class OrganizerTest {
         assertEquals(expectedOrganizer, organizerWithStudyAndExam);
     }
 
-    //@@dominickenn
+    //@@author dominickenn
     @Test
     public void addTask_alwaysSorted() throws DuplicateTaskException {
         Organizer addRevision = new OrganizerBuilder().withTask(STUDY)

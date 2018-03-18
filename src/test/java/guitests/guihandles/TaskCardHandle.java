@@ -16,6 +16,7 @@ public class TaskCardHandle extends NodeHandle<Node> {
     private static final String DESCRIPTION_FIELD_ID = "#description";
     private static final String PRIORITY_FIELD_ID = "#priority";
     private static final String DEADLINE_FIELD_ID = "#deadline";
+    private static final String DATEADDED_FIELD_ID = "#dateadded";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String STATUS_FIELD_ID = "#status";
 
@@ -25,6 +26,7 @@ public class TaskCardHandle extends NodeHandle<Node> {
     private final Label statusLabel;
     private final Label priorityLabel;
     private final Label deadlineLabel;
+    private final Label dateaddedLabel;
     private final List<Label> tagLabels;
 
     public TaskCardHandle(Node cardNode) {
@@ -36,6 +38,7 @@ public class TaskCardHandle extends NodeHandle<Node> {
         this.statusLabel = getChildNode(STATUS_FIELD_ID);
         this.priorityLabel = getChildNode(PRIORITY_FIELD_ID);
         this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
+        this.dateaddedLabel = getChildNode(DATEADDED_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -63,6 +66,10 @@ public class TaskCardHandle extends NodeHandle<Node> {
 
     public String getDeadline() {
         return deadlineLabel.getText();
+    }
+
+    public String getDateAdded() {
+        return dateaddedLabel.getText();
     }
 
     public String getStatus() {

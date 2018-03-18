@@ -19,6 +19,7 @@ public class Task {
     private final Name name;
     private final Priority priority;
     private final Deadline deadline;
+    private final DateAdded dateAdded;
     private final Description description;
     private final Status status;
 
@@ -32,6 +33,23 @@ public class Task {
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
+        this.dateAdded = new DateAdded();
+        this.description = description;
+        this.status = null;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+    }
+
+    /**
+     * Every field must be present and not null
+     */
+    public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded,
+                Description description, Set<Tag> tags) {
+        requireAllNonNull(name, priority, deadline, description, tags);
+        this.name = name;
+        this.priority = priority;
+        this.deadline = deadline;
+        this.dateAdded = dateAdded;
         this.description = description;
         this.status = null;
         // protect internal tags from changes in the arg list
@@ -41,12 +59,13 @@ public class Task {
     /**
      * Another constructor with custom status
      */
-    public Task(Name name, Priority priority, Deadline deadline,
+    public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded,
                 Description description, Status status, Set<Tag> tags) {
         requireAllNonNull(name, priority, deadline, description, tags);
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
+        this.dateAdded = dateAdded;
         this.description = description;
         this.status = status;
         // protect internal tags from changes in the arg list
@@ -63,6 +82,10 @@ public class Task {
 
     public Deadline getDeadline() {
         return deadline;
+    }
+
+    public DateAdded getDateAdded() {
+        return dateAdded;
     }
 
     public Description getDescription() {
@@ -124,7 +147,7 @@ public class Task {
         return builder.toString();
     }
 
-    //@@dominickenn
+    //@@author dominickenn
     /**
      * @return a Task comparator based on priority
      */

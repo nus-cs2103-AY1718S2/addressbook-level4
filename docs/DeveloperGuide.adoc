@@ -892,7 +892,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user with many tasks |find a task by description|locate a task when I have forgotten it's name
 
-|`* *` |user who is forgetful |have tasks' priority levels be automatically updated when nearing the deadline, or when deadline has passed |be reminded to complete tasks
+|`* *` |user who is forgetful |have tasks' priority levels be automatically updated as deadline approaches |be reminded to complete tasks
+
+|`* *` |user who is forgetful |have tasks' priority levels be automatically increased to maximum level any are still uncompleted after the deadline has passed |be reminded to complete tasks which are past the deadline
 
 |`* *` |user |have a reminder of tasks with high priority levels |be reminded to complete tasks with high priority levels
 

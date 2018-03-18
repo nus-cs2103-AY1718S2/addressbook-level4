@@ -28,9 +28,9 @@ public class XmlUtilTest {
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
     private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validOrganizer.xml");
-    private static final File MISSING_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingTaskField.xml");
-    private static final File INVALID_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidTaskField.xml");
-    private static final File VALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "validTask.xml");
+    private static final File MISSING_TASK_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingTaskField.xml");
+    private static final File INVALID_TASK_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidTaskField.xml");
+    private static final File VALID_TASK_FILE = new File(TEST_DATA_FOLDER + "validTask.xml");
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempOrganizer.xml"));
 
     private static final String INVALID_PRIORITY = "9!@#";
@@ -38,6 +38,7 @@ public class XmlUtilTest {
     private static final String VALID_NAME = "Work on PrioriTask";
     private static final String VALID_PRIORITY = "9";
     private static final String VALID_DEADLINE = "2018-07-16";
+    private static final String VALID_DATEADDED = "2018-03-18";
     private static final String VALID_DESCRIPTION = "Refactor Address to Description";
     private static final Boolean VALID_STATUS = null;
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
@@ -77,30 +78,33 @@ public class XmlUtilTest {
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithMissingPersonField_validResult() throws Exception {
-        XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
-                MISSING_PERSON_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
-        XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                null, VALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+    public void xmlAdaptedTaskFromFile_fileWithMissingTaskField_validResult() throws Exception {
+        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
+                MISSING_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
+        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
+                null, VALID_PRIORITY, VALID_DEADLINE, VALID_DATEADDED,
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
+        assertEquals(expectedTask, actualTask);
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithInvalidPersonField_validResult() throws Exception {
-        XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
-                INVALID_PERSON_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
-        XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+    public void xmlAdaptedTaskFromFile_fileWithInvalidTaskField_validResult() throws Exception {
+        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
+                INVALID_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
+        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
+                VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, VALID_DATEADDED,
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
+        assertEquals(expectedTask, actualTask);
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithValidPerson_validResult() throws Exception {
-        XmlAdaptedTask actualPerson = XmlUtil.getDataFromFile(
-                VALID_PERSON_FILE, XmlAdaptedTaskWithRootElement.class);
-        XmlAdaptedTask expectedPerson = new XmlAdaptedTask(
-                VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+    public void xmlAdaptedTaskFromFile_fileWithValidTask_validResult() throws Exception {
+        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
+                VALID_TASK_FILE, XmlAdaptedTaskWithRootElement.class);
+        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
+                VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_DATEADDED,
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
+        assertEquals(expectedTask, actualTask);
     }
 
     @Test

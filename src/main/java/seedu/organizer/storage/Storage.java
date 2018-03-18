@@ -21,18 +21,18 @@ public interface Storage extends OrganizerStorage, UserPrefsStorage {
     void saveUserPrefs(UserPrefs userPrefs) throws IOException;
 
     @Override
-    String getAddressBookFilePath();
+    String getOrganizerFilePath();
 
     @Override
-    Optional<ReadOnlyOrganizer> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyOrganizer> readOrganizer() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyOrganizer addressBook) throws IOException;
+    void saveOrganizer(ReadOnlyOrganizer addressBook) throws IOException;
 
     /**
      * Saves the current version of the Address Book to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
-    void handleAddressBookChangedEvent(OrganizerChangedEvent abce);
+    void handleOrganizerChangedEvent(OrganizerChangedEvent abce);
 }

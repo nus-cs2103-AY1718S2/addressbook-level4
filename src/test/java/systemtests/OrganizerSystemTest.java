@@ -179,7 +179,7 @@ public abstract class OrganizerSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getOrganizer(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getOrganizer(), testApp.readStorageOrganizer());
         assertListMatching(getTaskListPanel(), expectedModel.getFilteredTaskList());
     }
 

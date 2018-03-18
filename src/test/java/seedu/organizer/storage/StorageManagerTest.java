@@ -30,9 +30,9 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        XmlOrganizerStorage addressBookStorage = new XmlOrganizerStorage(getTempFilePath("ab"));
+        XmlOrganizerStorage organizerStorage = new XmlOrganizerStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(organizerStorage, userPrefsStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -55,29 +55,29 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void organizerReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link XmlOrganizerStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link XmlOrganizerStorageTest} class.
          */
         Organizer original = getTypicalOrganizer();
-        storageManager.saveAddressBook(original);
-        ReadOnlyOrganizer retrieved = storageManager.readAddressBook().get();
+        storageManager.saveOrganizer(original);
+        ReadOnlyOrganizer retrieved = storageManager.readOrganizer().get();
         assertEquals(original, new Organizer(retrieved));
     }
 
     @Test
-    public void getAddressBookFilePath() {
-        assertNotNull(storageManager.getAddressBookFilePath());
+    public void getOrganizerFilePath() {
+        assertNotNull(storageManager.getOrganizerFilePath());
     }
 
     @Test
-    public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
+    public void handleOrganizerChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlOrganizerStorageExceptionThrowingStub("dummy"),
                 new JsonUserPrefsStorage("dummy"));
-        storage.handleAddressBookChangedEvent(new OrganizerChangedEvent(new Organizer()));
+        storage.handleOrganizerChangedEvent(new OrganizerChangedEvent(new Organizer()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
@@ -92,7 +92,7 @@ public class StorageManagerTest {
         }
 
         @Override
-        public void saveAddressBook(ReadOnlyOrganizer addressBook, String filePath) throws IOException {
+        public void saveOrganizer(ReadOnlyOrganizer addressBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.organizer.commons.exceptions.IllegalValueException;
 import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.DateAdded;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
@@ -31,6 +32,8 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String deadline;
     @XmlElement(required = true)
+    private String dateadded;
+    @XmlElement(required = true)
     private String description;
     @XmlElement(required = true)
     private Boolean status;
@@ -48,12 +51,13 @@ public class XmlAdaptedTask {
     /**
      * Constructs an {@code XmlAdaptedTask} with the given task details.
      */
-    public XmlAdaptedTask(String name, String priority, String deadline, String description,
-                          Boolean status, List<XmlAdaptedTag>
+    public XmlAdaptedTask(String name, String priority, String deadline, String dateadded,
+                          String description, Boolean status, List<XmlAdaptedTag>
             tagged) {
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
+        this.dateadded = dateadded;
         this.description = description;
         this.status = status;
         if (tagged != null) {
@@ -70,6 +74,7 @@ public class XmlAdaptedTask {
         name = source.getName().fullName;
         priority = source.getPriority().value;
         deadline = source.getDeadline().toString();
+        dateadded = source.getDateAdded().toString();
         description = source.getDescription().value;
         status = source.getStatus().value;
         tagged = new ArrayList<>();
@@ -115,6 +120,15 @@ public class XmlAdaptedTask {
         }
         final Deadline deadline = new Deadline(this.deadline);
 
+        if (this.dateadded == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateAdded.class.getSimpleName
+                    ()));
+        }
+        if (!DateAdded.isValidDateAdded(this.deadline)) {
+            throw new IllegalValueException(DateAdded.MESSAGE_DATEADDED_CONSTRAINTS);
+        }
+        final DateAdded dateadded = new DateAdded(this.dateadded);
+
         if (this.description == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Description.class.getSimpleName()));
@@ -127,7 +141,7 @@ public class XmlAdaptedTask {
         final Status status = new Status(this.status);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Task(name, priority, deadline, description, status, tags);
+        return new Task(name, priority, deadline, dateadded, description, status, tags);
     }
 
     @Override
@@ -140,12 +154,13 @@ public class XmlAdaptedTask {
             return false;
         }
 
-        XmlAdaptedTask otherPerson = (XmlAdaptedTask) other;
-        return Objects.equals(name, otherPerson.name)
-                && Objects.equals(priority, otherPerson.priority)
-                && Objects.equals(deadline, otherPerson.deadline)
-                && Objects.equals(description, otherPerson.description)
-                && Objects.equals(status, otherPerson.status)
-                && tagged.equals(otherPerson.tagged);
+        XmlAdaptedTask otherTask = (XmlAdaptedTask) other;
+        return Objects.equals(name, otherTask.name)
+                && Objects.equals(priority, otherTask.priority)
+                && Objects.equals(deadline, otherTask.deadline)
+                && Objects.equals(dateadded, otherTask.dateadded)
+                && Objects.equals(description, otherTask.description)
+                && Objects.equals(status, otherTask.status)
+                && tagged.equals(otherTask.tagged);
     }
 }

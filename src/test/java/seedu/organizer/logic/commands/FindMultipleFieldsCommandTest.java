@@ -59,7 +59,7 @@ public class FindMultipleFieldsCommandTest extends FindCommandTest<FindMultipleF
     @Test
     public void execute_multipleKeywords_multipleTasksFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
-        FindMultipleFieldsCommand command = prepareCommand("Toast Project 2018-04-05");
+        FindMultipleFieldsCommand command = prepareCommand("Toast Project 2019-04-05");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(REVISION, PROJECT, PREPAREBREAKFAST));
     }
 

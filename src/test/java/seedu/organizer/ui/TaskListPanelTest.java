@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.organizer.testutil.EventsUtil.postNow;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalTasks;
-import static seedu.organizer.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.organizer.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 import static seedu.organizer.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import org.junit.Before;
@@ -41,7 +41,7 @@ public class TaskListPanelTest extends GuiUnitTest {
             Task expectedTask = TYPICAL_TASKS.get(i);
             TaskCardHandle actualCard = taskListPanelHandle.getTaskCardHandle(i);
 
-            assertCardDisplaysPerson(expectedTask, actualCard);
+            assertCardDisplaysTask(expectedTask, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }

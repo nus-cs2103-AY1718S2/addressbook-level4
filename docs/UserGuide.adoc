@@ -53,8 +53,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * `NAME`
 * `PRIORITY LEVEL`
 ** A task can have a priority level ranging from 0 (lowest) to 9 (highest).
-** Setting a priority level is optional. PrioriTask will automatically set a task’s priority level to its default level (0) if User does not add a one.
-** _[Coming in v2.0]_ Priority levels are automatically updated as the deadline approaches, or when a task is still uncompleted after the deadline has passed.
+** Setting a priority level is optional. PrioriTask will automatically set a task’s priority level to its default level (0) if User does not add one.
+** Priority levels are automatically updated as the deadline approaches.
+** If a task is still uncompleted after the deadline has passed, priority level will be updated to it's maximum level : 9.
 * `DEADLINE`
 ** A task must have a deadline in the format of YYYY-MM-DD.
 * `DESCRIPTION`

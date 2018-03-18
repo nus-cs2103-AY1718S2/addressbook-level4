@@ -845,7 +845,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |exit the application |call it a day
 
-|`* * *` |user |find a customer with a keyword |search up a customer quickly without looking at the whole list
+|`* * *` |user |find a customer with a keyword and specify which data field to search |search up a customer quickly without looking at the whole list
 
 |`* * *` |user |view history of previously entered commands |trace my workflow
 
@@ -889,7 +889,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |view a route encompassing a given set of customers' locations |access the cost, time and effort involved in collecting from a set of customers
 
+|`**` |user | enter commands with aliases | type commands faster and improve speed of using the application
+
 |`*` |user |export my current view to another format |view specific information in another format or print out a hardcopy and pass the information to subordinates
+
+
 |=======================================================================
 
 _{More to be added}_
@@ -948,9 +952,9 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*LoanShark Tycoon*
 
-Author: ...
+Author:
 
 Pros:
 

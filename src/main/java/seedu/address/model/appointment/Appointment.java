@@ -1,7 +1,7 @@
 package seedu.address.model.appointment;
 
 /**
- * Patient appointment in IMDB
+ * Patient appointment in Imdb
  * Gurantees: details are present and not null, field values are validated, immutable
  */
 public class Appointment {

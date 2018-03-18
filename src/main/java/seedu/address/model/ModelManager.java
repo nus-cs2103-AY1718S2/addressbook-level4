@@ -11,10 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.commons.events.model.ImdbChangedEvent;
+import seedu.address.model.patient.Patient;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -24,61 +24,61 @@ import seedu.address.model.tag.Tag;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
-    private final FilteredList<Person> filteredPersons;
+    private final Imdb imdb;
+    private final FilteredList<Patient> filteredPatients;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given Imdb and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyImdb addressBook, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.imdb = new Imdb(addressBook);
+        filteredPatients = new FilteredList<>(this.imdb.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new Imdb(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
+    public void resetData(ReadOnlyImdb newData) {
+        imdb.resetData(newData);
         indicateAddressBookChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public ReadOnlyImdb getImdb() {
+        return imdb;
     }
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+        raise(new ImdbChangedEvent(imdb));
     }
 
     @Override
-    public synchronized void deletePerson(Person target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
+    public synchronized void deletePerson(Patient target) throws PatientNotFoundException {
+        imdb.removePerson(target);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
+    public synchronized void addPerson(Patient patient) throws DuplicatePatientException {
+        imdb.addPerson(patient);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
+    public void updatePerson(Patient target, Patient editedPatient)
+            throws DuplicatePatientException, PatientNotFoundException {
+        requireAllNonNull(target, editedPatient);
 
-        addressBook.updatePerson(target, editedPerson);
+        imdb.updatePerson(target, editedPatient);
         indicateAddressBookChanged();
     }
 
@@ -87,24 +87,24 @@ public class ModelManager extends ComponentManager implements Model {
      * Removes {@code tag} from all Persons
      */
     public void deleteTag(Tag tag) {
-        addressBook.removeTag(tag);
+        imdb.removeTag(tag);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Patient List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@code Patient} backed by the internal list of
+     * {@code Imdb}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<Patient> getFilteredPersonList() {
+        return FXCollections.unmodifiableObservableList(filteredPatients);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredPersonList(Predicate<Patient> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredPatients.setPredicate(predicate);
     }
 
     @Override
@@ -121,8 +121,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+        return imdb.equals(other.imdb)
+                && filteredPatients.equals(other.filteredPatients);
     }
 
 }

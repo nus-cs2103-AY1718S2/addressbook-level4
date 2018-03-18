@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +12,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.patient.Patient;
+import seedu.address.testutil.PatientBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
@@ -29,26 +29,26 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() throws Exception {
-        Person validPerson = new PersonBuilder().build();
+        Patient validPatient = new PatientBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
+        Model expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
+        expectedModel.addPerson(validPatient);
 
-        assertCommandSuccess(prepareCommand(validPerson, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
+        assertCommandSuccess(prepareCommand(validPatient, model), model,
+                String.format(AddCommand.MESSAGE_SUCCESS, validPatient), expectedModel);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = model.getAddressBook().getPersonList().get(0);
-        assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        Patient patientInList = model.getImdb().getPersonList().get(0);
+        assertCommandFailure(prepareCommand(patientInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     /**
-     * Generates a new {@code AddCommand} which upon execution, adds {@code person} into the {@code model}.
+     * Generates a new {@code AddCommand} which upon execution, adds {@code patient} into the {@code model}.
      */
-    private AddCommand prepareCommand(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand prepareCommand(Patient patient, Model model) {
+        AddCommand command = new AddCommand(patient);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

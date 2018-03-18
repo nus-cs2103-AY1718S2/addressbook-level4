@@ -2,7 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.ui.StatusBarFooter.RECORD_NUMBER_STATUS;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
@@ -18,15 +18,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.commons.events.model.ImdbChangedEvent;
+import seedu.address.testutil.ImdbBuilder;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
     private static final String STUB_SAVE_LOCATION = "Stub";
     private static final String RELATIVE_PATH = "./";
-    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(
-            new AddressBookBuilder().withPerson(ALICE).build());
+    private static final ImdbChangedEvent EVENT_STUB = new ImdbChangedEvent(
+            new ImdbBuilder().withPerson(ALICE).build());
 
     private static final int INITIAL_TOTAL_PERSONS = 0;
 

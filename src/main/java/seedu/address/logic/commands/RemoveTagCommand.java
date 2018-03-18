@@ -41,8 +41,8 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_TAG + "owesMoney "
+            + PREFIX_TAG + "friends";
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Remove Tags for Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

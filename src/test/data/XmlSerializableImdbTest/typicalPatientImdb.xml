@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Imdb save file which contains the same Patient values as in
 {@code TypicalPersons#getTypicalAddressBook()}-->
-<addressbook>
+<imdb>
     <patients>
         <name>Alice Pauline</name>
         <phone>85355255</phone>
@@ -49,4 +49,4 @@
     </patients>
     <tags>friends</tags>
     <tags>owesMoney</tags>
-</addressbook>
+</imdb>

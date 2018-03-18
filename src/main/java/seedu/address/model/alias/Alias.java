@@ -12,8 +12,8 @@ public class Alias {
     public static final String MESSAGE_ALIAS_CONSTRAINTS = "ALias names should be alphanumeric";
     public static final String ALIAS_VALIDATION_REGEX = "\\p{Alnum}+";
 
-    public final String command;
-    public final String aliasName;
+    private final String command;
+    private final String aliasName;
 
     /**
      * Constructs a {@code Alias}.
@@ -25,6 +25,14 @@ public class Alias {
         checkArgument(isValidAliasName(aliasName), MESSAGE_ALIAS_CONSTRAINTS);
         this.aliasName = aliasName;
         this.command = command;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public String getAlias() {
+        return aliasName;
     }
 
     /**

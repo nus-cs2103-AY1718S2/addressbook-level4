@@ -103,7 +103,8 @@ public class EditCommand extends UndoableCommand {
         assert recipeToEdit != null;
 
         Name updatedName = editRecipeDescriptor.getName().orElse(recipeToEdit.getName());
-        PreparationTime updatedPreparationTime = editRecipeDescriptor.getPreparationTime().orElse(recipeToEdit.getPreparationTime());
+        PreparationTime updatedPreparationTime =
+                editRecipeDescriptor.getPreparationTime().orElse(recipeToEdit.getPreparationTime());
         Ingredient updatedIngredient = editRecipeDescriptor.getIngredient().orElse(recipeToEdit.getIngredient());
         Instruction updatedInstruction = editRecipeDescriptor.getInstruction().orElse(recipeToEdit.getInstruction());
         Set<Tag> updatedTags = editRecipeDescriptor.getTags().orElse(recipeToEdit.getTags());
@@ -159,7 +160,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.preparationTime, this.ingredient, this.instruction, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.preparationTime, this.ingredient, this.instruction,
+                    this.tags);
         }
 
         public void setName(Name name) {

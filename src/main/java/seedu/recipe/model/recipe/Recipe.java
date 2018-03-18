@@ -25,7 +25,8 @@ public class Recipe {
     /**
      * Every field must be present and not null.
      */
-    public Recipe(Name name, PreparationTime preparationTime, Ingredient ingredient, Instruction instruction, Set<Tag> tags) {
+    public Recipe(Name name, PreparationTime preparationTime, Ingredient ingredient, Instruction instruction,
+                  Set<Tag> tags) {
         requireAllNonNull(name, preparationTime, ingredient, instruction, tags);
         this.name = name;
         this.preparationTime = preparationTime;

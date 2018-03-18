@@ -44,7 +44,8 @@ public class XmlAdaptedRecipe {
     /**
      * Constructs an {@code XmlAdaptedRecipe} with the given recipe details.
      */
-    public XmlAdaptedRecipe(String name, String preparationTime, String ingredient, String instruction, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedRecipe(String name, String preparationTime, String ingredient, String instruction,
+                            List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.preparationTime = preparationTime;
         this.ingredient = ingredient;
@@ -90,7 +91,8 @@ public class XmlAdaptedRecipe {
         final Name name = new Name(this.name);
 
         if (this.preparationTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, PreparationTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    PreparationTime.class.getSimpleName()));
         }
         if (!PreparationTime.isValidPreparationTime(this.preparationTime)) {
             throw new IllegalValueException(PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
@@ -98,7 +100,8 @@ public class XmlAdaptedRecipe {
         final PreparationTime preparationTime = new PreparationTime(this.preparationTime);
 
         if (this.ingredient == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Ingredient.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Ingredient.class.getSimpleName()));
         }
         if (!Ingredient.isValidIngredient(this.ingredient)) {
             throw new IllegalValueException(Ingredient.MESSAGE_INGREDIENT_CONSTRAINTS);
@@ -106,7 +109,8 @@ public class XmlAdaptedRecipe {
         final Ingredient ingredient = new Ingredient(this.ingredient);
 
         if (this.instruction == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Instruction.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Instruction.class.getSimpleName()));
         }
         if (!Instruction.isValidInstuction(this.instruction)) {
             throw new IllegalValueException(Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS);

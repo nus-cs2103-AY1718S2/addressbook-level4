@@ -10,8 +10,8 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
 public class Ingredient {
 
     private static  final String SPECIAL_CHARACTERS = "!#$%&'*+/=?`{|}~^.-";
-    public static final String MESSAGE_INGREDIENT_CONSTRAINTS = "Recipe ingredients should be of the format local-part@domain "
-            + "and adhere to the following constraints:\n"
+    public static final String MESSAGE_INGREDIENT_CONSTRAINTS = "Recipe ingredients should be of the format "
+            + "local-part@domain and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "
             + "the parentheses, (" + SPECIAL_CHARACTERS + ") .\n"
             + "2. This is followed by a '@' and then a domain name. "

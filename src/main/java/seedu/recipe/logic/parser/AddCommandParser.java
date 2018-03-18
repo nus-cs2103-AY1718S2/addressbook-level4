@@ -32,16 +32,18 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PREPARATION_TIME, PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PREPARATION_TIME, PREFIX_INGREDIENT,
+                        PREFIX_INSTRUCTION, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_PREPARATION_TIME, PREFIX_INGREDIENT)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_PREPARATION_TIME,
+                PREFIX_INGREDIENT) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            PreparationTime preparationTime = ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME)).get();
+            PreparationTime preparationTime =
+                    ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME)).get();
             Ingredient ingredient = ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).get();
             Instruction instruction = ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));

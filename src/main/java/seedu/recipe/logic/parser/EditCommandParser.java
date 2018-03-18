@@ -32,8 +32,8 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PREPARATION_TIME, PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PREPARATION_TIME,
+                PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_TAG);
 
         Index index;
 
@@ -46,9 +46,12 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditRecipeDescriptor editRecipeDescriptor = new EditRecipeDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editRecipeDescriptor::setName);
-            ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME)).ifPresent(editRecipeDescriptor::setPreparationTime);
-            ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).ifPresent(editRecipeDescriptor::setIngredient);
-            ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).ifPresent(editRecipeDescriptor::setInstruction);
+            ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME))
+                    .ifPresent(editRecipeDescriptor::setPreparationTime);
+            ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT))
+                    .ifPresent(editRecipeDescriptor::setIngredient);
+            ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION))
+                    .ifPresent(editRecipeDescriptor::setInstruction);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editRecipeDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

@@ -83,12 +83,15 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> preparationTime} into an {@code Optional<PreparationTime>} if {@code preparationTime} is present.
+     * Parses a {@code Optional<String> preparationTime} into an {@code Optional<PreparationTime>}
+     * if {@code preparationTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<PreparationTime> parsePreparationTime(Optional<String> preparationTime) throws IllegalValueException {
+    public static Optional<PreparationTime> parsePreparationTime(Optional<String> preparationTime)
+            throws IllegalValueException {
         requireNonNull(preparationTime);
-        return preparationTime.isPresent() ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.empty();
+        return preparationTime.isPresent()
+                ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.empty();
     }
 
     /**
@@ -131,7 +134,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> ingredient} into an {@code Optional<Ingredient>} if {@code ingredient} is present.
+     * Parses a {@code Optional<String> ingredient} into an {@code Optional<Ingredient>}
+     * if {@code ingredient} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Ingredient> parseIngredient(Optional<String> ingredient) throws IllegalValueException {

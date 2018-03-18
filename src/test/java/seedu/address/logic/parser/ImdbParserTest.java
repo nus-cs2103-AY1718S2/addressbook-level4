@@ -222,8 +222,14 @@ public class ImdbParserTest {
     }
 
     @Test
-    public void parseCommand_redoCommandAlias_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS) instanceof RedoCommand);
+    public void parseCommand_redoCommandAlias_returnsRedoCommand1() throws Exception {
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS1) instanceof RedoCommand);
+        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
+    }
+
+    @Test
+    public void parseCommand_redoCommandAlias_returnsRedoCommand2() throws Exception {
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS2) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 

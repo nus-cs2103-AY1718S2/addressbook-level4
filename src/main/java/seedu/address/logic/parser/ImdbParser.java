@@ -132,7 +132,10 @@ public class ImdbParser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
-        case RedoCommand.COMMAND_ALIAS:
+        case RedoCommand.COMMAND_ALIAS1:
+            return new RedoCommand();
+
+        case RedoCommand.COMMAND_ALIAS2:
             return new RedoCommand();
 
         case RemarkCommand.COMMAND_WORD:

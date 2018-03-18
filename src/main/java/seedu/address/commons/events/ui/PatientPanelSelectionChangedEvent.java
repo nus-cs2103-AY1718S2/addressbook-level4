@@ -6,12 +6,12 @@ import seedu.address.ui.PatientCard;
 /**
  * Represents a selection change in the Patient List Panel
  */
-public class PersonPanelSelectionChangedEvent extends BaseEvent {
+public class PatientPanelSelectionChangedEvent extends BaseEvent {
 
 
     private final PatientCard newSelection;
 
-    public PersonPanelSelectionChangedEvent(PatientCard newSelection) {
+    public PatientPanelSelectionChangedEvent(PatientCard newSelection) {
         this.newSelection = newSelection;
     }
 

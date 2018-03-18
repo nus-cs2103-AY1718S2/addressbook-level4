@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -63,7 +63,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Creates the tag labels for {@code person}.
+     * Creates the tag labels for {@code recipe}.
      */
     private void initTags(Person person) {
         person.getTags().forEach(tag -> {

@@ -38,13 +38,13 @@ import seedu.recipe.logic.commands.EditCommand;
 import seedu.recipe.logic.commands.RedoCommand;
 import seedu.recipe.logic.commands.UndoCommand;
 import seedu.recipe.model.Model;
-import seedu.recipe.model.person.Address;
-import seedu.recipe.model.person.Email;
-import seedu.recipe.model.person.Name;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.Phone;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Email;
+import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Phone;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.testutil.PersonBuilder;
 import seedu.recipe.testutil.PersonUtil;
@@ -67,19 +67,19 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedPerson);
 
-        /* Case: undo editing the last person in the list -> last person restored */
+        /* Case: undo editing the last recipe in the list -> last recipe restored */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo editing the last person in the list -> last person edited again */
+        /* Case: redo editing the last recipe in the list -> last recipe edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updatePerson(
                 getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: edit a person with new values same as existing values -> edited */
+        /* Case: edit a recipe with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
@@ -99,7 +99,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered person list, edit index within bounds of recipe book and person list -> edited */
+        /* Case: filtered recipe list, edit index within bounds of recipe book and recipe list -> edited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
@@ -108,7 +108,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedPerson);
 
-        /* Case: filtered person list, edit index within bounds of recipe book but out of bounds of person list
+        /* Case: filtered recipe list, edit index within bounds of recipe book but out of bounds of recipe list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
@@ -116,9 +116,9 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* --------------------- Performing edit operation while a person card is selected -------------------------- */
+        /* --------------------- Performing edit operation while a recipe card is selected -------------------------- */
 
-        /* Case: selects first card in the person list, edit a person -> edited, card selection remains unchanged but
+        /* Case: selects first card in the recipe list, edit a recipe -> edited, card selection remains unchanged but
          * browser url changes
          */
         showAllPersons();
@@ -127,7 +127,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
-        // browser's url is updated to reflect the new person's name
+        // browser's url is updated to reflect the new recipe's name
         assertCommandSuccess(command, index, AMY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
@@ -173,7 +173,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
-        /* Case: edit a person with new values same as another person's values -> rejected */
+        /* Case: edit a recipe with new values same as another recipe's values -> rejected */
         executeCommand(PersonUtil.getAddCommand(BOB));
         assertTrue(getModel().getRecipeBook().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
@@ -182,7 +182,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 
-        /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
+        /* Case: edit a recipe with new values same as another recipe's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
@@ -201,7 +201,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
      * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
-     * 2. Asserts that the model related components are updated to reflect the person at index {@code toEdit} being
+     * 2. Asserts that the model related components are updated to reflect the recipe at index {@code toEdit} being
      * updated to values specified {@code editedPerson}.<br>
      * @param toEdit the index of the current model's filtered list.
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)

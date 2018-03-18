@@ -21,9 +21,9 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ReadOnlyRecipeBook;
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 import seedu.recipe.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -79,12 +79,12 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different recipe -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddCommand with the details of the given recipe.
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
@@ -136,7 +136,7 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicatePersonException when trying to add a recipe.
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
@@ -151,7 +151,7 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the recipe being added.
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();

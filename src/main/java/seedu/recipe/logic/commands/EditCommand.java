@@ -19,24 +19,24 @@ import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.util.CollectionUtil;
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.model.person.Address;
-import seedu.recipe.model.person.Email;
-import seedu.recipe.model.person.Name;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.Phone;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Email;
+import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Phone;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 import seedu.recipe.model.tag.Tag;
 
 /**
- * Edits the details of an existing person in the recipe book.
+ * Edits the details of an existing recipe in the recipe book.
  */
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the recipe identified "
+            + "by the index number used in the last recipe listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
@@ -50,7 +50,7 @@ public class EditCommand extends UndoableCommand {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the recipe book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This recipe already exists in the recipe book.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -59,8 +59,8 @@ public class EditCommand extends UndoableCommand {
     private Person editedPerson;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param index of the recipe in the filtered recipe list to edit
+     * @param editPersonDescriptor details to edit the recipe with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
@@ -77,7 +77,7 @@ public class EditCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target recipe cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
@@ -131,8 +131,8 @@ public class EditCommand extends UndoableCommand {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the recipe with. Each non-empty field value will replace the
+     * corresponding field value of the recipe.
      */
     public static class EditPersonDescriptor {
         private Name name;

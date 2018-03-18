@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 import seedu.recipe.ui.PersonCard;
 
 /**
@@ -55,7 +55,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
-     * Navigates the listview to display and select the person.
+     * Navigates the listview to display and select the recipe.
      */
     public void navigateToCard(Person person) {
         List<PersonCard> cards = getRootNode().getItems();
@@ -73,14 +73,14 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
-     * Returns the person card handle of a person associated with the {@code index} in the list.
+     * Returns the recipe card handle of a recipe associated with the {@code index} in the list.
      */
     public PersonCardHandle getPersonCardHandle(int index) {
         return getPersonCardHandle(getRootNode().getItems().get(index).person);
     }
 
     /**
-     * Returns the {@code PersonCardHandle} of the specified {@code person} in the list.
+     * Returns the {@code PersonCardHandle} of the specified {@code recipe} in the list.
      */
     public PersonCardHandle getPersonCardHandle(Person person) {
         Optional<PersonCardHandle> handle = getRootNode().getItems().stream()

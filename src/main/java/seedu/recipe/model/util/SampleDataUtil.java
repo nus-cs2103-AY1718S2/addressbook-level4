@@ -5,12 +5,12 @@ import java.util.Set;
 
 import seedu.recipe.model.ReadOnlyRecipeBook;
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.person.Address;
-import seedu.recipe.model.person.Email;
-import seedu.recipe.model.person.Name;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.Phone;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Email;
+import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Phone;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
 import seedu.recipe.model.tag.Tag;
 
 /**

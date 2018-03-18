@@ -21,7 +21,7 @@ import seedu.recipe.logic.UndoRedoStack;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.UserPrefs;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -90,14 +90,14 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
         Model expectedModel = new ModelManager(model.getRecipeBook(), new UserPrefs());
 
-        // delete -> first person deleted
+        // delete -> first recipe deleted
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
 
-        // undo -> reverts recipebook back to previous state and filtered person list to show all persons
+        // undo -> reverts recipebook back to previous state and filtered recipe list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // redo -> same first person deleted again
+        // redo -> same first recipe deleted again
         expectedModel.deletePerson(personToDelete);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -121,9 +121,9 @@ public class DeleteCommandTest {
     /**
      * 1. Deletes a {@code Person} from a filtered list.
      * 2. Undo the deletion.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted person in the
+     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted recipe in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the person object regardless of indexing.
+     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the recipe object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
@@ -135,16 +135,16 @@ public class DeleteCommandTest {
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // delete -> deletes second person in unfiltered person list / first person in filtered person list
+        // delete -> deletes second recipe in unfiltered recipe list / first recipe in filtered recipe list
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
 
-        // undo -> reverts recipebook back to previous state and filtered person list to show all persons
+        // undo -> reverts recipebook back to previous state and filtered recipe list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         expectedModel.deletePerson(personToDelete);
         assertNotEquals(personToDelete, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        // redo -> deletes same second person in unfiltered person list
+        // redo -> deletes same second recipe in unfiltered recipe list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -170,7 +170,7 @@ public class DeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different recipe -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 

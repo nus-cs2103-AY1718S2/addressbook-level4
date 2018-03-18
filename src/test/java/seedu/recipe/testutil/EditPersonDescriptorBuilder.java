@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.recipe.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.recipe.model.person.Address;
-import seedu.recipe.model.person.Email;
-import seedu.recipe.model.person.Name;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.Phone;
+import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Email;
+import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -28,7 +28,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
+     * Returns an {@code EditPersonDescriptor} with fields containing {@code recipe}'s details
      */
     public EditPersonDescriptorBuilder(Person person) {
         descriptor = new EditPersonDescriptor();

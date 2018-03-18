@@ -19,9 +19,9 @@ import seedu.recipe.logic.UndoRedoStack;
 import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.person.NameContainsKeywordsPredicate;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 import seedu.recipe.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -92,7 +92,7 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the recipe book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the recipe book and the filtered recipe list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
@@ -111,7 +111,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
+     * Updates {@code model}'s filtered list to show only the recipe at the given {@code targetIndex} in the
      * {@code model}'s recipe book.
      */
     public static void showPersonAtIndex(Model model, Index targetIndex) {
@@ -125,7 +125,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s recipe book.
+     * Deletes the first recipe in {@code model}'s filtered list from {@code model}'s recipe book.
      */
     public static void deleteFirstPerson(Model model) {
         Person firstPerson = model.getFilteredPersonList().get(0);

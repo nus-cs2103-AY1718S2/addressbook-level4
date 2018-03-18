@@ -1,4 +1,4 @@
-package seedu.recipe.model.person;
+package seedu.recipe.model.recipe;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
@@ -41,7 +41,7 @@ public class Email {
     }
 
     /**
-     * Returns if a given string is a valid person email.
+     * Returns if a given string is a valid recipe email.
      */
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);

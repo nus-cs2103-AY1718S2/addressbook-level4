@@ -1,4 +1,4 @@
-package seedu.recipe.model.person.exceptions;
+package seedu.recipe.model.recipe.exceptions;
 
 import seedu.recipe.commons.exceptions.DuplicateDataException;
 

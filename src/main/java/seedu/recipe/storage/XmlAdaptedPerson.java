@@ -9,11 +9,11 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.recipe.commons.exceptions.IllegalValueException;
-import seedu.recipe.model.person.Address;
-import seedu.recipe.model.person.Email;
-import seedu.recipe.model.person.Name;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.Phone;
+import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Email;
+import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -42,7 +42,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     * Constructs an {@code XmlAdaptedPerson} with the given recipe details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
         this.name = name;
@@ -71,9 +71,9 @@ public class XmlAdaptedPerson {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     * Converts this jaxb-friendly adapted recipe object into the model's Person object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted recipe
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();

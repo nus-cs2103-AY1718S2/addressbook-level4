@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import org.junit.Test;
 
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 import seedu.recipe.model.util.SampleDataUtil;
 import seedu.recipe.testutil.TestUtil;
 

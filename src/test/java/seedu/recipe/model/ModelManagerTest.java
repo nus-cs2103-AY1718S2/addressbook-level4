@@ -12,7 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.recipe.model.person.NameContainsKeywordsPredicate;
+import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;
 import seedu.recipe.testutil.RecipeBookBuilder;
 
 public class ModelManagerTest {

@@ -28,7 +28,7 @@ import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.RecipeBook;
 import seedu.recipe.model.UserPrefs;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 import seedu.recipe.testutil.EditPersonDescriptorBuilder;
 import seedu.recipe.testutil.PersonBuilder;
 
@@ -116,7 +116,7 @@ public class EditCommandTest {
     public void execute_duplicatePersonFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        // edit person in filtered list into a duplicate in recipe book
+        // edit recipe in filtered list into a duplicate in recipe book
         Person personInList = model.getRecipeBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
@@ -161,14 +161,14 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new RecipeBook(model.getRecipeBook()), new UserPrefs());
 
-        // edit -> first person edited
+        // edit -> first recipe edited
         editCommand.execute();
         undoRedoStack.push(editCommand);
 
-        // undo -> reverts recipebook back to previous state and filtered person list to show all persons
+        // undo -> reverts recipebook back to previous state and filtered recipe list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // redo -> same first person edited again
+        // redo -> same first recipe edited again
         expectedModel.updatePerson(personToEdit, editedPerson);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -193,9 +193,9 @@ public class EditCommandTest {
     /**
      * 1. Edits a {@code Person} from a filtered list.
      * 2. Undo the edit.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously edited person in the
+     * 3. The unfiltered list should be shown now. Verify that the index of the previously edited recipe in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the edit. This ensures {@code RedoCommand} edits the person object regardless of indexing.
+     * 4. Redo the edit. This ensures {@code RedoCommand} edits the recipe object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonEdited() throws Exception {
@@ -209,16 +209,16 @@ public class EditCommandTest {
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // edit -> edits second person in unfiltered person list / first person in filtered person list
+        // edit -> edits second recipe in unfiltered recipe list / first recipe in filtered recipe list
         editCommand.execute();
         undoRedoStack.push(editCommand);
 
-        // undo -> reverts recipebook back to previous state and filtered person list to show all persons
+        // undo -> reverts recipebook back to previous state and filtered recipe list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         expectedModel.updatePerson(personToEdit, editedPerson);
         assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), personToEdit);
-        // redo -> edits same second person in unfiltered person list
+        // redo -> edits same second recipe in unfiltered recipe list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

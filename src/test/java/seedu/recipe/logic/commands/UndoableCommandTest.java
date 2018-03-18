@@ -13,8 +13,8 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.UserPrefs;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
@@ -47,7 +47,7 @@ public class UndoableCommandTest {
     }
 
     /**
-     * Deletes the first person in the model's filtered list.
+     * Deletes the first recipe in the model's filtered list.
      */
     class DummyCommand extends UndoableCommand {
         DummyCommand(Model model) {

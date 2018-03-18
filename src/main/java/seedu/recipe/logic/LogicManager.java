@@ -11,7 +11,7 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.logic.parser.RecipeBookParser;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.Model;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 
 /**
  * The main LogicManager of the app.

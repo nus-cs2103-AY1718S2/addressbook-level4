@@ -7,7 +7,7 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.recipe.logic.commands.AddCommand;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 
 /**
  * A utility class for Person.
@@ -15,14 +15,14 @@ import seedu.recipe.model.person.Person;
 public class PersonUtil {
 
     /**
-     * Returns an add command string for adding the {@code person}.
+     * Returns an add command string for adding the {@code recipe}.
      */
     public static String getAddCommand(Person person) {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
     /**
-     * Returns the part of command string for the given {@code person}'s details.
+     * Returns the part of command string for the given {@code recipe}'s details.
      */
     public static String getPersonDetails(Person person) {
         StringBuilder sb = new StringBuilder();

@@ -12,7 +12,7 @@ import seedu.recipe.logic.UndoRedoStack;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.UserPrefs;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 import seedu.recipe.testutil.PersonBuilder;
 
 /**
@@ -45,7 +45,7 @@ public class AddCommandIntegrationTest {
     }
 
     /**
-     * Generates a new {@code AddCommand} which upon execution, adds {@code person} into the {@code model}.
+     * Generates a new {@code AddCommand} which upon execution, adds {@code recipe} into the {@code model}.
      */
     private AddCommand prepareCommand(Person person, Model model) {
         AddCommand command = new AddCommand(person);

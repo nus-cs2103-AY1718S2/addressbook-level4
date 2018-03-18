@@ -2,8 +2,8 @@ package seedu.recipe.testutil;
 
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -30,7 +30,7 @@ public class RecipeBookBuilder {
         try {
             recipeBook.addPerson(person);
         } catch (DuplicatePersonException dpe) {
-            throw new IllegalArgumentException("person is expected to be unique.");
+            throw new IllegalArgumentException("recipe is expected to be unique.");
         }
         return this;
     }

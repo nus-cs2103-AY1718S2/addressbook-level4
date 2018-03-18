@@ -16,7 +16,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 import seedu.recipe.model.tag.Tag;
 
 public class RecipeBookTest {

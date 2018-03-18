@@ -1,4 +1,4 @@
-package seedu.recipe.model.person;
+package seedu.recipe.model.recipe;
 
 import java.util.List;
 import java.util.function.Predicate;

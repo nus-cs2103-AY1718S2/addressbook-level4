@@ -11,10 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.UniquePersonList;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.UniquePersonList;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.model.tag.UniqueTagList;
 
@@ -76,29 +76,29 @@ public class RecipeBook implements ReadOnlyRecipeBook {
         }
     }
 
-    //// person-level operations
+    //// recipe-level operations
 
     /**
-     * Adds a person to the recipe book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a recipe to the recipe book.
+     * Also checks the new recipe's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the recipe to point to those in {@link #tags}.
      *
-     * @throws DuplicatePersonException if an equivalent person already exists.
+     * @throws DuplicatePersonException if an equivalent recipe already exists.
      */
     public void addPerson(Person p) throws DuplicatePersonException {
         Person person = syncWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        // This can cause the tags master list to have additional tags that are not tagged to any recipe
+        // in the recipe list.
         persons.add(person);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * Replaces the given recipe {@code target} in the list with {@code editedPerson}.
      * {@code RecipeBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
+     * @throws DuplicatePersonException if updating the recipe's details causes the recipe to be equivalent to
+     *      another existing recipe in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncWithMasterTagList(Person)
@@ -109,14 +109,14 @@ public class RecipeBook implements ReadOnlyRecipeBook {
 
         Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        // This can cause the tags master list to have additional tags that are not tagged to any recipe
+        // in the recipe list.
         persons.setPerson(target, syncedEditedPerson);
     }
 
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     *  Updates the master tag list to include tags in {@code recipe} that are not in the list.
+     *  @return a copy of this {@code recipe} such that every tag in this recipe points to a Tag object in the master
      *  list.
      */
     private Person syncWithMasterTagList(Person person) {
@@ -124,11 +124,11 @@ public class RecipeBook implements ReadOnlyRecipeBook {
         tags.mergeFrom(personTags);
 
         // Create map with values = tag object references in the master list
-        // used for checking person tag references
+        // used for checking recipe tag references
         final Map<Tag, Tag> masterTagObjects = new HashMap<>();
         tags.forEach(tag -> masterTagObjects.put(tag, tag));
 
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        // Rebuild the list of recipe tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(

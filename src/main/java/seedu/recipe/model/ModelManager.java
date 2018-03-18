@@ -12,9 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.recipe.commons.core.ComponentManager;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.model.RecipeBookChangedEvent;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 
 /**
  * Represents the in-memory model of the recipe book data.

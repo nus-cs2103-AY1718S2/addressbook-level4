@@ -8,18 +8,18 @@ import java.util.Objects;
 import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the recipe book.
+ * Deletes a recipe identified using it's last displayed index from the recipe book.
  */
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + ": Deletes the recipe identified by the index number used in the last recipe listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -40,7 +40,7 @@ public class DeleteCommand extends UndoableCommand {
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target recipe cannot be missing");
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));

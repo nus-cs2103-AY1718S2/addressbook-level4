@@ -21,8 +21,8 @@ import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.RecipeBook;
 import seedu.recipe.model.UserPrefs;
-import seedu.recipe.model.person.NameContainsKeywordsPredicate;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;
+import seedu.recipe.model.recipe.Person;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -53,7 +53,7 @@ public class FindCommandTest {
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different recipe -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 

@@ -1,4 +1,4 @@
-package seedu.recipe.model.person;
+package seedu.recipe.model.recipe;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.CollectionUtil.requireAllNonNull;
@@ -9,8 +9,8 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.recipe.commons.util.CollectionUtil;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -25,7 +25,7 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent recipe as the given argument.
      */
     public boolean contains(Person toCheck) {
         requireNonNull(toCheck);
@@ -33,9 +33,9 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Adds a person to the list.
+     * Adds a recipe to the list.
      *
-     * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
+     * @throws DuplicatePersonException if the recipe to add is a duplicate of an existing recipe in the list.
      */
     public void add(Person toAdd) throws DuplicatePersonException {
         requireNonNull(toAdd);
@@ -46,9 +46,9 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the recipe {@code target} in the list with {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
+     * @throws DuplicatePersonException if the replacement is equivalent to another existing recipe in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     public void setPerson(Person target, Person editedPerson)
@@ -68,9 +68,9 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Removes the equivalent person from the list.
+     * Removes the equivalent recipe from the list.
      *
-     * @throws PersonNotFoundException if no such person could be found in the list.
+     * @throws PersonNotFoundException if no such recipe could be found in the list.
      */
     public boolean remove(Person toRemove) throws PersonNotFoundException {
         requireNonNull(toRemove);

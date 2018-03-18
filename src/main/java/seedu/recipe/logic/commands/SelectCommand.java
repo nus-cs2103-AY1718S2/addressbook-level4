@@ -7,17 +7,17 @@ import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 
 /**
- * Selects a person identified using it's last displayed index from the recipe book.
+ * Selects a recipe identified using it's last displayed index from the recipe book.
  */
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the person identified by the index number used in the last person listing.\n"
+            + ": Selects the recipe identified by the index number used in the last recipe listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 

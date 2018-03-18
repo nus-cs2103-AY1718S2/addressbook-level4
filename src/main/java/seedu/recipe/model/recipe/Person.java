@@ -1,4 +1,4 @@
-package seedu.recipe.model.person;
+package seedu.recipe.model.recipe;
 
 import static seedu.recipe.commons.util.CollectionUtil.requireAllNonNull;
 

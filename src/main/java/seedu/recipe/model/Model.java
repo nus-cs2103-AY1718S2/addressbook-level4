@@ -3,9 +3,9 @@ package seedu.recipe.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
-import seedu.recipe.model.person.exceptions.PersonNotFoundException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.exceptions.PersonNotFoundException;
 
 /**
  * The API of the Model component.
@@ -20,27 +20,27 @@ public interface Model {
     /** Returns the RecipeBook */
     ReadOnlyRecipeBook getRecipeBook();
 
-    /** Deletes the given person. */
+    /** Deletes the given recipe. */
     void deletePerson(Person target) throws PersonNotFoundException;
 
-    /** Adds the given person */
+    /** Adds the given recipe */
     void addPerson(Person person) throws DuplicatePersonException;
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given recipe {@code target} with {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
+     * @throws DuplicatePersonException if updating the recipe's details causes the recipe to be equivalent to
+     *      another existing recipe in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /** Returns an unmodifiable view of the filtered recipe list */
     ObservableList<Person> getFilteredPersonList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered recipe list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);

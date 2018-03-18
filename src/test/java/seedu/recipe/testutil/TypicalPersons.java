@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.

@@ -1,6 +1,6 @@
 package seedu.recipe.logic.commands;
 
-import seedu.recipe.model.person.NameContainsKeywordsPredicate;
+import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in recipe book whose name contains any of the argument keywords.

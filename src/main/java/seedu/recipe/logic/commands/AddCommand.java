@@ -8,17 +8,17 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.exceptions.DuplicatePersonException;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.exceptions.DuplicatePersonException;
 
 /**
- * Adds a person to the recipe book.
+ * Adds a recipe to the recipe book.
  */
 public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the recipe book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a recipe to the recipe book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -33,8 +33,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the recipe book";
+    public static final String MESSAGE_SUCCESS = "New recipe added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This recipe already exists in the recipe book";
 
     private final Person toAdd;
 

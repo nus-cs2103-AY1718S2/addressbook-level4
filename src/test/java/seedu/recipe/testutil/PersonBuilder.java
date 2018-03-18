@@ -3,11 +3,11 @@ package seedu.recipe.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.recipe.model.person.Address;
-import seedu.recipe.model.person.Email;
-import seedu.recipe.model.person.Name;
-import seedu.recipe.model.person.Person;
-import seedu.recipe.model.person.Phone;
+import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Email;
+import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.Person;
+import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.model.util.SampleDataUtil;
 

@@ -15,7 +15,7 @@ import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
-import seedu.recipe.model.person.Person;
+import seedu.recipe.model.recipe.Person;
 
 public class PersonListPanelTest extends GuiUnitTest {
     private static final ObservableList<Person> TYPICAL_PERSONS =

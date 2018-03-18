@@ -13,14 +13,14 @@ import seedu.address.model.tag.Tag;
  */
 public class ImdbBuilder {
 
-    private Imdb Imdb;
+    private Imdb imdb;
 
     public ImdbBuilder() {
-        Imdb = new Imdb();
+        imdb = new Imdb();
     }
 
-    public ImdbBuilder(Imdb Imdb) {
-        this.Imdb = Imdb;
+    public ImdbBuilder(Imdb imdb) {
+        this.imdb = imdb;
     }
 
     /**
@@ -28,7 +28,7 @@ public class ImdbBuilder {
      */
     public ImdbBuilder withPerson(Patient patient) {
         try {
-            Imdb.addPerson(patient);
+            imdb.addPerson(patient);
         } catch (DuplicatePatientException dpe) {
             throw new IllegalArgumentException("patient is expected to be unique.");
         }
@@ -40,7 +40,7 @@ public class ImdbBuilder {
      */
     public ImdbBuilder withTag(String tagName) {
         try {
-            Imdb.addTag(new Tag(tagName));
+            imdb.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tagName is expected to be valid.");
         }
@@ -48,6 +48,6 @@ public class ImdbBuilder {
     }
 
     public Imdb build() {
-        return Imdb;
+        return imdb;
     }
 }

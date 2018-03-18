@@ -54,27 +54,33 @@ public class RemoveTagCommandTest {
         assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
     }
 
-//    @Test
-//    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-//        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
-//        Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
-//
-//        PersonBuilder personInList = new PersonBuilder(lastPerson);
-//        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-//                .withTags(VALID_TAG_HUSBAND).build();
-//
-//        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-//                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
-//        EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
-//
-//        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
-//
-//        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-//        expectedModel.updatePerson(lastPerson, editedPerson);
-//
-//        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-//    }
-//
+    @Test
+    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
+        Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
+        // lastPerson contains original info
+
+        PersonBuilder personInList = new PersonBuilder(lastPerson);
+        Person tagRemovedPerson = personInList
+                .withName(lastPerson.getName().toString())
+                .withPhone(lastPerson.getPhone().toString())
+                .withEmail(lastPerson.getEmail().toString())
+                .withAddress(lastPerson.getAddress().toString())
+                .withMoney(lastPerson.getMoney().toString())
+                .withoutTags().build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTags(lastPerson.getTags()).build();
+        RemoveTagCommand removeTagCommand = prepareCommand(indexLastPerson, descriptor);
+
+        String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS, tagRemovedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(lastPerson, tagRemovedPerson);
+
+        assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
+    }
+
 //    @Test
 //    public void execute_noFieldSpecifiedUnfilteredList_success() {
 //        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
@@ -104,6 +110,7 @@ public class RemoveTagCommandTest {
 //        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
 //    }
 //
+
 //    @Test
 //    public void execute_duplicatePersonUnfilteredList_failure() {
 //        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -112,6 +119,7 @@ public class RemoveTagCommandTest {
 //
 //        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
 //    }
+
 //
 //    @Test
 //    public void execute_duplicatePersonFilteredList_failure() {

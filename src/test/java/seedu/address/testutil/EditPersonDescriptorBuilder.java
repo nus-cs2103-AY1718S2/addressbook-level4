@@ -91,6 +91,15 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Copy a Tag Set {@code toCopy} and set the copy into the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withTags(Set<Tag> toCopy) {
+        descriptor.setTags(toCopy);
+        return this;
+    }
+
     public EditPersonDescriptor build() {
         return descriptor;
     }

@@ -249,4 +249,5 @@ public class RemoveTagCommand extends UndoableCommand {
                     && getTags().equals(e.getTags());
         }
     }
+
 }

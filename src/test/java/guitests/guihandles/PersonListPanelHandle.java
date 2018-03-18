@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.person.Person;
-import seedu.address.ui.PersonCard;
+import seedu.progresschecker.model.person.Person;
+import seedu.progresschecker.ui.PersonCard;
 
 /**
  * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.

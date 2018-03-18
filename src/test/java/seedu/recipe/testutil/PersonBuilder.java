@@ -3,7 +3,7 @@ package seedu.recipe.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Email;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Person;
@@ -19,20 +19,20 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_INSTRUCTION = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
     private Phone phone;
     private Email email;
-    private Address address;
+    private Instruction instruction;
     private Set<Tag> tags;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
+        instruction = new Instruction(DEFAULT_INSTRUCTION);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -43,12 +43,12 @@ public class PersonBuilder {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
-        address = personToCopy.getAddress();
+        instruction = personToCopy.getInstruction();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Recipe} that we are building.
      */
     public PersonBuilder withName(String name) {
         this.name = new Name(name);
@@ -56,7 +56,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Recipe} that we are building.
      */
     public PersonBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
@@ -64,15 +64,15 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
+     * Sets the {@code Instruction} of the {@code Recipe} that we are building.
      */
-    public PersonBuilder withAddress(String address) {
-        this.address = new Address(address);
+    public PersonBuilder withInstruction(String instruction) {
+        this.instruction = new Instruction(instruction);
         return this;
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Phone} of the {@code Recipe} that we are building.
      */
     public PersonBuilder withPhone(String phone) {
         this.phone = new Phone(phone);
@@ -80,7 +80,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Email} of the {@code Recipe} that we are building.
      */
     public PersonBuilder withEmail(String email) {
         this.email = new Email(email);
@@ -88,7 +88,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, instruction, tags);
     }
 
 }

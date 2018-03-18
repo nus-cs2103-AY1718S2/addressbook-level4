@@ -1,7 +1,7 @@
 package seedu.recipe.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -19,7 +19,7 @@ import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.util.CollectionUtil;
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Email;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Person;
@@ -42,7 +42,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_INSTRUCTION + "INSTRUCTION] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -105,10 +105,10 @@ public class EditCommand extends UndoableCommand {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Instruction updatedInstruction = editPersonDescriptor.getInstruction().orElse(personToEdit.getInstruction());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedInstruction, updatedTags);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class EditCommand extends UndoableCommand {
         private Name name;
         private Phone phone;
         private Email email;
-        private Address address;
+        private Instruction instruction;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -151,7 +151,7 @@ public class EditCommand extends UndoableCommand {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setAddress(toCopy.address);
+            setInstruction(toCopy.instruction);
             setTags(toCopy.tags);
         }
 
@@ -159,7 +159,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.instruction, this.tags);
         }
 
         public void setName(Name name) {
@@ -186,12 +186,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(email);
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
+        public void setInstruction(Instruction instruction) {
+            this.instruction = instruction;
         }
 
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
+        public Optional<Instruction> getInstruction() {
+            return Optional.ofNullable(instruction);
         }
 
         /**
@@ -229,7 +229,7 @@ public class EditCommand extends UndoableCommand {
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
+                    && getInstruction().equals(e.getInstruction())
                     && getTags().equals(e.getTags());
         }
     }

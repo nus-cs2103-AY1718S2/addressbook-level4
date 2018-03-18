@@ -18,7 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.recipe.commons.exceptions.IllegalValueException;
-import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Email;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Phone;
@@ -28,13 +28,13 @@ import seedu.recipe.testutil.Assert;
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
+    private static final String INVALID_INSTRUCTION = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
-    private static final String VALID_ADDRESS = "123 Main Street #0505";
+    private static final String VALID_INSTRUCTION = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
@@ -131,35 +131,35 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseAddress_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((Optional<String>) null));
+    public void parseInstruction_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseInstruction((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseInstruction((Optional<String>) null));
     }
 
     @Test
-    public void parseAddress_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS)));
+    public void parseInstruction_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseInstruction(INVALID_INSTRUCTION));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseInstruction(Optional.of(INVALID_INSTRUCTION)));
     }
 
     @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
+    public void parseInstruction_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseInstruction(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseAddress_validValueWithoutWhitespace_returnsAddress() throws Exception {
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(VALID_ADDRESS));
-        assertEquals(Optional.of(expectedAddress), ParserUtil.parseAddress(Optional.of(VALID_ADDRESS)));
+    public void parseInstruction_validValueWithoutWhitespace_returnsInstruction() throws Exception {
+        Instruction expectedInstruction = new Instruction(VALID_INSTRUCTION);
+        assertEquals(expectedInstruction, ParserUtil.parseInstruction(VALID_INSTRUCTION));
+        assertEquals(Optional.of(expectedInstruction), ParserUtil.parseInstruction(Optional.of(VALID_INSTRUCTION)));
     }
 
     @Test
-    public void parseAddress_validValueWithWhitespace_returnsTrimmedAddress() throws Exception {
-        String addressWithWhitespace = WHITESPACE + VALID_ADDRESS + WHITESPACE;
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(addressWithWhitespace));
-        assertEquals(Optional.of(expectedAddress), ParserUtil.parseAddress(Optional.of(addressWithWhitespace)));
+    public void parseInstruction_validValueWithWhitespace_returnsTrimmedInstruction() throws Exception {
+        String instructionWithWhitespace = WHITESPACE + VALID_INSTRUCTION + WHITESPACE;
+        Instruction expectedInstruction = new Instruction(VALID_INSTRUCTION);
+        assertEquals(expectedInstruction, ParserUtil.parseInstruction(instructionWithWhitespace));
+        assertEquals(Optional.of(expectedInstruction), ParserUtil.parseInstruction(Optional.of(instructionWithWhitespace)));
     }
 
     @Test

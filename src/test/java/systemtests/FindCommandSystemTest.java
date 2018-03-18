@@ -117,7 +117,7 @@ public class FindCommandSystemTest extends RecipeBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find recipe of recipe in recipe book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getInstruction().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

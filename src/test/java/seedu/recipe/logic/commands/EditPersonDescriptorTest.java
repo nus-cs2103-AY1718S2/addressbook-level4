@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.recipe.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -48,7 +48,7 @@ public class EditPersonDescriptorTest {
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different recipe -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withInstruction(VALID_INSTRUCTION_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false

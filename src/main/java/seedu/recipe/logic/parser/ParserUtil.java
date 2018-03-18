@@ -10,7 +10,7 @@ import java.util.Set;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.StringUtil;
-import seedu.recipe.model.recipe.Address;
+import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Email;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Phone;
@@ -92,27 +92,27 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String recipe} into an {@code Address}.
+     * Parses a {@code String recipe} into an {@code Instruction}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code recipe} is invalid.
      */
-    public static Address parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+    public static Instruction parseInstruction(String instruction) throws IllegalValueException {
+        requireNonNull(instruction);
+        String trimmedInstruction = instruction.trim();
+        if (!Instruction.isValidInstuction(trimmedInstruction)) {
+            throw new IllegalValueException(Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new Instruction(trimmedInstruction);
     }
 
     /**
-     * Parses a {@code Optional<String> recipe} into an {@code Optional<Address>} if {@code recipe} is present.
+     * Parses a {@code Optional<String> recipe} into an {@code Optional<Instruction>} if {@code recipe} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    public static Optional<Instruction> parseInstruction(Optional<String> instruction) throws IllegalValueException {
+        requireNonNull(instruction);
+        return instruction.isPresent() ? Optional.of(parseInstruction(instruction.get())) : Optional.empty();
     }
 
     /**

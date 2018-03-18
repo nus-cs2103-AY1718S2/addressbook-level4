@@ -74,10 +74,12 @@ Examples:
 
 * `man`
 
+
 === Adding a task: `task`
 
 Adds a task to the board +
 Format: `task n/NAME d/DATETIME [r/REMARK]`
+
 
 Examples:
 
@@ -85,6 +87,7 @@ Examples:
 * `task n/Programming Methodology Assignment 2 d/16/03/2018 23:59`
 
 === Adding an event: `event`
+
 
 Adds an event to the board +
 Format: `event n/NAME s/STARTTIME e/ENDTTIME [l/LOCATION] [r/REMARK]`
@@ -99,7 +102,9 @@ Examples:
 Shows two lists in the board - the first list shows all uncompleted tasks, and the other list shows all upcoming events. +
 Format: `ls`
 
+
 === Listing all uncompleted tasks: `ls task`
+
 
 Shows a list of all uncompleted tasks in the board. +
 Format: `ls task`
@@ -114,6 +119,7 @@ Format: `ls event`
 Removes the specified task from the board. +
 Format: `rm task INDEX`
 
+
 ****
 * Removes the task at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
@@ -121,6 +127,7 @@ Format: `rm task INDEX`
 ****
 
 Examples:
+
 
 * `ls task` +
 `rm task 2` +
@@ -133,11 +140,13 @@ Format: `rm event INDEX`
 
 ****
 * Removes the event at the specified `INDEX`.
+
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
+
 
 * `ls event` +
 `rm event 2` +
@@ -150,11 +159,13 @@ Format: `complete task INDEX` or `com task INDEX`
 
 ****
 * Completes the task at the specified `INDEX`.
+
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
+
 
 * `ls task` +
 `complete task 3` +
@@ -179,6 +190,7 @@ Format: `overdue`
 Events that are overdue are automatically marked as 'complete'
 ====
 
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -192,12 +204,14 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
+
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u`
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the board's content (`task`, `rm task`).
+
 ====
 
 Examples:
@@ -236,7 +250,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` or `c`
 
-Clears all entries from the address book. +
+Clears all entries from the desk board. +
 Format: `clear` or `c`
 
 === Exiting the program : `exit`

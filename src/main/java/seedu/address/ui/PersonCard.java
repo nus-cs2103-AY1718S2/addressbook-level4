@@ -40,6 +40,10 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label income;
+    @FXML
+    private Label actualSpending;
+    @FXML
+    private Label expectedSpending;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -50,6 +54,8 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         income.setText(person.getIncome().toString());
         email.setText(person.getEmail().value);
+        actualSpending.setText(person.getActualSpending().toString());
+        expectedSpending.setText(person.getExpectedSpending().toString());
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 

@@ -14,20 +14,20 @@ public class Milestone {
     private final Date dueDate;
     private final List<Task> taskList;
     private final Progress progress;
-    private final String objective;
+    private final String description;
 
-    public Milestone(Date dueDate, String objective) {
+    public Milestone(Date dueDate, String description) {
         this.dueDate = dueDate;
-        this.objective = objective;
+        this.description = description;
         progress = new Progress();
         taskList = new ArrayList<>();
     }
 
-    public Milestone(Date dueDate, List<Task> taskList, Progress progress, String objective) {
+    public Milestone(Date dueDate, List<Task> taskList, Progress progress, String description) {
         this.dueDate = dueDate;
         this.taskList = taskList;
         this.progress = progress;
-        this.objective = objective;
+        this.description = description;
     }
 
     /**
@@ -36,13 +36,13 @@ public class Milestone {
     public static Milestone copyMilestone(Milestone toCopy) {
         Date copyDueDate = new Date(toCopy.getDueDate().getValue());
         List<Task> copyTaskList = toCopy.getTaskList().stream()
-                .map(task -> new Task(task.getName(), task.getDesc(), task.isCompleted()))
+                .map(task -> new Task(task.getName(), task.getDescription(), task.isCompleted()))
                 .collect(Collectors.toList());
         Progress copyProgress = new Progress(toCopy.getProgress().getTotalTasks(),
                 toCopy.getProgress().getNumCompletedTasks());
-        String copyObjective = new String(toCopy.getObjective());
+        String copyDescription = new String(toCopy.getDescription());
 
-        return new Milestone(copyDueDate, copyTaskList, copyProgress, copyObjective);
+        return new Milestone(copyDueDate, copyTaskList, copyProgress, copyDescription);
     }
 
     public Date getDueDate() {
@@ -57,8 +57,8 @@ public class Milestone {
         return progress;
     }
 
-    public String getObjective() {
-        return objective;
+    public String getDescription() {
+        return description;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Milestone {
                 && this.dueDate.equals(((Milestone) obj).getDueDate())
                 && this.taskList.equals(((Milestone) obj).getTaskList())
                 && this.progress.equals(((Milestone) obj).getProgress())
-                && this.objective.equals(((Milestone) obj).getObjective()));
+                && this.description.equals(((Milestone) obj).getDescription()));
     }
 
     @Override
@@ -76,8 +76,8 @@ public class Milestone {
         StringBuilder builder = new StringBuilder();
         int index = 1;
 
-        builder.append("Objective: ")
-                .append(objective)
+        builder.append("Description: ")
+                .append(description)
                 .append(" ||")
                 .append(" Due Date: ")
                 .append(dueDate)
@@ -97,6 +97,6 @@ public class Milestone {
 
     @Override
     public int hashCode() {
-        return Objects.hash(dueDate, taskList, progress, objective);
+        return Objects.hash(dueDate, taskList, progress, description);
     }
 }

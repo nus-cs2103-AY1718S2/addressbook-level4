@@ -13,6 +13,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_PROGRAMMING_LANGUAGE = new Prefix("s/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_DATE = new Prefix("d/");
-    public static final Prefix PREFIX_OBJECTIVE = new Prefix("o/");
+    public static final Prefix PREFIX_DESCRIPTION = new Prefix("o/");
     public static final Prefix PREFIX_INDEX = new Prefix("i/");
 }

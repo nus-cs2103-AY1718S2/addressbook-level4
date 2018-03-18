@@ -3,7 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_OBJECTIVE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 
 import java.util.stream.Stream;
 
@@ -22,9 +22,9 @@ public class AddMilestoneCommandParser {
     public AddMilestoneCommand parse(String args) throws ParseException {
         assert args != null;
 
-        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_DATE, PREFIX_OBJECTIVE);
+        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_DATE, PREFIX_DESCRIPTION);
 
-        if (!arePrefixesPresent(argMultiMap, PREFIX_INDEX, PREFIX_DATE, PREFIX_OBJECTIVE)
+        if (!arePrefixesPresent(argMultiMap, PREFIX_INDEX, PREFIX_DATE, PREFIX_DESCRIPTION)
                 || !argMultiMap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMilestoneCommand.MESSAGE_USAGE));
         }
@@ -32,7 +32,7 @@ public class AddMilestoneCommandParser {
         try {
             Index index = ParserUtil.parseIndex(argMultiMap.getValue(PREFIX_INDEX).get());
             Date date = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_DATE).get());
-            String objective = argMultiMap.getValue(PREFIX_OBJECTIVE).get();
+            String objective = argMultiMap.getValue(PREFIX_DESCRIPTION).get();
 
             Milestone milestone = new Milestone(date, objective);
 

@@ -5,7 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLA
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_OBJECTIVE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +36,14 @@ public class AddMilestoneCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addMS";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a milestone to a Student's Dashboard."
-            + "Parameters: "
+            + " Parameters: "
             + PREFIX_INDEX + "INDEX "
             + PREFIX_DATE + "DATE "
-            + PREFIX_OBJECTIVE + "OBJECTIVE "
+            + PREFIX_DESCRIPTION + "DESCRIPTION "
             + "Example: " + COMMAND_WORD +" "
             + PREFIX_INDEX + "1 "
             + PREFIX_DATE + "17/05/2018 23:59 "
-            + PREFIX_OBJECTIVE + "Master Arrays";
+            + PREFIX_DESCRIPTION + "Learn Arrays";
 
     public static final String MESSAGE_SUCCESS = "Milestone added to Student's Dashboard: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book.";
@@ -114,10 +114,16 @@ public class AddMilestoneCommand extends UndoableCommand {
         return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
     }
 
+    /**
+     * Creates and returns a deep copy of a list of Milestone.
+     */
     private List<Milestone> copyMilestoneList(List<Milestone> listToCopy) {
         return listToCopy.stream().map(Milestone::copyMilestone).collect(Collectors.toList());
     }
 
+    /**
+     * Creates and returns a deep copy of a list of Homework.
+     */
     private List<Homework> copyHomeworkList(List<Homework> listToCopy) {
         return listToCopy.stream().map(Homework::copyHomework).collect(Collectors.toList());
     }

@@ -7,18 +7,18 @@ package seedu.address.model.student.dashboard;
 public class Task {
 
     private final String name;
-    private final String desc;
+    private final String description;
     private final boolean isCompleted;
 
-    public Task(String name, String desc) {
+    public Task(String name, String description) {
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         isCompleted = false;
     }
 
-    public Task(String name, String desc, boolean isCompleted) {
+    public Task(String name, String description, boolean isCompleted) {
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         this.isCompleted = isCompleted;
     }
 
@@ -26,8 +26,8 @@ public class Task {
         return name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
     public boolean isCompleted() {
@@ -39,7 +39,7 @@ public class Task {
         return this == obj // short circuit if same object
                 || (obj instanceof Task // instanceof checks null
                 && this.name.equals(((Task) obj).getName())
-                && this.desc.equals(((Task) obj).getDesc())
+                && this.description.equals(((Task) obj).getDescription())
                 && this.isCompleted == ((Task) obj).isCompleted());
     }
 
@@ -50,7 +50,7 @@ public class Task {
                 .append(name)
                 .append(" ||")
                 .append("Desc: ")
-                .append(desc)
+                .append(description)
                 .append(" ||")
                 .append("Completed: ")
                 .append(isCompleted);

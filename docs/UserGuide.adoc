@@ -106,6 +106,19 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` or `e 2 n/Betsy Crower t/`+
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+
+=== Remove Tags: `removetag` or `rt`
+
+Remove Tags from a specific person in the TravelBanker. +
+Format: `removetag INDEX [t/TAG]...`
+Format: `rt INDEX [t/TAG]...`
+
+Examples:
+
+* `removetag 1 t/owesMoney t/friends` +
+Remove the tags `owesMoney` and `friends` from the first person.
+
+
 === Locating persons by name: `find` or `f`
 
 Finds persons whose names contain any of the given keywords. +

@@ -21,13 +21,13 @@ public class LogicManager extends ComponentManager implements Logic {
 
     private final Model model;
     private final CommandHistory history;
-    private final ImdbParser ImdbParser;
+    private final ImdbParser imdbParser;
     private final UndoRedoStack undoRedoStack;
 
     public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
-        ImdbParser = new ImdbParser();
+        imdbParser = new ImdbParser();
         undoRedoStack = new UndoRedoStack();
     }
 
@@ -35,7 +35,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
-            Command command = ImdbParser.parseCommand(commandText);
+            Command command = imdbParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
             undoRedoStack.push(command);

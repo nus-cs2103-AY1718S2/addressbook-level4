@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueStudentList;
+import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -145,7 +146,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         studentTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Student(
                 student.getName(), student.getPhone(), student.getEmail(), student.getAddress(),
-                student.getProgrammingLanguage(), correctTagReferences, student.getFavourite());
+                student.getProgrammingLanguage(), correctTagReferences, student.getFavourite(), student.getDashboard());
     }
 
     /**

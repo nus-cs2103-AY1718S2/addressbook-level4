@@ -40,6 +40,7 @@ public class AliasCommandParser implements Parser<AliasCommand> {
         args = args.trim();
         String[] trimmedArgs = args.split("\\s+");
         String command = trimmedArgs[0];
+        String alias = trimmedArgs[1];
         if (trimmedArgs.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
@@ -47,10 +48,14 @@ public class AliasCommandParser implements Parser<AliasCommand> {
             throw new ParseException(
                     String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
                             AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
+        } else if (commands.contains(alias)) {
+            throw new ParseException(
+                    String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
+                            AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION));
         }
 
-        Alias alias = new Alias(trimmedArgs[0], trimmedArgs[1]);
-        return new AliasCommand(alias);
+        Alias aliasCreated = new Alias(command, alias);
+        return new AliasCommand(aliasCreated);
     }
 
 }

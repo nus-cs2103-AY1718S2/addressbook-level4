@@ -18,8 +18,12 @@ public class AliasCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New alias added";
     public static final String MESSAGE_DUPLICATE_ALIAS = "This alias is already used";
+    public static final String MESSAGE_INVALID_ALIAS = "Invalid alias word! \n%1$s";
+    public static final String MESSAGE_INVALID_ALIAS_DESCRIPTION = "Alias word is a command word. \n"
+            + "Please choose another alias";
+    public static final String MESSAGE_INVALID_COMMAND = "Invalid command word! \n%1$s";
     public static final String MESSAGE_INVALID_COMMAND_DESCRIPTION = "There is no such command to alias to.";
-    public static final String MESSAGE_INVALID_COMMAND = "Invalid alias command! \n%1$s";
+
 
     private final Alias toAdd;
 
@@ -45,8 +49,8 @@ public class AliasCommand extends UndoableCommand {
 
     @Override
     public boolean equals(Object other) {
-        return other.equals(this);
+        return other == (this)
+                || (other instanceof AliasCommand // instanceof handles nulls
+                && toAdd.equals(((AliasCommand) other).toAdd));
     }
 }
-
-

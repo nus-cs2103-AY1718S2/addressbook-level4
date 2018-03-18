@@ -11,7 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -56,29 +56,29 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyIMDB> readAddressBook() throws DataConversionException, IOException {
+    public Optional<ReadOnlyImdb> readAddressBook() throws DataConversionException, IOException {
         return readAddressBook(IMDBStorage.getAddressBookFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyIMDB> readAddressBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyImdb> readAddressBook(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return IMDBStorage.readAddressBook(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyIMDB addressBook) throws IOException {
+    public void saveAddressBook(ReadOnlyImdb addressBook) throws IOException {
         saveAddressBook(addressBook, IMDBStorage.getAddressBookFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyIMDB addressBook, String filePath) throws IOException {
+    public void saveAddressBook(ReadOnlyImdb addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         IMDBStorage.saveAddressBook(addressBook, filePath);
     }
 
     @Override
-    public void backupAddressBook(ReadOnlyIMDB addressBook) throws IOException {
+    public void backupAddressBook(ReadOnlyImdb addressBook) throws IOException {
         IMDBStorage.backupAddressBook(addressBook);
     }
 

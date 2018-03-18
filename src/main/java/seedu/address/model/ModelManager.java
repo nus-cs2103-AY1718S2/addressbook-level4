@@ -30,7 +30,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given Imdb and userPrefs.
      */
-    public ModelManager(ReadOnlyIMDB addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyImdb addressBook, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
@@ -45,13 +45,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void resetData(ReadOnlyIMDB newData) {
+    public void resetData(ReadOnlyImdb newData) {
         Imdb.resetData(newData);
         indicateAddressBookChanged();
     }
 
     @Override
-    public ReadOnlyIMDB getImdb() {
+    public ReadOnlyImdb getImdb() {
         return Imdb;
     }
 

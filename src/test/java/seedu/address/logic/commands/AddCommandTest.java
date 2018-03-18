@@ -20,7 +20,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -108,12 +108,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyIMDB newData) {
+        public void resetData(ReadOnlyImdb newData) {
             fail("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyIMDB getImdb() {
+        public ReadOnlyImdb getImdb() {
             fail("This method should not be called.");
             return null;
         }
@@ -151,7 +151,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyIMDB getImdb() {
+        public ReadOnlyImdb getImdb() {
             return new Imdb();
         }
     }
@@ -169,7 +169,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyIMDB getImdb() {
+        public ReadOnlyImdb getImdb() {
             return new Imdb();
         }
     }

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.Imdb;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 
 /**
  * Represents a storage for {@link Imdb}.
@@ -18,29 +18,29 @@ public interface IMDBStorage {
     String getAddressBookFilePath();
 
     /**
-     * Returns Imdb data as a {@link ReadOnlyIMDB}.
+     * Returns Imdb data as a {@link ReadOnlyImdb}.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyIMDB> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyImdb> readAddressBook() throws DataConversionException, IOException;
 
     /**
      * @see #getAddressBookFilePath()
      */
-    Optional<ReadOnlyIMDB> readAddressBook(String filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyImdb> readAddressBook(String filePath) throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link ReadOnlyIMDB} to the storage.
+     * Saves the given {@link ReadOnlyImdb} to the storage.
      * @param addressBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyIMDB addressBook) throws IOException;
+    void saveAddressBook(ReadOnlyImdb addressBook) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyIMDB)
+     * @see #saveAddressBook(ReadOnlyImdb)
      */
-    void saveAddressBook(ReadOnlyIMDB addressBook, String filePath) throws IOException;
+    void saveAddressBook(ReadOnlyImdb addressBook, String filePath) throws IOException;
 
-    void backupAddressBook(ReadOnlyIMDB addressBook) throws IOException;
+    void backupAddressBook(ReadOnlyImdb addressBook) throws IOException;
 }

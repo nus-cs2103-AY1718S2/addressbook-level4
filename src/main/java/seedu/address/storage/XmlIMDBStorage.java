@@ -12,7 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 
 /**
  * A class to access Imdb data stored as an xml file on the hard disk.
@@ -32,7 +32,7 @@ public class XmlIMDBStorage implements IMDBStorage {
     }
 
     @Override
-    public Optional<ReadOnlyIMDB> readAddressBook() throws DataConversionException, IOException {
+    public Optional<ReadOnlyImdb> readAddressBook() throws DataConversionException, IOException {
         return readAddressBook(filePath);
     }
 
@@ -41,7 +41,7 @@ public class XmlIMDBStorage implements IMDBStorage {
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyIMDB> readAddressBook(String filePath) throws DataConversionException,
+    public Optional<ReadOnlyImdb> readAddressBook(String filePath) throws DataConversionException,
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
@@ -62,20 +62,20 @@ public class XmlIMDBStorage implements IMDBStorage {
     }
 
     @Override
-    public void backupAddressBook(ReadOnlyIMDB addressBook) throws IOException {
+    public void backupAddressBook(ReadOnlyImdb addressBook) throws IOException {
         saveAddressBook(addressBook, filePath + ".backup");
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyIMDB addressBook) throws IOException {
+    public void saveAddressBook(ReadOnlyImdb addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyIMDB)}
+     * Similar to {@link #saveAddressBook(ReadOnlyImdb)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveAddressBook(ReadOnlyIMDB addressBook, String filePath) throws IOException {
+    public void saveAddressBook(ReadOnlyImdb addressBook, String filePath) throws IOException {
         requireNonNull(addressBook);
         requireNonNull(filePath);
 

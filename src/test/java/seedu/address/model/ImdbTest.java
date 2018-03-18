@@ -82,7 +82,7 @@ public class ImdbTest {
         // Repeat ALICE twice
         List<Patient> newPatients = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        IMDBStub newData = new IMDBStub(newPatients, newTags);
+        ImdbStub newData = new ImdbStub(newPatients, newTags);
 
         thrown.expect(AssertionError.class);
         Imdb.resetData(newData);
@@ -101,14 +101,14 @@ public class ImdbTest {
     }
 
     /**
-     * A stub ReadOnlyIMDB whose patients and tags lists can violate interface constraints.
+     * A stub ReadOnlyImdb whose patients and tags lists can violate interface constraints.
      */
-    private static class IMDBStub implements ReadOnlyIMDB {
+    private static class ImdbStub implements ReadOnlyImdb {
         private final ObservableList<Patient> patients = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-        IMDBStub(Collection<Patient> patients, Collection<? extends Tag> tags) {
+        ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags) {
             this.patients.setAll(patients);
             this.tags.setAll(tags);
             this.appointments.setAll(appointments);

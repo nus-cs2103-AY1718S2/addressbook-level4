@@ -6,13 +6,13 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Imdb;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyIMDB previousAddressBook;
+    private ReadOnlyImdb previousAddressBook;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 

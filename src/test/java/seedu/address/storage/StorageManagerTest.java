@@ -15,7 +15,7 @@ import org.junit.rules.TemporaryFolder;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.Imdb;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -63,7 +63,7 @@ public class StorageManagerTest {
          */
         Imdb original = getTypicalAddressBook();
         storageManager.saveAddressBook(original);
-        ReadOnlyIMDB retrieved = storageManager.readAddressBook().get();
+        ReadOnlyImdb retrieved = storageManager.readAddressBook().get();
         assertEquals(original, new Imdb(retrieved));
     }
 
@@ -92,7 +92,7 @@ public class StorageManagerTest {
         }
 
         @Override
-        public void saveAddressBook(ReadOnlyIMDB addressBook, String filePath) throws IOException {
+        public void saveAddressBook(ReadOnlyImdb addressBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

@@ -8,7 +8,7 @@ import org.testfx.api.FxToolkit;
 import guitests.guihandles.MainWindowHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 
 /**
  * Contains helper methods that system tests require.
@@ -20,7 +20,7 @@ public class SystemTestSetupHelper {
     /**
      * Sets up a new {@code TestApp} and returns it.
      */
-    public TestApp setupApplication(Supplier<ReadOnlyIMDB> addressBook, String saveFileLocation) {
+    public TestApp setupApplication(Supplier<ReadOnlyImdb> addressBook, String saveFileLocation) {
         try {
             FxToolkit.registerStage(Stage::new);
             FxToolkit.setupApplication(() -> testApp = new TestApp(addressBook, saveFileLocation));

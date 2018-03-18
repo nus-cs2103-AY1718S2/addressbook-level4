@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Imdb;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 
 /**
  * An Immutable Imdb that is serializable to XML format
@@ -37,7 +37,7 @@ public class XmlSerializableIMDB {
     /**
      * Conversion
      */
-    public XmlSerializableIMDB(ReadOnlyIMDB src) {
+    public XmlSerializableIMDB(ReadOnlyImdb src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPatient::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));

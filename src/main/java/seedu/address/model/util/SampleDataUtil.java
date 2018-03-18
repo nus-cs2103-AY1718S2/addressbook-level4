@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.Imdb;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
@@ -40,7 +40,7 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyIMDB getSampleAddressBook() {
+    public static ReadOnlyImdb getSampleAddressBook() {
         try {
             Imdb sampleAb = new Imdb();
             for (Patient samplePatient : getSamplePersons()) {

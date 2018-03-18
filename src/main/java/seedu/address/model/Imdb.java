@@ -24,7 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
-public class Imdb implements ReadOnlyIMDB {
+public class Imdb implements ReadOnlyImdb {
 
     private final UniquePatientList persons;
     private final UniqueTagList tags;
@@ -48,7 +48,7 @@ public class Imdb implements ReadOnlyIMDB {
     /**
      * Creates an Imdb using the Persons and Tags in the {@code toBeCopied}
      */
-    public Imdb(ReadOnlyIMDB toBeCopied) {
+    public Imdb(ReadOnlyImdb toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -70,7 +70,7 @@ public class Imdb implements ReadOnlyIMDB {
     /**
      * Resets the existing data of this {@code Imdb} with {@code newData}.
      */
-    public void resetData(ReadOnlyIMDB newData) {
+    public void resetData(ReadOnlyImdb newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
         List<Patient> syncedPatientList = newData.getPersonList().stream()

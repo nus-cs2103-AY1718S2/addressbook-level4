@@ -23,7 +23,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.IMDBStorage;
@@ -86,8 +86,8 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyIMDB> addressBookOptional;
-        ReadOnlyIMDB initialData;
+        Optional<ReadOnlyImdb> addressBookOptional;
+        ReadOnlyImdb initialData;
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {

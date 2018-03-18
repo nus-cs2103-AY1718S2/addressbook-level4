@@ -16,10 +16,10 @@ public interface Model {
     Predicate<Patient> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyIMDB newData);
+    void resetData(ReadOnlyImdb newData);
 
     /** Returns the Imdb */
-    ReadOnlyIMDB getImdb();
+    ReadOnlyImdb getImdb();
 
     /** Deletes the given patient. */
     void deletePerson(Patient target) throws PatientNotFoundException;

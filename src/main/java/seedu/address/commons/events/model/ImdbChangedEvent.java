@@ -1,14 +1,14 @@
 package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.ReadOnlyIMDB;
+import seedu.address.model.ReadOnlyImdb;
 
 /** Indicates the Imdb in the model has changed*/
 public class ImdbChangedEvent extends BaseEvent {
 
-    public final ReadOnlyIMDB data;
+    public final ReadOnlyImdb data;
 
-    public ImdbChangedEvent(ReadOnlyIMDB data) {
+    public ImdbChangedEvent(ReadOnlyImdb data) {
         this.data = data;
     }
 

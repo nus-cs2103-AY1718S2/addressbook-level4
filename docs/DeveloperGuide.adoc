@@ -779,19 +779,6 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == Product Scope
-*Feature contribution*:
-
-*Add NRIC field in Owner's profile (minor):*
-
-The NRIC field will help the veterinarians and their assistants to better locate an owner using their unique ID.
-
-*Assign different colors to different tags (minor):*
-
-By assigning different colors to different tags, user can differentiate between tags more easily.
-
-*Integrating CalenderFX as framework for Calender view (major):*
-
-Vets and their assistants will be able to see their appointments in calender view integrated in the software.
 
 *Target user profile*:
 
@@ -805,6 +792,23 @@ Vets and their assistants will be able to see their appointments in calender vie
 * needs to search through amounts of data for information
 
 *Value proposition*: all-in-one vet assistant app that can view and make appointments and search for information
+
+*Feature contribution:*
+
+*Peng Xuanchang:*
+
+*Add NRIC field in Owner's profile (minor)*
+
+The NRIC field will help the veterinarians and their assistants to better locate an owner using their unique ID.
+
+*Assign different colors to different tags (minor)*
+
+By assigning different colors to different tags, user can differentiate between tags more easily.
+
+*Integrating CalenderFX as framework for Calender view (major)*
+
+Vets and their assistants will be able to see their appointments in calender view integrated in the software.
+
 
 [appendix]
 == User Stories

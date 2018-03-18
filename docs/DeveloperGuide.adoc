@@ -780,19 +780,28 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*: Couples in NUS who:
+*Target user profile:*
 
-* want to plan dates, in and out of school
-* want to store their memories via private journal entries
+* is currently a student of NUS
+* is in a relationship with a student of NUS
+* needs to remember special moments
+* needs to remember special dates
+* needs to schedule meetings
+* needs to find a good time to meet
 * prefer desktop apps over other types
 * can type fast
 * prefer typing over mouse input
 * are reasonably comfortable using CLI apps
 
-*Value proposition*: Help couples in NUS to create new memories and remember them through:
+*Value proposition:* all-in-one desktop app to help NUS couples make and remember memories with each other
 
-* Providing features such as NUS timetable comparator to allow couples in NUS to plan dates more easily
-* Jot down journal entries to remember their dates
+*Feature contribution:*
+
+* Timetable viewer: To help couples identify common breaks during school term so they can plan meetings
+* Scheduler: To schedule meetings and remind couples of planned meetings and important dates
+* Journal: To record special memories
+* Location: To help couples locate each other's classes so they can plan meetings near that area or meet them immediately after class
+* Data encryption: To keep others from viewing personal information such as journal entries
 
 [appendix]
 == User Stories
@@ -808,23 +817,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |As a part of a couple in NUS |view my partner's NUS timetable for the week |keep track of my partner's free time
+|`* * *` |new user |have commands that are intuitive and easy to remember |
 
-|`* * *` |As a part of a couple in NUS |add and view special events (e.g. Valentine's day) in the same month |better plan for these dates
+|`* * *` |user who perfers typing over using the mouse |be able to control almost everything from the CLI |
 
-|`* * *` |As a part of a couple in NUS |add/view Journal entries |remember memories of our dates
+|`* * *` |experienced user |have shortcut keys| do the same thing in a shorter time |
 
-|`* * *` |As a part of a couple in NUS |locate my partner from his NUS timetable |easily meet up with my partner on campus
+|`* * *` |pair of NUS students in a relationship |view my partner's NUS timetable for the week |keep track of my partner's free time
 
-|`* * *` |As a part of a couple in NUS |encrypt my NUSCouples save data |prevent strangers from reading personal information such as my journal entries
+|`* * *` |pair of NUS students in a relationship |replace my partner's NUS timetable |see the most updated timetable
+
+|`* * *` |person in a relationship |add and view special events (e.g. Valentine's day) in the same month |better plan for these dates
+
+|`* * *` |person in a relationship |schedule meetings with my partner |
+
+|`* * *` |person in a relationship |add/view Journal entries |remember special memories
+
+|`* * *` |pair of NUS students in a relationship |locate my partner from his NUS timetable |easily meet up with my partner on campus
+
+|`* * *` |user who values their privacy |encrypt my NUSCouples save data |prevent strangers from reading personal information such as my journal entries
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`* *` |As a part of a couple in NUS |be notified of special events (e.g. Valentine's day) in my calendar |better plan for these dates
-
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*`| As a user who likes to customize things |change the theme or customize text color |
+|`*`|user who likes to customize things |change the theme or customize text color |
 
 
 |=======================================================================
@@ -834,7 +851,7 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `NUSCouples` app and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person

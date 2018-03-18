@@ -3,7 +3,7 @@
     <!-- Recipe with invalid name field -->
     <recipes>
         <name>Ha!ns Mu@ster</name>
-        <phone isPrivate="false">9482424</phone>
+        <preparationTime isPrivate="false">9482424</preparationTime>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
     </recipes>

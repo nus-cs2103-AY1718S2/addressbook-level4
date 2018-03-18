@@ -2,55 +2,55 @@
 <recipebook>
     <recipes>
         <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
+        <preparationTime isPrivate="false">9482424</preparationTime>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
     </recipes>
     <recipes>
         <name>Ruth Mueller</name>
-        <phone isPrivate="false">87249245</phone>
+        <preparationTime isPrivate="false">87249245</preparationTime>
         <ingredient isPrivate="false">ruth@example.com</ingredient>
         <instruction isPrivate="false">81th street</instruction>
     </recipes>
     <recipes>
         <name>Heinz Kurz</name>
-        <phone isPrivate="false">95352563</phone>
+        <preparationTime isPrivate="false">95352563</preparationTime>
         <ingredient isPrivate="false">heinz@example.com</ingredient>
         <instruction isPrivate="false">wall street</instruction>
     </recipes>
     <recipes>
         <name>Cornelia Meier</name>
-        <phone isPrivate="false">87652533</phone>
+        <preparationTime isPrivate="false">87652533</preparationTime>
         <ingredient isPrivate="false">cornelia@example.com</ingredient>
         <instruction isPrivate="false">10th street</instruction>
     </recipes>
     <recipes>
         <name>Werner Meyer</name>
-        <phone isPrivate="false">9482224</phone>
+        <preparationTime isPrivate="false">9482224</preparationTime>
         <ingredient isPrivate="false">werner@example.com</ingredient>
         <instruction isPrivate="false">michegan ave</instruction>
     </recipes>
     <recipes>
         <name>Lydia Kunz</name>
-        <phone isPrivate="false">9482427</phone>
+        <preparationTime isPrivate="false">9482427</preparationTime>
         <ingredient isPrivate="false">lydia@example.com</ingredient>
         <instruction isPrivate="false">little tokyo</instruction>
     </recipes>
     <recipes>
         <name>Anna Best</name>
-        <phone isPrivate="false">9482442</phone>
+        <preparationTime isPrivate="false">9482442</preparationTime>
         <ingredient isPrivate="false">anna@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
     </recipes>
     <recipes>
         <name>Stefan Meier</name>
-        <phone isPrivate="false">8482424</phone>
+        <preparationTime isPrivate="false">8482424</preparationTime>
         <ingredient isPrivate="false">stefan@example.com</ingredient>
         <instruction isPrivate="false">little india</instruction>
     </recipes>
     <recipes>
         <name>Martin Mueller</name>
-        <phone isPrivate="false">8482131</phone>
+        <preparationTime isPrivate="false">8482131</preparationTime>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">chicago ave</instruction>
     </recipes>

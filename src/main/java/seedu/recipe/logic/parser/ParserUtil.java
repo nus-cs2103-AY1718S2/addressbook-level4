@@ -13,7 +13,7 @@ import seedu.recipe.commons.util.StringUtil;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Phone;
+import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -68,27 +68,27 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Parses a {@code String preparationTime} into a {@code PreparationTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws IllegalValueException if the given {@code preparationTime} is invalid.
      */
-    public static Phone parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+    public static PreparationTime parsePreparationTime(String preparationTime) throws IllegalValueException {
+        requireNonNull(preparationTime);
+        String trimmedPreparationTime = preparationTime.trim();
+        if (!PreparationTime.isValidPreparationTime(trimmedPreparationTime)) {
+            throw new IllegalValueException(PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new PreparationTime(trimmedPreparationTime);
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code Optional<String> preparationTime} into an {@code Optional<PreparationTime>} if {@code preparationTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
+    public static Optional<PreparationTime> parsePreparationTime(Optional<String> preparationTime) throws IllegalValueException {
+        requireNonNull(preparationTime);
+        return preparationTime.isPresent() ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.empty();
     }
 
     /**

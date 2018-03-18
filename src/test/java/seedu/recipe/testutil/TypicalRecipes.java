@@ -6,8 +6,8 @@ import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -26,33 +26,33 @@ public class TypicalRecipes {
 
     public static final Recipe ALICE = new RecipeBuilder().withName("Alice Pauline")
             .withInstruction("123, Jurong West Ave 6, #08-111").withIngredient("alice@example.com")
-            .withPhone("85355255")
+            .withPreparationTime("85355255")
             .withTags("friends").build();
     public static final Recipe BENSON = new RecipeBuilder().withName("Benson Meier")
             .withInstruction("311, Clementi Ave 2, #02-25")
-            .withIngredient("johnd@example.com").withPhone("98765432")
+            .withIngredient("johnd@example.com").withPreparationTime("98765432")
             .withTags("owesMoney", "friends").build();
-    public static final Recipe CARL = new RecipeBuilder().withName("Carl Kurz").withPhone("95352563")
+    public static final Recipe CARL = new RecipeBuilder().withName("Carl Kurz").withPreparationTime("95352563")
             .withIngredient("heinz@example.com").withInstruction("wall street").build();
-    public static final Recipe DANIEL = new RecipeBuilder().withName("Daniel Meier").withPhone("87652533")
+    public static final Recipe DANIEL = new RecipeBuilder().withName("Daniel Meier").withPreparationTime("87652533")
             .withIngredient("cornelia@example.com").withInstruction("10th street").build();
-    public static final Recipe ELLE = new RecipeBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final Recipe ELLE = new RecipeBuilder().withName("Elle Meyer").withPreparationTime("9482224")
             .withIngredient("werner@example.com").withInstruction("michegan ave").build();
-    public static final Recipe FIONA = new RecipeBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final Recipe FIONA = new RecipeBuilder().withName("Fiona Kunz").withPreparationTime("9482427")
             .withIngredient("lydia@example.com").withInstruction("little tokyo").build();
-    public static final Recipe GEORGE = new RecipeBuilder().withName("George Best").withPhone("9482442")
+    public static final Recipe GEORGE = new RecipeBuilder().withName("George Best").withPreparationTime("9482442")
             .withIngredient("anna@example.com").withInstruction("4th street").build();
 
     // Manually added
-    public static final Recipe HOON = new RecipeBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final Recipe HOON = new RecipeBuilder().withName("Hoon Meier").withPreparationTime("8482424")
             .withIngredient("stefan@example.com").withInstruction("little india").build();
-    public static final Recipe IDA = new RecipeBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final Recipe IDA = new RecipeBuilder().withName("Ida Mueller").withPreparationTime("8482131")
             .withIngredient("hans@example.com").withInstruction("chicago ave").build();
 
     // Manually added - Recipe's details found in {@code CommandTestUtil}
-    public static final Recipe AMY = new RecipeBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+    public static final Recipe AMY = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_AMY)
             .withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final Recipe BOB = new RecipeBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+    public static final Recipe BOB = new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_BOB)
             .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 

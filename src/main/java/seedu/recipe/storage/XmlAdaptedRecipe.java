@@ -12,8 +12,8 @@ import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
-import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -26,7 +26,7 @@ public class XmlAdaptedRecipe {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String phone;
+    private String preparationTime;
     @XmlElement(required = true)
     private String ingredient;
     @XmlElement(required = true)
@@ -44,9 +44,9 @@ public class XmlAdaptedRecipe {
     /**
      * Constructs an {@code XmlAdaptedRecipe} with the given recipe details.
      */
-    public XmlAdaptedRecipe(String name, String phone, String ingredient, String instruction, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedRecipe(String name, String preparationTime, String ingredient, String instruction, List<XmlAdaptedTag> tagged) {
         this.name = name;
-        this.phone = phone;
+        this.preparationTime = preparationTime;
         this.ingredient = ingredient;
         this.instruction = instruction;
         if (tagged != null) {
@@ -61,7 +61,7 @@ public class XmlAdaptedRecipe {
      */
     public XmlAdaptedRecipe(Recipe source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
+        preparationTime = source.getPreparationTime().value;
         ingredient = source.getIngredient().value;
         instruction = source.getInstruction().value;
         tagged = new ArrayList<>();
@@ -89,13 +89,13 @@ public class XmlAdaptedRecipe {
         }
         final Name name = new Name(this.name);
 
-        if (this.phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        if (this.preparationTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, PreparationTime.class.getSimpleName()));
         }
-        if (!Phone.isValidPhone(this.phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+        if (!PreparationTime.isValidPreparationTime(this.preparationTime)) {
+            throw new IllegalValueException(PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
         }
-        final Phone phone = new Phone(this.phone);
+        final PreparationTime preparationTime = new PreparationTime(this.preparationTime);
 
         if (this.ingredient == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Ingredient.class.getSimpleName()));
@@ -114,7 +114,7 @@ public class XmlAdaptedRecipe {
         final Instruction instruction = new Instruction(this.instruction);
 
         final Set<Tag> tags = new HashSet<>(recipeTags);
-        return new Recipe(name, phone, ingredient, instruction, tags);
+        return new Recipe(name, preparationTime, ingredient, instruction, tags);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class XmlAdaptedRecipe {
 
         XmlAdaptedRecipe otherRecipe = (XmlAdaptedRecipe) other;
         return Objects.equals(name, otherRecipe.name)
-                && Objects.equals(phone, otherRecipe.phone)
+                && Objects.equals(preparationTime, otherRecipe.preparationTime)
                 && Objects.equals(ingredient, otherRecipe.ingredient)
                 && Objects.equals(instruction, otherRecipe.instruction)
                 && tagged.equals(otherRecipe.tagged);

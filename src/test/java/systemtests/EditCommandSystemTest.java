@@ -9,18 +9,18 @@ import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INSTRUCTION_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INGREDIENT_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_PREPARATION_TIME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.recipe.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.recipe.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
@@ -41,8 +41,8 @@ import seedu.recipe.model.Model;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
-import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
 import seedu.recipe.model.tag.Tag;
@@ -62,8 +62,8 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
          */
         Index index = INDEX_FIRST_RECIPE;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
-                + PHONE_DESC_BOB + " " + INGREDIENT_DESC_BOB + "  " + INSTRUCTION_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
-        Recipe editedRecipe = new RecipeBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                + PREPARATION_TIME_DESC_BOB + " " + INGREDIENT_DESC_BOB + "  " + INSTRUCTION_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
+        Recipe editedRecipe = new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_BOB)
                 .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedRecipe);
 
@@ -80,7 +80,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a recipe with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + INGREDIENT_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB
                 + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
 
@@ -124,7 +124,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         showAllRecipes();
         index = INDEX_FIRST_RECIPE;
         selectRecipe(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + INGREDIENT_DESC_AMY
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
                 + INSTRUCTION_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new recipe's name
@@ -157,9 +157,9 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased() + INVALID_NAME_DESC,
                 Name.MESSAGE_NAME_CONSTRAINTS);
 
-        /* Case: invalid phone -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased() + INVALID_PHONE_DESC,
-                Phone.MESSAGE_PHONE_CONSTRAINTS);
+        /* Case: invalid preparation time -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased() + INVALID_PREPARATION_TIME_DESC,
+                PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
 
         /* Case: invalid ingredient -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased() + INVALID_INGREDIENT_DESC,
@@ -178,12 +178,12 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         assertTrue(getModel().getRecipeBook().getRecipeList().contains(BOB));
         index = INDEX_FIRST_RECIPE;
         assertFalse(getModel().getFilteredRecipeList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + INGREDIENT_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB
                 + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_RECIPE);
 
         /* Case: edit a recipe with new values same as another recipe's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + INGREDIENT_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB
                 + INSTRUCTION_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_RECIPE);
     }

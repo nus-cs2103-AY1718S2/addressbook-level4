@@ -9,7 +9,7 @@ import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.Recipe;
-import seedu.recipe.model.recipe.Phone;
+import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -33,7 +33,7 @@ public class EditRecipeDescriptorBuilder {
     public EditRecipeDescriptorBuilder(Recipe recipe) {
         descriptor = new EditRecipeDescriptor();
         descriptor.setName(recipe.getName());
-        descriptor.setPhone(recipe.getPhone());
+        descriptor.setPreparationTime(recipe.getPreparationTime());
         descriptor.setIngredient(recipe.getIngredient());
         descriptor.setInstruction(recipe.getInstruction());
         descriptor.setTags(recipe.getTags());
@@ -48,10 +48,10 @@ public class EditRecipeDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditRecipeDescriptor} that we are building.
+     * Sets the {@code PreparationTime} of the {@code EditRecipeDescriptor} that we are building.
      */
-    public EditRecipeDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
+    public EditRecipeDescriptorBuilder withPreparationTime(String preparationTime) {
+        descriptor.setPreparationTime(new PreparationTime(preparationTime));
         return this;
     }
 

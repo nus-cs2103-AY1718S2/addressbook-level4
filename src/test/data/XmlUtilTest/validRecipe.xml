@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <recipe>
     <name>Hans Muster</name>
-    <phone>9482424</phone>
+    <preparationTime>9482424</preparationTime>
     <ingredient>hans@example</ingredient>
     <instruction>4th street</instruction>
     <tagged>friends</tagged>

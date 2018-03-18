@@ -3,7 +3,7 @@ package seedu.recipe.testutil;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.recipe.logic.commands.AddCommand;
@@ -27,7 +27,7 @@ public class RecipeUtil {
     public static String getRecipeDetails(Recipe recipe) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + recipe.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + recipe.getPhone().value + " ");
+        sb.append(PREFIX_PREPARATION_TIME + recipe.getPreparationTime().value + " ");
         sb.append(PREFIX_INGREDIENT + recipe.getIngredient().value + " ");
         sb.append(PREFIX_INSTRUCTION + recipe.getInstruction().value + " ");
         recipe.getTags().stream().forEach(

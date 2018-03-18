@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- Recipe with an invalid phone field -->
+<!-- Recipe with an invalid preparationTime field -->
 <recipe>
     <name>Hans Muster</name>
-    <phone>9482asf424</phone>
+    <preparationTime>9482asf424</preparationTime>
     <ingredient>hans@example</ingredient>
     <instruction>4th street</instruction>
     <tagged>friends</tagged>

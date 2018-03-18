@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.recipe.logic.commands.exceptions.CommandException;
@@ -21,13 +21,13 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a recipe to the recipe book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
+            + PREFIX_PREPARATION_TIME + "PREPARATION_TIME "
             + PREFIX_INGREDIENT + "INGREDIENT "
             + PREFIX_INSTRUCTION + "INSTRUCTION "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
+            + PREFIX_PREPARATION_TIME + "98765432 "
             + PREFIX_INGREDIENT + "johnd@example.com "
             + PREFIX_INSTRUCTION + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TAG + "friends "

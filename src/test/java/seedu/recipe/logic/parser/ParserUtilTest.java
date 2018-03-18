@@ -21,19 +21,19 @@ import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
-import seedu.recipe.model.recipe.Phone;
+import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.testutil.Assert;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
+    private static final String INVALID_PREPARATION_TIME = "+651234";
     private static final String INVALID_INSTRUCTION = " ";
     private static final String INVALID_INGREDIENT = "example.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
+    private static final String VALID_PREPARATION_TIME = "123456";
     private static final String VALID_INSTRUCTION = "123 Main Street #0505";
     private static final String VALID_INGREDIENT = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
@@ -99,35 +99,35 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((Optional<String>) null));
+    public void parsePreparationTime_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePreparationTime((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePreparationTime((Optional<String>) null));
     }
 
     @Test
-    public void parsePhone_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(INVALID_PHONE));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(Optional.of(INVALID_PHONE)));
+    public void parsePreparationTime_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePreparationTime(INVALID_PREPARATION_TIME));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePreparationTime(Optional.of(INVALID_PREPARATION_TIME)));
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    public void parsePreparationTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parsePreparationTime(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parsePhone_validValueWithoutWhitespace_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(VALID_PHONE));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(VALID_PHONE)));
+    public void parsePreparationTime_validValueWithoutWhitespace_returnsPreparationTime() throws Exception {
+        PreparationTime expectedPreparationTime = new PreparationTime(VALID_PREPARATION_TIME);
+        assertEquals(expectedPreparationTime, ParserUtil.parsePreparationTime(VALID_PREPARATION_TIME));
+        assertEquals(Optional.of(expectedPreparationTime), ParserUtil.parsePreparationTime(Optional.of(VALID_PREPARATION_TIME)));
     }
 
     @Test
-    public void parsePhone_validValueWithWhitespace_returnsTrimmedPhone() throws Exception {
-        String phoneWithWhitespace = WHITESPACE + VALID_PHONE + WHITESPACE;
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(phoneWithWhitespace));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(phoneWithWhitespace)));
+    public void parsePreparationTime_validValueWithWhitespace_returnsTrimmedPreparationTime() throws Exception {
+        String preparationTimeWithWhitespace = WHITESPACE + VALID_PREPARATION_TIME + WHITESPACE;
+        PreparationTime expectedPreparationTime = new PreparationTime(VALID_PREPARATION_TIME);
+        assertEquals(expectedPreparationTime, ParserUtil.parsePreparationTime(preparationTimeWithWhitespace));
+        assertEquals(Optional.of(expectedPreparationTime), ParserUtil.parsePreparationTime(Optional.of(preparationTimeWithWhitespace)));
     }
 
     @Test

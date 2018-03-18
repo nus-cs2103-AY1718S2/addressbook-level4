@@ -6,8 +6,8 @@ import java.util.Set;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
-import seedu.recipe.model.recipe.Phone;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.model.util.SampleDataUtil;
 
@@ -17,20 +17,20 @@ import seedu.recipe.model.util.SampleDataUtil;
 public class RecipeBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_PREPARATION_TIME = "85355255";
     public static final String DEFAULT_INGREDIENT = "alice@gmail.com";
     public static final String DEFAULT_INSTRUCTION = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
-    private Phone phone;
+    private PreparationTime preparationTime;
     private Ingredient ingredient;
     private Instruction instruction;
     private Set<Tag> tags;
 
     public RecipeBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
+        preparationTime = new PreparationTime(DEFAULT_PREPARATION_TIME);
         ingredient = new Ingredient(DEFAULT_INGREDIENT);
         instruction = new Instruction(DEFAULT_INSTRUCTION);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
@@ -41,7 +41,7 @@ public class RecipeBuilder {
      */
     public RecipeBuilder(Recipe recipeToCopy) {
         name = recipeToCopy.getName();
-        phone = recipeToCopy.getPhone();
+        preparationTime = recipeToCopy.getPreparationTime();
         ingredient = recipeToCopy.getIngredient();
         instruction = recipeToCopy.getInstruction();
         tags = new HashSet<>(recipeToCopy.getTags());
@@ -72,10 +72,10 @@ public class RecipeBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Recipe} that we are building.
+     * Sets the {@code PreparationTime} of the {@code Recipe} that we are building.
      */
-    public RecipeBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
+    public RecipeBuilder withPreparationTime(String preparationTime) {
+        this.preparationTime = new PreparationTime(preparationTime);
         return this;
     }
 
@@ -88,7 +88,7 @@ public class RecipeBuilder {
     }
 
     public Recipe build() {
-        return new Recipe(name, phone, ingredient, instruction, tags);
+        return new Recipe(name, preparationTime, ingredient, instruction, tags);
     }
 
 }

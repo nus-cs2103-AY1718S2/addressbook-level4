@@ -16,7 +16,7 @@ import seedu.recipe.model.tag.UniqueTagList;
 public class Recipe {
 
     private final Name name;
-    private final Phone phone;
+    private final PreparationTime preparationTime;
     private final Ingredient ingredient;
     private final Instruction instruction;
 
@@ -25,10 +25,10 @@ public class Recipe {
     /**
      * Every field must be present and not null.
      */
-    public Recipe(Name name, Phone phone, Ingredient ingredient, Instruction instruction, Set<Tag> tags) {
-        requireAllNonNull(name, phone, ingredient, instruction, tags);
+    public Recipe(Name name, PreparationTime preparationTime, Ingredient ingredient, Instruction instruction, Set<Tag> tags) {
+        requireAllNonNull(name, preparationTime, ingredient, instruction, tags);
         this.name = name;
-        this.phone = phone;
+        this.preparationTime = preparationTime;
         this.ingredient = ingredient;
         this.instruction = instruction;
         // protect internal tags from changes in the arg list
@@ -39,8 +39,8 @@ public class Recipe {
         return name;
     }
 
-    public Phone getPhone() {
-        return phone;
+    public PreparationTime getPreparationTime() {
+        return preparationTime;
     }
 
     public Ingredient getIngredient() {
@@ -71,7 +71,7 @@ public class Recipe {
 
         Recipe otherRecipe = (Recipe) other;
         return otherRecipe.getName().equals(this.getName())
-                && otherRecipe.getPhone().equals(this.getPhone())
+                && otherRecipe.getPreparationTime().equals(this.getPreparationTime())
                 && otherRecipe.getIngredient().equals(this.getIngredient())
                 && otherRecipe.getInstruction().equals(this.getInstruction());
     }
@@ -79,15 +79,15 @@ public class Recipe {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, ingredient, instruction, tags);
+        return Objects.hash(name, preparationTime, ingredient, instruction, tags);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
-                .append(getPhone())
+                .append(" PreparationTime: ")
+                .append(getPreparationTime())
                 .append(" Ingredient: ")
                 .append(getIngredient())
                 .append(" Instruction: ")

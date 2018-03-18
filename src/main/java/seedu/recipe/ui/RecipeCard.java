@@ -31,7 +31,7 @@ public class RecipeCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private Label preparationTime;
     @FXML
     private Label instruction;
     @FXML
@@ -44,7 +44,7 @@ public class RecipeCard extends UiPart<Region> {
         this.recipe = recipe;
         id.setText(displayedIndex + ". ");
         name.setText(recipe.getName().fullName);
-        phone.setText(recipe.getPhone().value);
+        preparationTime.setText(recipe.getPreparationTime().value);
         instruction.setText(recipe.getInstruction().value);
         ingredient.setText(recipe.getIngredient().value);
         initTags(recipe);

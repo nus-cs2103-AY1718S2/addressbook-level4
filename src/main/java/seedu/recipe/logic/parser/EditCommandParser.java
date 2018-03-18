@@ -5,7 +5,7 @@ import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
@@ -33,7 +33,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PREPARATION_TIME, PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_TAG);
 
         Index index;
 
@@ -46,7 +46,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditRecipeDescriptor editRecipeDescriptor = new EditRecipeDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editRecipeDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editRecipeDescriptor::setPhone);
+            ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME)).ifPresent(editRecipeDescriptor::setPreparationTime);
             ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).ifPresent(editRecipeDescriptor::setIngredient);
             ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).ifPresent(editRecipeDescriptor::setInstruction);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editRecipeDescriptor::setTags);

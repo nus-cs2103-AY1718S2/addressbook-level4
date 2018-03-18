@@ -33,10 +33,10 @@ public class XmlUtilTest {
     private static final File VALID_RECIPE_FILE = new File(TEST_DATA_FOLDER + "validRecipe.xml");
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempRecipeBook.xml"));
 
-    private static final String INVALID_PHONE = "9482asf424";
+    private static final String INVALID_PREPARATION_TIME = "9482asf424";
 
     private static final String VALID_NAME = "Hans Muster";
-    private static final String VALID_PHONE = "9482424";
+    private static final String VALID_PREPARATION_TIME = "9482424";
     private static final String VALID_INGREDIENT = "hans@example";
     private static final String VALID_INSTRUCTION = "4th street";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
@@ -80,7 +80,7 @@ public class XmlUtilTest {
         XmlAdaptedRecipe actualRecipe = XmlUtil.getDataFromFile(
                 MISSING_RECIPE_FIELD_FILE, XmlAdaptedRecipeWithRootElement.class);
         XmlAdaptedRecipe expectedRecipe = new XmlAdaptedRecipe(
-                null, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
+                null, VALID_PREPARATION_TIME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
         assertEquals(expectedRecipe, actualRecipe);
     }
 
@@ -89,7 +89,7 @@ public class XmlUtilTest {
         XmlAdaptedRecipe actualRecipe = XmlUtil.getDataFromFile(
                 INVALID_RECIPE_FIELD_FILE, XmlAdaptedRecipeWithRootElement.class);
         XmlAdaptedRecipe expectedRecipe = new XmlAdaptedRecipe(
-                VALID_NAME, INVALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
+                VALID_NAME, INVALID_PREPARATION_TIME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
         assertEquals(expectedRecipe, actualRecipe);
     }
 
@@ -98,7 +98,7 @@ public class XmlUtilTest {
         XmlAdaptedRecipe actualRecipe = XmlUtil.getDataFromFile(
                 VALID_RECIPE_FILE, XmlAdaptedRecipeWithRootElement.class);
         XmlAdaptedRecipe expectedRecipe = new XmlAdaptedRecipe(
-                VALID_NAME, VALID_PHONE, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
+                VALID_NAME, VALID_PREPARATION_TIME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_TAGS);
         assertEquals(expectedRecipe, actualRecipe);
     }
 

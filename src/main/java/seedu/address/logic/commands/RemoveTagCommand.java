@@ -35,6 +35,7 @@ import seedu.address.model.tag.Tag;
 public class RemoveTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "removetag";
+    public static final String COMMAND_SHORTCUT = "rt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes the specific tags of the person identified "
             + "by the index number used in the last person listing.\n"

@@ -108,6 +108,9 @@ public class AddressBookParser {
         case RemoveTagCommand.COMMAND_WORD:
             return new RemoveTagCommandParser().parse(arguments);
 
+        case RemoveTagCommand.COMMAND_SHORTCUT:
+                return new RemoveTagCommandParser().parse(arguments);
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

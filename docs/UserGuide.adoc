@@ -35,14 +35,14 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for CLIndar.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-Please insert an image here
+*Please insert an image here*
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`task`* `n/Software Engineering Milestone 1 d/16/3/2018 17:00 r/Enhance major component`: Adds Software Engineering task to the board in CLIndar
-* **`event`* `n/Software Project s/1/5/2018 8:00 e/1/8/2018 8:00 l/School of Computing`: Adds Software Project event to the board
+* *`task`* `n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/Enhance major component`: Adds Software Engineering task to the board in CLIndar
+* **`event`* `n/Software Project s/01/05/2018 8:00 e/01/08/2018 8:00 l/School of Computing`: Adds Software Project event to the board
 * *`list task`* : list all uncompleted tasks
 * *`exit`* : exits the app
 
@@ -56,7 +56,7 @@ The following are the commands of CLIndar:
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `task n/NAME`, `NAME` is a parameter which can be used as `add n/Software Engineering Milestone 1`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `task n/NAME`, `NAME` is a parameter which can be used as `task n/Software Engineering Milestone 1`.
 * Items in square brackets are optional e.g `n/NAME [r/REMARK]` can be used as `n/Software Engineering Milestone 1 r/urgent` or as `n/Software Engineering Milestone 1`.
 * Parameters can be in any order e.g. if the command specifies `n/NAME d/DATETIME`, `d/DATETIME n/NAME` is also acceptable.
 ====
@@ -70,49 +70,44 @@ Format: `help`, `help COMMAND_WORD`, `man` or `man COMMAND_WORD`
 
 Examples:
 
-* `help`
+* `help task`
 
-* `man task`
+* `man`
 
 === Adding a task: `task`
 
 Adds a task to the board +
-Format: `add n/NAME d/DATETIME [r/REMARK]`
+Format: `task n/NAME d/DATETIME [r/REMARK]`
 
 Examples:
 
-* `task n/Software Engineering Milestone 1 d/16/3/2018 17:00 r/urgent`
-* `task n/Programming Methodology Assignment 2 d/16/3/2018 23:59`
+* `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
+* `task n/Programming Methodology Assignment 2 d/16/03/2018 23:59`
 
 === Adding an event: `event`
 
-Adds a event to the board +
+Adds an event to the board +
 Format: `event n/NAME s/STARTTIME e/ENDTTIME [l/LOCATION] [r/REMARK]`
 
 Examples:
 
-* `event n/Software Project s/1/5/2018 8:00 e/1/8/2018 8:00 l/School of Computing r/remember to bring laptop charger`
-* `event n/Blockchain Talk s/16/3/2018 16:00 e/16/3/2018 18:00`
+* `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
+* `event n/Blockchain Talk s/16/3/2018 16:00 e/16/03/2018 18:00`
+
+=== Listing all uncompleted tasks and upcoming events: `ls`
+
+Shows two lists in the board - the first list shows all uncompleted tasks, and the other list shows all upcoming events. +
+Format: `ls`
 
 === Listing all uncompleted tasks: `ls task`
 
 Shows a list of all uncompleted tasks in the board. +
 Format: `ls task`
 
-=== Listing all uncompleted events: `ls event`
+=== Listing all upcoming events: `ls event`
 
-Shows a list of all uncompleted event in the board. +
+Shows a list of all upcoming events in the board. +
 Format: `ls event`
-
-=== Editing a person : `edit task` *`Coming Soon in v2.0`*
-
-Edits task in the board. +
-Format: `edit task INDEX`
-
-=== Locating task by name: `find task` *`Coming Soon in v2.0`*
-
-Finds tasks that contains any of the given keywords. +
-Format: `find task KEYWORD [MORE_KEYWORDS]`
 
 === Removing a task: `rm task`
 
@@ -168,6 +163,11 @@ Completes the 3rd task in the board.
 * `ls task` +
 `com task 2` +
 Completes the 2nd task in the board.
+
+=== Listing all completed tasks: `ls complete task` or `ls com task`
+
+Shows a list of all completed tasks in the board. +
+Format: `ls complete task` or `ls com task`
 
 === Shows overdue tasks: `overdue`
 
@@ -243,6 +243,18 @@ Format: `clear` or `c`
 
 Exits the program. +
 Format: `exit`
+
+=== Editing a person : `edit task`
+
+*`Coming Soon in v2.0`*
+
+=== Locating task by name: `find task`
+
+*`Coming Soon in v2.0`*
+
+=== Listing all completed events: `ls complete event` or `ls com event`
+
+*`Coming Soon in v2.0`*
 
 === Saving the data
 

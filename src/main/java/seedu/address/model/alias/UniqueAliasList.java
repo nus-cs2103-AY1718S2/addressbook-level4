@@ -48,10 +48,10 @@ public class UniqueAliasList {
      */
     public void add(Alias toAdd) throws DuplicateAliasException {
         requireNonNull(toAdd);
-        if (contains(toAdd.aliasName)) {
+        if (contains(toAdd.getAlias())) {
             throw new DuplicateAliasException();
         }
-        hashList.put(toAdd.aliasName, toAdd.command);
+        hashList.put(toAdd.getAlias(), toAdd.getCommand());
     }
 
     /**
@@ -59,14 +59,13 @@ public class UniqueAliasList {
      */
     public void importAlias(Alias toAdd) {
         requireNonNull(toAdd);
-        if (!contains(toAdd.aliasName)) {
-            hashList.put(toAdd.aliasName, toAdd.command);
+        if (!contains(toAdd.getAlias())) {
+            hashList.put(toAdd.getAlias(), toAdd.getCommand());
         }
     }
 
     /**
      * Converts HashMap into an observable list
-     *
      */
     public void convertToList() {
         for (String key : hashList.keySet()) {

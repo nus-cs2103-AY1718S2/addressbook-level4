@@ -17,6 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TimeTableLink;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.todo.Content;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -58,6 +59,21 @@ public class ParserUtil {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
         return new Name(trimmedName);
+    }
+
+    /**
+     * Parses a {@code String content} into a {@code Content}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code content} is invalid.
+     */
+    public static Content parseContent(String content) throws IllegalValueException {
+        requireNonNull(content);
+        String trimmedContent = content.trim();
+        if (!Content.isValidContent(trimmedContent)) {
+            throw new IllegalValueException(Content.MESSAGE_CONTENT_CONSTRAINTS);
+        }
+        return new Content(trimmedContent);
     }
 
     /**

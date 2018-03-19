@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
@@ -21,6 +22,7 @@ public class AddPatientQueueCommandParser implements Parser<AddPatientQueueComma
      */
     @Override
     public AddPatientQueueCommand parse(String args) throws ParseException {
+        requireNonNull(args);
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {

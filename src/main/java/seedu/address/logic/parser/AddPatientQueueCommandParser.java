@@ -31,9 +31,7 @@ public class AddPatientQueueCommandParser implements Parser<AddPatientQueueComma
 
         String patientName = argMultimap.getValue(PREFIX_NAME).toString();
 
-        //search patient by patient name from patient list
-
-        return new AddPatientQueueCommand(patientName);     //parameter change to patient object later
+        return new AddPatientQueueCommand(patientName);
     }
 
     /**

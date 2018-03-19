@@ -1,4 +1,4 @@
-= Loanshark Manager
+= Loanshark Tycoon
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-F12-B4/main[image:https://travis-ci.org/CS2103JAN2018-F12-B4/main.svg?branch=master[Build Status]]

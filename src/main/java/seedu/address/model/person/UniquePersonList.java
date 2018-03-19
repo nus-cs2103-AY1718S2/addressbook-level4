@@ -95,6 +95,14 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Sort all persons based on alphabetical order of their full names
+     */
+    public void sort() {
+        internalList.sort((personA, personB) -> (
+            personA.getName().fullName.toLowerCase().compareTo(personB.getName().fullName.toLowerCase())));
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Person> asObservableList() {

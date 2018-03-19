@@ -82,6 +82,11 @@ Shows a list of all persons in the address book. +
 Format: `list`
 Alias: `l`
 
+=== Sorting all persons : `sort`
+
+Sorts all persons in the address book based on alphabetical order of their full names. +
+Format: `sort`
+
 === Listing all clients tagged with one or more specific tag (union): `listtag`
 
 `Coming in v2.0`

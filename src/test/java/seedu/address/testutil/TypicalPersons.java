@@ -48,6 +48,23 @@ public class TypicalPersons {
             .withEmail("stefan@example.com").withAddress("little india").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
+    public static final Person BLAKE = new PersonBuilder().withName("Blake Stu").withPhone("9390845")
+            .withEmail("blakestu@example.com").withAddress("Trade Route").build();
+    public static final Person HOB1 = new PersonBuilder().withName("Hob Wright").withPhone("8406714")
+            .withEmail("hob1@example.com").withAddress("Grey Crane").build();
+    public static final Person HOB2 = new PersonBuilder().withName("Hob wright").withPhone("8024786")
+            .withEmail("hob2@example.com").withAddress("Hype Street").build();
+    public static final Person JANE = new PersonBuilder().withName("Jane Low").withPhone("8390841")
+            .withEmail("janelow@example.com").withAddress("Neverend").build();
+    public static final Person JOHN1 = new PersonBuilder().withName("JohN Doe").withPhone("9836241")
+            .withEmail("john1@example.com").withAddress("Holly Way").build();
+    public static final Person JOHN2 = new PersonBuilder().withName("John Doe").withPhone("9816482")
+            .withEmail("john2@example.com").withAddress("Peace Street").build();
+    public static final Person JOHN3 = new PersonBuilder().withName("John doe").withPhone("8373364")
+            .withEmail("john3@example.com").withAddress("Lace Walk").build();
+    public static final Person LEONARD = new PersonBuilder().withName("Leonard Xu").withPhone("9067234")
+            .withEmail("leonard@example.com").withAddress("Daze Lane").build();
+
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

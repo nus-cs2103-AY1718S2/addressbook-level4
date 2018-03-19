@@ -118,6 +118,26 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by tag: `findtag`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+* The order of the keywords does not matter. e.g. `friends classmate` will match `classmate friends`
+* Only the tags are searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends classmates` will return persons with tags `friends` and `neighbour`, `owesMoney` `friends`
+****
+
+Examples:
+
+* `findtag friends` +
+Returns any person having tags `friends`
+* `find friends classmate neighbour` +
+Returns any person having tags `friends`, `classmate`, or `neighbour`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -137,6 +157,11 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Sorting all persons : `sort`
+
+Sorts all persons in the address book alphabetically and then displays the current list in sorted order. +
+Format: `sort`
 
 === Selecting a person : `select`
 
@@ -176,7 +201,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `sort` and `clear`).
 ====
 
 Examples:

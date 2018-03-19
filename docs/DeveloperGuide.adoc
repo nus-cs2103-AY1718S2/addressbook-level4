@@ -802,7 +802,7 @@ manage which include contact details and profiles of potential employees. It is 
  ** Users can delete reminders.
  ** The reminders will be displayed on the screen sorted according to earliest time due.
 
- * Minor Feature: Contact details and LinkedIn search display.
+ * Minor Feature: Contact details and LinkedIn search display
  ** Users can view the contact details in a separate panel using the `select` command.
  ** Users can view the LinkedIn search of the person using the `linkedIn` command.
 

@@ -60,6 +60,9 @@ public class ImdbParser {
 
         if (state == NO_USER){
             switch (commandWord){
+                case ExitCommand.COMMAND_WORD:
+                    return new ExitCommand();
+
                 case ExitCommand.COMMAND_ALIAS:
                     return new ExitCommand();
 
@@ -75,8 +78,104 @@ public class ImdbParser {
                 case LoginCommand.COMMAND_ALIAS:
                     return new LoginCommandParser().parse(arguments);
 
+                case AddCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case AddCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case EditCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case EditCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case SelectCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case SelectCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case DeleteCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case DeleteCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case ClearCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case ClearCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case FindCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case FindCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case ListCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case ListCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case HistoryCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case HistoryCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case UndoCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case UndoCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case RedoCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case RedoCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case RemarkCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case RemarkCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case ViewAppointmentCommand.COMMAND_WORD:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
+                case ViewAppointmentCommand.COMMAND_ALIAS:
+                    throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                            LoginCommand.MESSAGE_USAGE));
+
                 default:
-                    throw new ParseException("Not logged in!");
+                    throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
         } else if (state == DOCTOR_LOGIN){
             switch (commandWord) {
@@ -142,10 +241,10 @@ public class ImdbParser {
                     return new HelpCommand();
 
                 case LoginCommand.COMMAND_WORD:
-                    return new LoginCommandParser().parse(arguments);
+                    throw new ParseException(LoginCommand.MESSAGE_ALREADY_LOGGED_IN);
 
                 case LoginCommand.COMMAND_ALIAS:
-                    return new LoginCommandParser().parse(arguments);
+                    throw new ParseException(LoginCommand.MESSAGE_ALREADY_LOGGED_IN);
 
                 case UndoCommand.COMMAND_WORD:
                     return new UndoCommand();
@@ -238,10 +337,10 @@ public class ImdbParser {
                     return new HelpCommand();
 
                 case LoginCommand.COMMAND_WORD:
-                    return new LoginCommandParser().parse(arguments);
+                    throw new ParseException(LoginCommand.MESSAGE_ALREADY_LOGGED_IN);
 
                 case LoginCommand.COMMAND_ALIAS:
-                    return new LoginCommandParser().parse(arguments);
+                    throw new ParseException(LoginCommand.MESSAGE_ALREADY_LOGGED_IN);
 
                 case UndoCommand.COMMAND_WORD:
                     return new UndoCommand();

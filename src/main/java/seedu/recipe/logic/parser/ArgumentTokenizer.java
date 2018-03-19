@@ -2,6 +2,8 @@ package seedu.recipe.logic.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Tokenizes arguments string of the form: {@code preamble <prefix>value <prefix>value ...}<br>
@@ -71,11 +73,17 @@ public class ArgumentTokenizer {
      * {@code argsString} = "e/hi p/900", {@code prefix} = "p/" and
      * {@code fromIndex} = 0, this method returns 5.
      */
+    //@@author kokonguyen191
     private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
-        return prefixIndex == -1 ? -1
-                : prefixIndex + 1; // +1 as offset for whitespace
+        Pattern pattern = Pattern.compile("[ \n]" + "\\Q" + prefix + "\\E");
+        Matcher matcher = pattern.matcher(argsString);
+        if (matcher.find(fromIndex)) {
+            return matcher.start() + 1;
+        } else {
+            return -1;
+        }
     }
+    //@@author
 
     /**
      * Extracts prefixes and their argument values, and returns an {@code ArgumentMultimap} object that maps the

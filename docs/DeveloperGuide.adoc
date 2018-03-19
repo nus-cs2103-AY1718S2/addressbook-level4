@@ -794,37 +794,44 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Feature Contribution*:
 
+[options="header"]
 |=======================================================================
 |Assignee |Major | Minor
 |Seunghwan Choi
-|* Updating the UI to show multiple social pages on the application window:
- ** With all the links to the different social media pages of a person stored in the user's address book, the user can
- view all of the pages in a single window under collapsible tabs (to distinguish the different social media platform
- pages) when he/she selects the particular person.
- This simplifies the process of providing the user with his/her daily social media fix.
-|* `login` function:
- ** Allows the user to login to all the available social media platforms as given by the application.
- This feature is essential so that users can perform their required tasks, such as accessing their friends list and
- viewing the social feeds of friends.
+a|
+* Updating the UI to show multiple social pages on the application window:
+** With all the links to the different social media pages of a person stored in the user's address book, the user can
+view all of the pages in a single window under collapsible tabs (to distinguish the different social media platform
+pages) when he/she selects the particular person.
+This simplifies the process of providing the user with his/her daily social media fix.
+a|
+* `login` function:
+** Allows the user to login to all the available social media platforms as given by the application.
+This feature is essential so that users can perform their required tasks, such as accessing their friends list and
+viewing the social feeds of friends.
 
 |Chuang Cheng Heng
-|* `searchall` function:
- ** Allows user to perform the search action on all the social media platforms available with a single command.
- This feature improves the product significantly because a user can do search on the application instead of going to
- the individual social media platform and repeatedly perform the search.
-|* `findtag` command:
- ** Allows the user to find persons whose tags contain the input keywords.
- This can assist users in filtering out people who only use a certain social media platform if they are tagged.
+a|
+* `searchall` function:
+** Allows user to perform the search action on all the social media platforms available with a single command.
+This feature improves the product significantly because a user can do search on the application instead of going to
+the individual social media platform and repeatedly perform the search.
+a|
+* `findtag` command:
+** Allows the user to find persons whose tags contain the input keywords.
+This can assist users in filtering out people who only use a certain social media platform if they are tagged.
 
 |Tan Wei Jie
-|* Add person from social media friends list function:
- ** Allows user to perform the `add` command by obtaining the relevant information stated in his/her friend's social
- media page.
- This feature eases the process of having to manually key in all the required information before a user can add a
- person to the address book.
-|* `sort` command:
- ** Allows the user to sort the address book list alphabetically.
- This feature organises and arranges the list for easier viewing and searching.
+a|
+* Add person from social media friends list function:
+** Allows user to perform the `add` command by obtaining the relevant information stated in his/her friend's social
+media page.
+This feature eases the process of having to manually key in all the required information before a user can add a
+person to the address book.
+a|
+* `sort` command:
+** Allows the user to sort the address book list alphabetically.
+This feature organises and arranges the list for easier viewing and searching.
 |=======================================================================
 // end::product-scope[]
 

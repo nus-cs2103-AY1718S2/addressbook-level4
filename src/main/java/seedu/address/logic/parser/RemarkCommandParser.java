@@ -10,6 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.patient.Remark;
 
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -35,7 +36,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         try {
             Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
             String remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
-            return new RemarkCommand(index, remark);
+            return new RemarkCommand(index, new Remark(remark));
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));

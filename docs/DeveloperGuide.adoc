@@ -787,8 +787,12 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* visually-oriented so prefers to see maps instead of addresses
+* may take on different user profiles for different users with different contact lists
+* may require to add contacts on the go occasionally quickly
+* may like to be able to communicate with addressees
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app while being accessible easily on the go
 
 [appendix]
 == User Stories
@@ -903,8 +907,8 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Need to have access to the app while driving, needs to work offline and have internet access for any updates during the day
+.  Driver needs to be trained in the tool so it should be user-friendly
 
 [appendix]
 == Glossary
@@ -977,3 +981,28 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+[Appendix B (Product scope)]
+
+==Product scope
+
+Delivery system for drivers with a database of deliveries and locations to map the optimal route in a handsfree offline system.
+
+==Feature contribution
+
+. Shi Kang
+Major: Login for each delivery driver to own a separate list of addresses in his customised address book
+Minor: ability for correspondence with each addressee
+
+. Meera
+Minor: adding delivery date tag
+Major:  prioritizing deliveries
+
+. Matthieu
+Minor : simplifying the input
+Major: beautify the UI
+
+. Minh
+Minor: Adding google maps and handsfree sound feature
+Major: Mapping out the routes for delivery
+

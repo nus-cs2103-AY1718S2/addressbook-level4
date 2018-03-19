@@ -894,7 +894,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 |Name |Minor Enhancement |Major Enhancement
 |Lee Yong Ler | Adding of `TimeTable` class and into the `Person` class. This allows user to enter their time table into the address book, making it easy for them to know their time table.|Data encryption system to allow the `addressbook.xml` to be encrypted when not in use. A `password` command will also be added for user to key in their own password. This ensure that the privacy of users are respected and information in the address book is confidential. NUS students would be able to store sensitive information like time table without fear of them leaking.
 |Loh Cai Jun |x |x
-|Ong Jing Yin |x |x
+|Ong Jing Yin |Designing UI for finding vacant venues feature. UI will display a table of timings for the requested location, with information about whether the venue is vacant or not |Customised alias to allow users to set their own short cuts or intuitive naming for existing commands, to cater to their own preference.
 |Wayne Neo|x |x
 |=======================================================================
 

@@ -780,7 +780,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target User Profile*:
 
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -788,7 +788,34 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value Proposition*: manage contacts faster than a typical mouse/GUI driven app
+
+*Feature Contribution*:
+
+`Ryan` - Media: As a user, I want to share my personal recipes with my friends so that they can try my recipes.
+
+* add url to recipe `minor`
+* add image to recipe
+* share recipe on social media `major`
+
+`Nicholas` - Organisation: As a user, I want to organise my recipe storage so that I can maintain ease of access to my recipes.
+
+* create, edit, delete groups for recipes `major`
+* save files online (cloud storage)
+* search recipes by tags `minor`
+
+`Huang Duong` - Efficiency: As a user, I want to efficiently manage my recipes so that I can save time.
+
+* find recipe by name, ingredient, cuisine `minor`
+* filter and sort recipes by cooking time/difficulty level
+* sort recipes by name
+* auto-completion, IDE style shortcuts (“manage” because you may need to edit recipes. This auto-completion helps in quickening the process) `major`
+* get a random recipe
+
+`Thanh Nguyen` - Data: As a user, I want to easily add recipes from the internet so that I can save time on unnecessary typing of recipes.
+
+* add recipe in a user friendly manner (not a single command line) `minor`
+* search and import recipes from internet `major`
 
 [appendix]
 == User Stories

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -36,6 +38,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
      */
     //will be replaced using patient object as parameter
     public AddPatientQueueCommand(NameContainsKeywordsPredicate predicate) {
+        requireNonNull(predicate);
         this.predicate = predicate;
     }
 

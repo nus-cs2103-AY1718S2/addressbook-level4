@@ -816,6 +816,14 @@ Halal/Non-halal and Vegetarian/Non-vegetarian features now are available for Add
 are optional, if no input is given, the default value is Non-halal and Non-vegetarian.
 - Major enhancement: Add a new feature
 
+* Zhang Yijiong
+- Minor enhancement: Add back up method in storage +
+Users are able to back up the address book in a different location.
+- Minor enhancement: Add find location feature +
+When clicking one particular person in the addressbook, the browser on the left will automatically show that person's
+address using google map.
+- Major enhancement: Add a new feature
+
 [appendix]
 == User Stories
 

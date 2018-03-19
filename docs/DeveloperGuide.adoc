@@ -800,6 +800,16 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 ** Added a `theme` command that allows the user to switch between the various themes included with Bibliotek.
 ** This allows the user to change the design of Bibliotek according to their own preferences.
 
+[discrete]
+==== Qiu Siqi
+* **Search for books in the library or add to watchlist** (major)
+** Update network component to support NLB catalogue.
+** Add `library` and `watch` commands to perform search and add to watchlist respectively.
+** This allows the user to easily check or get updated on the availability of books.
+* **Get recently viewed books** (minor)
+** Add a `recent` command that allows user to view previous selections that he did not add into his book shelf.
+** This allows the user to reconsider his choices without having to perform the search again.
+
 [appendix]
 == User Stories
 

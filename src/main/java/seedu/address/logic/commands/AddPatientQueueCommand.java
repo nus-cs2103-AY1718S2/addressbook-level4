@@ -34,7 +34,8 @@ public class AddPatientQueueCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        return null;
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, patientName));
     }
 
     @Override

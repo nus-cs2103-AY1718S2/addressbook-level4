@@ -78,7 +78,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Importing contacts from CSV : `import_contacts`
+=== Importing contacts from CSV : `import_contacts` or `ic`
 
 Will import contacts from a csv file that contains the header (Name, Email, Phone, Address) +
 Format: `import_contacts User/username/examplefile.csv`

@@ -27,6 +27,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
     /**
      * Creates an AddCommand to add the specified {@code Patient}
      */
+    //will be replaced using patient object as parameter
     public AddPatientQueueCommand(String patientName) {
         requireNonNull(patientName);
     }

@@ -17,8 +17,8 @@ public class Date {
             + ", mm between 01 and 12"
             + ", yyyy between 0000 and 9999"
             + ", hh between 00 to 23"
-            + " and mm between 00 to 59"
-            + "There must be a single space between the date and the time.";
+            + " and mm between 00 to 59."
+            + " There must be a single space between the date and the time.";
 
     // Regex for the date format
     private static final String DAY_PART_REGEX = "([0-9]{2})";

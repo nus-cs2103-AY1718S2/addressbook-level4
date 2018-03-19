@@ -225,6 +225,30 @@ record 1 d/19 March 2018 s/Runny nose, Headache i/Flu t/Zyrtec +
 Edits the record for the first person to Date:19 March 2018 Symptoms:Runny nose, Headache
 Illness:Flu Treatment:Zyrtec`.
 
+=== Add patient into visiting queue with patient name: `addq` [coming in v1.2]
+
+Add patient into visiting queue (registration).
+Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
+
+Examples:
+* `addq Betsy` +
+Betsy will be added at the back of the visiting queue.
+
+* `vq John` +
+John will be added at the back of the visiting queue.
+
+=== Remove patient into visiting queue with patient name: `removeq` [coming in v1.2]
+
+Remove the first patient from the visiting queue (check-out).
+Format: `removeq` or `rq`
+
+Examples:
+* `removeq Betsy` +
+Betsy will be removed if she is the first patient in the queue.
+
+* `vq John` +
+John will be removed if he is the first patient in the queue.
+
 === Listing entered commands : `history` or `hi`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -285,10 +309,53 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== View patient appointments: `viewappt`
+=== View medical appointments by patient name: `viewappt` [coming in v1.3]
 
-Shows a list of patient appointments in the Imdb.
-Format: `viewappt` or `va`
+Shows a list of medical appointments of the patient.
+Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
+
+Examples:
+* `viewappt Betsy` +
+List of medical appointments made by Betsy.
+
+* `va John` +
+List of medical appointments made by John.
+
+=== Delete a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
+
+Delete a medical appointment of the patient.
+Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
+
+Examples:
+* `delappt Betsy 2` +
+Delete a medical appointment of Betsy with index number 2.
+
+* `da John 1` +
+Delete a medical appointment of John with index number 1.
+
+=== View medical appointments by date: `viewappt` [coming in v1.4]
+
+Shows a list of medical appointments of a particular date.
+Format: `viewappt DATE` or `va DATE`
+
+Examples:
+* `viewappt 19/3/2018` +
+List of medical appointments on 19/3/2018.
+
+* `va 23/3/2019` +
+List of medical appointments on 23/3/2018.
+
+== Add a medical appointment with: `addappt` [coming in v1.4]
+
+Add a medical appointment with patient name, date, time.
+Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
+
+Examples:
+* `addappt Betsy 19/3/2018 1000` +
+Add a medical appointment for Betsy on 19/3/2018 at 10am.
+
+* `aa John 23/3/2019 1430` +
+Add a medical appointment for John on 23/3/2018 at 2:30pm.
 
 === Clearing all entries : `clear` or `c`
 

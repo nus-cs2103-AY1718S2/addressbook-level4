@@ -36,15 +36,13 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.activity.Remark;
-import seedu.address.model.activity.Name;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
-import seedu.address.model.activity.Task;
+import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Remark;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.ActivityUtil;
 import seedu.address.testutil.TaskBuilder;
 
@@ -61,7 +59,8 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
          */
         Index index = INDEX_FIRST_ACTIVITY;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
-                + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
+                + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB
+                + " " + TAG_DESC_HUSBAND + " ";
         Activity editedActivity = new TaskBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
                 .withRemark(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedActivity);
@@ -79,7 +78,8 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a activity with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
 
@@ -115,15 +115,17 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
-        /* --------------------- Performing edit operation while a activity card is selected -------------------------- */
+        /* --------------------- Performing edit operation while a activity card is selected ------------------------ */
 
-        /* Case: selects first card in the activity list, edit a activity -> edited, card selection remains unchanged but
+        /* Case: selects first card in the activity list, edit a activity -> edited,
+         * card selection remains unchanged but
          * browser url changes
          */
         showAllPersons();
         index = INDEX_FIRST_ACTIVITY;
         selectPerson(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new activity's name
@@ -153,19 +155,23 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
                 EditCommand.MESSAGE_NOT_EDITED);
 
         /* Case: invalid name -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased() + INVALID_NAME_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST_ACTIVITY.getOneBased() + INVALID_NAME_DESC,
                 Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased() + INVALID_PHONE_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST_ACTIVITY.getOneBased() + INVALID_PHONE_DESC,
                 DateTime.MESSAGE_DATETIME_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased() + INVALID_ADDRESS_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST_ACTIVITY.getOneBased() + INVALID_ADDRESS_DESC,
                 Remark.MESSAGE_REMARK_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased() + INVALID_TAG_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST_ACTIVITY.getOneBased() + INVALID_TAG_DESC,
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a activity with new values same as another activity's values -> rejected */
@@ -173,12 +179,16 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
         assertTrue(getModel().getDeskBoard().getActivityList().contains(BOB));
         index = INDEX_FIRST_ACTIVITY;
         assertFalse(getModel().getFilteredActivityList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
+                + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 
-        /* Case: edit a activity with new values same as another activity's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        /* Case: edit a activity with new values same as another activity's
+         * values but with different tags -> rejected
+         */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
+                + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
@@ -194,7 +204,8 @@ public class EditCommandSystemTest extends RemarkBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)}
+     * and in addition,<br>
      * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
      * 2. Asserts that the model related components are updated to reflect the activity at index {@code toEdit} being
      * updated to values specified {@code editedActivity}.<br>

@@ -21,7 +21,8 @@ public class ActivityListPanelTest extends GuiUnitTest {
     private static final ObservableList<Activity> TYPICAL_ACTIVITIES =
             FXCollections.observableList(getTypicalActivitiess());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_ACTIVITY);
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToListRequestEvent(INDEX_SECOND_ACTIVITY);
 
     private PersonListPanelHandle personListPanelHandle;
 

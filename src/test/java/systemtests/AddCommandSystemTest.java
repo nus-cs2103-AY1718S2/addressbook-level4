@@ -56,7 +56,8 @@ public class AddCommandSystemTest extends RemarkBookSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a activity without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a activity without tags to a non-empty address book,
+         * command with leading spaces and trailing spaces
          * -> added
          */
         Activity toAdd = AMY;
@@ -122,7 +123,7 @@ public class AddCommandSystemTest extends RemarkBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(DEMO1);
 
-        /* ------------------------ Perform add operation while a activity card is selected --------------------------- */
+        /* ------------------------ Perform add operation while a activity card is selected ------------------------ */
 
         /* Case: selects first card in the activity list, add a activity -> added, card selection remains unchanged */
         selectPerson(Index.fromOneBased(1));

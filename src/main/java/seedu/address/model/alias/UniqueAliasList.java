@@ -42,21 +42,30 @@ public class UniqueAliasList {
     }
 
     /**
-     * Adds a Alias to the list.
+     * Adds an Alias to the list.
      *
      * @throws DuplicateAliasException if the Alias to add is a duplicate of an existing Alias in the list.
      */
     public void add(Alias toAdd) throws DuplicateAliasException {
         requireNonNull(toAdd);
-        if (contains(toAdd.aliasName)) {
+        if (contains(toAdd.getAlias())) {
             throw new DuplicateAliasException();
         }
-        hashList.put(toAdd.aliasName, toAdd.command);
+        hashList.put(toAdd.getAlias(), toAdd.getCommand());
+    }
+
+    /**
+     * Imports an Alias to the list if the Alias is not a duplicate of an existing Alias in the list.
+     */
+    public void importAlias(Alias toAdd) {
+        requireNonNull(toAdd);
+        if (!contains(toAdd.getAlias())) {
+            hashList.put(toAdd.getAlias(), toAdd.getCommand());
+        }
     }
 
     /**
      * Converts HashMap into an observable list
-     *
      */
     public void convertToList() {
         for (String key : hashList.keySet()) {

@@ -130,6 +130,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         aliases.add(alias);
     }
 
+    public void importAlias(Alias alias) {
+        aliases.importAlias(alias);
+    }
+
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.

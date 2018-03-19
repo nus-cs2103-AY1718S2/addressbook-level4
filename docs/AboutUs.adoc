@@ -17,7 +17,7 @@ Role: Project Advisor
 '''
 
 === Ong Jing Yin
-image::jing.jpg[width="150", align="left"]
+image::jingyinno.jpg[width="150", align="left"]
 {empty}[http://github.com/jingyinno[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
@@ -26,7 +26,7 @@ Responsibilities: Logic
 '''
 
 === Low Cai Jun
-image::caijun.jpg[width="150", align="left"]
+image::caijun7.jpg[width="150", align="left"]
 {empty}[http://github.com/caijun7[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -35,8 +35,8 @@ Responsibilities: Model
 '''
 
 === Wayne Neo Wei Zhe
-image::wayne.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+image::AzuraAiR.jpg[width="150", align="left"]
+{empty}[http://github.com/AzuraAiR[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage
@@ -44,7 +44,7 @@ Responsibilities: Storage
 '''
 
 === Lee Yong Ler
-image::yongler.jpg[width="150", align="left"]
+image::yeggasd.jpg[width="150", align="left"]
 {empty}[http://github.com/yeggasd[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

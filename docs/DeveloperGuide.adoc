@@ -396,6 +396,40 @@ It is used to prevent data from being stored in plain text and hence a simple ci
 ** Cons: Increase coupling of more classes and makes the implementation harder to understand.
 // end::dataencryption[]
 
+=== Import AddressBook feature
+==== Current Implementation
+
+The import AddressBook mechanism is facilitated by `XmlSerializableAddressBook`, which resides inside `Storage`. It allows the imported XML file to be converted into AddressBook format.
+
+The imported AddressBook must be a XML file that follows `XmlAdaptedPerson`, `XmlAdaptedTag`, and `XmlAdaptedAlias` format.
+
+`Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` in the user's AddressBook will be added.
+
+The following sequence diagram shows how the import operation works:
+
+image::ImportCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Imported AddressBook file format
+
+* **Alternative 1 (current choice):** Uses the same XML file format as `XmlSerializableAddressBook`
+** Pros: Same file format as saved AddressBook, users can transfer AddressBook easily without the need to indicate file format.
+** Cons: Imported AddressBook must be in XML file format that follows `XmlAdaptedPerson`, `XmlAdaptedTag`, and `XmlAdaptedAlias` format.
+* **Alternative 2:** Uses CSV file format
+** Pros: CSV file format is widely used and is able to transfer between different applications (eg. Microsoft Excel).
+** Cons: Different file format as saved AddressBook, implementation of converting file type from XML to CSV is needed.
+
+===== Aspect: How import command executes
+
+* **Alternative 1 (current choice):** Adds all `Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's AddressBook.
+** Pros: User does not need to indicate which `Person`, `Tag` or `Alias` to be imported.
+** Cons: User is not able to select which `Person`, `Tag` or `Alias` to be imported.
+* **Alternative 2:** Adds selected `Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's AddressBook.
+** Pros: User is able to select which `Person`, `Tag` or `Alias` to be imported.
+** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported.
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -835,9 +869,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student with friends |search friends who have taken or are taking similar modules |know who I can group with or approach for help
 
-|`* * *` |student with friends |find my friend’s timetables |can find common studying time with them
+|`* * *` |student with friends |find my friend’s timetables |find common studying time with them
 
-|`* * *` |user |add tasks |keep track of what I need to do
+|`* * *` |busy student |have my own shortforms of commands |type more quickly and in my own style
 
 |`* * *` |user |add a new person |
 
@@ -848,8 +882,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user who is concerned about privacy |have my data encrypted |ensure that no one can access my data without my permission
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`* *` |student with friends |tag my friends in my tasks, so that we can share important information |
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 

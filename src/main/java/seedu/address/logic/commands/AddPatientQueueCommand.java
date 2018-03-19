@@ -25,11 +25,11 @@ public class AddPatientQueueCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "%1$s is registered in the waiting list";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already registered.";
-
+    private static final Logger logger = LogsCenter.getLogger(ViewAppointmentCommand.class);
     private Patient toAddQueue;
     private String patientName;
     private final NameContainsKeywordsPredicate predicate;
-    private static final Logger logger = LogsCenter.getLogger(ViewAppointmentCommand.class);
+
 
     /**
      * Creates an AddCommand to add the specified {@code Patient}
@@ -46,8 +46,8 @@ public class AddPatientQueueCommand extends UndoableCommand {
         try {
             model.addPatientToQueue(toQueuePatient);
             logger.info("--add patient to visiting queue---");
-//            printOutVisitingQueue(model.getVisitingQueue());
-            return new CommandResult(String.format(MESSAGE_SUCCESS, patientName));
+            printOutVisitingQueue(model.getVisitingQueue());
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toQueuePatient.getName()));
         } catch (DuplicateDataException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -62,9 +62,9 @@ public class AddPatientQueueCommand extends UndoableCommand {
                 && patientName.equals(((AddPatientQueueCommand) other).patientName));
     }
 
-//    public void printOutVisitingQueue(UniquePatientVisitingQueue queue) {
-//        queue.forEach(appointment -> {
-//            logger.info(appointment.getPatientName() + ", " + appointment.getAppointmentDateTime() + "\n");
-//        });
-//    }
+    private void printOutVisitingQueue(UniquePatientVisitingQueue queue) {
+        queue.getVisitingQueue().forEach(patient -> {
+            logger.info("patient: " + patient.getName() + "\n");
+        });
+    }
 }

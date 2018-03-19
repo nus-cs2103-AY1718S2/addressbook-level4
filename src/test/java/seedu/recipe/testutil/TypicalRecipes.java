@@ -10,6 +10,8 @@ import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_URL_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_URL_BOB;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,10 +63,10 @@ public class TypicalRecipes {
     // Manually added - Recipe's details found in {@code CommandTestUtil}
     public static final Recipe AMY = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(
             VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY)
-            .withUrl("https://www.google.com").withTags(VALID_TAG_FRIEND).build();
+            .withUrl(VALID_URL_AMY).withTags(VALID_TAG_FRIEND).build();
     public static final Recipe BOB = new RecipeBuilder().withName(VALID_NAME_BOB)
             .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB)
-            .withInstruction(VALID_INSTRUCTION_BOB).withUrl("https://www.bbcgoodfood.com/recipes/collection/chicken-salad")
+            .withInstruction(VALID_INSTRUCTION_BOB).withUrl(VALID_URL_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

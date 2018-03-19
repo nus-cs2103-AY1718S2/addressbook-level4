@@ -214,7 +214,7 @@ public abstract class RecipeBookSystemTest {
         String selectedCardName = getRecipeListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
+            expectedUrl = new URL(getRecipeListPanel().getHandleToSelectedCard().getUrl());
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

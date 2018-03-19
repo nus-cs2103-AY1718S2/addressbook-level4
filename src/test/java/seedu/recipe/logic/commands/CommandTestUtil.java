@@ -38,7 +38,7 @@ public class CommandTestUtil {
     public static final String VALID_INGREDIENT_BOB = "bob@example.com";
     public static final String VALID_INSTRUCTION_AMY = "Block 312, Amy Street 1";
     public static final String VALID_INSTRUCTION_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_URL_AMY = "https://www.google.com";
+    public static final String VALID_URL_AMY = "https://www.bbcgoodfood.com/recipes/volcano-cake";
     public static final String VALID_URL_BOB = "https://www.bbcgoodfood.com/recipes/collection/chicken-salad";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";

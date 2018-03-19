@@ -68,6 +68,19 @@ public class UniqueActivityList implements Iterable<Activity> {
         internalList.set(index, editedActivity);
     }
 
+    public void setActivity(UniqueActivityList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setActivity(List<Activity> activities) throws DuplicateActivityException {
+        requireAllNonNull(activities);
+        final UniqueActivityList replacement = new UniqueActivityList();
+        for (final Activity activity : activities) {
+            replacement.add(activity);
+        }
+        setActivity(replacement);
+    }
+
     /**
      * Removes the equivalent activity from the list.
      *
@@ -80,19 +93,6 @@ public class UniqueActivityList implements Iterable<Activity> {
             throw new ActivityNotFoundException();
         }
         return activityFoundAndDeleted;
-    }
-
-    public void setActivity(UniqueActivityList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setActivity(List<Activity> activities) throws DuplicateActivityException {
-        requireAllNonNull(activities);
-        final UniqueActivityList replacement = new UniqueActivityList();
-        for (final Activity activity : activities) {
-            replacement.add(activity);
-        }
-        setActivity(replacement);
     }
 
     /**

@@ -70,39 +70,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         hasLoggedIn = loggedin;
     }
 
-    /// login authentication operations
-
-    public boolean hasLoggedIn() {
-        return hasLoggedIn;
-    }
-
-    public void setLoginStatus(boolean status) {
-        hasLoggedIn = status;
-    }
-
-
-    /** @@author kaisertanqr
-     *
-     * Checks the login credentials whether it matches the one in addressbook
-     *
-     * @param username
-     * @param password
-     * @throws AlreadyLoggedInException is the user is already logged in.
-     * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given
-     *                                       in ModelManager.
-     */
-
-    public void checkLoginCredentials(Username username, Password password)
-            throws AlreadyLoggedInException, AuthenticationFailedException {
-        if (hasLoggedIn) {
-            throw new AlreadyLoggedInException();
-        } else if (!username.equals(this.username) || !password.equals(this.password)) {
-            throw new AuthenticationFailedException();
-        } else {
-            hasLoggedIn = true;
-        }
-
-    }
 
     //// list overwrite operations
 
@@ -239,4 +206,39 @@ public class AddressBook implements ReadOnlyAddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
     }
+
+    // @@author kaisertanqr
+    /// login authentication operations
+
+    public boolean hasLoggedIn() {
+        return hasLoggedIn;
+    }
+
+    public void setLoginStatus(boolean status) {
+        hasLoggedIn = status;
+    }
+
+
+    /**
+     * Checks the login credentials whether it matches the one in addressbook
+     *
+     * @param username
+     * @param password
+     * @throws AlreadyLoggedInException is the user is already logged in.
+     * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given
+     *                                       in ModelManager.
+     */
+
+    public void checkLoginCredentials(Username username, Password password)
+            throws AlreadyLoggedInException, AuthenticationFailedException {
+        if (hasLoggedIn) {
+            throw new AlreadyLoggedInException();
+        } else if (!username.equals(this.username) || !password.equals(this.password)) {
+            throw new AuthenticationFailedException();
+        } else {
+            hasLoggedIn = true;
+        }
+
+    }
+
 }

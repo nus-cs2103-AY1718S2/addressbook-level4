@@ -7,7 +7,11 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LoginCommand;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -43,7 +47,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 result = command.execute();
             } else {
                 logger.info("User attempts to use a command without logging in first.");
-                result = executeLoginCommandOnly(commandText, command);
+                result = executeNoLoginCommands(commandText, command);
             }
             undoRedoStack.push(command);
             return result;
@@ -62,12 +66,14 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
-    /** @@author kaisertanqr */
+    // @@author kaisertanqr
     @Override
-    public CommandResult executeLoginCommandOnly (String commandText, Command command) throws CommandException {
+    public CommandResult executeNoLoginCommands (String commandText, Command command) throws CommandException {
         CommandResult result;
         try {
-            if (commandText.split(" ")[0].equals(LoginCommand.COMMAND_WORD)) {
+            if (commandText.split(" ")[0].equals(LoginCommand.COMMAND_WORD)
+                    || commandText.split(" ")[0].equals(HelpCommand.COMMAND_WORD)
+                    || commandText.split(" ")[0].equals(ExitCommand.COMMAND_WORD)) {
                 result = command.execute();
             } else {
                 result = null;

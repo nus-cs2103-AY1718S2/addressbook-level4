@@ -113,6 +113,8 @@ public class CommandBox extends UiPart<Region> {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             if (logic.hasLoggedIn()) {
                 mainWindow.showAfterLogin();
+            } else {
+                mainWindow.hideBeforeLogin();
             }
             initHistory();
             historySnapshot.next();

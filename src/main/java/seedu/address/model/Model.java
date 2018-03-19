@@ -49,8 +49,8 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    /** @@auther kaisertanqr
-     *
+    //@@author kaisertanqr
+    /**
      * Checks the login credentials.
      *
      * @param username
@@ -63,13 +63,17 @@ public interface Model {
     void checkLoginCredentials(Username username, Password password)
             throws AlreadyLoggedInException, AuthenticationFailedException;
 
-    /** @@author kaisertanqr
-     *
+    /**
      * Returns whether the AddressBook has already been logged into.
      *
      */
     boolean hasLoggedIn();
 
+    /**
+     * Set login status in AddressBook to {@code status}.
+     *
+     * @param status
+     */
     void setLoginStatus(boolean status);
 
 }

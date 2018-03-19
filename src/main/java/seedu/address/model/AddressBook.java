@@ -158,7 +158,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             for (Person person : persons) {
                 removeTagFromPerson(t, person);
             }
-        }catch (PersonNotFoundException pnfe) {
+        } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Impossible: original person is obtained from the address book.");
         }
     }

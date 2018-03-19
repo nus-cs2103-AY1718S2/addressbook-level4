@@ -793,6 +793,23 @@ manage which include contact details and profiles of potential employees. It is 
 
 *Value proposition*: An ideal solution for small teams and business professionals who need a simple solution to manage their contacts and help them with day-to-day business activities.
 
+
+*Feature contributions:*
+
+1. Kushagra Goyal
+ * Major Feature: Reminders
+ ** Users can add reminders with subject, date and time
+ ** Users can delete reminders
+ ** The reminders will be displayed on the screen sorted according to earliest time due.
+ 
+ * Minor Feature: Contact details and LinkedIn search display 
+ ** Users can view the contact details in a separate panel using the `select` command
+ ** Users can view the LinkedIn search of the person using the `linkedIn` command
+ 
+ * How do these features fit into the product scope?
+ ** Major Feature: Recruiters have a lot of appointments, meetings and interviews to manage and these reminders will help them keep a track of these events so that they do not miss them, be late for any of them  and they can better manage their time.
+ ** Minor Feature: Viewing the contact details in a separate focused panel makes them easier to read for the user and the information looks clearer. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
+ 
 [appendix]
 == User Stories
 

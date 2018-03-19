@@ -28,6 +28,7 @@ import seedu.address.commons.exceptions.WrongPasswordException;
 public class SecurityUtil {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     private static final String defaultPassword = new String("test");
+    private static byte[] hashed;
 
     /**
      * Encrypts the given file using AES key created by defaultPassword.
@@ -70,6 +71,7 @@ public class SecurityUtil {
     public static void decrypt(File file)throws IOException, WrongPasswordException {
         String defaultPassword = new String("test");
         byte[] hashedPassword = hashPassword(defaultPassword);
+        hashed = hashedPassword;
         decrypt(file, hashedPassword);
     }
 
@@ -107,13 +109,15 @@ public class SecurityUtil {
             FileInputStream inputStream = new FileInputStream(file);
             byte[] inputBytes = new byte[(int) file.length()];
             inputStream.read(inputBytes);
-            inputStream.close();
-
+            logger.info(Arrays.toString(hashed));
+            logger.info(new Integer(cipher.getBlockSize()).toString());
+            logger.info(Arrays.toString(inputBytes));
             byte[] outputBytes = cipher.doFinal(inputBytes);
 
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(outputBytes);
 
+            inputStream.close();
             outputStream.close();
 
         } catch (BadPaddingException e) {

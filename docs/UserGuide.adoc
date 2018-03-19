@@ -294,9 +294,22 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files (coming in v2.0)
+=== Encrypting data files (coming in v1.3)
 
-_{explain how the user can enable/disable data encryption}_
+Changes the password used to encrypt the address book. +
+Format: `password PASSWORD`
+
+****
+* Encrypts the address book using the specified PASSWORD.
+* Passwords are case-sensitive.
+* The password string can only contain characters in the UTF-8 format.
+****
+
+Examples:
+
+* `password test` +
+Encrypts `addressbook.xml` with "test" as the key.
+
 // end::dataencryption[]
 
 === Sorting all persons by module code: `sortCode` (coming in v2.0)

@@ -808,6 +808,12 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 . (Minor) Changing color themes: students will be able to change between a dark and light theme like the norm for editors which programmers are used to.
 . (Major) Exercises: students will be able to view, answer and save their responses for the weekly exercises to help track their conceptual understanding. Choice based questions will automatically be check for correctness with corresponding feedback to students.
 
+**Lai Liwen:**
+
+. (Minor) HighLight the key word: the key word will be highlighted in command find
+. (Major) Revamp the UI: rearrange the different sections and panels to best suit audience's needs
+. (Major) Upload profile photo: students will be able to upload a photo to their profile
+
 [appendix]
 == User Stories
 

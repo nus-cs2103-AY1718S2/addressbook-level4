@@ -810,6 +810,27 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage cryptocurrencies faster than a typical mouse/GUI driven app
 
+=== Feature contribution
+*Eldon Chung*
+
+* Major: Search enhancement. Support for SQL-like queries with logical operators as well as additional search specifiers besides name, such as tags and price. This lets users manage their large portfolio easily through efficient filtering.
+* Minor: Fetch news. Fetches news related to cryptocurrencies from sources such as RSS feeds. This lets users keep track of latest developments in the scene to aid their decision making.
+
+*Ewald Hew*
+
+* Major: Sync and notifications. Updates price data periodically and make notifications based on user-set rules. This helps users stay on top of what's happening and obtain important information at the right time.
+* Minor: Charts panel for data visualization. This lets users analyse price trends for decision making.
+
+*Lai Cheng Yu*
+
+* Major: User experience. Create smoother workflow via GUI hints, view modes, command autocompletion, and data visualization. This helps users manage their portfolio quickly and efficiently, and lets them focus on the more important tasks.
+* Minor: Data fetching system. Updates the price data, etc., in the model from a source. This lets users keep up to date on latest developments.
+
+*Neil Mehta*
+
+* Major: Organization options. Sorting options and groups. This lets users switch between different contexts to fit in with their objectives at the moment, and helps them focus on only what is relevant.
+* Minor: Various refactoring work.
+
 [appendix]
 == User Stories
 

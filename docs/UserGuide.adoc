@@ -65,7 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
-=== Logging into the system: `login` or `lg`
+=== Logging into the system: `login` or `lg` [coming in v1.2]
 
 Logs the user into the Imdb, given a matching username and password.
 Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
@@ -224,6 +224,11 @@ Examples:
 record 1 d/19 March 2018 s/Runny nose, Headache i/Flu t/Zyrtec +
 Edits the record for the first person to Date:19 March 2018 Symptoms:Runny nose, Headache
 Illness:Flu Treatment:Zyrtec`.
+
+=== Printing a patient's formatted medical records : `print` [coming in v1.4]
+
+Formats and prints out a patient's medical records. +
+Format: `print INDEX`
 
 === Add patient into visiting queue with patient name: `addq` [coming in v1.2]
 

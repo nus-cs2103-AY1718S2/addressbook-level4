@@ -6,6 +6,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -23,16 +24,18 @@ public class ImportContactsCommand extends Command {
     public static final String MESSAGE_FILE_SUCCESS_OPEN = "File was successfully opened.\n";
     public static final String MESSAGE_FILE_FAILED_OPEN = "File failed to open. Please try a different address " +
             "or check if file may be corrupt.\n";
+    public static final String MESSAGE_FILE_NOT_FOUND = "No file was found at the address provided. " +
+            "Please provide anotehr address.\n";
     public static final String MESSAGE_NO_ADDRESS = "No address was provided, please provide an address to a csv, "
             + "from which to import the file\n";
 
 
-    public ImportContactsCommand(String _fileAddress) {
-        requireNonNull(_fileAddress);
+    public ImportContactsCommand(String _fileAddress) throws IOException {
+        requireNonNull(_fileAddress); //This throws IOException if _fileAddress is null
         fileAddress = _fileAddress;
     }
 
-    public CommandResult openFile() {
+    public CommandResult openFile() throws IOException, CommandException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(fileAddress));
             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
@@ -41,14 +44,20 @@ public class ImportContactsCommand extends Command {
                     .withTrim());
             return new CommandResult(MESSAGE_FILE_SUCCESS_OPEN + "from : " + fileAddress);
         }
-        catch () { //file won't open
+        catch (NullPointerException npe) { //file won't open, null ptr
             throw new CommandException(MESSAGE_FILE_FAILED_OPEN);
+        }
+        catch (FileNotFoundException fnf) {
+            throw new CommandException(MESSAGE_FILE_NOT_FOUND);
+        }
+        catch(IOException ioe) {
+            throw new CommandException("IOException thrown in ImportContactsCommand.");
         }
     }
 
 
     try (
-    Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
+    Reader reader = Files.newBufferedReader(Paths.get(fileAddress));
     CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
             .withFirstRecordAsHeader()
             .withIgnoreHeaderCase()
@@ -78,6 +87,6 @@ public class ImportContactsCommand extends Command {
     public CommandResult executeUndoableCommand() throws CommandException {
 
     }
-
+*/
 }
 

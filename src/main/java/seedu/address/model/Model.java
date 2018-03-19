@@ -51,4 +51,7 @@ public interface Model {
 
     /** Adds patient into visiting queue */
     void addPatientToQueue(Patient patient) throws DuplicatePatientException;
+
+    /** Get patient visiting queue*/
+    UniquePatientVisitingQueue getVisitingQueue();
 }

@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyImdb;
+import seedu.address.model.UniquePatientVisitingQueue;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -143,6 +144,11 @@ public class AddCommandTest {
         @Override
         public void addPatientToQueue(Patient patient) throws DuplicatePatientException {
             //update later
+        }
+
+        @Override
+        public UniquePatientVisitingQueue getVisitingQueue() {
+            return null;    //update later
         }
     }
 

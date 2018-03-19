@@ -114,6 +114,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public UniquePatientVisitingQueue getVisitingQueue() {
+        return imdb.getVisitingQueue();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {

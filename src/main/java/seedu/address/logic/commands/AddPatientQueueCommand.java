@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
@@ -25,6 +28,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
     private Patient toAddQueue;
     private String patientName;
     private final NameContainsKeywordsPredicate predicate;
+    private static final Logger logger = LogsCenter.getLogger(ViewAppointmentCommand.class);
 
     /**
      * Creates an AddCommand to add the specified {@code Patient}
@@ -40,6 +44,8 @@ public class AddPatientQueueCommand extends UndoableCommand {
         Patient toQueuePatient = model.getFilteredPersonList().get(0);
         try {
             model.addPatientToQueue(toQueuePatient);
+            logger.info("--add patient to visiting queue---");
+//            printOutVisitingQueue();
             return new CommandResult(String.format(MESSAGE_SUCCESS, patientName));
         } catch (DuplicateDataException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);

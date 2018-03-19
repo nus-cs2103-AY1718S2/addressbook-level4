@@ -147,6 +147,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updatePassword(byte[] password)  {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void importAddressBook(String filepath) {
             fail("This method should not be called.");
         }

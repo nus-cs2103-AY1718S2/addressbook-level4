@@ -25,7 +25,7 @@ public class SecurityUtilTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void encrypt_decrypt_default_password_success() throws Exception {
+    public void encryptDecrypt_defaultPassword_success() throws Exception {
 
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
         writer.write(TEST_DATA);
@@ -42,7 +42,7 @@ public class SecurityUtilTest {
     }
 
     @Test
-    public void encrypt_decrypt_customised_password_success() throws Exception {
+    public void encryptDecrypt_customisedPassword_success() throws Exception {
         byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
 
         FileWriter writer = new FileWriter(TEST_DATA_FILE);

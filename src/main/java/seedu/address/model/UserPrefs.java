@@ -2,31 +2,33 @@ package seedu.address.model;
 
 import java.util.Objects;
 
-import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.Theme;
+import seedu.address.commons.core.WindowSettings;
 
 /**
  * Represents User's preferences.
  */
 public class UserPrefs {
 
-    private GuiSettings guiSettings;
+    private WindowSettings windowSettings;
     private String bookShelfFilePath = "data/bookshelf.xml";
     private String bookShelfName = "MyBookShelf";
+    private Theme appTheme = Theme.DEFAULT_THEME;
 
     public UserPrefs() {
-        guiSettings = new GuiSettings();
+        windowSettings = new WindowSettings();
     }
 
-    public GuiSettings getGuiSettings() {
-        return guiSettings == null ? new GuiSettings() : guiSettings;
+    public WindowSettings getWindowSettings() {
+        return windowSettings == null ? new WindowSettings() : windowSettings;
     }
 
-    public void updateLastUsedGuiSetting(GuiSettings guiSettings) {
-        this.guiSettings = guiSettings;
+    public void updateLastUsedGuiSetting(WindowSettings windowSettings) {
+        this.windowSettings = windowSettings;
     }
 
     public void setGuiSettings(double width, double height, int x, int y) {
-        guiSettings = new GuiSettings(width, height, x, y);
+        windowSettings = new WindowSettings(width, height, x, y);
     }
 
     public String getBookShelfFilePath() {
@@ -45,6 +47,14 @@ public class UserPrefs {
         this.bookShelfName = bookShelfName;
     }
 
+    public Theme getAppTheme() {
+        return appTheme;
+    }
+
+    public void setAppTheme(Theme appTheme) {
+        this.appTheme = appTheme;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -56,22 +66,24 @@ public class UserPrefs {
 
         UserPrefs o = (UserPrefs) other;
 
-        return Objects.equals(guiSettings, o.guiSettings)
+        return Objects.equals(windowSettings, o.windowSettings)
                 && Objects.equals(bookShelfFilePath, o.bookShelfFilePath)
-                && Objects.equals(bookShelfName, o.bookShelfName);
+                && Objects.equals(bookShelfName, o.bookShelfName)
+                && Objects.equals(appTheme, o.appTheme);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, bookShelfFilePath, bookShelfName);
+        return Objects.hash(windowSettings, bookShelfFilePath, bookShelfName);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + bookShelfFilePath);
-        sb.append("\nBookShelf name : " + bookShelfName);
+        sb.append("Window Settings : ").append(windowSettings.toString());
+        sb.append("\nLocal data file location : ").append(bookShelfFilePath);
+        sb.append("\nBookShelf name : ").append(bookShelfName);
+        sb.append("\nTheme : ").append(appTheme);
         return sb.toString();
     }
 

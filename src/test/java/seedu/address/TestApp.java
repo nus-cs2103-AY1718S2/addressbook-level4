@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
-import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.WindowSettings;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
@@ -64,7 +64,7 @@ public class TestApp extends MainApp {
         UserPrefs userPrefs = super.initPrefs(storage);
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
-        userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
+        userPrefs.updateLastUsedGuiSetting(new WindowSettings(600.0, 600.0, (int) x, (int) y));
         userPrefs.setBookShelfFilePath(saveFileLocation);
         userPrefs.setBookShelfName(BOOK_SHELF_NAME);
         return userPrefs;

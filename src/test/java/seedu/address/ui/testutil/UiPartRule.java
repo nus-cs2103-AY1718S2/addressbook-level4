@@ -6,19 +6,19 @@ import org.testfx.api.FxToolkit;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import seedu.address.commons.core.Theme;
 import seedu.address.ui.UiPart;
 
 /**
  * Provides an isolated stage to test an individual {@code UiPart}.
  */
 public class UiPartRule extends StageRule {
-    private static final String[] CSS_FILES = {"view/LightTheme.css"};
 
     public void setUiPart(final UiPart<? extends Parent> uiPart) {
         try {
             FxToolkit.setupScene(() -> {
                 Scene scene = new Scene(uiPart.getRoot());
-                scene.getStylesheets().setAll(CSS_FILES);
+                scene.getStylesheets().setAll(Theme.DEFAULT_THEME.getCssFile());
                 return scene;
             });
             FxToolkit.showStage();

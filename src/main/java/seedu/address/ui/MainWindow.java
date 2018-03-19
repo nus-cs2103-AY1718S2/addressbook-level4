@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -14,9 +15,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
-import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.WindowSettings;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -44,6 +46,9 @@ public class MainWindow extends UiPart<Stage> {
     private SearchResultsPanel searchResultsPanel;
     private Config config;
     private UserPrefs prefs;
+
+    @FXML
+    private Scene scene;
 
     @FXML
     private StackPane mainContentPlaceholder;
@@ -75,6 +80,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        updateStylesheet(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -153,19 +159,24 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the default size based on user preferences.
      */
     private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
+        primaryStage.setHeight(prefs.getWindowSettings().getWindowHeight());
+        primaryStage.setWidth(prefs.getWindowSettings().getWindowWidth());
+        if (prefs.getWindowSettings().getWindowCoordinates() != null) {
+            primaryStage.setX(prefs.getWindowSettings().getWindowCoordinates().getX());
+            primaryStage.setY(prefs.getWindowSettings().getWindowCoordinates().getY());
         }
+    }
+
+    /** Updates the stylesheet used based on user preferences. */
+    private void updateStylesheet(UserPrefs prefs) {
+        scene.getStylesheets().setAll(prefs.getAppTheme().getCssFile());
     }
 
     /**
      * Returns the current size and the position of the main Window.
      */
-    GuiSettings getCurrentGuiSetting() {
-        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
+    WindowSettings getCurrentGuiSetting() {
+        return new WindowSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
@@ -188,6 +199,13 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
+    }
+
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        prefs.setAppTheme(event.newTheme);
+        updateStylesheet(prefs);
     }
 
     @Subscribe

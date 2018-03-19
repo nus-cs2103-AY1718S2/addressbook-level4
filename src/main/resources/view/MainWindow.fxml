@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Menu?>
@@ -17,11 +16,7 @@
     <Image url="@/images/book_flat_32.png" />
   </icons>
   <scene>
-    <Scene>
-      <stylesheets>
-        <URL value="@LightTheme.css" />
-      </stylesheets>
-
+    <Scene fx:id="scene">
       <VBox>
         <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
           <Menu mnemonicParsing="false" text="File">
@@ -34,7 +29,7 @@
 
         <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
           <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
+            <Insets top="12" right="10" bottom="8" left="10" />
           </padding>
         </StackPane>
 
@@ -54,9 +49,6 @@
           </VBox>
 
           <StackPane fx:id="mainContentPlaceholder" prefWidth="340" >
-            <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
-            </padding>
           </StackPane>
         </SplitPane>
 

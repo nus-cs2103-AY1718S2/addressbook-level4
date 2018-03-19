@@ -349,6 +349,16 @@ The `undo` command fails as there are no undoable commands executed previously.
 Don't need the data in your book shelf anymore? Remove them using `clear`. +
 Format: `clear`
 
+=== Changing application theme `[since v1.2]`
+
+If you don't like the default theme used by Bibliotek, you can change it using `theme`. +
+Format: `theme THEME_NAME`
+
+****
+* `THEME_NAME` must specify a valid theme, and is case-insensitive.
+* The current available themes are: `white`, `light`, and `dark`.
+****
+
 === Changing settings: `settings` `[coming in v1.4]`
 
 [[settings-library]]
@@ -406,12 +416,6 @@ Change the command alias of `add` to `a`.
 
 * `settings alias/add:` +
 Remove the command alias of `add`.
-
-==== Theme `[coming in v2.0]`
-
-Don't like the default theme of the application? You can choose from the various
-themes that Bibliotek provides. +
-Format: `settings theme/THEME`
 
 ==== Font size `[coming in v2.0]`
 
@@ -487,6 +491,7 @@ e.g. `add 1`
 * *Search* : `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]` +
 e.g. `search t/Babylon's Ashes c/Science Fiction`
 * *Select* : `select INDEX` +
+* *Theme* : `theme THEME_NAME` +
 //* *Settings* : `settings ...` +
 //e.g. `settings lib/NLB`
 * *Undo* : `undo`

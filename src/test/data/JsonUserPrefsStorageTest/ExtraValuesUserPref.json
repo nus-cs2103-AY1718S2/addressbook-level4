@@ -1,5 +1,5 @@
 {
-  "guiSettings" : {
+  "windowSettings" : {
     "windowWidth" : 1000.0,
     "windowHeight" : 500.0,
     "extra" : "some value ",
@@ -10,5 +10,6 @@
     }
   },
   "bookShelfFilePath" : "bookshelf.xml",
-  "bookShelfName" : "TypicalBookShelfName"
+  "bookShelfName" : "TypicalBookShelfName",
+  "appTheme": "WHITE"
 }

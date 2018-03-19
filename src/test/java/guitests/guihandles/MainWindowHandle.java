@@ -1,5 +1,8 @@
 package guitests.guihandles;
 
+import guitests.guihandles.exceptions.StylesheetNotFoundException;
+
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -7,6 +10,7 @@ import javafx.stage.Stage;
  */
 public class MainWindowHandle extends StageHandle {
 
+    private final Scene scene;
     private final BookListPanelHandle bookListPanel;
     private final SearchResultsPanelHandle searchResultsPanel;
     private final ResultDisplayHandle resultDisplay;
@@ -18,6 +22,7 @@ public class MainWindowHandle extends StageHandle {
     public MainWindowHandle(Stage stage) {
         super(stage);
 
+        scene = stage.getScene();
         bookListPanel = new BookListPanelHandle(getChildNode(BookListPanelHandle.BOOK_LIST_VIEW_ID));
         searchResultsPanel =
                 new SearchResultsPanelHandle(getChildNode(SearchResultsPanelHandle.SEARCH_RESULTS_LIST_VIEW_ID));
@@ -56,4 +61,10 @@ public class MainWindowHandle extends StageHandle {
         return bookDetailsPanel;
     }
 
+    public String getActiveStylesheet() {
+        if (scene.getStylesheets().size() == 0) {
+            throw new StylesheetNotFoundException();
+        }
+        return scene.getStylesheets().get(0);
+    }
 }

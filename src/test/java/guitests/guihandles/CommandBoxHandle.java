@@ -1,18 +1,18 @@
 package guitests.guihandles;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
-import seedu.address.ui.CommandBox;
+import seedu.recipe.ui.CommandBox;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
  */
-public class CommandBoxHandle extends NodeHandle<TextField> {
+public class CommandBoxHandle extends NodeHandle<TextArea> {
 
-    public static final String COMMAND_INPUT_FIELD_ID = "#commandTextField";
+    public static final String COMMAND_INPUT_FIELD_ID = "#commandTextArea";
 
-    public CommandBoxHandle(TextField commandBoxNode) {
+    public CommandBoxHandle(TextArea commandBoxNode) {
         super(commandBoxNode);
     }
 
@@ -35,6 +35,14 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         guiRobot.type(KeyCode.ENTER);
 
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Append the given string to text already existing in the Command box
+     */
+    public void appendText(String text) {
+        guiRobot.interact(() -> getRootNode().appendText(text));
+        guiRobot.pauseForHuman();
     }
 
     /**

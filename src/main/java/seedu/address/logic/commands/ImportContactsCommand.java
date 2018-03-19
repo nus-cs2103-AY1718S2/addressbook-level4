@@ -31,7 +31,7 @@ import seedu.address.model.tag.Tag;
  *https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/
  *and https://github.com/callicoder/java-read-write-csv-file
 */
-public class ImportContactsCommand extends Command {
+public final class ImportContactsCommand extends Command {
 
     //is there a list of added commands?
     public static final String COMMAND_WORD = "import_contacts";
@@ -57,29 +57,33 @@ public class ImportContactsCommand extends Command {
     private CSVParser csvParser;
 
 
-    public ImportContactsCommand(String _fileAddress) throws IOException {
-        requireNonNull(_fileAddress); //This throws IOException if _fileAddress is null
-        fileAddress = _fileAddress;
+    public ImportContactsCommand(final String fa) throws IOException {
+        //This throws IOException if _fileAddress is null
+        requireNonNull(fa);
+        fileAddress = fa;
     }
 
-    public CommandResult openFile() throws IOException, CommandException { //go ahead... see what happens
+    public CommandResult openFile() throws IOException, CommandException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(fileAddress));
             csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
                     .withIgnoreHeaderCase()
                     .withTrim());
-            return new CommandResult(MESSAGE_FILE_SUCCESS_OPEN + "from : " + fileAddress);
+            return new CommandResult(MESSAGE_FILE_SUCCESS_OPEN
+                    + "from : " + fileAddress);
         } catch (NullPointerException npe) { //file won't open, null ptr
             throw new CommandException(MESSAGE_FILE_FAILED_OPEN);
         } catch (FileNotFoundException fnf) {
             throw new CommandException(MESSAGE_FILE_NOT_FOUND);
-        } catch(IOException ioe) {
-            throw new CommandException("IOException thrown in ImportContactsCommand.");
+        } catch (IOException ioe) {
+            throw new CommandException("IOException thrown in "
+                    + "ImportContactsCommand.");
         }
     }
 
-    public void printResult(final String n, final String e, final String p, final String a) {
+    public void printResult(final String n, final String e,
+                            final String p, final String a) {
         System.out.println("---------------");
         System.out.println("Name : " + n);
         System.out.println("Email : " + e);
@@ -114,19 +118,21 @@ public class ImportContactsCommand extends Command {
 
                 printResult(name, email, phone, address); //mainly for debugging
 
-                Set<Tag> tagSet = (Set<Tag>) new Tag("friend"); //temporary tag, fix later
+                Set<Tag> tagSet =
+                        (Set<Tag>) new Tag("friend"); //temporary tag, fix later
 
-                personToAdd = new Person(new Name(name), new Phone(phone), new Email(email),
+                personToAdd = new Person(new Name(name),
+                        new Phone(phone), new Email(email),
                         new Address(address), addDate, tagSet);
 
-                AddCommand addMe = new AddCommand(personToAdd); //not the most efficient...
+                AddCommand addMe =
+                        new AddCommand(personToAdd); //not the most efficient...
                 addMe.executeUndoableCommand();
             }
-
             return new CommandResult(MESSAGE_SUCCESS);
-        }
-        catch (IOException ioe) {
-            throw new CommandException("Aw Fuck."); //Obviously need to change this
+        } catch (IOException ioe) {
+            throw new CommandException(
+                    "Aw Fuck."); //Obviously need to change this
         }
     }
 

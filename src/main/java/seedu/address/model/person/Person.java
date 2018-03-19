@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -57,6 +58,15 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    /**
+     * Returns a person comparator, which compares the names alphabetically.
+     * Similar names are compared lexicographically.
+     */
+    public static Comparator<Person> nameComparator() {
+        return Comparator.comparing((Person p) -> p.getName().toString(), (
+            s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2));
     }
 
     @Override

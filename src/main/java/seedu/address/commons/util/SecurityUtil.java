@@ -21,12 +21,12 @@ import javax.crypto.spec.SecretKeySpec;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.WrongPasswordException;
+import sun.misc.CharacterEncoder;
 
 /**
  * Contains utility methods used for encrypting and decrypting files for Storage
  */
 public class SecurityUtil {
-    private static final int CHECK_LENGTH = 50;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     private static final String DEFAULT_PASSWORD = new String("test");
 
@@ -113,7 +113,7 @@ public class SecurityUtil {
 
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(outputBytes);
-
+            checkPlainText(outputBytes);
             inputStream.close();
             outputStream.close();
 
@@ -169,13 +169,14 @@ public class SecurityUtil {
 
     /**
      * Checks whether it is plain text by checking whether it is in the range of characters commonly used for the
-     * first CHECK_LENGTH or the whole data whichever is shorter.
+     *  the whole data
      * @param data Contains the file data
      * @return true if it is highly likely to be plain text
      */
     private static boolean checkPlainText(byte[] data) {
-        for (int i = 0; i < CHECK_LENGTH && i < data.length; i++) {
-            if (data[i] > 'z') {
+        String string = new String(data);
+        for (int i = 0; i < data.length; i++) {
+            if (string.charAt(i) > 'z') {
                 return false;
             }
         }

@@ -166,7 +166,8 @@ public class RemarkCommandTest {
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // remark -> edits the remarks of the second patient in unfiltered patient list / first patient in filtered patient list
+        // remark -> edits the remarks of the second patient in unfiltered patient list
+        // / first patient in filtered patient list
         remarkCommand.execute();
         Patient editedPatient = remarkCommand.getEdited();
         undoRedoStack.push(remarkCommand);

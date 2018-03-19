@@ -234,6 +234,22 @@ Examples:
 * `import data/addressBook.xml` +
 Imports address book XML file at data folder.
 
+=== Vacant study rooms finder : `vacant` (coming in v1.3)
+
+Finds vacant study rooms in the building at the specified timing. +
+Format: `vacant TIME BUILDING`
+
+****
+* Finds vacant study rooms in the specified `TIME`, `FACULTY`, and `BUILDING`.
+* The time must be in 24 hour format, e.g. `1330`
+* The building must be in NUS venue format, e.g. `COM1`, `S17`, `E2`
+****
+
+Examples:
+
+* `vacant 1400 ERC` +
+Finds vacant study rooms in ERC building at 1400.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -310,7 +326,7 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files (coming in v1.3)
+=== Encrypting data files : `password` (coming in v1.3)
 
 Changes the password used to encrypt the address book. +
 Format: `password PASSWORD`
@@ -362,6 +378,8 @@ e.g. `find James Jake`
 e.g.`select 2`
 * *Import* : `import FILEPATH` +
 e.g.`import data/addressBook.xml`
+* *Vacant* : `vacant TIME BUILDING +
+e.g.`vacant 1400 ERC`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

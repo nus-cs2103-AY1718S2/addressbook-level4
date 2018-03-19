@@ -385,61 +385,6 @@ The details of implementation are as follow:
 . `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
 . `edited` Person is used to replace `toEdit` Person in `AddressBook`
 
-=== Lock and unlock the application
-
-`lock` command and `unlock` command are implemented in a similar manner. Both have the same command format.
-
-The implementation of `lock` and `unlock` command in the Logic component involves 5 objects: +
-
-. Command: LockCommand
-. Command: UnlockCommand
-. CommandParser: LockCommandParser or UnlockCommandParser
-. AddressBookParser
-. LogicManager
-
-The details of implementation of `lock` command are as follow:
-
-. `AddressBookParser` is used to let the application accept `lock` command.
-. `LockCommandParser` extracts the password from user input.
-. `LockCommand` is used to set the password in LogicManager.
-. `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
-
-The details of implementation of `unlock` command are similar to `lock` command and are as follow:
-
-. `AddressBookParser` is used to let the application accept `unlock` command.
-. `UnlockCommandParser` extracts the password from user input.
-. `UnlockCommand` is used to compare the user input password to the password stored in LogicManager by last `lock` caommand,
-if they are the same, unlock the application, otherwise, inform incorrect password.
-. `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
-
-=== Every employee has own timetable
-
-To implement the timetables for employees, we use a third party source which is Google Calendar API. With this API, we
-can integrate the application with Google Calendar, and achieve things liking creating events as what we usually do on
-Google Calendar website through the command. The import of Google Calendar API is simple: just add the necessary
-dependencies in Build.gradle and which will import the external libraries after building.
-
-After we have the API, what we need to do is just automatically creating a new timetable (calendar) for every employee
-at the time this employee was added to the application. And this is what the CreateNewCalendar class for.
-
-Additionally, as everyone has their own unique timetables, a new field called `CalendarId` will be created for each
-employee, to indicate the associated timetables.
-
-=== Add events on anyone's timetable
-
-`addEvent` command is used to add an event on one employee's timetable. The implementation mainly touches 3 objects in
-the logic component: +
-
-. Command: TestAddEventCommand
-. CommandParser: TestAddEventCommandParser
-. AddressBookParser
-
-The details of implementation of `addEvent` command are as follow:
-
-. `AddressBookParser` is used to let the application accept `addEvent` command.
-. `TestAddEventCommandParser` is used to extracts information of the event to be added from user input.
-. `TestAddEventCommand` is used to perform the addition of the event to one's timetable with Google Calendar API.
-
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

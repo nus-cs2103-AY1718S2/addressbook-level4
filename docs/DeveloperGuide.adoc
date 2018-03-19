@@ -930,3 +930,28 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+[Appendix B (Product scope)]
+
+==Product scope
+
+Delivery system for drivers with a database of deliveries and locations to map the optimal route in a handsfree offline system.
+
+==Feature contribution
+
+. Shi Kang
+Major: Login for each delivery driver to own a separate list of addresses in his customised address book
+Minor: ability for correspondence with each addressee
+
+. Meera
+Minor: adding delivery date tag
+Major:  prioritizing deliveries
+
+. Matthieu
+Minor : simplifying the input
+Major: beautify the UI
+
+. Minh
+Minor: Adding google maps and handsfree sound feature
+Major: Mapping out the routes for delivery
+

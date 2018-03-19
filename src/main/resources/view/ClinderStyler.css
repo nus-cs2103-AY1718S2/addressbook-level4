@@ -1,0 +1,84 @@
+/* menu bar*/
+.menu-bar {
+    -fx-background-color: #f7e399;
+    -fx-padding: 0 2 0 2;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #dbdad9;
+}
+
+.menu-bar .label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: black;
+}
+
+.context-menu {
+    -fx-background-color: #ffd177;
+    -fx-border-width: 2 0 0 0;
+    -fx-border-color: #969594;
+}
+
+/* taskList and eventList */
+
+#taskListPlaceholder    {
+    -fx-background-color: grey;
+    -fx-opacity: 0.5;
+    -fx-background-radius: 5px 5px 5px 5px;
+}
+
+#eventListPlaceholder   {
+    -fx-background-color: grey;
+    -fx-opacity: 0.5;
+    -fx-background-radius: 5px 5px 5px 5px;
+}
+
+/* resultBox */
+
+#resultBox {
+    -fx-background-color: grey;
+    -fx-opacity: 0.45;
+    -fx-background-radius: 2px 2px 2px 2px;
+}
+
+/* commandBox */
+
+#commandBoxPlaceholder {
+    -fx-background-color: grey;
+    -fx-opacity: 0.4;
+    -fx-background-radius: 4px 4px 4px 4px;
+}
+
+.text-field {
+    -fx-prompt-text-fill: black;
+}
+
+/* statusBar */
+
+#statusBarPlaceholder   {
+    -fx-background-color: #f7e399 /*silver #d8d7d0*/;
+    -fx-font-color: black;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #dbdad9;
+
+}
+
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: black;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: #f7e399;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #dbdad9;
+}
+
+/* miscs */
+.background {
+    -fx-background-image: url("../images/light-veneer.png");
+    -fx-background-repeat: repeat;
+}
+
+.split-pane-divider {
+   -fx-background-color: transparent;
+}

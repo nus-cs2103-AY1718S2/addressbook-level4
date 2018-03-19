@@ -5,14 +5,14 @@ import java.util.Arrays;
 import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in address book whose tag contains any of the argument keywords.
+ * Finds and lists all recipes in address book whose tag contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class TagCommand extends Command {
 
     public static final String COMMAND_WORD = "tag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose tags contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all recipes whose tags contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " favourite";
@@ -28,9 +28,9 @@ public class TagCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
+        model.updateFilteredRecipeList(predicate);
         return new CommandResult(getMessageForTagListShownSummary
-                                    (model.getFilteredPersonList().size(), Arrays.toString(tagKeywords)));
+                                    (model.getFilteredRecipeList().size(), Arrays.toString(tagKeywords)));
     }
 
     @Override

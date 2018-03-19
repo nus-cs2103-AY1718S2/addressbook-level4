@@ -6,8 +6,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ACTIVITY_DISPL
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_ACTIVITY_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
-import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalActivities.getTypicalActivitiess;
+import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -78,7 +78,8 @@ public class SelectCommandSystemTest extends RemarkBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredActivityList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
+                MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",

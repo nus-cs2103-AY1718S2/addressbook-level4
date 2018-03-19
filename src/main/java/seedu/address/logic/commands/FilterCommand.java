@@ -13,11 +13,14 @@ public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filter according the predicates specified. "
-            + "Display all persons with expected graduation year before or equal to the input keyword\n"
+            + "Display all persons with fields in the range specified by the input keyword.\n"
+            + "Range is either a single predicate, or an interval in the format of `low - high`, "
+            + "or a combination of both using commas.\n"
+            + "Filterable field is expected graduation year."
             + "Parameters: "
             + "[" + PREFIX_EXPECTED_GRADUATION_YEAR + "EXPECTED GRADUATION YEAR] "
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_EXPECTED_GRADUATION_YEAR + "2020 ";
+            + PREFIX_EXPECTED_GRADUATION_YEAR + " 2020, 2021-2024";
 
     private final Predicate<Person> predicate;
 
@@ -27,7 +30,7 @@ public class FilterCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
+        model.filterFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

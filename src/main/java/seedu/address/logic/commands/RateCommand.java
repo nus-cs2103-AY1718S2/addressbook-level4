@@ -99,7 +99,7 @@ public class RateCommand extends UndoableCommand {
         assert personToRate != null;
 
         return new Person(personToRate.getName(), personToRate.getPhone(), personToRate.getEmail(),
-                personToRate.getAddress(), personToRate.getExpectedGraduationYear(), rating,
+                personToRate.getAddress(), personToRate.getExpectedGraduationYear(), personToRate.getMajor(), rating,
                 personToRate.getResume(), personToRate.getInterviewDate(), personToRate.getTags());
     }
 

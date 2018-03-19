@@ -8,6 +8,7 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -39,6 +40,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setExpectedGraduationYear(person.getExpectedGraduationYear());
+        descriptor.setMajor(person.getMajor());
         descriptor.setResume(person.getResume());
         descriptor.setTags(person.getTags());
     }
@@ -74,11 +76,20 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(new Address(address));
         return this;
     }
+
     /**
      * Sets the {@code ExpectedGraduationYear} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withExpectedGraduationYear(String expectedGraduationYear) {
         descriptor.setExpectedGraduationYear(new ExpectedGraduationYear(expectedGraduationYear));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Major} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withMajor(String major) {
+        descriptor.setMajor(new Major(major));
         return this;
     }
 

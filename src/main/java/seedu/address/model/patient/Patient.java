@@ -92,7 +92,7 @@ public class Patient {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append(" Conditions: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

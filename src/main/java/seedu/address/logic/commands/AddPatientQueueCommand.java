@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.UniquePatientVisitingQueue;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 
@@ -45,7 +46,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
         try {
             model.addPatientToQueue(toQueuePatient);
             logger.info("--add patient to visiting queue---");
-//            printOutVisitingQueue();
+//            printOutVisitingQueue(model.getVisitingQueue());
             return new CommandResult(String.format(MESSAGE_SUCCESS, patientName));
         } catch (DuplicateDataException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -60,4 +61,10 @@ public class AddPatientQueueCommand extends UndoableCommand {
                 && toAddQueue.equals(((AddPatientQueueCommand) other).toAddQueue)
                 && patientName.equals(((AddPatientQueueCommand) other).patientName));
     }
+
+//    public void printOutVisitingQueue(UniquePatientVisitingQueue queue) {
+//        queue.forEach(appointment -> {
+//            logger.info(appointment.getPatientName() + ", " + appointment.getAppointmentDateTime() + "\n");
+//        });
+//    }
 }

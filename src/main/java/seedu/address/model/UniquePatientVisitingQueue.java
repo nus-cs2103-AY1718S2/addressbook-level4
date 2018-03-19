@@ -27,4 +27,8 @@ public class UniquePatientVisitingQueue {
     public Patient removePatient() {
         return visitingQueue.removeFirst();
     }
+
+    public LinkedList<Patient> getVisitingQueue() {
+        return visitingQueue;
+    }
 }

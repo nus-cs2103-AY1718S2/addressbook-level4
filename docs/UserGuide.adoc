@@ -284,7 +284,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Data in HR+ are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -292,6 +292,15 @@ There is no need to save manually.
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
+
+=== Customising rating criteria `[coming in v2.0]`
+Specifies the criteria that candidates will be rated against.
+
+=== Saving searches `[coming in v2.0]`
+Saves searches that can be displayed in future for fast lookups.
+
+=== Sending and receiving emails `[coming in v2.0]`
+Sends and receives emails within HR+.
 
 == FAQ
 

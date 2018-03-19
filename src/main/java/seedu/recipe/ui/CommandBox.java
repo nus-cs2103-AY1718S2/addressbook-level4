@@ -1,10 +1,10 @@
 package seedu.recipe.ui;
 
-import static seedu.address.ui.util.KeyboardShortcutsMapping.COMMAND_SUBMISSION;
-import static seedu.address.ui.util.KeyboardShortcutsMapping.LAST_COMMAND;
-import static seedu.address.ui.util.KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND;
-import static seedu.address.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
-import static seedu.address.ui.util.KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND;
+import static seedu.recipe.ui.util.KeyboardShortcutsMapping.COMMAND_SUBMISSION;
+import static seedu.recipe.ui.util.KeyboardShortcutsMapping.LAST_COMMAND;
+import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND;
+import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
+import static seedu.recipe.ui.util.KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND;
 
 import java.util.Arrays;
 import java.util.Collections;

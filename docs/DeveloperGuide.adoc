@@ -812,9 +812,9 @@ Minor:
 
 ~Jonathan Lee~
 
-Major:
+Major: Natural language processing for commands
 
-Minor:
+Minor: UI update - colours and layout
 
 ~Choi Wi Su~
 

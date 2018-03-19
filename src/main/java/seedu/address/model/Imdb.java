@@ -176,6 +176,7 @@ public class Imdb implements ReadOnlyImdb {
      * @throws DuplicatePatientException if an equivalent patient already exists.
      */
     public void addPatientToQueue(Patient p) throws DuplicatePatientException {
+        requireNonNull(p);
         Patient patient = syncWithMasterTagList(p);
         visitingQueue.add(patient);
     }

@@ -109,6 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void addPatientToQueue(Patient patient) throws DuplicatePatientException {
+        requireNonNull(patient);
         imdb.addPatientToQueue(patient);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }

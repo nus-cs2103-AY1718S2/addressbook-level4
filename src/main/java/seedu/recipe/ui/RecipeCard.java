@@ -37,6 +37,8 @@ public class RecipeCard extends UiPart<Region> {
     @FXML
     private Label ingredient;
     @FXML
+    private Label url;
+    @FXML
     private FlowPane tags;
 
     public RecipeCard(Recipe recipe, int displayedIndex) {
@@ -47,6 +49,7 @@ public class RecipeCard extends UiPart<Region> {
         preparationTime.setText(recipe.getPreparationTime().value);
         instruction.setText(recipe.getInstruction().value);
         ingredient.setText(recipe.getIngredient().value);
+        url.setText(recipe.getUrl().value);
         initTags(recipe);
     }
 

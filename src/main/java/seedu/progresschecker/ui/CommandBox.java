@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.progresschecker.commons.core.LogsCenter;
@@ -62,7 +63,13 @@ public class CommandBox extends UiPart<Region> {
                 if ((commandTextField.getText().trim().equalsIgnoreCase(CORRECT_COMMAND_WORD)
                         || isCorrectCommandWord)) {
                     isCorrectCommandWord = !commandTextField.getText().trim().isEmpty();
-                    CommandResult commandResult = logic.execute(commandTextField.getText() + keyEvent.getText());
+                    CommandResult commandResult;
+                    if (keyEvent.getCode() != KeyCode.BACK_SPACE && keyEvent.getCode() != KeyCode.DELETE) {
+                        commandResult = logic.execute(commandTextField.getText() + keyEvent.getText());
+                    } else {
+                        commandResult = logic.execute(commandTextField.getText().substring(0,
+                                commandTextField.getText().length() - 1));
+                    }
                     // process result of the command
                     logger.info("Result: " + commandResult.feedbackToUser);
                     raise(new NewResultAvailableEvent(commandResult.feedbackToUser));

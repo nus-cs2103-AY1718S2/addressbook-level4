@@ -168,7 +168,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.preparationTime, this.ingredient, this.instruction,
-                    this.tags);
+                    this.url, this.tags);
         }
 
         public void setName(Name name) {

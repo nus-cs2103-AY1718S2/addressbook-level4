@@ -27,8 +27,8 @@ public class RemarkTest {
         Assert.assertThrows(NullPointerException.class, () -> Remark.isValidRemark(null));
 
         // invalid addresses
-        assertFalse(Remark.isValidRemark("")); // empty string
-        assertFalse(Remark.isValidRemark(" ")); // spaces only
+        assertTrue(Remark.isValidRemark("")); // empty string
+        assertTrue(Remark.isValidRemark(" ")); // spaces only
 
         // valid addresses
         assertTrue(Remark.isValidRemark("Blk 456, Den Road, #01-355"));

@@ -46,6 +46,21 @@ public class UniqueActivityList implements Iterable<Activity> {
         internalList.add(toAdd);
     }
 
+
+    /**
+     * Removes the equivalent activity from the list.
+     *
+     * @throws ActivityNotFoundException if no such activity could be found in the list.
+     */
+    public boolean remove(Activity toRemove) throws ActivityNotFoundException {
+        requireNonNull(toRemove);
+        final boolean activityFoundAndDeleted = internalList.remove(toRemove);
+        if (!activityFoundAndDeleted) {
+            throw new ActivityNotFoundException();
+        }
+        return activityFoundAndDeleted;
+    }
+
     /**
      * Replaces the activity {@code target} in the list with {@code editedActivity}.
      *
@@ -67,21 +82,7 @@ public class UniqueActivityList implements Iterable<Activity> {
 
         internalList.set(index, editedActivity);
     }
-
-    /**
-     * Removes the equivalent activity from the list.
-     *
-     * @throws ActivityNotFoundException if no such activity could be found in the list.
-     */
-    public boolean remove(Activity toRemove) throws ActivityNotFoundException {
-        requireNonNull(toRemove);
-        final boolean activityFoundAndDeleted = internalList.remove(toRemove);
-        if (!activityFoundAndDeleted) {
-            throw new ActivityNotFoundException();
-        }
-        return activityFoundAndDeleted;
-    }
-
+    
     public void setActivity(UniqueActivityList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -94,6 +95,7 @@ public class UniqueActivityList implements Iterable<Activity> {
         }
         setActivity(replacement);
     }
+
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

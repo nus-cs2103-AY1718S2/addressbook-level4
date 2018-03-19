@@ -23,17 +23,15 @@ public class XmlAdaptedActivity {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Activity's %s field is missing!";
 
-    private final String  ACTIVITY_TYPE = "ACTIVITY";
-
     @XmlElement(required = true)
-    protected String name;
+    private String name;
     @XmlElement(required = true)
-    protected String dateTime;
+    private String dateTime;
     @XmlElement(required = true)
-    protected String remark;
+    private String remark;
 
     @XmlElement
-    protected List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedActivity.
@@ -67,8 +65,6 @@ public class XmlAdaptedActivity {
             tagged.add(new XmlAdaptedTag(tag));
         }
     }
-
-    public String getActivityType() { return ACTIVITY_TYPE; }
 
     /**
      * Converts this jaxb-friendly adapted activity object into the model's Activity object.
@@ -123,8 +119,7 @@ public class XmlAdaptedActivity {
         }
 
         XmlAdaptedActivity otherActivity = (XmlAdaptedActivity) other;
-        return Objects.equals(ACTIVITY_TYPE, otherActivity.ACTIVITY_TYPE)
-                && Objects.equals(name, otherActivity.name)
+        return Objects.equals(name, otherActivity.name)
                 && Objects.equals(dateTime, otherActivity.dateTime)
                 && Objects.equals(remark, otherActivity.remark)
                 && tagged.equals(otherActivity.tagged);

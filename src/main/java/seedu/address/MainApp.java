@@ -81,19 +81,19 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
+     * Returns a {@code ModelManager} with the data from {@code storage}'s desk board and {@code userPrefs}. <br>
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyDeskBoard> deskBoardOptional;
+        Optional<ReadOnlyDeskBoard> addressBookOptional;
         ReadOnlyDeskBoard initialData;
         try {
-            deskBoardOptional = storage.readDeskBoard();
-            if (!deskBoardOptional.isPresent()) {
+            addressBookOptional = storage.readDeskBoard();
+            if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample DeskBoard");
             }
-            initialData = deskBoardOptional.orElseGet(SampleDataUtil::getSampleDeskBoard);
+            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleDeskBoard);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty DeskBoard");
             initialData = new DeskBoard();

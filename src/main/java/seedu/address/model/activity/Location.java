@@ -3,8 +3,9 @@ package seedu.address.model.activity;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author YuanQQLer
 /**
- * This class is to store location info in an event
+ * This clas is to store location info in an event
  */
 public class Location {
     public static final String MESSAGE_LOCATION_CONSTRAINTS =
@@ -54,10 +55,4 @@ public class Location {
         return value.hashCode();
     }
 
-    /**
-     * Returns true if a given string is a valid activity location.
-     */
-    public static boolean isValidLocation(String test) {
-        return test.matches(LOCATION_VALIDATION_REGEX);
-    }
 }

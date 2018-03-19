@@ -14,11 +14,11 @@ import seedu.address.model.ReadOnlyDeskBoard;
 /**
  * An Immutable DeskBoard that is serializable to XML format
  */
-@XmlRootElement(name = "deskBoard")
+@XmlRootElement(name = "addressbook")
 public class XmlSerializableDeskBoard {
 
     @XmlElement
-    private List<XmlAdaptedActivity> activities;
+    private List<XmlAdaptedActivity> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -27,7 +27,7 @@ public class XmlSerializableDeskBoard {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableDeskBoard() {
-        activities = new ArrayList<>();
+        persons = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
@@ -36,7 +36,7 @@ public class XmlSerializableDeskBoard {
      */
     public XmlSerializableDeskBoard(ReadOnlyDeskBoard src) {
         this();
-        activities.addAll(src.getActivityList().stream().map(XmlAdaptedActivity::new).collect(Collectors.toList()));
+        persons.addAll(src.getActivityList().stream().map(XmlAdaptedActivity::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -51,7 +51,7 @@ public class XmlSerializableDeskBoard {
         for (XmlAdaptedTag t : tags) {
             deskBoard.addTag(t.toModelType());
         }
-        for (XmlAdaptedActivity p : activities) {
+        for (XmlAdaptedActivity p : persons) {
             deskBoard.addActivity(p.toModelType());
         }
         return deskBoard;
@@ -68,6 +68,6 @@ public class XmlSerializableDeskBoard {
         }
 
         XmlSerializableDeskBoard otherAb = (XmlSerializableDeskBoard) other;
-        return activities.equals(otherAb.activities) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
     }
 }

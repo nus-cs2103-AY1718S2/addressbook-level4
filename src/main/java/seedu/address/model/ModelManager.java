@@ -16,8 +16,9 @@ import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
+//@@author YuanQQLer
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the desk board data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -46,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyDeskBoard newData) {
         deskBoard.resetData(newData);
-        indicateDeskBoardChanged();
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -55,21 +56,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateDeskBoardChanged() {
+    private void indicateAddressBookChanged() {
         raise(new DeskBoardChangedEvent(deskBoard));
     }
 
     @Override
     public synchronized void deleteActivity(Activity target) throws ActivityNotFoundException {
-        deskBoard.removePerson(target);
-        indicateDeskBoardChanged();
+        deskBoard.removeActivity(target);
+        indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addActivity(Activity activity) throws DuplicateActivityException {
         deskBoard.addActivity(activity);
         updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
-        indicateDeskBoardChanged();
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -78,7 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedActivity);
 
         deskBoard.updateActivity(target, editedActivity);
-        indicateDeskBoardChanged();
+        indicateAddressBookChanged();
     }
 
     //=========== Filtered Activity List Accessors =============================================================

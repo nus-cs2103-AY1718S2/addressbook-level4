@@ -9,6 +9,7 @@ import java.util.Set;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author YuanQQLer
 /**
  * Represents a Activity in the desk board.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -59,7 +60,6 @@ public class Activity {
     public String getActivityType() {
         return ACTIVITY_TYPE;
     }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {

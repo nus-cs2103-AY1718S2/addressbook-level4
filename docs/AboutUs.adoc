@@ -20,8 +20,8 @@ Responsibilities: Logic component
 '''
 
 === Gloria Law
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+image::Gloria.jpg[width="150", align="left"]
+{empty}[https://github.com/glorialaw[github]] [<<glorialaw#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI component

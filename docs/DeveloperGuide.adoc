@@ -809,10 +809,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to keep track of a significant number of employees
+* is a manger
+* has a need to keep track of a significant number of subordinate employees
 * need to assign work to employees and keep track of it
-* prefer desktop apps over other types
-* can type fast
+* prefer desktop apps over mobile apps
+* can type fast, i.e. >45 words per minute
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
@@ -820,10 +821,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Feature Contrbution*：
 
+. Li Yufei +
 * (minor) be able to lock the application and unlock it and must use the same password
 * (major) each employee has his own timetable and manager can add events on anyone's timetable
+. Yang Yuqing
 * (minor) be able to sort the employees by existing field (ie. name, phone, email, address, rate)
 * (major) UI optimization (may change)
+. Ho Bing Xuan
+* (minor) add Rating features
+* (major) notification feature for timetable entry 
 
 [appendix]
 == User Stories

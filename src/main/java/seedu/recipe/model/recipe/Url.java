@@ -12,7 +12,7 @@ import java.net.URL;
  */
 public class Url {
 
-
+    public static final String NULL_URL_REFERENCE = "-";
     public static final String MESSAGE_URL_CONSTRAINTS = "URL should start with a http:// or https://";
     public final String value;
 
@@ -30,9 +30,10 @@ public class Url {
     //@@author RyanAngJY-reused
     //Reused from https://stackoverflow.com/questions/2230676/how-to-check-for-a-valid-url-in-java with exception handling
     /**
-     *  Returns true if a given string is a valid web url.
+     *  Returns true if a given string is a valid web url, or no url has been assigned
      */
     public static boolean isValidUrl(String testUrl) {
+        if (testUrl.equals(NULL_URL_REFERENCE)) return true;
         try {
             URL url = new URL(testUrl);
             url.toURI();

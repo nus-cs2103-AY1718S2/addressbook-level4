@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
@@ -35,8 +36,15 @@ public class AddPatientQueueCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
+        model.updateFilteredPersonList(predicate);
+        Patient toQueuePatient = model.getFilteredPersonList().get(0);
+        try {
+            model.addPatientToQueue(toQueuePatient);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, patientName));
+        } catch (DuplicateDataException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, patientName));
     }
 
     @Override

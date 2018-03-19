@@ -49,4 +49,6 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Patient> predicate);
 
+    /** Adds patient into visiting queue */
+    void addPatientToQueue(Patient patient) throws DuplicatePatientException;
 }

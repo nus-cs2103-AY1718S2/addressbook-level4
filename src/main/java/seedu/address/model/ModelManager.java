@@ -108,6 +108,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void addPatientToQueue(Patient patient) throws DuplicatePatientException {
+        imdb.addPatientToQueue(patient);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {

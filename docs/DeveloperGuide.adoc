@@ -809,6 +809,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 . (Major) Exercises: students will be able to view, answer and save their responses for the weekly exercises to help track their conceptual understanding. Choice based questions will automatically be check for correctness with corresponding feedback to students.
 
 **Kang Anmin:**
+
 . (Minor) Change/Add more fields of information for persons in the contact list, in order to fit the specific context of this software. It also lays a foundation for other operations.
 . (Major) LO management: Add LOs to google tasks (the users google account, load tasks and sign completion.
 
@@ -817,6 +818,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 . (Minor) HighLight the key word: the key word will be highlighted in command find
 . (Major) Revamp the UI: rearrange the different sections and panels to best suit audience's needs
 . (Major) Upload profile photo: students will be able to upload a photo to their profile
+
+**Aditya Agarwal:**
+
+. (Minor) Implement dynamic search and highlight keywords which are being searched
+. (Major) Add a progress checker which will keep a track of number of tasks remaining and accordingly update the progress bar
 
 [appendix]
 == User Stories

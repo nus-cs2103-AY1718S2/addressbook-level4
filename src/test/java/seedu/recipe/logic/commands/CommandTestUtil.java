@@ -8,6 +8,7 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +38,8 @@ public class CommandTestUtil {
     public static final String VALID_INGREDIENT_BOB = "bob@example.com";
     public static final String VALID_INSTRUCTION_AMY = "Block 312, Amy Street 1";
     public static final String VALID_INSTRUCTION_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_URL_AMY = "https://www.bbcgoodfood.com/recipes/collection/fish-pie";
+    public static final String VALID_URL_BOB = "https://www.bbcgoodfood.com/recipes/collection/chicken-salad";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -48,6 +51,8 @@ public class CommandTestUtil {
     public static final String INGREDIENT_DESC_BOB = " " + PREFIX_INGREDIENT + VALID_INGREDIENT_BOB;
     public static final String INSTRUCTION_DESC_AMY = " " + PREFIX_INSTRUCTION + VALID_INSTRUCTION_AMY;
     public static final String INSTRUCTION_DESC_BOB = " " + PREFIX_INSTRUCTION + VALID_INSTRUCTION_BOB;
+    public static final String URL_DESC_AMY = " " + PREFIX_URL + VALID_URL_BOB;
+    public static final String URL_DESC_BOB = " " + PREFIX_URL + VALID_URL_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -57,6 +62,8 @@ public class CommandTestUtil {
     public static final String INVALID_INGREDIENT_DESC = " " + PREFIX_INGREDIENT + "bob!yahoo"; // missing '@' symbol
     // empty string not allowed for instructions
     public static final String INVALID_INSTRUCTION_DESC = " " + PREFIX_INSTRUCTION;
+    // missing "https://" or "http://"
+    public static final String INVALID_URL_DESC = " " + PREFIX_URL + "www.google.com";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -68,7 +75,7 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditRecipeDescriptorBuilder().withName(VALID_NAME_AMY)
             .withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY)
-            .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
+            .withInstruction(VALID_INSTRUCTION_AMY).withUrl(VALID_URL_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditRecipeDescriptorBuilder().withName(VALID_NAME_BOB)
             .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB)
             .withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();

@@ -807,14 +807,14 @@ To enhance user experience and usage efficiency by improving the command syntax 
 
 This allows Vets to change the application's appearance to better suit their preferences and working environment (e.g. dark theme for night time)
 
-|someone#1 |
-*MAJOR ENHANCEMENT*
+|Chia Le Jing|
+*PetPatient class and all its relevant features*
 
-DESCRIPTION HERE |
+Commands such as add, edit, delete, find. Also includes the storage of pet patient's data into the associated .xml file. |
 
-*MINOR ENHANCEMENT*
+*Implement backup function for local databases and the cloud (for v2.0)*
 
-DESCRIPTION HERE
+Allows local files to be backed up with the latest copy (in case of corruption of data). Also allows data to be backed up to the cloud for future use.
 
 |Wynona Kaan |
 *Appointment class and all relevant features*

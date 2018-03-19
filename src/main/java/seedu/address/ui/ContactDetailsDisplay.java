@@ -24,6 +24,9 @@ public class ContactDetailsDisplay extends UiPart<Region> {
     private static final String FXML = "ContactDetailsDisplay.fxml";
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
 
+    private List<Label> keysList = new ArrayList<>();
+    private List<Label> valuesList = new ArrayList<>();
+
     @FXML
     private Label name;
 
@@ -46,41 +49,27 @@ public class ContactDetailsDisplay extends UiPart<Region> {
      */
     private void showPersonDetails(Person person) {
         name.setText(person.getName().fullName);
-
-        List<Label> keysList = new ArrayList<>();
-        List<Label> valuesList = new ArrayList<>();
-
-        Label fullNameKey = new Label("Full Name" + ":");
-        Label fullNameValue = new Label(person.getName().fullName);
-        fullNameKey.getStyleClass().add("details-key");
-        fullNameValue.getStyleClass().add("details-value");
-
-        Label phoneKey = new Label("Phone" + ":");
-        Label phoneValue = new Label(person.getPhone().value);
-        phoneKey.getStyleClass().add("details-key");
-        phoneValue.getStyleClass().add("details-value");
-
-        Label emailKey = new Label("Email" + ":");
-        Label emailValue = new Label(person.getEmail().value);
-        emailKey.getStyleClass().add("details-key");
-        emailValue.getStyleClass().add("details-value");
-
-        Label addressKey = new Label("Address" + ":");
-        Label addressValue = new Label(person.getAddress().value);
-        addressKey.getStyleClass().add("details-key");
-        addressValue.getStyleClass().add("details-value");
-
-        keysList.add(fullNameKey);
-        keysList.add(phoneKey);
-        keysList.add(emailKey);
-        keysList.add(addressKey);
-        valuesList.add(fullNameValue);
-        valuesList.add(phoneValue);
-        valuesList.add(emailValue);
-        valuesList.add(addressValue);
+        
+        addPropertyToList("Full Name", person.getName().fullName);
+        addPropertyToList("Phone", person.getPhone().value);
+        addPropertyToList("Email", person.getEmail().value);
+        addPropertyToList("Address", person.getAddress().value);
 
         keys.setItems(FXCollections.observableList(keysList));
         values.setItems(FXCollections.observableList(valuesList));
+    }
+    
+    /**
+     * Adds the label for key and value to the respective list
+     */
+    private void addPropertyToList(String key, String value) {
+        Label keyLabel = new Label(key + ":");
+        Label valueLabel = new Label(value);
+        keyLabel.getStyleClass().add("details-key");
+        valueLabel.getStyleClass().add("details-value");
+        
+        keysList.add(keyLabel);
+        valuesList.add(valueLabel);
     }
 
     @Subscribe

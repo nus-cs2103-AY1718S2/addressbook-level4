@@ -797,6 +797,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 === Feature Contribution
 
 *Samuel Loh:*
+
 * *(Minor)* Added programmingLanguage field to student model and modified add/edit commands to fit enhancement
 This helps the tutor to identify what programming language is being used by each student to learn coding.
 

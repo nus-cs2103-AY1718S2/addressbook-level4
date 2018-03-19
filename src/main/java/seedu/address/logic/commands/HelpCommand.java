@@ -37,18 +37,18 @@ public class HelpCommand extends Command {
 
             case TaskCommand.COMMAND_WORD:
                 return new CommandResult(TaskCommand.MESSAGE_USAGE);
-//
-//          case EditCommand.COMMAND_WORD:
-//              return new CommandResult(EditCommand.MESSAGE_USAGE);
-//
-//          case SelectCommand.COMMAND_WORD:
-//              return new CommandResult(SelectCommand.MESSAGE_USAGE);
-//
-//          case DeleteCommand.COMMAND_WORD:
-//              return new CommandResult(DeleteCommand.MESSAGE_USAGE);
-//
-//          case FindCommand.COMMAND_WORD:
-//              return new CommandResult(FindCommand.MESSAGE_USAGE);
+
+            //case EditCommand.COMMAND_WORD:
+                //return new CommandResult(EditCommand.MESSAGE_USAGE);
+
+            //case SelectCommand.COMMAND_WORD:
+                //return new CommandResult(SelectCommand.MESSAGE_USAGE);
+
+            //case DeleteCommand.COMMAND_WORD:
+                //return new CommandResult(DeleteCommand.MESSAGE_USAGE);
+
+            //case FindCommand.COMMAND_WORD:
+                //return new CommandResult(FindCommand.MESSAGE_USAGE);
 
             default:
                 return new CommandResult(MESSAGE_USAGE);

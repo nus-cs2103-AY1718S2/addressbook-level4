@@ -29,8 +29,8 @@ Responsibilities: UI component
 '''
 
 === Ma Yuqian
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+image::Yuqian.jpg[width="150", align="left"]
+{empty}[https://github.com/XavierMaYuqian[github]] [<<XavierMaYuqian#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model component

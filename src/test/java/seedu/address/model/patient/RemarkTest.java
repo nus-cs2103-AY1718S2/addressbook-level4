@@ -16,7 +16,7 @@ public class RemarkTest {
     }
 
     @Test
-    public void equals(){
+    public void equals() {
         Remark remark = new Remark("test");
 
         // same object -> returns true

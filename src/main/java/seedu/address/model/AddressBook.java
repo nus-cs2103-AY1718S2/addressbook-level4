@@ -114,6 +114,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, syncedEditedPerson);
     }
 
+    //@@author ongkuanyang
+    public void archivePerson(Person target) throws PersonNotFoundException {
+        target.setArchived(true);
+        try {
+            persons.setPerson(target, target);
+        } catch (DuplicatePersonException e) {
+            // Impossible to have this exception
+        }
+    }
+
+    public void unarchivePerson(Person target) throws PersonNotFoundException {
+        target.setArchived(false);
+        try {
+            persons.setPerson(target, target);
+        } catch (DuplicatePersonException e) {
+            // Impossible to have this exception
+        }
+    }
+    //@@author
+
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master

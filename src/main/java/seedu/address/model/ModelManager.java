@@ -81,6 +81,20 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author ongkuanyang
+    @Override
+    public void archivePerson(Person target) throws PersonNotFoundException {
+        addressBook.archivePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unarchivePerson(Person target) throws PersonNotFoundException {
+        addressBook.unarchivePerson(target);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

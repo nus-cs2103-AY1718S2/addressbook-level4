@@ -36,6 +36,15 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author ongkuanyang
+    /** Archives the given person. */
+    void archivePerson(Person target) throws PersonNotFoundException;
+
+    /** Unarchive the given person. */
+    void unarchivePerson(Person target) throws PersonNotFoundException;
+
+    //@@author
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

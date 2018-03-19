@@ -22,6 +22,8 @@ public class Person {
 
     private final UniqueTagList tags;
 
+    private boolean isArchived = false;
+
     /**
      * Every field must be present and not null.
      */
@@ -49,6 +51,14 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean value) {
+        this.isArchived = value;
     }
 
     /**

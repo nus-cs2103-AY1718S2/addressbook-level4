@@ -142,6 +142,34 @@ Gives the 1st person in the last persons listing a 5-stars rating.
 `rate 2 2` +
 Gives the 2nd person in the list of Alex(s) a 2-star rating.
 
+=== Review an employee : `review`
+
+Updates the review of an existing person in the address book. +
+Format: `review INDEX u/REVIEWER REVIEW`
+
+****
+* Rates the person at the specified `INDEX`. The index refers to the index number shown in the last persons listing. The index *must be a positive integer* 1, 2, 3, ...
+* Both INDEX and REVIEW must be provided.
+* Existing revie will be updated to the input REVIEW.
+* REVIEW can contain any character with no length limitation
+* REVIEW will be tied to a REVIEWER
+****
+
+[NOTE]
+====
+* A person will have a null review by default upon added. This implies that the person is yet to be reviewed.
+* Null review is shown as `-`.
+====
+
+Examples:
+
+* `list` +
+`review 1 u/John Good Worker` +
+Gives the 1st person in the last persons listing a review "Good Worker".
+* `find n/Alex` +
+`rate 2 u/John Lazy` +
+Gives the 2nd person in the list of Alex(s) a review "Lazy".
+
 === Locating persons by name: `find`
 
 Finds persons whose names or tags contain any of the given keywords. +

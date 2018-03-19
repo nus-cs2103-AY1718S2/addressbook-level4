@@ -11,6 +11,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
+/**
+ * Displays the full information of a student on the browser panel
+ */
 public class MoreInfoCommand extends Command {
 
     public static final String COMMAND_WORD = "moreInfo";
@@ -34,7 +37,7 @@ public class MoreInfoCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException{
+    public CommandResult execute() throws CommandException {
         try {
             preProcessStudent();
 
@@ -44,7 +47,7 @@ public class MoreInfoCommand extends Command {
             throw new AssertionError("The target student cannot be missing");
         }
 
-        return new CommandResult((String.format(MESSAGE_MOREINFO_STUDENT_SUCCESS,studentToGetInfoFrom.getName())));
+        return new CommandResult((String.format(MESSAGE_MOREINFO_STUDENT_SUCCESS, studentToGetInfoFrom.getName())));
     }
 
     public void preProcessStudent() throws CommandException {

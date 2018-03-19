@@ -20,8 +20,7 @@ import seedu.address.model.student.Student;
 /**
  * The Browser Panel of the App.
  */
-public class
-BrowserPanel extends UiPart<Region> {
+public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String EXAMPLE_STUDENT_PAGE = "ExampleStudentPage.html";
@@ -52,8 +51,8 @@ BrowserPanel extends UiPart<Region> {
     }
 
     private void loadStudentInfoPage(Student student) {
-        URL ExampleStudentPage = MainApp.class.getResource(FXML_FILE_FOLDER + EXAMPLE_STUDENT_PAGE);
-        loadPage(ExampleStudentPage.toExternalForm());
+        URL exampleStudentPage = MainApp.class.getResource(FXML_FILE_FOLDER + EXAMPLE_STUDENT_PAGE);
+        loadPage(exampleStudentPage.toExternalForm());
     }
 
 

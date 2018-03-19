@@ -797,6 +797,26 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 
+
+== Feature Contribution
+
+[width="85%",cols="22%,<23%,<40%",options="header",]
+|=======================================================================
+|Name | Major |Minor
+|Johnny  |Display Panel: Add display panel functionalities to UI window | Data Integration: Integrate data input from user into display window
+
+|Xin Hui |Subject Window: Add L1R5 calculation support into subject inputs | Subject Class Database: Create subject class and integrate input into command.
+
+|Kun Hong |Administrative Information: Add support for automatic register number calculation and class allocation | Tag Support: Enhance tag functionalities in EduBuddy
+
+|Keng Seng |Advanced Sorting Functionalities: Add advanced sorting functionalities into EduBuddy | Command Support: Adding commands to EduBuddy to enhance user experience
+
+|=======================================================================
+
+
+
+
+
 [appendix]
 == User Stories
 

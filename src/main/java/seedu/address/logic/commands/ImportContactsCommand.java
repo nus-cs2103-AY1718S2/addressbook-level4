@@ -16,25 +16,40 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.DateAdded;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 
 
-//This class borrows from https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/
-// and https://github.com/callicoder/java-read-write-csv-file
-
+/**
+ * This class borrows from.
+ *https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/
+ *and https://github.com/callicoder/java-read-write-csv-file
+*/
 public class ImportContactsCommand extends Command {
 
-    public static final String COMMAND_WORD = "import_contacts"; //is there a list of added commands?
-    public static final String COMMAND_ALIAS = "ic"; //is there a list of aliases??
-    public static final String MESSAGE_SUCCESS = "Contacts successfully imported.\n"; //is there a list of aliases??
-    public static final String MESSAGE_FILE_SUCCESS_OPEN = "File was successfully opened.\n";
-    public static final String MESSAGE_FILE_FAILED_OPEN = "File failed to open. Please try a different address " +
-            "or check if file may be corrupt.\n";
-    public static final String MESSAGE_FILE_NOT_FOUND = "No file was found at the address provided. " +
-            "Please provide anotehr address.\n";
-    public static final String MESSAGE_NO_ADDRESS = "No address was provided, please provide an address to a csv, "
+    //is there a list of added commands?
+    public static final String COMMAND_WORD = "import_contacts";
+    //is there a list of aliases??
+    public static final String COMMAND_ALIAS = "ic";
+    //is there a list of aliases
+    public static final String MESSAGE_SUCCESS =
+            "Contacts successfully imported.\n";
+    public static final String MESSAGE_FILE_SUCCESS_OPEN =
+            "File was successfully opened.\n";
+    public static final String MESSAGE_FILE_FAILED_OPEN =
+            "File failed to open. Please try a different address "
+            + "or check if file may be corrupt.\n";
+    public static final String MESSAGE_FILE_NOT_FOUND =
+            "No file was found at the address provided. "
+            + "Please provide anotehr address.\n";
+    public static final String MESSAGE_NO_ADDRESS =
+            "No address was provided, please provide an address to a csv, "
             + "from which to import the file\n";
 
 
@@ -55,20 +70,16 @@ public class ImportContactsCommand extends Command {
                     .withIgnoreHeaderCase()
                     .withTrim());
             return new CommandResult(MESSAGE_FILE_SUCCESS_OPEN + "from : " + fileAddress);
-        }
-        catch (NullPointerException npe) { //file won't open, null ptr
+        } catch (NullPointerException npe) { //file won't open, null ptr
             throw new CommandException(MESSAGE_FILE_FAILED_OPEN);
-        }
-        catch (FileNotFoundException fnf) {
+        } catch (FileNotFoundException fnf) {
             throw new CommandException(MESSAGE_FILE_NOT_FOUND);
-        }
-        catch(IOException ioe) {
+        } catch(IOException ioe) {
             throw new CommandException("IOException thrown in ImportContactsCommand.");
         }
     }
 
-
-    public void printResult(String n, String e, String p, String a) {
+    public void printResult(final String n, final String e, final String p, final String a) {
         System.out.println("---------------");
         System.out.println("Name : " + n);
         System.out.println("Email : " + e);
@@ -90,7 +101,8 @@ public class ImportContactsCommand extends Command {
         DateAdded addDate;
 
         try {
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords(); //get iterator to go through records in csv
+            //get iterator to go through records in csv
+            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
             for (CSVRecord csvRecord : csvRecords) { //iterate through the
                 // Accessing values by Header names

@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class AddMilestoneCommand extends UndoableCommand {
             + PREFIX_INDEX + "STUDENT'S INDEX "
             + PREFIX_DATE + "DATE "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
-            + "Example: " + COMMAND_WORD +" "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_INDEX + "1 "
             + PREFIX_DATE + "17/05/2018 23:59 "
             + PREFIX_DESCRIPTION + "Learn Arrays";

@@ -76,7 +76,7 @@ public class Date {
         int min = Integer.parseInt(matcher.group(GROUP_MINUTE));
 
         return (day >= 1 && day <= 31) && (month >= 1 && month <= 12) && (year >= 1 && year <= 9999)
-                && (hour >= 0 && hour <= 23) && (min >=0 && min <= 59);
+                && (hour >= 0 && hour <= 23) && (min >= 0 && min <= 59);
     }
 
     public LocalDateTime getValue() {

@@ -2,8 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 
 import java.util.stream.Stream;
 
@@ -19,6 +19,11 @@ import seedu.address.model.student.dashboard.Milestone;
  */
 public class AddMilestoneCommandParser {
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddMilestoneCommand
+     * and returns an AddMilestoneCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public AddMilestoneCommand parse(String args) throws ParseException {
         assert args != null;
 

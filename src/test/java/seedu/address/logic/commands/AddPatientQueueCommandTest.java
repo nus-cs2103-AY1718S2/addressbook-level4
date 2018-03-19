@@ -67,13 +67,13 @@ public class AddPatientQueueCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddPatientQueueCommand.MESSAGE_PERSON_NOT_FOUND);
 
-        command.executeUndoableCommand();
+        command.execute();
     }
 
     @Test
     public void execute_patientExist_addSuccessful() throws Exception {
         AddPatientQueueCommand command = prepareCommand("fiona");
-        CommandResult commandResult = command.executeUndoableCommand();
+        CommandResult commandResult = command.execute();
         assertEquals(String.format(AddPatientQueueCommand.MESSAGE_SUCCESS, TypicalPatients.FIONA.getName()),
                 commandResult.feedbackToUser);
     }
@@ -84,7 +84,7 @@ public class AddPatientQueueCommandTest {
         AddPatientQueueCommand duplicateCommand = prepareCommand("fiona");
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddPatientQueueCommand.MESSAGE_DUPLICATE_PERSON);
-        duplicateCommand.executeUndoableCommand();
+        duplicateCommand.execute();
     }
 
     /**
@@ -99,6 +99,6 @@ public class AddPatientQueueCommandTest {
     
     private void prepareForDuplicatePatient() throws Exception {
         AddPatientQueueCommand duplicateCommand = prepareCommand("fiona");
-        duplicateCommand.executeUndoableCommand();
+        duplicateCommand.execute();
     }
 }

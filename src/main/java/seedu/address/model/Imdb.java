@@ -141,7 +141,7 @@ public class Imdb implements ReadOnlyImdb {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Patient(
-                patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(), correctTagReferences);
+                patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(), patient.getRemark(), correctTagReferences);
     }
 
     /**
@@ -174,7 +174,7 @@ public class Imdb implements ReadOnlyImdb {
 
         if (personTags.remove(tag)) {
             Patient updatedPatient = new Patient(patient.getName(), patient.getPhone(),
-                    patient.getEmail(), patient.getAddress(), personTags);
+                    patient.getEmail(), patient.getAddress(), patient.getRemark(), personTags);
             try {
                 updatePerson(patient, updatedPatient);
             } catch (DuplicatePatientException dpe) {

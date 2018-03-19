@@ -14,6 +14,7 @@ import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,6 +32,8 @@ public class XmlAdaptedPatient {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String remark;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -64,6 +67,7 @@ public class XmlAdaptedPatient {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        remark = source.getRemark().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -113,8 +117,10 @@ public class XmlAdaptedPatient {
         }
         final Address address = new Address(this.address);
 
+        final Remark remark = new Remark(this.remark);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Patient(name, phone, email, address, tags);
+        return new Patient(name, phone, email, address, remark, tags);
     }
 
     @Override

@@ -37,10 +37,9 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
-        if( event.hasError ) {
+        if (event.hasError) {
             resultDisplay.getStyleClass().add(ERROR_STYLE_CLASS);
-        }
-        else {
+        } else {
             resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
         }
     }

@@ -24,8 +24,6 @@ public class ContactDetailsDisplay extends UiPart<Region> {
     private static final String FXML = "ContactDetailsDisplay.fxml";
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
 
-    private List<Label> keysList = new ArrayList<>();
-    private List<Label> valuesList = new ArrayList<>();
 
     @FXML
     private Label name;
@@ -49,25 +47,28 @@ public class ContactDetailsDisplay extends UiPart<Region> {
      */
     private void showPersonDetails(Person person) {
         name.setText(person.getName().fullName);
-        
-        addPropertyToList("Full Name", person.getName().fullName);
-        addPropertyToList("Phone", person.getPhone().value);
-        addPropertyToList("Email", person.getEmail().value);
-        addPropertyToList("Address", person.getAddress().value);
+
+        List<Label> keysList = new ArrayList<>();
+        List<Label> valuesList = new ArrayList<>();
+
+        addPropertyToList("Full Name", person.getName().fullName, keysList, valuesList);
+        addPropertyToList("Phone", person.getPhone().value, keysList, valuesList);
+        addPropertyToList("Email", person.getEmail().value, keysList, valuesList);
+        addPropertyToList("Address", person.getAddress().value, keysList, valuesList);
 
         keys.setItems(FXCollections.observableList(keysList));
         values.setItems(FXCollections.observableList(valuesList));
     }
-    
+
     /**
      * Adds the label for key and value to the respective list
      */
-    private void addPropertyToList(String key, String value) {
+    private void addPropertyToList(String key, String value, List<Label> keysList, List<Label> valuesList) {
         Label keyLabel = new Label(key + ":");
         Label valueLabel = new Label(value);
         keyLabel.getStyleClass().add("details-key");
         valueLabel.getStyleClass().add("details-value");
-        
+
         keysList.add(keyLabel);
         valuesList.add(valueLabel);
     }

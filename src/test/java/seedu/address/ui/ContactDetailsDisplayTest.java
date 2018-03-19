@@ -13,8 +13,8 @@ import seedu.address.testutil.PersonBuilder;
 
 public class ContactDetailsDisplayTest extends GuiUnitTest {
 
+    private static final String DEFAULT_TEXT = "Select a person to view his details";
     private ContactDetailsDisplayHandle contactDetailsDisplayHandle;
-    private final String DEFAULT_TEXT = "Select a person to view his details";
 
     @Before
     public void setUp() {

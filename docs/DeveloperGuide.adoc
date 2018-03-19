@@ -236,10 +236,11 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the organizer (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
+.Reference from Figure 7.
 image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -275,14 +276,18 @@ public class DeleteCommand extends UndoableCommand {
 }
 ----
 
+===== Scenario
+
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th task in the organizer. The current state of the organizer is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.UndoRedoStack `delete 5` command execution
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/Study ...` to add a new task.
 
+.UndoRedoStack `add n/Study ...` command execution
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -292,6 +297,7 @@ The user now decides that adding the task was a mistake, and decides to undo tha
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the organizer to the state before the `add` command executed.
 
+.UndoRedoStack `undo` command execution
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -299,6 +305,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.UndeRedoStack sequence diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the organizer to the state after the command is executed).
@@ -308,14 +315,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/Study` command (this is the behavior that most modern desktop applications follow).
 
+.UndoRedoStack `clear` command execution
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.UndoRedoStack `list` command execution
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.UndoRedoStack activity diagram
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -359,6 +369,126 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
+
+// tag::taskpriority[]
+=== Task's Priority Autoupdating and AutoSorting feature
+==== Current Implementation
+
+The autoupdating and autosorting mechanism resides inside `UniqueTaskList`. The `UniqueTaskList` is responsible for updating each Task’s priority level and sorting the `ObservableList<Task>` whenever a new `Task` is added. In addition, whenever a `Task` is edited, the `ObservableList<Task>` is sorted again.
+
+===== Description of `UniqueTaskList` 's `add` method
+
+The `add` method of the `UniqueTaskList` class is implemented as such:
+
+----
+public void add(Task toAdd) throws DuplicateTaskException {
+	//check non null and no duplicate task
+	toAdd = updatePriority(toAdd);
+	internalList.add(toAdd);
+	sortTasks();
+}
+----
+
+The `updatePriority` method returns a new `Task` with a new `Priority` based on the current date, `AddedDate`, and `Deadline`.
+
+The new `Priority` level will remain within the range of 0 - 9. The new `Priority` is calculated as such :
+
+* If the current date is equal to `AddedDate`
+** `Priority` remains the same.
+* If the current date is past `Deadline`
+** `Priority` is set to the `HIGHEST_SETTABLE_PRIORITY_LEVEL` : 9
+* If the current date is before `Deadline` and not equal to `AddedDate`
+** `Priority is calculated via the following formula :
+----
+priorityDifferenceFromMax = HIGHEST_SETTABLE_PRIORITY_LEVEL - currentPriority
+
+dayDifferenceCurrentToDeadline = Duration.between(currentDate, deadline)
+
+dayDifferenceAddedToDeadline = Duration.between(dateAdded, deadline)
+
+priorityToIncrease = priorityDifferenceFromMax * (dayDifferenceCurrentToDeadline / dayDifferenceAddedToDeadline)
+
+newPriority = currentPriority + priorityToIncrease
+----
+The new `Task` with its updated `Priority` will then be added to `UniqueTaskList`’s `internalList`. Following that, the `internalList` is sorted via the `sortTasks` method. The `sortTasks` method is implemented as such:
+----
+private void sortTasks() {
+	internalList.sort(Task.priorityComparator());
+}
+----
+The `sortTasks` method makes use of the `ObservableList` class’s `sort` method and `Task`’s `priorityComparator` method. The `priorityComparator` method returns a `Comparator` that sorts `Task`’s based on descending `Priority` levels. The `internalList` is sorted with respect to the comparator.
+
+===== Scenario
+
+Consider a `addTask` method call by the `Organizer`. The current date is 2018-03-19.
+
+The following is a sequence diagram which represents the `Organizer` adding a Study `Task`.
+
+.addTask(Study) method execution sequence diagram
+image::OrganizerAddTaskSequenceDiagram.png[width="800"]
+
+Suppose the `tasks` currently contains the following two `Task` s.
+
+.`tasks` 's initial `Task` s
+image::OrganizerAddTaskDiagram1.png[width="800"]
+
+The following figure represents the "Study" `Task`.
+
+."Study" `Task`
+image::OrganizerAddTaskDiagram2.png[width="300"]
+
+When `tasks` calls `updatePriority(Study)`, the new priority level is calculated as such :
+-----
+priorityDifferenceFromMax = 9 - 0 = 9
+
+dayDifferenceCurrentToDeadline = 14
+
+dayDifferenceAddedToDeadline = 31
+
+priorityToIncrease = 9 * (14 / 31) = 4
+
+newPriority = 0 + 4 = 4
+-----
+
+A new "Study" `Task` is created and added to the `internalList`.
+
+.`internalList` after "Study" `Task` is added
+image::OrganizerAddTaskDiagram3.png[width="800"]
+
+The `sortTasks` method is then called, which calls the `priorityCompartor` method, and uses the `Comparator` returned to sort the `Task` s. This results in the following `UniqueTaskList`.
+
+.`internalList` after `sortTasks` is called
+image::OrganizerAddTaskDiagram4.png[width="800"]
+
+==== Design Considerations
+===== Aspect : Implementation of `updatePriority`
+
+* Alternative 1 (current choice): Add a new method `updatePriority` in UniqueTaskList’s `add`
+** Pros : Convenient to update the priority during this method call; since during initialization of `Organizer`, `add` is called for every `Task` to initialize the `UniqueTaskList`.
+** Cons : Possible violation of Single Responsibility Principle and Separation of Concerns as `UniqueTaskList` now updates `Task` priorities and stores `Task` s.
+* Alternative 2 : Add a new class `UpdatedUniqueTaskList` which extends `UniqueTaskList`
+** Pros : Removes violation of Single Responsibility Principle and Separation of Concerns in Alternative 1.
+** Cons : Repeats the logic in `UniqueTaskList` while adding one method.
+
+===== Aspect : How `updatePriority` executes
+
+* Alternative 1 (current choice) : Return a new `Task` with new `Priority`
+** Pros : Easy to implement.
+** Cons : A new object is created twice during every addition, even if `Priority` is not updated; Hence slightly inefficient.
+* Alternative 2 : Edit the `Priority` parameter of the `Task`
+** Pros : No new objects need to be created.
+** Cons : Requires major overhaul of `Task` and it’s parameters to be mutable.
+
+===== Aspect : Scope of `updatePriority` and `sortTasks`
+
+* Alternative 1 (current choice) : Implement within `Model`
+** Pros : No need to deal with commands, and fits with the idea of automation.
+** Cons : Concern of updating priorities and sorting tasks may not lie with `Model` but `Logic`.
+* Alternative 2 : Implement within `Logic`
+** Pros : Fits with the concern of updating priorities and sorting tasks.
+** Cons : Requires development of commands and extra command calls to be automatically called upon start of application; unnecessary trouble for same feature.
+
+// end::taskpriority[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -812,11 +942,10 @@ Helps busy university students keep track of their tasks and priorities
 ** Minor : Priority autosorting and autoupdate
 *** Allows application to automatically manage task priority levels so that the user does not have to
 * Natania Djohaari
-** Major : Announcement / Notification
-*** Helps users be reminded of the latest upcoming deadline
-** Minor : Date added parameter
-*** Allows users to recall when the task was created
-*** Supports application function of priority autoupdating
+** Major : Recurring Tasks
+*** Helps users automatically create tasks that are recurring
+** Minor : RemoveTag method
+*** Allows application to remove a specific tag from all tasks
 * Yeo Guek Ling
 ** Major : Calendar
 *** Allows users to be able to have a more concise view of task deadlines

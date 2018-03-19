@@ -139,7 +139,7 @@ public class UniqueTaskList implements Iterable<Task> {
      * Priority level remains the same if task has just been created
      * Priority level is at maximum if current date is the deadline
      */
-    public static Task updatePriority(Task task) {
+    public Task updatePriority(Task task) {
         Task newTask;
         Priority newPriority;
         LocalDate currentDate = LocalDate.now();

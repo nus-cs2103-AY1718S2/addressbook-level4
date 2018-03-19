@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class XmlUtilTest {
     private static final String VALID_NAME = "Work on PrioriTask";
     private static final String VALID_PRIORITY = "9";
     private static final String VALID_DEADLINE = "2018-07-16";
-    private static final String VALID_DATEADDED = "2018-03-18";
+    private static final String VALID_DATEADDED = LocalDate.now().toString();
     private static final String VALID_DESCRIPTION = "Refactor Address to Description";
     private static final Boolean VALID_STATUS = null;
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));

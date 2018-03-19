@@ -373,3 +373,23 @@
 #tags .purple {
     -fx-background-color: #8064a7;
 }
+
+.exercises-panel {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+    -fx-border: none;
+}
+
+.exercises-panel .content {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.exercises-panel:focused .content {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.exercises-panel .label {
+    -fx-text-fill: black !important;
+}

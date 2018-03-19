@@ -808,6 +808,14 @@ An yellow-based light colour theme is now available as an alternative to the def
 is to give the users a warm and comfortable feeling when they are doing their busy work in the restaurant.
 - Major enhancement: Add a new feature
 
+* Zhang Zequn
+- Minor enhancement: Add colours to different tags +
+Same tags will be assigned the same colours which makes the differentiation of tags clearer.
+- Minor enhancement: Add Halal/Non-halal and Vegetarian/Non-vegetarian features +
+Halal/Non-halal and Vegetarian/Non-vegetarian features now are available for Add command. Since these two features
+are optional, if no input is given, the default value is Non-halal and Non-vegetarian.
+- Major enhancement: Add a new feature
+
 [appendix]
 == User Stories
 

@@ -3,6 +3,8 @@ package seedu.recipe.model.recipe;
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
+import java.net.URL;
+
 /**
  * Represents a Recipe's URL in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidUrl(String)}
@@ -10,7 +12,7 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
 public class Url {
 
 
-    public static final String MESSAGE_URL_CONSTRAINTS = "URL should be valid";
+    public static final String MESSAGE_URL_CONSTRAINTS = "URL should start with a http:// or https://";
     public final String value;
 
     /**
@@ -24,12 +26,22 @@ public class Url {
         this.value = url;
     }
 
+    //@@author RyanAngJY-reused
+    //Reused from https://stackoverflow.com/questions/2230676/how-to-check-for-a-valid-url-in-java with exception handling
     /**
-     * TO BE IMPLEMENTED
+     *  Returns true if a given string is a valid web url.
      */
-    public static boolean isValidUrl(String test) {
-        return true;
+    public static boolean isValidUrl(String testUrl) {
+        try {
+            URL url = new URL(testUrl);
+            url.toURI();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
+    //@@author RyanAngJY
 
     @Override
     public String toString() {

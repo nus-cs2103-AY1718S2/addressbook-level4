@@ -29,6 +29,7 @@ public class Imdb implements ReadOnlyImdb {
     private final UniquePatientList persons;
     private final UniqueTagList tags;
     private final UniqueAppointmentList appointments;
+    private final UniquePatientVisitingQueue visitingQueue;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -41,6 +42,7 @@ public class Imdb implements ReadOnlyImdb {
         persons = new UniquePatientList();
         tags = new UniqueTagList();
         appointments = new UniqueAppointmentList();
+        visitingQueue = new UniquePatientVisitingQueue();
     }
 
     public Imdb() {}

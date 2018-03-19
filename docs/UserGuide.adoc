@@ -118,7 +118,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by tag: `findtag`
+=== Locating persons by tag: `findtag` `[Coming in v2.0]`
 
 Finds persons whose tags contain any of the given keywords. +
 Format: `findtag KEYWORD [MORE_KEYWORDS]`
@@ -159,7 +159,7 @@ Deletes the 2nd person in the address book.
 Deletes the 1st person in the results of the `find` command.
 
 // tag::sort[]
-=== Sorting all persons : `sort`
+=== Sorting all persons : `sort` `[Since v1.2]`
 
 Sorts all persons in the address book alphabetically and then displays the current list in sorted order. +
 Format: `sort`
@@ -261,7 +261,7 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Encrypting data files `[Coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]

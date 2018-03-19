@@ -21,6 +21,7 @@ mainClassName = 'seedu.address.MainApp'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
+
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -39,6 +40,7 @@ jacocoTestReport {
 }
 
 dependencies {
+
     String testFxVersion = '4.0.7-alpha'
 
     compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
@@ -54,6 +56,10 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
     testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-calendar:v3-rev298-1.23.0'
     compile 'com.vdurmont:emoji-java:4.0.0'
 }
 
@@ -64,7 +70,7 @@ shadowJar {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '4.6'
 }
 
 task coverage(type: JacocoReport) {
@@ -161,6 +167,7 @@ task headless << {
 // Makes sure that headless properties are set before running tests
 test.mustRunAfter headless
 
+
 asciidoctor {
     backends 'html5'
     sourceDir 'docs'
@@ -197,12 +204,9 @@ task deployOfflineDocs(type: Copy) {
     }
 }
 
-task copyDummySearchPage(type: Copy) {
-    from 'docs/DummySearchPage.html'
-    into "${buildDir}/docs/html5"
-}
-
 deployOfflineDocs.dependsOn asciidoctor
 processResources.dependsOn deployOfflineDocs
 
 defaultTasks 'clean', 'headless', 'allTests', 'coverage', 'asciidoctor'
+
+

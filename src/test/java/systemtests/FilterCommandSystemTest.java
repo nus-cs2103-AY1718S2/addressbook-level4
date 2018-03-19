@@ -27,36 +27,45 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         /* Case: filters multiple persons in address book, command with leading spaces and trailing spaces
          * -> 3 persons found
          */
+        showAllPersons();
         String command = "   " + FilterCommand.COMMAND_WORD + " "
                 + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019 + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, CARL, ELLE, FIONA); // their graduation year is before or equal 2019
+        ModelHelper.setFilteredList(expectedModel, CARL, FIONA); // their graduation year is before or equal 2019
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: repeat previous filter command where person list is displaying the persons satisfying the filter
          * -> 2 persons found
          */
+        showAllPersons();
         command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: filter person where person list is not displaying the person we are finding -> 5 person found */
-        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2020";
+        /* Case: filter person twice -> 5 persons found and 2 persons found*/
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2017-2020";
         ModelHelper.setFilteredList(expectedModel, ALICE, CARL, DANIEL, ELLE, FIONA);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2020-2022";
+        ModelHelper.setFilteredList(expectedModel, ALICE, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: filter no person in address book, 2017 -> 0 persons found */
+        showAllPersons();
         command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2017";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: filter multiple persons in address book, 2 keywords -> 3 persons found */
+        showAllPersons();
         command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2018" + " "
                 + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019;
-        ModelHelper.setFilteredList(expectedModel, CARL, ELLE, FIONA); //only last keyword effective
+        ModelHelper.setFilteredList(expectedModel, CARL, FIONA); //only last keyword effective
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -74,7 +83,8 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         /* Case: filter same persons in address book after deleting 1 of them -> 2 person found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertFalse(getModel().getAddressBook().getPersonList().contains(CARL));
-        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019;
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2017-2019";
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, ELLE, FIONA);
         assertCommandSuccess(command, expectedModel);
@@ -84,7 +94,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         showAllPersons();
         selectPerson(Index.fromOneBased(4));
         assertTrue(getPersonListPanel().getHandleToSelectedCard().getName().equals(ELLE.getName().fullName));
-        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019;
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2017-2019";
         ModelHelper.setFilteredList(expectedModel, ELLE, FIONA);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();

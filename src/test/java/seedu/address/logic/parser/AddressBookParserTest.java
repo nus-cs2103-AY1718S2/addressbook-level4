@@ -38,7 +38,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ExpectedGraduationYearBeforeKeywordPredicate;
+import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -109,8 +109,8 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         FilterCommand command = (FilterCommand) parser.parseCommand(
                 PersonUtil.getFilterCommand(person));
-        assertEquals(new FilterCommand(new ExpectedGraduationYearBeforeKeywordPredicate(
-                person.getExpectedGraduationYear().toString())), command);
+        assertEquals(new FilterCommand(new ExpectedGraduationYearInKeywordsRangePredicate(
+                person.getExpectedGraduationYear(), person.getExpectedGraduationYear())), command);
     }
 
     @Test

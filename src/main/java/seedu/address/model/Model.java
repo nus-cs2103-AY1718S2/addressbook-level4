@@ -50,4 +50,6 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    void filterFilteredPersonList(Predicate<Person> predicate);
+
 }

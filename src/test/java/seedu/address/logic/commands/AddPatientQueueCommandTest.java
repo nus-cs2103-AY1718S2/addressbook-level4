@@ -16,9 +16,7 @@ public class AddPatientQueueCommandTest {
     @Test
     public void constructor_nullObject_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        NameContainsKeywordsPredicate nullPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("null"));
-        new AddPatientQueueCommand(nullPredicate);
+        new AddPatientQueueCommand(null);
     }
 
 }

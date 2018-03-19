@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * LoginManager class to store login state and handle login attempts
+ */
 public final class LoginManager {
     public static final int NO_USER = 0;
     public static final int DOCTOR_LOGIN = 1;
@@ -20,6 +23,10 @@ public final class LoginManager {
         return currLoginState.getState();
     }
 
+    /**
+     * Check if username and password match and are in the passwords list.
+     * Login state will be updated.
+     */
     public static boolean authenticate (String username, String password) {
         boolean match = false;
         int loginStateIndex = 0;

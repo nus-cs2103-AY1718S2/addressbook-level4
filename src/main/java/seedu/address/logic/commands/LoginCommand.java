@@ -34,7 +34,7 @@ public class LoginCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (LoginManager.authenticate(username, password)){
+        if (LoginManager.authenticate(username, password)) {
             return new CommandResult(MESSAGE_LOGIN_SUCCESS + username);
         } else {
             throw new CommandException(MESSAGE_LOGIN_FAIL);

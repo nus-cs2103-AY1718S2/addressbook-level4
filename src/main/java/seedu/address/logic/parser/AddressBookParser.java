@@ -83,6 +83,9 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        case SwitchThemeCommand.COMMAND_WORD:
+            return new SwitchThemeCommand();
+
         case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 

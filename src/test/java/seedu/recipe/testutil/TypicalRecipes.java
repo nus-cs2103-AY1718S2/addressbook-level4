@@ -27,13 +27,15 @@ public class TypicalRecipes {
     public static final Recipe ALICE = new RecipeBuilder().withName("Alice Pauline")
             .withInstruction("123, Jurong West Ave 6, #08-111").withIngredient("alice@example.com")
             .withPreparationTime("85355255")
-            .withTags("friends").build();
+            .withTags("family").build();
     public static final Recipe BENSON = new RecipeBuilder().withName("Benson Meier")
             .withInstruction("311, Clementi Ave 2, #02-25")
             .withIngredient("johnd@example.com").withPreparationTime("98765432")
-            .withTags("owesMoney", "friends").build();
+            .withTags("owesMoney", "family").build();
     public static final Recipe CARL = new RecipeBuilder().withName("Carl Kurz").withPreparationTime("95352563")
-            .withIngredient("heinz@example.com").withInstruction("wall street").build();
+            .withIngredient("heinz@example.com")
+            .withInstruction("wall street")
+            .withTags("owesMoney").build();
     public static final Recipe DANIEL = new RecipeBuilder().withName("Daniel Meier").withPreparationTime("87652533")
             .withIngredient("cornelia@example.com").withInstruction("10th street").build();
     public static final Recipe ELLE = new RecipeBuilder().withName("Elle Meyer").withPreparationTime("9482224")

@@ -17,6 +17,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -144,6 +145,8 @@ public class XmlAddressBookStorageTest {
     private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
         try {
             new XmlAddressBookStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+        } catch (WrongPasswordException wpe) {
+            throw new AssertionError("There should not be any encryption for the file.", wpe);
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

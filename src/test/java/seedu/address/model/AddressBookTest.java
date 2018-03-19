@@ -113,6 +113,7 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Alias> aliases = FXCollections.observableArrayList();
+        private final String password = new String("test");
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
@@ -132,6 +133,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Alias> getAliasList() {
             return aliases;
+        }
+
+        @Override
+        public byte[] getPassword() {
+            return password.getBytes();
         }
     }
 

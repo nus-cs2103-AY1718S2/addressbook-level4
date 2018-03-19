@@ -109,7 +109,8 @@ public class StorageManager extends ComponentManager implements Storage {
         try {
             saveAddressBook(event.data);
         } catch (WrongPasswordException wpe) {
-
+            logger.severe("Unable to save due to wrong password. Should not happen.");
+            raise(new DataSavingExceptionEvent(wpe));
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

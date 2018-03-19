@@ -205,7 +205,8 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setCustTimeZone(CustTimeZone timeZone) { this.timeZone = timeZone; }
+        public void setCustTimeZone(CustTimeZone timeZone) {
+            this.timeZone = timeZone; }
 
         public Optional<CustTimeZone> getTimeZone() {
             return Optional.ofNullable(timeZone);

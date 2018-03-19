@@ -13,7 +13,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
-import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.TaskBuilder;
 
 /**

@@ -32,7 +32,8 @@ public class DeleteCommandSystemTest extends RemarkBookSystemTest {
 
         /* Case: delete the first activity in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_ACTIVITY.getOneBased() + "       ";
+        String command = "     " + DeleteCommand.COMMAND_WORD + "      "
+                + INDEX_FIRST_ACTIVITY.getOneBased() + "       ";
         Activity deletedActivity = removePerson(expectedModel, INDEX_FIRST_ACTIVITY);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedActivity);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -73,7 +74,7 @@ public class DeleteCommandSystemTest extends RemarkBookSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
-        /* --------------------- Performing delete operation while a activity card is selected ------------------------ */
+        /* --------------------- Performing delete operation while a activity card is selected ---------------------- */
 
         /* Case: delete the selected activity -> activity list panel selects the activity before the deleted activity */
         showAllPersons();
@@ -103,10 +104,12 @@ public class DeleteCommandSystemTest extends RemarkBookSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
@@ -137,7 +140,8 @@ public class DeleteCommandSystemTest extends RemarkBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedActivity);
 
         assertCommandSuccess(
-                DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
+                DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel,
+                expectedResultMessage);
     }
 
     /**

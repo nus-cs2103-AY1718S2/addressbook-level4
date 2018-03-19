@@ -51,7 +51,8 @@ public class ActivityListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        PersonCardHandle expectedCard = personListPanelHandle.getPersonCardHandle(INDEX_SECOND_ACTIVITY.getZeroBased());
+        PersonCardHandle expectedCard = personListPanelHandle.getPersonCardHandle(INDEX_SECOND_ACTIVITY
+                .getZeroBased());
         PersonCardHandle selectedCard = personListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }

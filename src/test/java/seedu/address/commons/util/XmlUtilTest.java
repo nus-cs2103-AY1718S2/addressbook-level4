@@ -18,7 +18,6 @@ import seedu.address.model.DeskBoard;
 import seedu.address.storage.XmlAdaptedActivity;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableDeskBoard;
-import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.DeskBoardBuilder;
 import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TestUtil;
@@ -139,7 +138,8 @@ public class XmlUtilTest {
     }
 
     /**
-     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedActivity}
+     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data
+     * to {@code XmlAdaptedActivity}
      * objects.
      */
     @XmlRootElement(name = "activity")

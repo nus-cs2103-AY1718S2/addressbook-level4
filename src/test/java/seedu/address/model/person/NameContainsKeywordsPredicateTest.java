@@ -10,8 +10,6 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
-import seedu.address.model.activity.Task;
-import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.TaskBuilder;
 
 public class NameContainsKeywordsPredicateTest {

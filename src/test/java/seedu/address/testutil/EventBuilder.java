@@ -12,7 +12,10 @@ import seedu.address.model.util.SampleDataUtil;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EventBuilder implements ActivityBuilder{
+/**
+ * This the class to build event
+ */
+public class EventBuilder implements ActivityBuilder {
 
     public static final String DEFAULT_NAME = "CIP";
     public static final String DEFAULT_START_DATETIME = "04/04/2018 08:10";
@@ -93,7 +96,7 @@ public class EventBuilder implements ActivityBuilder{
      * Sets the {@code Location} of the {@code Activity} that we are building.
      */
     public EventBuilder withLocation (String location) {
-        this.location =new Location(location);
+        this.location = new Location(location);
         return this;
     }
     public Activity build() {

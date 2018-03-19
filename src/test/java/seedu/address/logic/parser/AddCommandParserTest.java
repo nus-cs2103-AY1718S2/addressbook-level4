@@ -32,10 +32,11 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.activity.*;
+import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.TaskBuilder;
 
 public class AddCommandParserTest {

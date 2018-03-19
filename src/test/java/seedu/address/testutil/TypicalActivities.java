@@ -15,8 +15,6 @@ import java.util.List;
 
 import seedu.address.model.DeskBoard;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
-import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
 /**

@@ -34,9 +34,9 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditActivityDescriptor;
-import seedu.address.model.activity.Remark;
-import seedu.address.model.activity.Name;
 import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
 
@@ -180,7 +180,8 @@ public class EditCommandParserTest {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_ACTIVITY;
         String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
-        EditCommand.EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+        EditCommand.EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+                .withPhone(VALID_PHONE_BOB).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 

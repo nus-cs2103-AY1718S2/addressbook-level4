@@ -24,7 +24,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new ActivityPanelSelectionChangedEvent(new ActivityCard(ASSIGNMENT1, 0));
+        selectionChangedEventStub = new ActivityPanelSelectionChangedEvent(
+                new ActivityCard(ASSIGNMENT1, 0));
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -40,7 +41,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a activity
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ASSIGNMENT1.getName().fullName.replaceAll(" ", "%20"));
+        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ASSIGNMENT1.getName().fullName
+                .replaceAll(" ", "%20"));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());

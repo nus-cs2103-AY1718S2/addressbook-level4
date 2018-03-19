@@ -4,9 +4,9 @@ import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
-import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -11,6 +11,9 @@ import seedu.address.model.util.SampleDataUtil;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Build task for testing
+ */
 public class TaskBuilder implements ActivityBuilder {
     public static final String DEFAULT_NAME = "ASSIGNMENT";
     public static final String DEFAULT_DATETIME = "04/04/2018 08:10";

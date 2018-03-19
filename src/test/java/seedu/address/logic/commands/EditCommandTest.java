@@ -13,9 +13,9 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
-import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import org.junit.Test;
 
@@ -29,10 +29,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Task;
-import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
-import seedu.address.testutil.EventBuilder;
 import seedu.address.testutil.TaskBuilder;
 
 /**

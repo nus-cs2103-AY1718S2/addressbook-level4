@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
 import seedu.address.model.activity.Activity;
-import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.TaskBuilder;
 
 public class ActivityCardTest extends GuiUnitTest {

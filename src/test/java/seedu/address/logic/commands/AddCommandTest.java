@@ -22,9 +22,8 @@ import seedu.address.model.DeskBoard;
 import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.Model;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
-import seedu.address.testutil.ActivityBuilder;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.testutil.TaskBuilder;
 
 public class AddCommandTest {

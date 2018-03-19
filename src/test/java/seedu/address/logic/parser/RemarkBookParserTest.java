@@ -31,7 +31,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
-import seedu.address.testutil.ActivityBuilder;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
 import seedu.address.testutil.ActivityUtil;
 import seedu.address.testutil.TaskBuilder;

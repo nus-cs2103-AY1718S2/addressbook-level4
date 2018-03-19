@@ -33,7 +33,9 @@ public class Url {
      *  Returns true if a given string is a valid web url, or no url has been assigned
      */
     public static boolean isValidUrl(String testUrl) {
-        if (testUrl.equals(NULL_URL_REFERENCE)) return true;
+        if (testUrl.equals(NULL_URL_REFERENCE)) {
+            return true;
+        }
         try {
             URL url = new URL(testUrl);
             url.toURI();

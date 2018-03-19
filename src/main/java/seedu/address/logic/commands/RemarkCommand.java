@@ -91,12 +91,15 @@ public class RemarkCommand extends UndoableCommand {
                 patientToEdit.getAddress(), updatedRemark, patientToEdit.getTags());
     }
 
+    /**
+     * Generates the success message depending on whether a remark was modified or deleted from {@code patientToEdit}
+     */
     private String generateSuccessMessage(Patient editedPatient) {
         String message = MESSAGE_ADD_SUCCESS;
         if (remark.value.isEmpty()) {
             message = MESSAGE_REMOVE_SUCCESS;
         }
-        return String.format(message,editedPatient);
+        return String.format(message, editedPatient);
     }
 
     @Override

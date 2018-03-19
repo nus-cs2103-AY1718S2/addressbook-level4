@@ -51,7 +51,7 @@ public class CommandTestUtil {
     public static final String INGREDIENT_DESC_BOB = " " + PREFIX_INGREDIENT + VALID_INGREDIENT_BOB;
     public static final String INSTRUCTION_DESC_AMY = " " + PREFIX_INSTRUCTION + VALID_INSTRUCTION_AMY;
     public static final String INSTRUCTION_DESC_BOB = " " + PREFIX_INSTRUCTION + VALID_INSTRUCTION_BOB;
-    public static final String URL_DESC_AMY = " " + PREFIX_URL + VALID_URL_BOB;
+    public static final String URL_DESC_AMY = " " + PREFIX_URL + VALID_URL_AMY;
     public static final String URL_DESC_BOB = " " + PREFIX_URL + VALID_URL_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
@@ -74,11 +74,12 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditRecipeDescriptorBuilder().withName(VALID_NAME_AMY)
-            .withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY)
-            .withInstruction(VALID_INSTRUCTION_AMY).withUrl(VALID_URL_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY)
+                .withInstruction(VALID_INSTRUCTION_AMY).withUrl(VALID_URL_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditRecipeDescriptorBuilder().withName(VALID_NAME_BOB)
-            .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB)
-            .withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB)
+                .withInstruction(VALID_INSTRUCTION_BOB).withUrl(VALID_URL_BOB)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

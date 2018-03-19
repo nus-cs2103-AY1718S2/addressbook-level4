@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -268,6 +269,24 @@ public class ImdbParserTest {
     public void parseCommand_viewAppointmentCommandAlias() throws Exception {
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS) instanceof ViewAppointmentCommand);
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS + " 3") instanceof ViewAppointmentCommand);
+    }
+
+    @Test
+    public void parseCommand_addPatientQueue() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        AddPatientQueueCommand command = (AddPatientQueueCommand) parser.parseCommand(
+                AddPatientQueueCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new AddPatientQueueCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_addPatientQueueAlias() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        AddPatientQueueCommand command = (AddPatientQueueCommand) parser.parseCommand(
+                AddPatientQueueCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new AddPatientQueueCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test

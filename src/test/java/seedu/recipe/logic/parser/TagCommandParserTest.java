@@ -1,8 +1,8 @@
-package seedu.address.logic.parser;
+package seedu.recipe.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Arrays;
 
@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import seedu.recipe.logic.commands.TagCommand;
 import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
-import seedu.recipe.logic.parser.TagCommandParser;
 
 public class TagCommandParserTest {
 

@@ -33,7 +33,9 @@ public class TypicalRecipes {
             .withIngredient("johnd@example.com").withPreparationTime("98765432")
             .withTags("owesMoney", "friends").build();
     public static final Recipe CARL = new RecipeBuilder().withName("Carl Kurz").withPreparationTime("95352563")
-            .withIngredient("heinz@example.com").withInstruction("wall street").build();
+            .withIngredient("heinz@example.com")
+            .withInstruction("wall street")
+            .withTags("owesMoney").build();
     public static final Recipe DANIEL = new RecipeBuilder().withName("Daniel Meier").withPreparationTime("87652533")
             .withIngredient("cornelia@example.com").withInstruction("10th street").build();
     public static final Recipe ELLE = new RecipeBuilder().withName("Elle Meyer").withPreparationTime("9482224")

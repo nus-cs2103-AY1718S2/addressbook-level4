@@ -33,7 +33,7 @@ public abstract class Command {
      * @return summary message for persons displayed
      */
     public static String getMessageForTagListShownSummary(int displaySize, String tagKeywords) {
-        return String.format(Messages.MESSAGE_PERSONS_WITH_TAGS_LISTED_OVERVIEW, displaySize, tagKeywords);
+        return String.format(Messages.MESSAGE_RECIPES_WITH_TAGS_LISTED_OVERVIEW, displaySize, tagKeywords);
     }
 
     /**

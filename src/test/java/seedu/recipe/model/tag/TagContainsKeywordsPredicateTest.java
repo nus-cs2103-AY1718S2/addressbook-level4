@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.recipe.model.tag;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,8 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.testutil.PersonBuilder;
-import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
+import seedu.recipe.testutil.RecipeBuilder;
 
 public class TagContainsKeywordsPredicateTest {
 
@@ -35,7 +34,7 @@ public class TagContainsKeywordsPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate == null);
 
-        // different person -> returns false
+        // different recipe -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -43,31 +42,31 @@ public class TagContainsKeywordsPredicateTest {
     public void testTagContainsKeywordsReturnsTrue() {
         // One keyword
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.singletonList("friends"));
-        assertTrue(predicate.test(new PersonBuilder().build()));
+        assertTrue(predicate.test(new RecipeBuilder().build()));
 
         // Multiple keywords
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("friends", "family").build()));
+        assertTrue(predicate.test(new RecipeBuilder().withTags("friends", "family").build()));
 
         // Only one matching keyword
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "family"));
-        assertTrue(predicate.test(new PersonBuilder().build()));
+        assertTrue(predicate.test(new RecipeBuilder().build()));
     }
 
     @Test
     public void testTagDoesNotContainKeywordsReturnsFalse() {
         // Zero keywords
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().build()));
+        assertFalse(predicate.test(new RecipeBuilder().build()));
 
         // Non-matching keyword
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("family"));
-        assertFalse(predicate.test(new PersonBuilder().build()));
+        assertFalse(predicate.test(new RecipeBuilder().build()));
 
         // Keywords match phone, email, name and address, but does not match tag
         predicate = new TagContainsKeywordsPredicate(Arrays.asList
                             ("Alice", "12345", "alice@email.com", "Main", "Street"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+        assertFalse(predicate.test(new RecipeBuilder().withName("Alice").withPreparationTime("12345")
+                .withIngredient("alice@email.com").withInstruction("Main Street").build()));
     }
 }

@@ -5,8 +5,9 @@ import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import java.util.Arrays;
 
 import seedu.recipe.logic.commands.TagCommand;
-import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
 import seedu.recipe.logic.parser.exceptions.ParseException;
+import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
+
 
 /**
  * Parses input arguments and creates a new TagCommand object

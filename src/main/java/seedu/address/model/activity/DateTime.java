@@ -55,6 +55,15 @@ public class DateTime {
         //return test.matches(DATETIME_VALIDATION_REGEX);
     }
 
+    /**
+     * Get the date time as java.util.Date
+     * @return date and time infor.
+     */
+    public Date getDate() {
+        return this.date;
+    }
+
+
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);

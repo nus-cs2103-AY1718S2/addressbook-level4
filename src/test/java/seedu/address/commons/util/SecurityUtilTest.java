@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.exceptions.WrongPasswordException;
 
 public class SecurityUtilTest {
@@ -59,7 +60,7 @@ public class SecurityUtilTest {
     }
 
     @Test
-    public void encrypt_decrypt_wrongPassword_throwsWrongPasswordException() throws Exception {
+    public void encryptDecrypt_wrongPassword_throwsWrongPasswordException() throws Exception {
 
         byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
         byte[] hashedWrong = SecurityUtil.hashPassword(WRONG_PASSWORD);

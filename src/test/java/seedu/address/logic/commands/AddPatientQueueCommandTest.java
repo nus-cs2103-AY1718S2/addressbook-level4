@@ -80,6 +80,7 @@ public class AddPatientQueueCommandTest {
 
     @Test
     public void execute_duplicatePatient_throwsCommandException() throws Exception {
+        prepareForDuplicatePatient();
         AddPatientQueueCommand duplicateCommand = prepareCommand("fiona");
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddPatientQueueCommand.MESSAGE_DUPLICATE_PERSON);
@@ -94,5 +95,10 @@ public class AddPatientQueueCommandTest {
                 new AddPatientQueueCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
+    }
+    
+    private void prepareForDuplicatePatient() throws Exception {
+        AddPatientQueueCommand duplicateCommand = prepareCommand("fiona");
+        duplicateCommand.executeUndoableCommand();
     }
 }

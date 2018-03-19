@@ -797,6 +797,17 @@ Hence they need a software to store all personal information and order informati
 
 *Value proposition*: Help restaurants maintain all the information of customers and a queue for delivery services
 
+*Feature contribution*
+
+* Wu Hao
+- Minor enhancement: Add alias to each command +
+In case the restaurant has to handle many orders during lunch time, this feature helps restaurant owners to manage
+the orders faster using shortcuts for commands.
+- Minor enhancement: Add a light colour theme +
+An yellow-based light colour theme is now available as an alternative to the default dark grey colour theme. This
+is to give the users a warm and comfortable feeling when they are doing their busy work in the restaurant.
+- Major enhancement: Add a new feature
+
 [appendix]
 == User Stories
 

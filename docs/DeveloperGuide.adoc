@@ -358,6 +358,38 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::customisedalias[]
+=== Customised Alias feature
+==== Current Implementation
+
+image::AddAliasSdForLogic.png[width="800"]
+
+image::StorageClassDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: How alias list is maintained
+
+* **Alternative 1 (current choice):** Create an `UniqueAliasList` in the `alias` model
+
+image::ModelClassDiagram.png[width="800"]
+
+** Pros: Reduce coupling between `Alias` and other commands. This design follows the Open Closed Principle where a command is open to extension and closed to modification.
+** Cons: More difficult to implement as need to design an instance of a `UniqueAliasList`.
+* **Alternative 2:** Create a HashMap of `Alias` in each command class
+** Pros: Faster to implement as each command class only needs to include a HashMap that stores all the aliases tagged to the command.
+** Cons: High coupling between `Alias` and other commands and the HashMaps of every command needs to be iterated through to find to find the aliased command.
+
+===== Aspect: How alias is stored
+
+* **Alternative 1 (current choice):** Store as `XmlAdaptedAlias` and save to `addressbook.xml`
+** Pros:
+** Cons:
+* **Alternative 2:** Store in `UserPrefsStorage`
+** Pros:
+** Cons:
+// end::customisedalias[]
+
 // tag::dataencryption[]
 ===  Data Encryption
 ==== Current Implementation
@@ -428,7 +460,6 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 * **Alternative 2:** Adds selected `Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's AddressBook.
 ** Pros: User is able to select which `Person`, `Tag` or `Alias` to be imported.
 ** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported.
-
 
 === Logging
 

@@ -35,8 +35,8 @@ public class HelpCommand extends Command {
         } else   {
             switch(commandRequest) {
 
-            case AddCommand.COMMAND_WORD:
-                return new CommandResult(AddCommand.MESSAGE_USAGE);
+            case TaskCommand.COMMAND_WORD:
+                return new CommandResult(TaskCommand.MESSAGE_USAGE);
 
             case EditCommand.COMMAND_WORD:
                 return new CommandResult(EditCommand.MESSAGE_USAGE);

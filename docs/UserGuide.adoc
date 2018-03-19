@@ -65,7 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
-=== Logging into the system: `login` or `lg`
+=== Logging into the system: `login` or `lg` [coming in v1.2]
 
 Logs the user into the Imdb, given a matching username and password.
 Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
@@ -225,16 +225,22 @@ record 1 d/19 March 2018 s/Runny nose, Headache i/Flu t/Zyrtec +
 Edits the record for the first person to Date:19 March 2018 Symptoms:Runny nose, Headache
 Illness:Flu Treatment:Zyrtec`.
 
+=== Printing a patient's formatted medical records : `print` [coming in v1.4]
+
+Formats and prints out a patient's medical records. +
+Format: `print INDEX`
+
 === Add patient into visiting queue with patient name: `addq` [coming in v1.2]
 
 Add patient into visiting queue (registration).
 Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
 
 Examples:
+
 * `addq Betsy` +
 Betsy will be added at the back of the visiting queue.
 
-* `vq John` +
+* `aq John` +
 John will be added at the back of the visiting queue.
 
 === Remove patient into visiting queue with patient name: `removeq` [coming in v1.2]
@@ -243,11 +249,38 @@ Remove the first patient from the visiting queue (check-out).
 Format: `removeq` or `rq`
 
 Examples:
+
 * `removeq Betsy` +
 Betsy will be removed if she is the first patient in the queue.
 
-* `vq John` +
+* `rq John` +
 John will be removed if he is the first patient in the queue.
+
+=== Add condition to an existing patient: `addc` [coming in v1.3]
+
+Adds a medical condition to an existing patient.
+Format: `addc` or `ac`
+
+Examples:
+
+* `addc Betsy aspirin` +
+Aspirin will be added to the list of conditions that Betsy has.
+
+* `ac John asthma` +
+Asthma will be added to the list of conditions that John has.
+
+=== Remove condition of an existing patient: `removec` [coming in v1.4]
+
+Adds a medical condition to an existing patient.
+Format: `removec` or `rc`
+
+Examples:
+
+* `removec Betsy aspirin` +
+Aspirin will be removed from the list of conditions that Betsy has.
+
+* `rc John asthma` +
+Asthma will be removed from the list of conditions that John has.
 
 === Listing entered commands : `history` or `hi`
 

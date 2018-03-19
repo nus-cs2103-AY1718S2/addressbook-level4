@@ -797,7 +797,7 @@ manage which include contact details and profiles of potential employees. It is 
 *Feature contributions:*
 
 1. Kushagra Goyal
- * Major Feature: Reminders.
+ * Major Feature: Reminders
  ** Users can add reminders with subject, date and time.
  ** Users can delete reminders.
  ** The reminders will be displayed on the screen sorted according to earliest time due.
@@ -811,17 +811,17 @@ manage which include contact details and profiles of potential employees. It is 
  ** Minor Feature: Viewing the contact details in a separate focused panel makes them easier to read for the user and the information looks clearer. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
 
 2. Do Andre Khoi Nguyen
- * Major Feature: Calendar.
+ * Major Feature: Calendar
  ** Users can sync Gmail calendar.
  ** Users can add events to the calendar.
 
  * Minor Feature: Profile Picture display.
- ** Users can add profile picture by using `add` command or `edit` command.
- ** Users can view profile picture.
+ ** Users can add a profile picture by using `add` command or `edit` command.
+ ** Users can view the profile picture.
 
  * How do these features fit into the product scope?
- ** Major Feature: Recruiters have a lot of appointment, meeting, and interviews to manage. Hence, showing them on the calendar help they manage their time effectively.
- ** Minor Feature: Viewing profile pictures of the employees help recruiters to recognize the employees easier.
+ ** Major Feature: Recruiters have a lot of appointments, meetings, and interviews to manage. Hence, showing them on the calendar will help them visualize and manage their time effectively.
+ ** Minor Feature: Viewing profile pictures of the potential employees help recruiters to recognize them easily.
 
 [appendix]
 == User Stories

@@ -140,8 +140,8 @@ public class Imdb implements ReadOnlyImdb {
         // Rebuild the list of patient tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Patient(
-                patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(), patient.getRemark(), correctTagReferences);
+        return new Patient(patient.getName(), patient.getPhone(), patient.getEmail(),
+                patient.getAddress(), patient.getRemark(), correctTagReferences);
     }
 
     /**

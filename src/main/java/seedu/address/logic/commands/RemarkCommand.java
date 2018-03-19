@@ -91,9 +91,11 @@ public class RemarkCommand extends UndoableCommand {
                 patientToEdit.getAddress(), updatedRemark, patientToEdit.getTags());
     }
 
-    private String generateSuccessMessage(Patient editedPatient){
+    private String generateSuccessMessage(Patient editedPatient) {
         String message = MESSAGE_ADD_SUCCESS;
-        if(remark.value.isEmpty()){message = MESSAGE_REMOVE_SUCCESS;}
+        if (remark.value.isEmpty()) {
+            message = MESSAGE_REMOVE_SUCCESS;
+        }
         return String.format(message,editedPatient);
     }
 
@@ -116,8 +118,16 @@ public class RemarkCommand extends UndoableCommand {
                 && getRemark().equals(e.getRemark());
     }
 
-    public Index getIndex() { return index; }
-    public Remark getRemark() { return remark; }
-    public Patient getToEdit() { return patientToEdit; }
-    public Patient getEdited() { return editedPatient; }
+    public Index getIndex() {
+        return index;
+    }
+    public Remark getRemark() {
+        return remark;
+    }
+    public Patient getToEdit() {
+        return patientToEdit;
+    }
+    public Patient getEdited() {
+        return editedPatient;
+    }
 }

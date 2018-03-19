@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import static java.util.Objects.requireNonNull;
 import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
@@ -24,6 +23,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
+import static java.util.Objects.requireNonNull;
 
 
 /**
@@ -33,36 +33,66 @@ import seedu.address.model.tag.Tag;
 */
 public final class ImportContactsCommand extends Command {
 
-    //is there a list of added commands?
+    /**
+     * Self explanitory.
+     */
     public static final String COMMAND_WORD = "import_contacts";
-    //is there a list of aliases??
+    /**
+     * Self explanitory.
+     */
     public static final String COMMAND_ALIAS = "ic";
-    //is there a list of aliases
+    /**
+     * Self explanitory.
+     */
     public static final String MESSAGE_SUCCESS =
             "Contacts successfully imported.\n";
+    /**
+     * Self explanitory.
+     */
     public static final String MESSAGE_FILE_SUCCESS_OPEN =
             "File was successfully opened.\n";
+    /**
+     * Self explanitory.
+     */
     public static final String MESSAGE_FILE_FAILED_OPEN =
             "File failed to open. Please try a different address "
             + "or check if file may be corrupt.\n";
+    /**
+     * Self explanitory.
+     */
     public static final String MESSAGE_FILE_NOT_FOUND =
             "No file was found at the address provided. "
             + "Please provide anotehr address.\n";
+    /**
+     * Self explanitory.
+     */
     public static final String MESSAGE_NO_ADDRESS =
             "No address was provided, please provide an address to a csv, "
             + "from which to import the file\n";
 
 
+    /**
+     * Self explanitory.
+     */
     private String fileAddress;
+    /**
+     * Self explanitory.
+     */
     private CSVParser csvParser;
 
 
+    /**
+     * Self explanitory.
+     */
     public ImportContactsCommand(final String fa) throws IOException {
         //This throws IOException if _fileAddress is null
         requireNonNull(fa);
         fileAddress = fa;
     }
 
+    /**
+     * Self explanitory.
+     */
     public CommandResult openFile() throws IOException, CommandException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(fileAddress));
@@ -82,6 +112,9 @@ public final class ImportContactsCommand extends Command {
         }
     }
 
+    /**
+     * Self explanitory.
+     */
     public void printResult(final String n, final String e,
                             final String p, final String a) {
         System.out.println("---------------");
@@ -92,6 +125,9 @@ public final class ImportContactsCommand extends Command {
         System.out.println("---------------\n\n");
     }
 
+    /**
+     * Self explanitory.
+     */
     @Override
     public CommandResult execute() throws CommandException {
         Person personToAdd;

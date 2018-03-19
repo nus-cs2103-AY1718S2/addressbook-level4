@@ -810,6 +810,17 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 ** Add a `recent` command that allows user to view previous selections that he did not add into his book shelf.
 ** This allows the user to reconsider his choices without having to perform the search again.
 
+[discrete]
+==== Shi Jin
+* **Mark a book as read, change the priority of a book and rate books** (major)
+** Add attributes rating, status, priority.
+** Add `edit` command that allows user to rate, set status and change priority of
+some books.
+** This allows the user to keep track of what to read and what have been read and give recommendations to others.
+* **Use aliases in place of full commands** (minor)
+** Add a `alias` command that allows users to change the current full commands to the aliases that users need.
+** This allows users to reduce the amount of typing needed.
+
 [appendix]
 == User Stories
 

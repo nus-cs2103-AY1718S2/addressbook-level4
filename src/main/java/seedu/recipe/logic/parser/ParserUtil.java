@@ -14,6 +14,7 @@ import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
+import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -117,6 +118,31 @@ public class ParserUtil {
         requireNonNull(instruction);
         return instruction.isPresent() ? Optional.of(parseInstruction(instruction.get())) : Optional.empty();
     }
+
+    /** ========= RYAN ANG JIA YONG ==============
+     * Parses a {@code String email} into an {@code Email}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code email} is invalid.
+     */
+    public static Url parseUrl(String url) throws IllegalValueException {
+        requireNonNull(url);
+        String trimmedUrl = url.trim();
+        if (!Url.isValidUrl(trimmedUrl)) {
+            throw new IllegalValueException(Url.MESSAGE_URL_CONSTRAINTS);
+        }
+        return new Url(trimmedUrl);
+    }
+
+    /**
+     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Url> parseUrl(Optional<String> url) throws IllegalValueException {
+        requireNonNull(url);
+        return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.empty();
+    }
+    // ===========================================
 
     /**
      * Parses a {@code String ingredient} into an {@code Ingredient}.

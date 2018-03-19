@@ -359,6 +359,83 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::dataencryption[]
+
+=== Details Panel Implementation
+
+The `select` command shows the contact details of the person in a separate panel while the `linkedIn` command shows the LinkedIn search of the person.
+
+The `DetailsPanel` is a TabPane which  which consists of the two tabs, `Contact Details` and `LinkedIn Search`. The `ContactDetailsDisplay` is embedded in the `Contact Details` tab and the `Browser Panel` in the `Linked Search` tab.
+
+The UML diagram below represents the UI structure for the `DetailsPanel` (Refer to Figure 30):
+
+image::umlDetails.png[width="790"]
+_Figure 30 : UML Diagram for Panel._
+
+We created a new event, `SwitchTabRequestEvent` which sets the current tab to `Contact Details` or `LinkedIn Search` depending on the input command.
+The code for the SwitchTabRequestEvent` event is as follows.
+
+[source, java]
+----
+public class SwitchTabRequestEvent extends BaseEvent {
+    public final int tabId;
+    public SwitchTabRequestEvent(int tabId) {
+        this.tabId = tabId;
+    }
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+----
+
+[NOTE]
+The `SwitchTabRequestEvent` has an integer attribute `tabId`. The event handlers use this `tabId` to switch between tabs wherein the `Contact Details` and `LinkedIn Search` have tabIds 0 and 1 respectively.
+
+Event handlers use the following code to handle the `SwitchTabRequestEvent` event.
+
+[source, java]
+----
+@Subscribe
+private void handleSwitchTabRequestEvent(SwitchTabRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    tabPane.getSelectionModel().clearAndSelect(event.tabId);
+}
+----
+
+The `DetailsPanel` is also displayed when the user manually clicks on the `PersonCard` and the panel corresponding to the current tab is shown. This is implemented by handling the `PersonPanelSelectionChangedEvent` in both the `ContactDetailsPanel` and the `BrowserPanel`.
+
+[NOTE]
+Both the `select` and `linkedIn` command function quite similarly and only differ in the panel that they trigger.
+
+The figure below (Refer to figure 31) is the wireframe for the `ContactDetailsDisplay`:
+
+image::wireframeDetailsPanel.PNG[width="600"]
+_Figure 31 : Wireframe for Details Panel._
+
+image::wireframeDetailsPanel.PNG[width="600"]
+_Figure 31 : Wireframe for Details Panel._
+
+
+[discrete]
+==== Design Consideration
+
+**Aspect:** Improving the UI +
+
+
+**Alternative 1 (current choice):** Show the extra details of contact after they are selected. +
+**Pros**: Allows more readability of the contact details and if more attributes are added to the `Person` class, not everything needs to be shown in the `PersonCard`. +
+**Cons**: User needs to manually select the user to see more details of that person. +
+
+**Alternative 2:** Only show the LinkedIn search in the `BrowserPanel` and show the contact details of the person only in the `PersonCard`. +
+**Pros**: User only has to look in the `PersonCard` for any and every detail +
+**Cons**: Looks very cluttered and has poor User Interface design.
+
+**Alternative 3 :** Show the `ContactDetailsDisplay` and `LinkedIn` as completely independent windows without tabs. +
+**Pros**: Completely isolates the `select` and `linkedIn` commands. +
+**Cons**: Removes the connectivity between a person's contact information and LinkedIn profile. Also, in the current implementation one is easily accessible from another, just by manually switching tabs which would not be possible with this alternative.
+1
+//end::details[]
+
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_

@@ -146,21 +146,10 @@ Examples:
 * `module CS2010` +
 Returns all persons having CS2010 in their modules
 
-=== Viewing a collated birthday list: `bdlist` (coming in v2.0)
+=== Viewing a collated birthday list: `birthdays` (coming in v1.3)
 
 Displays a list that contains all the birthdays of all contacts ordered in date +
-Format: `bdlist`
-
-****
-* Only full names will be matched e.g. `Han` will not match `Han Tan`
-* Overlap of the two persons' timetables will be displayed.
-* Auto-fill for person's name
-****
-
-Examples:
-
-* `free p/John Doe p/Han Tan` +
-Displays the combined timetable for John Doe and Han Tan.
+Format: `birthdays`
 
 === Viewing common time slots in timetable: `free` (coming in v2.0)
 

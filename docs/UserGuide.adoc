@@ -177,6 +177,17 @@ Examples:
 * `deletebefore d/12/12/2017 t/friends` +
 Deletes all friends added before 12/12/2017 in the address book.
 
+=== Emailing a person : `email`
+
+Emails a person based on the specified name.
+Format: `email KEYWORD [MORE KEYWORDS]`
+
+****
+* Emailed person must have name match the full word of keyword
+* Search is case insensitive. e.g. hans will match Hans
+* Persons matching at least one keyword will be emailed. eg. Hans Bo will email Hans Gruber, Bo Yang
+****
+
 === Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +

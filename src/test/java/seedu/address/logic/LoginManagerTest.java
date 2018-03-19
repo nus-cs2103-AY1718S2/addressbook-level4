@@ -6,9 +6,6 @@ import static seedu.address.logic.commands.LoginCommand.FAKE_PASSWORD;
 import static seedu.address.logic.commands.LoginCommand.TEST_PASSWORD;
 import static seedu.address.logic.commands.LoginCommand.TEST_USERNAME;
 
-import static seedu.address.logic.LoginManager.DOCTOR_LOGIN;
-import static seedu.address.logic.LoginManager.NO_USER;
-
 import org.junit.Test;
 
 public class LoginManagerTest {
@@ -19,7 +16,7 @@ public class LoginManagerTest {
         int loginState = LoginManager.getUserState();
 
         assertEquals(expectSuccess, true);
-        assertEquals(loginState, DOCTOR_LOGIN);
+        assertEquals(loginState, LoginManager.DOCTOR_LOGIN);
     }
 
     @Test
@@ -28,6 +25,6 @@ public class LoginManagerTest {
         int loginState = LoginManager.getUserState();
 
         assertEquals(expectFail, false);
-        assertEquals(loginState, NO_USER);
+        assertEquals(loginState, LoginManager.NO_USER);
     }
 }

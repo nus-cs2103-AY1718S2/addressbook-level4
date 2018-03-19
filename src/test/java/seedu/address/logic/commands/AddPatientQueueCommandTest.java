@@ -19,6 +19,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.testutil.TypicalPatients;
 
 public class AddPatientQueueCommandTest {
 
@@ -62,12 +63,27 @@ public class AddPatientQueueCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() throws Exception {
-        String expectedMessage = String.format(AddPatientQueueCommand.MESSAGE_PERSON_NOT_FOUND);
         AddPatientQueueCommand command = prepareCommand(" ");
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddPatientQueueCommand.MESSAGE_PERSON_NOT_FOUND);
 
         command.executeUndoableCommand();
+    }
+
+    @Test
+    public void execute_patientExist_addSuccessful() throws Exception {
+        AddPatientQueueCommand command = prepareCommand("fiona");
+        CommandResult commandResult = command.executeUndoableCommand();
+        assertEquals(String.format(AddPatientQueueCommand.MESSAGE_SUCCESS, TypicalPatients.FIONA.getName()),
+                commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_duplicatePatient_throwsCommandException() throws Exception {
+        AddPatientQueueCommand duplicateCommand = prepareCommand("fiona");
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddPatientQueueCommand.MESSAGE_DUPLICATE_PERSON);
+        duplicateCommand.executeUndoableCommand();
     }
 
     /**
@@ -79,5 +95,4 @@ public class AddPatientQueueCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
-
 }

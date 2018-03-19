@@ -28,7 +28,7 @@ public class UniqueAliasList {
     /**
      * Returns true if the list contains an equivalent Alias as the given argument.
      */
-    public boolean contains(String toCheck) {
+    public static boolean contains(String toCheck) {
         requireNonNull(toCheck);
         return hashList.containsKey(toCheck);
     }
@@ -36,7 +36,7 @@ public class UniqueAliasList {
     /**
      * Returns the command of the alias.
      */
-    public String getCommandFromAlias(String alias) {
+    public static String getCommandFromAlias(String alias) {
         requireNonNull(alias);
         return hashList.get(alias);
     }
@@ -46,7 +46,7 @@ public class UniqueAliasList {
      *
      * @throws DuplicateAliasException if the Alias to add is a duplicate of an existing Alias in the list.
      */
-    public void add(Alias toAdd) throws DuplicateAliasException {
+    public static void add(Alias toAdd) throws DuplicateAliasException {
         requireNonNull(toAdd);
         if (contains(toAdd.getAlias())) {
             throw new DuplicateAliasException();

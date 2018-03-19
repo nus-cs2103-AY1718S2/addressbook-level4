@@ -49,10 +49,9 @@ public class AddressBookParser {
 
         String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        UniqueAliasList aliasList = new UniqueAliasList();
 
-        if (aliasList.contains(commandWord)) {
-            commandWord = aliasList.getCommandFromAlias(commandWord);
+        if (UniqueAliasList.contains(commandWord)) {
+            commandWord = UniqueAliasList.getCommandFromAlias(commandWord);
         }
         switch (commandWord) {
 

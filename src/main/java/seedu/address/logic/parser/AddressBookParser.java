@@ -16,6 +16,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListAllCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -77,6 +78,9 @@ public class AddressBookParser {
 
         case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
+
+        case ListAllCommand.COMMAND_WORD: case ListAllCommand.COMMAND_ALIAS:
+            return new ListAllCommand();
 
         case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();

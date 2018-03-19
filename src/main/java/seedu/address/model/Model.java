@@ -11,7 +11,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
+    /** {@code Predicate} Predicate that shows only unarchived persons */
+    Predicate<Person> PREDICATE_SHOW_UNARCHIVED_PERSONS = person -> !person.isArchived();
+
+    /** {@code Predicate} Predicate that shows all persons */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
@@ -42,8 +45,8 @@ public interface Model {
 
     /** Unarchive the given person. */
     void unarchivePerson(Person target) throws PersonNotFoundException;
-
     //@@author
+
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();

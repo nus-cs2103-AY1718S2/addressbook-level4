@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_UNARCHIVED_PERSONS;
 
 import java.util.List;
 import java.util.Objects;
@@ -46,6 +47,7 @@ public class UnarchiveCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
 
+        model.updateFilteredPersonList(PREDICATE_SHOW_UNARCHIVED_PERSONS);
         return new CommandResult(String.format(MESSAGE_ARCHIVE_PERSON_SUCCESS, personToUnarchive));
     }
 

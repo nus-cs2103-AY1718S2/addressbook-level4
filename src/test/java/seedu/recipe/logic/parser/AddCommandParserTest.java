@@ -83,6 +83,13 @@ public class AddCommandParserTest {
             NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_AMY
                 + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
 
+        //@@author RyanAngJY
+        // multiple urls - last url accepted
+        assertParseSuccess(parser, NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB
+                + INSTRUCTION_DESC_BOB + URL_DESC_AMY + URL_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
+        //@@author
+
+
         // multiple tags - all accepted
         Recipe expectedRecipeMultipleTags =
             new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_BOB)
@@ -162,11 +169,13 @@ public class AddCommandParserTest {
             NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INVALID_INSTRUCTION_DESC
                 + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS);
 
+        //@@author RyanAngJY
         // invalid url
         assertParseFailure(parser,
                 NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
                         + INVALID_URL_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Url.MESSAGE_URL_CONSTRAINTS);
+        //@@author
 
         // invalid tag
         assertParseFailure(parser,

@@ -160,6 +160,23 @@ Examples:
 * `deletebefore d/12/12/2017 t/friends` +
 Deletes all friends added before 12/12/2017 in the address book.
 
+=== Deleting dated persons  : `deletebefore` or `db`
+
+Deletes all persons added before a specified date with specified tags. +
+Format: `deletebefore [d/DATE] [t/TAG]...` or `db [d/DATE] [t/TAG]...`
+
+****
+* Persons deleted must have tags that matches all the specified tags.
+* The specified tags can be in any order.
+* At least one tag must be provided.
+* The input date must be in the following format: dd/MM/yyyy.
+****
+
+Examples:
+
+* `deletebefore d/12/12/2017 t/friends` +
+Deletes all friends added before 12/12/2017 in the address book.
+
 === Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +

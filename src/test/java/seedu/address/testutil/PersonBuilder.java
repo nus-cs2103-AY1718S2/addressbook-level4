@@ -1,9 +1,12 @@
 package seedu.address.testutil;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -20,12 +23,14 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_DATE_ADDED = "02/02/2018";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private DateAdded dateAdded;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -33,6 +38,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        dateAdded = new DateAdded(DEFAULT_DATE_ADDED);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -44,6 +50,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        dateAdded = personToCopy.getDateAdded();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -87,8 +94,27 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DateAdded} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withDateAdded(String dateAdded) {
+        this.dateAdded = new DateAdded(dateAdded);
+        return this;
+    }
+
+    /**
+     * Creates and returns a {@code DateAdded} with the dateAdded attribute representing the current date
+     * @return current date in the following format: dd/MM/yyyy
+     */
+    public PersonBuilder generateDate() {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = Calendar.getInstance();
+        this.dateAdded =  new DateAdded(dateFormatter.format(calendar.getTime()));
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, dateAdded, tags);
     }
 
 }

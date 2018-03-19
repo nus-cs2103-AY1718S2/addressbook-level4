@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -31,6 +32,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String dateAdded;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -44,11 +47,13 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email,
+                            String address, String dateAdded, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.dateAdded = dateAdded;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -64,6 +69,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        dateAdded = source.getDateAdded().dateAdded;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -90,7 +96,8 @@ public class XmlAdaptedPerson {
         final Name name = new Name(this.name);
 
         if (this.phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
         if (!Phone.isValidPhone(this.phone)) {
             throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
@@ -98,7 +105,8 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
 
         if (this.email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
         }
         if (!Email.isValidEmail(this.email)) {
             throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
@@ -106,15 +114,25 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
 
         if (this.address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
         if (!Address.isValidAddress(this.address)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
         final Address address = new Address(this.address);
 
+        if (this.dateAdded == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, DateAdded.class.getSimpleName()));
+        }
+        if (!DateAdded.isValidDate(this.dateAdded)) {
+            throw new IllegalValueException(DateAdded.MESSAGE_DATE_CONSTRAINTS);
+        }
+        final DateAdded dateAdded = new DateAdded(this.dateAdded);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, dateAdded, tags);
     }
 
     @Override

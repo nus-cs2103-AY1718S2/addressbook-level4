@@ -21,18 +21,20 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final DateAdded dateAdded;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, DateAdded dateAdded, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, dateAdded, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.dateAdded = dateAdded;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -51,6 +53,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public DateAdded getDateAdded() {
+        return dateAdded;
     }
 
     /**
@@ -75,13 +81,14 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getDateAdded().equals(this.getDateAdded());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, dateAdded, tags);
     }
 
     @Override
@@ -94,6 +101,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Date Added: ")
+                .append(getDateAdded())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
@@ -109,6 +118,7 @@ public class Person {
         result.add(getAddress().toString());
         result.add(getEmail().toString());
         result.add(getPhone().toString());
+        result.add(getDateAdded().toString());
         result.add(getTags().toString());
         return result;
 

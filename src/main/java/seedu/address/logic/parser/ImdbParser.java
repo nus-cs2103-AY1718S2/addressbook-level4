@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -149,6 +150,12 @@ public class ImdbParser {
 
         case ViewAppointmentCommand.COMMAND_ALIAS:
             return new ViewAppointmentCommand();
+
+        case AddPatientQueueCommand.COMMAND_WORD:
+            return new AddPatientQueueCommandParser().parse(arguments);
+
+        case AddPatientQueueCommand.COMMAND_ALIAS:
+            return new AddPatientQueueCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

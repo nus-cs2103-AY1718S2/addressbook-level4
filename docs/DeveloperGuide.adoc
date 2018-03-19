@@ -818,6 +818,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: keep track of employees and their work easily through a single app
 
+*Feature Contrbution*：
+
+* (minor) be able to lock the application and unlock it and must use the same password
+* (major) each employee has his own timetable and manager can add events on anyone's timetable
+
 [appendix]
 == User Stories
 

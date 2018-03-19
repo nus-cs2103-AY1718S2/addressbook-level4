@@ -7,11 +7,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -21,6 +17,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 //This class borrows from https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/
 // and https://github.com/callicoder/java-read-write-csv-file
@@ -48,7 +46,7 @@ public class ImportContactsCommand extends Command {
         fileAddress = _fileAddress;
     }
 
-    public CommandResult openFile() throws IOException, CommandException {
+    public CommandResult openFile() throws IOException, CommandException { //go ahead... see what happens
         try {
             Reader reader = Files.newBufferedReader(Paths.get(fileAddress));
             csvParser = new CSVParser(reader, CSVFormat.DEFAULT
@@ -86,6 +84,10 @@ public class ImportContactsCommand extends Command {
         String phone;
         String address;
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        DateAdded addDate;
+
         try {
             Iterable<CSVRecord> csvRecords = csvParser.getRecords(); //get iterator to go through records in csv
 
@@ -95,15 +97,16 @@ public class ImportContactsCommand extends Command {
                  email = csvRecord.get("Email");
                  phone = csvRecord.get("Phone");
                  address = csvRecord.get("Address");
+                 addDate = new DateAdded(formatter.format(date));
 
                 printResult(name, email, phone, address); //mainly for debugging
 
                 Set<Tag> tagSet = (Set<Tag>) new Tag("friend"); //temporary tag, fix later
 
                 personToAdd = new Person(new Name(name), new Phone(phone), new Email(email),
-                        new Address(address), tagSet);
+                        new Address(address), addDate, tagSet);
 
-                AddCommand addMe = new AddCommand(personToAdd);
+                AddCommand addMe = new AddCommand(personToAdd); //not the most efficient...
                 addMe.executeUndoableCommand();
             }
 

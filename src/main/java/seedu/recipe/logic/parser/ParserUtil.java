@@ -141,9 +141,14 @@ public class ParserUtil {
      */
     public static Optional<Url> parseUrl(Optional<String> url) throws IllegalValueException {
         requireNonNull(url);
-        return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.empty();
+        return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.of(getNullReferenceUrl());
+    }
+
+    public static Url getNullReferenceUrl() throws IllegalValueException {
+        return new Url(Url.NULL_URL_REFERENCE);
     }
     //@@author
+
 
     /**
      * Parses a {@code String ingredient} into an {@code Ingredient}.

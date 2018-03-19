@@ -39,7 +39,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_PREPARATION_TIME,
-                PREFIX_INGREDIENT, PREFIX_URL) || !argMultimap.getPreamble().isEmpty()) {
+                PREFIX_INGREDIENT) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 

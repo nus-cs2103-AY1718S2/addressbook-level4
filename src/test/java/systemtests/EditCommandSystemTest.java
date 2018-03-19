@@ -23,10 +23,10 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACTIVITY;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalActivities.AMY;
 import static seedu.address.testutil.TypicalActivities.BOB;
 import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
 import org.junit.Test;
 

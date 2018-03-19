@@ -23,13 +23,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 import static seedu.address.testutil.TypicalActivities.AMY;
-import static seedu.address.testutil.TypicalActivities.BOB;
-import static seedu.address.testutil.TypicalActivities.QUIZ;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
+import static seedu.address.testutil.TypicalActivities.BOB;
 import static seedu.address.testutil.TypicalActivities.DEMO1;
 import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalActivities.QUIZ;
 
 import org.junit.Test;
 

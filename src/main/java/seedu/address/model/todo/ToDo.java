@@ -2,9 +2,7 @@ package seedu.address.model.todo;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Represents a ToDo in the address book.

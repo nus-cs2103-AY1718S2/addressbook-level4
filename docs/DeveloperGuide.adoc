@@ -857,6 +857,16 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: share useful information with their friends who are taking the same modules and find a common studying time
 
+*Feature Contribution*
+[width="100%",cols="45%,<33%,<33%",options="header",]
+|=======================================================================
+|Name |Minor Enhancement |Major Enhancement
+|Lee Yong Ler | Adding of `TimeTable` class and into the `Person` class. This allows user to enter their time table into the address book, making it easy for them to know their time table.|Data encryption system to allow the `addressbook.xml` to be encrypted when not in use. A `password` command will also be added for user to key in their own password. This ensure that the privacy of users are respected and information in the address book is confidential. NUS students would be able to store sensitive information like time table without fear of them leaking.
+|Loh Cai Jun |x |x
+|Ong Jing Yin |x |x
+|Wayne Neo|x |x
+|=======================================================================
+
 [appendix]
 == User Stories
 
@@ -1045,10 +1055,9 @@ _{ more test cases ... }_
 
 . Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-=== Encrypting data
-. Dealing with wrong password
-.. Change password
+.. Test case: Delete `addressbook.xml` +
+   Expected: Application opens with an address book with dummy data.
+.. Test case: Corrupt `addressbook.xml` by editing it +
+   Expected: Application opens with an address book with dummy data.
 
 _{ more test cases ... }_

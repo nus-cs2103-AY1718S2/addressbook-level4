@@ -22,8 +22,9 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.tag.UniqueTagList;
 
-import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
+import seedu.address.model.todo.ToDo;
+import seedu.address.model.todo.UniqueToDoList;
 
 /**
  * Wraps all data at the address-book level
@@ -45,6 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        todos = new UniqueToDoList();
     }
 
     public AddressBook() {

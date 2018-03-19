@@ -272,6 +272,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         return password;
     }
 
+    /**
+     * Updates the password of this {@code AddressBook}.
+     * @param newPassword  will be the new password.
+     */
+    public void updatePassword (byte[] newPassword) {
+        for (int i = 0; i < password.length; i++) {
+            password[i] = newPassword[i];
+        }
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

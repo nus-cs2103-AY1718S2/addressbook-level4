@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Student;
@@ -19,9 +20,11 @@ import seedu.address.model.student.Student;
 /**
  * The Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class
+BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String EXAMPLE_STUDENT_PAGE = "ExampleStudentPage.html";
     public static final String SEARCH_PAGE_URL =
             "https://www.google.com.sg/maps/place/";
 
@@ -48,6 +51,12 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(SEARCH_PAGE_URL + append);
     }
 
+    private void loadStudentInfoPage(Student student) {
+        URL ExampleStudentPage = MainApp.class.getResource(FXML_FILE_FOLDER + EXAMPLE_STUDENT_PAGE);
+        loadPage(ExampleStudentPage.toExternalForm());
+    }
+
+
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -71,5 +80,11 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleStudentPanelSelectionChangedEvent(StudentPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadStudentPage(event.getNewSelection().student);
+    }
+
+    @Subscribe
+    private void handleStudentInfoDisplayEvent(StudentInfoDisplayEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadStudentInfoPage(event.getStudent());
     }
 }

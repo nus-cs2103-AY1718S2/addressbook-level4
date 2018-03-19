@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -82,10 +83,22 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
     @Override
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
     }
+
+    @Override
+    public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
+        indicateBrowserPanelToDisplayStudent(target);
+    }
+
+    /** Raises an event to indicate Browser Panel display changed to display student's information */
+    private void indicateBrowserPanelToDisplayStudent(Student target) {
+        raise(new StudentInfoDisplayEvent(target));
+    }
+
 
     //=========== Filtered Student List Accessors =============================================================
 

@@ -786,6 +786,17 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: resolve the issue of possible medical negligence due to failure to take pre-existing medical conditions into account, and also make the practitioners' lives much more easier by knowing patients' records from a glance
 
+*Feature contribution*:
+
+* *Kai Yong*:
+** Major Features:
+*** Maintain a waiting list of patients (Visiting queue)
+**** Medical staff and doctor can easy access basic information and medical profile of next patient in the queue.
+** Minor Features:
+*** Maintain patient appointments
+**** This is a typical features for most of the medical systems.
+
+
 [appendix]
 == User Stories
 

@@ -358,6 +358,38 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::customisedalias[]
+=== Customised Alias feature
+==== Current Implementation
+
+image::AddAliasSdForLogic.png[width="800"]
+
+image::StorageClassDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: How alias list is maintained
+
+* **Alternative 1 (current choice):** Create an `UniqueAliasList` in the `alias` model
+
+image::ModelClassDiagram.png[width="800"]
+
+** Pros: Reduce coupling between `Alias` and other commands. This design follows the Open Closed Principle where a command is open to extension and closed to modification.
+** Cons: More difficult to implement as need to design an instance of a `UniqueAliasList`.
+* **Alternative 2:** Create a HashMap of `Alias` in each command class
+** Pros: Faster to implement as each command class only needs to include a HashMap that stores all the aliases tagged to the command.
+** Cons: High coupling between `Alias` and other commands and the HashMaps of every command needs to be iterated through to find to find the aliased command.
+
+===== Aspect: How alias is stored
+
+* **Alternative 1 (current choice):** Store as `XmlAdaptedAlias` and save to `addressbook.xml`
+** Pros:
+** Cons:
+* **Alternative 2:** Store in `UserPrefsStorage`
+** Pros:
+** Cons:
+// end::customisedalias[]
+
 // tag::dataencryption[]
 ===  Data Encryption
 ==== Current Implementation
@@ -428,7 +460,6 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 * **Alternative 2:** Adds selected `Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's AddressBook.
 ** Pros: User is able to select which `Person`, `Tag` or `Alias` to be imported.
 ** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported.
-
 
 === Logging
 
@@ -862,9 +893,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 |=======================================================================
 |Name |Minor Enhancement |Major Enhancement
 |Lee Yong Ler | Adding of `TimeTable` class and into the `Person` class. This allows user to enter their time table into the address book, making it easy for them to know their time table.|Data encryption system to allow the `addressbook.xml` to be encrypted when not in use. A `password` command will also be added for user to key in their own password. This ensure that the privacy of users are respected and information in the address book is confidential. NUS students would be able to store sensitive information like time table without fear of them leaking.
-|Loh Cai Jun |x |x
-|Ong Jing Yin |x |x
-|Wayne Neo|x |x
+|Loh Cai Jun | Import AddressBook feature allows user to transfer data to other users, transfer to different computers, and restore backup of AddressBook easily. | Vacant study rooms finder feature helps user to find vacant study rooms nearby. User will input time, faculty, and building. Next, our app will returns all rooms in the building and showing their status, e.g. COM1-B103: vacant until 2330.
+|Ong Jing Yin | Designing UI for finding vacant venues feature. UI will display a table of timings for the requested location, with information about whether the venue is vacant or not |Customised alias to allow users to set their own short cuts or intuitive naming for existing commands, to cater to their own preference.
+|Wayne Neo| Designing UI for Timetable. UI will display the timetable of each person and also the union of timetables to find common timeslots| Adding of Birthday class into the `Person` class. With an additional command, it allows users to generate a list of birthdays to celebrate with their friends.
 |=======================================================================
 
 [appendix]

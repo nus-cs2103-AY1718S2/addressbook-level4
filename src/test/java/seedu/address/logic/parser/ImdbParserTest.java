@@ -57,6 +57,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_addCommandAlias() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         Patient patient = new PatientBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PatientUtil.getAddCommandAlias(patient));
         assertEquals(new AddCommand(patient), command);
@@ -64,18 +65,21 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_clear() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
 
     @Test
     public void parseCommand_clearCommandAlias() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
 
     @Test
     public void parseCommand_delete() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
@@ -83,6 +87,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_deleteCommandAlias1() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS1 + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
@@ -90,6 +95,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_deleteCommandAlias2() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS2 + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
@@ -97,6 +103,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         Patient patient = new PatientBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
@@ -106,6 +113,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_editCommandAlias() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         Patient patient = new PatientBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
@@ -127,6 +135,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
@@ -135,6 +144,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_findCommandAlias() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
@@ -181,12 +191,14 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_list() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
     @Test
     public void parseCommand_listCommandAlias() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
@@ -205,6 +217,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_select() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
@@ -212,6 +225,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_selectCommandAlias() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
@@ -219,42 +233,49 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
     @Test
     public void parseCommand_redoCommandAlias_returnsRedoCommand1() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS1) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
     @Test
     public void parseCommand_redoCommandAlias_returnsRedoCommand2() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS2) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
     @Test
     public void parseCommand_undoCommandAlias_returnsUndoCommand1() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS1) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
     @Test
     public void parseCommand_undoCommandAlias_returnsUndoCommand2() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS2) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
     @Test
     public void remarkCommand_returnsRemarkCommand() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + "r/ Is very clever") instanceof RemarkCommand);
 
@@ -262,12 +283,14 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_viewAppointment() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_WORD) instanceof ViewAppointmentCommand);
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_WORD + " 3") instanceof ViewAppointmentCommand);
     }
 
     @Test
     public void parseCommand_viewAppointmentCommandAlias() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS) instanceof ViewAppointmentCommand);
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS + " 3") instanceof ViewAppointmentCommand);
     }

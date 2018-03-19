@@ -68,6 +68,7 @@ public class SecurityUtil {
      * @throws IOException thrown if cannot open file
      */
     public static void decrypt(File file)throws IOException, WrongPasswordException {
+        String defaultPassword = new String("test");
         byte[] hashedPassword = hashPassword(defaultPassword);
         decrypt(file, hashedPassword);
     }

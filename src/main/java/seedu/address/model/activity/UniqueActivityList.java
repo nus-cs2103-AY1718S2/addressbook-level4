@@ -82,7 +82,7 @@ public class UniqueActivityList implements Iterable<Activity> {
 
         internalList.set(index, editedActivity);
     }
-    
+
     public void setActivity(UniqueActivityList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

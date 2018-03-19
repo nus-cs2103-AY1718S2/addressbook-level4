@@ -3,6 +3,7 @@ package seedu.progresschecker.ui;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.progresschecker.commons.core.LogsCenter;
@@ -16,6 +17,7 @@ public class HelpWindow extends UiPart<Stage> {
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1";
 
     @FXML
     private WebView browser;
@@ -29,7 +31,9 @@ public class HelpWindow extends UiPart<Stage> {
         super(FXML, root);
 
         String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
-        browser.getEngine().load(userGuideUrl);
+        WebEngine engine = browser.getEngine();
+        engine.setUserAgent(USER_AGENT);
+        engine.load(userGuideUrl);
     }
 
     /**

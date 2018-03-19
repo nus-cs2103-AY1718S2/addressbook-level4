@@ -29,4 +29,10 @@ public class CommandHistory {
     public List<String> getHistory() {
         return new LinkedList<>(userInputHistory);
     }
+
+    /**
+     *  Clears the history.
+     */
+    public void clearHistory() { userInputHistory.clear(); }
+
 }

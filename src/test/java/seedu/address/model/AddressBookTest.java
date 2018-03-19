@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -17,7 +18,10 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 public class AddressBookTest {
 
@@ -54,6 +58,16 @@ public class AddressBookTest {
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
+    }
+
+    @Test
+    public void removeTag_withValidAddressBook()
+            throws DuplicatePersonException, PersonNotFoundException, UniqueTagList.DuplicateTagException {
+        addressBook.addPerson(BENSON);
+        List<Tag> tagList = new ArrayList<Tag>();
+        tagList.add(new Tag("owesMoney"));
+        addressBook.removeTag(new Tag("friends"));
+        assertEquals(addressBook.getTagList(), tagList);
     }
 
     @Test

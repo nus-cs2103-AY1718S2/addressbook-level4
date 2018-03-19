@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= contactHeRo - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,15 +11,17 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/W09-B2/main
+:repoURL: https://github.com/CS2103JAN2018-W09-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Welcome to *contactHero*! contactHeRo is the *perfect contact management solution for recruiters* across companies who need a *quick and efficient way* to manage the contact details and profiles of their potential recruits. It is a *Command Line Interface(CLI) application* with intuitive usage and effective features. You can `add`, `delete` and `edit` your contacts and `find` them by names or tags that you can assign. Other than that, you can also `view the linkedIn profiles` of your potential employees, `set reminders` and `arrange meetings`.
 
 == Quick Start
+
+You can begin using contactHeRo by following a few simple steps below.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -27,12 +29,19 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+[TIP]
+Not sure how to install Java? Visit the oracle website link below for more information. https://tinyurl.com/yb8leqv8
+
+
+.  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for contactHeRo.
+.  Double-click the file to start the app. The user interface should appear in a few seconds as shown below.
 +
 image::Ui.png[width="790"]
 +
+
+Now you can start using contactHeRo.
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -42,7 +51,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+.  You can refer to <<Features>> for more details of each command.
+
+Thank you for choosing us as your contact management solution!
 
 [[Features]]
 == Features
@@ -56,45 +67,42 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-====
-*Auto-complete feature*
-
-* After typing partial command, press TAB for the command to be auto-completed. For e.g typing 'a' and pressing TAB will give the entire syntax for 'add' command.
-* The first lexicographically matched command is returned.
-====
-
 === Viewing help : `help`
 
+You can get help using the following format. +
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person : `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+You can add a person to contactHero using the following format. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pp/PROFILE_PICTURE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
+[TIP]
+Profile Picture indicates the profile picture's file path
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pp/C:\\Downloads\\john.jpg`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pp/C:\\Downloads\\john.jpg t/criminal`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+You can see a list of all persons in contactHero using the following format. +
 Format: `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+You can edit an existing person in contactHero using this format. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pp/PROFILE_PICTURE][t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
+* Edits the person at the specified `INDEX`. Remember that the index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* You need to provide at least one of the optional.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When you edit tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -105,29 +113,31 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name : `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+You can find all the persons whose names or tags contain any of the given keywords using the following format. +
+Format: `find n/KEYWORD [MORE_KEYWORDS]` to find by name or `find t/KEYWORD [MORE_KEYWORDS]` to find by tag
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the name or tag is searched, depending on the prefix (n/ or t/)
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find t/designer` +
+Returns `Jane Doe` whose tag is `designer`
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+You can delete a specified person from contactHeRo using the following format. +
 Format: `delete INDEX`
 
 ****
@@ -140,18 +150,18 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in contactHeRo.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Viewing the contact details of a person: `select`
 
-Selects the person identified by the index number used in the last person listing. +
+You can select a person identified by the index number used in the last person listing to view his/her contact details using the following format. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Shows the contact details of the person at the specified `INDEX` in a formatted page.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -160,15 +170,41 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the .
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Viewing the LinkedIn search of a person: `linkedIn`
+
+You can select a person identified by the index number used in the last person listing to view his/her LinkedIn search using the following format. +
+Format: `linkedIn INDEX`
+
+****
+* Loads the LinkedIn search of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* You *will have to login to LinkedIn* the first time to use this command in order to search the person.
+****
+
+Examples:
+
+* `list` +
+`linkedIn 2` +
+Loads the LinkedIn search of the 2nd person in the contactHeRo.
+* `find Betsy` +
+`select 1` +
+Loads the LinkedIn search of 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
+
+=== Clearing list of entered commands : `clearhistory`
+
+You can clear your history of entered commands using the following format. +
+Format: `clearhistory`
 
 [NOTE]
 ====
@@ -178,12 +214,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+You can restore contactHeRo to the state before the previous _undoable_ command was executed using the following format. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the contactHeRo's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -204,7 +240,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+You can reverse the most recent `undo` command using the following format. +
 Format: `redo`
 
 Examples:
@@ -227,24 +263,46 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+You can clear all entries from contactHeRo using the following format. +
 Format: `clear`
 
 === Exiting the program : `exit`
 
-Exits the program. +
+You can exit the program using the following format. +
 Format: `exit`
+
+=== Auto-complete command
+
+To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
+[NOTE]
+The first lexicographically matched command is returned.
+Examples:
+
+* Typing `ad` and pressing `TAB` gives: +
+    `add n/ e/ a/ [t/]...`
+
+* Typing `h` and pressing `TAB` gives: +
+     `help`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+You do not need to save manually. contactHeRo saves the data into the hard disk for you automatically. +
+
+// tag::dataencryption[]
+
+=== Set reminders `[comming in v1.5]`
+
+You can set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
+
+=== Login system `[coming in v2.0]`
+
+The login system shall provide security to your data stored in contactHeRo.
 
 == FAQ
 
@@ -253,19 +311,22 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *<<Adding-a-person, Add>>* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *<<Clearing-all-entries, Clear>>* : `clear`
+* *<<ClearHistory>>* : `clearhistory`
+* *<<Deleting-a-person, Delete>>* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *<<Editing-a-person, Edit>>* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *<<Locating-persons-by-name, Find>>* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
+* *<<Listing-all-persons, List>>* : `list`
+* *<<Viewing-help, Help>>* : `help`
+* *<<Selecting-a-person, Select>>* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *<<Listing-entered-commands, History>>* : `history`
+* *<<Undoing-previous-command, Undo>>* : `undo`
+* *<<Redoing-the-previously-undone-command, Redo>>* : `redo`
+* *<<Viewing-the-LinkedIn-search-of-the-person, LinkedIn>>*: `linkedIn INDEX` +
+e.g. `linkedIn 2`

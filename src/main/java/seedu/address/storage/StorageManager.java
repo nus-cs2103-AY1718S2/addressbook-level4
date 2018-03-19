@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -26,8 +27,14 @@ public class StorageManager extends ComponentManager implements Storage {
 
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
+        createProfilePicturesFolder();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+    }
+
+    private void createProfilePicturesFolder() {
+        File dir = new File("src/main/resources/ProfilePictures");
+        dir.mkdir();
     }
 
     // ================ UserPrefs methods ==============================

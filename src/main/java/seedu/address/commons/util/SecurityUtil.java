@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import seedu.address.MainApp;
@@ -26,21 +27,21 @@ import seedu.address.commons.exceptions.WrongPasswordException;
  */
 public class SecurityUtil {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private static String password = new String("test");
+    private static final String defaultPassword = new String("test");
 
     /**
-     * Encrypts the given file using AES key created by password.
+     * Encrypts the given file using AES key created by defaultPassword.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
      */
     public static void encrypt(File file)throws IOException, WrongPasswordException {
-        byte[] hashedPassword = hashPassword(password);
+        byte[] hashedPassword = hashPassword(defaultPassword);
         encrypt(file, hashedPassword);
     }
 
     /**
-     * Encrypts the given file using AES key created by password.
+     * Encrypts the given file using AES key created by defaultPassword.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
@@ -51,24 +52,28 @@ public class SecurityUtil {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretAesKey);
             fileProcessor(cipher, file);
-        } catch (GeneralSecurityException gse) {
-            logger.severe("ERROR: Wrong cipher to encrypt message " + StringUtil.getDetails(gse));
+        } catch (InvalidKeyException ike) {
+            logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
+            throw new AssertionError("Wrong key length");
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            logger.severe("ERROR: Cannot find AES or padding in library.");
+            throw new AssertionError("Cannot find AES or padding");
         }
     }
 
     /**
-     * Encrypts the given file using AES key created by password.
+     * Encrypts the given file using AES key created by defaultPassword.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
      */
     public static void decrypt(File file)throws IOException, WrongPasswordException {
-        byte[] hashedPassword = hashPassword(password);
+        byte[] hashedPassword = hashPassword(defaultPassword);
         decrypt(file, hashedPassword);
     }
 
     /**
-     * Decrypts the given file using AES key created by password.
+     * Decrypts the given file using AES key created by defaultPassword.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
@@ -79,8 +84,12 @@ public class SecurityUtil {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretAesKey);
             fileProcessor(cipher, file);
-        } catch (GeneralSecurityException gse) {
-            logger.severe("ERROR: Wrong cipher to encrypt message " + StringUtil.getDetails(gse));
+        } catch (InvalidKeyException ike) {
+            logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
+            throw new AssertionError("Wrong key length");
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            logger.severe("ERROR: Cannot find AES or padding in library.");
+            throw new AssertionError("Cannot find AES or padding");
         }
     }
 
@@ -107,15 +116,15 @@ public class SecurityUtil {
             outputStream.close();
 
         } catch (BadPaddingException e) {
-            logger.severe("ERROR: Wrong password length used " + StringUtil.getDetails(e));
-            throw new WrongPasswordException("Wrong password.");
+            logger.severe("ERROR: Wrong defaultPassword length used " + StringUtil.getDetails(e));
+            throw new WrongPasswordException("Wrong defaultPassword.");
         } catch (IllegalBlockSizeException e) {
             logger.info("Warning: Text already in plain text.");
         }
     }
 
     /**
-     * Hashes the password to meet the required length for AES.
+     * Hashes the defaultPassword to meet the required length for AES.
      */
     public static byte[] hashPassword(String password) {
         try {

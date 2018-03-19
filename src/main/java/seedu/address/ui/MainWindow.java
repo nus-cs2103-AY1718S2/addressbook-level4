@@ -70,7 +70,6 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
-
         setAccelerators();
         registerAsAnEventHandler(this);
     }

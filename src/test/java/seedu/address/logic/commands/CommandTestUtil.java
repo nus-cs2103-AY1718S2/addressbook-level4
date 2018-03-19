@@ -3,8 +3,10 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTEDSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -42,6 +44,10 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final Double VALID_INCOME_AMY = 12345.6;
     public static final Double VALID_INCOME_BOB = 12345.6;
+    public static final Double VALID_ACTUALSPENDING_AMY = 12345.6;
+    public static final Double VALID_ACTUALSPENDING_BOB = 12345.6;
+    public static final Double VALID_EXPECTEDSPENDING_AMY = 12345.6;
+    public static final Double VALID_EXPECTEDSPENDING_BOB = 12345.6;
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -51,6 +57,10 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String INCOME_DESC_AMY = " " + PREFIX_INCOME + VALID_INCOME_AMY;
+    public static final String ACTUALSPENDING_DESC_AMY = " " + PREFIX_ACTUALSPENDING + VALID_ACTUALSPENDING_AMY;
+    public static final String ACTUALSPENDING_DESC_BOB = " " + PREFIX_ACTUALSPENDING + VALID_ACTUALSPENDING_BOB;
+    public static final String EXPECTEDSPENDING_DESC_AMY = " " + PREFIX_EXPECTEDSPENDING + VALID_EXPECTEDSPENDING_AMY;
+    public static final String EXPECTEDSPENDING_DESC_BOB = " " + PREFIX_EXPECTEDSPENDING + VALID_EXPECTEDSPENDING_BOB;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String INCOME_DESC_BOB = " " + PREFIX_INCOME + VALID_INCOME_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;

@@ -30,11 +30,11 @@ public class AppointmentEntry {
     }
 
     public LocalDate getStartDate() {
-        return  interval.getStartDate();
+        return interval.getStartDate();
     }
 
     public LocalDate getEndDate() {
-        return  interval.getEndDate();
+        return interval.getEndDate();
     }
 
     public Entry getAppointmentEntry() {

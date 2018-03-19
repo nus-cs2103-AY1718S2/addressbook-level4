@@ -38,7 +38,8 @@ public class XmlAdptedAppointmentEntry {
      * Constructs an XmlAdaptedCalendarEntry.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdptedAppointmentEntry() {}
+    public XmlAdptedAppointmentEntry() {
+    }
 
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
@@ -69,7 +70,7 @@ public class XmlAdptedAppointmentEntry {
     public AppointmentEntry toModelType() throws IllegalValueException {
 
         if (this.title == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MISSING_FIELD_TITLE ));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MISSING_FIELD_TITLE));
         }
 
         final String title = this.title;
@@ -86,7 +87,7 @@ public class XmlAdptedAppointmentEntry {
 
         final String newEndDate = this.endDate;
 
-        final Interval interval = new Interval(getLocatDate(newStartDate) , LocalTime.MIN, getLocatDate(newEndDate),
+        final Interval interval = new Interval(getLocatDate(newStartDate), LocalTime.MIN, getLocatDate(newEndDate),
                 LocalTime.MAX);
 
         return new AppointmentEntry(title, interval);

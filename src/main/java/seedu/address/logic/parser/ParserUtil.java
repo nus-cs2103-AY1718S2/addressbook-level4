@@ -17,6 +17,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.insuranceCalendar.AppointmentEntry;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -39,6 +40,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -162,7 +164,7 @@ public class ParserUtil {
     public static Address parseAddress(String address) throws IllegalValueException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
+        if (!Address.isValid(trimmedAddress)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
         return new Address(trimmedAddress);
@@ -210,7 +212,7 @@ public class ParserUtil {
     public static Income parseIncome(String income) throws IllegalValueException {
         requireNonNull(income);
         Double trimmedIncome = Double.parseDouble(income.trim());
-        if (!Income.isValidIncome(trimmedIncome)) {
+        if (!Income.isValid(trimmedIncome)) {
             throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
         }
         return new Income(trimmedIncome);
@@ -223,6 +225,61 @@ public class ParserUtil {
     public static Optional<Income> parseIncome(Optional<String> income) throws IllegalValueException {
         requireNonNull(income);
         return income.isPresent() ? Optional.of(parseIncome(income.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code String value} into an {@code value}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code value} is invalid.
+     */
+    public static Expenditure parseActualSpending(String actualSpending) throws IllegalValueException {
+        requireNonNull(actualSpending);
+        Double trimmedActualSpending = Double.parseDouble(actualSpending.trim());
+        if (!Expenditure.isValid(trimmedActualSpending)) {
+            throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
+        }
+        return new Expenditure(trimmedActualSpending);
+    }
+
+
+    /**
+     * Parses a {@code Optional<String> value} into an {@code Optional<value>} if {@code value} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Expenditure> parseActualSpending(Optional<String> actualSpending)
+            throws IllegalValueException {
+        requireNonNull(actualSpending);
+        return actualSpending.isPresent()
+                ? Optional.of(parseActualSpending(actualSpending.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String value} into an {@code value}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code value} is invalid.
+     */
+    public static Expenditure parseExpectedSpending(String expectedSpending) throws IllegalValueException {
+        requireNonNull(expectedSpending);
+        Double trimmedExpectedSpending = Double.parseDouble(expectedSpending.trim());
+        if (!Expenditure.isValid(trimmedExpectedSpending)) {
+            throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
+        }
+        return new Expenditure(trimmedExpectedSpending);
+    }
+
+
+    /**
+     * Parses a {@code Optional<String> value} into an {@code Optional<value>} if {@code value} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Expenditure> parseExpectedSpending(Optional<String> expectedSpending)
+            throws IllegalValueException {
+        requireNonNull(expectedSpending);
+        return expectedSpending.isPresent()
+                ? Optional.of(parseExpectedSpending(expectedSpending.get())) : Optional.empty();
     }
 
     /**

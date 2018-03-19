@@ -158,10 +158,12 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::sort[]
 === Sorting all persons : `sort`
 
 Sorts all persons in the address book alphabetically and then displays the current list in sorted order. +
 Format: `sort`
+// end::sort[]
 
 === Selecting a person : `select`
 

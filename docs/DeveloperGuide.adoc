@@ -777,6 +777,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+// tag::product-scope[]
 [appendix]
 == Product Scope
 
@@ -790,7 +791,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * is reasonably comfortable using CLI apps
 
 *Value proposition*: one-stop access to multiple social media platforms
+// end::product-scope[]
 
+// tag::user-stories[]
 [appendix]
 == User Stories
 
@@ -871,6 +874,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 
 _{More to be added}_
+// end::user-stories[]
 
 [appendix]
 == Use Cases
@@ -937,6 +941,7 @@ Use case resumes at step 3.
 
 _{More to be added}_
 
+// tag::non-functional-requirements[]
 [appendix]
 == Non Functional Requirements
 
@@ -949,6 +954,7 @@ _{More to be added}_
 .  The application should have an user friendly interface so that even users that are not familiar with CLI will have minimal problem navigating through the application.
 
 _{More to be added}_
+// end::non-functional-requirements[]
 
 [appendix]
 == Glossary

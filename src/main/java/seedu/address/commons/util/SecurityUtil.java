@@ -26,23 +26,23 @@ import seedu.address.commons.exceptions.WrongPasswordException;
  * Contains utility methods used for encrypting and decrypting files for Storage
  */
 public class SecurityUtil {
+    private static final int CHECK_LENGTH = 50;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private static final String defaultPassword = new String("test");
-    private static byte[] hashed;
+    private static final String DEFAULT_PASSWORD = new String("test");
 
     /**
-     * Encrypts the given file using AES key created by defaultPassword.
+     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
      */
     public static void encrypt(File file)throws IOException, WrongPasswordException {
-        byte[] hashedPassword = hashPassword(defaultPassword);
+        byte[] hashedPassword = hashPassword(DEFAULT_PASSWORD);
         encrypt(file, hashedPassword);
     }
 
     /**
-     * Encrypts the given file using AES key created by defaultPassword.
+     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
@@ -63,7 +63,7 @@ public class SecurityUtil {
     }
 
     /**
-     * Encrypts the given file using AES key created by defaultPassword.
+     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
@@ -71,12 +71,11 @@ public class SecurityUtil {
     public static void decrypt(File file)throws IOException, WrongPasswordException {
         String defaultPassword = new String("test");
         byte[] hashedPassword = hashPassword(defaultPassword);
-        hashed = hashedPassword;
         decrypt(file, hashedPassword);
     }
 
     /**
-     * Decrypts the given file using AES key created by defaultPassword.
+     * Decrypts the given file using AES key created by DEFAULT_PASSWORD.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
@@ -104,14 +103,12 @@ public class SecurityUtil {
      * @throws IOException if cannot open file
      */
     private static void fileProcessor(Cipher cipher, File file) throws IOException, WrongPasswordException {
+        byte[] inputBytes = "Dummy".getBytes();
         try {
 
             FileInputStream inputStream = new FileInputStream(file);
-            byte[] inputBytes = new byte[(int) file.length()];
+            inputBytes = new byte[(int) file.length()];
             inputStream.read(inputBytes);
-            logger.info(Arrays.toString(hashed));
-            logger.info(new Integer(cipher.getBlockSize()).toString());
-            logger.info(Arrays.toString(inputBytes));
             byte[] outputBytes = cipher.doFinal(inputBytes);
 
             FileOutputStream outputStream = new FileOutputStream(file);
@@ -121,15 +118,14 @@ public class SecurityUtil {
             outputStream.close();
 
         } catch (BadPaddingException e) {
-            logger.severe("ERROR: Wrong defaultPassword length used " + StringUtil.getDetails(e));
-            throw new WrongPasswordException("Wrong defaultPassword.");
+            handleBadPaddingException(inputBytes, e);
         } catch (IllegalBlockSizeException e) {
             logger.info("Warning: Text already in plain text.");
         }
     }
 
     /**
-     * Hashes the defaultPassword to meet the required length for AES.
+     * Hashes the DEFAULT_PASSWORD to meet the required length for AES.
      */
     public static byte[] hashPassword(String password) {
         try {
@@ -152,5 +148,37 @@ public class SecurityUtil {
      */
     private static Key createKey(byte[] password) {
         return new SecretKeySpec(password, "AES");
+    }
+
+    /**
+     * Handles {@code BadPaddingException} by determining whether it is plain text or other case
+     * @param inputBytes Input data that caused this
+     * @param e Contains the exception details to throw with WrongPasswordException
+     * @throws WrongPasswordException if it is wrong password
+     */
+    private static void  handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
+                                                                            throws WrongPasswordException {
+        if (!checkPlainText(inputBytes)) {
+            logger.severe("ERROR: Wrong DEFAULT_PASSWORD length used " + StringUtil.getDetails(e));
+            throw new WrongPasswordException("Wrong DEFAULT_PASSWORD.");
+
+        } else {
+            logger.info("Warning: Text already in plain text.");
+        }
+    }
+
+    /**
+     * Checks whether it is plain text by checking whether it is in the range of characters commonly used for the
+     * first CHECK_LENGTH or the whole data whichever is shorter.
+     * @param data Contains the file data
+     * @return true if it is highly likely to be plain text
+     */
+    private static boolean checkPlainText(byte[] data) {
+        for (int i = 0; i < CHECK_LENGTH && i < data.length; i++) {
+            if (data[i] > 'z') {
+                return false;
+            }
+        }
+        return true;
     }
 }

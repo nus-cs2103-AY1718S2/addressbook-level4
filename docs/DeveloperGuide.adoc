@@ -835,6 +835,25 @@ manage which include contact details and profiles of potential employees. It is 
 ** Major Feature: Recruiters may sometimes need to set up appointments, meetings, and interviews. This will usually be done through the use of email. This feature will be convenient for them as the email address of the contacts are already in contactHeRo.
 ** Minor Feature: Sometimes, recruiter might not remember the name of the person they wish to contact. The assigned role of a person is much easier to remember. Therefore, this feature is very useful in helping them find a contact easily.
 
+4. Jason Lim
+* Major Feature: Login System
+** Users can be assured that their data in contactHeRo is secured.
+** User can create a new account to login to contactHeRo.
+** User can login and logout of contactHeRo through CLI.
+
+* Minor Feature: Clear list of history
+** User can clear away the list of commands which they have entered in previously using the `clearhistory` command.
+
+* How do this features fit into the product scope?
+** Major Feature: Recruiters are dealing with data of their potential employees and some of these data are personal and sensitive.
+** Recruiters may also have some confidential company data stored in the application. Hence it is necessary for them to set up some
+** form of security to protect these sensitive data. Having a login system is one of the common methods to ensure data security.
+
+* Minor Feature: As our application is mainly using CLI, sometimes the commands we entered may contain sensitive information. For example,
+** the `add` command contains the phone number, address and email of the person being added into the application. All of the inputs entered
+** into the command line can be viewed by using the history command. Hence being able to clear away the history of user inputs can help to
+** protect those sensitive information. In addition, clearing away the back log help save space in the application.
+
 [appendix]
 == User Stories
 

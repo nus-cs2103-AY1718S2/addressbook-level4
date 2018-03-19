@@ -793,6 +793,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == User Stories
 
+[discrete]
+==== Jianghao
+* **Get command auto-completion suggestions** (major)
+** Add auto-completion suggestions for command.
+** This allows the user to reduce the amount of typing needed
+* **View hints when typing command** (minor)
+** Add hints to UI when typing commands.
+** Recall the syntax of the command.
+
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]

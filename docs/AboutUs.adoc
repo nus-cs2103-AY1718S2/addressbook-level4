@@ -30,7 +30,7 @@ Responsibilities: Add sort command and adjust UI
 image::emer7.png[width="150", align="left"]
 {empty}[http://github.com/emer7[github]]
 
-Role: - +
+Role: Developer +
 Responsibilities: Implement enhanced feature search and new feature review
 
 '''

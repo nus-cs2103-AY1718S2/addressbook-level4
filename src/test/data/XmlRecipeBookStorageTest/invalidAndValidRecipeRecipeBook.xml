@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recipebook>
+    <!-- Valid Recipe -->
+    <recipes>
+        <name>Hans Muster</name>
+        <preparationTime isPrivate="false">9482424</preparationTime>
+        <ingredient isPrivate="false">hans@example.com</ingredient>
+        <instruction isPrivate="false">4th street</instruction>
+    </recipes>
+    <!-- Recipe with invalid preparationTime field -->
+    <recipes>
+        <name>Hans Muster</name>
+        <preparationTime isPrivate="false">948asdf2424</preparationTime>
+        <ingredient isPrivate="false">hans@example.com</ingredient>
+        <instruction isPrivate="false">4th street</instruction>
+    </recipes>
+</recipebook>

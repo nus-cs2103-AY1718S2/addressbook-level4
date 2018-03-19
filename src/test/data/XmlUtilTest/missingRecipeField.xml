@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Recipe with missing name field -->
+<recipe>
+    <preparationTime>9482424</preparationTime>
+    <ingredient>hans@example</ingredient>
+    <instruction>4th street</instruction>
+    <tagged>friends</tagged>
+</recipe>

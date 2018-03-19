@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- RecipeBook save file which contains the same Recipe values as in
+{@code TypicalRecipes#getTypicalRecipeBook()}-->
+<recipebook>
+    <recipes>
+        <name>Alice Pauline</name>
+        <preparationTime>85355255</preparationTime>
+        <ingredient>alice@example.com</ingredient>
+        <instruction>123, Jurong West Ave 6, #08-111</instruction>
+        <tagged>friends</tagged>
+    </recipes>
+    <recipes>
+        <name>Benson Meier</name>
+        <preparationTime>98765432</preparationTime>
+        <ingredient>johnd@example.com</ingredient>
+        <instruction>311, Clementi Ave 2, #02-25</instruction>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </recipes>
+    <recipes>
+        <name>Carl Kurz</name>
+        <preparationTime>95352563</preparationTime>
+        <ingredient>heinz@example.com</ingredient>
+        <instruction>wall street</instruction>
+    </recipes>
+    <recipes>
+        <name>Daniel Meier</name>
+        <preparationTime>87652533</preparationTime>
+        <ingredient>cornelia@example.com</ingredient>
+        <instruction>10th street</instruction>
+    </recipes>
+    <recipes>
+        <name>Elle Meyer</name>
+        <preparationTime>9482224</preparationTime>
+        <ingredient>werner@example.com</ingredient>
+        <instruction>michegan ave</instruction>
+    </recipes>
+    <recipes>
+        <name>Fiona Kunz</name>
+        <preparationTime>9482427</preparationTime>
+        <ingredient>lydia@example.com</ingredient>
+        <instruction>little tokyo</instruction>
+    </recipes>
+    <recipes>
+        <name>George Best</name>
+        <preparationTime>9482442</preparationTime>
+        <ingredient>anna@example.com</ingredient>
+        <instruction>4th street</instruction>
+    </recipes>
+    <tags>friends</tags>
+    <tags>owesMoney</tags>
+</recipebook>

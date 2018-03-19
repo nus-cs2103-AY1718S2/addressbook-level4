@@ -339,7 +339,7 @@
     -fx-background-color: transparent;
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #recipeListPanel, #recipeWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 

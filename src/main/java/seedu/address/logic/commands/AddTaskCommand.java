@@ -38,13 +38,13 @@ public class AddTaskCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a Task to a Milestone in a Student's Dashboard."
             + " Parameters: "
-            + PREFIX_INDEX + "STUDENT'S INDEX"
-            + PREFIX_MILESTONE_INDEX + "MILESTONE'S INDEX"
-            + PREFIX_NAME + "NAME OF TASK"
-            + PREFIX_DESCRIPTION + "DESCRIPTION"
+            + PREFIX_INDEX + "STUDENT'S INDEX "
+            + PREFIX_MILESTONE_INDEX + "MILESTONE'S INDEX "
+            + PREFIX_NAME + "NAME OF TASK "
+            + PREFIX_DESCRIPTION + "DESCRIPTION "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_INDEX + "1 "
-            + PREFIX_MILESTONE_INDEX + "2"
+            + PREFIX_MILESTONE_INDEX + "2 "
             + PREFIX_NAME + "Learn syntax of arrays "
             + PREFIX_DESCRIPTION + "Learn declaration and initialisation of arrays";
 

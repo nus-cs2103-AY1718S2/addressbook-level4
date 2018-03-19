@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W10-B4/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -779,16 +779,24 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == Product Scope
+*Target user*:
+
+* Insurance agents
 
 *Target user profile*:
 
+* aged between 23 and 34 years
 * has a need to manage a significant number of contacts
+* has little time to maintain contacts
+* has a need to keep track of appointments with clients
+* has a need to delete old, inactive contacts
 * prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
+* is reasonably tech savvy and can type fast
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* A comprehensive, reliable and convenient address book for insurance agents built on a simple belief -- efficiency and elegance.
 
 [appendix]
 == User Stories
@@ -798,17 +806,68 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the application
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |save the person's contact details
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |delete old, inactive contacts in batches |clear up space for new contacts
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |undo an action |revert to the previous state when I make an unwanted action
+
+|`* * *` |user |redo an action |revert to the later state
+
+|`* * *` |user |add multiple entries under the same contact category for the same client |avoid creating multiple contacts for the same client
+
+|`* * *` |user |store appointment dates and details |keep track of them
+
+|`* * *` |user |set reminders |be reminded about appointments and events
+
+|`* * *` |user |include client photos in their contact details |recognise them more easily
+
+|`* * *` |user |enjoy autocomplete when typing commands |save time
+
+|`* * *` |user |use truncated commands |remove entries that I no longer need
+
+|`* * *` |user |customise the colour of the tags |view the different tags more clearly
+
+|`* * *` |user |replace an existing tag with a new tag |update tags effectively
+
+|`* * *` |user |delete a tag from everyone in the address book |save time
+
+|`* *` |user |export the contacts to a spreadsheet |further make use of them
+
+|`* *` |user |prioritise clients |single out the more profitable clients
+
+|`* *` |user |email clients from the address book |make arrangements with them
+
+|`* *` |user |change the font and font size of the words in the address book |better read off the application
+
+|`* *` |user |email multiple clients at the same time |save time when sending a common email
+
+|`* *` |user |automate emails and SMS sending |remind clients of upcoming appointments
+
+|`* *` |user |can change the colour theme of my address book |customise the address book to my liking
+
+|`* *` |user |import contacts from xls and doc files |speed up the process of adding new contacts
+
+|`* *` |user |back up my address book periodically |avoid losing all data
+
+|`* *` |user |select tabs for different categories of clients |effectively look for clients belonging to the same category
+
+|`* *` |user |pull my contacts from LinkedIn |synchronize my contacts across platforms
+
+|`*` |user |link to the clients' social media page |find out more about them
+
+|`*` |user |add in new commands to the address book |have the added functionalities I desire
+
 |=======================================================================
 
 _{More to be added}_
@@ -844,14 +903,103 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Undo action
+
+*MSS*
+
+1.  User requests to undo the previous action taken.
+2.  AddressBook undo the the action.
++
+Use case ends.
+
+
+*Extensions*
+[none]
+* 2a. If there is no previous action taken.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find person and enters any keywords in the name of the person.
+2.  AddressBook returns the person requested.
++
+Use case ends.
+
+
+*Extensions*
+[none]
+* 2a.  The list of people is empty.
++
+[none]
+** 2a1.  AddressBook shows an error message.
++
+Use case ends.
+
+* 2b.  The person is not in the list.
++
+** 2b1.  AddressBook returns error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete old contacts
+
+*MSS*
+
+1.  User requests to delete old contacts.
+2.  AddressBook prompts user for cut off date input.
+3.  User enters cut off date.
+4.  AddressBook prompts user for confirmation.
+5.  User confirms deletion.
+6.  AddressBook deletes all contact created before the cut off date.
+7.  AddressBook shows success message.
++
+Use case ends.
+
+
+*Extensions*
+[none]
+* 3a.  If user input invalid date.
++
+[none]
+** 3a1.  AddressBook prompts user for cut off date input.
+** 3a2.  User enters cut off date.
++
+Steps 3a1 - 3a2 are repeated until date entered is correct.
++
+Use case resumes from step 4.
+
+* 5a.  If user decline the deletion.
++
+Use case ends.
+
+* 6a.  If there is no contact before the cut off date
+** 6a1.  AddressBook shows error message
++
+Use case ends.
+
+
 _{More to be added}_
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 5000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+. Must be aesthetically appealing
+. Search must be relatively fast
+. Customisable theme
+. Must be less than 10MB in size
+. Data must be backed up
+. Should be able to be extended into a mobile application
+. CRUD operations must be relatively fast
+
 
 _{More to be added}_
 
@@ -863,6 +1011,11 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[client]] Client::
+A person who has (potential) business relationship with the insurance agent whose contact needs to be saved
+
+
 
 [appendix]
 == Product Survey

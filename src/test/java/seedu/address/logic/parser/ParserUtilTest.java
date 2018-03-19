@@ -19,6 +19,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -30,12 +31,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_DATE = "12/34";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_DATE = "01/01/2018";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -192,6 +195,38 @@ public class ParserUtilTest {
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
         assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
+    }
+
+    @Test
+    public void parseDate_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDate((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDate((Optional<String>) null));
+    }
+
+    @Test
+    public void parseDate_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDate(INVALID_DATE));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDate(Optional.of(INVALID_DATE)));
+    }
+
+    @Test
+    public void parseDate_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDate(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDate_validValueWithoutWhitespace_returnsDate() throws Exception {
+        DateAdded expectedDate = new DateAdded(VALID_DATE);
+        assertEquals(expectedDate, ParserUtil.parseDate(VALID_DATE));
+        assertEquals(Optional.of(expectedDate), ParserUtil.parseDate(Optional.of(VALID_DATE)));
+    }
+
+    @Test
+    public void parsDate_validValueWithWhitespace_returnsTrimmedDate() throws Exception {
+        String dateWithWhitespace = WHITESPACE + VALID_DATE + WHITESPACE;
+        DateAdded expectedDate = new DateAdded(VALID_DATE);
+        assertEquals(expectedDate, ParserUtil.parseDate(dateWithWhitespace));
+        assertEquals(Optional.of(expectedDate), ParserUtil.parseDate(Optional.of(dateWithWhitespace)));
     }
 
     @Test

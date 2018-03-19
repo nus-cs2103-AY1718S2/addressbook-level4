@@ -15,7 +15,7 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.getTypicalAddressBookWithAutoDateGeneration;
 
 import org.junit.Test;
 
@@ -37,11 +37,11 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBookWithAutoDateGeneration(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person editedPerson = new PersonBuilder().build();
+        Person editedPerson = new PersonBuilder().generateDate().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
@@ -104,7 +104,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_duplicatePersonUnfilteredList_failure() {
+    public void execute_nonDuplicatePersonUnfilteredList_failure() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
@@ -113,7 +113,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_duplicatePersonFilteredList_failure() {
+    public void execute_nonDuplicatePersonFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         // edit person in filtered list into a duplicate in address book
@@ -155,7 +155,7 @@ public class EditCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Person editedPerson = new PersonBuilder().build();
+        Person editedPerson = new PersonBuilder().generateDate().build();
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
@@ -202,7 +202,7 @@ public class EditCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Person editedPerson = new PersonBuilder().build();
+        Person editedPerson = new PersonBuilder().generateDate().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());

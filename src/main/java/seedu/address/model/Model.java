@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -22,6 +23,9 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
+
+    /** Deletes the given list of persons. */
+    void deletePersons(List<Person> targets) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;

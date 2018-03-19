@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= AddSurance - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,13 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W10-B4/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+AddSurance is for insurance agents who *prefer to use a desktop app for managing contacts with current or potential clients*. More importantly, AddSurance is *optimized for insurance agents who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AddSurance can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -33,14 +33,18 @@ This app will not work with earlier versions of Java 8.
 +
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  Type the command/command alias in the command box and press kbd:[Enter] to execute it. +
+e.g. typing *`help`* or *`h`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
+* *`l`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`a`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`d`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
+* *`ex`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
 
@@ -54,16 +58,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Actual command words can be replaced by their aliases e.g. for the help command, user can use its alias, *`h`*, instead.
 ====
 
-=== Viewing help : `help`
+=== Viewing help : `help` or `h`
 
-Format: `help`
+Format: `help` or `h`
 
-=== Adding a person: `add`
+=== Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -74,18 +79,19 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Importing contacts from CSV : `import_contacts`
+
 Will import contacts from a csv file that contains the header (Name, Email, Phone, Address) +
 Format: `import_contacts User/username/examplefile.csv`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` or `l`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` or `l`
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` or `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -102,16 +108,16 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by detail: `find` or `f`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose details contain any of the given keywords or part thereof. +
+Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* All the details will be searched.
+* Partial words will be matched e.g. `Han` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -120,12 +126,12 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any person having names containing `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` or `d`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` or `d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -140,12 +146,46 @@ Examples:
 Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st person in the results of the `find` command
 
-=== Selecting a person : `select`
+=== Deleting dated persons  : `deletebefore` or `db`
+
+Deletes all persons added before a specified date with specified tags. +
+Format: `deletebefore [d/DATE] [t/TAG]...` or `db [d/DATE] [t/TAG]...`
+
+****
+* Persons deleted must have tags that matches all the specified `TAG` s.
+* The specified tags can be in any order.
+* *At least one tag* must be provided.
+* The input `DATE` *must be in the following format: dd/MM/yyyy*.
+****
+
+Examples:
+
+* `deletebefore d/12/12/2017 t/friends` +
+Deletes all friends added before 12/12/2017 in the address book.
+
+=== Deleting dated persons  : `deletebefore` or `db`
+
+Deletes all persons added before a specified date with specified tags. +
+Format: `deletebefore [d/DATE] [t/TAG]...` or `db [d/DATE] [t/TAG]...`
+
+****
+* Persons deleted must have tags that matches all the specified tags.
+* The specified tags can be in any order.
+* At least one tag must be provided.
+* The input date must be in the following format: dd/MM/yyyy.
+****
+
+Examples:
+
+* `deletebefore d/12/12/2017 t/friends` +
+Deletes all friends added before 12/12/2017 in the address book.
+
+=== Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` or `s INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -162,21 +202,45 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `history` or `hist`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` or `hist`
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Email appointment reminder  : `emailreminder` or `er` (tentative)
+
+Email a person a reminder with regards to an upcoming appointment with the specified date and time. +
+Format: `emailreminder INDEX [d/DATE] [ti/TIME]` or `er INDEX [d/DATE] [ti/TIME]`
+
+****
+* Emails the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Appointment is set at `DATE` and `TIME`
+* The input date *must be in the following format: dd/MM/yyyy*.
+* The input time *must be in the following format: HH:MM (24hr format)*.
+****
+
+Examples:
+
+* `list` +
+`er 3 d/12/12/2017 ti/12:30` +
+Emails the 3rd person in the address book a reminder of an appointment on 12/12/2017 at 12:30pm.
+
+* `find Betsy` +
+`er 1st d/1/1/2017 ti/14:00` +
+Emails the 1st person in the results of the `find` command a reminder of an appointment on 1/1/2017 at 2:00pm.
+
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` or `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` or `u`
 
 [NOTE]
 ====
@@ -199,10 +263,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` or `r`
 
 Examples:
 
@@ -222,15 +286,15 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` or `c`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` or `c`
 
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` or `ex`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` or `ex`
 
 === Saving the data
 
@@ -255,6 +319,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Before* : `deletebefore d/DATE [t/TAG]...` +
+e.g. `deletebefore d/12/12/2017 t/friends`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -264,5 +330,6 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Email Reminder* : `er 3 d/12/12/2017 ti/12:30`
 * *Undo* : `undo`
 * *Redo* : `redo`

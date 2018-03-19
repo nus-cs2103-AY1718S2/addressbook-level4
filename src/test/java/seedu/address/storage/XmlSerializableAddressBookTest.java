@@ -24,6 +24,7 @@ public class XmlSerializableAddressBookTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+
     @Test
     public void toModelType_typicalPersonsFile_success() throws Exception {
         XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,

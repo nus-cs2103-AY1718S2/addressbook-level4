@@ -146,10 +146,10 @@ Examples:
 * `module CS2010` +
 Returns all persons having CS2010 in their modules
 
-=== Viewing common time slots in timetable: `free`
+=== Viewing common time slots in timetable: `free` (coming in v2.0)
 
 Displays the common free time of two people in the addressbook. +
-Format: `free [PERSON1] [PERSON2]`
+Format: `free p/[PERSON1] p/[PERSON2]`
 
 ****
 * Only full names will be matched e.g. `Han` will not match `Han Tan`
@@ -159,8 +159,8 @@ Format: `free [PERSON1] [PERSON2]`
 
 Examples:
 
-* `module CS2010` +
-Returns all persons having CS2010 in their modules
+* `free p/John Doe p/Han Tan` +
+Displays the combined timetable for John Doe and Han Tan.
 
 === Deleting a person : `delete`
 

@@ -365,6 +365,52 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::favourites[]
+=== Favourites feature
+==== Current Implementation
+
+To facilitate the favourite/unfavourite feature, a `Favourite` attribute is added to the `Student` class:
+
+image::StudentClassDiagram.png[width="800"]
+
+Since the implementation of the favourite and unfavourite command are similar, we will talk about the implementation of the favourite command only.
+
+The logic part of the favourite command will be executed by the `FavouriteCommand` class.
+To mark a `Student` object called "studentToFavourite" as favourite:
+
+* A Student object called "editedStudent" will be created by `FavouriteCommand.createEditedStudent(Student)`, which is implemented as such:
+[source, java]
+----
+    private static Student createEditedStudent(Student target) {
+        assert target != null;
+
+        Name name = target.getName();
+        Phone phone = target.getPhone();
+        // ... get the rest of the target's attributes ...
+        Favourite fav = new Favourite(true);
+
+        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+    }
+----
+
+* editedStudent will have the attributes of studentToFavourite, except that its `Favourite` attribute will be set to "true"
+* `Model.updateStudent(Student, Student)` is used to replace studentToFavourite with editedStudent in the Address Book in-memory
+
+[NOTE]
+If you have a future implementation that requires the addition of a new attribute in the `Student` class, you must take note of updating the `FavouriteCommand.createEditedStudent(Student)` method to reflect the new attribute.
+
+==== Design Considerations
+
+===== Aspect: Implementation of 'FavouriteCommand'
+* *Alternative 1 (current choice)*: Add a `Favourite` attribute to `Student`
+** Pro: It is easy to mark a student as favourite since we can make use of the current `Model.updateStudent(Student, Student)` method by creating a copy of the target `Student` object, with the value of its `Favourite` attribute set to "true"
+** Con: Creating a copy of the `Student` object can be inefficient
+* *Alternative 2*: Create a new `UniqueFavouriteStudentsList` that contains the list of students in favourites and store this list in the Address Book
+** Pro: Students that are currently in favourites can be managed more easily since there is a direct overview of which student is in favourites
+** Con: Students in the `UniqueFavouriteStudentsList` have to be synced with the `UniqueStudentsList`. For example, we have to ensure that deleting a student in the `UniqueStudentList` deletes the student in the `UniqueFavouriteStudentsList` too
+
+// end::favourites[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

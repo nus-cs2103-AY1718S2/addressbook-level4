@@ -1,11 +1,16 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -23,13 +28,13 @@ public class ContactDetailsDisplay extends UiPart<Region> {
     private Label name;
 
     @FXML
-    private Label phone;
+    private ListView<Label> keys;
 
     @FXML
-    private Label address;
+    private ListView<Label> values;
 
     @FXML
-    private Label email;
+    private ImageView imageView;
 
     public ContactDetailsDisplay() {
         super(FXML);
@@ -41,9 +46,41 @@ public class ContactDetailsDisplay extends UiPart<Region> {
      */
     private void showPersonDetails(Person person) {
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+
+        List<Label> keysList = new ArrayList<>();
+        List<Label> valuesList = new ArrayList<>();
+
+        Label fullNameKey = new Label("Full Name" + ":");
+        Label fullNameValue = new Label(person.getName().fullName);
+        fullNameKey.getStyleClass().add("details-key");
+        fullNameValue.getStyleClass().add("details-value");
+
+        Label phoneKey = new Label("Phone" + ":");
+        Label phoneValue = new Label(person.getPhone().value);
+        phoneKey.getStyleClass().add("details-key");
+        phoneValue.getStyleClass().add("details-value");
+
+        Label emailKey = new Label("Email" + ":");
+        Label emailValue = new Label(person.getEmail().value);
+        emailKey.getStyleClass().add("details-key");
+        emailValue.getStyleClass().add("details-value");
+
+        Label addressKey = new Label("Address" + ":");
+        Label addressValue = new Label(person.getAddress().value);
+        addressKey.getStyleClass().add("details-key");
+        addressValue.getStyleClass().add("details-value");
+
+        keysList.add(fullNameKey);
+        keysList.add(phoneKey);
+        keysList.add(emailKey);
+        keysList.add(addressKey);
+        valuesList.add(fullNameValue);
+        valuesList.add(phoneValue);
+        valuesList.add(emailValue);
+        valuesList.add(addressValue);
+
+        keys.setItems(FXCollections.observableList(keysList));
+        values.setItems(FXCollections.observableList(valuesList));
     }
 
     @Subscribe

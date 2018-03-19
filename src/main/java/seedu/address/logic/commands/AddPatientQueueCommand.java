@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -23,13 +24,14 @@ public class AddPatientQueueCommand extends UndoableCommand {
 
     private Patient toAddQueue;
     private String patientName;
+    private final NameContainsKeywordsPredicate predicate;
 
     /**
      * Creates an AddCommand to add the specified {@code Patient}
      */
     //will be replaced using patient object as parameter
-    public AddPatientQueueCommand(String patientName) {
-        requireNonNull(patientName);
+    public AddPatientQueueCommand(NameContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
     }
 
     @Override

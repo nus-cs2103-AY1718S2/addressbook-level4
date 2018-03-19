@@ -1,12 +1,13 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new AddPatientQueueCommand object
@@ -20,18 +21,16 @@ public class AddPatientQueueCommandParser implements Parser<AddPatientQueueComma
      */
     @Override
     public AddPatientQueueCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME);
+        String trimmedArgs = args.trim();
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddPatientQueueCommand.MESSAGE_USAGE));
+        if (trimmedArgs.isEmpty()) {
+           throw new ParseException(
+                   String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPatientQueueCommand.MESSAGE_USAGE));
         }
 
-        String patientName = argMultimap.getValue(PREFIX_NAME).toString();
+        String[] nameKeywords = trimmedArgs.split("\\s");
 
-        return new AddPatientQueueCommand(patientName);
+        return new AddPatientQueueCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
     /**

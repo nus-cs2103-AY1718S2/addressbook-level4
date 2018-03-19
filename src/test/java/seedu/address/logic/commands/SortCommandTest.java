@@ -13,8 +13,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 /**
-  * Including integration tests and unit tests of the SortCommand.
-  */
+ * Including integration tests and unit tests of the SortCommand.
+ */
 public class SortCommandTest {
 
     private Model model;

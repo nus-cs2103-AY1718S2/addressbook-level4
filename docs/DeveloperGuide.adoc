@@ -783,13 +783,54 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Target user profile*:
 
 * has a need to plan tuition slots for large number of students
-* handle their contacts
+* wants to store students' profile information and pictures
+* wants to keep a progress log for students
+* is able to reference common important student details like contact number
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
+
 *Value proposition*: improve the planning process for scheduling time slots for all tutees
+
+
+=== Feature Contribution
+
+*Samuel Loh:*
+
+* *(Minor)* Added programmingLanguage field to student model and modified add/edit commands to fit enhancement
+** This helps the tutor to identify what programming language is being used by each student to learn coding.
+
+* *(Major)* Create a "more information" page storing other important details of the students including an optional profile picture.
+** This helps the tutor store more information about students, which are not referenced as often, in another portion and thus are not displayed on the student card.
+E.g. emergency contact and an optional profile picture
+
+*Tan Wei Hao:*
+
+* *(Minor)* Added a findTag command
+** This allows the tutor to find a student by tag labels.
+
+
+* *(Major)* Syncing timetable with Google calendar
+** This helps the tutor keep track of lessons better by syncing with his Google calendar. It also allows the use of Google calendar features.
+
+*Tan Chee Wee:*
+
+* *(Minor)* Selecting a student via 'select' commands renders their location on google maps
+** This allows the tutor to easily plan a route to the student's home.
+
+* *(Major)* Add a functionality that enables tutor to use free-form english to execute commands instead of conforming to the specific syntax
+** This makes the app more user-friendly without the need to memorise the syntax of respective commands and able to execute them more intuitively.
+
+*Yap ni:*
+
+* *(Minor)* Favourites feature where tutors can add or remove students from favourites and list students that are in their favourites
+** This helps the tutor to remember or view the list of prominent students they want to take note of easily.
+
+* *(Major)* Dashboard feature where each student has their own dashboard
+** This helps the tutor to better plan out lessons for each student and track their learning progress.
+
 
 [appendix]
 == User Stories

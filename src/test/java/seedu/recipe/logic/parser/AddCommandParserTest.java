@@ -136,11 +136,6 @@ public class AddCommandParserTest {
             NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + VALID_INSTRUCTION_BOB
                 + URL_DESC_BOB, expectedMessage);
 
-        // missing url prefix
-        assertParseFailure(parser,
-                NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
-                        + VALID_URL_BOB, expectedMessage);
-
         // all prefixes missing
         assertParseFailure(parser,
             VALID_NAME_BOB + VALID_PREPARATION_TIME_BOB + VALID_INGREDIENT_BOB + VALID_INSTRUCTION_BOB

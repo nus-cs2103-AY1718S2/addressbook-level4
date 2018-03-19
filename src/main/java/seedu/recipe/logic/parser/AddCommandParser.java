@@ -49,7 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME)).get();
             Ingredient ingredient = ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).get();
             Instruction instruction = ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).get();
-            Url url = ParserUtil.parseUrl(argMultimap.getValue(PREFIX_URL)).get();
+            Url url = ParserUtil.parseUrlOnInitialAdd(argMultimap.getValue(PREFIX_URL)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Recipe recipe = new Recipe(name, preparationTime, ingredient, instruction, url, tagList);

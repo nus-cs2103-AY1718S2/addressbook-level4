@@ -793,7 +793,6 @@ manage which include contact details and profiles of potential employees. It is 
 
 *Value proposition*: An ideal solution for small teams and business professionals who need a simple solution to manage their contacts and help them with day-to-day business activities.
 
-
 *Feature contributions:*
 
 1. Kushagra Goyal
@@ -822,6 +821,19 @@ manage which include contact details and profiles of potential employees. It is 
  * How do these features fit into the product scope?
  ** Major Feature: Recruiters have a lot of appointments, meetings, and interviews to manage. Hence, showing them on the calendar will help them visualize and manage their time effectively.
  ** Minor Feature: Viewing profile pictures of the potential employees help recruiters to recognize them easily.
+
+3. Kevin Chin
+* Major Feature: Email contact
+** User can use the "email" command to send email to chosen contact.
+** The feature uses Gmail API to send emails.
+
+* Minor Feature: Find contact by tag
+** User can find contact by tag using keyword of the tag.
+** Supports multiple keywords.
+
+* How do these features fit into the product scope?
+** Major Feature: Recruiters may sometimes need to set up appointments, meetings, and interviews. This will usually be done through the use of email. This feature will be convenient for them as the email address of the contacts are already in contactHeRo.
+** Minor Feature: Sometimes, recruiter might not remember the name of the person they wish to contact. The assigned role of a person is much easier to remember. Therefore, this feature is very useful in helping them find a contact easily.
 
 [appendix]
 == User Stories

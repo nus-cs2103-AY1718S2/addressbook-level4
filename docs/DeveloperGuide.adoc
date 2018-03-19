@@ -793,7 +793,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 === Feature Contribution
 
 ==== Ong Kuan Yang
-* *Major*: A calendar or appointment scheduling feature alllows the salesperson to record down when he has appointments with his clients and to see at a glance his future appointments for the days/month ahead.
+* *Major*: A calendar or appointment scheduling feature allows the salesperson to record down when he has appointments with his clients and to see at a glance his future appointments for the days/month ahead.
 * *Minor*: An archival feature for clients that the salesperson is no longer in contact with so that they do not clutter up the interface as the salesperson has to manage a lot of clients.
 
 ==== Gloria Law

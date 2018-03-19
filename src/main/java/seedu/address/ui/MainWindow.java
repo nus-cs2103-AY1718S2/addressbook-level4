@@ -219,12 +219,14 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookListPanel.clearSelectionAndScrollToTop();
+        bookDetailsPanel.scrollToTop();
     }
 
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         searchResultsPanel.clearSelectionAndScrollToTop();
+        bookDetailsPanel.scrollToTop();
     }
 
 }

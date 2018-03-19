@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -37,6 +38,8 @@ public class BookDetailsPanel extends UiPart<Region> {
     private Label publicationDate;
     @FXML
     private Label description;
+    @FXML
+    private ScrollPane scrollPane;
 
     public BookDetailsPanel() {
         super(FXML);
@@ -62,6 +65,10 @@ public class BookDetailsPanel extends UiPart<Region> {
 
             getRoot().setVisible(true);
         });
+    }
+
+    protected void scrollToTop() {
+        scrollPane.setVvalue(0);
     }
 
     @Subscribe

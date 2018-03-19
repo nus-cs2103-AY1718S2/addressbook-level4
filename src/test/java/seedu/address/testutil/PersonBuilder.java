@@ -22,6 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_CALENDARID = "null";
     public static final String DEFAULT_RATING = "-1";
 
     private Name name;
@@ -30,6 +31,7 @@ public class PersonBuilder {
     private Address address;
     private Rating rating;
     private Set<Tag> tags;
+    private String calendarId;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -38,6 +40,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         rating = new Rating(DEFAULT_RATING);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        calendarId = this.DEFAULT_CALENDARID;
     }
 
     /**
@@ -50,6 +53,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         rating = personToCopy.getRating();
         tags = new HashSet<>(personToCopy.getTags());
+
     }
 
     /**
@@ -93,6 +97,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Email} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCalendarId(String calendarId) {
+        this.calendarId = calendarId;
+        return this;
+    }
+
+    /**
      * Sets the {@code Rating} of the {@code Person} that we are building.
      */
     public PersonBuilder withRating(String rating) {
@@ -101,7 +113,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, rating, tags);
+        return new Person(name, phone, email, address, rating, tags, calendarId);
     }
 
 }

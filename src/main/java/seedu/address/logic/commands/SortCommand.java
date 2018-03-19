@@ -18,7 +18,7 @@ public class SortCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " name";
 
     public static final String MESSAGE_SORT_EMPLOYEE_SUCCESS = "Employees has been sorted.";
-    public static final String MESSAGE_SORT_INVALID_FIELD = "Your field is invalid, please check again.";
+    public static final String MESSAGE_SORT_INVALID_FIELD = "Your input field is invalid, please check again.";
 
     private final String sortField;
 

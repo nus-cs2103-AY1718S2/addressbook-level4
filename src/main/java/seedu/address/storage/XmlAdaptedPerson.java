@@ -33,6 +33,8 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
+
+    private String calendarId;
     private String rating;
 
     @XmlElement
@@ -48,7 +50,8 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      * To retain until XmlAdaptedPersonTest is updated.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged,
+                            String calendarId) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -56,6 +59,7 @@ public class XmlAdaptedPerson {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.calendarId = calendarId;
     }
 
     /**
@@ -92,6 +96,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        calendarId = source.getCalendarId();
     }
 
     /**
@@ -146,7 +151,8 @@ public class XmlAdaptedPerson {
         final Rating rating = new Rating(this.rating);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, rating, tags);
+
+        return new Person(name, phone, email, address, rating, tags, calendarId);
     }
 
     @Override

@@ -782,9 +782,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-Our address book aims to target social workers who have to visit different less privileged families and/or high-risk stay-at-home patients as their daily routine. Social workers regularly make visits to these beneficiaries to assist them in overcoming obstacles in their lives.
+Our SLAP aims to target social workers who have to visit different less privileged families and/or high-risk
+stay-at-home patients as their daily routine. Social workers regularly make visits to these beneficiaries to assist them
+ in overcoming obstacles in their lives.
 
-Our address book will allow them to organise their schedule for the day as they may have to visit multiple locations, take copious notes and help in many different ways. For example, a social worker may have to pick a victim of domestic abuse up in the morning to take her to the lawyer’s office to file for a divorce from her abusive husband and after taking her home, the social worker might have to visit another family to check on a disabled patient.
+Our SLAP will allow them to organise their schedule for the day as they may have to visit multiple locations, take
+copious notes and help in many different ways. For example, a social worker may have to pick a victim of domestic abuse
+up in the morning to take her to the lawyer’s office to file for a divorce from her abusive husband and after taking her
+ home, the social worker might have to visit another family to check on a disabled patient.
 
 
 * has a need to manage a significant number of contacts
@@ -801,6 +806,53 @@ Our address book will allow them to organise their schedule for the day as they 
 * uses minimal system resources
 * more secure than a traditional address book
 
+*Feature contribution:*
+
+**Jason Manson-Hing**
+
+`Major Feature:` Calendar Integration
+
+* Functional calendar within the application with add/view/delete/edit functionality.
+* This is useful for social workers to keep track of all of the things that they have to do now and in the future.
+This calendar will be seperate from their personal calendar so as to keep business and personal information seperate.
+Additionally, this calendar will integrat with the daily scheduler function to help optimize their time in a day.
+
+`Minor Feature:` Daily Scheduler (Events)
+
+* Collates the user's list of calendar events for the day into an easily consumable view.
+* Allows the user to plan the most optimal route of travel for their beneficiary visits for the day and creates the
+optimal schedule for them.
+
+
+**Chan Jin Jia**
+
+`Major Feature:` Map Location and Main UI
+
+* As our application aims to better the day-to-day operations of a social worker, integrating maps into our application
+greatly aids their visitation process. This integration aims to make the locating of beneficiaries much more convenient.
+* In addition, a cleaner Main UI will be required to better display our Session Logger and Planner (SLAP) for
+Social Worker application as it will contain several major features (beneficiary details, calendar, and daily
+scheduler).
+
+`Minor Feature:` Daily Scheduler (Navigation)
+
+* Rather than just seeing where the beneficiary is located, the daily scheduler feature of our app will display the
+route between addresses of the beneficiaries on the daily agenda to facilitate ease of movement.
+
+**Kaiser Tan**
+
+`Major feature:` Export function with Secure Encryption
+
+* The storage file of our application will always be encrypted when logged out. User can also export and transfer the
+ storage file securely.
+* The social worker will have many sensitive data which needs to be kept confidential, hence a external user should not
+be able to see and read the storage file easily, especially when the user is logged out.
+
+`Minor feature:` User Login
+
+* User can login and logout safely, preventing external users from accessing the SLAP without authorisation
+* As a social worker, I want to secure my SLAP and only ensure that it is only accessible to me, hence a login function
+is needed to maintain the C-I-A security framework.
 
 [appendix]
 == User Stories

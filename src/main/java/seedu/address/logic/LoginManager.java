@@ -34,11 +34,6 @@ public final class LoginManager {
                 String fileUsername = inputStream.next();
                 String filePassword = inputStream.next();
 
-                System.out.println("***");
-                System.out.println(username + ", " + password);
-                System.out.println(fileUsername + ", " + filePassword);
-                System.out.println("***");
-
                 if (username.equals(fileUsername) && password.equals(filePassword)) {
                     int role = Integer.parseInt(inputStream.next());
                     loginStateIndex = role;
@@ -54,7 +49,6 @@ public final class LoginManager {
 
         if (match){
             currLoginState.updateState(loginStateIndex);
-            System.out.println("Success");
             return true;
         }
 

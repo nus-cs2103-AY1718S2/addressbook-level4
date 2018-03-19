@@ -22,6 +22,9 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.tag.UniqueTagList;
 
+import seedu.address.model.todo.ToDo;
+import seedu.address.model.todo.exceptions.DuplicateToDoException;
+
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
@@ -30,6 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueToDoList todos;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -152,6 +156,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    //// to-do-level operations
+    /**
+     * Adds a to-do to the address book.
+     *
+     * @throws DuplicateToDoException if an equivalent to-do already exists.
+     */
+    public void addToDo(ToDo todo) throws DuplicateToDoException {
+        todos.add(todo);
     }
 
     //// tag-level operations

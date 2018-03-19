@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.Patient;
+import seedu.address.model.patient.Remark;
 
 
 /**
@@ -23,17 +24,17 @@ public class RemarkCommand extends UndoableCommand {
     public static final String MESSAGE_ADD_SUCCESS = "Added remark to: %1$s";
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed remark from: %1$s";
 
-    private final Patient toAdd;
+    private final Patient toEdit;
     private final Index index;
-    private final String remark;
+    private final Remark remark;
 
     /**
      * Creates an AddCommand to add the specified {@code Patient}
      */
-    public RemarkCommand(Index index, String remark) {
+    public RemarkCommand(Index index, Remark remark) {
         this.index = index;
         this.remark = remark;
-        toAdd = null;
+        toEdit = null;
     }
 
     @Override

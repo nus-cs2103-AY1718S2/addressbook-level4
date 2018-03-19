@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.patient.Remark;
 
 public class RemarkCommandTest {
 
@@ -32,7 +33,7 @@ public class RemarkCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage("Index: 1 Remark: Test");
 
-        RemarkCommand command = new RemarkCommand(Index.fromOneBased(1), "Test");
+        RemarkCommand command = new RemarkCommand(Index.fromOneBased(1), new Remark("Test"));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         command.execute();
     }

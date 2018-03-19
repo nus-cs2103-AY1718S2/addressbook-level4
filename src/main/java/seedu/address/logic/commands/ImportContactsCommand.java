@@ -12,6 +12,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -80,30 +81,36 @@ public class ImportContactsCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         Person personToAdd;
+        String name;
+        String email;
+        String phone;
+        String address;
 
         try {
             Iterable<CSVRecord> csvRecords = csvParser.getRecords(); //get iterator to go through records in csv
 
             for (CSVRecord csvRecord : csvRecords) { //iterate through the
                 // Accessing values by Header names
-                String name = csvRecord.get("Name");
-                Name n = new Name (name);
-                String email = csvRecord.get("Email");
-                String phone = csvRecord.get("Phone");
-                String address = csvRecord.get("Address");
+                 name = csvRecord.get("Name");
+                 email = csvRecord.get("Email");
+                 phone = csvRecord.get("Phone");
+                 address = csvRecord.get("Address");
 
-                printResult(name, email, phone, address);
+                printResult(name, email, phone, address); //mainly for debugging
 
                 Set<Tag> tagSet = (Set<Tag>) new Tag("friend"); //temporary tag, fix later
 
                 personToAdd = new Person(new Name(name), new Phone(phone), new Email(email),
-                        new Address(address), new tagSet);
+                        new Address(address), tagSet);
 
+                AddCommand addMe = new AddCommand(personToAdd);
+                addMe.executeUndoableCommand();
             }
+
             return new CommandResult(MESSAGE_SUCCESS);
         }
         catch (IOException ioe) {
-            throw new CommandException("Aw Fuck.");
+            throw new CommandException("Aw Fuck."); //Obviously need to change this
         }
     }
 

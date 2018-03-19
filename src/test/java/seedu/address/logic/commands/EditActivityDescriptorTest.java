@@ -9,7 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.address.logic.commands.EditCommand.EditActivityDescriptor;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
@@ -17,6 +17,9 @@ import seedu.address.testutil.EditActivityDescriptorBuilder;
 public class EditActivityDescriptorTest {
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void equals() {
         // same values -> returns true
         EditActivityDescriptor descriptorWithSameValues = new EditActivityDescriptor(DESC_AMY);

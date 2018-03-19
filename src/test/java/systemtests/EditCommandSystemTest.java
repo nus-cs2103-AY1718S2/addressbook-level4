@@ -28,7 +28,7 @@ import static seedu.address.testutil.TypicalActivities.BOB;
 import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -49,6 +49,9 @@ import seedu.address.testutil.TaskBuilder;
 public class EditCommandSystemTest extends RemarkBookSystemTest {
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void edit() throws Exception {
         Model model = getModel();
 

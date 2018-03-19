@@ -39,6 +39,9 @@ public class RemarkBookTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
         DeskBoard newData = getTypicalDeskBoard();
         addressBook.resetData(newData);
@@ -46,6 +49,9 @@ public class RemarkBookTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ASSIGNMENT1 twice
         List<Activity> newActivities = Arrays.asList(ASSIGNMENT1, ASSIGNMENT1);

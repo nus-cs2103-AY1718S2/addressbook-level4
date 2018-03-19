@@ -42,6 +42,9 @@ public class RemarkBookParserTest {
     private final DeskBoardParser parser = new DeskBoardParser();
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void parseCommand_add() throws Exception {
         Activity activity = new TaskBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(ActivityUtil.getAddCommand(activity));

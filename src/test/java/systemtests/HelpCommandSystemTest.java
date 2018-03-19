@@ -29,6 +29,9 @@ public class HelpCommandSystemTest extends RemarkBookSystemTest {
     private final GuiRobot guiRobot = new GuiRobot();
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void openHelpWindow() {
         //use accelerator
         getCommandBox().click();

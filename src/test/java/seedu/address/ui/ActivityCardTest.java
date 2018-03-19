@@ -14,6 +14,9 @@ import seedu.address.testutil.TaskBuilder;
 public class ActivityCardTest extends GuiUnitTest {
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void display() {
         // no tags
         Activity activityWithNoTags = new TaskBuilder().withTags(new String[0]).build();

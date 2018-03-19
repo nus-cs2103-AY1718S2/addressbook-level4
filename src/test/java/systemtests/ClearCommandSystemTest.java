@@ -15,6 +15,9 @@ import seedu.address.model.ModelManager;
 public class ClearCommandSystemTest extends RemarkBookSystemTest {
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void clear() {
         final Model defaultModel = getModel();
 

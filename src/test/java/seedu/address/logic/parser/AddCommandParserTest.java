@@ -29,7 +29,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.activity.Activity;
@@ -43,6 +43,9 @@ public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void parse_allFieldsPresent_success() {
         Activity expectedActivity = new TaskBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
                 .withRemark(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
@@ -76,6 +79,9 @@ public class AddCommandParserTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Activity expectedActivity = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
@@ -85,6 +91,9 @@ public class AddCommandParserTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
@@ -110,6 +119,9 @@ public class AddCommandParserTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void parse_invalidValue_failure() {
         // invalid name
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB

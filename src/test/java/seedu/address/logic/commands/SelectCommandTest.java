@@ -41,6 +41,9 @@ public class SelectCommandTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredActivityList().size());
 
@@ -50,6 +53,9 @@ public class SelectCommandTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
 
@@ -57,6 +63,9 @@ public class SelectCommandTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
 
@@ -64,6 +73,9 @@ public class SelectCommandTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void execute_invalidIndexFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
 
@@ -75,6 +87,9 @@ public class SelectCommandTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void equals() {
         SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_ACTIVITY);
         SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_ACTIVITY);

@@ -15,6 +15,9 @@ public class RemarkTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void constructor_invalidAddress_throwsIllegalArgumentException() {
         String invalidAddress = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new Remark(invalidAddress));

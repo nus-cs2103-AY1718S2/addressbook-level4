@@ -31,7 +31,7 @@ import static seedu.address.testutil.TypicalActivities.DEMO1;
 import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalActivities.QUIZ;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -51,6 +51,9 @@ import seedu.address.testutil.TaskBuilder;
 public class AddCommandSystemTest extends RemarkBookSystemTest {
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void add() throws Exception {
         Model model = getModel();
 

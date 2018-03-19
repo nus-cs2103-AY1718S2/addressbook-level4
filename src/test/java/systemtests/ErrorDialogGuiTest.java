@@ -8,7 +8,7 @@ import static seedu.address.ui.UiManager.FILE_OPS_ERROR_DIALOG_STAGE_TITLE;
 
 import java.io.IOException;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import guitests.GuiRobot;
 import guitests.guihandles.AlertDialogHandle;
@@ -20,6 +20,9 @@ public class ErrorDialogGuiTest extends RemarkBookSystemTest {
     private final GuiRobot guiRobot = new GuiRobot();
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void showErrorDialogs() {
         postLater(new DataSavingExceptionEvent(IO_EXCEPTION_STUB));
 

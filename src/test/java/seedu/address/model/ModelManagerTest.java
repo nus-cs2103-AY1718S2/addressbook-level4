@@ -27,6 +27,9 @@ public class ModelManagerTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void equals() {
         DeskBoard addressBook = new DeskBoardBuilder().withActivity(ASSIGNMENT1).withActivity(ASSIGNMENT2).build();
         DeskBoard differentAddressBook = new DeskBoard();

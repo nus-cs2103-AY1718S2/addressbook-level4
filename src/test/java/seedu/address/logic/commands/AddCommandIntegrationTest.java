@@ -28,6 +28,9 @@ public class AddCommandIntegrationTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void execute_newPerson_success() throws Exception {
         Activity validActivity = new TaskBuilder().build();
 
@@ -39,6 +42,9 @@ public class AddCommandIntegrationTest {
     }
 
     //TODO: TEST
+    /**
+     * Test
+     */
     public void execute_duplicatePerson_throwsCommandException() {
         Activity activityInList = model.getDeskBoard().getActivityList().get(0);
         assertCommandFailure(prepareCommand(activityInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);

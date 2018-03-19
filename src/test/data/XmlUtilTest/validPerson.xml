@@ -5,6 +5,7 @@
     <email>hans@example</email>
     <address>4th street</address>
     <expectedGraduationYear>2020</expectedGraduationYear>
+    <major>Computer Science</major>
     <resume>src/test/data/XmlUtilTest/hans.pdf</resume>
     <interviewDate>1540814400</interviewDate>
     <tagged>friends</tagged>

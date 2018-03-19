@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
@@ -25,6 +26,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.InterviewDate;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -51,6 +53,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_EXPECTED_GRADUATION_YEAR + "EXPECTED GRADUATION YEAR] "
+            + "[" + PREFIX_MAJOR + "MAJOR] "
             + "[" + PREFIX_RESUME + "RESUME] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -117,6 +120,8 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         ExpectedGraduationYear updatedExpectedGraduationYear = editPersonDescriptor.getExpectedGraduationYear()
                 .orElse(personToEdit.getExpectedGraduationYear());
+        Major updatedMajor = editPersonDescriptor.getMajor().orElse(personToEdit.getMajor());
+
         // Doesn't allow editing of rating
         Rating rating = personToEdit.getRating();
         Resume updatedResume = editPersonDescriptor.getResume().orElse(personToEdit.getResume());
@@ -127,7 +132,7 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedExpectedGraduationYear, rating, updatedResume, interviewDate, updatedTags);
+                updatedExpectedGraduationYear, updatedMajor, rating, updatedResume, interviewDate, updatedTags);
     }
 
     @Override
@@ -159,6 +164,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private ExpectedGraduationYear expectedGraduationYear;
+        private Major major;
         private Resume resume;
         private Set<Tag> tags;
 
@@ -174,6 +180,7 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setExpectedGraduationYear(toCopy.expectedGraduationYear);
+            setMajor(toCopy.major);
             setResume(toCopy.resume);
             setTags(toCopy.tags);
         }
@@ -183,7 +190,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
-                    this.expectedGraduationYear, this.resume, this.tags);
+                    this.expectedGraduationYear, this.major, this.resume, this.tags);
         }
 
         public void setName(Name name) {
@@ -224,6 +231,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<ExpectedGraduationYear> getExpectedGraduationYear() {
             return Optional.ofNullable(expectedGraduationYear);
+        }
+
+        public void setMajor(Major major) {
+            this.major = major;
+        }
+
+        public Optional<Major> getMajor() {
+            return Optional.ofNullable(major);
         }
 
         public void setResume(Resume resume) {
@@ -270,6 +285,7 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getExpectedGraduationYear().equals(e.getExpectedGraduationYear())
+                    && getMajor().equals(e.getMajor())
                     && getResume().equals(e.getResume())
                     && getTags().equals(e.getTags());
         }

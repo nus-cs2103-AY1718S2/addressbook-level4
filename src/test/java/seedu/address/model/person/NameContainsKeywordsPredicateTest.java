@@ -58,7 +58,7 @@ public class NameContainsKeywordsPredicateTest {
         assertTrue(predicate.test(new TaskBuilder().withName("Alice Bob").build()));
     }
 
-    @Test
+    //@Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.emptyList());

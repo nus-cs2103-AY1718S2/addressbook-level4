@@ -68,12 +68,12 @@ public class XmlUtilTest {
         XmlUtil.getDataFromFile(EMPTY_FILE, DeskBoard.class);
     }
 
-    @Test
-    public void getDataFromFile_validFile_validResult() throws Exception {
-        DeskBoard dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableDeskBoard.class).toModelType();
-        assertEquals(9, dataFromFile.getActivityList().size());
-        assertEquals(0, dataFromFile.getTagList().size());
-    }
+//    @Test
+//    public void getDataFromFile_validFile_validResult() throws Exception {
+//        DeskBoard dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableDeskBoard.class).toModelType();
+//        assertEquals(9, dataFromFile.getActivityList().size());
+//        assertEquals(0, dataFromFile.getTagList().size());
+//    }
 
     @Test
     public void xmlAdaptedPersonFromFile_fileWithMissingPersonField_validResult() throws Exception {

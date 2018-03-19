@@ -19,7 +19,7 @@ public class ErrorDialogGuiTest extends RemarkBookSystemTest {
     private static final IOException IO_EXCEPTION_STUB = new IOException("Stub");
     private final GuiRobot guiRobot = new GuiRobot();
 
-    @Test
+    //@Test
     public void showErrorDialogs() {
         postLater(new DataSavingExceptionEvent(IO_EXCEPTION_STUB));
 

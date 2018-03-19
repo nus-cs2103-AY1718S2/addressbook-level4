@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -21,7 +19,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient into vising queue. "
             + "Parameters: "
-            + PREFIX_NAME + "NAME ";
+            + "NAME ";
 
     public static final String MESSAGE_SUCCESS = "%1$s is registered in the waiting list";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already registered.";

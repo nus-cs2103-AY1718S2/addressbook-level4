@@ -46,7 +46,7 @@ Responsibilities: Logic
 '''
 
 === Choi Wi Su
-image::yl_coder.jpg[width="150", align="left"]
+image::wisu.jpg[width="150", align="left"]
 {empty}[http://github.com/Der-Erlkonig[github]] [<<Der-Erlkonig#, portfolio>>]
 
 Role: Developer +

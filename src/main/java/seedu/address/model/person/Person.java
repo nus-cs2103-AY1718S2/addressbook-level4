@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TimeZone;
 
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -54,7 +53,8 @@ public class Person {
         return address;
     }
 
-    public CustTimeZone getCustTimeZone() { return timeZone; }
+    public CustTimeZone getCustTimeZone() {
+        return timeZone; }
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

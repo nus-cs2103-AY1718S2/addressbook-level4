@@ -1,10 +1,11 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import java.util.TimeZone;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-
+/**
+ * Represents a person's timezone in the address book.
+ */
 public class CustTimeZone {
 
     public static final String MESSAGE_TIMEZONE_CONSTRAINTS =
@@ -33,7 +34,8 @@ public class CustTimeZone {
     }
 
     @Override
-    public String toString() { return timeZone; }
+    public String toString() {
+        return timeZone; }
 
     @Override
     public boolean equals(Object other) {
@@ -43,6 +45,7 @@ public class CustTimeZone {
     }
 
     @Override
-    public int hashCode() { return timeZone.hashCode();}
+    public int hashCode() {
+        return timeZone.hashCode(); }
 
 }

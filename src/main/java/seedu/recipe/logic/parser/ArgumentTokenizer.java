@@ -75,7 +75,7 @@ public class ArgumentTokenizer {
      */
     //@@author kokonguyen191
     private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        Pattern pattern = Pattern.compile("[ \n]" + prefix);
+        Pattern pattern = Pattern.compile("[ \n]" + "\\Q" + prefix + "\\E");
         Matcher matcher = pattern.matcher(argsString);
         if (matcher.find(fromIndex)) {
             return matcher.start() + 1;

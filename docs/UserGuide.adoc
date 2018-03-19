@@ -74,7 +74,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/010195`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/121212 t/criminal`
 
-=== Adding a person: `alias`
+=== Adding a command alias: `alias` (since v1.1)
 
 Creates customised aliases for any valid command +
 Format: `alias [COMMAND] [ALIAS]`
@@ -130,7 +130,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons taking that module: `module`
+=== Locating persons taking that module: `module` (coming in v1.3)
 
 Finds persons who is taking the module as specified. +
 Format: `module MODULE_CODE`
@@ -202,7 +202,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Importing address book : `import`
+=== Importing address book : `import` (since v1.1)
 
 Imports an address book from filepath to the existing address book. Persons, Tags, and Aliases that are not in your address book will be added. +
 Format: `import FILEPATH`

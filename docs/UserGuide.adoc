@@ -269,6 +269,19 @@ Aspirin will be added to the list of conditions that Betsy has.
 * `ac John asthma` +
 Asthma will be added to the list of conditions that John has.
 
+=== View certain details only: `filter` [coming in v1.3]
+
+Switches between showing personal details only, medical information only.
+Format: `filter` or `fil`
+
+Examples:
+
+* `filter Betsy p` +
+Displays only the personal details of Betsy.
+
+* `fil John m` +
+Displays only the medical information of John.
+
 === Remove condition of an existing patient: `removec` [coming in v1.4]
 
 Adds a medical condition to an existing patient.

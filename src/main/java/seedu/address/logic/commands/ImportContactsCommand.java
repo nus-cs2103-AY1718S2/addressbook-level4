@@ -147,28 +147,28 @@ public final class ImportContactsCommand extends Command {
         try {
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
-        for (CSVRecord csvRecord : csvRecords) { //iterate through the
-            // Accessing values by Header names
-             name = csvRecord.get("Name");
-             email = csvRecord.get("Email");
-             phone = csvRecord.get("Phone");
-             address = csvRecord.get("Address");
-             addDate = new DateAdded(formatter.format(date));
+            for (CSVRecord csvRecord : csvRecords) { //iterate through the
+                // Accessing values by Header names
+                name = csvRecord.get("Name");
+                email = csvRecord.get("Email");
+                phone = csvRecord.get("Phone");
+                address = csvRecord.get("Address");
+                addDate = new DateAdded(formatter.format(date));
 
-            printResult(name, email, phone, address); //mainly for debugging
+                printResult(name, email, phone, address); //mainly for debugging
 
-            Set<Tag> tagSet =
-                    (Set<Tag>) new Tag("friend"); //temporary tag, fix later
+                Set<Tag> tagSet =
+                        (Set<Tag>) new Tag("friend"); //temporary tag, fix later
 
-            personToAdd = new Person(new Name(name),
-                    new Phone(phone), new Email(email),
-                    new Address(address), addDate, tagSet);
+                personToAdd = new Person(new Name(name),
+                        new Phone(phone), new Email(email),
+                        new Address(address), addDate, tagSet);
 
-            AddCommand addMe =
-                    new AddCommand(personToAdd); //not the most efficient...
-            addMe.executeUndoableCommand();
-        }
-        return new CommandResult(MESSAGE_SUCCESS);
+                AddCommand addMe =
+                        new AddCommand(personToAdd); //not the most efficient...
+                addMe.executeUndoableCommand();
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException ioe) {
             throw new CommandException(
                     "Aw Fuck."); //Obviously need to change this

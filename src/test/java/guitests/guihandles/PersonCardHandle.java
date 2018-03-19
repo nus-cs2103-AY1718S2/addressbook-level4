@@ -65,7 +65,8 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return emailLabel.getText();
     }
 
-    public String getCustTimeZone() { return timeZoneLabel.getText(); }
+    public String getCustTimeZone() {
+        return timeZoneLabel.getText(); }
 
     public List<String> getTags() {
         return tagLabels

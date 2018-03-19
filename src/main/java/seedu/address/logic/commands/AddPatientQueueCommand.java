@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,6 +24,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "%1$s is registered in the waiting list";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already registered.";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
     private static final Logger logger = LogsCenter.getLogger(ViewAppointmentCommand.class);
     private Patient toAddQueue;
     private String patientName;
@@ -40,7 +42,14 @@ public class AddPatientQueueCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(predicate);
-        Patient toQueuePatient = model.getFilteredPersonList().get(0);
+
+        ObservableList<Patient> filteredPatientList = model.getFilteredPersonList();
+
+        if (filteredPatientList.isEmpty()) {
+            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
+        }
+
+        Patient toQueuePatient = filteredPatientList.get(0);
         try {
             model.addPatientToQueue(toQueuePatient);
             logger.info("--add patient to visiting queue---");

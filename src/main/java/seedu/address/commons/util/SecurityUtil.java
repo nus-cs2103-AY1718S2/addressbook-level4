@@ -106,13 +106,13 @@ public class SecurityUtil {
             FileInputStream inputStream = new FileInputStream(file);
             byte[] inputBytes = new byte[(int) file.length()];
             inputStream.read(inputBytes);
+            inputStream.close();
 
             byte[] outputBytes = cipher.doFinal(inputBytes);
 
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(outputBytes);
 
-            inputStream.close();
             outputStream.close();
 
         } catch (BadPaddingException e) {

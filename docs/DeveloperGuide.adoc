@@ -825,6 +825,18 @@ It provides a quicker way to manage events compared to using other calendar appl
 ** Minor Feature: Groups can be used to indicate which social media platform does the salesperson use to communicate with a particular contact, while preferences indicates the products and services a contact usually purchases.
 Using separate labels for groups and preferences placed at separate locations in the Ui display gives a more organised display of a contact's information, allowing salespersons to derive important information of their contacts quickly.
 
+3. Ang Jing Zhe
+* Major Feature: Add a person panel to the user interface.
+** It allows users to see their contacts in a nicer way.
+** It is implemented by adding a people's panel code.
+** Alternative considerations is to vary the amount of information put up at the panel.
+* Minor Feature: Adding colours to tags
+** Putting colours to tag so that it looks more user friendly.
+** It is implemented by adding colours to java fx.
+* How the above features fit into the product scope:
+** Major Feature: Users can see the contact more clearly.
+** Minor Feature: Colours are more eye-catching.
+
 [appendix]
 == User Stories
 

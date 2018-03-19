@@ -837,6 +837,18 @@ Using separate labels for groups and preferences placed at separate locations in
 ** Major Feature: Users can see the contact more clearly.
 ** Minor Feature: Colours are more eye-catching.
 
+4. Kevin Yeong Yu Heng
+* Major Feature: Ability to import and export contacts from and to other formats.
+** Allows user to export contacts to a local contact files and import contacts from local contact files.
+** The exported file can integrate in the users workflow which might include external manipulation of the data such as printing a hardcopy of the contact list or using it in an external spreadsheet software.
+* Minor Feature: Ability to generate and display a list of relevant fields of multiple contacts.
+** Ability to only show certain fields associated to contacts selected by filters.
+** Displays the information in a list rather and excludes other information which is not needed by the user.
+* How the above features fit into the product scope:
+** Major Feature: The export and import facility enables users to help salespersons to use the data from ContactSails solely as an addressbook, but gives them the option to more easily integrate it to their current application processes which might allow them to be more efficient in their work.
+** Minor Feature: The more targeted listing feature allows users fit more relevant data into their screen which helps them to focus on the data they need while minimising other non essential information.
+
+
 [appendix]
 == User Stories
 

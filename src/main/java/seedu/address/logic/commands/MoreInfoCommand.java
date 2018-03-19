@@ -12,7 +12,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
 /**
- * Displays the full information of a student on the browser panel
+ * Displays the full information of a student on the browser panel.
  */
 public class MoreInfoCommand extends Command {
 
@@ -50,6 +50,11 @@ public class MoreInfoCommand extends Command {
         return new CommandResult((String.format(MESSAGE_MOREINFO_STUDENT_SUCCESS, studentToGetInfoFrom.getName())));
     }
 
+    /**
+     * This method is called before execution of {@code MoreInfoCommand}.
+     * Finds the target student from the last shown list of students in the StudentListPanel by its index.
+     * @throws CommandException
+     */
     public void preProcessStudent() throws CommandException {
         List<Student> lastShownList = model.getFilteredStudentList();
 

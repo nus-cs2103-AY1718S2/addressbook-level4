@@ -69,6 +69,12 @@ public class ImdbParser {
             case HelpCommand.COMMAND_ALIAS:
                 return new HelpCommand();
 
+            case HistoryCommand.COMMAND_WORD:
+                return new HistoryCommand();
+
+            case HistoryCommand.COMMAND_ALIAS:
+                return new HistoryCommand();
+
             case LoginCommand.COMMAND_WORD:
                 return new LoginCommandParser().parse(arguments);
 
@@ -132,14 +138,6 @@ public class ImdbParser {
                         LoginCommand.MESSAGE_USAGE));
 
             case ListCommand.COMMAND_ALIAS:
-                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
-                        LoginCommand.MESSAGE_USAGE));
-
-            case HistoryCommand.COMMAND_WORD:
-                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
-                        LoginCommand.MESSAGE_USAGE));
-
-            case HistoryCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
 

@@ -38,6 +38,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -57,6 +58,7 @@ public class AddCommandSystemTest extends ImdbSystemTest {
     @Test
     public void add() throws Exception {
         Model model = getModel();
+        LoginManager.authenticate("alice", "password123");
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 

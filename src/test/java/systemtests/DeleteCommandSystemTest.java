@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -32,6 +33,7 @@ public class DeleteCommandSystemTest extends ImdbSystemTest {
 
         /* Case: delete the first patient in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
+        LoginManager.authenticate("alice", "password123");
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
         Patient deletedPatient = removePerson(expectedModel, INDEX_FIRST_PERSON);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPatient);

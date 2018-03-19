@@ -17,6 +17,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -48,6 +49,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
+        LoginManager.authenticate("alice", "password123");
         Patient patient = new PatientBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PatientUtil.getAddCommand(patient));
         assertEquals(new AddCommand(patient), command);

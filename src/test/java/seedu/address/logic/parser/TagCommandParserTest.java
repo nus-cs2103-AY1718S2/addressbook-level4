@@ -8,8 +8,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.TagCommand;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
+import seedu.recipe.logic.commands.TagCommand;
+import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
+import seedu.recipe.logic.parser.TagCommandParser;
 
 public class TagCommandParserTest {
 

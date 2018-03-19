@@ -21,6 +21,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.login.Password;
+import seedu.address.model.login.Username;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -59,6 +61,7 @@ public class AddCommandTest {
         getAddCommandForPerson(validPerson, modelStub).execute();
     }
 
+
     @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
@@ -95,7 +98,7 @@ public class AddCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
-    private class ModelStub implements Model {
+    private abstract class ModelStub implements Model {
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -127,6 +130,22 @@ public class AddCommandTest {
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public boolean hasLoggedIn() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void setLoginStatus(boolean status) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void checkLoginCredentials(Username username, Password password) {
+            fail("This method should not be called.");
         }
 
         @Override

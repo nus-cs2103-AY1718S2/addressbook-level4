@@ -11,7 +11,7 @@ lib/*
 config.json
 src/test/data/sandbox/
 preferences.json
-.DS_Store
+*.DS_Store
 ./screenshot*.png
 classes/
 /data/

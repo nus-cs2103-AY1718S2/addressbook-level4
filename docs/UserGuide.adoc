@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= SLAP for Social Workers - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -29,7 +29,9 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The Login GUI should appear in a few seconds.
+.  Enter your username and password. Press Enter.
+.  If login is successful, the GUI should appear.
 +
 image::Ui.png[width="790"]
 +
@@ -59,6 +61,29 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Viewing help : `help`
 
 Format: `help`
+
+====
+
+=== Viewing calendar : `calendar`
+
+Format: `calendar`
+
+=== Switching between feature interfaces : `switch`
+
+Switches to the user interface feature identified by the user. +
+Format: `switch FEATURE`
+
+****
+* Switches to the specified `FEATURE`
+* `FEATURE` must be either "details", "calendar" or "scheduler".
+****
+
+Examples:
+
+* `switch calendar` +
+Switches to `calendar` tab and displays contents
+* `switch details` +
+Switches to `details` tab and displays contents
 
 === Adding a person: `add`
 
@@ -230,14 +255,27 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+PersonalBook data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
+
+=== Login to your account: `[coming in v2.0]`
+
+PersonalBook will request for your login credentials (username and password) before allowing you to access it.
+
+=== Logout from your account: `logout` `[coming in v2.0]`
+
+Log out from your account and it will bring you to the login UI.
+
+
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Encryption is done automatically when AddressBook is logged out or is exited.
+
+=== Export Addressbook `[coming in v2.0]`
+
+Exports your addressbook into a file so that it can be transported across systems.
 
 == FAQ
 
@@ -257,8 +295,13 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
+* *Calendar* : `calendar`
+* *Switch* : `switch FEATURE` +
+e.g.`switch scheduler`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Logout* : `logout`
+* *Login Status* : `login-status`

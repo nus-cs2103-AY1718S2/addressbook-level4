@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @@author {ifalluphill} -->
+<?import java.net.URL?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.web.WebView?>
+
+<!-- TODO: set a more appropriate initial size -->
+<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+         title="Calendar" minWidth="450" minHeight="600">
+    <icons>
+        <Image url="@/images/calendar.png" />
+    </icons>
+    <scene>
+        <Scene>
+            <WebView fx:id="browser" />
+        </Scene>
+    </scene>
+</fx:root>
+
+<!-- @@author -->

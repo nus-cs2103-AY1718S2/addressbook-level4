@@ -37,6 +37,14 @@ public class Person {
         this.tags = new UniqueTagList(tags);
     }
 
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, boolean isArchived, Set<Tag> tags) {
+        this(name, phone, email, address, tags);
+        this.isArchived = isArchived;
+    }
+
     public Name getName() {
         return name;
     }

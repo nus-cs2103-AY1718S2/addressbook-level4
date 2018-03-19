@@ -74,7 +74,7 @@ public class DeleteRatingCommand extends UndoableCommand {
 
         targetPerson = lastShownList.get(targetIndex.getZeroBased());
 
-        if (targetPerson.getRating().getTechnicalSkillsScore() == Rating.DEFAULT_SCORE) {
+        if (targetPerson.getRating().getOverallScore() == Rating.DEFAULT_SCORE) {
             throw new CommandException(String.format(MESSAGE_PERSON_NOT_RATED, targetPerson.getName()));
         }
 

@@ -41,10 +41,10 @@ public class Rating {
         checkArgument(isValidOrDefaultScore(communicationSkillsScore), MESSAGE_RATING_CONSTRAINTS);
         checkArgument(isValidOrDefaultScore(problemSolvingSkillsScore), MESSAGE_RATING_CONSTRAINTS);
         checkArgument(isValidOrDefaultScore(experienceScore), MESSAGE_RATING_CONSTRAINTS);
-        this.technicalSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(technicalSkillsScore);
-        this.communicationSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(communicationSkillsScore);
-        this.problemSolvingSkillsScore = DoubleUtil.roundToTwoDecimalPlaces(problemSolvingSkillsScore);
-        this.experienceScore = DoubleUtil.roundToTwoDecimalPlaces(experienceScore);
+        this.technicalSkillsScore = technicalSkillsScore;
+        this.communicationSkillsScore = communicationSkillsScore;
+        this.problemSolvingSkillsScore = problemSolvingSkillsScore;
+        this.experienceScore = experienceScore;
         this.overallScore = calculateOverallScore(this.technicalSkillsScore,
                 this.communicationSkillsScore, this.problemSolvingSkillsScore, this.experienceScore);
     }
@@ -77,19 +77,6 @@ public class Rating {
                                          double problemSolvingSkillsScore, double experienceScore) {
         return DoubleUtil.roundToTwoDecimalPlaces((technicalSkillsScore + communicationSkillsScore
                 + problemSolvingSkillsScore + experienceScore) / NUMBER_OF_SCORES);
-    }
-
-    /**
-     * Returns the average of {@code technicalSkillsScore}, {@code communicationSkillsScore},
-     * {@code problemSolvingSkillsScore} and {@code experienceScore}, rounded to two decimal places as a String
-     */
-    public static String calculateOverallScore(String technicalSkillsScore, String communicationSkillsScore,
-                                                String problemSolvingSkillsScore, String experienceScore) {
-        double overallScore = DoubleUtil.roundToTwoDecimalPlaces((Double.parseDouble(technicalSkillsScore)
-                + Double.parseDouble(communicationSkillsScore)
-                + Double.parseDouble(problemSolvingSkillsScore)
-                + Double.parseDouble(experienceScore)) / NUMBER_OF_SCORES);
-        return Double.toString(overallScore);
     }
 
     @Override

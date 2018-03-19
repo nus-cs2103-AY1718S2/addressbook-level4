@@ -29,8 +29,8 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"), new ExpectedGraduationYear("2018"),
-                new Rating(-1, -1,
-                            -1, -1),
+                new Rating(4.3, 4.8,
+                            4.0, 4.1),
                 new Resume(formPathFromFileName("alex.pdf")), new InterviewDate(1540814400L), getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new ExpectedGraduationYear("2019"),

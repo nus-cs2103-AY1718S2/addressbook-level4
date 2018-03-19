@@ -9,6 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -87,6 +88,18 @@ public class DeleteRatingCommandTest {
         DeleteRatingCommand deleteRatingCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteRatingCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_personNotRated_throwsCommandException() {
+        Person personNotRated = model.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
+
+        DeleteRatingCommand deleteRatingCommand = prepareCommand(INDEX_THIRD_PERSON);
+
+        String expectedMessage = String.format(DeleteRatingCommand.MESSAGE_PERSON_NOT_RATED,
+                personNotRated.getName());
+
+        assertCommandFailure(deleteRatingCommand, model, expectedMessage);
     }
 
     @Test

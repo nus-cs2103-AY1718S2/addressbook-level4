@@ -21,7 +21,6 @@ import javax.crypto.spec.SecretKeySpec;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.WrongPasswordException;
-import sun.misc.CharacterEncoder;
 
 /**
  * Contains utility methods used for encrypting and decrypting files for Storage

@@ -50,7 +50,7 @@ import seedu.address.testutil.TaskBuilder;
 
 public class AddCommandSystemTest extends RemarkBookSystemTest {
 
-    //@Test
+    //TODO: TEST
     public void add() throws Exception {
         Model model = getModel();
 

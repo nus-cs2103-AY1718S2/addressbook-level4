@@ -48,7 +48,7 @@ import seedu.address.testutil.TaskBuilder;
 
 public class EditCommandSystemTest extends RemarkBookSystemTest {
 
-    //@Test
+    //TODO: TEST
     public void edit() throws Exception {
         Model model = getModel();
 

@@ -26,7 +26,7 @@ public class ModelManagerTest {
         modelManager.getFilteredActivityList().remove(0);
     }
 
-    //@Test
+    //TODO: TEST
     public void equals() {
         DeskBoard addressBook = new DeskBoardBuilder().withActivity(ASSIGNMENT1).withActivity(ASSIGNMENT2).build();
         DeskBoard differentAddressBook = new DeskBoard();

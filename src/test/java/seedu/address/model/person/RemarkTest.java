@@ -14,7 +14,7 @@ public class RemarkTest {
         Assert.assertThrows(NullPointerException.class, () -> new Remark(null));
     }
 
-    //@Test
+    //TODO: TEST
     public void constructor_invalidAddress_throwsIllegalArgumentException() {
         String invalidAddress = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new Remark(invalidAddress));

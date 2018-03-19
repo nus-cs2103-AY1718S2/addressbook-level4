@@ -9,7 +9,7 @@ import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalActivities.getTypicalActivitiess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
@@ -18,7 +18,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends RemarkBookSystemTest {
-    //@Test
+    //TODO: TEST
     public void select() {
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 

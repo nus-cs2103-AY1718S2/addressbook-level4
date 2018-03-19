@@ -54,7 +54,7 @@ public class StorageManagerTest {
         assertEquals(original, retrieved);
     }
 
-    //@Test
+    //TODO: TEST
     public void addressBookReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the

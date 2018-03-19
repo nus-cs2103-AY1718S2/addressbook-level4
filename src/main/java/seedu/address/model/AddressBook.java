@@ -127,6 +127,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author ongkuanyang
+
+    /**
+     * Archives person.
+     * @param target
+     * @throws PersonNotFoundException
+     */
     public void archivePerson(Person target) throws PersonNotFoundException {
         target.setArchived(true);
         try {
@@ -136,6 +142,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Unarchives person.
+     * @param target
+     * @throws PersonNotFoundException
+     */
     public void unarchivePerson(Person target) throws PersonNotFoundException {
         target.setArchived(false);
         try {
@@ -164,7 +175,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.isArchived(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(),
+                person.getAddress(), person.isArchived(), correctTagReferences);
     }
 
     /**

@@ -5,8 +5,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddToDoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.Content;
+import seedu.address.model.todo.ToDo;
 
 /**
  * Parses input arguments and creates a new AddToDoCommand object

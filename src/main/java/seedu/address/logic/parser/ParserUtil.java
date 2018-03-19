@@ -47,21 +47,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code name} is invalid.
-     */
-    public static Name parseName(String name) throws IllegalValueException {
-        requireNonNull(name);
-        String trimmedName = name.trim();
-        if (!Name.isValidName(trimmedName)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
-        }
-        return new Name(trimmedName);
-    }
-
-    /**
      * Parses a {@code String content} into a {@code Content}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -74,6 +59,21 @@ public class ParserUtil {
             throw new IllegalValueException(Content.MESSAGE_CONTENT_CONSTRAINTS);
         }
         return new Content(trimmedContent);
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Name parseName(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!Name.isValidName(trimmedName)) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return new Name(trimmedName);
     }
 
     /**

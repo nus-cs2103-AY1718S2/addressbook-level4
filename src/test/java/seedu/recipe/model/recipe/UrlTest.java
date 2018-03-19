@@ -1,7 +1,5 @@
+//@@author RyanAngJY
 package seedu.recipe.model.recipe;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -20,3 +18,4 @@ public class UrlTest {
     }
 
 }
+//@@author

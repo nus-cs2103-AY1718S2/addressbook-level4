@@ -36,7 +36,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void deleteTag_nonExistentTag_modelUnchanged() throws Exception {
+    public void deleteTagNonExistentTagModelUnchanged() throws Exception {
         AddressBook addressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -47,7 +47,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void deleteTag_tagUsedByMultiplePersons_tagRemoved() throws Exception {
+    public void deleteTagTagUsedByMultiplePersonsTagRemoved() throws Exception {
         AddressBook addressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
         UserPrefs userPrefs = new UserPrefs();
 

@@ -78,7 +78,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void updatePerson_detailsChanged_personsAndTagsListUpdated() throws Exception {
+    public void updatePersonDetailsChangedPersonsAndTagsListUpdated() throws Exception {
         AddressBook addressBookUpdatedToAmy = new AddressBookBuilder().withPerson(BOB).build();
         addressBookUpdatedToAmy.updatePerson(BOB, AMY);
 
@@ -88,7 +88,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void removeTag_nonExistentTag_addressBookUnchanged() throws Exception {
+    public void removeTagNonExistentTagAddressBookUnchanged() throws Exception {
         addressBookWithBobAndAmy.removeTag(new Tag(VALID_TAG_UNUSED));
 
         AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
@@ -97,7 +97,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void removeTag_tagUsedByMultiplePersons_tagRemoved() throws Exception {
+    public void removeTagTagUsedByMultiplePersonsTagRemoved() throws Exception {
         addressBookWithBobAndAmy.removeTag(new Tag(VALID_TAG_FRIEND));
 
         Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();

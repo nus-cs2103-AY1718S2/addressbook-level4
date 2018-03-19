@@ -42,7 +42,7 @@ public class LoginCommandTest {
     }
 
     @Test
-    public void equals(){
+    public void equals() {
         LoginCommand aliceCorrectLogin = new LoginCommand("alice", "password123");
         LoginCommand aliceWrongLogin = new LoginCommand("alice", "password456");
         LoginCommand bobLogin = new LoginCommand("bob", "password123");

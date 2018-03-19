@@ -20,7 +20,7 @@ public final class LoginManager {
         return currLoginState.getState();
     }
 
-    public static boolean authenticate (String username, String password){
+    public static boolean authenticate (String username, String password) {
         boolean match = false;
         int loginStateIndex = 0;
 
@@ -47,7 +47,7 @@ public final class LoginManager {
             e.printStackTrace();
         }
 
-        if (match){
+        if (match) {
             currLoginState.updateState(loginStateIndex);
             return true;
         }

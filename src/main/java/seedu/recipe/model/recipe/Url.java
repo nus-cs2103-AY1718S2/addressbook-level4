@@ -1,3 +1,4 @@
+//@@author RyanAngJY
 package seedu.recipe.model.recipe;
 
 import static java.util.Objects.requireNonNull;
@@ -59,5 +60,5 @@ public class Url {
     public int hashCode() {
         return value.hashCode();
     }
-
 }
+//@@author

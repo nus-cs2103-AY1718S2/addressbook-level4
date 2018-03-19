@@ -119,11 +119,12 @@ public class ParserUtil {
         return instruction.isPresent() ? Optional.of(parseInstruction(instruction.get())) : Optional.empty();
     }
 
-    /** ========= RYAN ANG JIA YONG ==============
-     * Parses a {@code String email} into an {@code Email}.
+    //@@author RyanAngJY
+    /**
+     * Parses a {@code String url} into an {@code Url}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code email} is invalid.
+     * @throws IllegalValueException if the given {@code url} is invalid.
      */
     public static Url parseUrl(String url) throws IllegalValueException {
         requireNonNull(url);
@@ -135,14 +136,14 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> url} into an {@code Optional<Url>} if {@code url} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Url> parseUrl(Optional<String> url) throws IllegalValueException {
         requireNonNull(url);
         return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.empty();
     }
-    // ===========================================
+    //@@author
 
     /**
      * Parses a {@code String ingredient} into an {@code Ingredient}.

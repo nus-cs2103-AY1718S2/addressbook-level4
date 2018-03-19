@@ -169,6 +169,22 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     /**
+     * Adds a patient to the visiting queue.
+     * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the patient to point to those in {@link #tags}.
+     *
+     * @throws DuplicatePatientException if an equivalent patient already exists.
+     */
+    public void addPatientToQueue(Patient p) throws DuplicatePatientException {
+        Patient patient = syncWithMasterTagList(p);
+        visitingQueue.add(patient);
+    }
+
+    public UniquePatientVisitingQueue getVisitingQueue() {
+        return visitingQueue;
+    }
+
+    /**
      * Remove {@code tag} from {@code patient}
      */
     private void removeTagFromPerson (Tag tag, Patient patient) throws PatientNotFoundException {

@@ -68,8 +68,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddPatientQueueCommand // instanceof handles nulls
-                && toAddQueue.equals(((AddPatientQueueCommand) other).toAddQueue)
-                && patientName.equals(((AddPatientQueueCommand) other).patientName));
+                && predicate.equals(((AddPatientQueueCommand) other).predicate));
     }
 
     private void printOutVisitingQueue(UniquePatientVisitingQueue queue) {

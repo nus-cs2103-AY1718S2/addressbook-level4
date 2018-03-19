@@ -328,6 +328,23 @@ Unlock the address book with password: 123 (the last lock command provided)
 * `unlock` +
 Unlock the address book, which is locked without password.
 
+=== Add event on one employee's timetable: `addEvent`
+
+Add an event to the employee identified by the index number used in the last person listing. +
+Format: `addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION`
+
+****
+* `STARTTIME` and `ENDTIME` *must be in the format `YYYY-MM-DDTHH-MM-SS`*.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer 1, 2, 3,* …​
+****
+
+Examples:
+
+* `list` +
+`addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event` +
+Adds the event to 2nd employee's timetable in the list.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +

@@ -80,9 +80,16 @@ public class ImdbParserTest {
     }
 
     @Test
-    public void parseCommand_deleteCommandAlias() throws Exception {
+    public void parseCommand_deleteCommandAlias1() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+                DeleteCommand.COMMAND_ALIAS1 + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_deleteCommandAlias2() throws Exception {
+        DeleteCommand command = (DeleteCommand) parser.parseCommand(
+                DeleteCommand.COMMAND_ALIAS2 + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
@@ -215,8 +222,14 @@ public class ImdbParserTest {
     }
 
     @Test
-    public void parseCommand_redoCommandAlias_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS) instanceof RedoCommand);
+    public void parseCommand_redoCommandAlias_returnsRedoCommand1() throws Exception {
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS1) instanceof RedoCommand);
+        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
+    }
+
+    @Test
+    public void parseCommand_redoCommandAlias_returnsRedoCommand2() throws Exception {
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS2) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
@@ -227,8 +240,14 @@ public class ImdbParserTest {
     }
 
     @Test
-    public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
+    public void parseCommand_undoCommandAlias_returnsUndoCommand1() throws Exception {
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS1) instanceof UndoCommand);
+        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_undoCommandAlias_returnsUndoCommand2() throws Exception {
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS2) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 

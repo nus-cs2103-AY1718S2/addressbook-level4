@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.model.patient.Remark;
 
 public class RemarkCommandParserTest {
 
@@ -51,7 +52,7 @@ public class RemarkCommandParserTest {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + " r/Is friendly";
 
-        RemarkCommand expectedCommand = new RemarkCommand(targetIndex, "Is friendly");
+        RemarkCommand expectedCommand = new RemarkCommand(targetIndex, new Remark("Is friendly"));
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

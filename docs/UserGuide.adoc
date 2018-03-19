@@ -65,7 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
-=== Logging into the system: `login` or `lg`
+=== Logging into the system: `login` or `lg` [coming in v1.2]
 
 Logs the user into the Imdb, given a matching username and password.
 Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
@@ -130,7 +130,7 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any patient having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a patient : `delete` or `d`
+=== Deleting a patient : `delete` or `d` or `rm`
 
 Deletes the specified patient from the Imdb. +
 Format: `delete INDEX` or `d`
@@ -170,13 +170,13 @@ Selects the 2nd patient in the Imdb.
 `s 1` +
 Selects the 1st patient in the results of the `find` command.
 
-=== Editing remarks for a patient : `remark` or `rk`
+=== Editing remarks for a patient : `remark` or `rk` [coming in v1.2]
 
 Edits the remark for a patient specified by the index number used in the last patient listing. +
 Format: `remark INDEX r/[REMARK]` or `rk INDEX r/[REMARK]`
 
 ****
-* Selects the patient at the specified `INDEX` and edits the remarks for tha patient.
+* Selects the patient at the specified `INDEX` and edits the remarks for that patient.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -190,6 +190,98 @@ Edits the remark for the first patient to Likes to drink coffee.
 `remark 1 r/` +
 Removes the remark for the first patient.
 
+=== Viewing the medical records for a patient : record [coming in v1.4]
+
+Views all the medical records for a patient specified by the index number used in the last patient listing. +
+Format: record INDEX
+
+**
+* Selects the person at the specified `INDEX` and displays all the medical records for that patient.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+**
+
+Examples:
+
+* list +
+record 1 +
+Displays all the medical records for the first person in the result of the list command.
+
+=== Editing the medical records for a patient : record [coming in v1.4]
+
+Edits the medical records for a patient specified by the index number used in the last patient listing. +
+Format: record INDEX d/[DATE] s/[SYMPTOMS] i/[ILLNESS] t/[TREATMENT] r/[REMARKS]
+
+**
+* Selects the person at the specified `INDEX` and edits the medical records for that patient.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+**
+
+Examples:
+
+* list +
+record 1 d/19 March 2018 s/Runny nose, Headache i/Flu t/Zyrtec +
+Edits the record for the first person to Date:19 March 2018 Symptoms:Runny nose, Headache
+Illness:Flu Treatment:Zyrtec`.
+
+=== Printing a patient's formatted medical records : `print` [coming in v1.4]
+
+Formats and prints out a patient's medical records. +
+Format: `print INDEX`
+
+=== Add patient into visiting queue with patient name: `addq` [coming in v1.2]
+
+Add patient into visiting queue (registration).
+Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
+
+Examples:
+
+* `addq Betsy` +
+Betsy will be added at the back of the visiting queue.
+
+* `aq John` +
+John will be added at the back of the visiting queue.
+
+=== Remove patient into visiting queue with patient name: `removeq` [coming in v1.2]
+
+Remove the first patient from the visiting queue (check-out).
+Format: `removeq` or `rq`
+
+Examples:
+
+* `removeq Betsy` +
+Betsy will be removed if she is the first patient in the queue.
+
+* `rq John` +
+John will be removed if he is the first patient in the queue.
+
+=== Add condition to an existing patient: `addc` [coming in v1.3]
+
+Adds a medical condition to an existing patient.
+Format: `addc` or `ac`
+
+Examples:
+
+* `addc Betsy aspirin` +
+Aspirin will be added to the list of conditions that Betsy has.
+
+* `ac John asthma` +
+Asthma will be added to the list of conditions that John has.
+
+=== Remove condition of an existing patient: `removec` [coming in v1.4]
+
+Adds a medical condition to an existing patient.
+Format: `removec` or `rc`
+
+Examples:
+
+* `removec Betsy aspirin` +
+Aspirin will be removed from the list of conditions that Betsy has.
+
+* `rc John asthma` +
+Asthma will be removed from the list of conditions that John has.
+
 === Listing entered commands : `history` or `hi`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -201,7 +293,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo` or `u`
+=== Undoing previous command : `undo` or `u` or `z`
 
 Restores the Imdb to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u`
@@ -227,7 +319,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo` or `r`
+=== Redoing the previously undone command : `redo` or `r` or `y`
 
 Reverses the most recent `undo` command. +
 Format: `redo` or `r`
@@ -250,10 +342,53 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== View patient appointments: `viewappt`
+=== View medical appointments by patient name: `viewappt` [coming in v1.3]
 
-Shows a list of patient appointments in the Imdb.
-Format: `viewappt` or `va`
+Shows a list of medical appointments of the patient.
+Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
+
+Examples:
+* `viewappt Betsy` +
+List of medical appointments made by Betsy.
+
+* `va John` +
+List of medical appointments made by John.
+
+=== Delete a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
+
+Delete a medical appointment of the patient.
+Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
+
+Examples:
+* `delappt Betsy 2` +
+Delete a medical appointment of Betsy with index number 2.
+
+* `da John 1` +
+Delete a medical appointment of John with index number 1.
+
+=== View medical appointments by date: `viewappt` [coming in v1.4]
+
+Shows a list of medical appointments of a particular date.
+Format: `viewappt DATE` or `va DATE`
+
+Examples:
+* `viewappt 19/3/2018` +
+List of medical appointments on 19/3/2018.
+
+* `va 23/3/2019` +
+List of medical appointments on 23/3/2018.
+
+== Add a medical appointment with: `addappt` [coming in v1.4]
+
+Add a medical appointment with patient name, date, time.
+Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
+
+Examples:
+* `addappt Betsy 19/3/2018 1000` +
+Add a medical appointment for Betsy on 19/3/2018 at 10am.
+
+* `aa John 23/3/2019 1430` +
+Add a medical appointment for John on 23/3/2018 at 2:30pm.
 
 === Clearing all entries : `clear` or `c`
 
@@ -315,7 +450,7 @@ e.g.`remark 1 r/Likes to drink coffee.`
 * *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/CONDITION]...`
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/peanuts c/aspirin`
 * *Clear* : `c`
-* *Delete* : `d INDEX` +
+* *Delete* : `d INDEX` or `rm INDEX` +
 e.g. `d 3`
 * *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/CONDITION]...` +
 e.g. `e 2 n/James Lee e/jameslee@example.com`
@@ -330,5 +465,5 @@ e.g.`s 2`
 e.g.`rk 1 r/Likes to drink coffee.`
 * *View Appointment* : `va`
 * *History* : `hi`
-* *Undo* : `u`
-* *Redo* : `r`
+* *Undo* : `u` or `z`
+* *Redo* : `r` or `y`

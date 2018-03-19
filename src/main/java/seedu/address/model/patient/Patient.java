@@ -100,7 +100,7 @@ public class Patient {
                 .append(getAddress())
                 .append(" Remark: ")
                 .append(getRemark())
-                .append(" Tags: ");
+                .append(" Conditions: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

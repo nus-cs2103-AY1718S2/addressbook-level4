@@ -783,7 +783,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Target user profile*:
 
 * has a need to plan tuition slots for large number of students
-* store students' profile information and pictures
+* wants to store students' profile information and pictures
 * wants to keep a progress log for students
 * is able to reference common important student details like contact number
 * prefer desktop apps over other types
@@ -820,7 +820,7 @@ E.g. emergency contact and an optional profile picture
 * *(Minor)* Selecting a student via 'select' commands renders their location on google maps
 ** This allows the tutor to easily plan a route to the student's home.
 
-* *(Major) Add a functionality that enables tutor to use free-form english to execute commands instead of conforming to the specific syntax
+* *(Major)* Add a functionality that enables tutor to use free-form english to execute commands instead of conforming to the specific syntax
 ** This makes the app more user-friendly without the need to memorise the syntax of respective commands and able to execute them more intuitively.
 
 *Yap ni:*

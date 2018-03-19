@@ -789,28 +789,36 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Feature contribution*:
 
 * *Xing Kai*:
-** Major Features:
+** Major Feature:
 *** Implement a Login System
 **** Only medical staff and doctors with IMDB accounts can acccess patient's information
-** Minor Features:
+** Minor Feature:
 *** Print formatted medical records of patient
-**** Can be easily shown to patients when explaining about their condition
+**** Can be easily shown to patients when explaining their condition
 
 * *Kai Yong*:
-** Major Features:
+** Major Feature:
 *** Maintain a waiting list of patients (Visiting queue)
-**** Medical staff and doctor can easy access basic information and medical profile of next patient in the queue.
-** Minor Features:
+**** Medical staff and doctor can have easy access basic information and medical profile of next patient in the queue.
+** Minor Feature:
 *** Maintain patient appointments
 **** This is a typical features for most of the medical systems.
 
 * *Ng Hung Siang*:
-** Major Features:
+** Major Feature:
 *** Keep the records of each visit of a patient
 **** Doctors can monitor the symptoms/condition and treatment of a patient.
-** Minor Features:
+** Minor Feature:
 *** Key in patient specific instructions/remarks that do not fit into existing fields
 **** Medical staff and doctors can record patient specific information.
+
+* *Kelvin Ting*:
+** Major Feature:
+*** Manage patient details and health profile
+**** Medical staff can update patient details and information easily.
+** Minor Feature:
+*** Filter that switches between showing personal details only, medical information only, and both at the same time
+**** Medical staff and doctors can reduce clutter on the screen and only see what is needed.
 
 
 [appendix]

@@ -817,7 +817,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *** Manage patient details and health profile
 **** Medical staff can update patient details and information easily.
 ** Minor Feature:
-*** Filter that switches between showing personal details only, medical information only, and both at the same time
+*** Filter that switches between showing personal details only, medical information only.
 **** Medical staff and doctors can reduce clutter on the screen and only see what is needed.
 
 

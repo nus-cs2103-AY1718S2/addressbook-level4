@@ -64,7 +64,7 @@ public class TypicalRecipes {
             .withUrl("https://www.google.com").withTags(VALID_TAG_FRIEND).build();
     public static final Recipe BOB = new RecipeBuilder().withName(VALID_NAME_BOB)
             .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB)
-            .withInstruction(VALID_INSTRUCTION_BOB).withUrl("https://www.google.com")
+            .withInstruction(VALID_INSTRUCTION_BOB).withUrl("https://www.bbcgoodfood.com/recipes/collection/chicken-salad")
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

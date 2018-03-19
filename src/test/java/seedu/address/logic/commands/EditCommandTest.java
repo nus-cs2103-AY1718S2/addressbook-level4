@@ -17,7 +17,7 @@ import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;

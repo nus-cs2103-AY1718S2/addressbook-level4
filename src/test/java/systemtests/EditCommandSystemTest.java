@@ -2,54 +2,59 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+//import static seedu.progresschecker.logic.commands.CommandTestUtil.INVALID_MAJOR_DESC;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.MAJOR_DESC_AMY;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.MAJOR_DESC_BOB;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+//import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_MAJOR_AMY;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_MAJOR_BOB;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_YEAR_BOB;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.YEAR_DESC_AMY;
+import static seedu.progresschecker.logic.commands.CommandTestUtil.YEAR_DESC_BOB;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.progresschecker.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.progresschecker.testutil.TypicalPersons.AMY;
+import static seedu.progresschecker.testutil.TypicalPersons.BOB;
+import static seedu.progresschecker.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.progresschecker.commons.core.Messages;
+import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.logic.commands.EditCommand;
+import seedu.progresschecker.logic.commands.RedoCommand;
+import seedu.progresschecker.logic.commands.UndoCommand;
+import seedu.progresschecker.model.Model;
+import seedu.progresschecker.model.person.Email;
+//import seedu.progresschecker.model.person.Major;
+import seedu.progresschecker.model.person.Name;
+import seedu.progresschecker.model.person.Person;
+import seedu.progresschecker.model.person.Phone;
+//import seedu.progresschecker.model.person.Year;
+import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
+import seedu.progresschecker.model.person.exceptions.PersonNotFoundException;
+import seedu.progresschecker.model.tag.Tag;
+import seedu.progresschecker.testutil.PersonBuilder;
+import seedu.progresschecker.testutil.PersonUtil;
 
-public class EditCommandSystemTest extends AddressBookSystemTest {
+public class EditCommandSystemTest extends ProgressCheckerSystemTest {
 
     @Test
     public void edit() throws Exception {
@@ -62,9 +67,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          */
         Index index = INDEX_FIRST_PERSON;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
-                + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
+                + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + MAJOR_DESC_BOB + " " + YEAR_DESC_BOB + " "
+                + TAG_DESC_HUSBAND + " ";
         Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withEmail(VALID_EMAIL_BOB).withMajor(VALID_MAJOR_BOB).withYear(VALID_YEAR_BOB)
+                .withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: undo editing the last person in the list -> last person restored */
@@ -80,8 +87,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a person with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + MAJOR_DESC_BOB + YEAR_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
@@ -99,7 +106,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered person list, edit index within bounds of address book and person list -> edited */
+        /* Case: filtered person list, edit index within bounds of ProgressChecker and person list -> edited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
@@ -108,11 +115,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedPerson);
 
-        /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
+        /* Case: filtered person list, edit index within bounds of ProgressChecker but out of bounds of person list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getPersonList().size();
+        int invalidIndex = getModel().getProgressChecker().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -124,8 +131,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         showAllPersons();
         index = INDEX_FIRST_PERSON;
         selectPerson(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + MAJOR_DESC_AMY + YEAR_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new person's name
         assertCommandSuccess(command, index, AMY, index);
@@ -154,37 +161,37 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 EditCommand.MESSAGE_NOT_EDITED);
 
         /* Case: invalid name -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_NAME_DESC,
-                Name.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_PHONE_DESC,
-                Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid email -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC,
-                Email.MESSAGE_EMAIL_CONSTRAINTS);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
-        /* Case: invalid address -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC,
-                Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        /* Case: invalid major -> rejected */
+        /*assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_MAJOR_DESC,
+                Major.MESSAGE_MAJOR_CONSTRAINTS);*/
 
         /* Case: invalid tag -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,
-                Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a person with new values same as another person's values -> rejected */
         executeCommand(PersonUtil.getAddCommand(BOB));
-        assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
+        assertTrue(getModel().getProgressChecker().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
         assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + MAJOR_DESC_BOB + YEAR_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + MAJOR_DESC_BOB + YEAR_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
@@ -241,9 +248,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * {@code ProgressCheckerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ProgressCheckerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see ProgressCheckerSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
@@ -267,8 +274,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ProgressCheckerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ProgressCheckerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

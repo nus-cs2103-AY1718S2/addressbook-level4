@@ -37,7 +37,7 @@ Note how the <<DeveloperGuide#architecture, Developer Guide>> uses events to com
 
 == Use API Design `[LO-ApiDesign]`
 
-Note how components of AddressBook have well-defined APIs. For example, the API of the `Logic` component is given in the link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+Note how components of Addressbook have well-defined APIs. For example, the API of the `Logic` component is given in the link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 image:LogicClassDiagram.png[width="800"]
 
 *Resources*

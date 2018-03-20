@@ -74,7 +74,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
      * sync status matches that of {@code expectedSyncStatus}, and the total persons matches that of
      * {@code expectedTotalPersonsStatus}.
      */
-     private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus,
+    private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus,
                                          String expectedTotalPersonsStatus) {
         assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());

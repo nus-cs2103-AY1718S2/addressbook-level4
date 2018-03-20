@@ -109,7 +109,8 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editStudentDescriptor.getPhone().orElse(studentToEdit.getPhone());
         Email updatedEmail = editStudentDescriptor.getEmail().orElse(studentToEdit.getEmail());
         Address updatedAddress = editStudentDescriptor.getAddress().orElse(studentToEdit.getAddress());
-        ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage();
+        ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage()
+                .orElse(studentToEdit.getProgrammingLanguage());
         Set<Tag> updatedTags = editStudentDescriptor.getTags().orElse(studentToEdit.getTags());
 
         return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
@@ -190,8 +191,8 @@ public class EditCommand extends UndoableCommand {
             this.email = email;
         }
 
-        public ProgrammingLanguage getProgrammingLanguage() {
-            return programmingLanguage;
+        public Optional<ProgrammingLanguage> getProgrammingLanguage() {
+            return Optional.ofNullable(programmingLanguage);
         }
 
         public void setAddress(Address address) {

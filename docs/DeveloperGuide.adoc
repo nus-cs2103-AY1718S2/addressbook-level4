@@ -365,6 +365,37 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::location[]
+=== Location feature
+==== Current Implementation
+Selecting a student using the `select` command will render their location on google maps.
+
+The address of the student is extracted and converted in a string to be appended to the end of the `SEARCH_PAGE_URL` in the following function
+
+----
+    private void loadStudentPage(Student student) {
+        Address location = student.getAddress();
+        String append = location.urlstyle();
+        loadPage(SEARCH_PAGE_URL + append);
+    }
+----
+
+An example is provided below when `select 1` is entered as a command:
+
+image::location_screenshot.png[width="300"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of displaying student locations
+* *Alternative 1 (current choice)*: display it on the embedded browser
+** Pros: Easy to implement, simply alter the default webpage
+** Cons: Might not be able to display student information and location simultaneously
+* *Alternative 2*: creating a new window to display the location
+** Pros: This would allow concurrent display of locations of many students
+** Cons: the UI would be messy and user has to navigate between 2 different windows
+
+// end::location[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

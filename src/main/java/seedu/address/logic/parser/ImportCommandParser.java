@@ -21,7 +21,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
         }
-        String[] splitArgs = args.split(SPLIT_TOKEN);
+        String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
         if (splitArgs.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));

@@ -9,7 +9,7 @@ import seedu.address.model.building.exceptions.BuildingNotFoundException;
 
 import static java.util.Objects.requireNonNull;
 
-public class VacantCommand extends UndoableCommand {
+public class VacantCommand extends Command {
     public static final String COMMAND_WORD = "vacant";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds vacant study rooms in a building \n"
@@ -31,7 +31,7 @@ public class VacantCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.getRoomsFrom(building);

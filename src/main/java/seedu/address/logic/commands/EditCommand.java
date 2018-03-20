@@ -26,6 +26,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
+import seedu.address.model.person.Review;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -110,9 +111,14 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Rating updatedRating = editPersonDescriptor.getRating().orElse(personToEdit.getRating());
+        Review updatedReview = editPersonDescriptor.getReview().orElse(personToEdit.getReview());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRating,
+
+        Person person = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRating,
                 updatedTags);
+        person.setReview(updatedReview);
+
+        return person;
     }
 
     @Override
@@ -145,6 +151,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
         private Rating rating;
+        private Review review;
 
         public EditPersonDescriptor() {}
 
@@ -158,6 +165,7 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setRating(toCopy.rating);
+            setReview(toCopy.review);
             setTags(toCopy.tags);
         }
 
@@ -165,7 +173,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.rating, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.rating,
+                    this.review, this.tags);
         }
 
         public void setName(Name name) {
@@ -208,6 +217,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(rating);
         }
 
+        public void setReview(Review review) {
+            this.review = review;
+        }
+
+        public Optional<Review> getReview() {
+            return Optional.ofNullable(review);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -245,6 +262,7 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getRating().equals(e.getRating())
+                    && getReview().equals(e.getReview())
                     && getTags().equals(e.getTags());
         }
     }

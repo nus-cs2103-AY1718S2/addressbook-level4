@@ -13,6 +13,9 @@ public class Room {
             "Room names should only contain alphanumeric characters and it should not be blank";
     public static final String ROOM_VALIDATION_REGEX = "\\p{Alnum}+";
 
+    /**
+     * Represents status of the {@code Room}
+     */
     private enum RoomStatus {
         VACANT, OCCUPIED
     }

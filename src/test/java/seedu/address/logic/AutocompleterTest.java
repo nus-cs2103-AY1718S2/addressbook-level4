@@ -11,6 +11,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DelivDate;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -47,6 +48,7 @@ public class AutocompleterTest {
                         new Phone("98765432"),
                         new Email("johndoe@test.com"),
                         new Address("NUS"),
+                        new DelivDate("2018-03-24"),
                         Collections.emptySet()));
 
         autocompleter = new Autocompleter(logic);

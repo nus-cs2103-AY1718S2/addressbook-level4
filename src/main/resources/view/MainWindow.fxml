@@ -21,7 +21,6 @@
 
             <VBox styleClass="background">
                 <children>
-
                     <MenuBar fx:id="menuBar" prefHeight="21.0" prefWidth="600.0" VBox.vgrow="NEVER">
                         <menus>
                             <Menu mnemonicParsing="false" text="File">

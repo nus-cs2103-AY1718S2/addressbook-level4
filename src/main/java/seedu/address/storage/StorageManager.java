@@ -8,25 +8,25 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.DeskBoardChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.UserPrefs;
 
 /**
- * Manages storage of AddressBook data in local storage.
+ * Manages storage of DeskBoard data in local storage.
  */
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
+    private DeskBoardStorage deskBoardStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(DeskBoardStorage deskBoardStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.addressBookStorage = addressBookStorage;
+        this.deskBoardStorage = deskBoardStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -48,46 +48,46 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
 
-    // ================ AddressBook methods ==============================
+    // ================ DeskBoard methods ==============================
 
     @Override
-    public String getAddressBookFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+    public String getDeskBoardFilePath() {
+        return deskBoardStorage.getDeskBoardFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(addressBookStorage.getAddressBookFilePath());
+    public Optional<ReadOnlyDeskBoard> readDeskBoard() throws DataConversionException, IOException {
+        return readDeskBoard(deskBoardStorage.getDeskBoardFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyDeskBoard> readDeskBoard(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
+        return deskBoardStorage.readDeskBoard(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
+    public void saveDeskBoard(ReadOnlyDeskBoard deskBoard) throws IOException {
+        saveDeskBoard(deskBoard, deskBoardStorage.getDeskBoardFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+    public void saveDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveAddressBook(addressBook, filePath);
+        deskBoardStorage.saveDeskBoard(deskBoard, filePath);
     }
 
     @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        addressBookStorage.backupAddressBook(addressBook);
+    public void backupDeskBoard(ReadOnlyDeskBoard deskBoard) throws IOException {
+        deskBoardStorage.backupDeskBoard(deskBoard);
     }
 
     @Override
     @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+    public void handleDeskBoardChangedEvent(DeskBoardChangedEvent dbce) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(dbce, "Local data changed, saving to file"));
         try {
-            saveAddressBook(event.data);
+            saveDeskBoard(dbce.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

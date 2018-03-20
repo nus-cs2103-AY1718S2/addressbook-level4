@@ -181,7 +181,8 @@ public class Imdb implements ReadOnlyImdb {
         visitingQueue.add(patient);
     }
 
-    public void removePatientFromQueue() {
+    public Patient removePatientFromQueue() {
+        return visitingQueue.removePatient();
     }
 
     /**

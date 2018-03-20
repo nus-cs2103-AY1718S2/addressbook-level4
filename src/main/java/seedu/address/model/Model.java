@@ -54,7 +54,7 @@ public interface Model {
     void addPatientToQueue(Patient patient) throws DuplicatePatientException;
 
     /** Remove a patient from the visiting queue*/
-    void removePatientFromQueue();
+    Patient removePatientFromQueue();
 
     /** Get patient visiting queue*/
     ObservableList<Patient> getVisitingQueue();

@@ -125,9 +125,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removePatientFromQueue() {
-        imdb.removePatientFromQueue();
+    public synchronized Patient removePatientFromQueue() {
+        Patient patientToRemove = imdb.removePatientFromQueue();
         indicateAddressBookChanged();
+        return patientToRemove;
     }
 
     @Override

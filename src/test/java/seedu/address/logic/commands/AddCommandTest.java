@@ -146,8 +146,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void removePatientFromQueue() {
+        public Patient removePatientFromQueue() {
             //update later
+            return null;
         }
 
         @Override

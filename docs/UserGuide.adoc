@@ -177,7 +177,7 @@ Examples:
 * `deletebefore d/12/12/2017 t/friends` +
 Deletes all friends added before 12/12/2017 in the address book.
 
-=== Emailing a person : `email`
+=== Emailing a person : `email` or `em`
 
 Emails a person based on the specified name.
 Format: `email KEYWORD [MORE KEYWORDS]`

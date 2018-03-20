@@ -18,12 +18,8 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.DateAdded;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 
@@ -32,7 +28,7 @@ import seedu.address.model.tag.Tag;
  *https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/
  *and https://github.com/callicoder/java-read-write-csv-file
 */
-public final class ImportContactsCommand extends Command {
+public final class ImportContactsCommand extends UndoableCommand {
 
     /**
      * Self explanitory.
@@ -145,7 +141,7 @@ public final class ImportContactsCommand extends Command {
      * calls executeUndoableCommand() on new Person
      */
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         Person personToAdd;
         String name;
         String email;
@@ -185,14 +181,27 @@ public final class ImportContactsCommand extends Command {
 
                 tagSet.add(new Tag("friend")); //temporary tag, fix later
 
-                try {
                 personToAdd = new Person(new Name(name),
                         new Phone(phone), new Email(email),
                         new Address(address), addDate, tagSet);
 
-                    AddCommand addMe =
-                            new AddCommand(personToAdd); //not the most efficient...
-                    addMe.executeUndoableCommand();
+                UniquePersonList upl = new UniquePersonList(); //need to change this later to get current model
+
+
+                try {
+                    upl.add(personToAdd);
+
+ //                   AddCommand addMe = new AddCommand(personToAdd); //not the most efficient...
+ //                   addMe.executeUndoableCommand();
+
+//                requireNonNull(model);
+//                try {
+//                    model.addPerson(personToAdd);
+//                    return new CommandResult(String.format(MESSAGE_SUCCESS, personToAdd));
+//                } catch (DuplicatePersonException e) {
+//                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+//                }
+
                 } catch (Exception e) {
                     throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
                     + e);

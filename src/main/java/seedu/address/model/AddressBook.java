@@ -142,9 +142,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
+        Person toReturn = new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getRating(),
                 correctTagReferences, person.getCalendarId());
+        toReturn.setReview(person.getReview());
+        return toReturn;
     }
 
     /**

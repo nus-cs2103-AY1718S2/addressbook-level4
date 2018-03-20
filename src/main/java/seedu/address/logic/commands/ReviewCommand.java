@@ -10,26 +10,27 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Rating;
+import seedu.address.model.person.Review;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Updates the rating of an existing person in the address book.
+ * Updates the review of an existing person in the address book.
  */
-public class RateCommand extends UndoableCommand {
+public class ReviewCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "rate";
+    public static final String COMMAND_WORD = "review";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Rate the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Review the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX must be positive integer "
-            + "RATING (must be 1, 2, 3, 4, or 5) \n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "REVIEW \n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "5";
+            + "This person is very hardworking";
 
-    public static final String MESSAGE_RATE_PERSON_SUCCESS = "Rated Person: %1$s";
+    public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed Person: %1$s";
+    public static final String MESSAGE_NOT_EDITED = "Both INDEX and REVIEW must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
@@ -42,7 +43,7 @@ public class RateCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public RateCommand(Index index, EditCommand.EditPersonDescriptor editPersonDescriptor) {
+    public ReviewCommand(Index index, EditCommand.EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -60,7 +61,7 @@ public class RateCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_RATE_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_REVIEW_PERSON_SUCCESS, editedPerson));
     }
 
     @Override
@@ -83,11 +84,11 @@ public class RateCommand extends UndoableCommand {
                                              EditCommand.EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
-        Rating updatedRating = editPersonDescriptor.getRating().orElse(new Rating());
+        Review updatedReview = editPersonDescriptor.getReview().orElse(new Review());
 
         Person person = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), updatedRating, personToEdit.getTags());
-        person.setReview(personToEdit.getReview());
+                personToEdit.getAddress(), personToEdit.getRating(), personToEdit.getTags());
+        person.setReview(updatedReview);
 
         return person;
     }
@@ -100,12 +101,12 @@ public class RateCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof RateCommand)) {
+        if (!(other instanceof ReviewCommand)) {
             return false;
         }
 
         // state check
-        RateCommand e = (RateCommand) other;
+        ReviewCommand e = (ReviewCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);

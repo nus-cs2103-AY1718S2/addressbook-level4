@@ -21,6 +21,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private Rating rating;
+    private Review review;
 
     private final UniqueTagList tags;
     private final String calendarId;
@@ -39,6 +40,7 @@ public class Person {
 
         this.calendarId = calendarId;
         this.rating = new Rating();
+        this.review = new Review();
     }
 
     /**
@@ -53,8 +55,9 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.rating = rating;
         this.calendarId = "";
+        this.rating = rating;
+        this.review = new Review();
     }
 
     /**
@@ -71,8 +74,8 @@ public class Person {
         this.tags = new UniqueTagList(tags);
         this.calendarId = calendarId;
         this.rating = rating;
+        this.review = new Review();
     }
-
 
     public Name getName() {
         return name;
@@ -88,6 +91,10 @@ public class Person {
 
     public Rating getRating() {
         return rating;
+    }
+
+    public Review getReview() {
+        return review;
     }
 
     public String getRatingDisplay() {
@@ -108,6 +115,19 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    public String getPersonUrl() {
+        return "https://calendar.google.com/calendar/embed?src="
+                + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
+    }
+
+    public void setRating(String newRating) {
+        rating = new Rating(newRating);
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 
     @Override
@@ -149,15 +169,4 @@ public class Person {
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
-    public String getPersonUrl() {
-        return "https://calendar.google.com/calendar/embed?src="
-                + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
-    }
-
-
-    public void setRating(String newRating) {
-        rating = new Rating(newRating);
-    }
-
 }

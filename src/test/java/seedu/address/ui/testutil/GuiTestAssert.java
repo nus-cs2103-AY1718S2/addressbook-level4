@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -14,6 +15,7 @@ import seedu.address.model.person.Person;
  * A set of assertion methods useful for writing GUI tests.
  */
 public class GuiTestAssert {
+    private static final String LABEL_DEFAULT_STYLE = "label";
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
@@ -36,6 +38,17 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualPanel} displays the details of {@code expectedPerson}.
+     */
+    public static void assertPanelDisplaysPerson(PersonCardHandle expectedPersonCard, BrowserPanelHandle actualPanel) {
+        assertEquals(expectedPersonCard.getName(), actualPanel.getName());
+        assertEquals(expectedPersonCard.getPhone(), actualPanel.getPhone());
+        assertEquals(expectedPersonCard.getEmail(), actualPanel.getEmail());
+        assertEquals(expectedPersonCard.getAddress(), actualPanel.getAddress());
+        assertEquals(expectedPersonCard.getTags(), actualPanel.getTags());
     }
 
     /**

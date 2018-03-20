@@ -27,15 +27,12 @@ public class AddPatientQueueCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already registered.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
     private static final Logger logger = LogsCenter.getLogger(ViewAppointmentCommand.class);
-    private Patient toAddQueue;
-    private String patientName;
     private final NameContainsKeywordsPredicate predicate;
 
 
     /**
      * Creates an AddCommand to add the specified {@code Patient}
      */
-    //will be replaced using patient object as parameter
     public AddPatientQueueCommand(NameContainsKeywordsPredicate predicate) {
         requireNonNull(predicate);
         this.predicate = predicate;
@@ -43,9 +40,6 @@ public class AddPatientQueueCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-//        model.updateFilteredPersonList(predicate);
-//
-//        ObservableList<Patient> filteredPatientList = model.getFilteredPersonList();
 
         Patient patientFound = model.getPatientFromList(predicate);
 
@@ -53,7 +47,6 @@ public class AddPatientQueueCommand extends Command {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
 
-//        Patient toQueuePatient = filteredPatientList.get(0);
         try {
             model.addPatientToQueue(patientFound);
             logger.info("--add patient to visiting queue---");

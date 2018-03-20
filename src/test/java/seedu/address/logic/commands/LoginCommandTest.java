@@ -14,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -27,6 +28,7 @@ public class LoginCommandTest {
     public void execute_success_displaysSuccessMessage() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Model expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
+        LoginManager.logout();
 
         LoginCommand commandSuccess = new LoginCommand(TEST_USERNAME, TEST_PASSWORD);
         assertCommandSuccess(commandSuccess, model, MESSAGE_LOGIN_SUCCESS + TEST_USERNAME, expectedModel);

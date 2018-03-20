@@ -12,7 +12,8 @@ students doing exchange from around the world.
 image::meerakanani.jpg[width="150", align="left"]
 {empty}[https://github.com/meerakanani[github]]
 
-Role: Project Manager and Developer
+Role: Project Manager +
+Responsibilites: Developer
 
 '''
 

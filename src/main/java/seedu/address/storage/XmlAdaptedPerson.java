@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CreateNewCalendar;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -148,6 +149,11 @@ public class XmlAdaptedPerson {
         if (!Rating.isValidRating(this.rating)) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
+
+        if (this.calendarId == null) {
+            this.calendarId = CreateNewCalendar.execute(name.fullName);
+        }
+
         final Rating rating = new Rating(this.rating);
 
         final Set<Tag> tags = new HashSet<>(personTags);

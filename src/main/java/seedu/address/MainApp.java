@@ -184,7 +184,19 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+        readWelcomeMessage();
         ui.start(primaryStage);
+    }
+
+    /**
+     * read welcome "username" message
+     */
+    private void readWelcomeMessage() {
+        try {
+            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
+        } catch (IOException e) {
+            System.out.println("Unable to load welcome message.");
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -22,7 +23,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.google.com.sg/maps/dir/Kent+Ridge+MRT+Station,+Singapore/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -41,8 +42,37 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    /**
+     * Show direction from Kent Ridge MRT to the person address
+     */
+    private void loadPersonDirection(Person person) {
+        String addressValue = person.getAddress().value.trim();
+        int stringCutIndex;
+        String addressWithoutUnit;
+
+        if (addressValue.indexOf('#') > 2) {
+            stringCutIndex = addressValue.indexOf('#') - 2;
+            addressWithoutUnit = addressValue.substring(0, stringCutIndex);
+        } else {
+            addressWithoutUnit = addressValue;
+        }
+
+        readPersonName(person);
+
+        loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
+    }
+
+    /**
+     * Run script that read person name
+     * @param person
+     */
+    private void readPersonName(Person person) {
+        try {
+            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
+                    + " " + person.getName().fullName);
+        } catch (IOException e) {
+            System.out.println("Unable to read person name");
+        }
     }
 
     public void loadPage(String url) {
@@ -50,7 +80,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Loads a default HTML file has pigeon-icon at the center and has background that matches the general theme.
      */
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
@@ -67,6 +97,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadPersonDirection(event.getNewSelection().person);
     }
 }

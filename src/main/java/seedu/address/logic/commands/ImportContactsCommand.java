@@ -216,5 +216,4 @@ public final class ImportContactsCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_FILE_FAILED_OPEN);
         }
     }
-
 }

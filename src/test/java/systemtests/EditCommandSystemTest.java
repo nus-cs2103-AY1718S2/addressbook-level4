@@ -2,29 +2,29 @@
 //
 //import static org.junit.Assert.assertFalse;
 //import static org.junit.Assert.assertTrue;
-//import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+//import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_CS2010_QUIZ;
 //import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 //import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 //import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 //import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-//import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+//import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.DATE_TIME_DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.DATE_TIME_DESC_CS2010_QUIZ;
 //import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 //import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CS2010;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MA2108;
 //import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 //import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACTIVITY;
-//import static seedu.address.testutil.TypicalActivities.AMY;
-//import static seedu.address.testutil.TypicalActivities.BOB;
+//import static seedu.address.testutil.TypicalActivities.MA2108_HOMEWORK;
+//import static seedu.address.testutil.TypicalActivities.CS2010_QUIZ;
 //import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 //import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 //
@@ -62,11 +62,11 @@
 //         * -> edited
 //         */
 //        Index index = INDEX_FIRST_ACTIVITY;
-//        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
-//                + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB
+//        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_CS2010_QUIZ + "  "
+//                + DATE_TIME_DESC_CS2010_QUIZ + " " + EMAIL_DESC_CS2010_QUIZ + "  " + ADDRESS_DESC_CS2010_QUIZ
 //                + " " + TAG_DESC_HUSBAND + " ";
-//        Activity editedActivity = new TaskBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
-//                .withRemark(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+//        Activity editedActivity = new TaskBuilder().withName(VALID_NAME_CS2010_QUIZ).withDateTime(VALID_DATE_TIME_CS2010_QUIZ)
+//                .withRemark(VALID_REMARK_CS2010_QUIZ).withTags(VALID_TAG_MA2108).build();
 //        assertCommandSuccess(command, index, editedActivity);
 //
 //        /* Case: undo editing the last activity in the list -> last activity restored */
@@ -82,16 +82,16 @@
 //        assertCommandSuccess(command, model, expectedResultMessage);
 //
 //        /* Case: edit a activity with new values same as existing values -> edited */
-//        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB
-//                + PHONE_DESC_BOB + EMAIL_DESC_BOB
-//                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-//        assertCommandSuccess(command, index, BOB);
+//        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_CS2010_QUIZ
+//                + DATE_TIME_DESC_CS2010_QUIZ + EMAIL_DESC_CS2010_QUIZ
+//                + ADDRESS_DESC_CS2010_QUIZ + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+//        assertCommandSuccess(command, index, CS2010_QUIZ);
 //
 //        /* Case: edit some fields -> edited */
 //        index = INDEX_FIRST_ACTIVITY;
 //        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
 //        Activity activityToEdit = getModel().getFilteredActivityList().get(index.getZeroBased());
-//        editedActivity = new TaskBuilder(activityToEdit).withTags(VALID_TAG_FRIEND).build();
+//        editedActivity = new TaskBuilder(activityToEdit).withTags(VALID_TAG_CS2010).build();
 //        assertCommandSuccess(command, index, editedActivity);
 //
 //        /* Case: clear tags -> cleared */
@@ -107,9 +107,9 @@
 //        showPersonsWithName(KEYWORD_MATCHING_MEIER);
 //        index = INDEX_FIRST_ACTIVITY;
 //        assertTrue(index.getZeroBased() < getModel().getFilteredActivityList().size());
-//        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
+//        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_CS2010_QUIZ;
 //        activityToEdit = getModel().getFilteredActivityList().get(index.getZeroBased());
-//        editedActivity = new TaskBuilder(activityToEdit).withName(VALID_NAME_BOB).build();
+//        editedActivity = new TaskBuilder(activityToEdit).withName(VALID_NAME_CS2010_QUIZ).build();
 //        assertCommandSuccess(command, index, editedActivity);
 //
 //        /* Case: filtered activity list, edit index within bounds of address book but out of bounds of activity list
@@ -117,7 +117,7 @@
 //         */
 //        showPersonsWithName(KEYWORD_MATCHING_MEIER);
 //        int invalidIndex = getModel().getDeskBoard().getActivityList().size();
-//        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
+//        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_CS2010_QUIZ,
 //                Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 //
 //        /* --------------------- Performing edit operation while a activity card is selected
@@ -130,31 +130,31 @@
 //        showAllPersons();
 //        index = INDEX_FIRST_ACTIVITY;
 //        selectPerson(index);
-//        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY
-//                + PHONE_DESC_AMY + EMAIL_DESC_AMY
-//                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
+//        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_MA2108_HOMEWORK
+//                + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK
+//                + ADDRESS_DESC_MA2108_HOMEWORK + TAG_DESC_FRIEND;
 //        // this can be misleading: card selection actually remains unchanged but the
 //        // browser's url is updated to reflect the new activity's name
-//        assertCommandSuccess(command, index, AMY, index);
+//        assertCommandSuccess(command, index, MA2108_HOMEWORK, index);
 //
 //        /* --------------------------------- Performing invalid edit operation
 //        -------------------------------------- */
 //
 //        /* Case: invalid index (0) -> rejected */
-//        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + NAME_DESC_BOB,
+//        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + NAME_DESC_CS2010_QUIZ,
 //                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 //
 //        /* Case: invalid index (-1) -> rejected */
-//        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + NAME_DESC_BOB,
+//        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + NAME_DESC_CS2010_QUIZ,
 //                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 //
 //        /* Case: invalid index (size + 1) -> rejected */
 //        invalidIndex = getModel().getFilteredActivityList().size() + 1;
-//        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
+//        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_CS2010_QUIZ,
 //                Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 //
 //        /* Case: missing index -> rejected */
-//        assertCommandFailure(EditCommand.COMMAND_WORD + NAME_DESC_BOB,
+//        assertCommandFailure(EditCommand.COMMAND_WORD + NAME_DESC_CS2010_QUIZ,
 //                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 //
 //        /* Case: missing all fields -> rejected */
@@ -182,21 +182,21 @@
 //                Tag.MESSAGE_TAG_CONSTRAINTS);
 //
 //        /* Case: edit a activity with new values same as another activity's values -> rejected */
-//        executeCommand(ActivityUtil.getAddCommand(BOB));
-//        assertTrue(getModel().getDeskBoard().getActivityList().contains(BOB));
+//        executeCommand(ActivityUtil.getAddCommand(CS2010_QUIZ));
+//        assertTrue(getModel().getDeskBoard().getActivityList().contains(CS2010_QUIZ));
 //        index = INDEX_FIRST_ACTIVITY;
-//        assertFalse(getModel().getFilteredActivityList().get(index.getZeroBased()).equals(BOB));
+//        assertFalse(getModel().getFilteredActivityList().get(index.getZeroBased()).equals(CS2010_QUIZ));
 //        command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-//                + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-//                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+//                + NAME_DESC_CS2010_QUIZ + DATE_TIME_DESC_CS2010_QUIZ + EMAIL_DESC_CS2010_QUIZ
+//                + ADDRESS_DESC_CS2010_QUIZ + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
 //        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 //
 //        /* Case: edit a activity with new values same as another activity's
 //         * values but with different tags -> rejected
 //         */
 //        command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-//                + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-//                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
+//                + NAME_DESC_CS2010_QUIZ + DATE_TIME_DESC_CS2010_QUIZ + EMAIL_DESC_CS2010_QUIZ
+//                + ADDRESS_DESC_CS2010_QUIZ + TAG_DESC_HUSBAND;
 //        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 //    }
 //

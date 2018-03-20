@@ -11,27 +11,23 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
 import seedu.address.model.activity.Name;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedActivityTest {
+
     private static final String INVALID_NAME = "Rachel's Bday";
     private static final String INVALID_DATE_TIME = "23 April 2018";
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_NAME = "CS2102Assignment";
+    private static final String VALID_NAME = ASSIGNMENT2.getName().toString();
     private static final String VALID_DATE_TIME = ASSIGNMENT2.getDateTime().toString();
     private static final String VALID_REMARK = ASSIGNMENT2.getRemark().toString();
     private static final List<XmlAdaptedTag> VALID_TAGS = ASSIGNMENT2.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
-
-    @Test
-    public void toModelType_validActivityDetails_returnsActivity() throws Exception {
-        XmlAdaptedActivity activity = new XmlAdaptedActivity(ASSIGNMENT2);
-        assertEquals(ASSIGNMENT2, activity.toModelType());
-    }
 
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {

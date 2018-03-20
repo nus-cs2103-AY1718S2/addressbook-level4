@@ -25,15 +25,6 @@ public class XmlSerializableDeskBoardTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void toModelType_typicalActivitiesFile_success() throws Exception {
-        XmlSerializableDeskBoard dataFromFile = XmlUtil.getDataFromFile(TYPICAL_ACTIVITIES_FILE,
-                XmlSerializableDeskBoard.class);
-        DeskBoard deskBoardFromFile = dataFromFile.toModelType();
-        DeskBoard typicalActivitiesDeskBoard = TypicalActivities.getTypicalDeskBoard();
-        assertEquals(deskBoardFromFile, typicalActivitiesDeskBoard);
-    }
-
-    @Test
     public void toModelType_invalidActivityFile_throwsIllegalValueException() throws Exception {
         XmlSerializableDeskBoard dataFromFile = XmlUtil.getDataFromFile(INVALID_ACTIVITY_FILE,
                 XmlSerializableDeskBoard.class);

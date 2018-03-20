@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
@@ -20,11 +20,11 @@ public class TaskCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the desk board. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_DATETIME + "DATETIME "
+            + PREFIX_DATE_TIME + "DATETIME "
             + "[" + PREFIX_REMARK + "REMARK]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Software Engineering Milestone 1 "
-            + PREFIX_DATETIME + "01/08/2018 17:00 "
+            + PREFIX_DATE_TIME + "01/08/2018 17:00 "
             + PREFIX_REMARK + "Enhance major component";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";

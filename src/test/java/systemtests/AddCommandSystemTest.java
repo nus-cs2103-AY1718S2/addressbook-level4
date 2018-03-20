@@ -1,32 +1,32 @@
 //package systemtests;
 //
 //import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-//import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+//import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_CS2010_QUIZ;
 //import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 //import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 //import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 //import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-//import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+//import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.DATE_TIME_DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.DATE_TIME_DESC_CS2010_QUIZ;
 //import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 //import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARKS_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CS2010;
 //import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-//import static seedu.address.testutil.TypicalActivities.AMY;
+//import static seedu.address.testutil.TypicalActivities.MA2108_HOMEWORK;
 //import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 //import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
-//import static seedu.address.testutil.TypicalActivities.BOB;
+//import static seedu.address.testutil.TypicalActivities.CS2010_QUIZ;
 //import static seedu.address.testutil.TypicalActivities.DEMO1;
 //import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 //import static seedu.address.testutil.TypicalActivities.QUIZ;
@@ -64,9 +64,9 @@
 //         * command with leading spaces and trailing spaces
 //         * -> added
 //         */
-//        Activity toAdd = AMY;
-//        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-//                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
+//        Activity toAdd = MA2108_HOMEWORK;
+//        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_MA2108_HOMEWORK + "  " + DATE_TIME_DESC_MA2108_HOMEWORK + " "
+//                + EMAIL_DESC_MA2108_HOMEWORK + "   " + ADDRESS_DESC_MA2108_HOMEWORK + "   " + TAG_DESC_FRIEND + " ";
 //        assertCommandSuccess(command, toAdd);
 //
 //        /* Case: undo adding Amy to the list -> Amy deleted */
@@ -81,31 +81,31 @@
 //        assertCommandSuccess(command, model, expectedResultMessage);
 //
 //        /* Case: add a activity with all fields same as another activity in the address book except name -> added */
-//        toAdd = new TaskBuilder().withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_AMY)
-//                .withRemark(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+//        toAdd = new TaskBuilder().withName(VALID_NAME_CS2010_QUIZ).withDateTime(VALID_DATE_TIME_MA2108_HOMEWORK)
+//                .withRemark(VALID_REMARKS_MA2108_HOMEWORK).withTags(VALID_TAG_CS2010).build();
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_CS2010_QUIZ + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK
 //                + TAG_DESC_FRIEND;
 //        assertCommandSuccess(command, toAdd);
 //
 //        /* Case: add a activity with all fields same as another activity in the address book except phone -> added */
-//        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_BOB)
-//                .withRemark(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+//        toAdd = new TaskBuilder().withName(VALID_NAME_MA2108_HOMEWORK).withDateTime(VALID_DATE_TIME_CS2010_QUIZ)
+//                .withRemark(VALID_REMARKS_MA2108_HOMEWORK).withTags(VALID_TAG_CS2010).build();
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + DATE_TIME_DESC_CS2010_QUIZ + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK
 //                + TAG_DESC_FRIEND;
 //        assertCommandSuccess(command, toAdd);
 //
 //        /* Case: add a activity with all fields same as another activity in the address book except email -> added */
-//        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
-//                .withRemark(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
+//        toAdd = new TaskBuilder().withName(VALID_NAME_MA2108_HOMEWORK).withDateTime(VALID_DATE_TIME_MA2108_HOMEWORK)
+//                .withRemark(VALID_REMARKS_MA2108_HOMEWORK).withTags(VALID_TAG_CS2010).build();
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_CS2010_QUIZ + ADDRESS_DESC_MA2108_HOMEWORK
 //                + TAG_DESC_FRIEND;
 //        assertCommandSuccess(command, toAdd);
 //
 //        /* Case: add a activity with all fields same as another activity in the address book except address
 //        -> added */
-//        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
-//                .withRemark(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
+//        toAdd = new TaskBuilder().withName(VALID_NAME_MA2108_HOMEWORK).withDateTime(VALID_DATE_TIME_MA2108_HOMEWORK)
+//                .withRemark(VALID_REMARK_CS2010_QUIZ).withTags(VALID_TAG_CS2010).build();
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_CS2010_QUIZ
 //                + TAG_DESC_FRIEND;
 //        assertCommandSuccess(command, toAdd);
 //
@@ -114,9 +114,9 @@
 //        assertCommandSuccess(ASSIGNMENT1);
 //
 //        /* Case: add a activity with tags, command with parameters in random order -> added */
-//        toAdd = BOB;
-//        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-//                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
+//        toAdd = CS2010_QUIZ;
+//        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + DATE_TIME_DESC_CS2010_QUIZ + ADDRESS_DESC_CS2010_QUIZ + NAME_DESC_CS2010_QUIZ
+//                + TAG_DESC_HUSBAND + EMAIL_DESC_CS2010_QUIZ;
 //        assertCommandSuccess(command, toAdd);
 //
 //        /* Case: add a activity, missing tags -> added */
@@ -151,19 +151,19 @@
 //        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 //
 //        /* Case: missing name -> rejected */
-//        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+//        command = AddCommand.COMMAND_WORD + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK;
 //        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 //
 //        /* Case: missing phone -> rejected */
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK;
 //        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 //
 //        /* Case: missing email -> rejected */
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + DATE_TIME_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK;
 //        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 //
 //        /* Case: missing address -> rejected */
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK;
 //        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 //
 //        /* Case: invalid keyword -> rejected */
@@ -171,22 +171,22 @@
 //        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 //
 //        /* Case: invalid name -> rejected */
-//        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY
-//                + ADDRESS_DESC_AMY;
+//        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK
+//                + ADDRESS_DESC_MA2108_HOMEWORK;
 //        assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 //
 //        /* Case: invalid phone -> rejected */
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY
-//                + ADDRESS_DESC_AMY;
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + INVALID_PHONE_DESC + EMAIL_DESC_MA2108_HOMEWORK
+//                + ADDRESS_DESC_MA2108_HOMEWORK;
 //        assertCommandFailure(command, DateTime.MESSAGE_DATETIME_CONSTRAINTS);
 //
 //        /* Case: invalid address -> rejected */
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK
 //                + INVALID_ADDRESS_DESC;
 //        assertCommandFailure(command, Remark.MESSAGE_REMARK_CONSTRAINTS);
 //
 //        /* Case: invalid tag -> rejected */
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+//        command = AddCommand.COMMAND_WORD + NAME_DESC_MA2108_HOMEWORK + DATE_TIME_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK
 //                + INVALID_TAG_DESC;
 //        assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
 //    }

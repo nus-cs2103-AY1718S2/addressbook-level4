@@ -73,32 +73,6 @@ public class XmlDeskBoardStorageTest {
     }
 
     @Test
-    public void readAndSaveDeskBoard_allInOrder_success() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + "TempDeskBoard.xml";
-        DeskBoard original = getTypicalDeskBoard();
-        XmlDeskBoardStorage xmlDeskBoardStorage = new XmlDeskBoardStorage(filePath);
-
-        //Save in new file and read back
-        xmlDeskBoardStorage.saveDeskBoard(original, filePath);
-        ReadOnlyDeskBoard readBack = xmlDeskBoardStorage.readDeskBoard(filePath).get();
-        assertEquals(original, new DeskBoard(readBack));
-
-        //Modify data, overwrite exiting file, and read back
-        original.addActivity(ASSIGNMENT3);
-        original.removeActivity(ASSIGNMENT1);
-        xmlDeskBoardStorage.saveDeskBoard(original, filePath);
-        readBack = xmlDeskBoardStorage.readDeskBoard(filePath).get();
-        assertEquals(original, new DeskBoard(readBack));
-
-        //Save and read without specifying file path
-        original.addActivity(DEMO1);
-        xmlDeskBoardStorage.saveDeskBoard(original); //file path not specified
-        readBack = xmlDeskBoardStorage.readDeskBoard().get(); //file path not specified
-        assertEquals(original, new DeskBoard(readBack));
-
-    }
-
-    @Test
     public void saveDeskBoard_nullDeskBoard_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         saveDeskBoard(null, "SomeFile.xml");

@@ -23,6 +23,8 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.login.LoginManager;
+import seedu.address.login.Login;
+import seedu.address.login.UserPassStorage;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -37,8 +39,7 @@ import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
-import seedu.address.login.UserPassStorage;
-import seedu.address.login.Login;
+
 
 /**
  * The main entry point to the application.
@@ -89,11 +90,11 @@ public class MainApp extends Application {
         return applicationParameters.get(parameterName);
     }
 
-        /**
-         * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-         * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-         * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
-         */
+    /**
+     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
+     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
+     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
@@ -192,12 +193,15 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting Login to AddressBook " + MainApp.VERSION);
+        logger.info("Starting Login to Pigeons AddressBook " + MainApp.VERSION);
         ui.startLogin(primaryStage);
     }
 
+    /**
+     * Starts Application after login success
+     */
     public void startApp(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Pigeons AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 

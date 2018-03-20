@@ -1,23 +1,23 @@
 package seedu.address.login;
 
+import java.util.logging.Logger;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LoginAccessGrantedEvent;
 import seedu.address.storage.StorageManager;
 
-import java.util.logging.Logger;
-
 /**
  * Manages login to a specific Pigeons driver profile and customised storage.
  */
 public class LoginManager extends ComponentManager implements Login {
     private static final Logger logger = LogsCenter.getLogger(LoginManager.class);
-    public static final boolean CHECK_SUCCESS = true;
+    private static final boolean CHECK_SUCCESS = true;
     private UserPassStorage userPassStorage;
     private StorageManager storage;
 
-    public LoginManager(StorageManager storage){
+    public LoginManager(StorageManager storage) {
         this.storage = storage;
         this.userPassStorage = storage.getUserPassStorage();
     }
@@ -57,7 +57,7 @@ public class LoginManager extends ComponentManager implements Login {
      * Stores new username and password into storage
      */
     public void storeUserPass(UserPass userpass) throws UsernameTakenException {
-        if(userPassStorage.containsKey(userpass.getUsername())) {
+        if (userPassStorage.containsKey(userpass.getUsername())) {
             throw new UsernameTakenException();
         }
         userPassStorage.put(userpass);
@@ -67,7 +67,7 @@ public class LoginManager extends ComponentManager implements Login {
     /**
      * Posts new event to signify login success
      */
-    public void accessPermitted(){
+    public void accessPermitted() {
         EventsCenter.getInstance().post(new LoginAccessGrantedEvent());
     }
 

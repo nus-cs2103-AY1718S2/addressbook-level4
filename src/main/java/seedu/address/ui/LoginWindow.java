@@ -1,12 +1,13 @@
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
+
+import java.util.logging.Logger;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.login.Login;
-
-import java.util.logging.Logger;
 
 /**
  * The Login Window. Provides the layout for user login before accessing the main program.
@@ -14,12 +15,20 @@ import java.util.logging.Logger;
 public class LoginWindow extends UiPart<Stage> {
 
     private static final String FXML = "LoginWindow.fxml";
-
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     private Stage primaryStage;
     private Login login;
     private LoginPane loginPane;
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    public LoginWindow(Stage primaryStage, Login login) {
+        super(FXML, primaryStage);
+
+        // Set dependencies
+        this.primaryStage = primaryStage;
+        this.login = login;
+
+        registerAsAnEventHandler(this);
+    }
 
     @FXML
     private AnchorPane loginPanePlaceholder;
@@ -33,21 +42,11 @@ public class LoginWindow extends UiPart<Stage> {
         return loginPane.isAccessPermitted();
     }
 
-    public LoginWindow(Stage primaryStage, Login login) {
-        super(FXML, primaryStage);
-
-        // Set dependencies
-        this.primaryStage = primaryStage;
-        this.login = login;
-
-        registerAsAnEventHandler(this);
-    }
-
     void show() {
         primaryStage.show();
     }
 
-    void hide(){
+    void hide() {
         primaryStage.hide();
     }
 

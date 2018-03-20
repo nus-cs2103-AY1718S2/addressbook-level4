@@ -1,7 +1,9 @@
 package seedu.address.ui;
 
-
 import javafx.fxml.FXML;
+
+import java.util.logging.Logger;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -13,8 +15,9 @@ import seedu.address.commons.events.ui.ExitLoginRequestEvent;
 import seedu.address.login.Login;
 import seedu.address.login.UserPass;
 
-import java.util.logging.Logger;
-
+/**
+ * A ui for the login screen
+ */
 public class LoginPane extends UiPart<Region> {
 
     private static final String FXML = "LoginPane.fxml";
@@ -55,11 +58,13 @@ public class LoginPane extends UiPart<Region> {
 
     private boolean checkLoginDetails(Login login) {
         try {
-            isAccessPermitted = login.checkLoginDetails(new UserPass(usernameTextField.getText(), passwordField.getText()));
-        } catch(Exception e) {
+            isAccessPermitted = login.checkLoginDetails(
+                    new UserPass(usernameTextField.getText(),
+                            passwordField.getText()));
+        } catch (Exception e) {
             loginStatus.setText("Login Failed.");
         }
-        if(isAccessPermitted) {
+        if (isAccessPermitted) {
             loginStatus.setText("Login Successful.");
         }
         return isAccessPermitted;
@@ -71,16 +76,18 @@ public class LoginPane extends UiPart<Region> {
     }
 
     private void createNewAccount(Login login) {
-        try{
-            login.storeUserPass(new UserPass(usernameTextField.getText(), passwordField.getText()));
-        }
-        catch(Exception e) {
+        try {
+            login.storeUserPass(
+                    new UserPass(
+                            usernameTextField.getText(),
+                            passwordField.getText()));
+        } catch (Exception e) {
             loginStatus.setText("Account cannot be created. Please try a different username.");
         }
     }
 
     @FXML
-    private void closeApplication(){
+    private void closeApplication() {
         EventsCenter.getInstance().post(new ExitLoginRequestEvent());
     }
 

@@ -201,15 +201,15 @@ Loads the LinkedIn search of 1st person in the results of the `find` command.
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
-=== Clearing list of entered commands : `clearhistory`
-
-You can clear your history of entered commands using the following format. +
-Format: `clearhistory`
-
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+=== Clearing list of entered commands : `clearhistory`
+
+You can clear your history of entered commands using the following format. +
+Format: `clearhistory`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`

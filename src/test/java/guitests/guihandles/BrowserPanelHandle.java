@@ -141,10 +141,10 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
     }
 
     public boolean isFieldsEmpty() {
-        return nameLabel.getText().equals("Label")
-                && addressLabel.getText().equals("Label")
-                && phoneLabel.getText().equals("Label")
-                && emailLabel.getText().equals("Label")
+        return nameLabel.getText().equals("")
+                && addressLabel.getText().equals("")
+                && phoneLabel.getText().equals("")
+                && emailLabel.getText().equals("")
                 && oldTagLabels == null;
     }
 }

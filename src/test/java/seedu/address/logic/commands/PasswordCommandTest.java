@@ -15,8 +15,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 /**
- * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
- * {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for
+ * {@code PasswordCommand}.
  */
 public class PasswordCommandTest {
     private static final String TEST_PASSWORD = "test";
@@ -57,7 +57,7 @@ public class PasswordCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code PasswordCommand} with the parameter {@code password}.
      */
     private PasswordCommand prepareCommand(String password) {
         PasswordCommand passwordCommand = new PasswordCommand(password);

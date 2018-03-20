@@ -59,7 +59,7 @@ public class TagReplaceCommand extends UndoableCommand {
         } catch (TagNotFoundException error) {
             throw new AssertionError("The target tag cannot be missing");
         }
-        return new CommandResult(String.format(MESSAGE_REPLACE_TAG_SUCCESS, TagArray[0]));
+        return new CommandResult(String.format(MESSAGE_REPLACE_TAG_SUCCESS, TagArray[1  ]));
     }
 
     @Override
@@ -67,7 +67,10 @@ public class TagReplaceCommand extends UndoableCommand {
         ReadOnlyAddressBook addressBook = model.getAddressBook();
         List<Tag> lastShownList = addressBook.getTagList();
         TagSet.toArray(TagArray);
-        if (!lastShownList.contains(TagArray[0])) {
+        String test1 = TagArray[0].toString();
+        String test2 = TagArray[1].toString();
+        System.out.println(test1 + test2);
+        if (!lastShownList.contains(TagArray[1])) {
             throw new CommandException(Messages.MESSAGE_INVALID_TAG_ENTERED);
         }
 

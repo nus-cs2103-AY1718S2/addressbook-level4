@@ -194,9 +194,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void replaceTag(Set<Tag> TagSet) throws TagNotFoundException {
         Tag tagArray[] = new Tag[2];
         TagSet.toArray(tagArray);
-        if (tags.contains(tagArray[0])){
+        Tag TagToBeReplaced = tagArray[1];
+        Tag TagToBePlaced = tagArray[0];    
+        if (tags.contains(TagToBeReplaced)){
             for (Person person : persons) {
-                removeTagFromPerson(tagArray[0], person);
+                replaceTagForPerson(TagToBeReplaced, TagToBePlaced, person);
             }
             tags.remove(tagArray[0]);
             tags.remove(tagArray[1]);
@@ -225,6 +227,22 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         }
 
+    }
+    public void replaceTagForPerson(Tag tagToBeReplaced, Tag tagToBePlaced, Person person){
+        Set<Tag> tagList = new HashSet<>(person.getTags());
+        if (tagList.remove(tagToBeReplaced)){
+            System.out.println(tagToBePlaced);
+            tagList.add(tagToBePlaced);
+            Person newPerson = new Person(person.getName(), person.getNric(),
+                    tagList);
+            try {
+                updatePerson(person, newPerson);
+            } catch (DuplicatePersonException error1) {
+                throw new AssertionError("Updating person after removing tag should not have duplicate persons.");
+            } catch (PersonNotFoundException error2) {
+                throw new AssertionError("Person should exist in the address book.");
+            }
+        }
     }
 
     //// util methods

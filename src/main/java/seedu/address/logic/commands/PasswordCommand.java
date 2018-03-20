@@ -8,7 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Adds a person to the address book.
  */
-public class PasswordCommand extends UndoableCommand {
+public class PasswordCommand extends Command {
 
     public static final String COMMAND_WORD = "password";
 
@@ -29,7 +29,7 @@ public class PasswordCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         byte[] hashedPassword = SecurityUtil.hashPassword(password);
         model.updatePassword(hashedPassword);

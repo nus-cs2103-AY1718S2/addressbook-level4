@@ -362,7 +362,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === Customised Alias feature
 ==== Current Implementation
 
-image::AddAliasSdForLogic.png[width="800"]
+image::LogicComponentAliasSequenceDiagram.png[width="800"]
 
 image::StorageClassDiagram.png[width="800"]
 

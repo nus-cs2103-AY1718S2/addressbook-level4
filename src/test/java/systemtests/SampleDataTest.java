@@ -1,7 +1,5 @@
 package systemtests;
 
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

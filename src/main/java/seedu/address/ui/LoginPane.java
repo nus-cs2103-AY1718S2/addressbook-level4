@@ -1,20 +1,15 @@
 package seedu.address.ui;
 
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ExitLoginRequestEvent;
-import seedu.address.logic.Logic;
 import seedu.address.login.Login;
 import seedu.address.login.UserPass;
 
@@ -46,26 +41,25 @@ public class LoginPane extends UiPart<Region> {
     @FXML
     private Text loginStatus;
 
-    public LoginPane(Login login){
+    public LoginPane(Login login) {
         super(FXML);
         this.login = login;
     }
 
     @FXML
     private void checkLoginDetails() {
-        if(checkLoginDetails(login)){
+        if(checkLoginDetails(login)) {
             login.accessPermitted();
         }
     }
 
     private boolean checkLoginDetails(Login login) {
-        try{
+        try {
             isAccessPermitted = login.checkLoginDetails(new UserPass(usernameTextField.getText(), passwordField.getText()));
-        }
-        catch(Exception e){
+        } catch(Exception e) {
             loginStatus.setText("Login Failed.");
         }
-        if(isAccessPermitted){
+        if(isAccessPermitted) {
             loginStatus.setText("Login Successful.");
         }
         return isAccessPermitted;
@@ -76,11 +70,11 @@ public class LoginPane extends UiPart<Region> {
         createNewAccount(login);
     }
 
-    private void createNewAccount(Login login){
+    private void createNewAccount(Login login) {
         try{
             login.storeUserPass(new UserPass(usernameTextField.getText(), passwordField.getText()));
         }
-        catch(Exception e){
+        catch(Exception e) {
             loginStatus.setText("Account cannot be created. Please try a different username.");
         }
     }

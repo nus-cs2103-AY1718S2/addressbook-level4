@@ -45,8 +45,7 @@ public class RemovePatientQueueCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof RemovePatientQueueCommand // instanceof handles nulls
-                && targetIndex.equals(((RemovePatientQueueCommand) other).targetIndex));
+        return other == this
+                || (other instanceof RemovePatientQueueCommand);
     }
 }

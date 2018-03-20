@@ -490,6 +490,46 @@ image::OrganizerAddTaskDiagram4.png[width="800"]
 
 // end::taskpriority[]
 
+// tag::calendar[]
+=== Calendar Feature
+==== Current Implementation
+
+The calendar feature is facilitated by the `Calendar` class, which supports the `CalendarPanel`. The `Calendar` is responsible for displaying a monthly calendar view to the users through the `CalendarPanel`. The following diagram describes the structure of the calendar system:
+
+.UML Class Diagram for Calendar
+image::CalendarComponentClassDiagram.png[width="800"]
+
+As you can see from the diagram, `MonthView` facilitates the drawing of the calendar, while `Calendar` supports the display of the calendar onto the `CalendarPanel`. The `MonthView` interacts very closely with the corresponding FXML file, and the following diagram shows the basic layout of the calendar:
+
+.Basic Calendar Layout
+image::MonthViewLayoutDiagram.png[width="800"]
+
+The basic calendar layout (refer to Figure 25) is reflected in the `MonthView.fxml` file, and is loaded by `MonthView`. `MonthView` uses the JavaFX layout objects extensively when drawing the calendar. An example would be the `addMonthDate` method, which adds a particular date to the exact `column` and `row` in the `taskCalendar`. The `addMonthDate` method is implemented as such:
+
+-----
+private void addMonthDate(Text dateToPrint, int column, int row) {
+    taskCalendar.add(dateToPrint, column, row);
+    taskCalendar.setHalignment(dateToPrint, HPos.LEFT);
+    taskCalendar.setValignment(dateToPrint, VPos.TOP)
+}
+-----
+
+Both the `Calendar` and `CalendarPanel` use the JavaFX `StackPane` object as a placeholder for the `MonthView`. After loading the respective FXML files, methods in the `Calendar` and `CalendarPanel` fetch the display for the `MonthView` as such:
+
+-----
+public void getCurrentMonth(YearMonth currentYearMonth) throws IOException {
+    // draws the calendar for the current month
+    calendarPlaceholder.getChildren().add(monthView.getRoot());
+}
+
+private void createMainView() throws IOException {
+    // fetches the calendar view
+    calendarPane.getChildren().add(calendar.getRoot());
+}
+-----
+
+// end::calendar[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

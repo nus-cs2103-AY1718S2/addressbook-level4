@@ -342,10 +342,58 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#tags .red {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .green {
+    -fx-text-fill: white;
+    -fx-background-color: green;
+}
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
+#tags .salmon {
+    -fx-text-fill: black;
+    -fx-background-color: salmon;
+}
+
+#tags .brown {
+    -fx-text-fill: white;
+    -fx-background-color: saddlebrown;
+}
+
+#tags .purple {
+    -fx-text-fill: white;
+    -fx-background-color: purple;
+}
+
+#tags .teal {
+    -fx-text-fill: white;
+    -fx-background-color: teal;
+}
+
+#tags .lime {
+    -fx-text-fill: black;
+    -fx-background-color: lime;
 }

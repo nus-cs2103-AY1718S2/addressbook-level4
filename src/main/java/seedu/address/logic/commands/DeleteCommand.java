@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
@@ -33,10 +34,13 @@ public class DeleteCommand extends UndoableCommand {
         this.targetIndex = targetIndex;
     }
 
-
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(personToDelete);
+        return getCommandResult();
+    }
+
+    private CommandResult getCommandResult() {
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
@@ -64,4 +68,5 @@ public class DeleteCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex) // state check
                 && Objects.equals(this.personToDelete, ((DeleteCommand) other).personToDelete));
     }
+
 }

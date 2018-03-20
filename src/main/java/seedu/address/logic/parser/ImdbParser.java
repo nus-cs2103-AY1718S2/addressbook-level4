@@ -182,6 +182,14 @@ public class ImdbParser {
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
 
+            case AddPatientQueueCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case AddPatientQueueCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }

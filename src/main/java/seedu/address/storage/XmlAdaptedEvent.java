@@ -24,12 +24,12 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedEvent extends XmlAdaptedActivity {
 
+    private static final String ACTIVITY_TYPE = "EVENT";
+
     @XmlElement(required = true)
     private String endDateTime;
     @XmlElement(required = true)
     private String location;
-
-    private static final String ACTIVITY_TYPE = "EVENT";
 
     /**
      * Constructs an XmlAdaptedEvent.
@@ -40,7 +40,8 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
     /**
      * Constructs an {@code XmlAdaptedEvent} with the given event details.
      */
-    public XmlAdaptedEvent(String name, String startDateTime, String endDateTime, String location, String remark, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedEvent(String name, String startDateTime, String endDateTime,
+                           String location, String remark, List<XmlAdaptedTag> tagged) {
         super(name, startDateTime, remark, tagged);
         this.endDateTime = endDateTime;
         this.location = location;

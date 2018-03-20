@@ -1,11 +1,21 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.activity.*;
-import seedu.address.model.tag.Tag;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
-import java.util.*;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Event;
+import seedu.address.model.activity.Location;
+import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Remark;
+import seedu.address.model.tag.Tag;
 
 //@@author karenfrilya97
 
@@ -19,7 +29,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
     @XmlElement(required = true)
     private String location;
 
-    private final String ACTIVITY_TYPE = "EVENT";
+    private static final String ACTIVITY_TYPE = "EVENT";
 
     /**
      * Constructs an XmlAdaptedEvent.

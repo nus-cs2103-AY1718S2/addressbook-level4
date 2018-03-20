@@ -48,7 +48,8 @@
 //        try {
 //            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editActivityDescriptor::setName);
 //            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editActivityDescriptor::setDateTime);
-//            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editActivityDescriptor::setRemark);
+//            ParserUtil.parseAddress
+//            (argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editActivityDescriptor::setRemark);
 //            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editActivityDescriptor::setTags);
 //        } catch (IllegalValueException ive) {
 //            throw new ParseException(ive.getMessage(), ive);

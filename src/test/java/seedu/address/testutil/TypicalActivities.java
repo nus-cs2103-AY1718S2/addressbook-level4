@@ -1,13 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import seedu.address.model.DeskBoard;
-import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.exceptions.DuplicateActivityException;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_CS2010_QUIZ;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_MA2108_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CS2010_QUIZ;
@@ -16,6 +8,14 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_CS2010_Q
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_MA2108_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CS2010;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MA2108;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.DeskBoard;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
 /**
  * A utility class containing a list of {@code Activity} objects to be used in tests.

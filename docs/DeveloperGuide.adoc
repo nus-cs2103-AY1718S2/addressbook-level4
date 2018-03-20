@@ -822,7 +822,7 @@ Major: Email updates/correspond with the users that are awaiting a delivery
 
 Minor: Adding google maps and handsfree sound feature
 
-Major: Mapping out the routes for delivery
+Major: Mapping out the routes for delivery and displaying on google maps
 
 [appendix]
 == User Stories

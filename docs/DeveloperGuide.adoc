@@ -396,7 +396,7 @@ For example, adding a student would have the command string parsed for arguments
 
             ProgrammingLanguage programmingLanguage = ParserUtil.parseSubject(argMultimap
                     .getValue(PREFIX_PROGRAMMING_LANGUAGE)).get();
-	
+
             Student student = new Student(name, phone, email, address, programmingLanguage, tagList);
 
             return new AddCommand(student);

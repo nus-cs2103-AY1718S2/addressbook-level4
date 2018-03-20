@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-T09-B4/main
 
-By: `Team NUSCouples`      Since: `Feb 2018`      Licence: `NUS School Of Computing `
+By: `Team T09-B4`      Since: `Feb 2018`      Licence: `NUS School Of Computing `
 
 == Setting up
 
@@ -384,6 +384,55 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== [Proposed]
+
+=== [Proposed] Timetable Viewer feature
+==== Proposed Implementation
+The Timetable Viewer feature is implemented by `Timetable`, which will reside in `ModelManager`.
+
+Users are able to add a shortened https://nusmods.com/[NUSMods] timetable URL to their existing partner in NUSCouples. +
+[none]
+ Sample shortened NUSMods URL: http://modsn.us/wNuIW
+
+We pass the shortened URL through a `HttpURLConnection` to get the expanded URL. +
+[none]
+ Sample expanded NUSMods URL: https://nusmods.com/timetable/sem-2/share?CS2101=SEC:C01&CS2103T=TUT:C01&…
+
+The expanded NUSMods URL can be generalised and represented in the format
+`…/timetable/sem-[SEM_NUM]/share?[MODULE_CODE]=[LESSON_TYPE]:[CLASS_NUM]&[MODULE_CODE]=[LESSON_TYPE]:[CLASS_NUM]&…`
+
+We can parse this expanded NUSMods URL to get the `SEM_NUM`, as well as the
+`MODULE_CODE`, `LESSON_TYPE` and `CLASS_NUM` for each of the modules in the timetable.
+
+Using http://api.nusmods.com/[NUSMods API], we can get the `WEEK_TEXT`, `DAY_TEXT`, `START_TIME`, `END_TIME` and
+`VENUE` of each module.
+
+The sequence diagram below shows interactions within the `Logic` Component for the `execute("tadd http://modsn.us/wNuIW")`
+API call.
+
+image::AddTimetableSequenceDiagram.png[width="650"]
+
+==== Design Considerations
+===== Aspect: Implementation of add NUSMods timetable URL
+* **Alternative 1 (current choice):** Accept short URLs only
+** Pros: Easier to implement.
+** Cons: Less user friendly as users can only add one type of URL.
+* **Alternative 2:** Accept both short URLs and expanded URLs
+** Pros: More user friendly as users have the choice to add either short or expanded URLs.
+** Cons: Difficult to check if given expanded NUSMods URL is a valid.
+
+===== Aspect: Data Structure to support implementation of Timetable
+* **Alternative 1 (current choice):** Store information by days of the week
+** Pros: Easy to add new functions on top of this implementation such as compare timetables by days.
+** Cons: Have to sort information by day during parsing which can be tedious.
+* **Alternative 2:** Store information by modules taken
+** Pros: Easier to implement due to how NUSMods API is structured.
+** Cons: Difficult to extract out information for a particular time slot on a particular day.
+
+=== [Proposed]
+
+=== [Proposed]
 
 == Documentation
 
@@ -794,11 +843,29 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Feature contribution:*
 
-* Timetable viewer: To help couples identify common breaks during school term so they can plan meetings
-* Scheduler: To schedule meetings and remind couples of planned meetings and important dates
-* Journal: To record special memories
-* Location: To help couples locate each other's classes so they can plan meetings near that area or meet them immediately after class
-* Data encryption: To keep others from viewing personal information such as journal entries
+
+|===
+|Assignee |Major|Minor
+
+|Chen Xing
+|Scheduler: This app allows user to schedule/edit/delete/view planned meetings
+|Notifications: Allows user to receive notification about important dates from scheduled meetings
+
+|Marlene
+|Timetable viewer: To help couples identify common breaks during school term so they can plan meetings during their free time
+|Data encryption: To protect data and prevent people from accessing and reading plaintext files
+
+|Samuel
+|Journal: Allow couples to record their thoughts and feelings to remember the time spent with their partner
+|Tag (emotions) : Add/delete tags to journal entries (happy, sad, angry, funny)
+
+|Daniel
+|Location Finder: To allow the user to find the venue of a particular lesson of interest from their own timetable using
+a Google Maps search result
+|Communication with Google API: Can communicate with different certain external APIs from Google such as Google Maps API
+
+|===
+
 
 [appendix]
 == User Stories
@@ -810,19 +877,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |pair of NUS students in a relationship |add/view my partner's NUS timetable for the week |keep track of my partner's free time
 
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |experienced user |have shortcut keys| do the same thing in a shorter time
-
-|`* * *` |pair of NUS students in a relationship |view my partner's NUS timetable for the week |keep track of my partner's free time
-
-|`* * *` |pair of NUS students in a relationship |replace my partner's NUS timetable |see the most updated timetable
-
-|`* * *` |person in a relationship |add and view special events (e.g. Valentine's day) in the same month |better plan for these dates
-
-|`* * *` |person in a relationship |schedule meetings with my partner |
+|`* * *` |person in a relationship |add,edit,delete and view special events/ meetings (e.g. Valentine's day) in the same month |better plan for these dates
 
 |`* * *` |person in a relationship |add/view Journal entries |remember special memories
 
@@ -830,12 +887,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user who values their privacy |encrypt my NUSCouples save data |prevent strangers from reading personal information such as my journal entries
 
+|`* * *` |As a part of a couple in NUS |encrypt my NUSCouples save data |prevent strangers from reading personal information such as my journal entries
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*`|user who likes to customize things |change the theme or customize text color |
 
+|`*` |experienced user |have shortcut keys| do the same thing in a shorter time
+
+|`*` |user |receive notification of upcoming scheduled events| so i can get notified and prepare earlier
 
 |=======================================================================
 
@@ -847,106 +909,52 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `NUSCouples` app and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add Timetable to Partner
 
 *MSS*
 
-1.  User requests to list persons.
-2.  NUSCouples shows a list of persons.
-3.  User requests to delete a specific person in the list
-4.  NUSCouples deletes the person
+1.  User request to add a shortened http://nusmods.com[NUSMODS] timetable url to his/her partner.
+2.  NUSCouples adds the url to the partner.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
+* 1a. The partner already has a timetable.
 +
 [none]
-** 3a1. NUSCouples shows an error message.
+** 1a1. NUSCouples prompts user to override existing timetable.
+** 1a2. User confirms change.
 +
 Use case resumes at step 2.
+
+* 1b. The given url is invalid.
++
+[none]
+** 1b1. NUSCouples shows an error message.
++
+Use case ends.
 
 [discrete]
-=== Use case: Add Timetable to Person
+=== Use case: View Timetable of Partner
 
 *MSS*
 
-1.  User requests to list persons.
-2.  NUSCouples shows a list of persons.
-3.  User request to add a shortened http://nusmods.com[NUSMODS] timetable url to a specific person in the list.
-4.  NUSCouples adds the url to the person in the list.
-5.  NUSCouples displays the timetable.
+1.  User requests to view timetable of his/her partner.
+2.  NUSCouples displays the timetable.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 1a. The specified person does not have a timetable.
++
+[none]
+** 1a1. NUSCouples shows an error message.
 +
 Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. NUSCouples shows an error message.
-+
-Use case resumes at step 2.
-
-* 3b. The specified person already has a timetable.
-+
-[none]
-** 3b1. NUSCouples prompts user to override existing timetable.
-** 3b2. User confirms change.
-+
-Use case resumes at step 4.
-
-* 3c. The given url is invalid.
-+
-[none]
-** 3c1. NUSCouples shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: View Timetable of Person
-
-*MSS*
-
-1.  User requests to list persons.
-2.  NUSCouples shows a list of persons.
-3.  User request view timetable of a specified person in the list.
-4.  NUSCouples displays the timetable.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. NUSCouples shows an error message.
-+
-Use case resumes at step 2.
-
-* 3b. The specified person does not have a timetable.
-+
-[none]
-** 3b1. NUSCouples shows an error message.
-+
-Use case resumes at step 2.
-
 
 
 [appendix]
@@ -959,10 +967,8 @@ Use case resumes at step 2.
 .  Should be able to handle any invalid inputs.
 .  Should respond to user inputs within 2 seconds.
 .  Should be able to work on both 32-bit and 64-bit environments.
-.  A new user can have commands that are intuitive and easy to remember.
-.  A user who prefers typing over using the mouse be able to control almost everything from the CLI.
-
-
+.  Should have commands that are intuitive and easy to remember.
+.  Should be able to control almost everything from the CLI.
 
 [appendix]
 == Glossary

@@ -41,4 +41,11 @@ public class UniquePatientVisitingQueueTest {
         thrown.expect(NullPointerException.class);
         queueToTest.add(null);
     }
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniquePatientVisitingQueue uniquePatientQueue = new UniquePatientVisitingQueue();
+        thrown.expect(UnsupportedOperationException.class);
+        uniquePatientQueue.asObservableList().remove(0);
+    }
 }

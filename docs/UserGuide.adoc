@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= CoinBook - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,13 +13,29 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F09-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103JAN2018-F09-B3` Since: `Feb 2018` Licence: `MIT`
+
+== How to Use this Guide
+Markup::
+Text with special meaning look different. Here are the various types:
+* Commands, filenames, and other miscellaneous keywords are `monospaced for emphasis`
+* Glossary terms have a [gloss]#dotted underline#
+* Keyboard keys are marked like kbd:[this]
+** kbd:[Q] means to press the `Q` key
+** kbd:[Ctrl]+kbd:[Q] means to hold down the `Ctrl` key and then press the `Q` key
+** kbd:[Ctrl]kbd:[Q]kbd:[E] means to press the `Ctrl` key, then press the `Q` key, followed by the `E` key; holding down is not required
+* Links are marked link:javascript:void(0);[blue with underline]
+** Cross-ref links bring you to another part of the document, and look like link:javascript:void(0);[this]
+** External cross-ref links bring you to another document, and look like [exref]#link:javascript:void(0);[this]#
+** External links bring you to another website, and look like [ext]#link:javascript:void(0);[this]#
+
 
 == Introduction
 
-CoinBook is a desktop application that is made for users who prefer to work on a mouse-free, command line platform with minimal graphical user interface (GUI) support.
-Our program allows you to store a portfolio of your cryptocurrency purchases as well as track the latest price trends and news, in addition to allowing for many
-operations to simplify and expedite your management process such as profit calculation.
+CoinBook is a desktop application that is made for users who prefer to work on a mouse-free, command line platform with minimal [gloss]#<<gui,graphical user interface (GUI)>># dependence.
+
+Coinbook allows you to store a portfolio of your cryptocurrency purchases as well as track the latest price trends and news, in addition to providing various
+tools to simplify and expedite your management process such as profit calculation.
 
 == Quick Start
 
@@ -27,21 +43,23 @@ operations to simplify and expedite your management process such as profit calcu
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+You can obtain the latest version http://www.oracle.com/technetwork/java/javase/downloads/index.html[here] (Download JRE).
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your CoinBook.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI should appear in a few seconds. (Fig. 1)
 +
+.Startup Window
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  Type your commands in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all Coins
-* **`add`**`n/BTC a/100` : adds a Coin account named `BTC` to the CoinBook with an initial amount of 100 coins.
-* **`buy`**`BTC 3` : adds 3 coins into the BTC account.
+* *`buy`*`BTC 3` : adds 3 coins to the BTC account
+* *`view`*`BTC` : view the details of the BTC account
 * *`exit`* : exits the app
 
 . Alternatively, you can type replace commands by their aliases which are shorter to achieve the same effect. For example:
@@ -53,43 +71,40 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [[Features]]
 == Features
 
-====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user. e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/ETH`.
-* Items in square brackets are optional. e.g `n/NAME [t/TAG]` can be used as `n/BTC t/fav` or as `n/BTC`.
-* Items with `…`​ after them can be used multiple times including zero times. e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/cheap`, `t/active t/fav` etc.
-* Parameters can be in any order. e.g. if the command specifies `n/NAME a/VALUE`, `a/VALUE n/NAME` is also acceptable.
-* Items in curly braces indicate multiple possibilities. e.g. `buy {NAME, TAG} AMOUNT`, is a command where the first parameter can either be a NAME or a TAG. +
-    [!] Bear in mind that if multiple items are tagged, then the command will be applied to all accounts under the same tag.
-====
+.Command Format
+****
+* Words in `UPPER_CASE` are the parameters to be supplied by the user. e.g. in `find NAME`, `NAME` is a parameter wh1ich can be used as `find ETH`.
+* Options in square brackets are optional. e.g `NAME [t/TAG]` can be used as `BTC t/fav` or as `BTC`.
+* Options with `...` after them can be used multiple times including zero times. e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/cheap`, `t/active t/fav` etc.
+* If an option without `...` is used multiple times, only the latest one will be used.
+* Parameters can be in any order. e.g. if the command specifies `t/TAG a/VALUE`, `a/VALUE t/TAG` is also acceptable.
+* Items in curly braces indicate multiple possibilities. e.g. `buy {NAME, TAG} AMOUNT`, is a command where the first parameter can either be a NAME or a TAG. 
+****
 
 === Viewing help : `help` / `?`
 
-Format: `help`
+.Format
+----
+help
+----
 
-=== Adding a Coin account: `add` / `a`
-
-Adds a Coin account to the address book +
-Format: `add n/NAME a/AMOUNT [t/TAG]...`
-
-[TIP]
-A Coin account can have any number of tags (including 0)
-
-Examples:
-
-* `add n/BTC a/50.50`
-* `add n/ETH a/1000 t/fav`
+Opens the help window.
 
 === Buying Coin for an account: `buy` / `b`
 
-Adds value into a given Coin account. +
-Format: `buy {INDEX, NAME, TAG} VALUE`
+.Format
+----
+buy {INDEX, NAME, CODE} VALUE
+----
 
-Example:
-* `buy BTC 0.5`
+Adds value into the specified Coin account.
 
-=== Selling Coin from an account: `sell` / `se`
+.Example
+----
+buy BTC 0.5
+----
+
+=== Selling Coin from an account: `sell` / `s`
 
 Removes value from a given Coin account. +
 Format: `sell {INDEX, NAME, TAG} VALUE`
@@ -134,10 +149,10 @@ Returns any accounts with the "fav" tag. +
 Returns any accounts that either currently cost more than 500 dollars and was previously tagged as FAV,
 or which the the account has less than 20 Coins left.
 
-=== Selecting an account : `select` / `s`
+=== Viewing details of an account : `view` / `v`
 
 Selects the account identified by the index number used in the most recent listing. +
-Format: `select INDEX`
+Format: `view INDEX`
 
 ****
 * Selects the account and loads the relevant information related to the account at the specified `INDEX`. The information includes:
@@ -227,13 +242,18 @@ Format: `clear`
 
 Adds a tag attribute to an entry in the CoinBook, so that they can be grouped for other commands. +
 Format: `tag {INDEX, NAME} TAG_NAME`
+****
 
-Example:
-
-* `tag 1 fav` +
+****
+`tag 1 fav` +
 `tag 3 fav` +
 `tag 5 fav` +
 The first, third, and fifth entry in the list is now tagged with the `fav` attribute.
+
+[TIP]
+A Coin account can have any number of tags (including 0)
+[NOTE]
+    Bear in mind that if multiple items are tagged, then the command will be applied to all accounts under the same tag.
 
 === Setting up notifications : `notifyme` / `n`
 
@@ -299,3 +319,44 @@ _{explain how the user can enable/disable data encryption}_
 * *Update* : `update` +
 * *Exit* :  `exit` +
 
+[appendix]
+== Glossary
+
+[[alias]] Alias::
+Alternate names for commands.
+
+[[coinmarketcap]] Coinmarketcap::
+A website that hosts Cryptocurrency information, including cap rankings, prices, volumes and circulating supplies.
+
+[[cryptopanic]] Cryptopanic::
+An online news platform for cryptocurrencies.
+
+[[exponential-moving-average]] Exponential moving average::
+A moving average window of closing prices over a past period that places more weight on the more recent days considered. Since cryptocurrencies do not have a closing price, this defaults to their price at 23:59:59 at the timezone of the exchange.
+
+[[gui]] Graphical User Interface::
+A type of user interface that lets users interact with the app through visual indicators, icons, mouse actions, etc. as compared to typed commands.
+
+[[MACD]] Moving Average Convergence Divergence (MACD)::
+Moving Average Convergence Divergence is an indicator that is the difference between two moving averages.
+
+[[macros]] Macros::
+A set of commands that can be executed under a single custom command is a macro. For example, if a user wishes to only view coins of a specific tag in a certain sorted order, he can set create a custom macro (e.g. `sortfavourites`) such that upon entering it at a command, the program will internally first call the `search` command on the user set tags, then call the `sort` command.
+
+[[mainstream-os]] Mainstream OS::
+Windows, Linux, Unix, OS-X
+
+[[resistance-lines]] Resistance Lines::
+When the price of a coin has risen to a certain amount, the price may eventually sustain its value at this point for a period of time. This is when it obtains "resistance".
+
+[[RSI]] Relative Strength Index::
+Relative Strength Index is used as an indicator to compare the current strength of cryptocurrency versus its historical strength. The strength is calculated based on the closing prices over a period of time.
+
+[[sensitive-data]] Sensitive Data::
+Refers to data that is not meant to be shared with others.
+
+[[simple-moving-average]] Simple Moving Average::
+A moving average window of closing prices over a past period that places equal weight on all days considered. Since cryptocurrencies do not have a closing price, this defaults to their price at 23:59:59 at the timezone of the exchange.
+
+[[support-lines]] Support lines::
+When the price of a coin has fallen to a certain amount, the price may eventually sustain its value at this point for a period of time. This is when it obtains "support".

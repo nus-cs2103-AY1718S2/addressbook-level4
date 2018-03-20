@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= CoinBook
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-F09-B3/main[image:https://travis-ci.org/CS2103JAN2018-F09-B3/main.svg?branch=master[Build Status]]
@@ -13,29 +13,19 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-** This is a desktop Crypto Currency management portfolio called CoinBook
-
-** Meant for storing and keeping track of one’s cryptocurrency records
+** This is a desktop Cryptocurrency management app for storing and keeping track of one’s cryptocurrency portfolio
 
 ** Has a GUI but most of the user interactions happen using CLI (Command Line Interface)
 
-** Java application  targeted at businessmen or investors who trade heavily and actively in cryptocurrency coins
+** Java application targeted at enthusiasts or investors who trade heavily and actively in cryptocurrencies
 
-** Helps user to keep track of trades for multiple coins; useful for frequent trading
+** Provides various statistics such as Relative Strength Index (RSI) and moving average convergence divergence (MACD) charts to aid users with their decision making
 
-** Provides decision making stats to equip user with the information necessary to trade
+** User won't have to check news and statistics on another platform; CoinBook offers an integrated soluton
 
-** User won't have to check patterns and statistics on another platform other than the CoinBook
+** Price history allows user to see price changes over time
 
-** Displays price history of coin --> Allows user to see price changes over time
-
-** View current price of crypto coin (based on 24 hour average) and the profit/loss the user stands to make if he sold the coin at the current moment
-
-** Various statistics to aid decision making such as Relative Strength Index(RSI) and Moving average convergence divergence (MACD) charts
-
-** Newsfeed for user to follow the news and happenings surrounding the coin
-
-** Allows the user to compare the price history based on newsfeed of any given coin.
+** Newsfeed for user to keep up to date on relevant news and happenings
 
 == Site Map
 

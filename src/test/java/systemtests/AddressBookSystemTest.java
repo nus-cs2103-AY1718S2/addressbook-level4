@@ -182,6 +182,13 @@ public abstract class AddressBookSystemTest {
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
+    protected void assertEqualAlias(String expectedCommandInput, String expectedResultMessage, Model expectedModel) {
+        assertEquals("", getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertEquals(expectedModel, getModel());
+        assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+    }
+
     /**
      * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.

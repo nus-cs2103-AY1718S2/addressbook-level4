@@ -116,4 +116,12 @@ public class SecurityUtil {
     private static Key createKey(byte[] password) {
         return new SecretKeySpec(password, "AES");
     }
+    public static void main(String[] args){
+        try{
+            File file = new File("data/addressbook.xml");
+            decrypt(file);
+        }catch(Exception e){
+
+        }
+    }
 }

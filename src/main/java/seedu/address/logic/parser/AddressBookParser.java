@@ -102,7 +102,7 @@ public class AddressBookParser {
 
         case VacantCommand.COMMAND_WORD:
             return new VacantCommandParser().parse(arguments);
-            
+
         case PasswordCommand.COMMAND_WORD:
             return new PasswordCommandParser().parse(arguments);
 

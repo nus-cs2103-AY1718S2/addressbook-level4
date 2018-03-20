@@ -1,14 +1,16 @@
 package seedu.address.logic.commands;
 
+import com.google.api.services.gmail.Gmail;
+
 import javafx.collections.ObservableList;
+
+import seedu.address.commons.util.GmailUtil;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import com.google.api.services.gmail.Gmail;
-import seedu.address.commons.util.GmailUtil;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Finds and emails all persons in address book whose name contains any of the argument keywords.
+ * Keyword matching is case insensitive.
  */
 public class EmailCommand extends Command {
 
@@ -32,14 +34,14 @@ public class EmailCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
         ObservableList<Person> emailList = model.getFilteredPersonList();
-        for(Person p : emailList){
+        for (Person p : emailList) {
             System.out.println(p.getEmail());
             try {
                 GmailUtil handler = new GmailUtil();
                 Gmail service = handler.getService();
-                handler.Send(service, p.getEmail().toString(), "",
-                        service.users().getProfile("me").getUserId(), "Hello","Hello");
-            } catch(Exception e){
+                handler.send(service, p.getEmail().toString(), "",
+                        service.users().getProfile("me").getUserId(), "Hello", "Hello");
+            } catch (Exception e) {
                 System.out.println(e);
                 System.out.println("Some IOException occurred");
             }

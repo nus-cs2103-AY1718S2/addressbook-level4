@@ -7,7 +7,7 @@
         <preparationTime>85355255</preparationTime>
         <ingredient>alice@example.com</ingredient>
         <instruction>123, Jurong West Ave 6, #08-111</instruction>
-        <tagged>friends</tagged>
+        <tagged>family</tagged>
     </recipes>
     <recipes>
         <name>Benson Meier</name>
@@ -15,13 +15,14 @@
         <ingredient>johnd@example.com</ingredient>
         <instruction>311, Clementi Ave 2, #02-25</instruction>
         <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <tagged>family</tagged>
     </recipes>
     <recipes>
         <name>Carl Kurz</name>
         <preparationTime>95352563</preparationTime>
         <ingredient>heinz@example.com</ingredient>
         <instruction>wall street</instruction>
+        <tagged>owesMoney</tagged>
     </recipes>
     <recipes>
         <name>Daniel Meier</name>

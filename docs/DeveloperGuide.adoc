@@ -995,7 +995,7 @@ Use case resumes at step 2.
 *Extensions*
 
 
-* 3a. The partial word does not match any of the commands known.
+* 2a. The partial word does not match any of the commands known.
 +
 Use case ends.
 

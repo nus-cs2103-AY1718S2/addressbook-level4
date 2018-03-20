@@ -58,6 +58,7 @@ public class AddCommandSystemTest extends ImdbSystemTest {
     @Test
     public void add() throws Exception {
         Model model = getModel();
+        // LoginManager.logout();
         LoginManager.authenticate("alice", "password123");
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */

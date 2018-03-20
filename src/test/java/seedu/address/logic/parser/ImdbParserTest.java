@@ -205,12 +205,14 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_loginCommandWord_returnsLoginCommand() throws Exception {
+        LoginManager.logout();
         assertTrue(parser.parseCommand(LoginCommand.COMMAND_WORD + " " + TEST_USERNAME + " "
                 + TEST_PASSWORD) instanceof LoginCommand);
     }
 
     @Test
     public void parseCommand_loginCommandAlias_returnsLoginCommand() throws Exception {
+        LoginManager.logout();
         assertTrue(parser.parseCommand(LoginCommand.COMMAND_ALIAS + " " + TEST_USERNAME + " "
                 + TEST_PASSWORD) instanceof LoginCommand);
     }

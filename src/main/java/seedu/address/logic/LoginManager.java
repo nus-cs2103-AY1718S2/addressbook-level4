@@ -24,6 +24,13 @@ public final class LoginManager {
     }
 
     /**
+     * Utility function for tests
+     */
+    public static void logout(){
+        currLoginState.updateState(NO_USER);
+    }
+
+    /**
      * Check if username and password match and are in the passwords list.
      * Login state will be updated.
      */

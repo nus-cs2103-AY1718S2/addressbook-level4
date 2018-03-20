@@ -20,6 +20,10 @@ public class AddToDoCommandParser implements Parser<AddToDoCommand> {
      */
     public AddToDoCommand parse(String args) throws ParseException {
 
+        if (args.trim().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToDoCommand.MESSAGE_USAGE));
+        }
+
         try {
             Content content = ParserUtil.parseContent(args);
 
@@ -27,8 +31,7 @@ public class AddToDoCommandParser implements Parser<AddToDoCommand> {
 
             return new AddToDoCommand(todo);
         } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToDoCommand.MESSAGE_USAGE));
+            throw new ParseException(ive.getMessage(), ive);
         }
     }
 }

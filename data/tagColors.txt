@@ -1,0 +1,5 @@
+colleagues:undefined
+classmates:undefined
+neighbours:undefined
+family:undefined
+friends:undefined

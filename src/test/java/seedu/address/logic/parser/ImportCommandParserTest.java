@@ -19,6 +19,12 @@ public class ImportCommandParserTest {
     }
 
     @Test
+    public void parse_oneArg_throwsParseException() {
+        assertParseFailure(parser, "validString", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ImportCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
     }

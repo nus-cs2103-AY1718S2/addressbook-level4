@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -10,12 +11,16 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Rule;
 import org.junit.Test;
+
+import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.SecurityUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -32,6 +37,9 @@ public class ImportCommandTest {
     private static final String TEST_DATA_FILE_ALICE = TEST_DATA_FOLDER + "aliceAddressBook.xml";
     private static final String TEST_DATA_FILE_ALICE_BENSON = TEST_DATA_FOLDER + "aliceBensonAddressBook.xml";
     private static final String TEST_PASSWORD = "test";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBook addressBookWithAliceAndBenson = new AddressBookBuilder().withPerson(ALICE)
             .withPerson(BENSON).build();
@@ -57,6 +65,24 @@ public class ImportCommandTest {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_encryptedAddressBook_success() throws Exception {
+        String encryptedFile = TEST_DATA_FOLDER + "encryptedAliceBensonAddressBook.xml";
+
+        ImportCommand importCommand = prepareCommand(encryptedFile, model, TEST_PASSWORD);
+        importCommand.executeUndoableCommand();
+        SecurityUtil.encrypt(encryptedFile, TEST_PASSWORD);
+        assertEquals(model.getAddressBook(), addressBookWithAliceAndBenson);
+    }
+
+    @Test
+    public void execute_wrongPasswordEncryptedAddressBook_throwsCommandException() throws Exception {
+        String encryptedFile = TEST_DATA_FOLDER + "encryptedAddressBook.xml";
+        ImportCommand importCommand = prepareCommand(encryptedFile, model, TEST_PASSWORD + "1");
+        thrown.expect(CommandException.class);
+        importCommand.executeUndoableCommand();
     }
 
     @Test
@@ -175,10 +201,16 @@ public class ImportCommandTest {
     }
 
     /**
-     * Returns a {@code ImportCommand} with the parameter {@code filepath}.
+     * Returns a {@code ImportCommand} with the parameter {@code filepath} with password as TEST_PASSWORD.
      */
     private ImportCommand prepareCommand(String filepath, Model model) {
-        ImportCommand importCommand = new ImportCommand(filepath, TEST_PASSWORD);
+        return prepareCommand(filepath, model, TEST_PASSWORD);
+    }
+    /**
+     * Returns a {@code ImportCommand} with the parameter {@code filepath} and {@code password}.
+     */
+    private ImportCommand prepareCommand(String filepath, Model model, String password) {
+        ImportCommand importCommand = new ImportCommand(filepath, password);
         importCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return importCommand;
     }

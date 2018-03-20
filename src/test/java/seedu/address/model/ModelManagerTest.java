@@ -27,6 +27,13 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getVisitingQueue_modifyQueue_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getVisitingQueue().remove(0);
+    }
+
+    @Test
     public void equals() {
         Imdb imdb = new ImdbBuilder().withPerson(ALICE).withPerson(BENSON).build();
         Imdb differentImdb = new Imdb();

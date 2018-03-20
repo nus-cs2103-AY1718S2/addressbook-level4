@@ -22,6 +22,7 @@ Responsibilities: Logic
 
 === Jasmund Toh
 
+image::jasmoon.png[width="150", align="left"]
 {empty}[http://github.com/jasmoon[github]]
 
 Role: Scheduling and tracking, JavaFX expert +

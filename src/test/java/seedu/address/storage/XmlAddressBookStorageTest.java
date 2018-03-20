@@ -95,8 +95,6 @@ public class XmlAddressBookStorageTest {
     public void readAddressBookWithPassword_wrongPassword_throwWrongPasswordException() throws Exception {
         String filePath = "TempEncryptedAddressBook.xml";
         File file = new File(TEST_DATA_FOLDER + filePath);
-        FileUtil.createFile(file);
-        FileUtil.writeToFile(file, "test");
         SecurityUtil.encrypt(file, SecurityUtil.hashPassword("wrongPassword"));
         thrown.expect(WrongPasswordException.class);
         readAddressBook(filePath, new Password("test"));

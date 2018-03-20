@@ -16,7 +16,7 @@ public class DateOfBirth {
      * The first character of the DOB must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DOB_VALIDATION_REGEX = "[\\p{Digit}\\p{Punct}]";
+    public static final String DOB_VALIDATION_REGEX = "[\\p{Digit}\\p{Punct}]*";
 
     public final String value;
 
@@ -34,9 +34,7 @@ public class DateOfBirth {
     /**
      * Returns true if a given string is a valid patient DOB.
      */
-    public static boolean isValidDob(String test) {
-        return test.matches(DOB_VALIDATION_REGEX);
-    }
+    public static boolean isValidDob(String test) { return test.matches(DOB_VALIDATION_REGEX); }
 
 
     @Override

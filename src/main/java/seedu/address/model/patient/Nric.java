@@ -16,7 +16,7 @@ public class Nric {
      * The first character of the NRIC must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NRIC_VALIDATION_REGEX = "[\\p{Alnum}]";
+    public static final String NRIC_VALIDATION_REGEX = "[\\p{Alnum}]*";
 
     public final String value;
 
@@ -34,9 +34,7 @@ public class Nric {
     /**
      * Returns true if a given string is a valid patient NRIC.
      */
-    public static boolean isValidNric(String test) {
-        return test.matches(NRIC_VALIDATION_REGEX);
-    }
+    public static boolean isValidNric(String test) { return test.matches(NRIC_VALIDATION_REGEX); }
 
 
     @Override

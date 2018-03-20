@@ -101,7 +101,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Location.class.getSimpleName()));
         }
-        if (!Location.isValidName(this.location)) {
+        if (!Location.isValidLocation(this.location)) {
             throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
         }
         final Location location = new Location(this.location);

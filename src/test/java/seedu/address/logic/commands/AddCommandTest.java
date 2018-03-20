@@ -140,6 +140,12 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void login(String username, String password) { fail("This method should not be called."); }
+
+        @Override
+        public void logout() { fail("This method should not be called."); }
     }
 
     /**

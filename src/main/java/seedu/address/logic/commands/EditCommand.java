@@ -45,7 +45,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_PROGRAMMING_LANGUAGE + "SUBJECT] "
+            + "[" + PREFIX_PROGRAMMING_LANGUAGE + "PROGRAMMING LANGUAGE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -109,8 +109,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editStudentDescriptor.getPhone().orElse(studentToEdit.getPhone());
         Email updatedEmail = editStudentDescriptor.getEmail().orElse(studentToEdit.getEmail());
         Address updatedAddress = editStudentDescriptor.getAddress().orElse(studentToEdit.getAddress());
-        ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage()
-                .orElse(studentToEdit.getProgrammingLanguage());
+        ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage();
         Set<Tag> updatedTags = editStudentDescriptor.getTags().orElse(studentToEdit.getTags());
 
         return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
@@ -191,8 +190,8 @@ public class EditCommand extends UndoableCommand {
             this.email = email;
         }
 
-        public Optional<ProgrammingLanguage> getProgrammingLanguage() {
-            return Optional.ofNullable(programmingLanguage);
+        public ProgrammingLanguage getProgrammingLanguage() {
+            return programmingLanguage;
         }
 
         public void setAddress(Address address) {

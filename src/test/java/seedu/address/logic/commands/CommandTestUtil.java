@@ -80,6 +80,11 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
+    public static final String CONTENT_E = "ToDo E";
+    public static final String CONTENT_B = "ToDo B";
+
+
+
     public static final String VALID_CONTENT = "Something to do";
     public static final String INVALID_CONTENT = "Something to do&"; // '&' not allowed in contents
 

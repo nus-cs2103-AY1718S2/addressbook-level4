@@ -27,7 +27,6 @@ public class Url {
         this.value = url;
     }
 
-    //@@author RyanAngJY-reused
     /**
      *  Returns true if a given string is a valid web url, or no url has been assigned
      */
@@ -44,7 +43,6 @@ public class Url {
         }
 
     }
-    //@@author RyanAngJY
 
     @Override
     public String toString() {

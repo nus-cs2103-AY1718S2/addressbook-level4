@@ -2,6 +2,7 @@ package seedu.address.model.todo;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CONTENT;
 
 import org.junit.Test;
 
@@ -37,5 +38,12 @@ public class ContentTest {
         assertTrue(Content.isValidContent("hello world the 2nd")); // alphanumeric characters
         assertTrue(Content.isValidContent("Hello World")); // with capital letters
         assertTrue(Content.isValidContent("David Roger Jackson Ray Jr 2nd")); // long names
+    }
+
+    @Test
+    public void isSameContentHashCode() {
+        Content firstContent = new Content(VALID_CONTENT);
+        Content secondContent = new Content(VALID_CONTENT);
+        assertTrue(firstContent.hashCode() == secondContent.hashCode());
     }
 }

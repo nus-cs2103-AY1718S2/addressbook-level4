@@ -7,6 +7,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
+import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
@@ -28,7 +29,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException, WrongPasswordException;
 
     @Override
-    Optional<ReadOnlyAddressBook> readAddressBook(byte[] password)
+    Optional<ReadOnlyAddressBook> readAddressBook(Password password)
             throws DataConversionException, IOException, WrongPasswordException;
 
     @Override

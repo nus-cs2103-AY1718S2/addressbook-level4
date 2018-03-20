@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
+import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 
 /**
@@ -34,13 +35,13 @@ public interface AddressBookStorage {
     /**
      * @see #getAddressBookFilePath()
      */
-    Optional<ReadOnlyAddressBook> readAddressBook(byte[] password) throws DataConversionException,
+    Optional<ReadOnlyAddressBook> readAddressBook(Password password) throws DataConversionException,
                                                                             IOException, WrongPasswordException;
 
     /**
      * @see #getAddressBookFilePath()
      */
-    Optional<ReadOnlyAddressBook> readAddressBook(String filePath, byte[] password) throws DataConversionException,
+    Optional<ReadOnlyAddressBook> readAddressBook(String filePath, Password password) throws DataConversionException,
             IOException, WrongPasswordException;
 
     /**

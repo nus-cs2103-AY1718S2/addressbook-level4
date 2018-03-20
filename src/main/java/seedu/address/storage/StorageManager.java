@@ -12,6 +12,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
+import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
@@ -70,13 +71,13 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(byte[] password)
+    public Optional<ReadOnlyAddressBook> readAddressBook(Password password)
             throws DataConversionException, IOException, WrongPasswordException {
         return addressBookStorage.readAddressBook(addressBookStorage.getAddressBookFilePath(), password);
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath, byte[] password)
+    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath, Password password)
             throws DataConversionException, IOException, WrongPasswordException {
         logger.fine("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath, password);

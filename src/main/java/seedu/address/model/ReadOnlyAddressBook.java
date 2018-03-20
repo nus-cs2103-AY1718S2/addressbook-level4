@@ -31,5 +31,5 @@ public interface ReadOnlyAddressBook {
     /**
      * Returns the hashed password
      */
-    byte[] getPassword();
+    Password getPassword();
 }

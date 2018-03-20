@@ -52,6 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
+        addressBook.updatePassword(newData.getPassword());
         indicateAddressBookChanged();
     }
 
@@ -98,6 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(password);
 
         addressBook.updatePassword(password);
+        indicateAddressBookChanged();
     }
 
     @Override

@@ -13,10 +13,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PasswordCorrectEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
-import seedu.address.commons.util.SecurityUtil;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.Storage;
@@ -72,12 +72,12 @@ public class PasswordBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
-        byte[] password = SecurityUtil.hashPassword(commandTextField.getText());
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
+        String input = commandTextField.getText();
         try {
             commandTextField.setText("");
-            addressBookOptional = storage.readAddressBook(password);
+            addressBookOptional = storage.readAddressBook(new Password(input));
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }

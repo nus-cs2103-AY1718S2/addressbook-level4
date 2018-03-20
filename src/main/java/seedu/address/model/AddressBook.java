@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.SecurityUtil;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.UniqueAliasList;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
@@ -31,7 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueAliasList aliases;
-    private final byte[] password;
+    private final Password password;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -47,11 +46,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public AddressBook() {
-        password = SecurityUtil.hashPassword("test");
+        password = new Password();
     }
 
     public AddressBook(String password) {
-        this.password = SecurityUtil.hashPassword(password);
+        this.password = new Password(password);
     }
 
     /**
@@ -268,7 +267,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public byte[] getPassword() {
+    public Password getPassword() {
         return password;
     }
 
@@ -277,9 +276,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param newPassword  will be the new password.
      */
     public void updatePassword (byte[] newPassword) {
-        for (int i = 0; i < password.length; i++) {
-            password[i] = newPassword[i];
-        }
+        password.updatePassword(newPassword);
+    }
+
+    /**
+     * Updates the password of this {@code AddressBook}.
+     * @param newPassword  will be the new password.
+     */
+    public void updatePassword (Password newPassword) {
+        password.updatePassword(newPassword);
     }
 
     @Override

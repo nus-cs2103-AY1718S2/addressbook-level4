@@ -10,8 +10,11 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.Address;
+import seedu.address.model.patient.BloodType;
+import seedu.address.model.patient.DateOfBirth;
 import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.Remark;
@@ -27,11 +30,17 @@ public class XmlAdaptedPatient {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
+    private String nric;
+    @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String dob;
+    @XmlElement(required = true)
+    private String bloodType;
     @XmlElement(required = true)
     private String remark;
 
@@ -47,11 +56,15 @@ public class XmlAdaptedPatient {
     /**
      * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
-    public XmlAdaptedPatient(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPatient(String name, String nric, String phone, String email, String address, String dob,
+                             String bloodType, List<XmlAdaptedTag> tagged) {
         this.name = name;
+        this.nric = nric;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.dob = dob;
+        this.bloodType = bloodType;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -93,6 +106,14 @@ public class XmlAdaptedPatient {
         }
         final Name name = new Name(this.name);
 
+        if (this.nric == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Nric.class.getSimpleName()));
+        }
+        if (!Nric.isValidNric(this.nric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
+        }
+        final Nric nric = new Nric(this.nric);
+
         if (this.phone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
@@ -117,10 +138,26 @@ public class XmlAdaptedPatient {
         }
         final Address address = new Address(this.address);
 
+        if (this.dob == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateOfBirth.class.getSimpleName()));
+        }
+        if (!DateOfBirth.isValidDob(this.dob)) {
+            throw new IllegalValueException(DateOfBirth.MESSAGE_DOB_CONSTRAINTS);
+        }
+        final DateOfBirth dob = new DateOfBirth(this.dob);
+
+        if (this.bloodType == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, BloodType.class.getSimpleName()));
+        }
+        if (!BloodType.isValidBloodType(this.bloodType)) {
+            throw new IllegalValueException(BloodType.MESSAGE_BLOODTYPE_CONSTRAINTS);
+        }
+        final BloodType bloodType = new BloodType(this.bloodType);
+
         final Remark remark = new Remark(this.remark);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Patient(name, phone, email, address, remark, tags);
+        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, tags);
     }
 
     @Override

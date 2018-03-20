@@ -101,7 +101,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Recipes matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
@@ -111,30 +111,26 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any recipe having names `Betsy`, `Tim`, or `John`
 
-<<<<<<< HEAD
-=== Locating persons by tags: `tag`
+=== Locating recipes by tags: `tag`
 
-Finds person whose tags contain any of the given keywords.
+Finds recipe whose tags contain any of the given keywords.
 Format: `tag KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case sensitive. e.g. `friends` will not match `Friends`
 * Only the tags are searched.
 * Only full words will be matched e.g. `friends` will not match `friend`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends family` will return persons with either `friends` OR `family` as their tags.
+* Rceipes matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends family` will return recipes with either `friends` OR `family` as their tags.
 ****
 
 Examples:
 
 * `tag friends` +
-Returns persons with the tag `friends`
+Returns recipes with the tag `friends`
 * `tag friends family` +
-Returns any person with the tag `friends` or `family`
+Returns any recipe with the tag `friends` or `family`
 
-=== Deleting a person : `delete`
-=======
 === Deleting a recipe : `delete`
->>>>>>> master
 
 Deletes the specified recipe from the recipe book. +
 Format: `delete INDEX`

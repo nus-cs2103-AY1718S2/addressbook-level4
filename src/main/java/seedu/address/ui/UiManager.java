@@ -52,6 +52,9 @@ public class UiManager extends ComponentManager implements Ui {
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
+            //PasswordWindow pw = new PasswordWindow(primaryStage);
+            //  pw.show();
+            // pw.fillInnerParts();
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();

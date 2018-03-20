@@ -21,6 +21,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.SecurityUtil;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -35,7 +36,7 @@ public class AddressBookTest {
     private final AddressBook addressBook = new AddressBook();
 
     private final AddressBook addressBookWithAmyAndBob = new AddressBookBuilder().withPerson(AMY)
-            .withPerson(BOB).build();
+            .withPerson(BOB).withPassword("test").build();
 
     @Test
     public void constructor() {
@@ -106,6 +107,23 @@ public class AddressBookTest {
         assertEquals(expectedAddressBook, addressBookWithAmyAndBob);
     }
 
+    @Test
+    public void updatePasswordWithClass_passwordChanged_passwordUpdated() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
+        addressBookUpdatedPassword.updatePassword(new Password("new"));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
+        assertEquals(expectedAddressBook, addressBookUpdatedPassword);
+    }
+
+    @Test
+    public void updatePasswordWithBytes_passwordChanged_passwordUpdated() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
+        addressBookUpdatedPassword.updatePassword(SecurityUtil.hashPassword("new"));
+        addressBookUpdatedPassword.updatePassword(SecurityUtil.hashPassword("new"));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
+        assertEquals(expectedAddressBook, addressBookUpdatedPassword);
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */
@@ -113,6 +131,7 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Alias> aliases = FXCollections.observableArrayList();
+        private final Password password = new Password("test");
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
@@ -132,6 +151,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Alias> getAliasList() {
             return aliases;
+        }
+
+        @Override
+        public Password getPassword() {
+            return password;
         }
     }
 

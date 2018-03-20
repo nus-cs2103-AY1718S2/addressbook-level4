@@ -63,4 +63,9 @@ public interface Model {
      * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
      */
     void importAddressBook(String filepath) throws DataConversionException, IOException;
+
+    /**
+     * Updates the password with the given password.
+     */
+    void updatePassword(byte[] password);
 }

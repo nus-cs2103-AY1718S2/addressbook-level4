@@ -34,7 +34,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String[] keywords;
         //check arguments[0] for specifier
 
-        if (arguments[0].matches("\\p{Alnum}++")) {
+        if (arguments[0].matches("\\p{Alnum}+.++")) {
             return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(arguments)));
         }
 

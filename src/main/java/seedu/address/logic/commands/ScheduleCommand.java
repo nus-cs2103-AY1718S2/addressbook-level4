@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_FAVOURITE_STUDENTS;
 
 /**
@@ -19,6 +18,7 @@ public class ScheduleCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        model.getSchedule().print();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

@@ -37,7 +37,7 @@ public class Time {
      * Returns if a given string is a valid student email.
      */
     public static boolean isValidTime(String test) {
-        return test.matches(EMAIL_VALIDATION_REGEX);
+        return true;
     }
 
     @Override

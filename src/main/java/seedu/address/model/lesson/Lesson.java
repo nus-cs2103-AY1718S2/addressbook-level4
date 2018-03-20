@@ -68,8 +68,6 @@ public class Lesson {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getStudent().getName())
-                .append(" Address: ")
-                .append(getStudent().getAddress())
                 .append(" programminglanguage: ")
                 .append(getStudent().getProgrammingLanguage())
                 .append(" Time: ")

@@ -44,6 +44,12 @@ public class Schedule implements ReadOnlySchedule {
                 || (other instanceof Schedule // instanceof handles nulls
                 && this.lessons.equals(((Schedule) other).lessons));
     }
+    public void print(){
+        System.out.println(this.toString());
+        for(Lesson l : lessons){
+            System.out.println(l.toString());
+        }
+    }
 
     @Override
     public int hashCode() {

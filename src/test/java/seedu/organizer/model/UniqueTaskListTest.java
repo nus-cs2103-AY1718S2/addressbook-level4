@@ -46,10 +46,10 @@ public class UniqueTaskListTest {
         expectedUniqueTaskList = new UniqueTaskList();
 
         //CurrentDate before Deadline
-        Task taskCurrentDateBeforeDeadline = new TaskBuilder().withDeadline("2999-01-01")
-                .withDateAdded("1950-01-01").build();
-        Task expectedTaskCurrentDateBeforeDeadline = new TaskBuilder().withDeadline("2999-01-01")
-                .withDateAdded("1950-01-01")
+        Task taskCurrentDateBeforeDeadline = new TaskBuilder().withDeadline("2035-01-01")
+                .withDateAdded("1900-01-01").build();
+        Task expectedTaskCurrentDateBeforeDeadline = new TaskBuilder().withDeadline("2035-01-01")
+                .withDateAdded("1900-01-01")
                 .withPriority("8").build();
         uniqueTaskList.add(taskCurrentDateBeforeDeadline);
         expectedUniqueTaskList.add(expectedTaskCurrentDateBeforeDeadline);

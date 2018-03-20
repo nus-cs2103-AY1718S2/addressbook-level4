@@ -3,7 +3,7 @@
 <task>
     <priority>9</priority>
     <deadline>2018-07-16</deadline>
-    <dateadded>2018-03-19</dateadded>
+    <dateadded>current_date</dateadded>
     <description>Refactor Address to Description</description>
     <tagged>friends</tagged>
 </task>

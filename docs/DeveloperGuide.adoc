@@ -406,7 +406,7 @@ dayDifferenceCurrentToDeadline = Duration.between(currentDate, deadline)
 
 dayDifferenceAddedToDeadline = Duration.between(dateAdded, deadline)
 
-priorityToIncrease = priorityDifferenceFromMax * (dayDifferenceCurrentToDeadline / dayDifferenceAddedToDeadline)
+priorityToIncrease = priorityDifferenceFromMax * ((dayDifferenceAddedToDeadline - dayDifferenceCurrentToDeadline) / dayDifferenceAddedToDeadline)
 
 newPriority = currentPriority + priorityToIncrease
 ----
@@ -445,7 +445,7 @@ dayDifferenceCurrentToDeadline = 14
 
 dayDifferenceAddedToDeadline = 31
 
-priorityToIncrease = 9 * (14 / 31) = 4
+priorityToIncrease = 9 * ((31 - 14) / 31) = 4
 
 newPriority = 0 + 4 = 4
 -----

@@ -31,7 +31,13 @@ public class DateAdded {
     public DateAdded(String dateadded) {
         requireNonNull(dateadded);
         checkArgument(isValidDateAdded(dateadded), MESSAGE_DATEADDED_CONSTRAINTS);
-        this.date = LocalDate.parse(dateadded);
+        //temporary fix for xml file bug due to PrioriTask's dependence on the current date
+        if (dateadded.equals("current_date")) {
+            this.date = LocalDate.now();
+        } else {
+            //actual code that is run when tests are not running
+            this.date = LocalDate.parse(dateadded);
+        }
     }
 
     /**
@@ -47,7 +53,7 @@ public class DateAdded {
      * Returns true if a given string is a valid task deadline.
      */
     public static boolean isValidDateAdded(String test) {
-        return test.matches("") || test.matches(DATEADDED_VALIDATION_REGEX);
+        return test.matches("current_date") || test.matches(DATEADDED_VALIDATION_REGEX);
     }
 
     @Override

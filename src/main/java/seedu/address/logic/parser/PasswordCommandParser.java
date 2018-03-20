@@ -16,7 +16,7 @@ public class PasswordCommandParser implements Parser<PasswordCommand> {
      */
     public PasswordCommand parse(String arguments) throws ParseException {
         String args = arguments.trim();
-        if (args.equals("")) {
+        if ("".equals(args)) {
             throw new ParseException(PasswordCommand.INVALID_PASSWORD);
         }
         return new PasswordCommand(args);

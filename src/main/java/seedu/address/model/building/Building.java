@@ -3,8 +3,6 @@ package seedu.address.model.building;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.ArrayList;
-
 /**
  * Represents a Building in National University of Singapore.
  * Guarantees: immutable; is valid as declared in {@link #isValidBuilding(String)}
@@ -38,7 +36,13 @@ public class Building {
      * Returns true if a given string is a valid building name.
      */
     public static boolean isValidBuilding(String test) {
-        return test.matches(BUILDING_VALIDATION_REGEX);
+        boolean isFound = false;
+        for (String building : BUILDINGS) {
+            if (building.equals(test)) {
+                isFound = true;
+            }
+        }
+        return isFound && test.matches(BUILDING_VALIDATION_REGEX);
     }
 
 

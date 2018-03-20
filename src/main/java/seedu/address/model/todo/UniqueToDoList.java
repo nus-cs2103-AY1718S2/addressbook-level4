@@ -44,40 +44,6 @@ public class UniqueToDoList implements Iterable<ToDo> {
         internalList.add(toAdd);
     }
 
-    /**
-     * Replaces the to-do {@code target} in the list with {@code editedToDo}.
-     *
-     * @throws DuplicateToDoException if the replacement is equivalent to another existing to-do in the list.
-     */
-    public void setToDo(ToDo target, ToDo editedToDo)
-            throws DuplicateToDoException {
-        requireNonNull(editedToDo);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            // throw new ToDoNotFoundException();
-        }
-
-        if (!target.equals(editedToDo) && internalList.contains(editedToDo)) {
-            throw new DuplicateToDoException();
-        }
-
-        internalList.set(index, editedToDo);
-    }
-
-    /**
-     * Removes the equivalent to-do from the list.
-     *
-     */
-    public boolean remove(ToDo toRemove) {
-        requireNonNull(toRemove);
-        final boolean toDoFoundAndDeleted = internalList.remove(toRemove);
-        if (!toDoFoundAndDeleted) {
-            // throw new ToDoNotFoundException();
-        }
-        return toDoFoundAndDeleted;
-    }
-
     public void setToDos(UniqueToDoList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

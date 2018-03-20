@@ -147,7 +147,7 @@ Returns `john` and `John Doe`
 `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by groups: `findgroup` `v1.2`
+=== Locating persons by groups: `findgroup` `since v1.2`
 
 Finds persons whose groups matches any of the given keywords. +
 Format: `findgroup KEYWORD [MORE_KEYWORDS]` +
@@ -170,7 +170,7 @@ Returns `John Doe`
 `fg neighbours friends colleagues` +
 Returns any person having groups `neighbours`, `friends`, or `colleagues`
 
-=== Locating persons by preferences: `findpref` `v1.2`
+=== Locating persons by preferences: `findpref` `since v1.2`
 
 Finds persons whose preferences matches any of the given keywords. +
 Format: `findpref KEYWORD [MORE_KEYWORDS]` +
@@ -236,6 +236,64 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` OR `s 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Adding an order : `orderadd` `since v1.2`
+
+Adds an order to the person specified by the index number used in the last person listing. +
+Format: `orderadd INDEX i/ORDER INFORMATION pr/PRICE q/QUANTITY d/DELIVERY DATE` +
+Alias: `oa`
+
+[NOTE]
+For now, orders are added to the list of all orders and not the person selected.
+We are planning to implement this aspect by `v1.3`.
+
+Examples:
+
+* `list` +
+`orderadd 1 i/Chocolates pr/10.00 q/5 d/12-08-2018` OR +
+`oa 1 i/Chocolates pr/10.00 q/5 d/12-08-2018` +
+Adds the 'Chocolates' order to the 1st person in the address book.
+
+* `find Betsy` +
+`orderadd 2 i/Books pr/20.00 q/2 d/04-11-2018` OR +
+`oa 2 i/Books pr/20.00 q/2 d/04-11-2018` +
+Adds the 'Books' order to 2nd person in the results of the `find` command.
+
+=== Editing an order : `orderedit` `since v1.2`
+
+Edits the order specified by the index number used in the order listing. +
+Format: `orderedit INDEX [i/ORDER INFORMATION] [pr/PRICE] [q/QUANTITY] [d/DELIVERY DATE]` +
+Alias: `oe`
+
+****
+* Edits the order at the specified `INDEX`. The index refers to the index number shown in the last order listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Examples:
+
+* `orderedit 1 q/10` OR +
+`or 1 q/10`
+Edits the quantity field of the 1st order to be 10.
+
+=== Deleting an order : `orderdelete` `since v1.2`
+
+Deletes the order specified by the index number used in the order listing. +
+Format: `orderdelete INDEX` +
+Alias: `od`
+
+****
+* Deletes the order at the specified `INDEX`.
+* The index refers to the index number shown in the most recent order listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `orderdelete 3` OR +
+`od 3`
+Deletes the 3rd order of the order list in the address book.
 
 === Listing entered commands : `history`
 
@@ -340,6 +398,12 @@ e.g. `findpref computers`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *OrderAdd* : `orderadd INDEX i/ORDER INFORMATION pr/PRICE q/QUANTITY d/DELIVERY DATE` +
+e.g. `orderadd 1 i/NBA 2k18 pr/229.99 q/1 d/11-09-2018`
+* *OrderEdit* : `orderedit INDEX [i/ORDER INFORMATION] [pr/PRICE] [q/QUANTITY] [d/DELIVERY DATE]` +
+e.g. `orderedit 1 pr/15.00 d/05-03-2018`
+* *OrderDelete* : `orderdelete INDEX` +
+e.g. `orderdelete 5`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
@@ -364,6 +428,12 @@ e.g. `fp computers`
 * *Help* : `?`
 * *Select* : `s INDEX` +
 e.g. `s 2`
+* *OrderAdd* : `oa INDEX i/ORDER INFORMATION pr/PRICE q/QUANTITY d/DELIVERY DATE` +
+e.g. `oa 1 i/NBA 2k18 pr/229.99 q/1 d/11-09-2018`
+* *OrderEdit* : `oe [i/ORDER INFORMATION] [pr/PRICE] [q/QUANTITY] [d/DELIVERY DATE]` +
+e.g. `oe 1 pr/15.00 d/05-03-2018`
+* *OrderDelete* : `od INDEX` +
+e.g. `od 5`
 * *History* : `h`
 * *Undo* : `u`
 * *Redo* : `r`
@@ -372,7 +442,6 @@ e.g. `s 2`
 == Coming in v2.0
 
 * Encrypting data files
-* Adding, editing, and deleting orders
 * Reminders
 * Viewing schedule in integrated calendar
 * Sending promotions to target groups

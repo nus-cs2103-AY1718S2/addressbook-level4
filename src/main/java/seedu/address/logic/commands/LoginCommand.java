@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.login.Password;
@@ -10,7 +8,7 @@ import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.login.exceptions.AuthenticationFailedException;
 
-// @@author kaisertanqr
+//@@author kaisertanqr
 /**
  * Authenticates login credentials.
  */
@@ -18,14 +16,14 @@ public class LoginCommand extends Command {
 
     public static final String COMMAND_WORD = "login";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Login to your SLAP. "
-            + "Parameters: "
-            + PREFIX_USERNAME + "USERNAME "
-            + PREFIX_PASSWORD + "PASSWORD ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
+            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " alice bob charlie";
 
-    public static final String MESSAGE_LOGIN_SUCCESS = "Login successful!";
-    public static final String MESSAGE_LOGIN_FAILURE = "Username or password is incorrect. Please login again.";
-    public static final String MESSAGE_LOGIN_ALREADY = "You have already logged in.";
+    public static final String LOGIN_SUCCESS = "Login successful!";
+    public static final String LOGIN_FAILURE = "Username or password is incorrect. Please login again.";
+    public static final String LOGIN_ALREADY = "You have already logged in.";
 
     private final Username username;
     private final Password password;
@@ -40,11 +38,11 @@ public class LoginCommand extends Command {
         requireNonNull(model);
         try {
             model.checkLoginCredentials(this.username, this.password);
-            return new CommandResult(MESSAGE_LOGIN_SUCCESS);
+            return new CommandResult(LOGIN_SUCCESS);
         } catch (AlreadyLoggedInException e) {
-            throw new CommandException(MESSAGE_LOGIN_ALREADY);
+            throw new CommandException(LOGIN_ALREADY);
         } catch (AuthenticationFailedException e) {
-            throw new CommandException(MESSAGE_LOGIN_FAILURE);
+            throw new CommandException(LOGIN_FAILURE);
         }
     }
 

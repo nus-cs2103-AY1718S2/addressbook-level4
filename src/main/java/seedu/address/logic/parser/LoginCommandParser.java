@@ -12,9 +12,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 
-
-/** @@author kaisertanqr
- *
+//@@author kaisertanqr
+/**
  * Parses input arguments and creates a new LoginCommand object
  */
 public class LoginCommandParser implements Parser<LoginCommand> {

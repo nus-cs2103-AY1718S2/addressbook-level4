@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -69,6 +70,16 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private AnchorPane topTitlePlaceholder;
 
+    // Responsive
+    @FXML
+    private SplitPane bottomPaneSplit;
+
+    @FXML
+    private AnchorPane bottomListPane;
+
+    @FXML
+    private AnchorPane bottomInfoPane;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -89,6 +100,9 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+
+        // Handle responsive
+        handleSplitPaneResponsive();
 
         // Handle minimize and maximize request
         registerAsAnEventHandler(this);
@@ -157,6 +171,17 @@ public class MainWindow extends UiPart<Stage> {
 
     void releaseResources() {
 
+    }
+
+    private void handleSplitPaneResponsive() {
+        int splitHandleSize = 5;
+
+        bottomPaneSplit.widthProperty().addListener((observable, oldValue, newValue) -> {
+            if (bottomInfoPane.getWidth() > bottomInfoPane.getMinWidth() - splitHandleSize) {
+                bottomPaneSplit.setDividerPosition(0,
+                        (bottomListPane.getWidth() + splitHandleSize) / newValue.doubleValue());
+            }
+        });
     }
 
     /**

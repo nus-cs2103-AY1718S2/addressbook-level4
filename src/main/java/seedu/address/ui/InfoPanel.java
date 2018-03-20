@@ -11,6 +11,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
@@ -27,7 +28,9 @@ import seedu.address.model.person.Rating;
 public class InfoPanel extends UiPart<Region> {
 
     public static final Person DEFAULT_PERSON = null;
+
     private static final String FXML = "InfoPanel.fxml";
+    private static final int SPLIT_MIN_WIDTH = 550;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -35,6 +38,20 @@ public class InfoPanel extends UiPart<Region> {
     private AnchorPane infoPaneWrapper;
     @FXML
     private SplitPane infoSplitPane;
+
+    // Responsive
+    @FXML
+    private ScrollPane infoMainPane;
+    @FXML
+    private ScrollPane infoSplitMainPane;
+    @FXML
+    private VBox infoMain;
+    @FXML
+    private AnchorPane infoMainRatings;
+    @FXML
+    private AnchorPane infoSplitSidePane;
+    @FXML
+    private VBox infoSplitRatings;
 
     @FXML
     private Label infoMainName;
@@ -79,9 +96,50 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private ProgressBar infoRatingExperience;
 
+
     public InfoPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
+
+        infoPaneWrapper.widthProperty().addListener((observable, oldValue, newValue) -> {
+            handleResize(oldValue.intValue(), newValue.intValue());
+        });
+        handleResponsive((int) infoPaneWrapper.getWidth());
+    }
+
+    private void handleResize(int oldValue, int newValue) {
+        // Process only if there are differences
+        int smaller = Math.min(oldValue, newValue);
+        int larger  = Math.max(oldValue, newValue);
+
+        if (smaller <= SPLIT_MIN_WIDTH && larger >= SPLIT_MIN_WIDTH) {
+            handleResponsive(newValue);
+        }
+    }
+
+    private void handleResponsive(int width) {
+        if (width >= SPLIT_MIN_WIDTH) {
+            infoSplitPane.setVisible(true);
+            infoMainPane.setVisible(false);
+
+            infoMainRatings.getChildren().remove(infoSplitRatings);
+            infoSplitSidePane.getChildren().remove(infoSplitRatings);
+            infoMainPane.setContent(null);
+
+            infoSplitMainPane.setContent(infoMain);
+            infoSplitSidePane.getChildren().add(infoSplitRatings);
+
+        } else {
+            infoMainPane.setVisible(true);
+            infoSplitPane.setVisible(false);
+
+            infoMainRatings.getChildren().remove(infoSplitRatings);
+            infoSplitSidePane.getChildren().remove(infoSplitRatings);
+            infoSplitMainPane.setContent(null);
+
+            infoMainPane.setContent(infoMain);
+            infoMainRatings.getChildren().add(infoSplitRatings);
+        }
     }
 
     @Subscribe
@@ -89,7 +147,7 @@ public class InfoPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person person = event.getNewSelection().person;
 
-        infoSplitPane.setVisible(true);
+        infoPaneWrapper.setVisible(true);
         infoMainName.setText(person.getName().fullName);
         infoMainUniversity.setText("WIP");
         infoMainMajorYear.setText("WIP (Expected " + person.getExpectedGraduationYear().value + ")");

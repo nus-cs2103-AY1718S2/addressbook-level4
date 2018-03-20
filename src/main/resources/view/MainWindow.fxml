@@ -28,10 +28,10 @@
                     <AnchorPane fx:id="centerPanePlaceholder" maxHeight="95.0" minHeight="95.0" prefHeight="95.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     <AnchorPane fx:id="bottomPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
                         <SplitPane fx:id="bottomPaneSplit" dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <AnchorPane fx:id="bottomListPane" maxWidth="300.0" minWidth="300.0">
+                            <AnchorPane fx:id="bottomListPane" minWidth="300.0" prefWidth="300.0">
                                 <AnchorPane fx:id="listPersonsPlaceholder" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                             </AnchorPane>
-                            <AnchorPane fx:id="bottomInfoPane">
+                            <AnchorPane fx:id="bottomInfoPane" minWidth="400.0">
                                 <VBox fx:id="welcomePane" alignment="CENTER" fillWidth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <Label fx:id="welcomeTitle" text="Welcome to HR+"/>
                                     <Pane fx:id="logoWelcome" styleClass="logo-hr" maxWidth="-Infinity" prefHeight="80.0" prefWidth="120.0" VBox.vgrow="NEVER">

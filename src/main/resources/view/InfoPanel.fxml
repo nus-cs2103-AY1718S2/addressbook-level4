@@ -14,10 +14,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.ProgressBar?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="infoPaneWrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-    <ScrollPane fx:id="infoMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="300.0" minWidth="300.0" pannable="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="infoPaneWrapper" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <ScrollPane fx:id="infoMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     <SplitPane fx:id="infoSplitPane" dividerPositions="0.5" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <ScrollPane fx:id="infoSplitMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="300.0" minWidth="300.0" pannable="true">
+        <ScrollPane fx:id="infoSplitMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true">
             <VBox fx:id="infoMain">
                 <AnchorPane fx:id="infoMainTop">
                     <VBox fx:id="infoMainTopLeft" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -164,7 +164,7 @@
                 </padding>
             </VBox>
         </ScrollPane>
-        <AnchorPane fx:id="infoSplitSidePane">
+        <AnchorPane fx:id="infoSplitSidePane" maxWidth="300.0" minWidth="250.0">
             <padding>
                 <Insets left="16.0" right="8.0" top="8.0" />
             </padding>

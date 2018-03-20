@@ -22,6 +22,10 @@ public class RemovePatientQueueCommand extends Command {
 
     private Patient patientToRemove;
 
+    public RemovePatientQueueCommand() {
+        this.targetIndex = null;
+    }
+
     public RemovePatientQueueCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }

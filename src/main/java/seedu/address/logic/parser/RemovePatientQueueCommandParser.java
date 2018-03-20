@@ -19,6 +19,11 @@ public class RemovePatientQueueCommandParser implements Parser<RemovePatientQueu
      */
     @Override
     public RemovePatientQueueCommand parse(String args) throws ParseException {
+
+        if (args.isEmpty()) {
+            return new RemovePatientQueueCommand();
+        }
+
         try {
             Index index = ParserUtil.parseIndex(args);
             return new RemovePatientQueueCommand(index);

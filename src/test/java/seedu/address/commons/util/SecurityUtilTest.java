@@ -78,6 +78,10 @@ public class SecurityUtilTest {
     public void encrypt_wrongPasswordLength_throwsAssertionError() throws Exception {
 
         byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
+
+        FileWriter writer = new FileWriter(TEST_DATA_FILE);
+        writer.write(TEST_DATA);
+        writer.close();
         hashedPassword = Arrays.copyOf(hashedPassword, 13);
 
         thrown.expect(AssertionError.class);

@@ -69,6 +69,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setToDos(List<ToDo> todos) throws DuplicateToDoException {
+        this.todos.setToDos(todos);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -78,11 +82,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
+        List<ToDo> syncedToDoList = newData.getToDoList();
 
         try {
             setPersons(syncedPersonList);
+            setToDos(syncedToDoList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (DuplicateToDoException e) {
+            throw new AssertionError("AddressBooks should not have duplicate todos");
         }
     }
 

@@ -14,6 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMETABLE_LINK_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMETABLE_LINK_BOB;
+import static seedu.address.testutil.TypicalToDos.getTypicalToDos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +22,9 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.todo.ToDo;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.todo.exceptions.DuplicateToDoException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -85,6 +88,13 @@ public class TypicalPersons {
             try {
                 ab.addPerson(person);
             } catch (DuplicatePersonException e) {
+                throw new AssertionError("not possible");
+            }
+        }
+        for (ToDo todo : getTypicalToDos()) {
+            try {
+                ab.addToDo(todo);
+            } catch (DuplicateToDoException e) {
                 throw new AssertionError("not possible");
             }
         }

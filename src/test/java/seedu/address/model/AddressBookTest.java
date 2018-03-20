@@ -23,6 +23,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.todo.Content;
 import seedu.address.model.todo.ToDo;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -59,7 +60,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<ToDo> newToDos = Arrays.asList(new ToDo(new Content("Something to do")));
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -106,9 +108,10 @@ public class AddressBookTest {
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ToDo> todos = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<ToDo> todos) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.todos.setAll(todos);
         }
 
         @Override

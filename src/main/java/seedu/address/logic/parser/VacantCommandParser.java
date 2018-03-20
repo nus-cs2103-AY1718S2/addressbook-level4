@@ -3,14 +3,14 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.model.building.Building.BUILDINGS;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.VacantCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.building.Building;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Parses input arguments and creates a new VacantCommand object

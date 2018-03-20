@@ -3,7 +3,6 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-
 Pigeons was developed by T16-B2 from the CS2103 course. We are a team comprised of students from NUS as well as
 students doing exchange from around the world.
 

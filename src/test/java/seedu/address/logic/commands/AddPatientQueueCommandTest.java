@@ -96,7 +96,6 @@ public class AddPatientQueueCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
-    
     private void prepareForDuplicatePatient() throws Exception {
         AddPatientQueueCommand duplicateCommand = prepareCommand("fiona");
         duplicateCommand.execute();

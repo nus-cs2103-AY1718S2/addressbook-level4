@@ -68,7 +68,7 @@ Alias: `a` +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of groups (including 0)
 
 Examples:
 
@@ -91,8 +91,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [l/TIMETABLE_LINK] 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing groups, the existing groups of the person will be removed i.e adding of groups is not cumulative.
+* You can remove all the person's groups by typing `t/` without specifying any groups after it.
 ****
 
 Examples:
@@ -100,7 +100,7 @@ Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing groups.
 
 === Locating persons by name: `find`
 
@@ -176,9 +176,9 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Change a tag's color: `changeTagColor`
+=== Change a group's color: `changeTagColor`
 
-Change a specific tag color to one of the supported colors. +
+Change a specific group color to one of the supported colors. +
 Alias: `color` +
 Format `changeTagColor TAG COLOR`
 
@@ -187,7 +187,7 @@ Format `changeTagColor TAG COLOR`
 * Available COLORS are: teal, red, yellow, blue, orange, brown, green, pink, black, grey
 ****
 
-// tag::undoredo[]
+// group::undoredo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
@@ -283,7 +283,7 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
+// group::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 Personal log in page that requires saved password. +

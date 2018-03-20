@@ -40,6 +40,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label rating;
     @FXML
+    private Label review;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
@@ -52,6 +54,7 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
+        review.setText(person.getReview().value);
         initTags(person);
     }
 

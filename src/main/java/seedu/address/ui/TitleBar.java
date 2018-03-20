@@ -95,7 +95,6 @@ public class TitleBar extends UiPart<Region> {
      */
     @FXML
     public void handleHelp(MouseEvent event) {
-        System.out.println(event);
         if (MouseButton.PRIMARY.equals(event.getButton())) {
             HelpWindow helpWindow = new HelpWindow();
             helpWindow.show();

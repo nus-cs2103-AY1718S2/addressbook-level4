@@ -22,7 +22,7 @@
             </HBox.margin>
             <Pane fx:id="controlMinimizeInner" layoutY="16.2" maxHeight="1.8" maxWidth="18.0" minHeight="1.8" minWidth="18.0" prefHeight="1.8" prefWidth="18.0" />
         </Pane>
-        <Pane fx:id="controlExpand" styleClass="icon-expand" onMouseClicked="#handleMaximize" maxHeight="18.0" maxWidth="18.0" minHeight="18.0" minWidth="18.0" prefHeight="18.0" prefWidth="18.0" HBox.hgrow="NEVER">
+        <Pane fx:id="controlMaximize" styleClass="icon-expand" onMouseClicked="#handleMaximize" maxHeight="18.0" maxWidth="18.0" minHeight="18.0" minWidth="18.0" prefHeight="18.0" prefWidth="18.0" HBox.hgrow="NEVER">
             <HBox.margin>
                 <Insets right="10.0" />
             </HBox.margin>

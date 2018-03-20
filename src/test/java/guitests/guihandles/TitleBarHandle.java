@@ -16,10 +16,17 @@ public class TitleBarHandle extends NodeHandle<Node> {
     private static final String SYNC_STATUS_ID = "#topStatusMessage";
     private static final String SAVE_LOCATION_STATUS_ID = "#topStatusFile";
     private static final String CONTROL_HELP_ID = "#controlHelp";
+    private static final String CONTROL_MINIMIZE_ID = "#controlMinimize";
+    private static final String CONTROL_MAXIMIZE_ID = "#controlMaximize";
+    private static final String CONTROL_CLOSE_ID = "#controlClose";
 
     private final Label syncStatusNode;
     private final Label saveLocationNode;
     private final Pane controlHelp;
+    private final Pane controlMinimize;
+    private final Pane controlMaximize;
+    private final Pane controlClose;
+
 
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
@@ -30,6 +37,9 @@ public class TitleBarHandle extends NodeHandle<Node> {
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
         this.controlHelp = getChildNode(CONTROL_HELP_ID);
+        this.controlMinimize = getChildNode(CONTROL_MINIMIZE_ID);
+        this.controlMaximize = getChildNode(CONTROL_MAXIMIZE_ID);
+        this.controlClose = getChildNode(CONTROL_CLOSE_ID);
     }
 
     /**
@@ -42,8 +52,29 @@ public class TitleBarHandle extends NodeHandle<Node> {
     /**
      * Opens the {@code HelpWindow} using the button in {@code TitleBar}.
      */
-    public void openHelpWindowUsingMenu() {
+    public void openHelpWindowUsingControl() {
         new GuiRobot().clickOn(controlHelp, MouseButton.PRIMARY);
+    }
+
+    /**
+     * Minimize the application using the button in {@code TitleBar}.
+     */
+    public void minimizeWindow() {
+        new GuiRobot().clickOn(controlMinimize, MouseButton.PRIMARY);
+    }
+
+    /**
+     * Maximize the application using the button in {@code TitleBar}.
+     */
+    public void maximizeWindow() {
+        new GuiRobot().clickOn(controlMaximize, MouseButton.PRIMARY);
+    }
+
+    /**
+     * Close the application using the button in {@code TitleBar}.
+     */
+    public void closeWindow() {
+        new GuiRobot().clickOn(controlClose, MouseButton.PRIMARY);
     }
 
     /**

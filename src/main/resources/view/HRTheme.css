@@ -177,17 +177,17 @@
 /* Controls */
 
 #controlHelpInner, #controlMinimizeInner,
-#controlExpand, #controlClose {
+#controlMaximize, #controlClose {
     -fx-background-color: white;
 }
 
 #controlHelp, #controlMinimize,
-#controlExpand, #controlClose {
+#controlMaximize, #controlClose {
     -fx-opacity: 0.5;
 }
 
 #controlHelp:hover, #controlMinimize:hover,
-#controlExpand:hover, #controlClose:hover {
+#controlMaximize:hover, #controlClose:hover {
     -fx-opacity: 0.9;
 }
 

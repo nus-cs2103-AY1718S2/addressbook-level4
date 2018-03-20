@@ -34,7 +34,6 @@ m/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="rating" styleClass="cell_small_label_rating" text="\$rating" />
-      <Label fx:id="review" styleClass="cell_small_label" text="\$review" />
     </VBox>
   </GridPane>
 </HBox>

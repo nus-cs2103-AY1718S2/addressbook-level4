@@ -20,8 +20,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.Address;
+import seedu.address.model.patient.BloodType;
+import seedu.address.model.patient.DateOfBirth;
 import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.Remark;
@@ -105,13 +108,17 @@ public class EditCommand extends UndoableCommand {
         assert patientToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(patientToEdit.getName());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(patientToEdit.getNric());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(patientToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(patientToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(patientToEdit.getAddress());
+        DateOfBirth updatedDob = editPersonDescriptor.getDob().orElse(patientToEdit.getDob());
+        BloodType updatedBloodType = editPersonDescriptor.getBloodType().orElse(patientToEdit.getBloodType());
         Remark updatedRemark = patientToEdit.getRemark(); //edit command cannot change remarks
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(patientToEdit.getTags());
 
-        return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
+        return new Patient(updatedName, updatedNric, updatedPhone, updatedEmail, updatedAddress,
+                updatedDob, updatedBloodType, updatedRemark, updatedTags);
     }
 
     @Override
@@ -139,9 +146,12 @@ public class EditCommand extends UndoableCommand {
      */
     public static class EditPersonDescriptor {
         private Name name;
+        private Nric nric;
         private Phone phone;
         private Email email;
         private Address address;
+        private DateOfBirth dob;
+        private BloodType bloodType;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -152,9 +162,12 @@ public class EditCommand extends UndoableCommand {
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
+            setNric(toCopy.nric);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setDob(toCopy.dob);
+            setBloodType(toCopy.bloodType);
             setTags(toCopy.tags);
         }
 
@@ -172,6 +185,10 @@ public class EditCommand extends UndoableCommand {
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
+
+        public void setNric(Nric nric) { this.nric = nric; }
+
+        public Optional<Nric> getNric() { return Optional.ofNullable(nric); }
 
         public void setPhone(Phone phone) {
             this.phone = phone;
@@ -193,9 +210,16 @@ public class EditCommand extends UndoableCommand {
             this.address = address;
         }
 
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
-        }
+        public Optional<Address> getAddress() { return Optional.ofNullable(address); }
+
+        public void setDob(DateOfBirth dob) { this.dob = dob; }
+
+        public Optional<DateOfBirth> getDob() { return Optional.ofNullable(dob); }
+
+        public void setBloodType(BloodType bloodType) { this.bloodType = bloodType; }
+
+        public Optional<BloodType> getBloodType() { return Optional.ofNullable(bloodType); }
+
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

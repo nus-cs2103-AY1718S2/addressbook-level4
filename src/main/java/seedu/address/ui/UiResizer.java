@@ -55,13 +55,11 @@ public class UiResizer {
         double stageHeight = stage.getHeight();
 
         if (stageWidth == screenBound.getWidth() && stageHeight == screenBound.getHeight()) {
-            stage.setMaximized(false);
             stage.setX(lastX);
             stage.setY(lastY);
             stage.setWidth(lastWidth);
             stage.setHeight(lastHeight);
         } else {
-            stage.setMaximized(true);
             lastX = stageX;
             lastY = stageY;
             lastWidth = stageWidth;

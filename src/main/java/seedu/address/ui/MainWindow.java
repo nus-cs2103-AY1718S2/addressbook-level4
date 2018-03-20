@@ -219,7 +219,6 @@ public class MainWindow extends UiPart<Stage> {
     @Subscribe
     public void handleMaximizeAppRequestEvent(MaximizeAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        primaryStage.setMaximized(true);
-        primaryStage.centerOnScreen();
+        uiResizer.toggleMaximize();
     }
 }

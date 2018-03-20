@@ -160,8 +160,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    public boolean checkForStudentInList(Student key) throws StudentNotFoundException {
-        if(students.contains(key)) {
+    /**
+     * Checks for the existence of {@code key} in this {@code AddressBook}.
+     * @throws StudentNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean checkForStudentInAB(Student key) throws StudentNotFoundException {
+        if (students.contains(key)) {
             return true;
         } else {
             throw new StudentNotFoundException();

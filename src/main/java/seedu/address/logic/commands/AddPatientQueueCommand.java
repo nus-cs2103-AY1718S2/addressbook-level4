@@ -2,10 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.logging.Logger;
-
-import javafx.collections.ObservableList;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
@@ -26,7 +22,6 @@ public class AddPatientQueueCommand extends Command {
     public static final String MESSAGE_SUCCESS = "%1$s is registered in the waiting list";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already registered.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
-    private static final Logger logger = LogsCenter.getLogger(ViewAppointmentCommand.class);
     private final NameContainsKeywordsPredicate predicate;
 
 
@@ -49,8 +44,6 @@ public class AddPatientQueueCommand extends Command {
 
         try {
             model.addPatientToQueue(patientFound);
-            logger.info("--add patient to visiting queue---");
-            printOutVisitingQueue(model.getVisitingQueue());
             return new CommandResult(String.format(MESSAGE_SUCCESS, patientFound.getName()));
         } catch (DuplicateDataException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -63,11 +56,5 @@ public class AddPatientQueueCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof AddPatientQueueCommand // instanceof handles nulls
                 && predicate.equals(((AddPatientQueueCommand) other).predicate));
-    }
-
-    private void printOutVisitingQueue(ObservableList<Patient> queue) {
-        queue.forEach(patient -> {
-            logger.info("patient: " + patient.getName() + "\n");
-        });
     }
 }

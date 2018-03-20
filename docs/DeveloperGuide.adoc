@@ -365,6 +365,87 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::programmingLanguage[]
+=== Programming Language Feature
+==== Current Implementation
+
+The programming language feature involves having an additional class to the student model called `ProgrammingLanguage`. 
+It stores the name of the programming language currently being taught to each student as a string.
+
+[NOTE]
+The string for `ProgrammingLanguage` must contain visible characters.
+
+image::ModelWithPLFeature.png[width="800"]
+
+As can be seen from the diagram, the field `ProgrammingLanuage` has been added to the student model. 
+
+Concerning the Logic component, when the `add` command or `edit` command is called, 
+a `Student` object with attributes including `ProgrammingLanguage` will be created/edited depending on which command was entered.
+
+For example, adding a student would have the command string parsed for arguments in such a way: 
+
+[source, java]
+----
+    public AddCommand parse(String args) throws ParseException {
+        // ...Tokenize the String Input...
+
+        // ...Check if prefixes are present...
+
+        try {
+		
+            // ...Parses the other fields required of a Student...
+			
+            ProgrammingLanguage programmingLanguage = ParserUtil.parseSubject(argMultimap
+                    .getValue(PREFIX_PROGRAMMING_LANGUAGE)).get();
+         
+            Student student = new Student(name, phone, email, address, programmingLanguage, tagList);
+
+            return new AddCommand(student);
+		} catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+	}
+----
+
+A new student would then be added. On the other hand, editing a student's programming language will be done by creating an edited student in such a way:
+
+[source, java]
+----
+	private static Student createEditedStudent(Student studentToEdit, EditStudentDescriptor editStudentDescriptor) {
+        assert studentToEdit != null;
+
+        // ...Set other attributes of the prospective newly edited student...
+		
+        ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage();
+        
+        return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
+                updatedTags);
+    }
+----
+
+The editedStudent will have the new programming language attribute and will hence be used to replace in the Address Book in-memory.
+
+==== Design Considerations
+
+===== Aspect: How to store `ProgrammingLanguage` for a `Student`
+
+* **Alternative 1 (current choice):** Store as an attribute of Student.
+** Pros: Easy to keep track of as well as modify.
+** Cons: Coupling increases as more classes (`ProgrammingLanguage` and `Student`) are associated with each other.
+* **Alternative 2:** Store as a separate list and have each student index in the UniqueStudentsList be mapped to each item in the list.
+** Pros: Less coupling so less need to refactor code
+** Cons: Might be messier to implement, especially if the UniqueStudentsList have it's students swapping indexes.
+
+===== Aspect: What command to add `ProgrammingLanguage` to `Student`
+
+* **Alternative 1 (current choice):** Implement it through the existing `add` command.
+** Pros: Intuitive and the user does not have to learn an additional command
+** Cons: User will have to type a longer string for add command to include the programming language used by the student.
+* **Alternative 2:** Implement it as a new command.
+** Pros: User will be able to add or modify `ProgrammingLanguage` one or possibly even a few students at their own discretion.
+** Cons: User will have to learn a new specific command and might also be slightly difficult to implement.
+// end::programmingLanguage[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

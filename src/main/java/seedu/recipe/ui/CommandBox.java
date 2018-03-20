@@ -36,7 +36,8 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static final String LF = "\n";
+    private static final char LF = '\n';
+    private static final char SPACE = ' ';
     private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit", "exit", "find",
         "help", "history", "list", "redo", "select", "undo"};
     private static final int MAX_SUGGESTIONS = 4;
@@ -85,7 +86,6 @@ public class CommandBox extends UiPart<Region> {
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
      */
-
     private void navigateToPreviousInput() {
         assert historySnapshot != null;
         if (!historySnapshot.hasPrevious()) {
@@ -95,26 +95,51 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.previous());
     }
 
+    //@@hoangduong1607
     /**
      * Shows suggestions for commands when users type in Command Box
      */
     private void showSuggestions() {
-        String inputText = commandTextArea.getText();
+        String inputText = findLastWord(commandTextArea.getText());
         // finds suggestions and displays
         suggestionPopUp = new ContextMenu();
         findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
-        suggestionPopUp.show(commandTextArea, Side.BOTTOM, 0, 0);
+        suggestionPopUp.show(commandTextArea, Side.BOTTOM, commandTextArea.getCaretPosition(), -commandTextArea.getHeight() +
+                commandTextArea.getBorder().getInsets().getTop() + 2 * commandTextArea.getFont().getSize());
     }
 
     /**
-     * Finds possible suggestions from {@code inputText} and
+     * Finds last word in user input from {@code inputText}
+     */
+    private String findLastWord(String inputText) {
+        String lastWord = new String("");
+
+        for (int i = inputText.length() - 1; i >= 0; i--) {
+            if (isWordSeparator(inputText.charAt(i))) {
+                break;
+            }
+            lastWord = inputText.charAt(i) + lastWord;
+        }
+
+        return lastWord;
+    }
+
+    /**
+     * Checks whether {@code inputChar} is a word separator
+     */
+    private boolean isWordSeparator(char inputChar) {
+        return (inputChar == LF || inputChar == SPACE);
+    }
+
+    /**
+     * Finds possible suggestions from {@code word} and
      * list of valid suggestions {@code textList}.
      */
-    public void findSuggestions(String inputText, List<String> textList) {
+    private void findSuggestions(String word, List<String> textList) {
         Collections.sort(textList);
 
         for (String suggestion : textList) {
-            if (suggestion.startsWith(inputText)) {
+            if (suggestion.startsWith(word)) {
                 addSuggestion(suggestion);
             }
 
@@ -132,10 +157,18 @@ public class CommandBox extends UiPart<Region> {
         item.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                replaceText(item.getText());
+                replaceText(replaceLastWord(commandTextArea.getText(), item.getText()));
             }
         });
         suggestionPopUp.getItems().add(item);
+    }
+
+    /**
+     * Replaces last word of {@code text} with {@code newLastWord}
+     */
+    private String replaceLastWord(String text, String newLastWord) {
+        int newLength = text.length() - findLastWord(text).length();
+        return text.substring(0, newLength) + newLastWord;
     }
 
     /**
@@ -147,6 +180,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author
     /**
      * Updates the text field with the next input in {@code historySnapshot},
      * if there exists a next input in {@code historySnapshot}

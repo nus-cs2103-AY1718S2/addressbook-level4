@@ -5,6 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -13,6 +17,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.tag.Tag;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -62,6 +67,39 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
+    public Optional<ReadOnlyAddressBook> readAddressBookBackup() throws DataConversionException, IOException {
+        return readAddressBook(filePath + ".backup");
+    }
+
+    @Override
+    public Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws DataConversionException,
+                                                                                       IOException {
+        if (Objects.isNull(filePath)) {
+            throw new NullPointerException();
+        } else {
+            return readAddressBook(filePath + ".backup");
+        }
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        if (Objects.isNull(filePath)) {
+            throw new NullPointerException();
+        } else {
+            saveAddressBook(addressBook, filePath + ".backup");
+        }
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        if (Objects.isNull(filePath)) {
+            throw new NullPointerException();
+        } else {
+            saveAddressBook(addressBook, filePath + ".backup");
+        }
+    }
+
+    @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
     }
@@ -77,6 +115,30 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+
+        saveTagColors(addressBook);
+    }
+
+    /**
+     * Save the tags and their specified colors from {@code addressBook}
+     */
+    private void saveTagColors(ReadOnlyAddressBook addressBook) throws IOException {
+        File oldFile = new File(Tag.TAG_COLOR_FILE_PATH);
+        oldFile.delete();
+        File newFile = new File(Tag.TAG_COLOR_FILE_PATH);
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(Tag.TAG_COLOR_FILE_PATH, "UTF-8");
+            List<Tag> tags = addressBook.getTagList();
+            for (Tag tag : tags) {
+                writer.write(tag.name + ":" + tag.color + "\n");
+            }
+        } catch (FileNotFoundException fnfe) {
+            throw new AssertionError("Tag color file not found. This should never happen.\n");
+        } catch (UnsupportedEncodingException uee) {
+            throw new AssertionError("UTF-8 encoding not supported.\n");
+        }
+        writer.close();
     }
 
 }

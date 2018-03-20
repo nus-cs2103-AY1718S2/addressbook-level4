@@ -16,8 +16,6 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
-//import contacts from csv command - need to match CommandWord
-import seedu.address.logic.commands.ImportContactsCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -81,12 +79,6 @@ public class AddressBookParser {
         case DeleteBeforeCommand.COMMAND_ALIAS:
             return new DeleteBeforeCommandParser().parse(arguments);
 
-        case ImportContactsCommand.COMMAND_WORD: //import contacts from csv
-            return new ImportContactsCommandParser().parse(arguments);
-
-        case ImportContactsCommand.COMMAND_ALIAS:
-            return new ImportContactsCommandParser().parse(arguments);
-
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -135,7 +127,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
-            default:
+        default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }

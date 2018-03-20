@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.logic.commands.PasswordCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -17,7 +19,8 @@ public class PasswordCommandParser implements Parser<PasswordCommand> {
     public PasswordCommand parse(String arguments) throws ParseException {
         String args = arguments.trim();
         if ("".equals(args)) {
-            throw new ParseException(PasswordCommand.INVALID_PASSWORD);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PasswordCommand.INVALID_PASSWORD,
+                            PasswordCommand.MESSAGE_USAGE));
         }
         return new PasswordCommand(args);
     }

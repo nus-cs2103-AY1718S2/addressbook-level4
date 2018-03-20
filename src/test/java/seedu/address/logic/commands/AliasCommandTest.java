@@ -88,7 +88,7 @@ public class AliasCommandTest {
         }
 
         @Override
-        public void importAddressBook(String filepath) throws DataConversionException, IOException {
+        public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException {
             fail("This method should not be called.");
         }
 

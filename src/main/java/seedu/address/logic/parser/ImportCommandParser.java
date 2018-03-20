@@ -9,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new ImportCommand object
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
-
+    private static final String SPLIT_TOKEN = " ";
     /**
      * Parses the given {@code String} of arguments in the context of the ImportCommand
      * and returns an ImportCommand object for execution.
@@ -21,7 +21,12 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
         }
+        String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+        if (splitArgs.length != 2) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+        }
 
-        return new ImportCommand(trimmedArgs);
+        return new ImportCommand(splitArgs[0], splitArgs[1]);
     }
 }

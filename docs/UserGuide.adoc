@@ -157,25 +157,8 @@ Format: `deletebefore [d/DATE] [t/TAG]...` or `db [d/DATE] [t/TAG]...`
 
 Examples:
 
-* `deletebefore d/12/12/2017 t/friends` +
-Deletes all friends added before 12/12/2017 in the address book.
-
-=== Deleting dated persons  : `deletebefore` or `db`
-
-Deletes all persons added before a specified date with specified tags. +
-Format: `deletebefore [d/DATE] [t/TAG]...` or `db [d/DATE] [t/TAG]...`
-
-****
-* Persons deleted must have tags that matches all the specified tags.
-* The specified tags can be in any order.
-* At least one tag must be provided.
-* The input date must be in the following format: dd/MM/yyyy.
-****
-
-Examples:
-
-* `deletebefore d/12/12/2017 t/friends` +
-Deletes all friends added before 12/12/2017 in the address book.
+* `deletebefore d/12/12/2017 t/non-clients` +
+Deletes all non-clients added before 12/12/2017 in the address book.
 
 === Selecting a person : `select` or `s`
 
@@ -207,29 +190,78 @@ Format: `history` or `hist`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Email appointment reminder  : `emailreminder` or `er` (tentative)
-
-Email a person a reminder with regards to an upcoming appointment with the specified date and time. +
-Format: `emailreminder INDEX [d/DATE] [ti/TIME]` or `er INDEX [d/DATE] [ti/TIME]`
+// tag::scheduling[]
+=== Add appointment : `addappointment` or `aa`
+Add an appointment with a person in the address book that will be shown in the calendar panel. +
+Format: `addappointment [n/NAME] [d/DATE] [ti/TIME] [l/LOCATION]` or `aa [n/NAME] [d/DATE] [ti/TIME] [l/LOCATION]`
 
 ****
-* Emails the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* Appointment is set at `DATE` and `TIME`
+* Adds an appointment with the person named `NAME`, with the specified `DATE`, `TIME` and `LOCATION` respectively
 * The input date *must be in the following format: dd/MM/yyyy*.
 * The input time *must be in the following format: HH:MM (24hr format)*.
+* The calendar panel will be updated accordingly.
 ****
 
 Examples:
 
-* `list` +
-`er 3 d/12/12/2017 ti/12:30` +
-Emails the 3rd person in the address book a reminder of an appointment on 12/12/2017 at 12:30pm.
+* `aa n/Betsy d/12/12/2017 ti/12:30 l/Gold Park Estate` +
+Creates an appointment with Betsy on 12/12/2017 at 12:30pm at Gold Park Estate.
 
-* `find Betsy` +
-`er 1st d/1/1/2017 ti/14:00` +
-Emails the 1st person in the results of the `find` command a reminder of an appointment on 1/1/2017 at 2:00pm.
+=== Remove appointment : `rmappointment` or `ra` `[Coming in v2.0]`
+Remove an appointment with a person in the addressbook. +
+Format: `rmappointment [n/NAME] [d/DATE] [ti/TIME]` or `ra [n/NAME] [d/DATE] [ti/TIME]`
+
+****
+* Adds an appointment with the person at the specified `INDEX` with the specified `DATE` and `TIME` respectively
+* The input date *must be in the following format: dd/MM/yyyy*.
+* The input time *must be in the following format: HH:MM (24hr format)*.
+* The calendar panel will be updated accordingly.
+****
+
+Examples:
+
+* `rm n/Betsy d/12/12/2017 ti/12:30` +
+Removes the appointment previously arranged with Betsy on 12/12/2017 at 12:30pm.
+
+=== Zoom in calendar view : `zoomin` or `zi`
+Zoom in for the calendar panel to show a more detailed calendar view  +
+Format: `zoomin` or `zi`
+
+****
+* The calendar will zoom in in the following order: Year View -> Month View -> Week View -> Day View.
+****
+
+Examples:
+
+* `zi` +
+If the calendar panel is previously showing the Year View, it will now be showing the Month View.
+
+=== Zoom out calendar view : `zoomout` or `zo`
+Zoom out for the calendar panel to show a wider calendar view  +
+Format: `zoomout` or `zo`
+
+****
+* The calendar will zoom out in the following order: Day View -> Week View -> Month View -> Year View.
+****
+
+Examples:
+
+* `zo` +
+If the calendar panel is previously showing the Day View, it will now be showing the Week View.
+
+=== Configure calendar theme : `configcalendar` or `cc` `[Coming in v2.0]`
+Add an appointment with a person in the address book that will be shown in the calendar panel. +
+Format: `configcalendar [s/STYLE]` or `cc [s/STYLE]`
+
+****
+* Set the calendar theme to the specified predefined `STYLE`.
+****
+
+Examples:
+
+* `cc s/STYLE_2` +
+Set the calendar them to the predefined `STYLE_2`.
+// end::scheduling[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
@@ -325,6 +357,13 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
-* *Email Reminder* : `er 3 d/12/12/2017 ti/12:30`
+* *Add Appointment* : `addappointment [n/NAME] [d/DATE] [ti/TIME] [l/LOCATION]` +
+e.g. `addappointment n/Betsy d/12/12/2017 ti/12:30 l/Gold Park Estate`
+* *Remove Appointment* : `rmappointment [n/NAME] [d/DATE] [ti/TIME]` +
+e.g. `rm n/Betsy d/12/12/2017 ti/12:30`
+* *Zoom In* : `zoomin`
+* *Zoom Out* : `zoomout`
+* *Configure Calendar Theme* : `configcalendar [s/STYLE]`
+e.g. `configcalendar s/STYLE_2`
 * *Undo* : `undo`
 * *Redo* : `redo`

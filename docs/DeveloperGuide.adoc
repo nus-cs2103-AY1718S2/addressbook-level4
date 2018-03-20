@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Pigeons - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-T16-B2/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -780,15 +780,49 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
+Delivery system for drivers with a database of deliveries and locations to map the optimal route in a handsfree offline system.
+
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to manage deliveries
 * prefer desktop apps over other types
-* can type fast
+* requires audio cues while driving and using the program
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* visually-oriented so prefers to see maps instead of addresses
+* may take on different user profiles for different users with different contact lists
+* may require to add contacts on the go occasionally quickly
+* may like to be able to communicate with addresses
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage deliveries faster than a typical GUI driven app while being accessible easily on the go and
+maps out ideal routes for drivers
+
+
+=== Feature contribution
+
+*Shi Kang*
+
+Minor: ability for correspondence with each addressee
+
+Major: Login for each delivery driver to own a separate list of addresses in his customised address book
+
+*Meera*
+
+Minor: adding delivery date field
+
+Major:  Route optimization for the deliveries on each date
+
+*Matthieu*
+
+Minor : simplifying the input
+
+Major: Email updates/correspond with the users that are awaiting a delivery
+
+*Minh*
+
+Minor: Adding google maps and handsfree sound feature
+
+Major: Mapping out the routes for delivery and displaying on google maps
 
 [appendix]
 == User Stories
@@ -808,7 +842,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user with many persons in the address book |sort persons by name, address |locate a person easily
+
+|`* * *` |user with many deliveries in the address book |sort deliveries by date, priority |make my planning
+
+|`* * *` |driver |quickly indicate that I have completed a delivery |always know which are the remaining parcels that I have to deliver
+
+|`* * *` |driver |be able to communicate with the customer |resolve any delivery issues I face
+
+|`* * *` |customer |receive updates about my parcel |know when it's gonna come
+
+|`* *` |driver |be able to find the optimal route to the next destination easily |focus on just driving to the next location
+
+|`*` |driver|my whole day by ordering the deliveries I want to do |avoid losing time during the day
+
+|`*` |driver |have users automatically downloaded from a central database |avoid having to add users one by one myself
+
+|`*` |driver |get traffic updates |follow my schedule
 |=======================================================================
 
 _{More to be added}_
@@ -819,30 +869,39 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Deliver a package to a specific customer
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User enters the package reference
+2. Address book outputs the customer's information (availabilities, address)
+3. User clicks on the customer’s address
+4. Address book open the itinerary to the customer’s address on Google Maps
+5. User can drive to the customer’s location
 +
 Use case ends.
 
 *Extensions*
 
+* 2a. The given package reference is invalid.
++
 [none]
-* 2a. The list is empty.
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Mapping the route for the day
+
+*MSS*
+
+1. User requests to list the database ordered by date of delivery
+2. Address book outputs the list of deliveries
+3. User selects all the addresses and runs the “map” command on the selected addresses
+4. Address book displays a mapped out route for the day with an ideal time to begin the route
+5. User can start the delivery
 +
 Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 _{More to be added}_
 
@@ -852,8 +911,8 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Need to have access to the app while driving, needs to work offline and have internet access for any updates during the day
+.  Driver needs to be trained in the tool so it should be user-friendly
 
 [appendix]
 == Glossary
@@ -926,3 +985,5 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+

@@ -1,7 +1,9 @@
 package seedu.address.ui;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -13,6 +15,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String[] TAG_COLOR = {"red", "green", "blue"};
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -47,7 +50,55 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        labelTag(person);
+    }
+
+    /**
+     * Set the label for the tag
+     * @param p
+     */
+    private void labelTag(Person p) {
+
+        p.getTags().forEach(tag -> {
+            Label showLabel = new Label(tag.tagName);
+            showLabel.getStyleClass().add(fromTagNameToColor(tag.tagName));
+            //Zoom effect on the label when the mouse is on the label
+            labelZoomEffect(showLabel);
+            tags.getChildren().add(showLabel);
+        });
+    }
+
+    /**
+     * Zoom effect on the label when the mouse is on the label
+     * @param label
+     */
+    private void labelZoomEffect(Label label) {
+        label.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                label.setScaleX(1.5);
+                label.setScaleY(1.5);
+            }
+        });
+
+        label.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                label.setScaleX(1);
+                label.setScaleY(1);
+            }
+        });
+    }
+
+    /**
+     *
+     * @param tagName
+     * @return the color for the label.
+     */
+    private String fromTagNameToColor(String tagName) {
+        // use hashCode to hash the tagName into an integer
+        // this help keeping the label colors consistency through every run
+        return TAG_COLOR[Math.abs(tagName.hashCode()) % TAG_COLOR.length];
     }
 
     @Override

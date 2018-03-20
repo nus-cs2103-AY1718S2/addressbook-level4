@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Pigeons - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -782,6 +782,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
@@ -833,32 +834,6 @@ _{More to be added}_
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
-
-[discrete]
-=== Use case: Delete person
-
-*MSS*
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 [discrete]
 === Use case: Deliver a package to a specific customer

@@ -2,6 +2,7 @@ package seedu.recipe.ui.util;
 
 import javafx.scene.input.KeyCombination;
 
+//@@author {yourGithubUsername}
 /**
  * Contains all mappings for keyboard shortcuts
  */

@@ -76,11 +76,17 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ti/SGT`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all persons excluding archived : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all unarchived persons in the address book. +
 Format: `list`
 Alias: `l`
+
+=== Listing all persons including archived : `listall`
+
+Shows a list of all persons (including archived) in the address book. +
+Format: `listall`
+Alias: `la`
 
 === Sorting all persons : `sort`
 
@@ -89,24 +95,31 @@ Format: `sort`
 
 === Listing all clients tagged with one or more specific tag (union): `listtag`
 
-`Coming in v2.0`
+`Coming in v2.0`+
 Shows a list of all clients in the address book tagged with any of the tags entered. +
 Format: `listtag TAG...`
 Alias: `lt`
 
 === Add or modifies notes to a client: `note`
 
-`Coming in v2.0`
+`Coming in v2.0`+
 Adds or modifies notes to an existing client. A text box will appear containing the saved notes (if available) for editing +
 Format: `note INDEX`
 Alias: `n`
 
-=== Archive a client: `archive`
+=== Archives a client: `archive`
 
-`Coming in v2.0`
+`Since v1.2`+
 Archives an existing client+
 Format: `archive INDEX`
 Alias: `ar`
+
+=== Unarchives a client: `unarchive`
+
+`Since v1.2`+
+Unarchives an existing client+
+Format: `unarchive INDEX`
+Alias: `uar`
 
 === Editing a person : `edit`
 
@@ -299,9 +312,11 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Note* : `note INDEX`
 * *Archive* : `archive INDEX`
+* *Unarchive* : `unarchive INDEX`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *List all* : `listall`
 * *listtag* : `listtag TAG...`
 * *Help* : `help`
 * *Select* : `select INDEX` +

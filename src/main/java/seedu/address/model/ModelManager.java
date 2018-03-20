@@ -38,6 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        updateFilteredPersonList(PREDICATE_SHOW_UNARCHIVED_PERSONS);
     }
 
     public ModelManager() {
@@ -69,7 +70,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredPersonList(PREDICATE_SHOW_UNARCHIVED_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -87,6 +88,20 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    //@@author ongkuanyang
+    @Override
+    public void archivePerson(Person target) throws PersonNotFoundException {
+        addressBook.archivePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unarchivePerson(Person target) throws PersonNotFoundException {
+        addressBook.unarchivePerson(target);
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     @Override
     public void deleteTag(Tag t) {

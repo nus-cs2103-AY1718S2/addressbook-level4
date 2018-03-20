@@ -135,6 +135,11 @@ public class AddCommandTest {
             return null;
         }
 
+
+
+
+
+
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
@@ -142,6 +147,16 @@ public class AddCommandTest {
 
         @Override
         public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void archivePerson(Person target) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unarchivePerson(Person target) {
             fail("This method should not be called.");
         }
     }

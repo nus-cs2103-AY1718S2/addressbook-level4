@@ -15,6 +15,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
+import seedu.address.model.person.Review;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,6 +37,8 @@ public class XmlAdaptedPerson {
 
     private String calendarId;
     private String rating;
+    @XmlElement(required = true)
+    private String review;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -70,12 +73,14 @@ public class XmlAdaptedPerson {
                             String email,
                             String address,
                             String rating,
+                            String review,
                             List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.rating = rating;
+        this.review = review;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -92,6 +97,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         rating = source.getRating().value.toString();
+        review = source.getReview().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -150,9 +156,20 @@ public class XmlAdaptedPerson {
         }
         final Rating rating = new Rating(this.rating);
 
+        if (this.review == null) {
+            this.review = (new Review()).toString();
+        }
+        if (!Review.isValidReview(this.review)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        final Review review = new Review(this.review);
+
         final Set<Tag> tags = new HashSet<>(personTags);
 
-        return new Person(name, phone, email, address, rating, tags, calendarId);
+        Person person = new Person(name, phone, email, address, rating, tags, calendarId);
+        person.setReview(review);
+
+        return person;
     }
 
     @Override

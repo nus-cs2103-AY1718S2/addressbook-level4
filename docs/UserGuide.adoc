@@ -81,7 +81,7 @@ Examples:
 === Importing contacts from CSV : `import_contacts` or `ic`
 
 Imports contacts from a csv file that contains the header (Name, Email, Phone, Address) +
-Format: `import_contacts [f/PATH]`  
+Format: `import_contacts [f/PATH]`
 
 For example `import_contacts f/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv`
 

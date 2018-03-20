@@ -26,7 +26,7 @@ public final class LoginManager {
     /**
      * Utility function for tests
      */
-    public static void logout(){
+    public static void logout() {
         currLoginState.updateState(NO_USER);
     }
 

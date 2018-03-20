@@ -55,4 +55,7 @@ public interface Model {
 
     /** Get patient visiting queue*/
     ObservableList<Patient> getVisitingQueue();
+
+    /** Get Patient from the patient list */
+    public Patient getPatientFromList(Predicate<Patient> predicate);
 }

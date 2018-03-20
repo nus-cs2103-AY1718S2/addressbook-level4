@@ -149,6 +149,11 @@ public class AddCommandTest {
         public ObservableList<Patient> getVisitingQueue() {
             return null;    //update later
         }
+
+        @Override
+        public Patient getPatientFromList(Predicate<Patient> predicate) {
+            return null;
+        }
     }
 
     /**

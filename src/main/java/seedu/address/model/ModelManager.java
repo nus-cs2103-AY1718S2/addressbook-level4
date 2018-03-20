@@ -107,6 +107,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPatients.setPredicate(predicate);
     }
 
+    public Patient getPatientFromList(Predicate<Patient> predicate) {
+        filteredPatients.setPredicate(predicate);
+        Patient patientFound = filteredPatients.get(0);
+        return patientFound;
+    }
+
     @Override
     public synchronized void addPatientToQueue(Patient patient) throws DuplicatePatientException {
         requireNonNull(patient);

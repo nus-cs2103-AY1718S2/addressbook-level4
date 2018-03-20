@@ -230,6 +230,29 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+//tag::timezone[]
+=== TimeZone feature
+==== Current Implementation
+The time zone feature allows the sales person to add a time zone for their clients. This will allow for simplified appointment scheduling between the sales person and their international clients.
+
+To add the time zone of a client, the tz/ tag is used with either the add or edit commands, followed by the time zone.
+
+An example of the add command would be: add n/David ... tz/PST
+
+An example of the edit command would be: edit 1 tz/SGT
+
+==== Design Considerations
+
+===== Aspect: Implementation of time zone
+
+* **Alternative 1 (current choice):** User must add time zone when adding client.
+** Pros: Information consistency.
+** Cons: User may not always know client's time zone.
+* **Alternative 2:** User can optionally add the time zone in a separate command.
+** Pros: Will use less memory (e.g. number of time zones are less than or equal to number of users).
+** Cons: May be more difficult to schedule meetings with clients with unknown time zones.
+
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation

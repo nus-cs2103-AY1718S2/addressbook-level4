@@ -924,7 +924,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student who studies in school |be able to find rooms that I can study in |save time finding rooms
 
-|`* * *`|user| be able to transfer data between computers | I can share my data with others and change computers seamlessly
+|`* * *`|user| be able to transfer data between computers |  share my data with others and change computers seamlessly
+
+|`* * *`|user with many friends| track the birthdays of my friends | not miss a friend's birthday
 
 |`* *`|power user| be able to auto complete commands| I can use the application faster
 

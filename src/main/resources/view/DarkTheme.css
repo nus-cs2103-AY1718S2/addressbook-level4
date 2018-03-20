@@ -98,13 +98,11 @@
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
 }
-
-.list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
-}
-
 .list-cell:filled:odd {
     -fx-background-color: #515658;
+        -fx-border-radius: 10px;
+        -fx-border-width: 2;
+        -fx-border-color: black;
 }
 
 .list-cell:filled:selected {
@@ -158,6 +156,7 @@
     -fx-text-fill: black !important;
 }
 
+/* status bar */
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
@@ -182,28 +181,24 @@
 .grid-pane .anchor-pane {
     -fx-background-color: derive(#1d1d1d, 30%);
 }
-
+/* menuBar */
 .context-menu {
-    -fx-background-color: derive(#1d1d1d, 50%);
-}
-
-.context-menu .label {
-    -fx-text-fill: white;
+    -fx-background-color: #ffd177;
+    -fx-border-width: 2 0 0 0;
+    -fx-border-color: #969594;
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #f7e399;
+    -fx-padding: 0 2 0 2;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #dbdad9;
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-opacity: 0.9;
-}
-
-.menu .left-container {
-    -fx-background-color: black;
+    -fx-text-fill: black;
 }
 
 /*
@@ -334,11 +329,6 @@
 #resultDisplay .content {
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;
-}
-
-#tags {
-    -fx-hgap: 7;
-    -fx-vgap: 3;
 }
 
 #tags .label {

@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 
@@ -70,5 +72,13 @@ public class UniquePatientVisitingQueue implements Iterable<Patient> {
     @Override
     public int hashCode() {
         return visitingQueue.hashCode();
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Patient> asObservableList() {
+        ObservableList<Patient> patientList = FXCollections.observableArrayList(this.visitingQueue);
+        return FXCollections.unmodifiableObservableList(patientList);
     }
 }

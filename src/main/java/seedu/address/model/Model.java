@@ -64,5 +64,5 @@ public interface Model {
      * @param TagSet
      * @throws TagNotFoundException
      */
-    void replaceTag(Set<Tag> TagSet) throws TagNotFoundException;
+    void replaceTag(List<Tag> TagSet) throws TagNotFoundException;
 }

@@ -117,7 +117,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void replaceTag(Set<Tag> TagSet){
+    public void replaceTag(List<Tag> TagSet){
         Tag[] TagArray = new Tag[2];
         TagSet.toArray(TagArray);
         try {

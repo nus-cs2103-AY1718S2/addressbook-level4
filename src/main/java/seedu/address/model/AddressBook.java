@@ -20,6 +20,8 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
@@ -187,21 +189,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Calls removeTagFromPerson method when tag is found in tags.
+     * Calls replaceTagForPerson method when tag is found in tags.
      * @param TagSet
      * @throws TagNotFoundException
      */
-    public void replaceTag(Set<Tag> TagSet) throws TagNotFoundException {
+    public void replaceTag(List<Tag> TagSet) throws TagNotFoundException {
         Tag tagArray[] = new Tag[2];
         TagSet.toArray(tagArray);
-        Tag TagToBeReplaced = tagArray[1];
-        Tag TagToBePlaced = tagArray[0];    
-        if (tags.contains(TagToBeReplaced)){
+        Tag tagToBeReplaced = tagArray[0];
+        Tag tagToBePlaced = tagArray[1];
+        if (tags.contains(tagToBeReplaced)){
             for (Person person : persons) {
-                replaceTagForPerson(TagToBeReplaced, TagToBePlaced, person);
+                replaceTagForPerson(tagToBeReplaced, tagToBePlaced, person);
             }
-            tags.remove(tagArray[0]);
-            tags.remove(tagArray[1]);
         } else {
             throw new TagNotFoundException("Specific tag is not used in the address book.");
         }
@@ -228,10 +228,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
     }
+
+    /**
+     * Removes a specific tag from an individual person and updates the person's information.
+     * @param tagToBeReplaced
+     * @param tagToBePlaced
+     * @param person
+     */
+
     public void replaceTagForPerson(Tag tagToBeReplaced, Tag tagToBePlaced, Person person){
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tagToBeReplaced)){
-            System.out.println(tagToBePlaced);
             tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(),
                     tagList);

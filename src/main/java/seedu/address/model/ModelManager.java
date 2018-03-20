@@ -115,7 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public UniquePatientVisitingQueue getVisitingQueue() {
+    public ObservableList<Patient> getVisitingQueue() {
         return imdb.getVisitingQueue();
     }
 

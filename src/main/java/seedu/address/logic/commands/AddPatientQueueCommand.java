@@ -71,8 +71,8 @@ public class AddPatientQueueCommand extends Command {
                 && predicate.equals(((AddPatientQueueCommand) other).predicate));
     }
 
-    private void printOutVisitingQueue(UniquePatientVisitingQueue queue) {
-        queue.getVisitingQueue().forEach(patient -> {
+    private void printOutVisitingQueue(ObservableList<Patient> queue) {
+        queue.forEach(patient -> {
             logger.info("patient: " + patient.getName() + "\n");
         });
     }

@@ -27,5 +27,5 @@ public interface Logic {
     ListElementPointer getHistorySnapshot();
 
     /** Returns a visiting queue */
-    UniquePatientVisitingQueue getPatientVisitingQueue();
+    ObservableList<Patient> getPatientVisitingQueue();
 }

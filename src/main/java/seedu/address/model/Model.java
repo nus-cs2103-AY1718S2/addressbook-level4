@@ -54,5 +54,5 @@ public interface Model {
     void addPatientToQueue(Patient patient) throws DuplicatePatientException;
 
     /** Get patient visiting queue*/
-    UniquePatientVisitingQueue getVisitingQueue();
+    ObservableList<Patient> getVisitingQueue();
 }

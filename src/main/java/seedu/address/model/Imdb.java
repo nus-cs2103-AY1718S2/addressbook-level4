@@ -181,8 +181,8 @@ public class Imdb implements ReadOnlyImdb {
         visitingQueue.add(patient);
     }
 
-    public UniquePatientVisitingQueue getVisitingQueue() {
-        return visitingQueue;
+    public ObservableList<Patient> getVisitingQueue() {
+        return visitingQueue.asObservableList();
     }
 
     /**

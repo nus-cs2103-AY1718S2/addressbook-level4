@@ -57,7 +57,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public UniquePatientVisitingQueue getPatientVisitingQueue() {
+    public ObservableList<Patient> getPatientVisitingQueue() {
         return model.getVisitingQueue();
     }
 }

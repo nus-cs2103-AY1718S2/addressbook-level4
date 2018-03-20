@@ -20,10 +20,25 @@ public class UniquePatientVisitingQueueTest {
     private UniquePatientVisitingQueue queueToTest = new UniquePatientVisitingQueue();
 
     @Test
-    public void execute_addPatient_addSuccessful() throws DuplicatePatientException {
+    public void execute_addPatient_addSuccessful() throws Exception {
         UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
         anotherQueue.add(samplePatient);
         queueToTest.add(samplePatient);
         assertEquals(anotherQueue, queueToTest);
+    }
+
+    @Test
+    public void execute_duplicatePatient_throwsDuplicateException() throws Exception {
+        queueToTest.add(samplePatient);
+
+        thrown.expect(DuplicatePatientException.class);
+
+        queueToTest.add(samplePatient);
+    }
+
+    @Test
+    public void execute_nullObject_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        queueToTest.add(null);
     }
 }

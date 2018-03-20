@@ -57,7 +57,8 @@
 //    public void add() throws Exception {
 //        Model model = getModel();
 //
-//        /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
+//        /* ------------------------ Perform add operations on the shown unfiltered list
+//        ----------------------------- */
 //
 //        /* Case: add a activity without tags to a non-empty address book,
 //         * command with leading spaces and trailing spaces
@@ -100,7 +101,8 @@
 //                + TAG_DESC_FRIEND;
 //        assertCommandSuccess(command, toAdd);
 //
-//        /* Case: add a activity with all fields same as another activity in the address book except address -> added */
+//        /* Case: add a activity with all fields same as another activity in the address book except address
+//        -> added */
 //        toAdd = new TaskBuilder().withName(VALID_NAME_AMY).withDateTime(VALID_PHONE_AMY)
 //                .withRemark(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
 //        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
@@ -120,19 +122,22 @@
 //        /* Case: add a activity, missing tags -> added */
 //        assertCommandSuccess(ASSIGNMENT3);
 //
-//        /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
+//        /* -------------------------- Perform add operation on the shown filtered list
+//        ------------------------------ */
 //
 //        /* Case: filters the activity list before adding -> added */
 //        showPersonsWithName(KEYWORD_MATCHING_MEIER);
 //        assertCommandSuccess(DEMO1);
 //
-//        /* ------------------------ Perform add operation while a activity card is selected ------------------------ */
+//        /* ------------------------ Perform add operation while a activity card is selected
+//        ------------------------ */
 //
 //        /* Case: selects first card in the activity list, add a activity -> added, card selection remains unchanged */
 //        selectPerson(Index.fromOneBased(1));
 //        assertCommandSuccess(QUIZ);
 //
-//        /* ----------------------------------- Perform invalid add operations --------------------------------------- */
+//        /* ----------------------------------- Perform invalid add operations
+//        --------------------------------------- */
 //
 //        /* Case: add a duplicate activity -> rejected */
 //        command = ActivityUtil.getAddCommand(ASSIGNMENT3);

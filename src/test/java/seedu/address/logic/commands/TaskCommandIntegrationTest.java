@@ -55,7 +55,7 @@ public class TaskCommandIntegrationTest {
      * Generates a new {@code AddCommand} which upon execution, adds {@code activity} into the {@code model}.
      */
     private TaskCommand prepareCommand(Activity activity, Model model) {
-        TaskCommand command = new TaskCommand( (Task) activity);
+        TaskCommand command = new TaskCommand((Task) activity);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

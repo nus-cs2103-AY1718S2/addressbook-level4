@@ -65,8 +65,8 @@ public class TaskCommandTest {
     public void equals() {
         Activity assignment = new TaskBuilder().build();
         Activity project = new TaskBuilder().withName("Project").build();
-        TaskCommand addAssignmentCommand = new TaskCommand( (Task) assignment);
-        TaskCommand addProjectCommand = new TaskCommand( (Task) project);
+        TaskCommand addAssignmentCommand = new TaskCommand((Task) assignment);
+        TaskCommand addProjectCommand = new TaskCommand((Task) project);
 
         // same object -> returns true
         assertTrue(addAssignmentCommand.equals(addAssignmentCommand));
@@ -89,7 +89,7 @@ public class TaskCommandTest {
      * Generates a new TaskCommand with the details of the given task.
      */
     private TaskCommand getTaskCommandForTask(Activity task, Model model) {
-        TaskCommand command = new TaskCommand( (Task) task);
+        TaskCommand command = new TaskCommand((Task) task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

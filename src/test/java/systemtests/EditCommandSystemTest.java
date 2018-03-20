@@ -55,7 +55,8 @@
 //    public void edit() throws Exception {
 //        Model model = getModel();
 //
-//        /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
+//        /* ----------------- Performing edit operation while an unfiltered list is being shown
+//        ---------------------- */
 //
 //        /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
 //         * -> edited
@@ -99,7 +100,8 @@
 //        editedActivity = new TaskBuilder(activityToEdit).withTags().build();
 //        assertCommandSuccess(command, index, editedActivity);
 //
-//        /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
+//        /* ------------------ Performing edit operation while a filtered list is being shown
+//        ------------------------ */
 //
 //        /* Case: filtered activity list, edit index within bounds of address book and activity list -> edited */
 //        showPersonsWithName(KEYWORD_MATCHING_MEIER);
@@ -118,7 +120,8 @@
 //        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
 //                Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 //
-//        /* --------------------- Performing edit operation while a activity card is selected ------------------------ */
+//        /* --------------------- Performing edit operation while a activity card is selected
+//        ------------------------ */
 //
 //        /* Case: selects first card in the activity list, edit a activity -> edited,
 //         * card selection remains unchanged but
@@ -134,7 +137,8 @@
 //        // browser's url is updated to reflect the new activity's name
 //        assertCommandSuccess(command, index, AMY, index);
 //
-//        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+//        /* --------------------------------- Performing invalid edit operation
+//        -------------------------------------- */
 //
 //        /* Case: invalid index (0) -> rejected */
 //        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + NAME_DESC_BOB,

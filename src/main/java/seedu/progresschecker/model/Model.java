@@ -1,5 +1,7 @@
 package seedu.progresschecker.model;
 
+import java.io.*;
+import java.nio.file.Path;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -47,5 +49,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /** Uploads the given photo with given path */
+    void uploadPhoto(Path path) throws FileNotFoundException, IOException;
 
 }

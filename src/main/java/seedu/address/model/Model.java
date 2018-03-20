@@ -53,9 +53,12 @@ public interface Model {
      * @throws NullPointerException if {@code Patient} is null.*/
     void addPatientToQueue(Patient patient) throws DuplicatePatientException;
 
+    /** Remove a patient from the visiting queue*/
+    Patient removePatientFromQueue() throws PatientNotFoundException;
+
     /** Get patient visiting queue*/
     ObservableList<Patient> getVisitingQueue();
 
     /** Get Patient from the patient list */
-    public Patient getPatientFromList(Predicate<Patient> predicate);
+    Patient getPatientFromList(Predicate<Patient> predicate);
 }

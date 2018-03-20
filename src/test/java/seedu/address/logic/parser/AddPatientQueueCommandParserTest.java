@@ -21,7 +21,7 @@ public class AddPatientQueueCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parse_validArgs_returnsAddPatientQueueCommand() {
         AddPatientQueueCommand expectedCommand = new AddPatientQueueCommand(
                 new NameContainsKeywordsPredicate(Arrays.asList("Alice")));
         assertParseSuccess(parser, "Alice", expectedCommand);

@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * Patient visiting queue in Imdb
@@ -41,7 +42,16 @@ public class UniquePatientVisitingQueue implements Iterable<Patient> {
         return visitingQueue.peekFirst();
     }
 
-    public Patient removePatient() {
+    /**
+     * Removes a patient from the visiting queue.
+     *
+     * @throws PatientNotFoundException if the queue is empty.
+     */
+    public Patient removePatient() throws PatientNotFoundException {
+        if (visitingQueue.isEmpty()) {
+            throw new PatientNotFoundException();
+        }
+
         return visitingQueue.removeFirst();
     }
 

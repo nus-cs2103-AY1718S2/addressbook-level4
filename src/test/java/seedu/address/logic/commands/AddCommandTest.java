@@ -146,6 +146,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public Patient removePatientFromQueue() {
+            //update later
+            return null;
+        }
+
+        @Override
         public ObservableList<Patient> getVisitingQueue() {
             return null;    //update later
         }

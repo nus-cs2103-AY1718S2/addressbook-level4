@@ -32,6 +32,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemovePatientQueueCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAppointmentCommand;
@@ -316,6 +317,24 @@ public class ImdbParserTest {
                 AddPatientQueueCommand.COMMAND_ALIAS + " " + keywords.stream()
                         .collect(Collectors.joining(" ")));
         assertEquals(new AddPatientQueueCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_removePatientQueue() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        RemovePatientQueueCommand command = (RemovePatientQueueCommand) parser.parseCommand(
+                RemovePatientQueueCommand.COMMAND_WORD);
+        assertEquals(new RemovePatientQueueCommand(), command);
+    }
+
+    @Test
+    public void parseCommand_removePatientQueueAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        RemovePatientQueueCommand command = (RemovePatientQueueCommand) parser.parseCommand(
+                RemovePatientQueueCommand.COMMAND_ALIAS);
+        assertEquals(new RemovePatientQueueCommand(), command);
     }
 
     @Test

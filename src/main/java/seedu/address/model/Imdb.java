@@ -181,7 +181,9 @@ public class Imdb implements ReadOnlyImdb {
         visitingQueue.add(patient);
     }
 
-
+    public Patient removePatientFromQueue() throws PatientNotFoundException {
+        return visitingQueue.removePatient();
+    }
 
     /**
      * Remove {@code tag} from {@code patient}

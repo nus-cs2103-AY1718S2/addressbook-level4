@@ -230,6 +230,119 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+//tag::SortCommand[]
+=== SortCommand feature
+==== Current Implementation
+The sort command feature allows the sales person to sort their clients according to their names in alphebetical order. This will allow for a more organized and neat address book.
+
+To sort the adress book, simply type 'sort' or the command alias 'so'.
+
+An example of the sort command would be: sort
+
+An example of the sort command alias would be: so
+//end::SortCommand[]
+
+// tag::DeletTag[]
+=== DeletTag feature
+==== Current Implementation
+The delete tag command allows user to remove a particular tag from all persons in the AddressBook. For example, he may want to delete the tag "neigbour" from all his contacts if he is no longer staying at the place.
+
+We implement Model#deleteTag(Tag) torwards the direction of removeTag command, so that the developer dealing with the 'logic' component is able to implement such a command.
+
+==== Design Considerations
+
+===== Aspect: Implementation of time zone
+
+The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the AddressBook. This may cause some tests to fail.
+
+* **Alternative 1 (current choice):** After updating a person, we go through everyone in the address book and collect their tags.
+** Pros: No more unused tags.
+** Cons: The time complexity is too high, of O(n^2).
+* **Alternative 2:** When deleting a tag, check whether there are person still having it as a tag.
+** Pros: Less time consuming.
+** Cons: More complex inplementation.
+//end::DeletTag[]
+
+// tag::TotalPersonStatusBar[]
+=== TotalPersonStatusBar feature
+==== Current Implementation
+This feature will allow user to see how many contacts he or she has in his/her address book in a straight way, so that I can call it straightforward when I need the information.
+//end::TotalPersonStatusBar[]
+
+// tag::AddComment[]
+=== AddComment feature
+==== Current Implementation
+The add comment tag command  will allow user to add some plain text information associated with a contact that the user wants to remember, so that I can recall it when I need the information.
+
+To add the comment of a client, the cm/ tag is used with either the add or edit commands, followed by the comment.
+
+An example of the add command would be: add n/David ... cm/interested in football
+
+An example of the edit command would be: edit 1 cm/interested in bascketball
+
+==== Design Considerations
+
+===== Aspect: Implementation of comment
+
+* **Alternative 1 (current choice):** User must add comment when adding client.
+** Pros: Information consistency.
+** Cons: User may not always want to add comment to clients.
+* **Alternative 2:** User can optionally add the comments in a separate command.
+** Pros: Will use less memory (e.g. number of comments are less than or equal to number of users).
+** Cons: May be more difficult to manage contacts without some comments.
+//end::AddComment[]
+
+//tag::archive[]
+=== Archive feature
+==== Current Implementation
+The archive feature allows the salesperson to archive clients that he no longer contacts, but does not want to delete as he possible might want to contact him/her again. Once archived, the client is not shown in the list. To display the client, either find or listall command has to be used. The client is then displayed in a red font with strikethrough, indicating that he/she is archived.
+
+The archival feature is implemented by adding a boolean variable isArchived in the Person model. Listing is filtered through the use of a predicate, PREDICATE_SHOW_UNARCHIVED_PERSONS, that will filter for those clients that are unarchived
+
+==== Design Considerations
+
+===== Aspect: find shows archived clients
+
+* **Alternative 1 (current choice):** Find shows archived clients.
+** Pros: Allows the user to quickly find specific clients that he wants to unarchive.
+** Cons: Goes against the purpose of not cluttering up the UI with archived clients.
+* **Alternative 2:** Find only displays unarchived clients.
+** Pros: Will not clutter up the UI with archived clients so that the user can quickly find clients that are unarchived.
+** Cons: It is hard to find a specific archived person. User has to scroll through listall.
+
+===== Aspect: isArchived is stored in a boolean in the Person model
+
+* **Alternative 1 (current choice):** Store whether a client is archived in the Person model as a boolean
+** Pros: Simple to implement
+** Cons: Uses more space than the alternative.
+* **Alternative 2:** Keep two separate lists of persons, archived and unarchived.
+** Pros: Uses less space than the alternative.
+** Cons: Harder to implement, more changes have to be made to existing codebase.
+// end::archive[]
+
+//tag::timezone[]
+=== TimeZone feature
+==== Current Implementation
+The time zone feature allows the sales person to add a time zone for their clients. This will allow for simplified appointment scheduling between the sales person and their international clients.
+
+To add the time zone of a client, the tz/ tag is used with either the add or edit commands, followed by the time zone.
+
+An example of the add command would be: add n/David ... tz/PST
+
+An example of the edit command would be: edit 1 tz/SGT
+
+==== Design Considerations
+
+===== Aspect: Implementation of time zone
+
+* **Alternative 1 (current choice):** User must add time zone when adding client.
+** Pros: Information consistency.
+** Cons: User may not always know client's time zone.
+* **Alternative 2:** User can optionally add the time zone in a separate command.
+** Pros: Will use less memory (e.g. number of time zones are less than or equal to number of users).
+** Cons: May be more difficult to schedule meetings with clients with unknown time zones.
+// end::timezone[]
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
@@ -797,8 +910,12 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * *Minor*: An archival feature for clients that the salesperson is no longer in contact with so that they do not clutter up the interface as the salesperson has to manage a lot of clients.
 
 ==== Gloria Law
+* *Major*: A chat bot which the sales person can ask simple questions regarding his schedule and clients.
+* *Minor*: A time zone feature which allows the sales person to add the timezone details of their clients.
 
 ==== Ma Yuqian
+* *Minor*: A sort command that can sort in alphabetical order.
+* *Minor*: A remove tag method in model component.
 
 [appendix]
 == User Stories

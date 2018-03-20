@@ -23,6 +23,8 @@ public class Person {
 
     private final UniqueTagList tags;
 
+    private boolean isArchived = false;
+
     /**
      * Every field must be present and not null.
      */
@@ -35,6 +37,14 @@ public class Person {
         this.timeZone = timeZone;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, CustTimeZone timeZone, boolean isArchived, Set<Tag> tags) {
+        this(name, phone, email, address, timeZone, tags);
+        this.isArchived = isArchived;
     }
 
     public Name getName() {
@@ -53,8 +63,16 @@ public class Person {
         return address;
     }
 
-    public CustTimeZone getCustTimeZone() {
-        return timeZone; }
+    public CustTimeZone getCustTimeZone() { return timeZone; }
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean value) {
+        this.isArchived = value;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

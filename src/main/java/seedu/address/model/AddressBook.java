@@ -30,6 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueAliasList aliases;
+    private final Password password;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -44,7 +45,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         aliases = new UniqueAliasList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+        password = new Password();
+    }
+
+    public AddressBook(String password) {
+        this.password = new Password(password);
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -259,13 +266,34 @@ public class AddressBook implements ReadOnlyAddressBook {
         return aliases.getAliasObservableList();
     }
 
+    @Override
+    public Password getPassword() {
+        return password;
+    }
+
+    /**
+     * Updates the password of this {@code AddressBook}.
+     * @param newPassword  will be the new password.
+     */
+    public void updatePassword (byte[] newPassword) {
+        password.updatePassword(newPassword);
+    }
+
+    /**
+     * Updates the password of this {@code AddressBook}.
+     * @param newPassword  will be the new password.
+     */
+    public void updatePassword (Password newPassword) {
+        password.updatePassword(newPassword);
+    }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.password.equals(((AddressBook) other).password);
     }
 
     @Override

@@ -33,8 +33,8 @@ public class AliasCommandParser implements Parser<AliasCommand> {
             UndoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD, ImportCommand.COMMAND_WORD);
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the AliasCommand
+     * and returns an AliasCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public AliasCommand parse(String args) throws ParseException {

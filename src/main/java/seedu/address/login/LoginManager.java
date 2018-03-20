@@ -40,6 +40,9 @@ public class LoginManager extends ComponentManager implements Login {
      */
     public boolean checkUsername(UserPass userpass) {
         String username = userpass.getUsername();
+        if (username.equals("") || username.isEmpty()){
+            return false;
+        }
         return userPassStorage.containsKey(username);
     }
 

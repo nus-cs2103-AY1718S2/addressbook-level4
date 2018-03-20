@@ -119,7 +119,7 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        patientListPanel = new PatientListPanel(logic.getFilteredPersonList());
+        patientListPanel = new PatientListPanel(logic.getPatientVisitingQueue());
         personListPanelPlaceholder.getChildren().add(patientListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();

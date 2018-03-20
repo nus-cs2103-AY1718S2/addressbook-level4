@@ -26,6 +26,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
+    private final FilteredList<Patient> patientVisitingQueue;
 
     /**
      * Initializes a ModelManager with the given Imdb and userPrefs.
@@ -38,6 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.imdb = new Imdb(addressBook);
         filteredPatients = new FilteredList<>(this.imdb.getPersonList());
+        patientVisitingQueue = new FilteredList<>(this.imdb.getUniquePatientQueue());
     }
 
     public ModelManager() {

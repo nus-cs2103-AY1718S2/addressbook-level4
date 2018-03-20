@@ -263,3 +263,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Shortcuts
+
+* kbd:[tab] : autocomplete a command or a field
+* kbd:[&uarr;] : previous input
+* kbd:[&darr;] : next input

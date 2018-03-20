@@ -18,7 +18,7 @@ Responsibilites: Developer
 '''
 
 === Ng Shi Kang
-image::[width="150", align="left"]
+image::ngshikang.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
@@ -27,7 +27,7 @@ Responsibilities: Developer
 '''
 
 === Matthieu Buot de L'Epine
-image::[width="150", align="left"]
+image::matthieu.jpg[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -36,7 +36,7 @@ Responsibilities: Developer
 '''
 
 === Minh Ngo
-image::[width="150", align="left"]
+image::minhngo.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

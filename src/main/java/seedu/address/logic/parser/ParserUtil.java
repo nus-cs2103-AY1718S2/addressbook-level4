@@ -14,6 +14,9 @@ import seedu.address.model.patient.Address;
 import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.DateOfBirth;
+import seedu.address.model.patient.BloodType;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -68,6 +71,30 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String nric} into a {@code Nric}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code nric} is invalid.
+     */
+    public static Nric parseNric(String nric) throws IllegalValueException {
+        requireNonNull(nric);
+        String trimmedNric = nric.trim();
+        if (!Nric.isValidNric(trimmedNric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
+        }
+        return new Nric(trimmedNric);
+    }
+
+    /**
+     * Parses a {@code Optional<String> nric} into an {@code Optional<Nric>} if {@code nric} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Nric> parseNric(Optional<String> nric) throws IllegalValueException {
+        requireNonNull(nric);
+        return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -113,6 +140,54 @@ public class ParserUtil {
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String dob} into an {@code Dob}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code dob} is invalid.
+     */
+    public static DateOfBirth parseDob(String dob) throws IllegalValueException {
+        requireNonNull(dob);
+        String trimmedDob = dob.trim();
+        if (!DateOfBirth.isValidDob(trimmedDob)) {
+            throw new IllegalValueException(DateOfBirth.MESSAGE_DOB_CONSTRAINTS);
+        }
+        return new DateOfBirth(trimmedDob);
+    }
+
+    /**
+     * Parses a {@code Optional<String> dob} into an {@code Optional<DateOfBirth>} if {@code dob} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DateOfBirth> parseDob(Optional<String> dob) throws IllegalValueException {
+        requireNonNull(dob);
+        return dob.isPresent() ? Optional.of(parseDob(dob.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String bloodType} into an {@code BloodType}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code bloodType} is invalid.
+     */
+    public static BloodType parseBloodType(String bloodType) throws IllegalValueException {
+        requireNonNull(bloodType);
+        String trimmedBloodType = bloodType.trim();
+        if (!BloodType.isValidBloodType(trimmedBloodType)) {
+            throw new IllegalValueException(BloodType.MESSAGE_BLOODTYPE_CONSTRAINTS);
+        }
+        return new BloodType(trimmedBloodType);
+    }
+
+    /**
+     * Parses a {@code Optional<String> bloodType} into an {@code Optional<BloodType>} if {@code bloodType} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<BloodType> parseBloodType(Optional<String> bloodType) throws IllegalValueException {
+        requireNonNull(bloodType);
+        return bloodType.isPresent() ? Optional.of(parseBloodType(bloodType.get())) : Optional.empty();
     }
 
     /**

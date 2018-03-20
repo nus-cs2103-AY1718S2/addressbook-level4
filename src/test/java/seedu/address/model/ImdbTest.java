@@ -100,6 +100,12 @@ public class ImdbTest {
         imdb.getTagList().remove(0);
     }
 
+    @Test
+    public void getVisitingQueue_modifyQueue_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        imdb.getVisitingQueue().remove(0);
+    }
+
     /**
      * A stub ReadOnlyImdb whose patients and tags lists can violate interface constraints.
      */

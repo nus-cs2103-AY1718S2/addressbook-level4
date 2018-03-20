@@ -220,7 +220,7 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Desk Board data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -790,17 +790,40 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user*: University Computing students
 
-*Target user profile*:
+*Target user profile*: Our target users are expected to have the following characteristics:
 
-* has a need to manage a significant number of tasks and events
+* have a need to manage a significant number of tasks and events
 * prefer desktop apps over other types
 * can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using Linux-style commands and CLI apps
+* prefer typing over mouse input
+* are reasonably comfortable using Linux-style commands and CLI apps
 
 *Value proposition*: The user will have all their tasks and events in one app.
 This creates convenience for the user. The CLI also makes it
 faster than a typical mouse/GUI-driven app
+
+=== Feature contribution
+The following section describes the major and minor enhancements that each of our members contributes to the development of our product.
+
+==== Jarrett
+*Major enhancement*: Creating 'overdue' command. This command shows a list of overdue tasks.
+
+*Minor enhancement*: Creating 'task' and 'event' commands which add Task and Event objects respectively.
+
+==== Jasmund
+*Major enhancement*: Modifying the GUI to fit our task/event manager application. This includes but is not limited to allowing the UI to display 2 panes for showing the Task and Event lists separately.
+
+*Minor enhancement*: Modifying the 'help' command. In our application, 'help' can be followed by a command word (e.g. 'help task') so that instructions for only the command desired are shown. Moreover, 'man' command -- an alias for 'help' -- is also added for users who are familiar with Linux commands.
+
+==== Karen
+*Major enhancement*: Modifying the Storage component to allow storage of Tasks and Events in an xml file.
+
+*Minor enhancement*: Creating 'ls' command. This command shows the Event and Task objects added to the Desk Board in 2 separate lists.
+
+==== Yuan Quan
+*Major enhancement*: Modifying the Model component. This includes creation of Event and Task classes, as well as their superclass, Activity. Other classes relevant to tasks and events are also created, such as DateTime.
+
+*Minor enhancement*: Creating 'complete' command. This command marks a Task object as completed.
 
 [appendix]
 == User Stories

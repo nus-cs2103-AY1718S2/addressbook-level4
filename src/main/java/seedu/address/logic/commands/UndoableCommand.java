@@ -17,7 +17,7 @@ public abstract class UndoableCommand extends Command {
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
-     * Stores the current state of {@code model#addressBook}.
+     * Stores the current state of {@code model#deskBoard}.
      */
     private void saveDeskBoardSnapshot() {
         requireNonNull(model);

@@ -181,9 +181,7 @@ public class Imdb implements ReadOnlyImdb {
         visitingQueue.add(patient);
     }
 
-    public ObservableList<Patient> getVisitingQueue() {
-        return visitingQueue.asObservableList();
-    }
+
 
     /**
      * Remove {@code tag} from {@code patient}
@@ -236,6 +234,11 @@ public class Imdb implements ReadOnlyImdb {
     @Override
     public ObservableList<Appointment> getAppointmentList() {
         return appointments.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Patient> getUniquePatientQueue() {
+        return visitingQueue.asObservableList();
     }
 
     @Override

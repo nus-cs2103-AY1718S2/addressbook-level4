@@ -103,7 +103,7 @@ public class ImdbTest {
     @Test
     public void getVisitingQueue_modifyQueue_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        imdb.getVisitingQueue().remove(0);
+        imdb.getUniquePatientQueue().remove(0);
     }
 
     /**
@@ -113,6 +113,7 @@ public class ImdbTest {
         private final ObservableList<Patient> patients = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        private final ObservableList<Patient> visitingQueue = FXCollections.observableArrayList();
 
         ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags) {
             this.patients.setAll(patients);
@@ -133,6 +134,11 @@ public class ImdbTest {
         @Override
         public ObservableList<Appointment> getAppointmentList() {
             return appointments;
+        }
+
+        @Override
+        public ObservableList<Patient> getUniquePatientQueue() {
+            return visitingQueue;
         }
     }
 

@@ -20,7 +20,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class CommandBox extends UiPart<Region> {
 
-    public static final String ERROR_STYLE_CLASS = "error";
+    public static final String ERROR_STYLE_CLASS = "command-error";
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);

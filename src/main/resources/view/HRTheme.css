@@ -205,6 +205,10 @@
     -fx-font-size: 13;
 }
 
+#commandInput.command-error {
+    -fx-text-fill: #F44336;
+}
+
 #commandInput:focused {
     -fx-background-color: #D8D8D8;
 }

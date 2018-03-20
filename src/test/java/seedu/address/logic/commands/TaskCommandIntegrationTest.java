@@ -13,12 +13,13 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.Task;
 import seedu.address.testutil.TaskBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
  */
-public class AddCommandIntegrationTest {
+public class TaskCommandIntegrationTest {
 
     private Model model;
 
@@ -38,7 +39,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addActivity(validActivity);
 
         assertCommandSuccess(prepareCommand(validActivity, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validActivity), expectedModel);
+                String.format(TaskCommand.MESSAGE_SUCCESS, validActivity), expectedModel);
     }
 
     //TODO: TEST
@@ -47,14 +48,14 @@ public class AddCommandIntegrationTest {
      */
     public void execute_duplicatePerson_throwsCommandException() {
         Activity activityInList = model.getDeskBoard().getActivityList().get(0);
-        assertCommandFailure(prepareCommand(activityInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(prepareCommand(activityInList, model), model, TaskCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     /**
      * Generates a new {@code AddCommand} which upon execution, adds {@code activity} into the {@code model}.
      */
-    private AddCommand prepareCommand(Activity activity, Model model) {
-        AddCommand command = new AddCommand(activity);
+    private TaskCommand prepareCommand(Activity activity, Model model) {
+        TaskCommand command = new TaskCommand((Task) activity);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

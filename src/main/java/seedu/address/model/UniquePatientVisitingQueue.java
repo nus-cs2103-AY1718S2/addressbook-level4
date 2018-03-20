@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import seedu.address.model.patient.Patient;
@@ -11,7 +12,7 @@ import seedu.address.model.patient.exceptions.DuplicatePatientException;
  * Patient visiting queue in Imdb
  * Gurantees: immutable
  */
-public class UniquePatientVisitingQueue {
+public class UniquePatientVisitingQueue implements Iterable<Patient> {
 
     private LinkedList<Patient> visitingQueue;
 
@@ -52,5 +53,22 @@ public class UniquePatientVisitingQueue {
     public boolean contains(Patient toCheck) {
         requireNonNull(toCheck);
         return visitingQueue.contains(toCheck);
+    }
+
+    @Override
+    public Iterator<Patient> iterator() {
+        return visitingQueue.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniquePatientVisitingQueue // instanceof handles nulls
+                && this.visitingQueue.equals(((UniquePatientVisitingQueue) other).visitingQueue));
+    }
+
+    @Override
+    public int hashCode() {
+        return visitingQueue.hashCode();
     }
 }

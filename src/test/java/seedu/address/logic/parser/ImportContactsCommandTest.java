@@ -13,6 +13,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ImportContactsCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.UniquePersonListTest;
 import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
@@ -107,14 +108,15 @@ public class ImportContactsCommandTest {
         Date date = new Date();
         DateAdded addDate;
 
-        //model.addPerson(personToAdd); //not the most efficient...
+        UniquePersonList upl = new UniquePersonList();
 
         try {
-//            personToAdd = new Person(new Name(name),
-//                    new Phone(phone), new Email(email),
-//                    new Address(address), addDate, tagSet);
-
 //            addMe.executeUndoableCommand();
+
+            upl.add(personToAdd);
+        //AddCommand addMe = new AddCommand(personToAdd); //not the most efficient...
+        //addMe.executeUndoableCommand();
+
         } catch (Exception e) {
             throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
             + e);
@@ -145,7 +147,7 @@ public class ImportContactsCommandTest {
 
     @Test
     public void execute_inputValidFileAddress_addsPersonsToAddressBook() throws CommandException {
-        importValidPath.execute();
+        importValidPath.executeUndoableCommand();
     }
 
     @Test

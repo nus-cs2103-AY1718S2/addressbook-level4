@@ -1,4 +1,4 @@
-package seedu.address.model.timetableEntry.exceptions;
+package seedu.address.model.timetableentry.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 

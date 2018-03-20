@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import seedu.address.model.timetableEntry.TimetableEntry;
+import seedu.address.model.timetableentry.TimetableEntry;
 
 /**
  * JAXB-friendly adapted version of the TimetableEntry.

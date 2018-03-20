@@ -1,4 +1,4 @@
-package seedu.address.model.timetableEntry;
+package seedu.address.model.timetableentry;
 
 /**
  * Represents a timetable entry added to Employees Tracker
@@ -11,7 +11,12 @@ public class TimetableEntry {
     private String id;
     private String endDate;
 
-    public TimetableEntry(String calendarId, String ownerName, String entryName, String ownerEmail, String id, String endDate) {
+    public TimetableEntry(String calendarId,
+                          String ownerName,
+                          String entryName,
+                          String ownerEmail,
+                          String id,
+                          String endDate) {
         this.calendarId = calendarId;
         this.ownerName = ownerName;
         this.entryName = entryName;

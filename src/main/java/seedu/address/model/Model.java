@@ -6,9 +6,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.timetableEntry.TimetableEntry;
-import seedu.address.model.timetableEntry.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.timetableEntry.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.timetableentry.TimetableEntry;
+import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.timetableentry.exceptions.TimetableEntryNotFoundException;
 
 /**
  * The API of the Model component.

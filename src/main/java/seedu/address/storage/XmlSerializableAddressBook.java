@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.timetableEntry.TimetableEntry;
+import seedu.address.model.timetableentry.TimetableEntry;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -79,6 +79,8 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && timetableEntries.equals(otherAb.timetableEntries);
+        return persons.equals(otherAb.persons)
+                && tags.equals(otherAb.tags)
+                && timetableEntries.equals(otherAb.timetableEntries);
     }
 }

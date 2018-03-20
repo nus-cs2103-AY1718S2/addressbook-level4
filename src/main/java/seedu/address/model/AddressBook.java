@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -19,9 +18,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.timetableEntry.TimetableEntry;
-import seedu.address.model.timetableEntry.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.timetableEntry.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.timetableentry.TimetableEntry;
+import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.timetableentry.exceptions.TimetableEntryNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -170,16 +169,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Adds a timetable entry to the address book.
      */
-    public void addTimetableEntry(TimetableEntry timetableEntry) throws DuplicateTimetableEntryException{
-        if (timetableEntries.contains(timetableEntry))
+    public void addTimetableEntry(TimetableEntry timetableEntry) throws DuplicateTimetableEntryException {
+        if (timetableEntries.contains(timetableEntry)) {
             throw new DuplicateTimetableEntryException();
+        }
         timetableEntries.add(timetableEntry);
     }
 
     /**
      * Removes a timetable entry to the address book.
      */
-    public void removeTimetableEntry(String timetableEntryId) throws TimetableEntryNotFoundException{
+    public void removeTimetableEntry(String timetableEntryId) throws TimetableEntryNotFoundException {
         boolean found = false;
         for (TimetableEntry t: timetableEntries) {
             if (t.getId().equals(timetableEntryId)) {
@@ -187,16 +187,17 @@ public class AddressBook implements ReadOnlyAddressBook {
                 found = true;
             }
         }
-        if (!found)
+        if (!found) {
             throw new TimetableEntryNotFoundException();
+        }
     }
 
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, " +
-                timetableEntries.size() + " timetable entries";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
+                + timetableEntries.size() + " timetable entries";
         // TODO: refine later
     }
 

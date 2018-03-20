@@ -16,7 +16,7 @@ public class FindCommand extends Command {
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Option 1 (Search all fields): KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alex david alexyeoh@example.com\n\n"
-            + "Option 2 (Search by prefixs): /n[KEYWORD] [MORE_KEYWORDS] /p...\n"
+            + "Option 2 (Search by prefix): /n[KEYWORD] [MORE_KEYWORDS] /p...\n"
             + "Example: " + COMMAND_WORD + " n/Alex Bernice p/999 555";
 
     private final Predicate<Person> predicate;

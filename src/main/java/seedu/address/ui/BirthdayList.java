@@ -3,7 +3,6 @@ package seedu.address.ui;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 
 /**
@@ -20,7 +18,6 @@ import seedu.address.model.person.Person;
  */
 public class BirthdayList extends UiPart<Region> {
 
-    private static final Logger logger = LogsCenter.getLogger(BirthdayList.class);
     private static final String FXML = "BirthdayList.fxml";
 
     private final StringProperty displayed = new SimpleStringProperty("");

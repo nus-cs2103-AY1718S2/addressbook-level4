@@ -922,11 +922,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user who is concerned about privacy |have my data encrypted |ensure that no one can access my data without my permission
 
+|`* * *` |student who studies in school |be able to find rooms that I can study in |save time finding rooms
+
+|`* * *`|user| be able to transfer data between computers |  share my data with others and change computers seamlessly
+
+|`* * *`|user with many friends| track the birthdays of my friends | not miss a friend's birthday
+
+|`* *`|power user| be able to auto complete commands| I can use the application faster
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
-|`*` |student |find venues in NUS |locate my tutorial rooms
 |=======================================================================
 
 _{More to be added}_

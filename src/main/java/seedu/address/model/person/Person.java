@@ -42,7 +42,8 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, CustTimeZone timeZone, boolean isArchived, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  CustTimeZone timeZone, boolean isArchived, Set<Tag> tags) {
         this(name, phone, email, address, timeZone, tags);
         this.isArchived = isArchived;
     }
@@ -63,7 +64,8 @@ public class Person {
         return address;
     }
 
-    public CustTimeZone getCustTimeZone() { return timeZone; }
+    public CustTimeZone getCustTimeZone() {
+        return timeZone; }
 
     public boolean isArchived() {
         return isArchived;

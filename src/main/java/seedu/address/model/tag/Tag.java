@@ -12,17 +12,33 @@ public class Tag {
     public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
-    public final String tagName;
+    public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: "
+            + "teal, red, yellow, blue, orange, brown, green, pink, black, grey";
+    public static final String TAG_COLOR_FILE_PATH = "data/tagColors.txt";
+    private static final String[] AVAILABLE_COLORS = new String[] {"teal", "red", "yellow", "blue", "orange", "brown",
+        "green", "pink", "black", "grey", "undefined"};
+
+    public final String name;
+    public final String color;
 
     /**
      * Constructs a {@code Tag}.
      *
-     * @param tagName A valid tag name.
+     * @param name A valid tag name.
      */
-    public Tag(String tagName) {
-        requireNonNull(tagName);
-        checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
-        this.tagName = tagName;
+    public Tag(String name) {
+        requireNonNull(name);
+        checkArgument(isValidTagName(name), MESSAGE_TAG_CONSTRAINTS);
+        this.name = name;
+        this.color = "undefined";
+    }
+
+    public Tag(String name, String color) {
+        requireNonNull(name);
+        checkArgument(isValidTagName(name), MESSAGE_TAG_CONSTRAINTS);
+        checkArgument(isValidTagColor(color), MESSAGE_TAG_COLOR_CONSTRAINTS);
+        this.name = name;
+        this.color = color;
     }
 
     /**
@@ -32,23 +48,36 @@ public class Tag {
         return test.matches(TAG_VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a given string is a available tag color
+     */
+    public static boolean isValidTagColor(String color) {
+        String trimmedColor = color.trim().toLowerCase();
+        for (String s : AVAILABLE_COLORS) {
+            if (s.equals(trimmedColor)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Tag // instanceof handles nulls
-                && this.tagName.equals(((Tag) other).tagName)); // state check
+                && this.name.equals(((Tag) other).name)); // state check
     }
 
     @Override
     public int hashCode() {
-        return tagName.hashCode();
+        return name.hashCode();
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + tagName + ']';
+        return '[' + name + ']';
     }
 
 }

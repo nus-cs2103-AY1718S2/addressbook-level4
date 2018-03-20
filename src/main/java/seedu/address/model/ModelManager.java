@@ -17,6 +17,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
+import seedu.address.model.todo.ToDo;
+import seedu.address.model.todo.exceptions.DuplicateToDoException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -71,6 +73,12 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addToDo(ToDo todo) throws DuplicateToDoException {
+        addressBook.addToDo(todo);
         indicateAddressBookChanged();
     }
 

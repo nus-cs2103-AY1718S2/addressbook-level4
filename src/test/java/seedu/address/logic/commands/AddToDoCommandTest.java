@@ -28,70 +28,70 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.ToDoBuilder;
 
-public class AddCommandTest {
+public class AddToDoCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullToDo_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddToDoCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_todoAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingToDoAdded modelStub = new ModelStubAcceptingToDoAdded();
+        ToDo validToDo = new ToDoBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddToDoCommandForToDo(validToDo, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddToDoCommand.MESSAGE_SUCCESS, validToDo), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validToDo), modelStub.todosAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateToDo_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateToDoException();
+        ToDo validToDo = new ToDoBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddToDoCommand.MESSAGE_DUPLICATE_TODO);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddToDoCommandForToDo(validToDo, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        ToDo todoA = new ToDoBuilder().withContent("ToDo A").build();
+        ToDo todoB = new ToDoBuilder().withContent("ToDo B").build();
+        AddToDoCommand addToDoACommand = new AddToDoCommand(todoA);
+        AddToDoCommand addToDoBCommand = new AddToDoCommand(todoB);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addToDoACommand.equals(addToDoACommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddToDoCommand addToDoACommandCopy = new AddToDoCommand(todoA);
+        assertTrue(addToDoACommand.equals(addToDoACommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addToDoACommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addToDoACommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different to-do -> returns false
+        assertFalse(addToDoACommand.equals(addToDoBCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddToDoCommand with the details of the given to-do.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddToDoCommand getAddToDoCommandForToDo(ToDo todo, Model model) {
+        AddToDoCommand command = new AddToDoCommand(todo);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -156,12 +156,12 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicateToDoException when trying to add a to-do.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateToDoException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addToDo(ToDo todo) throws DuplicateToDoException {
+            throw new DuplicateToDoException();
         }
 
         @Override
@@ -171,15 +171,15 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the to-do being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingToDoAdded extends ModelStub {
+        final ArrayList<ToDo> todosAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addToDo(ToDo todo) throws DuplicateToDoException {
+            requireNonNull(todo);
+            todosAdded.add(todo);
         }
 
         @Override
@@ -187,5 +187,4 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
-
 }

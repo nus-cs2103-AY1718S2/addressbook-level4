@@ -21,7 +21,7 @@ public class ImportCommand extends UndoableCommand {
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
             + "FILEPATH "
-            + " PASSWORD";
+            + "PASSWORD";
 
     public static final String MESSAGE_SUCCESS = "Persons and tags from Addressbook file successfully imported.";
     public static final String MESSAGE_FILE_NOT_FOUND = "Addressbook file is not found.";

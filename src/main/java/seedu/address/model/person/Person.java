@@ -45,7 +45,7 @@ public class Person {
      * Only rating specified.
      * Note: To remove when test cases are integrated to Calendar feature
      */
-    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags) {
+    /*public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -55,7 +55,7 @@ public class Person {
         this.tags = new UniqueTagList(tags);
         this.rating = rating;
         this.calendarId = "";
-    }
+    }*/
 
     /**
     * All fields specified
@@ -145,6 +145,8 @@ public class Person {
                 .append(getAddress())
                 .append(" Rating: ")
                 .append(getRatingDisplay())
+                .append(" Calendar ID: ")
+                .append(getCalendarId())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
@@ -152,7 +154,7 @@ public class Person {
 
     public String getPersonUrl() {
         return "https://calendar.google.com/calendar/embed?src="
-                + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
+                + this.calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
     }
 
 

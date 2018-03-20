@@ -129,6 +129,7 @@ public class CreateNewCalendar {
         try {
             Calendar createdCalendar = service.calendars().insert(calendar).execute();
             calendarId = createdCalendar.getId();
+            System.out.println(calendarId);
         } catch (IOException e) {
             e.printStackTrace();
         }

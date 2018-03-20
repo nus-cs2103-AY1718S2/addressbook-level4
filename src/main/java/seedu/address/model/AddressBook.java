@@ -112,7 +112,50 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
+        removeUnusedTags();
     }
+
+    /**
+     * Removes all {@code Tag}s that are not used by any {@code Person} in this {@code AddressBook}.
+     */
+    private void removeUnusedTags() {
+        Set<Tag> tagsInPersons = persons.asObservableList().stream()
+                .map(Person::getTags)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+        tags.setTags(tagsInPersons);
+    }
+
+    //@@author ongkuanyang
+
+    /**
+     * Archives person.
+     * @param target
+     * @throws PersonNotFoundException
+     */
+    public void archivePerson(Person target) throws PersonNotFoundException {
+        target.setArchived(true);
+        try {
+            persons.setPerson(target, target);
+        } catch (DuplicatePersonException e) {
+            // Impossible to have this exception
+        }
+    }
+
+    /**
+     * Unarchives person.
+     * @param target
+     * @throws PersonNotFoundException
+     */
+    public void unarchivePerson(Person target) throws PersonNotFoundException {
+        target.setArchived(false);
+        try {
+            persons.setPerson(target, target);
+        } catch (DuplicatePersonException e) {
+            // Impossible to have this exception
+        }
+    }
+    //@@author
 
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
@@ -133,7 +176,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getCustTimeZone(), correctTagReferences);
+                person.getCustTimeZone(), person.isArchived(), correctTagReferences);
     }
 
     /**
@@ -148,10 +191,52 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Sorts all the persons alphabetical order of their names
+     */
+    public void sort() {
+        requireNonNull(persons);
+        persons.sort();
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    /**
+     * Removes tags from persons
+     */
+    public void removeTag(Tag t) {
+        try {
+            for (Person person : persons) {
+                removeTagFromPerson(t, person);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: original person is obtained from the address book.");
+        }
+    }
+
+    /**
+     * Removes tags from persons
+     */
+    private void removeTagFromPerson(Tag t, Person person) throws PersonNotFoundException {
+        Set < Tag > newTags = new HashSet<>(person.getTags());
+
+        if (!newTags.remove(t)) {
+            return;
+        }
+
+        Person newPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
+                                      person.getAddress(), newTags);
+
+        try {
+            updatePerson(person, newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
+                     + "See Person#equals(Object).");
+        }
     }
 
     //// util methods

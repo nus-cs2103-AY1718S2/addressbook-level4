@@ -8,6 +8,7 @@
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <timeZone>SGT</timeZone>
+        <isArchived>false</isArchived>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -16,6 +17,7 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <timeZone>PST</timeZone>
+        <isArchived>false</isArchived>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
@@ -25,6 +27,7 @@
         <email>heinz@example.com</email>
         <address>wall street</address>
         <timeZone>PST</timeZone>
+        <isArchived>false</isArchived>
     </persons>
     <persons>
         <name>Daniel Meier</name>
@@ -32,6 +35,7 @@
         <email>cornelia@example.com</email>
         <address>10th street</address>
         <timeZone>PST</timeZone>
+        <isArchived>false</isArchived>
     </persons>
     <persons>
         <name>Elle Meyer</name>
@@ -39,6 +43,7 @@
         <email>werner@example.com</email>
         <address>michegan ave</address>
         <timeZone>PST</timeZone>
+        <isArchived>false</isArchived>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
@@ -46,6 +51,7 @@
         <email>lydia@example.com</email>
         <address>little tokyo</address>
         <timeZone>SGT</timeZone>
+        <isArchived>false</isArchived>
     </persons>
     <persons>
         <name>George Best</name>
@@ -53,6 +59,7 @@
         <email>anna@example.com</email>
         <address>4th street</address>
         <timeZone>PST</timeZone>
+        <isArchived>false</isArchived>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>

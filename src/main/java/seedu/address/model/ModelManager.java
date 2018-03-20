@@ -15,6 +15,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -37,6 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        updateFilteredPersonList(PREDICATE_SHOW_UNARCHIVED_PERSONS);
     }
 
     public ModelManager() {
@@ -68,7 +70,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredPersonList(PREDICATE_SHOW_UNARCHIVED_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void sort() {
+        addressBook.sort();
         indicateAddressBookChanged();
     }
 
@@ -79,6 +87,25 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    //@@author ongkuanyang
+    @Override
+    public void archivePerson(Person target) throws PersonNotFoundException {
+        addressBook.archivePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unarchivePerson(Person target) throws PersonNotFoundException {
+        addressBook.unarchivePerson(target);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
+    @Override
+    public void deleteTag(Tag t) {
+        addressBook.removeTag(t);
     }
 
     //=========== Filtered Person List Accessors =============================================================

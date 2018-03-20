@@ -34,6 +34,7 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String timeZone;
+    private Boolean isArchived;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -70,6 +71,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         timeZone = source.getCustTimeZone().timeZone;
+        isArchived = source.isArchived();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -129,7 +131,14 @@ public class XmlAdaptedPerson {
 
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, timeZone, tags);
+
+        Person person = new Person(name, phone, email, address, timeZone, tags);
+
+        if (this.isArchived == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "archived"));
+        }
+        person.setArchived(this.isArchived);
+        return person;
     }
 
     @Override

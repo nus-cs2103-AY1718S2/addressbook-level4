@@ -13,7 +13,6 @@ import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
-
 /**
  * Parses input arguments and creates a new FindCommand object
  */
@@ -33,10 +32,13 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] arguments = trimmedArgs.split("\\s+");
         String[] keywords;
-        //TODO: add code to throw exception for invalid specifier
         //check arguments[0] for specifier
-        switch (arguments[0]) {
 
+        if (arguments[0].matches("\\p{Alnum}++")) {
+            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(arguments)));
+        }
+
+        switch (arguments[0]) {
         case "-all":
             keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
             return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(keywords)));
@@ -56,8 +58,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
             return new FindCommand(new TagsContainsKeywordsPredicate(Arrays.asList(keywords)));
         default:
-            //no specifier so just search through all valid fields of Person instance
-            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(arguments)));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
     }
 

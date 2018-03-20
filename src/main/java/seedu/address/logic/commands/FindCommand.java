@@ -13,10 +13,12 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose fields contain any of "
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Valid specifiers are -all, -n, -p, -e, -a, -t, for ALL, NAME, PHONE, EMAIL, ADDRESS and TAGS"
+            + " respectively \n"
+            + "Parameters: [SPECIFIER] KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " -n alice bob charlie";
 
     private final Predicate<Person> predicate;
 

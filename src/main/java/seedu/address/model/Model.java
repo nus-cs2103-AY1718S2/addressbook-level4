@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -53,9 +54,12 @@ public interface Model {
      * @throws NullPointerException if {@code Patient} is null.*/
     void addPatientToQueue(Patient patient) throws DuplicatePatientException;
 
+    /** Remove a patient from the visiting queue*/
+    void removePatientFromQueue(Index targetIndex);
+
     /** Get patient visiting queue*/
     ObservableList<Patient> getVisitingQueue();
 
     /** Get Patient from the patient list */
-    public Patient getPatientFromList(Predicate<Patient> predicate);
+    Patient getPatientFromList(Predicate<Patient> predicate);
 }

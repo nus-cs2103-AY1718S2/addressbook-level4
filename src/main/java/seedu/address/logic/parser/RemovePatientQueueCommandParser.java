@@ -1,5 +1,9 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemovePatientQueueCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -14,7 +18,13 @@ public class RemovePatientQueueCommandParser implements Parser<RemovePatientQueu
      * @throws ParseException if the user input does not conform the expected format
      */
     @Override
-    public RemovePatientQueueCommand parse(String userInput) throws ParseException {
-        return null;
+    public RemovePatientQueueCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new RemovePatientQueueCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    RemovePatientQueueCommand.MESSAGE_USAGE));
+        }
     }
 }

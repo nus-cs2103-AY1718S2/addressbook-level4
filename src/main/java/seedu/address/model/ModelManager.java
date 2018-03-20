@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
@@ -122,6 +123,11 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(patient);
         imdb.addPatientToQueue(patient);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removePatientFromQueue(Index targetIndex) {
+
     }
 
     @Override

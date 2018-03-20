@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -30,6 +31,8 @@ public class HelpCommandSystemTest extends ImdbSystemTest {
 
     @Test
     public void openHelpWindow() {
+        LoginManager.authenticate("alice", "password123");
+
         //use accelerator
         getCommandBox().click();
         getMainMenu().openHelpWindowUsingAccelerator();

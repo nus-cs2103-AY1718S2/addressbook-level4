@@ -6,12 +6,16 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
+    /** {@code Predicate} Predicate that shows only unarchived persons */
+    Predicate<Person> PREDICATE_SHOW_UNARCHIVED_PERSONS = person -> !person.isArchived();
+
+    /** {@code Predicate} Predicate that shows all persons */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
@@ -26,6 +30,9 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+    /** Sorts the persons in AddressBook based on the alphabetical order of their names*/
+    void sort();
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -36,6 +43,15 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author ongkuanyang
+    /** Archives the given person. */
+    void archivePerson(Person target) throws PersonNotFoundException;
+
+    /** Unarchive the given person. */
+    void unarchivePerson(Person target) throws PersonNotFoundException;
+    //@@author
+
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -44,5 +60,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /** Removes the given {@code tag} from all {@code Person}s. */
+    void deleteTag(Tag t);
 
 }

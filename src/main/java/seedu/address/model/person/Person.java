@@ -22,6 +22,8 @@ public class Person {
 
     private final UniqueTagList tags;
 
+    private boolean isArchived = false;
+
     /**
      * Every field must be present and not null.
      */
@@ -33,6 +35,14 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, boolean isArchived, Set<Tag> tags) {
+        this(name, phone, email, address, tags);
+        this.isArchived = isArchived;
     }
 
     public Name getName() {
@@ -49,6 +59,14 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean value) {
+        this.isArchived = value;
     }
 
     /**

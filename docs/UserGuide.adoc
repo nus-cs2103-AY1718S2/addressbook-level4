@@ -85,8 +85,8 @@ Profile Picture indicates the profile picture's file path
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pp/C:\\Downloads\\john.jpg`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pp/C:\\Downloads\\john.jpg t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pp//home/trafalgarandre/Desktop/John.jpg`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pp//home/trafalgarandre/Desktop/John.jpg t/criminal`
 
 === Listing all persons : `list`
 

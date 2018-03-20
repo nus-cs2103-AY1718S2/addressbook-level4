@@ -458,6 +458,25 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Showing Profile Picture
+
+==== Current implementation
+`ProfilePicture` is a `Person` 's attribute. It stores the path of the input profile picture and generates a similar profile picture which will be stored in the app.
+The ProfilePicture constructor is called when `AddCommand` or `EditCommand` is executed. In `AddCommand`, it is an optional attribute. Whenever there is no valid profile picture for `ProfilePicture`,
+`ProfilePicture` takes the default `ProfilePicture`.
+`ProfilePicture`.getImage() returns an image for the `ImageView` of UI.
+
+==== Design consideration
+===== Aspect: How to link with `ProfilePicture`
+* **Alternative 1 (current choice):** Takes in the image path then copy the image to the ProfilePictureFolder.
+** Pros: We still have profile picture if the original profile picture is lost.
+** Cons: Memory consumption.
+* **Alternative 2:** Store the path and retrieve the image from the path when necessary.
+** Pros: Less memory consumption.
+** Cons: Original Image may be lost.
+
+diagrams::ModelComponentClassDiagram.pptx[width="650"]
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -874,7 +893,7 @@ manage which include contact details and profiles of potential employees. It is 
  ** Users can delete reminders.
  ** The reminders will be displayed on the screen sorted according to earliest time due.
 
- * Minor Feature: Contact details and LinkedIn search display
+ * Minor Feature: Contact details and LinkedIn search display.
  ** Users can view the contact details in a separate panel using the `select` command.
  ** Users can view the LinkedIn search of the person using the `linkedIn` command.
 

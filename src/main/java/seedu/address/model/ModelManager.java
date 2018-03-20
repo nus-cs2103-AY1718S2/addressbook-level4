@@ -91,7 +91,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
-        addressBook.checkForStudentInAB(target);
+        addressBook.checkForStudentInAdressBook(target);
         indicateBrowserPanelToDisplayStudent(target);
     }
 

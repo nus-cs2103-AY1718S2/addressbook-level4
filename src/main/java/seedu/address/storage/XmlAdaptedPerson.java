@@ -156,10 +156,6 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
 
-        if (this.calendarId == null) {
-            this.calendarId = CreateNewCalendar.execute(name.fullName);
-        }
-
         final Rating rating = new Rating(this.rating);
 
         if (this.review == null) {

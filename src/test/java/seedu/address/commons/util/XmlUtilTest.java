@@ -69,12 +69,12 @@ public class XmlUtilTest {
         XmlUtil.getDataFromFile(EMPTY_FILE, AddressBook.class);
     }
 
-    /*@Test
+    @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         AddressBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableAddressBook.class).toModelType();
         assertEquals(9, dataFromFile.getPersonList().size());
         assertEquals(0, dataFromFile.getTagList().size());
-    }*/
+    }
 
     @Test
     public void xmlAdaptedPersonFromFile_fileWithMissingPersonField_validResult() throws Exception {

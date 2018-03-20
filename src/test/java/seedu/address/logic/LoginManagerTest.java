@@ -8,8 +8,6 @@ import static seedu.address.logic.commands.LoginCommand.TEST_USERNAME;
 
 import org.junit.Test;
 
-import sun.rmi.runtime.Log;
-
 public class LoginManagerTest {
 
     @Test

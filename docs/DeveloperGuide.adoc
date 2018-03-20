@@ -924,6 +924,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student who studies in school |be able to find rooms that I can study in |save time finding rooms
 
+|`* *`|power user| be able to auto complete commands| I can use the application faster
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily

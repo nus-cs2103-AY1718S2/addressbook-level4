@@ -1,14 +1,14 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.commons.exceptions.IllegalValueException;
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Checks for vacant rooms in a given building
+ */
 public class VacantCommand extends Command {
     public static final String COMMAND_WORD = "vacant";
 

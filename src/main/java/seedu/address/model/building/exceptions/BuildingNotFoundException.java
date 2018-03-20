@@ -1,6 +1,5 @@
 package seedu.address.model.building.exceptions;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**

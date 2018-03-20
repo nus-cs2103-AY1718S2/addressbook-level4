@@ -91,7 +91,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void getRoomsFrom(Building building) throws BuildingNotFoundException {
         //get rooms of the building here
         //temporarily calling isValidBuilding
-        if(!Building.isValidBuilding(building)) {
+        if (!Building.isValidBuilding(building)) {
             throw new BuildingNotFoundException();
         }
     }

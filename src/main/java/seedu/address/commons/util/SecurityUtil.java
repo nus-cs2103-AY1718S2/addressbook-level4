@@ -27,7 +27,8 @@ import seedu.address.commons.exceptions.WrongPasswordException;
  */
 public class SecurityUtil {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private static final String DEFAULT_PASSWORD = new String("test");
+    private static final String DEFAULT_PASSWORD = "test";
+    private static final String XML = "xml";
 
     /**
      * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
@@ -68,8 +69,7 @@ public class SecurityUtil {
      * @throws IOException thrown if cannot open file
      */
     public static void decrypt(File file)throws IOException, WrongPasswordException {
-        String defaultPassword = new String("test");
-        byte[] hashedPassword = hashPassword(defaultPassword);
+        byte[] hashedPassword = hashPassword(DEFAULT_PASSWORD);
         decrypt(file, hashedPassword);
     }
 
@@ -174,11 +174,6 @@ public class SecurityUtil {
      */
     private static boolean checkPlainText(byte[] data) {
         String string = new String(data);
-        for (int i = 0; i < data.length; i++) {
-            if (string.charAt(i) > 'z') {
-                return false;
-            }
-        }
-        return true;
+        return string.contains(XML);
     }
 }

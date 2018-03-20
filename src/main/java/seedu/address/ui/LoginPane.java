@@ -1,8 +1,8 @@
 package seedu.address.ui;
 
-import javafx.fxml.FXML;
-
 import java.util.logging.Logger;
+
+import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -51,11 +51,14 @@ public class LoginPane extends UiPart<Region> {
 
     @FXML
     private void checkLoginDetails() {
-        if(checkLoginDetails(login)) {
+        if (checkLoginDetails(login)) {
             login.accessPermitted();
         }
     }
 
+    /**
+     * Returns a boolean for checking login details
+     */
     private boolean checkLoginDetails(Login login) {
         try {
             isAccessPermitted = login.checkLoginDetails(
@@ -75,6 +78,9 @@ public class LoginPane extends UiPart<Region> {
         createNewAccount(login);
     }
 
+    /**
+     * Stores new profile's UserPass into UserPassStorage
+     */
     private void createNewAccount(Login login) {
         try {
             login.storeUserPass(

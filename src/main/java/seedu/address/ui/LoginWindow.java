@@ -1,8 +1,8 @@
 package seedu.address.ui;
 
-import javafx.fxml.FXML;
-
 import java.util.logging.Logger;
+
+import javafx.fxml.FXML;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -18,7 +18,11 @@ public class LoginWindow extends UiPart<Stage> {
     private Stage primaryStage;
     private Login login;
     private LoginPane loginPane;
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private AnchorPane loginPanePlaceholder;
 
     public LoginWindow(Stage primaryStage, Login login) {
         super(FXML, primaryStage);
@@ -29,9 +33,6 @@ public class LoginWindow extends UiPart<Stage> {
 
         registerAsAnEventHandler(this);
     }
-
-    @FXML
-    private AnchorPane loginPanePlaceholder;
 
     void fillPane() {
         loginPane = new LoginPane(login);

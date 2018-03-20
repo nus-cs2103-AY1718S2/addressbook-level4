@@ -136,7 +136,7 @@ public class XmlAddressBookStorageTest {
 
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
-        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath,new Password("test")).get();
+        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath, new Password("test")).get();
         assertEquals(original, new AddressBook(readBack));
 
         //Modify data, overwrite exiting file, and read back

@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +19,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * Wraps all data at the address-book level
@@ -190,15 +188,15 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Calls replaceTagForPerson method when tag is found in tags.
-     * @param TagSet
+     * @param tagSet
      * @throws TagNotFoundException
      */
-    public void replaceTag(List<Tag> TagSet) throws TagNotFoundException {
-        Tag tagArray[] = new Tag[2];
-        TagSet.toArray(tagArray);
+    public void replaceTag(List<Tag> tagSet) throws TagNotFoundException {
+        Tag[] tagArray = new Tag[2];
+        tagSet.toArray(tagArray);
         Tag tagToBeReplaced = tagArray[0];
         Tag tagToBePlaced = tagArray[1];
-        if (tags.contains(tagToBeReplaced)){
+        if (tags.contains(tagToBeReplaced)) {
             for (Person person : persons) {
                 replaceTagForPerson(tagToBeReplaced, tagToBePlaced, person);
             }
@@ -236,9 +234,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param person
      */
 
-    public void replaceTagForPerson(Tag tagToBeReplaced, Tag tagToBePlaced, Person person){
+    public void replaceTagForPerson(Tag tagToBeReplaced, Tag tagToBePlaced, Person person) {
         Set<Tag> tagList = new HashSet<>(person.getTags());
-        if (tagList.remove(tagToBeReplaced)){
+        if (tagList.remove(tagToBeReplaced)) {
             tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(),
                     tagList);

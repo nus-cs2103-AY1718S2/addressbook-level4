@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -117,11 +116,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void replaceTag(List<Tag> TagSet){
-        Tag[] TagArray = new Tag[2];
-        TagSet.toArray(TagArray);
+    public void replaceTag(List<Tag> tagSet) {
+        Tag[] tagArray = new Tag[2];
+        tagSet.toArray(tagArray);
         try {
-            addressBook.replaceTag(TagSet);
+            addressBook.replaceTag(tagSet);
         } catch (TagNotFoundException error) {
             throw new AssertionError();
         }

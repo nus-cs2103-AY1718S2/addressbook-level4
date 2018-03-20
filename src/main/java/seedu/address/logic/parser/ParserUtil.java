@@ -108,7 +108,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses {@code Collection<String> tags} into a {@code List<Tag>}.
      */
     public static List<Tag> parseTagsForReplacement(Collection<String> tags) throws IllegalValueException {
         requireNonNull(tags);
@@ -119,6 +119,9 @@ public class ParserUtil {
         return tagSet;
     }
 
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();

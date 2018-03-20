@@ -290,9 +290,12 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 // tag::dataencryption[]
 
-=== Set reminders `[comming in v1.5]`
+=== Set reminders `[coming in v1.5]`
 
 You can set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
+
+=== Emailing a person `[coming in v1.5]`
+You can send email to any person you have saved in contactHeRo, without having to leave the app!
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`

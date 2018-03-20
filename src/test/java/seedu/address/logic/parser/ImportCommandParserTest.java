@@ -9,12 +9,13 @@ import org.junit.Test;
 import seedu.address.logic.commands.ImportCommand;
 
 public class ImportCommandParserTest {
+    private static final String TEST_PASSWORD = "test";
 
     private ImportCommandParser parser = new ImportCommandParser();
 
     @Test
     public void parse_validArgs_returnsImportCommand() {
-        assertParseSuccess(parser, "validString", new ImportCommand("validString"));
+        assertParseSuccess(parser, "validString test", new ImportCommand("validString", TEST_PASSWORD));
     }
 
     @Test

@@ -13,6 +13,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.Test;
 
 import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.SecurityUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -30,6 +31,7 @@ public class ImportCommandTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ImportCommandTest/");
     private static final String TEST_DATA_FILE_ALICE = TEST_DATA_FOLDER + "aliceAddressBook.xml";
     private static final String TEST_DATA_FILE_ALICE_BENSON = TEST_DATA_FOLDER + "aliceBensonAddressBook.xml";
+    private static final String TEST_PASSWORD = "test";
 
     private final AddressBook addressBookWithAliceAndBenson = new AddressBookBuilder().withPerson(ALICE)
             .withPerson(BENSON).build();
@@ -42,7 +44,7 @@ public class ImportCommandTest {
         ImportCommand importCommand = prepareCommand(filepath, model);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.importAddressBook(filepath);
+        expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -53,7 +55,7 @@ public class ImportCommandTest {
         ImportCommand importCommand = prepareCommand(filepath, model);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.importAddressBook(filepath);
+        expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -80,7 +82,7 @@ public class ImportCommandTest {
         ImportCommand importCommand = prepareCommand(filepath, model);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.importAddressBook(filepath);
+        expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -91,7 +93,7 @@ public class ImportCommandTest {
         ImportCommand importCommand = prepareCommand(filepath, model);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.importAddressBook(filepath);
+        expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -112,7 +114,7 @@ public class ImportCommandTest {
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> address book imported again
-        expectedModel.importAddressBook(filepath);
+        expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -160,7 +162,7 @@ public class ImportCommandTest {
         assertTrue(standardCommand.equals(standardCommand));
 
         // same type -> returns true
-        assertTrue(standardCommand.equals(new ImportCommand(TEST_DATA_FILE_ALICE_BENSON)));
+        assertTrue(standardCommand.equals(new ImportCommand(TEST_DATA_FILE_ALICE_BENSON, TEST_PASSWORD)));
 
         // null -> returns false
         assertFalse(standardCommand.equals(null));
@@ -176,7 +178,7 @@ public class ImportCommandTest {
      * Returns a {@code ImportCommand} with the parameter {@code filepath}.
      */
     private ImportCommand prepareCommand(String filepath, Model model) {
-        ImportCommand importCommand = new ImportCommand(filepath);
+        ImportCommand importCommand = new ImportCommand(filepath, TEST_PASSWORD);
         importCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return importCommand;
     }

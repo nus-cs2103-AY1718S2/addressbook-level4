@@ -27,6 +27,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
+    private static final String TEST_PASSWORD = "test";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -160,7 +161,7 @@ public class XmlAddressBookStorageTest {
         String filePath = TEST_DATA_FOLDER + "invalidFileFormatAddressBook.xml";
         AddressBook original = new AddressBook();
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
-        xmlAddressBookStorage.importAddressBook(filePath, original);
+        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
     }
 
     @Test
@@ -169,7 +170,7 @@ public class XmlAddressBookStorageTest {
         String filePath = TEST_DATA_FOLDER + "nonExistentAddressBook.xml";
         AddressBook original = new AddressBook();
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
-        xmlAddressBookStorage.importAddressBook(filePath, original);
+        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
     }
 
     @Test
@@ -179,7 +180,7 @@ public class XmlAddressBookStorageTest {
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
 
         // Import file into existing address book
-        xmlAddressBookStorage.importAddressBook(filePath, original);
+        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
         AddressBook expected = original;
         expected.importPerson(ALICE);
         expected.importPerson(BENSON);

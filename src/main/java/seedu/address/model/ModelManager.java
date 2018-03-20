@@ -14,6 +14,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.Person;
@@ -112,10 +113,13 @@ public class ModelManager extends ComponentManager implements Model {
      * @param filepath
      */
     @Override
-    public void importAddressBook(String filepath) throws DataConversionException, IOException {
+    public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
+                                                                            WrongPasswordException {
         requireNonNull(filepath);
-        XmlAddressBookStorage importedAddressBook = new XmlAddressBookStorage(filepath);
-        importedAddressBook.importAddressBook(filepath, this.addressBook);
+        requireNonNull(password);
+
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.importAddressBook(filepath, this.addressBook, password);
         indicateAddressBookChanged();
     }
 

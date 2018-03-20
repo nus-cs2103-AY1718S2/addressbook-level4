@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.Person;
@@ -62,7 +63,8 @@ public interface Model {
     /**
      * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
      */
-    void importAddressBook(String filepath) throws DataConversionException, IOException;
+    void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
+            WrongPasswordException;
 
     /**
      * Updates the password with the given password.

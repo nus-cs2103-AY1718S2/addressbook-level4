@@ -152,7 +152,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void importAddressBook(String filepath) {
+        public void importAddressBook(String filepath, byte[] password) {
             fail("This method should not be called.");
         }
     }

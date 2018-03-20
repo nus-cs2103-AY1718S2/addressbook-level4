@@ -14,7 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -36,15 +35,20 @@ public class BirthdayList extends UiPart<Region> {
         Platform.runLater(() -> displayed.setValue(parseBirthdaysFromObservableList(list)));
     }
 
+    /**
+     * Helper method to parse the given list into their respective birthdays into a sorted string
+     * @param observablelist given list of current addressBook
+     * @return String to be displayed
+     */
     private String parseBirthdaysFromObservableList(ObservableList<Person> observablelist) {
         StringBuilder string = new StringBuilder();
         List<Person> list = new ArrayList<Person>();
 
-        if(observablelist == null){
+        if (observablelist == null) {
             return "Hello World";
         }
 
-        for(Person person: observablelist){
+        for (Person person: observablelist) {
             list.add(person);
         }
 
@@ -58,8 +62,8 @@ public class BirthdayList extends UiPart<Region> {
                 List<String> o2Strings = new ArrayList<String>();
                 int index = 0;
                 while (index < o1Birthday.length() && index < o1Birthday.length()) {
-                    o1Strings.add(o1Birthday.substring(index, Math.min(index + 2,o1Birthday.length())));
-                    o2Strings.add(o2Birthday.substring(index, Math.min(index + 2,o2Birthday.length())));
+                    o1Strings.add(o1Birthday.substring(index, Math.min(index + 2, o1Birthday.length())));
+                    o2Strings.add(o2Birthday.substring(index, Math.min(index + 2, o2Birthday.length())));
                     index += 2;
                 }
 
@@ -76,7 +80,7 @@ public class BirthdayList extends UiPart<Region> {
             }
         });
 
-        for(Person person: list){
+        for (Person person: list) {
             string.append(person.getBirthday().toString());
             string.append(" ");
             string.append(person.getName().toString());

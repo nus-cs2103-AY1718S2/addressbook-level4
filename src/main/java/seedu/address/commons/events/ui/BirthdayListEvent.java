@@ -3,9 +3,6 @@ package seedu.address.commons.events.ui;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.ui.BirthdayList;
-import seedu.address.ui.PersonCard;
 
 /**
  * Represents a selection change in the Person List Panel

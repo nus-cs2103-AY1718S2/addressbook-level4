@@ -1,10 +1,9 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.BirthdayListEvent;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Format full help instructions for every command for display.

@@ -8,7 +8,7 @@
         <ingredient>alice@example.com</ingredient>
         <instruction>123, Jurong West Ave 6, #08-111</instruction>
         <url>https://www.bbcgoodfood.com/recipes/collection/baked-potato</url>
-        <tagged>friends</tagged>
+        <tagged>family</tagged>
     </recipes>
     <recipes>
         <name>Benson Meier</name>
@@ -17,7 +17,7 @@
         <instruction>311, Clementi Ave 2, #02-25</instruction>
         <url>https://www.bbcgoodfood.com/recipes/collection/burger</url>
         <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <tagged>family</tagged>
     </recipes>
     <recipes>
         <name>Carl Kurz</name>
@@ -25,6 +25,7 @@
         <ingredient>heinz@example.com</ingredient>
         <instruction>wall street</instruction>
         <url>https://www.bbcgoodfood.com/recipes/collection/casserole</url>
+        <tagged>owesMoney</tagged>
     </recipes>
     <recipes>
         <name>Daniel Meier</name>

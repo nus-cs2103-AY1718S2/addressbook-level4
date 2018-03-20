@@ -68,6 +68,7 @@ public class CommandTestUtil {
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
+    public static final String LF = "\n";
 
     public static final EditCommand.EditRecipeDescriptor DESC_AMY;
     public static final EditCommand.EditRecipeDescriptor DESC_BOB;

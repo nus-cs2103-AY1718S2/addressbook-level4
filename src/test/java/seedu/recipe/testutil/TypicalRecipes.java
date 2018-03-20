@@ -30,15 +30,15 @@ public class TypicalRecipes {
             .withInstruction("123, Jurong West Ave 6, #08-111").withIngredient("alice@example.com")
             .withPreparationTime("85355255")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/baked-potato")
-            .withTags("friends").build();
+            .withTags("family").build();
     public static final Recipe BENSON = new RecipeBuilder().withName("Benson Meier")
             .withInstruction("311, Clementi Ave 2, #02-25")
             .withIngredient("johnd@example.com").withPreparationTime("98765432")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/burger")
-            .withTags("owesMoney", "friends").build();
+            .withTags("owesMoney", "family").build();
     public static final Recipe CARL = new RecipeBuilder().withName("Carl Kurz").withPreparationTime("95352563")
             .withIngredient("heinz@example.com").withInstruction("wall street")
-            .withUrl("https://www.bbcgoodfood.com/recipes/collection/casserole").build();
+            .withUrl("https://www.bbcgoodfood.com/recipes/collection/casserole").withTags("owesMoney").build();
     public static final Recipe DANIEL = new RecipeBuilder().withName("Daniel Meier").withPreparationTime("87652533")
             .withIngredient("cornelia@example.com").withInstruction("10th street")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/curry").build();

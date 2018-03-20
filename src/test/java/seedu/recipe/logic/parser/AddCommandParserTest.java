@@ -11,6 +11,7 @@ import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_PREPARATION_TIME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_URL_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.LF;
 import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
@@ -99,6 +100,47 @@ public class AddCommandParserTest {
             NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
                 + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddCommand(expectedRecipeMultipleTags));
     }
+
+    //@@author kokonguyen191
+    @Test
+    public void parse_allFieldsPresentWithNewLineDelimiter_success() {
+        Recipe expectedRecipe = new RecipeBuilder().withName(VALID_NAME_AMY)
+            .withPreparationTime(VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY)
+            .withInstruction(VALID_INSTRUCTION_AMY).withTags(VALID_TAG_FRIEND).build();
+
+        // Multiple names - last name accepted
+        assertParseSuccess(parser,
+            NAME_DESC_AMY + LF + NAME_DESC_AMY + LF + PREPARATION_TIME_DESC_AMY + LF + INGREDIENT_DESC_AMY
+                + LF + INSTRUCTION_DESC_AMY + LF + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
+
+        // multiple preparationTimes - last preparationTime accepted
+        assertParseSuccess(parser,
+            NAME_DESC_AMY + LF + PREPARATION_TIME_DESC_AMY + LF + PREPARATION_TIME_DESC_AMY + LF
+                + INGREDIENT_DESC_AMY + LF + INSTRUCTION_DESC_AMY + LF + TAG_DESC_FRIEND,
+            new AddCommand(expectedRecipe));
+
+        // multiple ingredients - last ingredient accepted
+        assertParseSuccess(parser,
+            NAME_DESC_AMY + LF + PREPARATION_TIME_DESC_AMY + LF + INGREDIENT_DESC_AMY + LF
+                + INGREDIENT_DESC_AMY + LF + INSTRUCTION_DESC_AMY + LF + TAG_DESC_FRIEND,
+            new AddCommand(expectedRecipe));
+
+        // multiple instructions - last recipe accepted
+        assertParseSuccess(parser,
+            NAME_DESC_AMY + LF + PREPARATION_TIME_DESC_AMY + LF + INGREDIENT_DESC_AMY + LF
+             + INSTRUCTION_DESC_AMY + LF + INSTRUCTION_DESC_AMY + LF + TAG_DESC_FRIEND, new AddCommand(expectedRecipe));
+
+        // multiple tags - all accepted
+        Recipe expectedRecipeMultipleTags =
+            new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(VALID_PREPARATION_TIME_AMY)
+                .withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY)
+                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+        assertParseSuccess(parser,
+            NAME_DESC_AMY + LF + PREPARATION_TIME_DESC_AMY + LF + INGREDIENT_DESC_AMY + LF
+                + INSTRUCTION_DESC_AMY + LF + TAG_DESC_HUSBAND + LF + TAG_DESC_FRIEND,
+            new AddCommand(expectedRecipeMultipleTags));
+    }
+    //@@author
 
     @Test
     public void parse_optionalFieldsMissing_success() {

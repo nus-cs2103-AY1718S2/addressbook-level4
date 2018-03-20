@@ -74,6 +74,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 
+    //@@Author kokonguyen191
     @Test
     public void commandBox_handleMultipleLinesCommand() {
         commandBoxHandle.appendText(FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES);
@@ -81,6 +82,7 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.appendText(SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES);
         assertInput(COMMAND_THAT_HAS_MULTIPLE_LINES);
     }
+    //@@Author
 
     @Test
     public void handleKeyPress_startingWithUp() {
@@ -168,6 +170,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
 
+    //@@Author kokonguyen191
     /**
      * Checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
      */

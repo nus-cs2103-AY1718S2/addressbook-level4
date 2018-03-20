@@ -1,20 +1,22 @@
 package seedu.address.model.timetableEntry;
 
-import seedu.address.model.person.Person;
-
 /**
  * Represents a timetable entry added to Employees Tracker
  */
 public class TimetableEntry {
     private String calendarId;
-    private Person owner;
+    private String ownerName;
+    private String entryName;
+    private String ownerEmail;
     private String id;
     private String endDate;
 
-    public TimetableEntry(String calendarId, Person owner, String eventId, String endDate) {
+    public TimetableEntry(String calendarId, String ownerName, String entryName, String ownerEmail, String id, String endDate) {
         this.calendarId = calendarId;
-        this.owner = owner;
-        this.id = eventId;
+        this.ownerName = ownerName;
+        this.entryName = entryName;
+        this.ownerEmail = ownerEmail;
+        this.id = id;
         this.endDate = endDate;
     }
 
@@ -22,8 +24,16 @@ public class TimetableEntry {
         return calendarId;
     }
 
-    public Person getOwner() {
-        return owner;
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public String getEntryName() {
+        return entryName;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
     }
 
     public String getId() {

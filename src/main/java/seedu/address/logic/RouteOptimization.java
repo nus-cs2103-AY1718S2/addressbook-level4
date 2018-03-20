@@ -11,6 +11,9 @@ import com.google.maps.model.DistanceMatrix;
  * Testing retrieve distance data
  */
 public class RouteOptimization {
+    /**
+     * Simple check
+     */
     public static void main(String []agrs) throws InterruptedException, ApiException, IOException {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
@@ -22,7 +25,7 @@ public class RouteOptimization {
         DistanceMatrix matrix =
                 DistanceMatrixApi.getDistanceMatrix(context, origin, destination).await();
         String distance = matrix.rows[0].elements[0].distance.toString();
-        String distanceOnlyNumber = distance.substring(0, distance.length() - 3);
+        String distanceOnlyNumber = distance.substring(0, distance.length() -  3);
         System.out.println(Double.parseDouble(distanceOnlyNumber));
     }
 }

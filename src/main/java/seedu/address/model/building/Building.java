@@ -14,9 +14,9 @@ public class Building {
     public static final String BUILDING_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public static final String[] BUILDINGS = {
-            "AS1", "AS2", "AS3", "AS4", "AS5", "AS6", "AS7", "AS8", "COM1", "COM2", "I3", "BIZ1", "BIZ2",
-            "SDE", "S1", "S1A", "S2", "S3", "S4", "S4A", "S5", "S8", "S11", "S12", "S13", "S14", "S16",
-            "S17", "E1", "E2", "E2A", "E3", "E3A", "E4", "E4A", "E5", "EA", "ERC", "UTSRC", "LT"
+        "AS1", "AS2", "AS3", "AS4", "AS5", "AS6", "AS7", "AS8", "COM1", "COM2", "I3", "BIZ1", "BIZ2",
+        "SDE", "S1", "S1A", "S2", "S3", "S4", "S4A", "S5", "S8", "S11", "S12", "S13", "S14", "S16",
+        "S17", "E1", "E2", "E2A", "E3", "E3A", "E4", "E4A", "E5", "EA", "ERC", "UTSRC", "LT"
     };
 
     public final String buildingName;

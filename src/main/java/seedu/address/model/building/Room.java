@@ -13,7 +13,7 @@ public class Room {
             "Room names should only contain alphanumeric characters and it should not be blank";
     public static final String ROOM_VALIDATION_REGEX = "\\p{Alnum}+";
 
-    private enum roomStatus {
+    private enum RoomStatus {
         VACANT, OCCUPIED
     }
 

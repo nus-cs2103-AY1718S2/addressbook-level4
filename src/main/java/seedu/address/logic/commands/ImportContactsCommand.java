@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
@@ -84,18 +85,29 @@ public final class ImportContactsCommand extends Command {
     /**
      * Self explanitory.
      */
-    public ImportContactsCommand(final String fa) throws IOException {
+    public ImportContactsCommand(final String fa) throws Exception {
         //This throws IOException if _fileAddress is null
-        requireNonNull(fa);
+        try {
+            requireNonNull(fa);
+        } catch (Exception e) {
+            throw new Exception("Address passed to "
+                    + "ImportContactsCommand constructor is null");
+        }
         fileAddress = fa;
     }
 
     /**
      * Tries to open csv file, throws exception if problem
      */
-    public CommandResult openFile() throws IOException, CommandException {
+    public CommandResult openFile() throws Exception {
+        Reader reader;
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(fileAddress));
+            reader = Files.newBufferedReader(Paths.get(fileAddress));
+        } catch (Exception e) {
+            throw new CommandException("Reader failed in openFile()");
+        }
+
+        try {
             csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
                     .withIgnoreHeaderCase()
@@ -108,7 +120,7 @@ public final class ImportContactsCommand extends Command {
             throw new CommandException(MESSAGE_FILE_NOT_FOUND);
         } catch (IOException ioe) {
             throw new CommandException("IOException thrown in "
-                    + "ImportContactsCommand.");
+                    + "ImportContactsCommand, openFile.\n" + MESSAGE_FILE_FAILED_OPEN);
         }
     }
 
@@ -139,41 +151,61 @@ public final class ImportContactsCommand extends Command {
         String email;
         String phone;
         String address;
+        Set<Tag> tagSet = new HashSet<>();
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         DateAdded addDate;
 
         try {
+            openFile(); //open the file to add users
+        } catch (Exception e) {
+            throw new CommandException("Cannot open file in execute");
+        }
+
+        try {
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+            requireNonNull(csvRecords);
 
             for (CSVRecord csvRecord : csvRecords) { //iterate through the
                 // Accessing values by Header names
-                name = csvRecord.get("Name");
-                email = csvRecord.get("Email");
-                phone = csvRecord.get("Phone");
-                address = csvRecord.get("Address");
-                addDate = new DateAdded(formatter.format(date));
+                try {
+                    name = csvRecord.get("Name");
+                    email = csvRecord.get("Email");
+                    phone = csvRecord.get("Phone");
+                    address = csvRecord.get("Address");
+                    addDate = new DateAdded(formatter.format(date));
+                } catch (Exception e) {
+                    throw new CommandException("csvRecord failed. Check csv file to make sure" +
+                            "fields are separated correctly along with headers\n" +
+                            e);
+                }
 
                 printResult(name, email, phone, address); //mainly for debugging
 
-                Set<Tag> tagSet =
-                        (Set<Tag>) new Tag("friend"); //temporary tag, fix later
+                tagSet.add(new Tag("friend")); //temporary tag, fix later
 
+                try {
                 personToAdd = new Person(new Name(name),
                         new Phone(phone), new Email(email),
                         new Address(address), addDate, tagSet);
 
-                AddCommand addMe =
-                        new AddCommand(personToAdd); //not the most efficient...
-                addMe.executeUndoableCommand();
+                    AddCommand addMe =
+                            new AddCommand(personToAdd); //not the most efficient...
+                    addMe.executeUndoableCommand();
+                } catch (Exception e) {
+                    throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
+                    + e);
+                }
+
             }
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException ioe) {
             throw new CommandException(
                     "Aw Fuck."); //Obviously need to change this
+        } catch (NullPointerException npe) { //file won't open, null ptr
+            throw new CommandException(MESSAGE_FILE_FAILED_OPEN);
         }
     }
 
 }
-

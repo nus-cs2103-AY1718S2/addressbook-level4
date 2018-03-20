@@ -174,9 +174,15 @@ public abstract class AddressBookSystemTest {
      * and the person list panel displays the persons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+<<<<<<< HEAD
                                                      Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
+=======
+            Model expectedModel) {
+        //assertEquals(expectedCommandInput, getCommandBox().getInput());
+        //assertEquals(expectedResultMessage, getResultDisplay().getText());
+>>>>>>> upstream/master
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());

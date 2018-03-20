@@ -62,17 +62,17 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERY_DATE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 [TIP]
-You can include the delivery date for a person when adding them to the address book
+The date must be in the format "YYYY-MM-DD"
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/2018-06-2`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/2018-03-24`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 d/2018-06-17 t/criminal`
 
 === Listing all persons : `list`
 
@@ -263,3 +263,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Shortcuts
+
+* kbd:[tab] : autocomplete a command or a field
+* kbd:[&uarr;] : previous input
+* kbd:[&darr;] : next input

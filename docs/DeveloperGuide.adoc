@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Pigeons - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -780,19 +780,49 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
+Delivery system for drivers with a database of deliveries and locations to map the optimal route in a handsfree offline system.
+
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to manage deliveries
 * prefer desktop apps over other types
-* can type fast
+* requires audio cues while driving and using the program
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 * visually-oriented so prefers to see maps instead of addresses
 * may take on different user profiles for different users with different contact lists
 * may require to add contacts on the go occasionally quickly
-* may like to be able to communicate with addressees
+* may like to be able to communicate with addresses
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app while being accessible easily on the go
+*Value proposition*: manage deliveries faster than a typical GUI driven app while being accessible easily on the go and
+maps out ideal routes for drivers
+
+
+=== Feature contribution
+
+*Shi Kang*
+
+Minor: ability for correspondence with each addressee
+
+Major: Login for each delivery driver to own a separate list of addresses in his customised address book
+
+*Meera*
+
+Minor: adding delivery date field
+
+Major:  Route optimization for the deliveries on each date
+
+*Matthieu*
+
+Minor : simplifying the input
+
+Major: Email updates/correspond with the users that are awaiting a delivery
+
+*Minh*
+
+Minor: Adding google maps and handsfree sound feature
+
+Major: Mapping out the routes for delivery and displaying on google maps
 
 [appendix]
 == User Stories
@@ -837,32 +867,6 @@ _{More to be added}_
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
-
-[discrete]
-=== Use case: Delete person
-
-*MSS*
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 [discrete]
 === Use case: Deliver a package to a specific customer
@@ -982,27 +986,4 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
-[Appendix B (Product scope)]
-
-==Product scope
-
-Delivery system for drivers with a database of deliveries and locations to map the optimal route in a handsfree offline system.
-
-==Feature contribution
-
-. Shi Kang
-Major: Login for each delivery driver to own a separate list of addresses in his customised address book
-Minor: ability for correspondence with each addressee
-
-. Meera
-Minor: adding delivery date tag
-Major:  prioritizing deliveries
-
-. Matthieu
-Minor : simplifying the input
-Major: beautify the UI
-
-. Minh
-Minor: Adding google maps and handsfree sound feature
-Major: Mapping out the routes for delivery
 

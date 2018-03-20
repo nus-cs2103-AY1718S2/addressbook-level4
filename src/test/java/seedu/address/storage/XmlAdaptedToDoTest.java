@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_CONTENT;
 import static seedu.address.storage.XmlAdaptedToDo.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalToDos.TODO_A;
@@ -32,5 +34,14 @@ public class XmlAdaptedToDoTest {
         XmlAdaptedToDo todo = new XmlAdaptedToDo((String) null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Content.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+    }
+
+    @Test
+    public void equals() {
+        XmlAdaptedToDo todoA = new XmlAdaptedToDo(TODO_A);
+        XmlAdaptedToDo todoB = new XmlAdaptedToDo(TODO_A);
+        assertTrue(todoA.equals(todoA));
+        assertFalse(todoA.equals(1));
+        assertTrue(todoA.equals(todoB));
     }
 }

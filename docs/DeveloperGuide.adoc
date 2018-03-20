@@ -230,6 +230,64 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+//tag::SortCommand[]
+=== SortCommand feature
+==== Current Implementation
+The sort command feature allows the sales person to sort their clients according to their names in alphebetical order. This will allow for a more organized and neat address book.
+
+To sort the adress book, simply type 'sort' or the command alias 'so'.
+
+An example of the sort command would be: sort
+
+An example of the sort command alias would be: so
+
+// tag::DeletTag[]
+=== DeletTag feature
+==== Current Implementation
+The delete tag command allows user to remove a particular tag from all persons in the AddressBook. For example, he may want to delete the tag "neigbour" from all his contacts if he is no longer staying at the place.
+
+We implement Model#deleteTag(Tag) torwards the direction of removeTag command, so that the developer dealing with the 'logic' component is able to implement such a command.
+
+==== Design Considerations
+
+===== Aspect: Implementation of time zone
+
+The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the AddressBook. This may cause some tests to fail.
+
+* **Alternative 1 (current choice):** After updating a person, we go through everyone in the address book and collect their tags.
+** Pros: No more unused tags.
+** Cons: The time complexity is too high, of O(n^2).
+* **Alternative 2:** When deleting a tag, check whether there are person still having it as a tag.
+** Pros: Less time consuming.
+** Cons: More complex inplementation.
+
+// tag::TotalPersonStatusBar[]
+=== TotalPersonStatusBar feature
+==== Current Implementation
+This feature will allow user to see how many contacts he or she has in his/her address book in a straight way, so that I can call it straightforward when I need the information.
+
+// tag::AddComment[]
+=== AddComment feature
+==== Current Implementation
+The add comment tag command  will allow user to add some plain text information associated with a contact that the user wants to remember, so that I can recall it when I need the information.
+
+To add the comment of a client, the cm/ tag is used with either the add or edit commands, followed by the comment.
+
+An example of the add command would be: add n/David ... cm/interested in football
+
+An example of the edit command would be: edit 1 cm/interested in bascketball
+
+==== Design Considerations
+
+===== Aspect: Implementation of comment
+
+* **Alternative 1 (current choice):** User must add comment when adding client.
+** Pros: Information consistency.
+** Cons: User may not always want to add comment to clients.
+* **Alternative 2:** User can optionally add the comments in a separate command.
+** Pros: Will use less memory (e.g. number of comments are less than or equal to number of users).
+** Cons: May be more difficult to manage contacts without some comments.
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation

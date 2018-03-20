@@ -18,7 +18,7 @@ public class RemovePatientQueueCommand extends Command {
             + "QUEUE INDEX NO";
 
     public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the waiting list";
-    public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "The patient has been removed from the waiting list";
+    public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "Waiting list is empty";
 
     private final Index targetIndex;
 

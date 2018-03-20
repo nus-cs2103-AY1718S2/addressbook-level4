@@ -9,6 +9,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.DoubleUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -204,7 +205,7 @@ public class ParserUtil {
         throws IllegalValueException {
         requireNonNull(technicalSkillsScore);
         String trimmedTechnicalSkillsScore = technicalSkillsScore.trim();
-        double technicalSkillsScoreValue = Double.parseDouble(trimmedTechnicalSkillsScore);
+        double technicalSkillsScoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedTechnicalSkillsScore);
         if (!Rating.isValidScore(technicalSkillsScoreValue)) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
@@ -236,7 +237,7 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(communicationSkillsScore);
         String trimmedCommunicationSkillsScore = communicationSkillsScore.trim();
-        double communicationSkillsScoreValue = Double.parseDouble(trimmedCommunicationSkillsScore);
+        double communicationSkillsScoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedCommunicationSkillsScore);
         if (!Rating.isValidScore(communicationSkillsScoreValue)) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
@@ -268,7 +269,7 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(problemSolvingSkillsScore);
         String trimmedProblemSolvingSkillsScore = problemSolvingSkillsScore.trim();
-        double problemSolvingSkillsScoreValue = Double.parseDouble(trimmedProblemSolvingSkillsScore);
+        double problemSolvingSkillsScoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedProblemSolvingSkillsScore);
         if (!Rating.isValidScore(problemSolvingSkillsScoreValue)) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
@@ -300,7 +301,7 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(experienceScore);
         String trimmedExperienceScore = experienceScore.trim();
-        double experienceScoreValue = Double.parseDouble(trimmedExperienceScore);
+        double experienceScoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedExperienceScore);
         if (!Rating.isValidScore(experienceScoreValue)) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }

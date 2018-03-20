@@ -24,6 +24,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteRatingCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -124,6 +125,13 @@ public class AddressBookParserTest {
                 + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + rating.problemSolvingSkillsScore + " "
                 + PREFIX_EXPERIENCE_SCORE + rating.experienceScore);
         assertEquals(new RateCommand(INDEX_FIRST_PERSON, rating), command);
+    }
+
+    @Test
+    public void parseCommand_deleteRating() throws Exception {
+        DeleteRatingCommand command = (DeleteRatingCommand) parser.parseCommand(
+                DeleteRatingCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteRatingCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

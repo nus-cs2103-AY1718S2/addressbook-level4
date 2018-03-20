@@ -47,7 +47,12 @@ public class RateCommandTest {
                 COMMUNICATION_SKILLS_SCORE, PROBLEM_SOLVING_SKILLS_SCORE, EXPERIENCE_SCORE).build();
 
         RateCommand rateCommand = prepareCommand(INDEX_FIRST_PERSON, ratedPerson.getRating());
-        String expectedMessage = String.format(RateCommand.MESSAGE_RATE_PERSON_SUCCESS, ratedPerson);
+        String expectedMessage = String.format(RateCommand.MESSAGE_RATE_PERSON_SUCCESS,
+                ratedPerson.getName(), ratedPerson.getRating().getTechnicalSkillsScore(),
+                ratedPerson.getRating().getCommunicationSkillsScore(),
+                ratedPerson.getRating().getProblemSolvingSkillsScore(),
+                ratedPerson.getRating().getExperienceScore(),
+                ratedPerson.getRating().getOverallScore());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, ratedPerson);
@@ -64,7 +69,13 @@ public class RateCommandTest {
                 COMMUNICATION_SKILLS_SCORE, PROBLEM_SOLVING_SKILLS_SCORE, EXPERIENCE_SCORE).build();
 
         RateCommand rateCommand = prepareCommand(INDEX_FIRST_PERSON, ratedPerson.getRating());
-        String expectedMessage = String.format(RateCommand.MESSAGE_RATE_PERSON_SUCCESS, ratedPerson);
+        String expectedMessage = String.format(RateCommand.MESSAGE_RATE_PERSON_SUCCESS,
+                ratedPerson.getName(),
+                ratedPerson.getRating().getTechnicalSkillsScore(),
+                ratedPerson.getRating().getCommunicationSkillsScore(),
+                ratedPerson.getRating().getProblemSolvingSkillsScore(),
+                ratedPerson.getRating().getExperienceScore(),
+                ratedPerson.getRating().getOverallScore());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, ratedPerson);
@@ -144,7 +155,7 @@ public class RateCommandTest {
      * 4. Redo the modification. This ensures {@code RedoCommand} modifies the person object regardless of indexing.
      */
     @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
+    public void executeUndoRedo_validIndexFilteredList_samePersonRated() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);

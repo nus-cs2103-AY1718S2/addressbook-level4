@@ -202,7 +202,7 @@ Format: `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROB
 
 ****
 * Rates the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* The scores should be a number in the range of 1 to 5 (inclusive).
+* The scores should be a number in the range of 1 to 5 (inclusive). Scores are rounded to two decimal places.
 ****
 
 Examples:
@@ -211,6 +211,22 @@ Examples:
 Rates the 1st person to have technical skills score of 4.5, communication skills score of 3, problem solving skills of 4, experience score of 3.5.
 * `rate 2 t/3 c/5 p/3.5 e/2` +
 Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2.
+
+=== Deleting the rating given to an applicant : `deleteRating`
+
+Deletes the rating given to the applicant identified by the index number used in the last person listing. +
+Format: `deleteRating INDEX`
+
+****
+* Deletes the rating of the applicant at the specified `INDEX`.
+* The index refers to the index number shown in the last person listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `deleteRating 1` +
+Deletes the rating of the first applicant in HR+.
 
 === Listing entered commands : `history`
 
@@ -326,6 +342,8 @@ e.g. `filter y/2019`
 e.g.`select 2`
 * *Rate* : `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE` +
 e.g. `rate 1 t/4.5 c/3 p/4 e/3.5`
+* *deleteRating* : `deleteRating INDEX` +
+e.g. `deleteRating 1`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

@@ -11,7 +11,6 @@ public class RatingTest {
 
     private final Rating rating = new Rating(3, 3,
             4, 3.5);
-
     @Test
     public void isValidScore() {
         // null phone number

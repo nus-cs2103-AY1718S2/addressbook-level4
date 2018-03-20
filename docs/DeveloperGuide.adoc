@@ -799,28 +799,29 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 ~Zhang Rui Qi~
 
-Major:
+Major: Implementation of `Locate` command to bring up address of target on
+Google Maps.
 
-Minor:
+Minor: Addition of command aliases to improve speed of using CLI
 
 
 ~Melvin Tan~
 
-Major:
+Major: Integration with Google Calendar
 
-Minor:
+Minor: Enhancement to `Find` command to improve searching
 
 ~Jonathan Lee~
 
-Major:
+Major: Natural language processing for commands
 
-Minor:
+Minor: UI update - colours and layout
 
 ~Choi Wi Su~
 
-Major:
+Major: Import and export function to update contacts and export information to other formats
 
-Minor:
+Minor: Addition of remarks field for each contact
 
 
 [appendix]

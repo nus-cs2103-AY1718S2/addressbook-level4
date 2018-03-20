@@ -62,7 +62,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
-    /** @@author kaisertanqr */
+    //@@author kaisertanqr
     @Override
     public CommandResult executeLoginCommandOnly (String commandText, Command command) throws CommandException {
         CommandResult result;

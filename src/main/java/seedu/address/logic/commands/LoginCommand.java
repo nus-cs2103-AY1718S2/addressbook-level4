@@ -8,8 +8,8 @@ import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.login.exceptions.AuthenticationFailedException;
 
-/** @@author kaisertanqr
- *
+//@@author kaisertanqr
+/**
  * Authenticates login credentials.
  */
 public class LoginCommand extends Command {

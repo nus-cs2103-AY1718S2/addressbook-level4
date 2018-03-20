@@ -70,20 +70,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         hasLoggedIn = loggedin;
     }
 
+    //@@author kaisertanqr
     /// login authentication operations
 
+    /**
+     * Returns the login status of the user.
+     */
     public boolean hasLoggedIn() {
         return hasLoggedIn;
     }
 
+    /**
+     * Sets the login status of the user to {@code status}.
+     * @param status
+     */
     public void setLoginStatus(boolean status) {
         hasLoggedIn = status;
     }
 
 
-    /** @@author kaisertanqr
-     *
-     * Checks the login credentials whether it matches the one in addressbook
+    /**
+     * Checks the login credentials whether it matches the one in addressbook.
      *
      * @param username
      * @param password
@@ -91,7 +98,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given
      *                                       in ModelManager.
      */
-
     public void checkLoginCredentials(Username username, Password password)
             throws AlreadyLoggedInException, AuthenticationFailedException {
         if (hasLoggedIn) {
@@ -101,8 +107,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             hasLoggedIn = true;
         }
-
     }
+
+    //@@author
 
     //// list overwrite operations
 

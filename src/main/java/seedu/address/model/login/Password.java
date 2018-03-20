@@ -3,9 +3,8 @@ package seedu.address.model.login;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-
-/** @@author kaisertanqr
- *
+//@@author kaisertanqr
+/**
  * Represents a Username used to login to AddressBook
  * Guarantees: immutable; is valid as declared in {@link #isValidPassword(String)}
  */

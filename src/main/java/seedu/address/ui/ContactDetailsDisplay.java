@@ -46,7 +46,9 @@ public class ContactDetailsDisplay extends UiPart<Region> {
      *Shows the contact details of the person
      */
     private void showPersonDetails(Person person) {
+
         name.setText(person.getName().fullName);
+        imageView.setImage(person.getProfilePicture().getImage());
 
         List<Label> keysList = new ArrayList<>();
         List<Label> valuesList = new ArrayList<>();

@@ -15,4 +15,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_END_DATETIME = new Prefix("e/");
     public static final Prefix PREFIX_LOCATION = new Prefix("l/");
 
+    // To be deleted soon
+    public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
+    public static final Prefix PREFIX_EMAIL = new Prefix("em/");
+    public static final Prefix PREFIX_PHONE = new Prefix("p/");
 }

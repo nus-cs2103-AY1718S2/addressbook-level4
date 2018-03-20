@@ -149,15 +149,15 @@ public class InfoPanel extends UiPart<Region> {
 
         infoPaneWrapper.setVisible(true);
         infoMainName.setText(person.getName().fullName);
-        infoMainUniversity.setText("WIP");
-        infoMainMajorYear.setText("WIP (Expected " + person.getExpectedGraduationYear().value + ")");
-        infoMainCgpa.setText("WIP");
+        infoMainUniversity.setText("-");
+        infoMainMajorYear.setText("- (Expected " + person.getExpectedGraduationYear().value + ")");
+        infoMainCgpa.setText("-");
         infoMainEmail.setText(person.getEmail().value);
         infoMainAddress.setText(person.getAddress().value);
         infoMainPhone.setText(person.getPhone().value);
-        infoMainPosition.setText("WIP");
-        infoMainStatus.setText("WIP");
-        infoMainComments.setText("WIP");
+        infoMainPosition.setText("-");
+        infoMainStatus.setText("-");
+        infoMainComments.setText("-");
 
         // Process Interview info
         LocalDateTime interviewDate = person.getInterviewDate().getDateTime();

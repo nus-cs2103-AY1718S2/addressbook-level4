@@ -46,11 +46,11 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
 
         cardPersonName.setText(person.getName().fullName);
-        cardPersonUniversity.setText("WIP");
+        cardPersonUniversity.setText("-");
         cardPersonEmail.setText(person.getEmail().value);
         cardPersonContact.setText(person.getPhone().value);
-        cardPersonRating.setText("WIP");
-        cardPersonStatus.setText("WIP");
+        cardPersonRating.setText("-");
+        cardPersonStatus.setText("-");
         cardPersonNumber.setText(String.valueOf(displayedIndex));
     }
 

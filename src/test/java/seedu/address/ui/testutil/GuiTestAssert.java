@@ -31,11 +31,11 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals("WIP", actualCard.getUniversity());
+        assertEquals("-", actualCard.getUniversity());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals("WIP", actualCard.getRating());
-        assertEquals("WIP", actualCard.getStatus());
+        assertEquals("-", actualCard.getRating());
+        assertEquals("-", actualCard.getStatus());
     }
 
     /**

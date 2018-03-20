@@ -77,9 +77,12 @@ public class XmlAdaptedPatient {
      */
     public XmlAdaptedPatient(Patient source) {
         name = source.getName().fullName;
+        nric = source.getNric().value;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        dob = source.getDob().value;
+        bloodType = source.getBloodType().value;
         remark = source.getRemark().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {

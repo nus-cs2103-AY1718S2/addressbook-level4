@@ -1,5 +1,6 @@
 package seedu.address.model.card;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
@@ -27,14 +28,13 @@ public class Card {
     private final String back;
 
     public Card(String front, String back) {
-        requireAllNonNull(front, back);
-        this.front = front;
-        this.back = back;
-        this.id = UUID.randomUUID();
+        this(UUID.randomUUID(), front, back);
     }
 
     public Card(UUID id, String front, String back) {
         requireAllNonNull(id, front, back);
+        checkArgument(isValidCard(front), MESSAGE_CARD_CONSTRAINTS);
+        checkArgument(isValidCard(back), MESSAGE_CARD_CONSTRAINTS);
         this.front = front;
         this.back = back;
         this.id = id;

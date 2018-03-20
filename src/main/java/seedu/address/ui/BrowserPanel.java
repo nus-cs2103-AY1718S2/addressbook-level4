@@ -39,6 +39,7 @@ public class BrowserPanel extends UiPart<Region> {
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 
     private void loadPersonPage(Person person) {

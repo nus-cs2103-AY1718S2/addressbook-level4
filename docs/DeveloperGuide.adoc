@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Fastis-Meetup Manager - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -230,7 +230,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// group::undoredo[]
+// tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
 
@@ -358,7 +358,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// group::dataencryption[]
+// tag::dataencryption[]
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
@@ -536,54 +536,54 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular group from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeGroup(Group)` method. The specified group will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting groups?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the group removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the groups.
+** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Implement a `removeGroup(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `group` from each person.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
 ** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in groups management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
+*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
 *** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
 ****
 
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent groups from a contact, because the groups all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different groups inside person cards. For example, `friends` groups can be all in brown, and `colleagues` groups can be all in yellow.
+. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
 +
 **Before**
 +
-image::getting-started-ui-group-before.png[width="300"]
+image::getting-started-ui-tag-before.png[width="300"]
 +
 **After**
 +
-image::getting-started-ui-group-after.png[width="300"]
+image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The group labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(group.name)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.name)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the group's color as well.
+** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
 ** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the group names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own group colors, and directly saving the colors to storage, so that groups retain their colors even if the hash code algorithm changes.
+*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
 ****
 
 . Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
@@ -655,7 +655,7 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on groups alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
+*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
 Edits the remark for a person specified in the `INDEX`. +
@@ -785,7 +785,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * Have a number of events to keep track of:
 ** Talks
 ** Career Fairs
-** Interviews
+** Interviewws
 ** Consultations
 ** etc.
 
@@ -796,6 +796,43 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: Help students manage the humongous amount of events that they might have
 
+*Feature contribution*
+
+* Detail field for person (minor):
+** Detail for person is additional information such as remark, hobbies, comments, etc
+** Detail allows user to add information that does not fall unser categories such as phone, email, etc
+** Detail allows storing person information to become more flexible
+
+* Timetable link field for person (minor):
+** Timetable link for person is an NUSMods website link
+** Timetable link displays the actual link of NUSMods website shown when person is selected
+** Timetable link allows user to manage NUSMods link of person
+
+* Customizable tags color (minor):
+** User can set color of specific tags
+** Customizable tags color allows user to better personalise the application
+
+* Dark color theme for application bar and background (minor):
+** Application bar and background are changed to dark grey color
+** Dark color theme makes the application comfortable to use in different light conditions
+
+* Personal To-do list (major):
+** User can add to-dos, notes, upcomming tasks and organize them in the todo-list
+** To-do list serves to remind user of important tasks, events in group projects
+
+* Meetup Time Generator (major):
+** Generator parses information from persons' NUSMods timetables and generate a suitable project meetup time
+** Meetup Time Generator allows user to quickly decide meetup time without manually checcking timetables
+
+* Meetup Calendar (major):
+** User can add meetups with specific start, end time and display meetups on the calendar
+** Meetup Calendar allows user to visualise and remember upcomming group events/meetups
+
+* Organize persons in groups (major):
+** User can store specific persons in project groups
+** User can have a group list and display persons in each group
+** Groups allows user to manage persons based on the project groups they belongs to
+
 
 [appendix]
 == User Stories
@@ -805,17 +842,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |Student with group project |Add person with project group group |I know which person belongs to which project groups
+|`* * *` |Student with group project |Add person with project group tag |I know which person belongs to which project groups
 
-|`* * *` |Student that is finished with a group project |Delete the group group of a finished group project| I will not see the group in the application anymore
+|`* * *` |Student that is finished with a group project |Delete the group tag of a finished group project| I will not see the group in the application anymore
 
 |`* * *` |Student who forget teammates’ information |Find a person by name|I can find out more details of the person such as location, contact number
 
-|`* * *` |Student who made a mistake in recording a group group |Edit a person’s group group|I can change the group group accordingly
+|`* * *` |Student who made a mistake in recording a group tag |Edit a person’s group tag|I can change the group tag accordingly
 
 |`* * *` |Student who recorded the wrong personal information |Edit a person|I can correct the details of the person
 
-|`* * *` |Student who wants to know which teammates are in the project group |Print out the list of teammates under the same group group |I know which teammates I am meeting
+|`* * *` |Student who wants to know which teammates are in the project group |Print out the list of teammates under the same group tag |I know which teammates I am meeting
 
 |`* * *` |Student with arranged meet-ups  |Add meet-ups with title, time, venue to the calendar |Have the summary of upcoming meet-ups in a quick glance
 
@@ -843,7 +880,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Busy student with busy schedule |Have a reminder of the upcoming project meeting |I can be reminded of impending project with the details of group members printed on it
 
-|`* *` |Student who would like different colours group for different projects |Have customizable coloured groups for different groups |Easily differentiate the groups via colour groups
+|`* *` |Student who would like different colours tag for different projects |Have customizable coloured tags for different groups |Easily differentiate the groups via colour tags
 
 |`*` |Student who is too lazy to eyeball through the timetables |Have an appropriate meet-up time generated for a group |I do not have to manually come up with time for meetup
 
@@ -940,7 +977,7 @@ Use case resumes from 3.
 
 1. User requests to list all persons.
 2. Fastis shows all persons, listed with an index.
-3. User requests to add a group group to a few specified persons on the list.
+3. User requests to add a group tag to a few specified persons on the list.
 4. Fastis adds the new group to the group list.
 +
 Use case ends.
@@ -973,7 +1010,7 @@ Use case ends.
 +
 Use case ends.
 
-* 2b. No group groups were found.
+* 2b. No group tags were found.
 +
 [none]
 ** 2b1. Fastis notifies user that no groups were found.
@@ -988,7 +1025,7 @@ Use case ends.
 1.  User requests list all groups.
 2.  Fastis shows a list of all groups.
 3. User requests to delete all persons in a specific group in the list
-4. Fastis deletes all persons in the group, and deletes the group group
+4. Fastis deletes all persons in the group, and deletes the group tag
 +
 Use case ends.
 
@@ -1081,11 +1118,11 @@ Use case resumes from 3.
 Use case ends.
 
 [discrete]
-=== Use case: Change Group Color
+=== Use case: Change Tag Color
 
 *MSS*
 
-1. User enter command to change a specific group color
+1. User enter command to change a specific tag color
 2. Fastis changes the color accordingly and display it
 +
 Use case ends.
@@ -1093,7 +1130,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The group specified doesn't exist within the address book
+* 2a. The tag specified doesn't exist within the address book
 ** 2a1. Fastis notifies the user.
 +
 Use case ends

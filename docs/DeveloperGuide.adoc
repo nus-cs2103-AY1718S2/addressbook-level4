@@ -358,6 +358,67 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+//tag::filtercommand
+=== Filter Command
+
+==== Current Implementation
+
+Filter Command is supported by an `FilterCommand` class. It supports the advanced filtering of multiple fields such as `ExpectedGraduationYear`. Filter commands can supports both filtering by keyword and filtering by range, if the field has natural ordering.
+
+Filter command currently only filters `ExpectedGraduationYear` but will support more fields in the subsequent weeks.
+
+Filter command interact with `Model` and `UI` in the following way:
+
+. `FilterCommandParser` parses the user inputs into a wholesome `Predicate<Person>`.
+. This predicate will be used to instantiate the `FilterCommand`
+. Upon execution of the filter command, the UI will be updated by imposing the new predicate to the `FilteredList` in the `ModelManager` class.
+
+Below is the sequence diagram of filter command.
+
+image::FilterCommandSequenceDiagram.png[width="800"]
+==== Design Considerations
+===== Aspect: Implementation of `FilterCommandParser`
+* *Alternative 1 (current choice)*: `FilterCommandParser` breaks down user input according to prefix and pass to different methods in `FilterUtil` to generate respective `Predicate<Person>`, after which it unions these `Predicate`.
+
+** Pros: This appoach breaks down the parsing process into multiple classes and each class is responsible for single duty. This makes debugging easier.
+
+** Cons: New developers may find it hard to understand the design pattern.
+
+* *Alternative 2*: Puts actual parsing in `FilterCommandParser` class.
+
+** Pros: It reduces number of classes used and is easier for new developers to understand.
+
+** Cons: It violates single responsibility principle. `FilterCommandParser` will have too many distinct functionalities such as
+*** breaking down user input by prefix
+*** breaking down user's predicate for each prefix
+*** creating `FilterRange` objects to record down each range specified in the predicate
+*** creating `Predicate` from `FilterRange`
+*** unioning these `Predicate`
+
+===== Ascpect: Implementation of range tracker: `FilterRange<E>`
+* *Alternative 1 (current choice)*: All user input will either be in form of `ToBeFilteredClassPrefix/singletonValue, lowerRange - higherRange`. Both singleton value and range will be parsed into a `FilterRange<ToBeFilteredClass>`.
+** Pros: It ensures the user input is valid since `FilterRange<E>` can call `E.isValid()` to check. This ensures the integrity of `Predicate` later.
+
+** Cons: New developers may find it hard to understand the design pattern.
+
+* *Alternative 2 (current choice)*: All parsing of singleton or ranged values will be handled by some methods in `FilterUtil`.
+** Pros: New developers will find it easier to understand the design pattern.
+
+** Cons: It will be messy to handle both singletona dn ranged values in one method. It also adds the complexity of `FilterUtil` class.
+
+===== Aspect: `FilterCommand` behaviour
+* *Alternative 1 (current choice)*: Predicates in the same field will be ORed together. Predicates in the different field will be ANDed together.
+** Pros: For the same field, the user can have more flexibility in selecting the desired values. For the different field, the predicates are in logical conjunction to make the filter more restrictive. This follows the natural way of human thinking.
+
+** Cons: The developers may be confused about the OR/AND rule at first.
+
+* *Alternative 2*: Everything will be ORed together.
+** Pros: It is an easier logical pattern for developers to understand.
+
+** Cons: It is user unfriendly. The only way for user to filter the persons who is in Computer Science, graduating in 2020 and has a GPA greater than 4.6 is to use 3 filter commands.
+
+//end::filtercommand
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

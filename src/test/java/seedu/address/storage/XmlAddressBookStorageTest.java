@@ -46,7 +46,7 @@ public class XmlAddressBookStorageTest {
 
     private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath, Password password)
                                                                             throws Exception {
-        return new XmlAddressBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath),password);
+        return new XmlAddressBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath), password);
     }
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -84,7 +84,8 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void readAddressBookWithPassword_invalidAndValidPersonAddressBook_throwDataConversionException() throws Exception {
+    public void readAddressBookWithPassword_invalidAndValidPersonAddressBook_throwDataConversionException()
+            throws Exception {
         thrown.expect(DataConversionException.class);
         readAddressBook("invalidAndValidPersonAddressBook.xml", new Password("test"));
     }
@@ -142,7 +143,7 @@ public class XmlAddressBookStorageTest {
         original.addPerson(HOON);
         original.removePerson(ALICE);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
-        readBack = xmlAddressBookStorage.readAddressBook(filePath,new Password("test")).get();
+        readBack = xmlAddressBookStorage.readAddressBook(filePath, new Password("test")).get();
         assertEquals(original, new AddressBook(readBack));
 
         //Save and read without specifying file path

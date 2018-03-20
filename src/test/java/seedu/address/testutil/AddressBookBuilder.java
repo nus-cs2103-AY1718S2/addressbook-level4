@@ -49,10 +49,11 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Parses {@code password} into a {@code Password} and updates the {@code AddressBook} 's password that we are building.
+     * Parses {@code password} into a {@code Password} and updates the {@code AddressBook} 's password
+     * that we are building.
      */
     public AddressBookBuilder withPassword(String password) {
-            addressBook.updatePassword(new Password(password));
+        addressBook.updatePassword(new Password(password));
         return this;
     }
 

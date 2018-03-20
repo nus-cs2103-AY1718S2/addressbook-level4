@@ -203,9 +203,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(instruction);
         }
 
-        public void setUrl(Url url) { this.url = url; }
+        public void setUrl(Url url) {
+            this.url = url;
+        }
 
-        public Optional<Url> getUrl() { return Optional.ofNullable(url); }
+        public Optional<Url> getUrl() {
+            return Optional.ofNullable(url);
+        }
 
 
 

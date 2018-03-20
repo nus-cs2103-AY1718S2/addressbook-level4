@@ -53,7 +53,9 @@ public class Recipe {
         return instruction;
     }
 
-    public Url getUrl() { return url; }
+    public Url getUrl() {
+        return url;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

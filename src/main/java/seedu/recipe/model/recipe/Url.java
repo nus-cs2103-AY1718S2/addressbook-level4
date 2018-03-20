@@ -28,7 +28,6 @@ public class Url {
     }
 
     //@@author RyanAngJY-reused
-    //Reused from https://stackoverflow.com/questions/2230676/how-to-check-for-a-valid-url-in-java with exception handling
     /**
      *  Returns true if a given string is a valid web url, or no url has been assigned
      */

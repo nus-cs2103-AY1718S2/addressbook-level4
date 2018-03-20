@@ -39,7 +39,6 @@ import seedu.recipe.logic.commands.SelectCommand;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.RecipeBook;
 import seedu.recipe.testutil.TypicalRecipes;
-import seedu.recipe.ui.BrowserPanel;
 import seedu.recipe.ui.CommandBox;
 
 /**

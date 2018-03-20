@@ -100,6 +100,25 @@
     -fx-background-color: transparent;
 }
 
+/* Dialog pane */
+
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: linear-gradient(to right, #42A5F5, #1976D2);
+    -fx-background-insets: 0;
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-family: "Roboto";
+}
+
+.dialog-pane > .button-bar > .container > .details-button {
+    -fx-background-color: red !important;
+}
 
 
 /* Root */

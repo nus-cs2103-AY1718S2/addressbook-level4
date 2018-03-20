@@ -29,6 +29,7 @@ public class Imdb implements ReadOnlyImdb {
     private final UniquePatientList persons;
     private final UniqueTagList tags;
     private final UniqueAppointmentList appointments;
+    private final UniquePatientVisitingQueue visitingQueue;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -41,6 +42,7 @@ public class Imdb implements ReadOnlyImdb {
         persons = new UniquePatientList();
         tags = new UniqueTagList();
         appointments = new UniqueAppointmentList();
+        visitingQueue = new UniquePatientVisitingQueue();
     }
 
     public Imdb() {}
@@ -167,6 +169,21 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     /**
+     * Adds a patient to the visiting queue.
+     * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the patient to point to those in {@link #tags}.
+     *
+     * @throws DuplicatePatientException if an equivalent patient already exists.
+     */
+    public void addPatientToQueue(Patient p) throws DuplicatePatientException {
+        requireNonNull(p);
+        Patient patient = syncWithMasterTagList(p);
+        visitingQueue.add(patient);
+    }
+
+
+
+    /**
      * Remove {@code tag} from {@code patient}
      */
     private void removeTagFromPerson (Tag tag, Patient patient) throws PatientNotFoundException {
@@ -217,6 +234,11 @@ public class Imdb implements ReadOnlyImdb {
     @Override
     public ObservableList<Appointment> getAppointmentList() {
         return appointments.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Patient> getUniquePatientQueue() {
+        return visitingQueue.asObservableList();
     }
 
     @Override

@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PatientPanelSelectionChangedEvent;
 import seedu.address.model.patient.Patient;
@@ -85,4 +86,8 @@ public class PatientListPanel extends UiPart<Region> {
         }
     }
 
+    @Subscribe
+    public void handleAddressBookChangedEvent(ImdbChangedEvent abce) {
+        setConnections(abce.data.getUniquePatientQueue());
+    }
 }

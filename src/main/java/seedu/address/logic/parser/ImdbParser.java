@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.LoginManager;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -178,6 +179,14 @@ public class ImdbParser {
                         LoginCommand.MESSAGE_USAGE));
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case AddPatientQueueCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case AddPatientQueueCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
 
@@ -388,6 +397,12 @@ public class ImdbParser {
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
                 return new ViewAppointmentCommand();
+
+            case AddPatientQueueCommand.COMMAND_WORD:
+                return new AddPatientQueueCommandParser().parse(arguments);
+
+            case AddPatientQueueCommand.COMMAND_ALIAS:
+                return new AddPatientQueueCommandParser().parse(arguments);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

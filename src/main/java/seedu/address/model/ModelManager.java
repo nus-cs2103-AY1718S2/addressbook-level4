@@ -26,6 +26,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
+    private final FilteredList<Patient> patientVisitingQueue;
 
     /**
      * Initializes a ModelManager with the given Imdb and userPrefs.
@@ -38,6 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.imdb = new Imdb(addressBook);
         filteredPatients = new FilteredList<>(this.imdb.getPersonList());
+        patientVisitingQueue = new FilteredList<>(this.imdb.getUniquePatientQueue());
     }
 
     public ModelManager() {
@@ -105,6 +107,26 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Patient> predicate) {
         requireNonNull(predicate);
         filteredPatients.setPredicate(predicate);
+    }
+
+    public Patient getPatientFromList(Predicate<Patient> predicate) {
+        filteredPatients.setPredicate(predicate);
+        if (filteredPatients.size() > 0) {
+            return filteredPatients.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public synchronized void addPatientToQueue(Patient patient) throws DuplicatePatientException {
+        requireNonNull(patient);
+        imdb.addPatientToQueue(patient);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<Patient> getVisitingQueue() {
+        return imdb.getUniquePatientQueue();
     }
 
     @Override

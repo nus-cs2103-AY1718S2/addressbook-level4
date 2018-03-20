@@ -27,4 +27,10 @@ public interface ReadOnlyImdb {
      * This list will not contain any duplicate appointment.
      */
     ObservableList<Appointment> getAppointmentList();
+
+    /**
+     * Returns an unmodifiable view of the patient queue.
+     * This list will not contain any duplicate patient in the queue.
+     */
+    ObservableList<Patient> getUniquePatientQueue();
 }

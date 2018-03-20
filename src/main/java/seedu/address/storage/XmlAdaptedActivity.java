@@ -24,14 +24,14 @@ public class XmlAdaptedActivity {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Activity's %s field is missing!";
 
     @XmlElement(required = true)
-    private String name;
+    protected String name;
     @XmlElement(required = true)
-    private String dateTime;
+    protected String dateTime;
     @XmlElement(required = true)
-    private String remark;
+    protected String remark;
 
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    protected List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedActivity.

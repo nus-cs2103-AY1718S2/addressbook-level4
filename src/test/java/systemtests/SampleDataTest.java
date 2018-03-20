@@ -48,7 +48,7 @@ public class SampleDataTest extends RemarkBookSystemTest {
      * Test
      */
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Activity[] expectedList = SampleDataUtil.getSamplePersons();
+        Activity[] expectedList = SampleDataUtil.getSampleActivity();
         assertListMatching(getPersonListPanel(), expectedList);
     }
 }

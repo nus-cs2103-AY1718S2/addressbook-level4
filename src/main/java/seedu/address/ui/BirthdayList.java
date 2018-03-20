@@ -1,10 +1,9 @@
 package seedu.address.ui;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,8 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.BirthdayListEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -33,25 +30,43 @@ public class BirthdayList extends UiPart<Region> {
     @FXML
     private TextArea birthdayList;
 
-    public BirthdayList(UniquePersonList list) {
+    public BirthdayList(ObservableList<Person> list) {
         super(FXML);
         birthdayList.textProperty().bind(displayed);
-        Platform.runLater(() -> displayed.setValue(parseBirthdaysFromUniquePersonList(list)));
+        Platform.runLater(() -> displayed.setValue(parseBirthdaysFromObservableList(list)));
     }
 
-    private String parseBirthdaysFromUniquePersonList(UniquePersonList personsList) {
-        ObservableList<Person> list = personsList.asObservableList();
+    private String parseBirthdaysFromObservableList(ObservableList<Person> observablelist) {
         StringBuilder string = new StringBuilder();
+        List<Person> list = new ArrayList<Person>();
+
+        if(observablelist == null){
+            return "Hello World";
+        }
+
+        for(Person person: observablelist){
+            list.add(person);
+        }
 
         list.sort(new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
-                int o1Birthday = Integer.parseInt(o1.getBirthday().toString());
-                int o1Month = (o1Birthday % 1000) / 10;
-                int o1Days = (o1Birthday / 1000);
-                int o2Birthday = Integer.parseInt(o2.getBirthday().toString());
-                int o2Month = (o2Birthday % 1000) / 10;
-                int o2Days = (o2Birthday / 1000);
+                String o1Birthday = o1.getBirthday().toString();
+                String o2Birthday = o2.getBirthday().toString();
+
+                List<String> o1Strings = new ArrayList<String>();
+                List<String> o2Strings = new ArrayList<String>();
+                int index = 0;
+                while (index < o1Birthday.length() && index < o1Birthday.length()) {
+                    o1Strings.add(o1Birthday.substring(index, Math.min(index + 2,o1Birthday.length())));
+                    o2Strings.add(o2Birthday.substring(index, Math.min(index + 2,o2Birthday.length())));
+                    index += 2;
+                }
+
+                int o1Days = Integer.parseInt(o1Strings.get(0));
+                int o1Month = Integer.parseInt(o1Strings.get(1));
+                int o2Days = Integer.parseInt(o2Strings.get(0));
+                int o2Month = Integer.parseInt(o2Strings.get(1));
 
                 if (o1Month != o2Month) {
                     return o1Month - o2Month;

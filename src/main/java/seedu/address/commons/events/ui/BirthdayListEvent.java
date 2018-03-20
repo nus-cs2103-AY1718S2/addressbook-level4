@@ -1,6 +1,8 @@
 package seedu.address.commons.events.ui;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.ui.BirthdayList;
 import seedu.address.ui.PersonCard;
@@ -10,11 +12,10 @@ import seedu.address.ui.PersonCard;
  */
 public class BirthdayListEvent extends BaseEvent {
 
+    private final ObservableList<Person> birthdayList;
 
-    private final UniquePersonList newList;
-
-    public BirthdayListEvent(UniquePersonList newList) {
-        this.newList = newList;
+    public BirthdayListEvent(ObservableList<Person> newList) {
+        this.birthdayList = newList;
     }
 
     @Override
@@ -22,7 +23,7 @@ public class BirthdayListEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public UniquePersonList getNewList() {
-        return newList;
+    public ObservableList<Person> getBirthdayList() {
+        return birthdayList;
     }
 }

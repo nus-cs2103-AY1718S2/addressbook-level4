@@ -39,7 +39,7 @@ import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.TaskBuilder;
 
-public class AddCommandParserTest {
+public class TaskCommandParserTest {
     private TaskCommandParser parser = new TaskCommandParser();
 
     //TODO: TEST

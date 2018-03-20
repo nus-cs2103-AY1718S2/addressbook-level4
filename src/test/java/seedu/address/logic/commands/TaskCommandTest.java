@@ -22,72 +22,74 @@ import seedu.address.model.DeskBoard;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.testutil.TaskBuilder;
 
-public class AddCommandTest {
+//@@author Kyomian
+public class TaskCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullTask_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new TaskCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Activity validActivity = new TaskBuilder().build();
+    public void execute_taskAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingTaskAdded modelStub = new ModelStubAcceptingTaskAdded();
+        Activity validTask = new TaskBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validActivity, modelStub).execute();
+        CommandResult commandResult = getTaskCommandForTask(validTask, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validActivity), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validActivity), modelStub.personsAdded);
+        assertEquals(String.format(TaskCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validTask), modelStub.tasksAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Activity validActivity = new TaskBuilder().build();
+    public void execute_duplicateTask_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateActivityException();
+        Activity validTask = new TaskBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(TaskCommand.MESSAGE_DUPLICATE_TASK);
 
-        getAddCommandForPerson(validActivity, modelStub).execute();
+        getTaskCommandForTask(validTask, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Activity alice = new TaskBuilder().withName("Alice").build();
-        Activity bob = new TaskBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        Activity assignment = new TaskBuilder().build();
+        Activity project = new TaskBuilder().withName("Project").build();
+        TaskCommand addAssignmentCommand = new TaskCommand( (Task) assignment);
+        TaskCommand addProjectCommand = new TaskCommand( (Task) project);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addAssignmentCommand.equals(addAssignmentCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        TaskCommand addAssignmentCommandCopy = new TaskCommand((Task) assignment);
+        assertTrue(addAssignmentCommand.equals(addAssignmentCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addAssignmentCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addAssignmentCommand.equals(null));
 
         // different activity -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        assertFalse(addAssignmentCommand.equals(addProjectCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given activity.
+     * Generates a new TaskCommand with the details of the given task.
      */
-    private AddCommand getAddCommandForPerson(Activity activity, Model model) {
-        AddCommand command = new AddCommand(activity);
+    private TaskCommand getTaskCommandForTask(Activity task, Model model) {
+        TaskCommand command = new TaskCommand( (Task) task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -138,7 +140,7 @@ public class AddCommandTest {
     /**
      * A Model stub that always throw a DuplicateActivityException when trying to add a activity.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateActivityException extends ModelStub {
         @Override
         public void addActivity(Activity activity) throws DuplicateActivityException {
             throw new DuplicateActivityException();
@@ -153,13 +155,13 @@ public class AddCommandTest {
     /**
      * A Model stub that always accept the activity being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Activity> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingTaskAdded extends ModelStub {
+        final ArrayList<Activity> tasksAdded = new ArrayList<>();
 
         @Override
         public void addActivity(Activity activity) throws DuplicateActivityException {
             requireNonNull(activity);
-            personsAdded.add(activity);
+            tasksAdded.add(activity);
         }
 
         @Override

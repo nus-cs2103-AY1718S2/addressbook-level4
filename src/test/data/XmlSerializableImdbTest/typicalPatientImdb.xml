@@ -4,54 +4,75 @@
 <imdb>
     <patients>
         <name>Alice Pauline</name>
+        <nric>S1234567A</nric>
         <phone>85355255</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
+        <dob>11/11/1991</dob>
+        <bloodType>A</bloodType>
         <remark></remark>
         <tagged>friends</tagged>
     </patients>
     <patients>
         <name>Benson Meier</name>
+        <nric>S7654321B</nric>
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
+        <dob>10/10/1990</dob>
+        <bloodType>B-</bloodType>
         <remark></remark>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </patients>
     <patients>
         <name>Carl Kurz</name>
+        <nric>S5671234C</nric>
         <phone>95352563</phone>
         <email>heinz@example.com</email>
+        <dob>09/09/1989</dob>
+        <bloodType>A+</bloodType>
         <address>wall street</address>
         <remark></remark>
     </patients>
     <patients>
         <name>Daniel Meier</name>
+        <nric>S3456712D</nric>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
+        <dob>08/08/1988</dob>
+        <bloodType>B+</bloodType>
         <remark></remark>
     </patients>
     <patients>
         <name>Elle Meyer</name>
+        <nric>S5673412E</nric>
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
+        <dob>07/07/1987</dob>
+        <bloodType>O</bloodType>
         <remark></remark>
     </patients>
     <patients>
         <name>Fiona Kunz</name>
+        <nric>S1234512F</nric>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
+        <dob>06/06/1986</dob>
+        <bloodType>O+</bloodType>
         <remark></remark>
     </patients>
     <patients>
         <name>George Best</name>
+        <nric>S1234567A</nric>
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <address>4th street</address>
+        <dob>11/11/1991</dob>
+        <bloodType>B+</bloodType>
         <remark></remark>
     </patients>
     <tags>friends</tags>

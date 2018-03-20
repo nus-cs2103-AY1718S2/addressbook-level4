@@ -36,9 +36,12 @@ public class XmlUtilTest {
     private static final String INVALID_PHONE = "9482asf424";
 
     private static final String VALID_NAME = "Hans Muster";
+    private static final String VALID_NRIC = "S1234567A";
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
+    private static final String VALID_DOB = "10/10/1991";
+    private static final String VALID_BLOODTYPE = "B+";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
@@ -80,7 +83,7 @@ public class XmlUtilTest {
         XmlAdaptedPatient actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPatientWithRootElement.class);
         XmlAdaptedPatient expectedPerson = new XmlAdaptedPatient(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB, VALID_BLOODTYPE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -89,7 +92,7 @@ public class XmlUtilTest {
         XmlAdaptedPatient actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPatientWithRootElement.class);
         XmlAdaptedPatient expectedPerson = new XmlAdaptedPatient(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_NRIC, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB, VALID_BLOODTYPE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +101,7 @@ public class XmlUtilTest {
         XmlAdaptedPatient actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPatientWithRootElement.class);
         XmlAdaptedPatient expectedPerson = new XmlAdaptedPatient(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB, VALID_BLOODTYPE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

@@ -15,6 +15,7 @@ import seedu.address.model.activity.Name;
 import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 
+//@@author Kyomian
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  * {@code ParserUtil} contains methods that take in {@code Optional} as parameters. However, it goes against Java's
@@ -70,48 +71,49 @@ public class ParserUtil {
      * Parses a {@code String phone} into a {@code DateTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws IllegalValueException if the given {@code datetime} is invalid.
      */
-    public static DateTime parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!DateTime.isValidDateAndTime(trimmedPhone)) {
+
+    public static DateTime parseDateTime(String datetime) throws IllegalValueException {
+        requireNonNull(datetime);
+        String trimmedDateTime = datetime.trim();
+        if (!DateTime.isValidDateAndTime(trimmedDateTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
-        return new DateTime(trimmedPhone);
+        return new DateTime(trimmedDateTime);
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<DateTime>} if {@code phone} is present.
+     * Parses a {@code Optional<String> name} into an {@code Optional<DateTime>} if {@code datetime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<DateTime> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
+    public static Optional<DateTime> parseDateTime(Optional<String> datetime) throws IllegalValueException {
+        requireNonNull(datetime);
+        return datetime.isPresent() ? Optional.of(parseDateTime(datetime.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String address} into an {@code Remark}.
+     * Parses a {@code String remark} into a {@code Remark}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code address} is invalid.
+     * @throws IllegalValueException if the given {@code remark} is invalid.
      */
-    public static Remark parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Remark.isValidRemark(trimmedAddress)) {
+    public static Remark parseRemark(String remark) throws IllegalValueException {
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        if (!Remark.isValidRemark(trimmedRemark)) {
             throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
         }
-        return new Remark(trimmedAddress);
+        return new Remark(trimmedRemark);
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Remark>} if {@code address} is present.
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Remark> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
     }
 
     /**
@@ -140,4 +142,5 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
 }

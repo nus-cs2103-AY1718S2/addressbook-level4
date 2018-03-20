@@ -2,17 +2,17 @@ package seedu.address.storage;
 
 //@@author karenfrilya97
 
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.activity.Task;
-
-import java.util.List;
 
 /**
  * JAXB-friendly version of the Task.
  */
 public class XmlAdaptedTask extends XmlAdaptedActivity {
 
-    private final String  ACTIVITY_TYPE = "TASK";
+    private static final String ACTIVITY_TYPE = "TASK";
 
     /**
      * Constructs an XmlAdaptedTask.

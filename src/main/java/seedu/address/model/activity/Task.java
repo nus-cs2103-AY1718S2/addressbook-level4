@@ -17,7 +17,7 @@ import seedu.address.model.tag.Tag;
  */
 public class Task extends Activity {
 
-    private static final String  ACTIVITY_TYPE = "TASK";
+    private static final String ACTIVITY_TYPE = "TASK";
 
     /**
      * Every field must be present and not null.

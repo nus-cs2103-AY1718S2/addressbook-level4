@@ -99,7 +99,8 @@ public class EditCommand extends UndoableCommand {
      * Creates and returns a {@code Activity} with the details of {@code activityToEdit}
      * edited with {@code editActivityDescriptor}.
      */
-    private static Activity createEditedPerson(Activity activityToEdit, EditActivityDescriptor editActivityDescriptor) {
+    private static Activity createEditedPerson(Activity activityToEdit,
+        EditActivityDescriptor editActivityDescriptor) {
         assert activityToEdit != null;
 
         Name updatedName = editActivityDescriptor.getName().orElse(activityToEdit.getName());

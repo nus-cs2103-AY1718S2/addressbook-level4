@@ -11,15 +11,15 @@ import seedu.address.model.activity.Task;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
-
+//@@author YuanQQLer
 /**
  * Build task for testing
  */
 public class TaskBuilder implements ActivityBuilder {
-    public static final String DEFAULT_NAME = "ASSIGNMENT";
+    public static final String DEFAULT_NAME = "Assignment";
     public static final String DEFAULT_DATETIME = "04/04/2018 08:10";
-    public static final String DEFAULT_REMARK = "123, Jurong West Ave 6";
-    public static final String DEFAULT_TAGS = "optional";
+    public static final String DEFAULT_REMARK = "Urgent";
+    public static final String DEFAULT_TAGS = "Optional";
 
     private Name name;
     private DateTime dateTime;

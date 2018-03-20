@@ -12,20 +12,31 @@ import com.google.maps.model.DistanceMatrix;
  */
 public class RouteOptimization {
     /**
-     * Simple check
+     * get driving distance from origin to destination
      */
-    public static void main(String []agrs) throws InterruptedException, ApiException, IOException {
+    public double getDistance(String origin, String destination) throws InterruptedException, ApiException, IOException {
+
+        GeoApiContext context = buildGeoContext();
+
+        String[] origins = {origin};
+        String[] destinations = {destination};
+
+        DistanceMatrix matrix =
+                DistanceMatrixApi.getDistanceMatrix(context, origins, destinations).await();
+        String distance = matrix.rows[0].elements[0].distance.toString();
+        String distanceWithoutUnit = distance.substring(0, distance.length() -  3);
+
+        return Double.parseDouble(distanceWithoutUnit);
+    }
+
+    /**
+     * Build Google Map API Geo context with API key
+     */
+    private GeoApiContext buildGeoContext() {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
                 .build();
 
-        String[] origin = {"21 Lower Kent Ridge Rd, Singapore 119077"};
-        String[] destination = {"50 Nanyang Ave, 639798"};
-
-        DistanceMatrix matrix =
-                DistanceMatrixApi.getDistanceMatrix(context, origin, destination).await();
-        String distance = matrix.rows[0].elements[0].distance.toString();
-        String distanceOnlyNumber = distance.substring(0, distance.length() -  3);
-        System.out.println(Double.parseDouble(distanceOnlyNumber));
+        return context;
     }
 }

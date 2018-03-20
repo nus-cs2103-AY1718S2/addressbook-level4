@@ -3,6 +3,7 @@
     <books>
         <title>Artemis</title>
         <description>This is Artemis.</description>
+        <rating>-1</rating>
         <authors>Andy Weir</authors>
         <categories>Fiction</categories>
         <gid>ry3GjwEACAAJ</gid>
@@ -13,6 +14,7 @@
     <books>
         <title>Babylon's Ashes</title>
         <description>This is Babylon's Ashes.</description>
+        <rating>-1</rating>
         <authors>James S. A. Corey</authors>
         <categories>Fiction</categories>
         <gid>3jsYCwAAQBAJ</gid>
@@ -23,6 +25,7 @@
     <books>
         <title>The Collapsing Empire</title>
         <description>This is The Collapsing Empire.</description>
+        <rating>-1</rating>
         <authors>John Scalzi</authors>
         <categories>Fiction</categories>
         <gid>2SoaDAAAQBAJ</gid>
@@ -33,6 +36,7 @@
     <books>
         <title>Consider Phlebas</title>
         <description>This is Consider Phlebas.</description>
+        <rating>-1</rating>
         <authors>Iain M. Banks</authors>
         <categories>Fiction</categories>
         <categories>Science Fiction</categories>
@@ -44,6 +48,7 @@
     <books>
         <title>Waking Gods</title>
         <description>This is Waking Gods.</description>
+        <rating>-1</rating>
         <authors>Sylvain Neuvel</authors>
         <categories>Fiction</categories>
         <categories>Science Fiction</categories>

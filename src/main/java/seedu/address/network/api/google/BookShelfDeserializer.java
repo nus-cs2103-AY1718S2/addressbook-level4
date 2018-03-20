@@ -48,7 +48,6 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
     /** Converts a JsonVolume into a Book, and add it into the book shelf. */
     private void convertAndAddBook(BookShelf bookShelf, JsonVolume volume, Gid gid) {
         JsonVolumeInfo volumeInfo = volume.volumeInfo;
-
         Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);
 
         if (isbn == null) {
@@ -60,6 +59,7 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
                 BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
                 new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
+
         try {
             bookShelf.addBook(book);
         } catch (DuplicateBookException e) {

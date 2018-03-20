@@ -36,7 +36,6 @@ public class BookDeserializer extends StdDeserializer<Book> {
     public Book deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonRoot root = jp.readValueAs(JsonRoot.class);
         JsonVolumeInfo volumeInfo = root.volumeInfo;
-
         Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);
 
         if (isbn == null) {
@@ -46,7 +45,8 @@ public class BookDeserializer extends StdDeserializer<Book> {
         return new Book(new Gid(root.id), isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
                 getCategorySet(volumeInfo.categories), getDescription(volumeInfo.description),
-                new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
+                new Publisher(volumeInfo.publisher),
+                new PublicationDate(volumeInfo.publishedDate));
     }
 
     private Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] iiArray) {

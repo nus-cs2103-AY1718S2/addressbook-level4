@@ -15,9 +15,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+
 import seedu.address.model.book.Author;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
+import seedu.address.model.book.Rating;
 import seedu.address.model.book.Title;
 import seedu.address.testutil.Assert;
 
@@ -25,6 +27,7 @@ public class ParserUtilTest {
 
     private static final String VALID_TITLE = "Valid Title";
     private static final String VALID_DESCRIPTION = "Valid Description";
+    private static final int VALID_RATING = -1;
     private static final String VALID_AUTHOR_1 = "Author A";
     private static final String VALID_AUTHOR_2 = "Author B";
     private static final String VALID_CATEGORY_1 = "Category A";
@@ -107,6 +110,24 @@ public class ParserUtilTest {
         Description expectedDescription = new Description(VALID_DESCRIPTION);
         assertEquals(expectedDescription, ParserUtil.parseDescription(descWithWhitespace));
         assertEquals(Optional.of(expectedDescription), ParserUtil.parseDescription(Optional.of(descWithWhitespace)));
+    }
+
+    @Test
+    public void parseRating_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRating((Integer) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRating((Optional<Integer>) null));
+    }
+
+    @Test
+    public void parseRating_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRating(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRating_validValueWithoutWhitespace_returnsRating() throws Exception {
+        Rating expectedRating = new Rating(VALID_RATING);
+        assertEquals(expectedRating, ParserUtil.parseRating(VALID_RATING));
+        assertEquals(Optional.of(expectedRating), ParserUtil.parseRating(Optional.of(VALID_RATING)));
     }
 
     @Test

@@ -18,6 +18,7 @@ public class Book {
     private final Title title;
     private final UniqueList<Category> categories;
     private final Description description;
+    private final Rating rating;
     private final Gid gid;
     private final Isbn isbn;
     private final PublicationDate publicationDate;
@@ -35,6 +36,21 @@ public class Book {
         this.title = title;
         this.categories = new UniqueList<>(categories);
         this.description = description;
+        this.rating = new Rating(-1);
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+    }
+
+    public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
+                Description description, Rating rating, Publisher publisher, PublicationDate publicationDate) {
+        requireAllNonNull(gid, isbn, authors, title, categories, description, publisher, publicationDate);
+        this.gid = gid;
+        this.isbn = isbn;
+        this.authors = new UniqueList<>(authors);
+        this.title = title;
+        this.categories = new UniqueList<>(categories);
+        this.description = description;
+        this.rating = rating;
         this.publicationDate = publicationDate;
         this.publisher = publisher;
     }
@@ -61,6 +77,10 @@ public class Book {
 
     public Description getDescription() {
         return description;
+    }
+
+    public Rating getRating() {
+        return rating;
     }
 
     public Gid getGid() {

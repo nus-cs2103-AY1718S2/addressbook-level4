@@ -35,13 +35,14 @@ public class XmlUtilTest {
 
     private static final String VALID_TITLE = "Artemis";
     private static final String VALID_DESCRIPTION = "This is Artemis.";
+    private static final int VALID_RATING = -1;
     private static final List<XmlAdaptedAuthor> VALID_AUTHORS =
             Collections.singletonList(new XmlAdaptedAuthor("Andy Weir"));
     private static final List<XmlAdaptedCategory> VALID_CATEGORIES =
             Collections.singletonList(new XmlAdaptedCategory("Fiction"));
     private static final String VALID_GID = "ry3GjwEACAAJ";
     private static final String VALID_ISBN = "9780525572664";
-    private static final String VALID_PUBLISHER = "";
+    private static final String VALID_PUBLISHER = " ";
     private static final String VALID_PUBLICATION_DATE = "2017-11-14";
 
     @Rule
@@ -82,7 +83,7 @@ public class XmlUtilTest {
         XmlAdaptedBook actualBook = XmlUtil.getDataFromFile(
                 MISSING_BOOK_FIELD_FILE, XmlAdaptedBookWithRootElement.class);
         XmlAdaptedBook expectedBook = new XmlAdaptedBook(null, null, null,
-                VALID_DESCRIPTION, VALID_AUTHORS, VALID_CATEGORIES, null, null);
+                VALID_DESCRIPTION, VALID_RATING, VALID_AUTHORS, VALID_CATEGORIES, null, null);
         assertEquals(expectedBook, actualBook);
     }
 

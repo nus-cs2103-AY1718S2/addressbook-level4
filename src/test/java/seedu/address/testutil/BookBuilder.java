@@ -12,6 +12,7 @@ import seedu.address.model.book.Gid;
 import seedu.address.model.book.Isbn;
 import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
+import seedu.address.model.book.Rating;
 import seedu.address.model.book.Title;
 import seedu.address.model.util.BookDataUtil;
 
@@ -24,6 +25,7 @@ public class BookBuilder {
     public static final String DEFAULT_TITLE = "Artemis";
     public static final String DEFAULT_CATEGORY = "Science Fiction";
     public static final String DEFAULT_DESCRIPTION = "This is a description for Artemis.";
+    public static final int DEFAULT_RATING = -1;
     public static final String DEFAULT_ID = "ry3GjwEACAAJ";
     public static final String DEFAULT_ISBN = "9780525572664";
     public static final String DEFAULT_PUBLISHER = "Someone";
@@ -33,6 +35,7 @@ public class BookBuilder {
     private Title title;
     private Set<Category> categories;
     private Description description;
+    private Rating rating;
     private Gid gid;
     private Isbn isbn;
     private PublicationDate publicationDate;
@@ -43,6 +46,7 @@ public class BookBuilder {
         title = new Title(DEFAULT_TITLE);
         categories = Collections.singleton(new Category(DEFAULT_CATEGORY));
         description = new Description(DEFAULT_DESCRIPTION);
+        rating = new Rating(DEFAULT_RATING);
         gid = new Gid(DEFAULT_ID);
         isbn = new Isbn(DEFAULT_ISBN);
         publicationDate = new PublicationDate(DEFAULT_PUBLICATION_DATE);
@@ -57,6 +61,7 @@ public class BookBuilder {
         title = bookToCopy.getTitle();
         categories = new HashSet<>(bookToCopy.getCategories());
         description = bookToCopy.getDescription();
+        rating = bookToCopy.getRating();
     }
 
     /**
@@ -88,6 +93,14 @@ public class BookBuilder {
      */
     public BookBuilder withDescription(String description) {
         this.description = new Description(description);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Rating} of the {@code Book} that we are building.
+     */
+    public BookBuilder withRating(int rating) {
+        this.rating = new Rating(rating);
         return this;
     }
 
@@ -127,7 +140,7 @@ public class BookBuilder {
      * Returns a new {@code Book} object.
      */
     public Book build() {
-        return new Book(gid, isbn, authors, title, categories, description,
+        return new Book(gid, isbn, authors, title, categories, description, rating,
                 publisher, publicationDate);
     }
 

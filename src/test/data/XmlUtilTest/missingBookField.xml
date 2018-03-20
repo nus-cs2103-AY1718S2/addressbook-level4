@@ -2,6 +2,7 @@
 <!-- Book with missing title field -->
 <book>
     <description>This is Artemis.</description>
+    <rating>-1</rating>
     <authors>Andy Weir</authors>
     <categories>Fiction</categories>
 </book>

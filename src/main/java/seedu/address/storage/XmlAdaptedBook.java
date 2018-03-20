@@ -16,6 +16,7 @@ import seedu.address.model.book.Gid;
 import seedu.address.model.book.Isbn;
 import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
+import seedu.address.model.book.Rating;
 import seedu.address.model.book.Title;
 
 /**
@@ -33,6 +34,8 @@ public class XmlAdaptedBook {
     private String title;
     @XmlElement(required = true)
     private String description;
+    @XmlElement(required = true)
+    private Integer rating;
     @XmlElement(required = true)
     private String publisher;
     @XmlElement(required = true)
@@ -53,16 +56,36 @@ public class XmlAdaptedBook {
      * Constructs an {@code XmlAdaptedBook} with the given book details.
      */
     public XmlAdaptedBook(String gid, String isbn, String title, String description,
-                          List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
-                          String publisher, String publicationDate) {
+                           List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
+                           String publisher, String publicationDate) {
         this.title = title;
         this.description = description;
+        this.rating = -1;
         if (authors != null) {
             this.authors = new ArrayList<>(authors);
         }
         if (categories != null) {
             this.categories = new ArrayList<>(categories);
         }
+        this.gid = gid;
+        this.isbn = isbn;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+    }
+
+    public XmlAdaptedBook(String gid, String isbn, String title, String description, Integer rate,
+                          List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
+                          String publisher, String publicationDate) {
+        this.title = title;
+        this.description = description;
+        this.rating = -1;
+        if (authors != null) {
+            this.authors = new ArrayList<>(authors);
+        }
+        if (categories != null) {
+            this.categories = new ArrayList<>(categories);
+        }
+        this.rating = rate;
         this.gid = gid;
         this.isbn = isbn;
         this.publicationDate = publicationDate;
@@ -79,6 +102,7 @@ public class XmlAdaptedBook {
         isbn = source.getIsbn().isbn;
         title = source.getTitle().title;
         description = source.getDescription().description;
+        rating = source.getRating().rating;
         authors = new ArrayList<>();
         for (Author author : source.getAuthors()) {
             authors.add(new XmlAdaptedAuthor(author));
@@ -118,6 +142,12 @@ public class XmlAdaptedBook {
         }
         final Description description = new Description(this.description);
 
+        if (this.rating == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Rating.class.getSimpleName()));
+        }
+        final Rating rating = new Rating(this.rating);
+
         if (this.gid == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Gid.class.getSimpleName()));
@@ -143,7 +173,7 @@ public class XmlAdaptedBook {
         final PublicationDate publicationDate = new PublicationDate(this.publicationDate);
 
         return new Book(gid, isbn, new HashSet<>(bookAuthors), title,
-                new HashSet<>(bookCategories), description, publisher, publicationDate);
+                new HashSet<>(bookCategories), description, rating, publisher, publicationDate);
     }
 
     @Override
@@ -159,6 +189,7 @@ public class XmlAdaptedBook {
         XmlAdaptedBook otherBook = (XmlAdaptedBook) other;
         return Objects.equals(title, otherBook.title)
                 && Objects.equals(description, otherBook.description)
+                && Objects.equals(rating, otherBook.rating)
                 && authors.equals(otherBook.authors)
                 && categories.equals(otherBook.categories)
                 && Objects.equals(gid, otherBook.gid)

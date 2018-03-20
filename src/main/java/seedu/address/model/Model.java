@@ -29,6 +29,9 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+    /** Returns a person given an index*/
+    Person getPerson(int index) throws IndexOutOfBoundsException;
+
     /** Deletes a timetable entry given its id. */
     void deleteTimetableEntry(String id) throws TimetableEntryNotFoundException;
 

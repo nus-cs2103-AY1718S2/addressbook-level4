@@ -77,6 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException {
         addressBook.addTimetableEntry(e);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -93,6 +94,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public Person getPerson(int index) throws IndexOutOfBoundsException {
+        return addressBook.getPersonList().get(index);
     }
 
     //=========== Filtered Person List Accessors =============================================================

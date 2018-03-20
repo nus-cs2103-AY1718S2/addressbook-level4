@@ -230,6 +230,34 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+//tag::archive[]
+=== Archive feature
+==== Current Implementation
+The archive feature allows the salesperson to archive clients that he no longer contacts, but does not want to delete as he possible might want to contact him/her again. Once archived, the client is not shown in the list. To display the client, either find or listall command has to be used. The client is then displayed in a red font with strikethrough, indicating that he/she is archived.
+
+The archival feature is implemented by adding a boolean variable isArchived in the Person model. Listing is filtered through the use of a predicate, PREDICATE_SHOW_UNARCHIVED_PERSONS, that will filter for those clients that are unarchived
+
+==== Design Considerations
+
+===== Aspect: find shows archived clients
+
+* **Alternative 1 (current choice):** Find shows archived clients.
+** Pros: Allows the user to quickly find specific clients that he wants to unarchive.
+** Cons: Goes against the purpose of not cluttering up the UI with archived clients.
+* **Alternative 2:** Find only displays unarchived clients.
+** Pros: Will not clutter up the UI with archived clients so that the user can quickly find clients that are unarchived.
+** Cons: It is hard to find a specific archived person. User has to scroll through listall.
+
+===== Aspect: isArchived is stored in a boolean in the Person model
+
+* **Alternative 1 (current choice):** Store whether a client is archived in the Person model as a boolean
+** Pros: Simple to implement
+** Cons: Uses more space than the alternative.
+* **Alternative 2:** Keep two separate lists of persons, archived and unarchived.
+** Pros: Uses less space than the alternative.
+** Cons: Harder to implement, more changes have to be made to existing codebase.
+// end::archive[]
+
 //tag::timezone[]
 === TimeZone feature
 ==== Current Implementation
@@ -251,7 +279,7 @@ An example of the edit command would be: edit 1 tz/SGT
 * **Alternative 2:** User can optionally add the time zone in a separate command.
 ** Pros: Will use less memory (e.g. number of time zones are less than or equal to number of users).
 ** Cons: May be more difficult to schedule meetings with clients with unknown time zones.
-
+// end::timezone[]
 
 // tag::undoredo[]
 === Undo/Redo feature

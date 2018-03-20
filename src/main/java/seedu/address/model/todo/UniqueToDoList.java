@@ -10,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
-import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 
 /**
  * A list of to-dos that enforces uniqueness between its elements and does not allow nulls.
@@ -49,15 +48,14 @@ public class UniqueToDoList implements Iterable<ToDo> {
      * Replaces the to-do {@code target} in the list with {@code editedToDo}.
      *
      * @throws DuplicateToDoException if the replacement is equivalent to another existing to-do in the list.
-     * @throws ToDoNotFoundException if {@code target} could not be found in the list.
      */
     public void setToDo(ToDo target, ToDo editedToDo)
-            throws DuplicateToDoException, ToDoNotFoundException {
+            throws DuplicateToDoException {
         requireNonNull(editedToDo);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new ToDoNotFoundException();
+            // throw new ToDoNotFoundException();
         }
 
         if (!target.equals(editedToDo) && internalList.contains(editedToDo)) {
@@ -70,13 +68,12 @@ public class UniqueToDoList implements Iterable<ToDo> {
     /**
      * Removes the equivalent to-do from the list.
      *
-     * @throws ToDoNotFoundException if no such to-do could be found in the list.
      */
-    public boolean remove(ToDo toRemove) throws ToDoNotFoundException {
+    public boolean remove(ToDo toRemove) {
         requireNonNull(toRemove);
         final boolean toDoFoundAndDeleted = internalList.remove(toRemove);
         if (!toDoFoundAndDeleted) {
-            throw new ToDoNotFoundException();
+            // throw new ToDoNotFoundException();
         }
         return toDoFoundAndDeleted;
     }

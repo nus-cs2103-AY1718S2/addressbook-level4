@@ -300,6 +300,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_addPatientQueue() throws Exception {
+        LoginManager.authenticate("bob", "password456");
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         AddPatientQueueCommand command = (AddPatientQueueCommand) parser.parseCommand(
                 AddPatientQueueCommand.COMMAND_WORD + " " + keywords.stream()
@@ -309,6 +310,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_addPatientQueueAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         AddPatientQueueCommand command = (AddPatientQueueCommand) parser.parseCommand(
                 AddPatientQueueCommand.COMMAND_ALIAS + " " + keywords.stream()

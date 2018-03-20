@@ -13,6 +13,9 @@ public class Building {
             "Building names should only contain alphanumeric characters and it should not be blank";
     public static final String BUILDING_VALIDATION_REGEX = "\\p{Alnum}+";
 
+    /**
+     * Represents an array of Buildings in National University of Singapore
+     */
     public static final String[] BUILDINGS = {
         "AS1", "AS2", "AS3", "AS4", "AS5", "AS6", "AS7", "AS8", "COM1", "COM2", "I3", "BIZ1", "BIZ2",
         "SDE", "S1", "S1A", "S2", "S3", "S4", "S4A", "S5", "S8", "S11", "S12", "S13", "S14", "S16",

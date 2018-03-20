@@ -111,8 +111,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     public Patient getPatientFromList(Predicate<Patient> predicate) {
         filteredPatients.setPredicate(predicate);
-        Patient patientFound = filteredPatients.get(0);
-        return patientFound;
+        if (filteredPatients.size() > 0) {
+            return filteredPatients.get(0);
+        }
+        return null;
     }
 
     @Override

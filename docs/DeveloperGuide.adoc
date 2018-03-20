@@ -810,13 +810,13 @@ Major: Login for each delivery driver to own a separate list of addresses in his
 
 Minor: adding delivery date field
 
-Major:  prioritizing deliveries
+Major:  Route optimization for the deliveries on each date
 
 *Matthieu*
 
 Minor : simplifying the input
 
-Major: beautify the UI
+Major: Email updates/correspond with the users that are awaiting a delivery
 
 *Minh*
 

@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPatients.getTypicalPersons;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -20,6 +21,8 @@ import seedu.address.model.Model;
 public class SelectCommandSystemTest extends ImdbSystemTest {
     @Test
     public void select() {
+        LoginManager.authenticate("alice", "password123");
+
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
         /* Case: select the first card in the patient list, command with leading spaces and trailing spaces

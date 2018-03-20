@@ -6,6 +6,7 @@ import static seedu.address.testutil.TypicalPatients.KEYWORD_MATCHING_MEIER;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -17,6 +18,7 @@ public class ClearCommandSystemTest extends ImdbSystemTest {
     @Test
     public void clear() {
         final Model defaultModel = getModel();
+        LoginManager.authenticate("alice", "password123");
 
         /* Case: clear non-empty address book, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared

@@ -34,6 +34,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -54,6 +55,7 @@ public class EditCommandSystemTest extends ImdbSystemTest {
     @Test
     public void edit() throws Exception {
         Model model = getModel();
+        LoginManager.authenticate("alice", "password123");
 
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
 

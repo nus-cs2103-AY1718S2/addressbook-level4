@@ -1,11 +1,6 @@
 package seedu.address.storage;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
-import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
-import static seedu.address.testutil.TypicalActivities.DEMO1;
-import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.io.IOException;
 
@@ -79,11 +74,11 @@ public class XmlDeskBoardStorageTest {
     }
 
     /**
-     * Saves {@code DeskBoard} at the specified {@code filePath}.
+     * Saves {@code deskBoard} at the specified {@code filePath}.
      */
-    private void saveDeskBoard(ReadOnlyDeskBoard DeskBoard, String filePath) {
+    private void saveDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) {
         try {
-            new XmlDeskBoardStorage(filePath).saveDeskBoard(DeskBoard, addToTestDataPathIfNotNull(filePath));
+            new XmlDeskBoardStorage(filePath).saveDeskBoard(deskBoard, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

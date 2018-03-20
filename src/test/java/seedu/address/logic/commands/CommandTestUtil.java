@@ -3,10 +3,10 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -40,7 +40,8 @@ public class CommandTestUtil {
 
     public static final String NAME_DESC_MA2108_HOMEWORK = " " + PREFIX_NAME + VALID_NAME_MA2108_HOMEWORK;
     public static final String NAME_DESC_CS2010_QUIZ = " " + PREFIX_NAME + VALID_NAME_CS2010_QUIZ;
-    public static final String DATE_TIME_DESC_MA2108_HOMEWORK = " " + PREFIX_DATE_TIME + VALID_DATE_TIME_MA2108_HOMEWORK;
+    public static final String DATE_TIME_DESC_MA2108_HOMEWORK = " " + PREFIX_DATE_TIME
+            + VALID_DATE_TIME_MA2108_HOMEWORK;
     public static final String DATE_TIME_DESC_CS2010_QUIZ = " " + PREFIX_DATE_TIME + VALID_DATE_TIME_CS2010_QUIZ;
     public static final String REMARK_DESC_MA2108_HOMEWORK = " " + PREFIX_REMARK + VALID_REMARK_MA2108_HOMEWORK;
     public static final String REMARK_DESC_CS2010_QUIZ = " " + PREFIX_REMARK + VALID_REMARK_CS2010_QUIZ;

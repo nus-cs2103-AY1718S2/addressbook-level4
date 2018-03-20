@@ -84,11 +84,13 @@
 //        assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 //
 //        // invalid phone followed by valid email
-//        assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_MA2108_HOMEWORK, DateTime.MESSAGE_DATETIME_CONSTRAINTS);
+//        assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_MA2108_HOMEWORK, DateTime
+//                .MESSAGE_DATETIME_CONSTRAINTS);
 //
 //        // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
 //        // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-//        assertParseFailure(parser, "1" + DATE_TIME_DESC_CS2010_QUIZ + INVALID_PHONE_DESC, DateTime.MESSAGE_DATETIME_CONSTRAINTS);
+//        assertParseFailure(parser, "1" + DATE_TIME_DESC_CS2010_QUIZ + INVALID_PHONE_DESC,
+//                DateTime.MESSAGE_DATETIME_CONSTRAINTS);
 //
 //        // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Activity} being edited,
 //        // parsing it together with a valid tag results in error
@@ -97,7 +99,8 @@
 //        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
 //
 //        // multiple invalid values, but only the first invalid value is captured
-//        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_REMARKS_MA2108_HOMEWORK + VALID_DATE_TIME_MA2108_HOMEWORK,
+//        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_REMARKS_MA2108_HOMEWORK
+//                + VALID_DATE_TIME_MA2108_HOMEWORK,
 //                Name.MESSAGE_NAME_CONSTRAINTS);
 //    }
 //
@@ -105,7 +108,8 @@
 //    public void parse_allFieldsSpecified_success() {
 //        Index targetIndex = INDEX_SECOND_ACTIVITY;
 //        String userInput = targetIndex.getOneBased() + DATE_TIME_DESC_CS2010_QUIZ + TAG_DESC_HUSBAND
-//                + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK + NAME_DESC_MA2108_HOMEWORK + TAG_DESC_FRIEND;
+//                + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK + NAME_DESC_MA2108_HOMEWORK
+//                + TAG_DESC_FRIEND;
 //
 //        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_MA2108_HOMEWORK)
 //                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withAddress(VALID_REMARKS_MA2108_HOMEWORK)
@@ -120,7 +124,8 @@
 //        Index targetIndex = INDEX_FIRST_ACTIVITY;
 //        String userInput = targetIndex.getOneBased() + DATE_TIME_DESC_CS2010_QUIZ + EMAIL_DESC_MA2108_HOMEWORK;
 //
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withPhone(VALID_DATE_TIME_CS2010_QUIZ).build();
+//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 //
 //        assertParseSuccess(parser, userInput, expectedCommand);
@@ -131,7 +136,8 @@
 //        // name
 //        Index targetIndex = INDEX_THIRD_ACTIVITY;
 //        String userInput = targetIndex.getOneBased() + NAME_DESC_MA2108_HOMEWORK;
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_MA2108_HOMEWORK).build();
+//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//                .withName(VALID_NAME_MA2108_HOMEWORK).build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 //        assertParseSuccess(parser, userInput, expectedCommand);
 //
@@ -163,13 +169,15 @@
 //    @Test
 //    public void parse_multipleRepeatedFields_acceptsLast() {
 //        Index targetIndex = INDEX_FIRST_ACTIVITY;
-//        String userInput = targetIndex.getOneBased()  + DATE_TIME_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK
-//                + TAG_DESC_FRIEND + DATE_TIME_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK + TAG_DESC_FRIEND
-//                + DATE_TIME_DESC_CS2010_QUIZ + ADDRESS_DESC_CS2010_QUIZ + EMAIL_DESC_CS2010_QUIZ + TAG_DESC_HUSBAND;
+//        String userInput = targetIndex.getOneBased()  + DATE_TIME_DESC_MA2108_HOMEWORK
+//                + ADDRESS_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK + TAG_DESC_FRIEND
+//                + DATE_TIME_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK + EMAIL_DESC_MA2108_HOMEWORK
+//                + TAG_DESC_FRIEND + DATE_TIME_DESC_CS2010_QUIZ + ADDRESS_DESC_CS2010_QUIZ
+//                + EMAIL_DESC_CS2010_QUIZ + TAG_DESC_HUSBAND;
 //
-//        EditCommand.EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withPhone(VALID_DATE_TIME_CS2010_QUIZ)
-//                .withAddress(VALID_REMARK_CS2010_QUIZ).withTags(VALID_TAG_CS2010, VALID_TAG_MA2108)
-//                .build();
+//        EditCommand.EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withAddress(VALID_REMARK_CS2010_QUIZ)
+//                .withTags(VALID_TAG_CS2010, VALID_TAG_MA2108).build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 //
 //        assertParseSuccess(parser, userInput, expectedCommand);

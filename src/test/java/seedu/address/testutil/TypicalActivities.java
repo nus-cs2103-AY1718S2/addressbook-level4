@@ -8,7 +8,14 @@ import seedu.address.model.DeskBoard;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_CS2010_QUIZ;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_MA2108_HOMEWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CS2010_QUIZ;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_MA2108_HOMEWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_CS2010_QUIZ;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_MA2108_HOMEWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CS2010;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MA2108;
 
 /**
  * A utility class containing a list of {@code Activity} objects to be used in tests.
@@ -56,9 +63,11 @@ public class TypicalActivities {
             .withRemark("FinalDemo").build();
 
     // Manually added - Activity's details found in {@code CommandTestUtil}
-    public static final Activity MA2108_HOMEWORK = new TaskBuilder().withName(VALID_NAME_MA2108_HOMEWORK).withDateTime(VALID_DATE_TIME_MA2108_HOMEWORK)
+    public static final Activity MA2108_HOMEWORK = new TaskBuilder().withName(VALID_NAME_MA2108_HOMEWORK)
+            .withDateTime(VALID_DATE_TIME_MA2108_HOMEWORK)
             .withRemark(VALID_REMARK_MA2108_HOMEWORK).withTags(VALID_TAG_CS2010).build();
-    public static final Activity CS2010_QUIZ = new TaskBuilder().withName(VALID_NAME_CS2010_QUIZ).withDateTime(VALID_DATE_TIME_CS2010_QUIZ)
+    public static final Activity CS2010_QUIZ = new TaskBuilder().withName(VALID_NAME_CS2010_QUIZ)
+            .withDateTime(VALID_DATE_TIME_CS2010_QUIZ)
             .withRemark(VALID_REMARK_CS2010_QUIZ).withTags(VALID_TAG_MA2108, VALID_TAG_CS2010)
             .build();
 

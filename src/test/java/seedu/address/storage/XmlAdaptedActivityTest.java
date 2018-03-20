@@ -1,6 +1,5 @@
 package seedu.address.storage;
 
-import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.XmlAdaptedActivity.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT2;
 
@@ -11,7 +10,6 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
 import seedu.address.model.activity.Name;
 import seedu.address.testutil.Assert;

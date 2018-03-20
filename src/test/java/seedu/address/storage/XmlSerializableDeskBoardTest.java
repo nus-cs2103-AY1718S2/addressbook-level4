@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
 
 import org.junit.Rule;
@@ -11,8 +9,6 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.DeskBoard;
-import seedu.address.testutil.TypicalActivities;
 
 public class XmlSerializableDeskBoardTest {
 

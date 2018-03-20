@@ -414,7 +414,7 @@ A new student would then be added. On the other hand, editing a student's progra
         assert studentToEdit != null;
 
         // ...Set other attributes of the prospective newly edited student...
-		
+
         ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage();
 
         return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,

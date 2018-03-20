@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -184,6 +185,26 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TagNotFoundException("Specific tag is not used in the address book.");
         }
     }
+
+    /**
+     * Calls removeTagFromPerson method when tag is found in tags.
+     * @param TagSet
+     * @throws TagNotFoundException
+     */
+    public void replaceTag(Set<Tag> TagSet) throws TagNotFoundException {
+        Tag tagArray[] = new Tag[2];
+        TagSet.toArray(tagArray);
+        if (tags.contains(tagArray[0])){
+            for (Person person : persons) {
+                removeTagFromPerson(tagArray[0], person);
+            }
+            tags.remove(tagArray[0]);
+            tags.remove(tagArray[1]);
+        } else {
+            throw new TagNotFoundException("Specific tag is not used in the address book.");
+        }
+    }
+
 
     /**
      * Removes a specific tag from an individual person and updates the person's information.

@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -113,6 +115,17 @@ public class ModelManager extends ComponentManager implements Model {
             throw new AssertionError();
         }
     }
+
+    @Override
+    public void replaceTag(Set<Tag> TagSet){
+        try {
+            addressBook.replaceTag(TagSet);
+        } catch (TagNotFoundException error) {
+            throw new AssertionError();
+        }
+    }
+
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

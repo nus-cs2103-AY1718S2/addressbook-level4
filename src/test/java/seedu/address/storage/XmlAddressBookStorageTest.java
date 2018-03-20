@@ -6,6 +6,8 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalToDos.TODO_D;
+import static seedu.address.testutil.TypicalToDos.TODO_E;
 
 import java.io.IOException;
 
@@ -101,12 +103,14 @@ public class XmlAddressBookStorageTest {
         //Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
+        original.addToDo(TODO_D);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
 
         //Save and read without specifying file path
         original.addPerson(IDA);
+        original.addToDo(TODO_E);
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
@@ -127,12 +131,14 @@ public class XmlAddressBookStorageTest {
         //Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
+        original.addToDo(TODO_D);
         xmlAddressBookStorage.backupAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBookBackup(filePath).get();
         assertEquals(original, new AddressBook(readBack));
 
         //Back and read without specifying file path
         original.addPerson(IDA);
+        original.addToDo(TODO_E);
         xmlAddressBookStorage.backupAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBookBackup().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));

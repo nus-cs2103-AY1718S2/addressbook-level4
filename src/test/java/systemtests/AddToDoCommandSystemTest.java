@@ -16,7 +16,7 @@ public class AddToDoCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void addToDo() throws Exception {
-        /* ------------------------ Perform addToDo operations on the shown unfiltered list ----------------------------- */
+        /* ------------------------ Perform addToDo operations on the shown unfiltered list ---------------------- */
 
         /* Case: add a to-do to a non-empty address book, command with leading spaces and trailing spaces
          * -> added

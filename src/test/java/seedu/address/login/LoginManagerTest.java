@@ -12,15 +12,13 @@ import seedu.address.testutil.Assert;
 
 public class LoginManagerTest {
 
-    private StorageManager storage;
-    private Login login;
-
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
-    private String getTempFilePath(String fileName) {
-        return testFolder.getRoot().getPath() + fileName;
-    }
+    private Login login;
+    private StorageManager storage;
 
     @Before
     public void setUp() {
@@ -31,17 +29,18 @@ public class LoginManagerTest {
         login = new LoginManager(storage);
     }
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    private String getTempFilePath(String fileName) {
+        return testFolder.getRoot().getPath() + fileName;
+    }
 
     @Test
     public void execute_invalidUserPass_throwsInvalidException() {
         String invalidUsername = "";
         String invalidPassword = "";
-        Assert.assertThrows(InvalidUsernameException.class,
-                () -> login.checkLoginDetails(new UserPass(invalidUsername, "pass")));
-        Assert.assertThrows(InvalidUsernameException.class,
-                () -> login.checkLoginDetails(new UserPass("user", invalidPassword)));
+        Assert.assertThrows(InvalidUsernameException.class, () -> login.checkLoginDetails(
+                new UserPass(invalidUsername, "pass")));
+        Assert.assertThrows(InvalidUsernameException.class, () -> login.checkLoginDetails(
+                new UserPass("user", invalidPassword)));
     }
 
 }

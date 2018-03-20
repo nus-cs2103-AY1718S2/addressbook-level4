@@ -170,7 +170,7 @@ Selects the 2nd patient in the Imdb.
 `s 1` +
 Selects the 1st patient in the results of the `find` command.
 
-=== Editing remarks for a patient : `remark` or `rk` [coming in v1.2]
+=== Editing remarks for a patient : `remark` or `rk` [since v1.2]
 
 Edits the remark for a patient specified by the index number used in the last patient listing. +
 Format: `remark INDEX r/[REMARK]` or `rk INDEX r/[REMARK]`

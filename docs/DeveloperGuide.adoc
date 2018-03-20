@@ -205,6 +205,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Desk Board data.
+* use two class to store information about 'Event' and 'Task' separately
 * exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -384,6 +385,13 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+
+=== [Purposed Minor Enhancement]
+
+=== [Purposed Major Enhancement]
+
+Add in
 
 == Documentation
 

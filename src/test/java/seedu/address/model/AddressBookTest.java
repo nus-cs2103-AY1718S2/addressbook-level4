@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalToDos.TODO_A;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +62,19 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        List<ToDo> newToDos = Arrays.asList(new ToDo(new Content("Something to do")));
+        List<ToDo> newToDos = Arrays.asList(TODO_A);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos);
+
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
+
+    @Test
+    public void resetData_withDuplicateToDos_throwsAssertionError() {
+        // Repeat TODO_A twice
+        List<Person> newPersons = Arrays.asList(ALICE);
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<ToDo> newToDos = Arrays.asList(TODO_A, TODO_A);
         AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos);
 
         thrown.expect(AssertionError.class);

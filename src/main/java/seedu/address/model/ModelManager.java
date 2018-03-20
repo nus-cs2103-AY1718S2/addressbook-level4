@@ -16,6 +16,8 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -83,6 +85,15 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addAlias(Alias alias) throws DuplicateAliasException {
         addressBook.addAlias(alias);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void getRoomsFrom(Building building) throws BuildingNotFoundException {
+        //get rooms of the building here
+        //temporarily calling isValidBuilding
+        if(!Building.isValidBuilding(building)) {
+            throw new BuildingNotFoundException();
+        }
     }
 
     @Override

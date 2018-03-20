@@ -1,17 +1,21 @@
 package seedu.address.logic.parser;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.VacantCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.building.Building;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.model.building.Building.BUILDINGS;
 
 public class VacantCommandParser {
 
-    private List<String> buildings = Arrays.asList("COM1", "COM2", "I3", "BIZ1", "BIZ2");
+    private String[] buildingArray = BUILDINGS;
+    private List<String> buildings = new ArrayList<String>(Arrays.asList(buildingArray));
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -19,15 +23,17 @@ public class VacantCommandParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public VacantCommand parse(String args) throws ParseException {
-        String building = args.trim();
-        if (building.isEmpty()) {
+        String buildingName = args.trim();
+        if (buildingName.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, VacantCommand.MESSAGE_USAGE));
-        } else if (!buildings.contains(building)) {
-            throw new ParseException(
-                    String.format(VacantCommand.MESSAGE_INVALID_BUILDING));
         }
 
-        return new VacantCommand(building);
+        try {
+            Building building = ParserUtil.parseBuilding(buildingName);
+            return new VacantCommand(building);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
     }
 }

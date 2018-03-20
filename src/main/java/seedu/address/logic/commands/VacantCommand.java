@@ -1,7 +1,11 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.exceptions.BuildingNotFoundException;
 
 import static java.util.Objects.requireNonNull;
 
@@ -15,27 +19,27 @@ public class VacantCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "List of rooms in building successfully retrieved.";
     public static final String MESSAGE_INVALID_BUILDING = "Building does not exist.";
 
-    private final String building;
+    private final Building building;
 
     /**
      * Creates an ImportCommand to import the specified {@code AddressBook} from filepath to
      * current {@code AddressBook}
      */
-    public VacantCommand(String building) {
+    public VacantCommand(Building building) {
         requireNonNull(building);
         this.building = building;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-//        requireNonNull(model);
-//        try {
-//            model.importAddressBook(building);
-//            return new CommandResult(String.format(MESSAGE_SUCCESS));
-//        } catch (DataConversionException dce) {
-//            throw new CommandException(MESSAGE_DATA_CONVERSION_ERROR);
-//        }
-        return new CommandResult("");
+        requireNonNull(model);
+        try {
+            model.getRoomsFrom(building);
+        } catch (BuildingNotFoundException e) {
+            throw new CommandException(MESSAGE_INVALID_BUILDING);
+        }
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+
     }
 
     @Override

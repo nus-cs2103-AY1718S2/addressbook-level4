@@ -172,9 +172,12 @@ public class XmlAdaptedPatient {
 
         XmlAdaptedPatient otherPerson = (XmlAdaptedPatient) other;
         return Objects.equals(name, otherPerson.name)
+                && Objects.equals(nric, otherPerson.nric)
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(dob, otherPerson.dob)
+                && Objects.equals(bloodType, otherPerson.bloodType)
                 && tagged.equals(otherPerson.tagged);
     }
 }

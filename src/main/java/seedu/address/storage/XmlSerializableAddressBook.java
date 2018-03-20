@@ -58,6 +58,9 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
+        for (XmlAdaptedToDo todo : todos) {
+            addressBook.addToDo(todo.toModelType());
+        }
         addressBook.addColorsToTag();
         return addressBook;
     }
@@ -73,6 +76,6 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && todos.equals(otherAb.todos);
     }
 }

@@ -21,7 +21,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.tag.UniqueTagList;
-
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.UniqueToDoList;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;

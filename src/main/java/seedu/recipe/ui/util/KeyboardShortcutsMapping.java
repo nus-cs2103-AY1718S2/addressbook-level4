@@ -1,15 +1,15 @@
 package seedu.recipe.ui.util;
 
-import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyCodeCombination;
 
 //@@author {yourGithubUsername}
 /**
  * Contains all mappings for keyboard shortcuts
  */
 public class KeyboardShortcutsMapping {
-    public static final KeyCombination COMMAND_SUBMISSION = KeyCombination.valueOf("Enter");
-    public static final KeyCombination LAST_COMMAND = KeyCombination.valueOf("Up");
-    public static final KeyCombination NEXT_COMMAND = KeyCombination.valueOf("Down");
-    public static final KeyCombination NEW_LINE_IN_COMMAND = KeyCombination.valueOf("Shift+Enter");
-    public static final KeyCombination SHOW_SUGGESTIONS_COMMAND = KeyCombination.valueOf("Ctrl+Space");
+    public static final KeyCodeCombination COMMAND_SUBMISSION = (KeyCodeCombination) KeyCodeCombination.valueOf("Enter");
+    public static final KeyCodeCombination LAST_COMMAND = (KeyCodeCombination) KeyCodeCombination.valueOf("Up");
+    public static final KeyCodeCombination NEXT_COMMAND = (KeyCodeCombination) KeyCodeCombination.valueOf("Down");
+    public static final KeyCodeCombination NEW_LINE_IN_COMMAND = (KeyCodeCombination) KeyCodeCombination.valueOf("Shift+Enter");
+    public static final KeyCodeCombination SHOW_SUGGESTIONS_COMMAND = (KeyCodeCombination) KeyCodeCombination.valueOf("Ctrl+Space");
 }

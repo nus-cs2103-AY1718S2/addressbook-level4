@@ -28,6 +28,7 @@ import seedu.recipe.logic.ListElementPointer;
 import seedu.recipe.logic.Logic;
 import seedu.recipe.logic.commands.CommandResult;
 import seedu.recipe.logic.commands.exceptions.CommandException;
+import seedu.recipe.logic.parser.CliSyntax;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 
 /**
@@ -39,8 +40,11 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
     private static final char LF = '\n';
     private static final char SPACE = ' ';
-    private static final String[] COMMAND_NAMES = {"add", "clear", "delete", "edit", "exit", "find",
-        "help", "history", "list", "redo", "select", "undo"};
+    private static final String[] APPLICATION_KEYWORDS = {"add", "clear", "delete", "edit", "exit", "find",
+        "help", "history", "list", "redo", "select", "tag", "undo", CliSyntax.PREFIX_INGREDIENT.toString(),
+        CliSyntax.PREFIX_INSTRUCTION.toString(), CliSyntax.PREFIX_NAME.toString(),
+        CliSyntax.PREFIX_PREPARATION_TIME.toString(), CliSyntax.PREFIX_TAG.toString(),
+        CliSyntax.PREFIX_URL.toString()};
     private static final int MAX_SUGGESTIONS = 4;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
@@ -104,7 +108,7 @@ public class CommandBox extends UiPart<Region> {
         String inputText = getLastWord(commandTextArea.getText());
         // finds suggestions and displays
         suggestionPopUp = new ContextMenu();
-        findSuggestions(inputText, Arrays.asList(COMMAND_NAMES));
+        findSuggestions(inputText, Arrays.asList(APPLICATION_KEYWORDS));
 
         // gets caret position based on input text and font
         Text wholeCommand = new Text(commandTextArea.getText());

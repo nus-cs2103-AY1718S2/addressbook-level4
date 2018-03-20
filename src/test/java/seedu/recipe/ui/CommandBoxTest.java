@@ -14,6 +14,7 @@ import seedu.recipe.logic.LogicManager;
 import seedu.recipe.logic.commands.ListCommand;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
+import seedu.recipe.ui.util.KeyboardShortcutsMapping;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -79,20 +80,22 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void commandBox_handleMultipleLinesCommand() {
         commandBoxHandle.appendText(FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES);
-        guiRobot.push(KeyCode.SHIFT, KeyCode.ENTER);
+        guiRobot.push(KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND);
         commandBoxHandle.appendText(SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES);
         assertInput(COMMAND_THAT_HAS_MULTIPLE_LINES);
     }
     //@@Author
 
+    //@@author hoangduong1607
     @Test
     public void commandBox_handleShowingSuggestions() {
-        guiRobot.push(KeyCode.CONTROL, KeyCode.SPACE);
+        guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
         guiRobot.push(KeyCode.DOWN);
         guiRobot.push(KeyCode.ENTER);
         assertInput(FIRST_SUGGESTION);
     }
 
+    //@@author
     @Test
     public void handleKeyPress_startingWithUp() {
         // empty history

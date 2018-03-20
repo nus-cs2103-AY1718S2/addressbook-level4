@@ -947,6 +947,31 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Email contacts
+
+*MSS*
+
+1. User requests to email person and enters a word in the name of the person
+2. AddressBook emails the person requested a sample template.
++
+Use case ends.
+
+*Extensions*
+[none]
+* 2a.  The list of people is empty.
++
+[none]
+** 2a1.  AddressBook shows an error message.
++
+Use case ends.
+
+* 2b.  The person is not in the list.
++
+** 2b1.  AddressBook returns error message.
++
+Use case ends.
+
+[discrete]
 === Use case: Delete old contacts
 
 *MSS*

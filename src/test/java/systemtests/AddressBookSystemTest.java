@@ -4,26 +4,25 @@ import static guitests.guihandles.InfoPanelUtil.waitUntilInfoPanelLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.address.ui.TitleBar.SYNC_STATUS_INITIAL;
+import static seedu.address.ui.TitleBar.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.InfoPanelHandle;
-import guitests.guihandles.MainMenuHandle;
-import guitests.guihandles.MainWindowHandle;
-import guitests.guihandles.PersonListPanelHandle;
-import guitests.guihandles.ResultDisplayHandle;
-import guitests.guihandles.StatusBarFooterHandle;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.InfoPanelHandle;
+import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TitleBarHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -99,16 +98,12 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
-    public MainMenuHandle getMainMenu() {
-        return mainWindowHandle.getMainMenu();
-    }
-
     public InfoPanelHandle getInfoPanel() {
         return mainWindowHandle.getInfoPanel();
     }
 
-    public StatusBarFooterHandle getStatusBarFooter() {
-        return mainWindowHandle.getStatusBarFooter();
+    public TitleBarHandle getTitleBar() {
+        return mainWindowHandle.getTitleBar();
     }
 
     public ResultDisplayHandle getResultDisplay() {
@@ -131,7 +126,7 @@ public abstract class AddressBookSystemTest {
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
      */
-    protected void executeCommandWaitForUI(String command) {
+    protected void executeCommandWaitForUi(String command) {
         getInfoPanel().resetLoadedStatus();
         executeCommand(command);
         waitUntilInfoPanelLoaded(getInfoPanel());
@@ -184,14 +179,14 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code InfoPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code InfoPanelHandle}, {@code PersonListPanelHandle} and {@code TitleBarHandle} to remember
      * their current state.
      */
     private void rememberStates() {
-        StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
+        TitleBarHandle titleBarHandle = getTitleBar();
         getInfoPanel().rememberPerson();
-        statusBarFooterHandle.rememberSaveLocation();
-        statusBarFooterHandle.rememberSyncStatus();
+        titleBarHandle.rememberSaveLocation();
+        titleBarHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
@@ -247,7 +242,7 @@ public abstract class AddressBookSystemTest {
      * Asserts that the entire status bar remains the same.
      */
     protected void assertStatusBarUnchanged() {
-        StatusBarFooterHandle handle = getStatusBarFooter();
+        TitleBarHandle handle = getTitleBar();
         assertFalse(handle.isSaveLocationChanged());
         assertFalse(handle.isSyncStatusChanged());
     }
@@ -257,7 +252,7 @@ public abstract class AddressBookSystemTest {
      * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
      */
     protected void assertStatusBarUnchangedExceptSyncStatus() {
-        StatusBarFooterHandle handle = getStatusBarFooter();
+        TitleBarHandle handle = getTitleBar();
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
@@ -273,8 +268,8 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(InfoPanel.DEFAULT_PERSON, getInfoPanel().getLoadedPerson());
-            assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
-            assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+            assertEquals("./" + testApp.getStorageSaveLocation(), getTitleBar().getSaveLocation());
+            assertEquals(SYNC_STATUS_INITIAL, getTitleBar().getSyncStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }

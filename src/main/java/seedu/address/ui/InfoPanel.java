@@ -1,16 +1,25 @@
 package seedu.address.ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InfoPanelChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Rating;
 
 /**
  * The Info Panel of the App.
@@ -23,7 +32,52 @@ public class InfoPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private Label infoPanel;
+    private AnchorPane infoPaneWrapper;
+    @FXML
+    private SplitPane infoSplitPane;
+
+    @FXML
+    private Label infoMainName;
+    @FXML
+    private Label infoMainUniversity;
+    @FXML
+    private Label infoMainMajorYear;
+    @FXML
+    private Label infoMainCgpa;
+    @FXML
+    private Label infoMainEmail;
+    @FXML
+    private Label infoMainAddress;
+    @FXML
+    private Label infoMainPhone;
+    @FXML
+    private Label infoMainPosition;
+    @FXML
+    private Label infoMainStatus;
+    @FXML
+    private Label infoMainComments;
+
+    // Interview
+    @FXML
+    private VBox infoMainInterviewDatePane;
+    @FXML
+    private Label infoMainInterviewMonth;
+    @FXML
+    private Label infoMainInterviewDate;
+    @FXML
+    private Label infoMainInterviewDay;
+    @FXML
+    private Label infoMainInterviewTime;
+
+    // Rating
+    @FXML
+    private ProgressBar infoRatingTechnical;
+    @FXML
+    private ProgressBar infoRatingCommunication;
+    @FXML
+    private ProgressBar infoRatingProblemSolving;
+    @FXML
+    private ProgressBar infoRatingExperience;
 
     public InfoPanel() {
         super(FXML);
@@ -34,8 +88,50 @@ public class InfoPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person person = event.getNewSelection().person;
-        infoPanel.setText(person.getName().toString());
-        infoPanel.setUserData(person);
-        infoPanel.fireEvent(new InfoPanelChangedEvent());
+
+        infoSplitPane.setVisible(true);
+        infoMainName.setText(person.getName().fullName);
+        infoMainUniversity.setText("WIP");
+        infoMainMajorYear.setText("WIP (Expected " + person.getExpectedGraduationYear().value + ")");
+        infoMainCgpa.setText("WIP");
+        infoMainEmail.setText(person.getEmail().value);
+        infoMainAddress.setText(person.getAddress().value);
+        infoMainPhone.setText(person.getPhone().value);
+        infoMainPosition.setText("WIP");
+        infoMainStatus.setText("WIP");
+        infoMainComments.setText("WIP");
+
+        // Process Interview info
+        LocalDateTime interviewDate = person.getInterviewDate().getDateTime();
+        if (interviewDate != null) {
+            infoMainInterviewMonth.setText(interviewDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
+            infoMainInterviewDate.setText(String.valueOf(interviewDate.getDayOfMonth()));
+            infoMainInterviewDay.setText(interviewDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
+            infoMainInterviewTime.setText(DateTimeFormatter.ofPattern("hh:mma").format(interviewDate).toLowerCase());
+            infoMainInterviewDatePane.setVisible(true);
+        } else {
+            infoMainInterviewDatePane.setVisible(false);
+        }
+
+        // Process Rating info
+        Rating rating = person.getRating();
+        if (Rating.isValidScore(rating.technicalSkillsScore)
+                && Rating.isValidScore(rating.communicationSkillsScore)
+                && Rating.isValidScore(rating.problemSolvingSkillsScore)
+                && Rating.isValidScore(rating.experienceScore)) {
+            infoRatingTechnical.setProgress(rating.technicalSkillsScore / 5);
+            infoRatingCommunication.setProgress(rating.communicationSkillsScore / 5);
+            infoRatingProblemSolving.setProgress(rating.problemSolvingSkillsScore / 5);
+            infoRatingExperience.setProgress(rating.experienceScore / 5);
+        } else {
+            infoRatingTechnical.setProgress(0);
+            infoRatingCommunication.setProgress(0);
+            infoRatingProblemSolving.setProgress(0);
+            infoRatingExperience.setProgress(0);
+        }
+
+        // Set user data for test
+        infoPaneWrapper.setUserData(person);
+        infoPaneWrapper.fireEvent(new InfoPanelChangedEvent());
     }
 }

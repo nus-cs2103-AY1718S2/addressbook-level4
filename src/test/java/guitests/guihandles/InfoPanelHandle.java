@@ -1,30 +1,32 @@
 package guitests.guihandles;
 
+import java.util.Objects;
+
 import guitests.GuiRobot;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+
 import seedu.address.commons.events.ui.InfoPanelChangedEvent;
 import seedu.address.model.person.Person;
-
-import java.util.Objects;
 
 /**
  * A handler for the {@code InfoPanel} of the UI.
  */
 public class InfoPanelHandle extends NodeHandle<Node> {
 
-    public static final String INFO_ID = "#infoPanel";
+    public static final String INFO_ID = "#infoPaneWrapper";
 
     private boolean isInfoPanelLoaded = true;
     private Person lastRememberedPerson;
-    private Label infoPanel;
+    private AnchorPane infoPaneWrapper;
 
     public InfoPanelHandle(Node infoPanel) {
         super(infoPanel);
-        this.infoPanel = (Label) infoPanel;
-        new GuiRobot().interact(() -> this.infoPanel.addEventHandler(
-                InfoPanelChangedEvent.INFO_PANEL_EVENT,
-                event -> isInfoPanelLoaded = true
+        this.infoPaneWrapper = getChildNode(INFO_ID);
+
+        new GuiRobot().interact(() -> this.infoPaneWrapper.addEventHandler(
+            InfoPanelChangedEvent.INFO_PANEL_EVENT,
+            event -> isInfoPanelLoaded = true
         ));
     }
 
@@ -32,7 +34,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
      * Returns the {@code Person} of the currently previewed person.
      */
     public Person getLoadedPerson() {
-        return (Person) infoPanel.getUserData();
+        return (Person) infoPaneWrapper.getUserData();
     }
 
     /**

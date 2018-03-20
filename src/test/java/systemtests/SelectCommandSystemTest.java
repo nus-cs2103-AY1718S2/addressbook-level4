@@ -118,7 +118,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
 
         if (expectChanges) {
-            executeCommandWaitForUI(command);
+            executeCommandWaitForUi(command);
         } else {
             executeCommand(command);
         }

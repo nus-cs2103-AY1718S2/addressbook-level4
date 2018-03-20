@@ -1,29 +1,49 @@
 package guitests.guihandles;
 
-import org.controlsfx.control.StatusBar;
-
+import guitests.GuiRobot;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Pane;
 
 /**
- * A handle for the {@code StatusBarFooter} at the footer of the application.
+ * A handle for the {@code TitleBar} at the top of the application.
  */
-public class StatusBarFooterHandle extends NodeHandle<Node> {
-    public static final String STATUS_BAR_PLACEHOLDER = "#statusbarPlaceholder";
+public class TitleBarHandle extends NodeHandle<Node> {
+    public static final String TITLE_BAR_ID = "#topTitle";
 
-    private static final String SYNC_STATUS_ID = "#syncStatus";
-    private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
+    private static final String SYNC_STATUS_ID = "#topStatusMessage";
+    private static final String SAVE_LOCATION_STATUS_ID = "#topStatusFile";
+    private static final String CONTROL_HELP_ID = "#controlHelp";
 
-    private final StatusBar syncStatusNode;
-    private final StatusBar saveLocationNode;
+    private final Label syncStatusNode;
+    private final Label saveLocationNode;
+    private final Pane controlHelp;
 
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
 
-    public StatusBarFooterHandle(Node statusBarFooterNode) {
+    public TitleBarHandle(Node statusBarFooterNode) {
         super(statusBarFooterNode);
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
+        this.controlHelp = getChildNode(CONTROL_HELP_ID);
+    }
+
+    /**
+     * Opens the {@code HelpWindow} by pressing the shortcut key associated
+     */
+    public void openHelpWindowUsingAccelerator() {
+        guiRobot.push(KeyCode.F1);
+    }
+
+    /**
+     * Opens the {@code HelpWindow} using the button in {@code TitleBar}.
+     */
+    public void openHelpWindowUsingMenu() {
+        new GuiRobot().clickOn(controlHelp, MouseButton.PRIMARY);
     }
 
     /**

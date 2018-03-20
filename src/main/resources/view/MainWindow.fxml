@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Scene?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.Scene?>
+<?import java.net.URL?>
 
-<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         minWidth="450" minHeight="600">
-  <scene>
-    <Scene>
-      <VBox>
-        <VBox>
-          <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-            <Menu mnemonicParsing="false" text="File">
-              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-              <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-            </Menu>
-          </MenuBar>
-        </VBox>
-        <VBox styleClass="main-root">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          </StackPane>
-
-          <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                     minHeight="100" prefHeight="100" maxHeight="100">
-          </StackPane>
-
-          <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-            <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
-              <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-            </VBox>
-
-            <StackPane fx:id="infoPlaceholder" prefWidth="340" >
-            </StackPane>
-          </SplitPane>
-        </VBox>
-        <VBox>
-          <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
-        </VBox>
-      </VBox>
-    </Scene>
-  </scene>
+<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" minWidth="800" minHeight="600">
+    <scene>
+        <Scene>
+            <stylesheets>
+                <URL value="@HRTheme.css"/>
+            </stylesheets>
+            <AnchorPane fx:id="mainWindow">
+                <AnchorPane fx:id="topPane" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <AnchorPane fx:id="logoTop" styleClass="logo-hr" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0" />
+                    <AnchorPane fx:id="topTitlePlaceholder" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    <AnchorPane fx:id="topDownPane" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0">
+                        <AnchorPane fx:id="styleTopPane" styleClass="style-lower-triangle" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <AnchorPane fx:id="topCommandPlaceholder" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </AnchorPane>
+                </AnchorPane>
+                <AnchorPane fx:id="bottomWrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+                    <AnchorPane fx:id="centerPanePlaceholder" maxHeight="95.0" minHeight="95.0" prefHeight="95.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    <AnchorPane fx:id="bottomPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
+                        <SplitPane fx:id="bottomPaneSplit" dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="bottomListPane" maxWidth="300.0" minWidth="300.0">
+                                <AnchorPane fx:id="listPersonsPlaceholder" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                            </AnchorPane>
+                            <AnchorPane fx:id="bottomInfoPane">
+                                <VBox fx:id="welcomePane" alignment="CENTER" fillWidth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Label fx:id="welcomeTitle" text="Welcome to HR+"/>
+                                    <Pane fx:id="logoWelcome" styleClass="logo-hr" maxWidth="-Infinity" prefHeight="80.0" prefWidth="120.0" VBox.vgrow="NEVER">
+                                        <VBox.margin>
+                                            <Insets bottom="15.0" left="10.0" top="15.0" />
+                                        </VBox.margin>
+                                    </Pane>
+                                    <Label fx:id="welcomeMadeWith" text="Made with love by"/>
+                                    <Label fx:id="welcomeName" text="Yee Chin, Hong Qiang, Xiao Wen, Heng Yeow"/>
+                                </VBox>
+                                <VBox fx:id="infoCalendarPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                <AnchorPane fx:id="infoPanePlaceholder" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                            </AnchorPane>
+                        </SplitPane>
+                        <padding>
+                            <Insets left="15.0" right="15.0" bottom="10.0" top="10.0"/>
+                        </padding>
+                    </AnchorPane>
+                </AnchorPane>
+            </AnchorPane>
+        </Scene>
+    </scene>
 </fx:root>

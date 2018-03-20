@@ -15,7 +15,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.ui.InfoPanel;
-import seedu.address.ui.StatusBarFooter;
+import seedu.address.ui.TitleBar;
 
 /**
  * A system test class for the help window, which contains interaction with other UI components.
@@ -32,23 +32,23 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
     public void openHelpWindow() {
         //use accelerator
         getCommandBox().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
+        getTitleBar().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
         getResultDisplay().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
+        getTitleBar().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
         getPersonListPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
+        getTitleBar().openHelpWindowUsingAccelerator();
+        assertHelpWindowNotOpen();
 
         getInfoPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
+        getTitleBar().openHelpWindowUsingAccelerator();
+        assertHelpWindowNotOpen();
 
         //use menu button
-        getMainMenu().openHelpWindowUsingMenu();
+        getTitleBar().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
 
         //use command box
@@ -70,7 +70,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         // assert that the status bar too is updated correctly while the help window is open
         // note: the select command tested above does not update the status bar
         executeCommand(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertNotEquals(StatusBarFooter.SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+        assertNotEquals(TitleBar.SYNC_STATUS_INITIAL, getTitleBar().getSyncStatus());
     }
 
     /**

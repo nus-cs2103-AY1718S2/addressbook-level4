@@ -2,8 +2,8 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.address.ui.TitleBar.SYNC_STATUS_INITIAL;
+import static seedu.address.ui.TitleBar.SYNC_STATUS_UPDATED;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -15,40 +15,40 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.TitleBarHandle;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.AddressBook;
 
-public class StatusBarFooterTest extends GuiUnitTest {
+public class TitleBarTest extends GuiUnitTest {
 
     private static final String STUB_SAVE_LOCATION = "Stub";
     private static final String RELATIVE_PATH = "./";
 
     private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBook());
 
-    private static final Clock originalClock = StatusBarFooter.getClock();
+    private static final Clock originalClock = TitleBar.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
-    private StatusBarFooterHandle statusBarFooterHandle;
+    private TitleBarHandle titleBarHandle;
 
     @BeforeClass
     public static void setUpBeforeClass() {
         // inject fixed clock
-        StatusBarFooter.setClock(injectedClock);
+        TitleBar.setClock(injectedClock);
     }
 
     @AfterClass
     public static void tearDownAfterClass() {
         // restore original clock
-        StatusBarFooter.setClock(originalClock);
+        TitleBar.setClock(originalClock);
     }
 
     @Before
     public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION);
-        uiPartRule.setUiPart(statusBarFooter);
+        TitleBar titleBar = new TitleBar(STUB_SAVE_LOCATION);
+        uiPartRule.setUiPart(titleBar);
 
-        statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
+        titleBarHandle = new TitleBarHandle(titleBar.getRoot());
     }
 
     @Test
@@ -67,8 +67,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
      * sync status matches that of {@code expectedSyncStatus}.
      */
     private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus) {
-        assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
-        assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
+        assertEquals(expectedSaveLocation, titleBarHandle.getSaveLocation());
+        assertEquals(expectedSyncStatus, titleBarHandle.getSyncStatus());
         guiRobot.pauseForHuman();
     }
 

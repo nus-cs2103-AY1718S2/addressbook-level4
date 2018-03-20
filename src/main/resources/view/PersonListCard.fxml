@@ -2,35 +2,62 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
-      </padding>
-      <HBox spacing="5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="cardPersonPane" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" VBox.vgrow="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <AnchorPane fx:id="cardPerson" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="cardPhotoPane" maxHeight="70.0" maxWidth="70.0" minHeight="70.0" minWidth="70.0" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="10.0">
+            <ImageView fx:id="cardPhoto" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <Pane fx:id="cardPhotoMask" styleClass="style-mask-circle" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        </AnchorPane>
+        <VBox fx:id="cardPersonInfo" alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="cardPersonName">
+                <VBox.margin>
+                    <Insets bottom="-2.0" />
+                </VBox.margin>
+            </Label>
+            <Label fx:id="cardPersonUniversity">
+                <VBox.margin>
+                    <Insets bottom="3.0" />
+                </VBox.margin>
+            </Label>
+            <Label fx:id="cardPersonEmail">
+                <VBox.margin>
+                    <Insets bottom="-2.0" />
+                </VBox.margin>
+            </Label>
+            <Label fx:id="cardPersonContact">
+            </Label>
+        </VBox>
+        <HBox fx:id="cardPersonRatingPane" alignment="CENTER_RIGHT" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+            <Label fx:id="cardPersonRating">
+                <HBox.margin>
+                    <Insets bottom="-1.0" right="3.0" top="1.0" />
+                </HBox.margin>
+            </Label>
+            <Pane fx:id="iconRating" styleClass="icon-star" maxHeight="12.0" maxWidth="12.0" minHeight="12.0" minWidth="12.0" prefHeight="12.0" prefWidth="12.0"/>
+        </HBox>
+        <Label fx:id="cardPersonStatus" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="8.0">
+            <padding>
+                <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
+            </padding>
         </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
-      </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-    </VBox>
-  </GridPane>
-</HBox>
+        <HBox fx:id="cardPersonNumberPane">
+            <Label fx:id="cardPersonNumber" maxHeight="20.0" minHeight="20.0" prefHeight="20.0">
+                <padding>
+                    <Insets bottom="2.0" left="5.0" top="2.0" />
+                </padding>
+            </Label>
+            <Pane fx:id="styleCardPersonNumber" styleClass="style-upper-triangle" maxHeight="20.0" maxWidth="10.0" minHeight="20.0" minWidth="10.0" prefHeight="20.0" prefWidth="10.0"/>
+        </HBox>
+    </AnchorPane>
+    <padding>
+        <Insets left="10.0" right="10.0" top="10.0" />
+    </padding>
+</AnchorPane>
+

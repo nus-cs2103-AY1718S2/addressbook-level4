@@ -8,7 +8,7 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import seedu.address.ui.StatusBarFooter;
+import seedu.address.ui.TitleBar;
 
 /**
  * This rule makes the time stamp in the status bar predictable during a test.
@@ -18,14 +18,14 @@ import seedu.address.ui.StatusBarFooter;
  */
 public class ClockRule implements TestRule {
     private Clock injectedClock;
-    private final Clock originalClock = StatusBarFooter.getClock();
+    private final Clock originalClock = TitleBar.getClock();
 
     protected void before() {
         setInjectedClockToCurrentTime();
     }
 
     protected void after() {
-        StatusBarFooter.setClock(originalClock);
+        TitleBar.setClock(originalClock);
     }
 
     @Override
@@ -52,6 +52,6 @@ public class ClockRule implements TestRule {
      */
     public void setInjectedClockToCurrentTime() {
         injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-        StatusBarFooter.setClock(injectedClock);
+        TitleBar.setClock(injectedClock);
     }
 }

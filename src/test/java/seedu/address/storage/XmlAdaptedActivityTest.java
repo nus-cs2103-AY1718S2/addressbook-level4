@@ -20,7 +20,7 @@ public class XmlAdaptedActivityTest {
     private static final String INVALID_DATE_TIME = "23 April 2018";
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_NAME = ASSIGNMENT2.getName().toString();
+    private static final String VALID_NAME = "CS2102Assignment";
     private static final String VALID_DATE_TIME = ASSIGNMENT2.getDateTime().toString();
     private static final String VALID_REMARK = ASSIGNMENT2.getRemark().toString();
     private static final List<XmlAdaptedTag> VALID_TAGS = ASSIGNMENT2.getTags().stream()

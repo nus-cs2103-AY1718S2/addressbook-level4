@@ -13,6 +13,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class ContactDetailsDisplayTest extends GuiUnitTest {
 
+    private static final String DEFAULT_TEXT = "Select a person to view his/her details";
     private ContactDetailsDisplayHandle contactDetailsDisplayHandle;
 
     @Before
@@ -26,10 +27,7 @@ public class ContactDetailsDisplayTest extends GuiUnitTest {
     @Test
     public void display() {
         // default result text
-        assertEquals("", contactDetailsDisplayHandle.getName());
-        assertEquals("", contactDetailsDisplayHandle.getAddress());
-        assertEquals("", contactDetailsDisplayHandle.getPhone());
-        assertEquals("", contactDetailsDisplayHandle.getEmail());
+        assertEquals(DEFAULT_TEXT, contactDetailsDisplayHandle.getName());
 
         // new result received
         Person person = new PersonBuilder().build();
@@ -38,9 +36,9 @@ public class ContactDetailsDisplayTest extends GuiUnitTest {
         postNow(new PersonPanelSelectionChangedEvent(personCard));
         guiRobot.pauseForHuman();
 
-        assertEquals(person.getName().toString(), contactDetailsDisplayHandle.getName());
-        assertEquals(person.getAddress().toString(), contactDetailsDisplayHandle.getAddress());
-        assertEquals(person.getPhone().toString(), contactDetailsDisplayHandle.getPhone());
-        assertEquals(person.getEmail().toString(), contactDetailsDisplayHandle.getEmail());
+        assertEquals(person.getName().fullName, contactDetailsDisplayHandle.getName());
+        assertEquals(person.getName().fullName, contactDetailsDisplayHandle.getFullName());
+        assertEquals(person.getPhone().value, contactDetailsDisplayHandle.getPhone());
+        assertEquals(person.getEmail().value, contactDetailsDisplayHandle.getEmail());
     }
 }

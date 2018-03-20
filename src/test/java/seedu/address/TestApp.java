@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
@@ -76,6 +77,8 @@ public class TestApp extends MainApp {
     public AddressBook readStorageAddressBook() {
         try {
             return new AddressBook(storage.readAddressBook().get());
+        } catch (WrongPasswordException wpe) {
+            throw new AssertionError("Data encrypted with wrong password.");
         } catch (DataConversionException dce) {
             throw new AssertionError("Data is not in the AddressBook format.");
         } catch (IOException ioe) {

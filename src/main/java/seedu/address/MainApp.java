@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -32,6 +33,7 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.ui.PasswordUiManager;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -50,7 +52,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-
+    private boolean passwordChanged;
 
     @Override
     public void init() throws Exception {
@@ -94,6 +96,9 @@ public class MainApp extends Application {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+        } catch (WrongPasswordException e) {
+            passwordChanged = true;
+            initialData = new AddressBook();
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
@@ -184,7 +189,12 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
-        ui.start(primaryStage);
+        if (passwordChanged) {
+            PasswordUiManager pw = new PasswordUiManager(storage, model, ui);
+            pw.start(primaryStage);
+        } else {
+            ui.start(primaryStage);
+        }
     }
 
     @Override

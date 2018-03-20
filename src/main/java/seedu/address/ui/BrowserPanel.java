@@ -29,6 +29,7 @@ public class BrowserPanel extends UiPart<Region> {
     private static final String SEARCH_PAGE_URL =
             "https://calendar.google.com/calendar/embed?src=&ctz=Asia%2FSingapore";
     private static final String FXML = "BrowserPanel.fxml";
+    private static final String[] TAG_COLOR_STYLES = {"red", "yellow", "blue", "orange", "brown", "green"};
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -106,8 +107,30 @@ public class BrowserPanel extends UiPart<Region> {
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
         review.setText(person.getReview().value);
+        review.setWrapText(true);
         tags.getChildren().clear();
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        initTags(person);
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    /**
+     * Creates the tag labels for {@code person}.
+     */
+    private void initTags(Person person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    /**
+     * Returns the color style for {@code tagName}'s label.
+     */
+    private String getTagColorStyleFor(String tagName) {
+        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between tags.
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
     }
 }

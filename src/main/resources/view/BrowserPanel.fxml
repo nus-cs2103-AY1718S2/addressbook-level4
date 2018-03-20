@@ -12,20 +12,20 @@
 
 <StackPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="browserPanel" style="-fx-background-color: white;">
+      <GridPane fx:id="browserPanel" gridLinesVisible="true" maxWidth="1.7976931348623157E308" style="-fx-background-color: white;">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.26664733886719" minWidth="10.0" prefWidth="80.79996719360352" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.60001373291016" minWidth="10.0" prefWidth="120.00003280639649" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.40000610351564" minWidth="10.0" prefWidth="99.99998168945312" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="101.60001831054687" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="20.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="20.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="20.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="20.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="20.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="20.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Name">
@@ -33,51 +33,93 @@
                   <Font size="15.0" />
                </font>
                <GridPane.margin>
-                  <Insets />
+                  <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Phone" GridPane.rowIndex="1">
+            <Label text="Phone" GridPane.rowIndex="2">
                <font>
                   <Font size="15.0" />
                </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Label>
-            <Label text="Email" GridPane.rowIndex="2">
+            <Label text="Email" GridPane.rowIndex="3">
                <font>
                   <Font size="15.0" />
                </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Label>
-            <Label layoutX="10.0" layoutY="75.0" text="Address" GridPane.rowIndex="3">
+            <Label layoutX="10.0" layoutY="75.0" text="Address" GridPane.rowIndex="4">
                <font>
                   <Font size="15.0" />
                </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Label>
-            <Label text="Rating" GridPane.rowIndex="4">
+            <Label text="Rating" GridPane.rowIndex="5">
                <font>
                   <Font size="15.0" />
                </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Label>
-            <Label text="Review" GridPane.rowIndex="5">
+            <Label text="Review" GridPane.rowIndex="6">
                <font>
                   <Font size="15.0" />
                </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Label>
-            <Label text="Tag" GridPane.rowIndex="6">
+            <Label text="Tag" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
                </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Label>
             <Label text="Calendar" GridPane.rowIndex="7">
                <font>
                   <Font size="15.0" />
                </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Label>
-            <Label fx:id="name" text="Label" GridPane.columnIndex="1" />
-            <Label fx:id="phone" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="email" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="address" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="rating" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="review" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <FlowPane fx:id="tags" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="name" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Label>
+            <Label fx:id="phone" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Label>
+            <Label fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Label>
+            <Label fx:id="address" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Label>
+            <Label fx:id="rating" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Label>
+            <Label fx:id="review" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Label>
+            <FlowPane fx:id="tags" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></FlowPane>
             <WebView fx:id="browser" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>

@@ -79,7 +79,7 @@ public class ImportCommandTest {
 
     @Test
     public void execute_wrongPasswordEncryptedAddressBook_throwsCommandException() throws Exception {
-        String encryptedFile = TEST_DATA_FOLDER + "encryptedAddressBook.xml";
+        String encryptedFile = TEST_DATA_FOLDER + "encryptedAliceBensonAddressBook.xml";
         ImportCommand importCommand = prepareCommand(encryptedFile, model, TEST_PASSWORD + "1");
         thrown.expect(CommandException.class);
         importCommand.executeUndoableCommand();

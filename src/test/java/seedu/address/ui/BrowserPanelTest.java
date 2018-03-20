@@ -8,7 +8,6 @@ import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertPanelDisplaysPerson;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.junit.Before;

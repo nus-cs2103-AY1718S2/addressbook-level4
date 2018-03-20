@@ -4,5 +4,6 @@
     <preparationTime>9482424</preparationTime>
     <ingredient>hans@example</ingredient>
     <instruction>4th street</instruction>
+    <url>https://www.google.com</url>
     <tagged>friends</tagged>
 </recipe>

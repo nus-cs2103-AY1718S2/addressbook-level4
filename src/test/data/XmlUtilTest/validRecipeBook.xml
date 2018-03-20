@@ -5,53 +5,62 @@
         <preparationTime isPrivate="false">9482424</preparationTime>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
         <name>Ruth Mueller</name>
         <preparationTime isPrivate="false">87249245</preparationTime>
         <ingredient isPrivate="false">ruth@example.com</ingredient>
         <instruction isPrivate="false">81th street</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
         <name>Heinz Kurz</name>
         <preparationTime isPrivate="false">95352563</preparationTime>
         <ingredient isPrivate="false">heinz@example.com</ingredient>
         <instruction isPrivate="false">wall street</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
         <name>Cornelia Meier</name>
         <preparationTime isPrivate="false">87652533</preparationTime>
         <ingredient isPrivate="false">cornelia@example.com</ingredient>
         <instruction isPrivate="false">10th street</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
         <name>Werner Meyer</name>
         <preparationTime isPrivate="false">9482224</preparationTime>
         <ingredient isPrivate="false">werner@example.com</ingredient>
         <instruction isPrivate="false">michegan ave</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
         <name>Lydia Kunz</name>
         <preparationTime isPrivate="false">9482427</preparationTime>
         <ingredient isPrivate="false">lydia@example.com</ingredient>
         <instruction isPrivate="false">little tokyo</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
         <name>Anna Best</name>
         <preparationTime isPrivate="false">9482442</preparationTime>
         <ingredient isPrivate="false">anna@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
         <name>Stefan Meier</name>
         <preparationTime isPrivate="false">8482424</preparationTime>
         <ingredient isPrivate="false">stefan@example.com</ingredient>
         <instruction isPrivate="false">little india</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
         <name>Martin Mueller</name>
         <preparationTime isPrivate="false">8482131</preparationTime>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">chicago ave</instruction>
+        <url isPrivate="false">https://www.google.com</url>
     </recipes>
 </recipebook>

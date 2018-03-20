@@ -162,7 +162,6 @@ public class ParserUtil {
      */
     public static Optional<ProfilePicture> parseProfilePicture(Optional<String> profilePicture)
             throws IllegalValueException {
-        requireNonNull(profilePicture);
         return profilePicture.isPresent() ? Optional.of(parseProfilePicture(profilePicture.get())) : Optional.empty();
     }
 

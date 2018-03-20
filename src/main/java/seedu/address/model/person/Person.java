@@ -35,7 +35,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, ProfilePicture profilePicture, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, profilePicture, tags);
+        requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.nameProperty = new SimpleObjectProperty<>(name);
         this.phone = phone;
@@ -44,8 +44,11 @@ public class Person implements ReadOnlyPerson {
         this.emailProperty = new SimpleObjectProperty<>(email);
         this.address = address;
         this.addressProperty = new SimpleObjectProperty<>(address);
-        this.profilePicture = profilePicture;
-        // protect internal tags from changes in the arg list
+        if (profilePicture == null) {
+            this.profilePicture = new ProfilePicture();
+        } else {
+            this.profilePicture = profilePicture;
+        }
         this.tags = new UniqueTagList(tags);
     }
 
@@ -82,17 +85,14 @@ public class Person implements ReadOnlyPerson {
         if (other == this) {
             return true;
         }
-
         if (!(other instanceof Person)) {
             return false;
         }
-
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getProfilePicture().equals(this.getProfilePicture());
+                && otherPerson.getAddress().equals(this.getAddress());
     }
 
     @Override
@@ -133,4 +133,5 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<Address> addressProperty() {
         return addressProperty;
     }
+
 }

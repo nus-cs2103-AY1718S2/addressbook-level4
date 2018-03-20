@@ -39,7 +39,7 @@ public class XmlUtilTest {
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
-    private static final String VALID_PROFILE_PICTURE = "src/main/resources/ProfilePictures/Muster.jpg";
+    private static final String VALID_PROFILE_PICTURE = "./src/test/data/images/hans.jpeg";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
@@ -104,6 +104,7 @@ public class XmlUtilTest {
     }
 
     @Test
+
     public void saveDataToFile_nullFile_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         XmlUtil.saveDataToFile(null, new AddressBook());

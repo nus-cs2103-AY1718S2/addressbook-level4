@@ -22,6 +22,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemovePatientQueueCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAppointmentCommand;
@@ -187,6 +188,12 @@ public class ImdbParser {
                         LoginCommand.MESSAGE_USAGE));
 
             case AddPatientQueueCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+            case RemovePatientQueueCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+            case RemovePatientQueueCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
 
@@ -404,6 +411,10 @@ public class ImdbParser {
             case AddPatientQueueCommand.COMMAND_ALIAS:
                 return new AddPatientQueueCommandParser().parse(arguments);
 
+            case RemovePatientQueueCommand.COMMAND_WORD:
+                return new RemovePatientQueueCommandParser().parse(arguments);
+            case RemovePatientQueueCommand.COMMAND_ALIAS:
+                return new RemovePatientQueueCommandParser().parse(arguments);
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }

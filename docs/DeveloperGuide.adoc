@@ -785,7 +785,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * Have a number of events to keep track of:
 ** Talks
 ** Career Fairs
-** Interviewws
+** Interviews
 ** Consultations
 ** etc.
 

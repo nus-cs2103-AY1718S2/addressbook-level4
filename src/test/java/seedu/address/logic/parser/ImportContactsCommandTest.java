@@ -20,6 +20,9 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 import seedu.address.testutil.PersonBuilder;
 
+import seedu.address.model.person.Person;
+
+
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -104,14 +107,14 @@ public class ImportContactsCommandTest {
         Date date = new Date();
         DateAdded addDate;
 
-        AddCommand addMe = new AddCommand(personToAdd); //not the most efficient...
+        //model.addPerson(personToAdd); //not the most efficient...
 
         try {
 //            personToAdd = new Person(new Name(name),
 //                    new Phone(phone), new Email(email),
 //                    new Address(address), addDate, tagSet);
 
-            addMe.executeUndoableCommand();
+//            addMe.executeUndoableCommand();
         } catch (Exception e) {
             throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
             + e);

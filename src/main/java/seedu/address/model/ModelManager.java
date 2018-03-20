@@ -89,8 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void getRoomsFrom(Building building) throws BuildingNotFoundException {
-        //get rooms of the building here
-        //temporarily calling isValidBuilding
+        //TODO: get vacancy of all rooms in building
         if (!Building.isValidBuilding(building)) {
             throw new BuildingNotFoundException();
         }

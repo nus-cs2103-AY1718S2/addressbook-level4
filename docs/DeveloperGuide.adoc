@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= contactHeRo - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B2/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -368,10 +368,10 @@ The `DetailsPanel` is a TabPane which  which consists of the two tabs, `Contact 
 
 The UML diagram below represents the UI structure for the `DetailsPanel` (Refer to Figure 30):
 
-image::umlDetails.png[width="790"]
+image::DetailsPanelClassDiagram.png[width="600"]
 _Figure 30 : UML Diagram for Panel._
 
-We created a new event, `SwitchTabRequestEvent` which sets the current tab to `Contact Details` or `LinkedIn Search` depending on the input command.
+We created a new event, `SwitchTabRequestEvent` which sets the current tab in the `DetailsPanel` to `Contact Details` or `LinkedIn Search` depending on the input command.
 The code for the SwitchTabRequestEvent` event is as follows.
 
 [source, java]
@@ -409,12 +409,8 @@ Both the `select` and `linkedIn` command function quite similarly and only diffe
 
 The figure below (Refer to figure 31) is the wireframe for the `ContactDetailsDisplay`:
 
-image::wireframeDetailsPanel.PNG[width="600"]
-_Figure 31 : Wireframe for Details Panel._
-
-image::wireframeDetailsPanel.PNG[width="600"]
-_Figure 31 : Wireframe for Details Panel._
-
+image::ContactDetailsDisplayWireFrame.png[width="600"]
+_Figure 31 : Wireframe for Contact Details Panel._
 
 [discrete]
 ==== Design Consideration

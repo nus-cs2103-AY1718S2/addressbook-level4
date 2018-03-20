@@ -25,7 +25,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "should not work for now";
     private static final String COMMAND_THAT_HAS_MULTIPLE_LINES = FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES + LF
             + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
-    private static final String FIRST_SUGGESTION = "add";
+    private static final String FIRST_SUGGESTION = "a/";
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;

@@ -14,7 +14,8 @@ public class RouteOptimization {
     /**
      * get driving distance from origin to destination
      */
-    public double getDistance(String origin, String destination) throws InterruptedException, ApiException, IOException {
+    public double getDistance(String origin, String destination)
+            throws InterruptedException, ApiException, IOException {
 
         GeoApiContext context = buildGeoContext();
 

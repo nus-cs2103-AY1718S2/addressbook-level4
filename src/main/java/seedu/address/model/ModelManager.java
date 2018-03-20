@@ -15,6 +15,9 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.timetableEntry.TimetableEntry;
+import seedu.address.model.timetableEntry.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.timetableEntry.exceptions.TimetableEntryNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -63,6 +66,17 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteTimetableEntry(String id) throws TimetableEntryNotFoundException {
+        addressBook.removeTimetableEntry(id);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException {
+        addressBook.addTimetableEntry(e);
     }
 
     @Override

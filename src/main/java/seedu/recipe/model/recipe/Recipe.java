@@ -19,19 +19,20 @@ public class Recipe {
     private final PreparationTime preparationTime;
     private final Ingredient ingredient;
     private final Instruction instruction;
-
+    private final Url url;
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
     public Recipe(Name name, PreparationTime preparationTime, Ingredient ingredient, Instruction instruction,
-                  Set<Tag> tags) {
-        requireAllNonNull(name, preparationTime, ingredient, instruction, tags);
+                  Url url, Set<Tag> tags) {
+        requireAllNonNull(name, preparationTime, ingredient, instruction, url, tags);
         this.name = name;
         this.preparationTime = preparationTime;
         this.ingredient = ingredient;
         this.instruction = instruction;
+        this.url = url;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -50,6 +51,10 @@ public class Recipe {
 
     public Instruction getInstruction() {
         return instruction;
+    }
+
+    public Url getUrl() {
+        return url;
     }
 
     /**
@@ -74,13 +79,14 @@ public class Recipe {
         return otherRecipe.getName().equals(this.getName())
                 && otherRecipe.getPreparationTime().equals(this.getPreparationTime())
                 && otherRecipe.getIngredient().equals(this.getIngredient())
-                && otherRecipe.getInstruction().equals(this.getInstruction());
+                && otherRecipe.getInstruction().equals(this.getInstruction())
+                && otherRecipe.getUrl().equals(this.getUrl());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, preparationTime, ingredient, instruction, tags);
+        return Objects.hash(name, preparationTime, ingredient, instruction, url, tags);
     }
 
     @Override
@@ -93,6 +99,8 @@ public class Recipe {
                 .append(getIngredient())
                 .append(" Instruction: ")
                 .append(getInstruction())
+                .append(" Url: ")
+                .append(getUrl())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

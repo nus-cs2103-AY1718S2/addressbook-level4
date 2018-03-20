@@ -120,7 +120,7 @@ Format: `tag KEYWORD [MORE_KEYWORDS]`
 * The search is case sensitive. e.g. `friends` will not match `Friends`
 * Only the tags are searched.
 * Only full words will be matched e.g. `friends` will not match `friend`
-* Rceipes matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends family` will return recipes with either `friends` OR `family` as their tags.
+* Recipes matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends family` will return recipes with either `friends` OR `family` as their tags.
 ****
 
 Examples:

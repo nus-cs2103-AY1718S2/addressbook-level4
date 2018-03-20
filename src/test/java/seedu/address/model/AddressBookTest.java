@@ -21,6 +21,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.SecurityUtil;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -35,7 +36,7 @@ public class AddressBookTest {
     private final AddressBook addressBook = new AddressBook();
 
     private final AddressBook addressBookWithAmyAndBob = new AddressBookBuilder().withPerson(AMY)
-            .withPerson(BOB).build();
+            .withPerson(BOB).withPassword("test").build();
 
     @Test
     public void constructor() {
@@ -104,6 +105,23 @@ public class AddressBookTest {
                 .withPerson(bobWithoutFriendTag).build();
 
         assertEquals(expectedAddressBook, addressBookWithAmyAndBob);
+    }
+
+    @Test
+    public void updatePasswordWithClass_passwordChanged_passwordUpdated() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
+        addressBookUpdatedPassword.updatePassword(new Password("new"));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
+        assertEquals(expectedAddressBook, addressBookUpdatedPassword);
+    }
+
+    @Test
+    public void updatePasswordWithBytes_passwordChanged_passwordUpdated() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
+        addressBookUpdatedPassword.updatePassword(SecurityUtil.hashPassword("new"));
+        addressBookUpdatedPassword.updatePassword(SecurityUtil.hashPassword("new"));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
+        assertEquals(expectedAddressBook, addressBookUpdatedPassword);
     }
 
     /**

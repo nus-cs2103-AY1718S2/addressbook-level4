@@ -866,6 +866,62 @@ manage which include contact details and profiles of potential employees. It is 
 
 *Value proposition*: An ideal solution for small teams and business professionals who need a simple solution to manage their contacts and help them with day-to-day business activities.
 
+*Feature contributions:*
+
+1. Kushagra Goyal
+ * Major Feature: Reminders
+ ** Users can add reminders with subject, date and time.
+ ** Users can delete reminders.
+ ** The reminders will be displayed on the screen sorted according to earliest time due.
+
+ * Minor Feature: Contact details and LinkedIn search display
+ ** Users can view the contact details in a separate panel using the `select` command.
+ ** Users can view the LinkedIn search of the person using the `linkedIn` command.
+
+ * How do these features fit into the product scope?
+ ** Major Feature: Recruiters have a lot of appointments, meetings, and interviews to manage and these reminders will help them keep a track of these events so that they do not miss them, be late for any of them and they can better manage their time.
+ ** Minor Feature: Viewing the contact details in a separate focused panel makes them easier to read for the user and the information looks clearer. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
+
+2. Do Andre Khoi Nguyen
+ * Major Feature: Calendar
+ ** Users can sync Gmail calendar.
+ ** Users can add events to the calendar.
+
+ * Minor Feature: Profile Picture display.
+ ** Users can add a profile picture by using `add` command or `edit` command.
+ ** Users can view the profile picture.
+
+ * How do these features fit into the product scope?
+ ** Major Feature: Recruiters have a lot of appointments, meetings, and interviews to manage. Hence, showing them on the calendar will help them visualize and manage their time effectively.
+ ** Minor Feature: Viewing profile pictures of the potential employees help recruiters to recognize them easily.
+
+3. Kevin Chin
+* Major Feature: Email contact
+** User can use the "email" command to send email to chosen contact.
+** The feature uses Gmail API to send emails.
+
+* Minor Feature: Find contact by tag
+** User can find contact by tag using keyword of the tag.
+** Supports multiple keywords.
+
+* How do these features fit into the product scope?
+** Major Feature: Recruiters may sometimes need to set up appointments, meetings, and interviews. This will usually be done through the use of email. This feature will be convenient for them as the email address of the contacts are already in contactHeRo.
+** Minor Feature: Sometimes, recruiter might not remember the name of the person they wish to contact. The assigned role of a person is much easier to remember. Therefore, this feature is very useful in helping them find a contact easily.
+
+4. Jason Lim
+* Major Feature: Login System
+** Users can be assured that their data in contactHeRo is secured.
+** User can create a new account to login to contactHeRo.
+** User can login and logout of contactHeRo through CLI.
+
+* Minor Feature: Clear list of history
+** User can clear away the list of commands which they have entered in previously using the `clearhistory` command.
+
+* How do this features fit into the product scope?
+** Major Feature: Recruiters are dealing with data of their potential employees and some of these data are personal and sensitive. Recruiters may also have some confidential company data stored in the application. Hence it is necessary for them to set up some form of security to protect these sensitive data. Having a login system is one of the common methods to ensure data security.
+
+** Minor Feature: As our application is mainly using CLI, sometimes the commands we entered may contain sensitive information. For example, the `add` command contains the phone number, address and email of the person being added into the application. All of the inputs entered into the command line can be viewed by using the history command. Hence being able to clear away the history of user inputs can help to protect those sensitive information. In addition, clearing away the back log help save space in the application.
+
 [appendix]
 == User Stories
 

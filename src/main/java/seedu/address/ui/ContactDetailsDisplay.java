@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -32,6 +33,9 @@ public class ContactDetailsDisplay extends UiPart<Region> {
     @FXML
     private Label email;
 
+    @FXML
+    private ImageView imageView;
+
     public ContactDetailsDisplay() {
         super(FXML);
         registerAsAnEventHandler(this);
@@ -45,6 +49,8 @@ public class ContactDetailsDisplay extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        //imageView.imageProperty().bind(person.imageProperty());
+        imageView.setImage(person.getProfilePicture().getImage());
     }
 
     @Subscribe

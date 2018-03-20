@@ -21,6 +21,7 @@ import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -131,6 +132,12 @@ public class AddressBookParserTest {
         assertEquals(new LinkedInCommand(INDEX_FIRST_PERSON), command);
     }
 
+    @Test
+    public void parseCommand_email() throws Exception {
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
+    }
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

@@ -16,9 +16,9 @@ import seedu.address.commons.exceptions.WrongPasswordException;
 
 public class SecurityUtilTest {
     private static final File TEST_DATA_FILE = new File("./src/test/data/sandbox/temp");
-    private static final String TEST_DATA = new String("Test Data");
-    private static final String TEST_PASSWORD =  new String("test");
-    private static final String WRONG_PASSWORD = new String("wrong");
+    private static final String TEST_DATA = "Test Data";
+    private static final String TEST_PASSWORD =  "test";
+    private static final String WRONG_PASSWORD = "wrong";
 
 
     @Rule

@@ -21,6 +21,7 @@
 
             <VBox styleClass="background">
                 <children>
+
                     <MenuBar fx:id="menuBar" prefHeight="21.0" prefWidth="600.0" VBox.vgrow="NEVER">
                         <menus>
                             <Menu mnemonicParsing="false" text="File">
@@ -41,7 +42,7 @@
                         <items>
                             <VBox fx:id="personList" prefWidth="100.0" styleClass="VBox" VBox.vgrow="ALWAYS">
                                 <children>
-                                    <StackPane id="taskListPlaceholder" fx:id="personListPanelPlaceholder"
+                                    <StackPane id="taskListPlaceholder" fx:id="activityListPanelPlaceholder"
                                                prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                         <VBox.margin>
                                             <Insets bottom="8.0" left="30.0" right="30.0" top="10.0"/>

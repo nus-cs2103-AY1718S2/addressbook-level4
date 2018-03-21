@@ -20,19 +20,22 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final DisplayPic displayPic;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, MatriculationNumber matricNum, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, MatriculationNumber matricNum, Phone phone, Email email,
+                  Address address, DisplayPic displayPic, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.matricNumber = matricNum;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.displayPic = displayPic;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -42,7 +45,8 @@ public class Person {
     }
 
     public MatriculationNumber getMatricNumber() {
-        return matricNumber; }
+        return matricNumber;
+    }
 
     public Phone getPhone() {
         return phone;
@@ -54,6 +58,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public DisplayPic getDisplayPic() {
+        return displayPic;
     }
 
     /**

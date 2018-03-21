@@ -21,6 +21,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.CalendarId;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -115,7 +116,7 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         Person person = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRating,
-                updatedTags);
+                updatedTags, personToEdit.getCalendarId());
         person.setReview(updatedReview);
 
         return person;

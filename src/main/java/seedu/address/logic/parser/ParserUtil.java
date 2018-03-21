@@ -219,12 +219,12 @@ public class ParserUtil {
      * Parses {@code String day} into a {@code Day}.
      */
     public static Day parseDay(String day) throws IllegalValueException {
-        //requireNonNull(day);
-        String trimmedSubject = day.trim();
-        if (!Day.isValidDay(trimmedSubject)) {
+        requireNonNull(day);
+        String trimmedDay = day.trim();
+        if (!Day.isValidDay(trimmedDay)) {
             throw new IllegalValueException(Day.MESSAGE_DAY_CONSTRAINTS);
         }
-        return new Day(trimmedSubject);
+        return new Day(trimmedDay);
     }
 
     /**
@@ -232,7 +232,7 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Day> parseDay(Optional<String> day) throws IllegalValueException {
-        //requireNonNull(day);
+        requireNonNull(day);
         return day.isPresent() ? Optional.of(parseDay(day.get())) : Optional.empty();
     }
 }

@@ -4,15 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Student's time in a lesson in the Schedule.
- * Guarantees: immutable; is valid as declared in {@link #isValidTime String)}
+ * Represents a Student's day in a lesson in the Schedule.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDay String)}
  */
 public class Day {
 
-    public static final String MESSAGE_DAY_CONSTRAINTS = "Time should be of the format: first 3 letters of Day"
+    public static final String MESSAGE_DAY_CONSTRAINTS = "Day should be of the format: first 3 letters of Day"
             + "(not case sensitive) i,e.\n"
             + "mon, tue, wed, thu, fri, sat, sun\";\n\n";
-            // Numeric characters in Hour or Minute ranges
     private static final String DAY_REGEX = "^(mon|tue|wed|thu|fri|sat|sun)";
 
     public final String value;
@@ -32,8 +31,7 @@ public class Day {
      * Returns if a given string is a valid student day.
      */
     public static boolean isValidDay(String test) {
-        return true;
-        //return test.matches(DAY_REGEX);
+        return test.matches(DAY_REGEX);
     }
 
     @Override

@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -68,7 +68,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W15-B3/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W15-B3/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -482,6 +482,56 @@ and list out all members under the same tag.
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `ListGroupMembersCommand()` must remember to call `super.execute()`
 
+//tag::Calendar[]
+=== Calendar Feature
+==== Current Implementation
+
+Fastis uses a stand-alone `Calendar` class, adapted from `javafx-calendar` by SirGoose3432 (https://github.com/SirGoose3432/javafx-calendar).
+
+Two instances of calendar are implemented:
+
+* A monthly calendar to keep track of upcoming events and deadlines.
+* A weekly timetable to facilitate scheduling a suitable meet-up.
+
+The current time is retrieved upon startup, and both calendars base on that point in time to display the appropriate time frame.
+
+Both calendars utilize the `Event` class to determine which slots in the schedule are occupied.
+Users can associate each event to a `Person` or a `Group`, and can modify these events through commands.
+
+The details of these event, e.g. time, location, people involved, are saved locally in `.xml` file format.
+It is also retrieved upon start up by the `Storage` component and saved within the `Model` for the whole process.
+
+The weekly component of the `Calendar` is dependent on the `NUSMods` component for importing the timetable.
+
+==== Design Considerations
+
+===== Aspect: Implementation of the Calendar
+
+* **Alternative 1 (current choice):** Implement a stand-alone `Calendar` class
+** Pros:
+*** Easy to manipulate data.
+*** Easy to customize apperance.
+** Cons:
+*** Implementation is likely not optimized.
+*** Might not be aesthetically pleasing.
+* **Alternative 2:** Import external libraries/API
+** Choices:
+*** https://developers.google.com/calendar/[Google Calendar API]
+*** https://github.com/dlemmermann/CalendarFX[CalendarFX]
+** Pros:
+*** Likely optimized algorithms.
+*** Aesthetically pleasing.
+** Cons:
+*** Restricted to what the libraries/API offer.
+*** Need a firm understanding of the whole API to implement well.
+
+===== Aspect: Implementation of the `Event` class
+* **Alternative 1 (current choice):** One `Event` class for both monthly and weekly calendars.
+** Pros: The codes are concise and can be used interchangeably.
+** Cons: Prone to flawed and buggy implementations where methods are used where they are not supposed to.
+* **Alternative 2:** One `Event` interface with 2 classes implementing it accordingly.
+** Pros: The codes are modularized and safe from buggy behaviours.
+** Cons: There is likely a lot of code to write.
 
 == Documentation
 
@@ -1009,7 +1059,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |play videos from youtube |So that I can watch videos i want
 =======
->>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
 
 |=======================================================================
 

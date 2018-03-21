@@ -144,8 +144,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void checkLoginCredentials(Username username, Password password) {
+        public boolean checkLoginCredentials(Username username, Password password) {
             fail("This method should not be called.");
+            return false;
         }
 
         @Override

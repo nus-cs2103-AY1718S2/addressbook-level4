@@ -311,6 +311,7 @@
     -fx-padding: 8 1 8 1;
 }
 
+
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -354,3 +355,4 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+

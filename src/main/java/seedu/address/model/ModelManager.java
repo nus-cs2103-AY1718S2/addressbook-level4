@@ -15,7 +15,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
-import seedu.address.model.login.exceptions.AuthenticationFailedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -98,9 +97,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void checkLoginCredentials(Username username, Password password)
-            throws AlreadyLoggedInException, AuthenticationFailedException  {
-        addressBook.checkLoginCredentials(username, password);
+    public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
+        return addressBook.checkLoginCredentials(username, password);
     }
 
     @Override

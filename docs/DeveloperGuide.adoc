@@ -230,6 +230,45 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Login Feature
+
+==== Current Implementation
+
+===== User Login
+
+The Login feature involves UI, Logic and Model components. It allows the user to login and logout
+from the application. When the user is logged out, the user commands are limited, some panels are hidden
+the user and the viewing of history is disabled. It serves the purpose of maintaining confidentiality of the data in the application.
+
+The `LoginCommand` is part of Logic component. However it makes use of `addressBook` to check for the match in
+the username and password input. Below is a sequence diagram of how the feature works.
+
+.Sequence Diagram for Login Command (Logic Component)
+image::LoginFeatureLogicModelComponent.png[width="800"]
+
+The Login feature involves the UI component as well as we need to know when to hide and show certain panels depending on
+whether the user has logged in or not. To maintain our n-tier architecture, we make `CommandBox` check the login
+status upon each command entry to effect the change on the UI. The sequence diagram is as shown below.
+
+.Sequence Diagram for Login Command (UI Component)
+image::LoginFeatureUIComponent.png[width="800"]
+
+When the user is not logged in, commands that manipulate data in the application will be disabled. To avoid editing
+every single command, the invalidity of the command is handled in `LogicManager`.
+
+
+===== User Logout
+
+The logout feature similarly involves the UI, Logic and Model components. It allows the user to
+log out from the application, securing his data.
+
+The user cannot logout when he/she is not even logged in initially. This is already handled by limiting the availability
+of commands when the user is logged out.
+
+Similarly, some of the UI panels will be hidden when the user logs out.
+
+
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
@@ -855,6 +894,7 @@ be able to see and read the storage file easily, especially when the user is log
 is needed to maintain the C-I-A security framework.
 
 [appendix]
+
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`

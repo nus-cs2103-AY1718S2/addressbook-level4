@@ -13,11 +13,14 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T15-B3`      Since: `FEB 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Session Logger and Planner (SLAP) for Social Workers is for those who *prefer to use a desktop app for managing their schedule and
+contacts*. More importantly, SLAP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having
+the benefits of a Graphical User Interface (GUI). If you can type fast, SLAP can get your daily scheduling and
+contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -62,7 +65,19 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-====
+=== Login : `login`
+
+Logs the user into the application.
+Format: `login u/USERNAME p/PASSWORD`
+
+****
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
+=== Logout: `logout`
+
+Logs the user out of the application.
+Format: `logout`
 
 === Viewing calendar : `calendar`
 
@@ -255,27 +270,27 @@ Format: `exit`
 
 === Saving the data
 
-PersonalBook data are saved in the hard disk automatically after any command that changes the data. +
+SLAP data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
 
-=== Login to your account: `[coming in v2.0]`
+=== Login to your account:
 
-PersonalBook will request for your login credentials (username and password) before allowing you to access it.
+SLAP will request for your login credentials (username and password) before allowing you to access it.
 
-=== Logout from your account: `logout` `[coming in v2.0]`
+=== Logout from your account: `logout`
 
-Log out from your account and it will bring you to the login UI.
+SLAP allows to log out from your account so that you can ensure confidentiality of your data.
 
 
 === Encrypting data files `[coming in v2.0]`
 
-Encryption is done automatically when AddressBook is logged out or is exited.
+Encryption is done automatically when SLAP is logged out or is exited.
 
-=== Export Addressbook `[coming in v2.0]`
+=== Export SLAP `[coming in v2.0]`
 
-Exports your addressbook into a file so that it can be transported across systems.
+Exports your SLAP into a file so that it can be transported across systems.
 
 == FAQ
 

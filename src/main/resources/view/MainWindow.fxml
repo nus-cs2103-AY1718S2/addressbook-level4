@@ -26,6 +26,8 @@
       </stylesheets>
 
       <VBox>
+        <StackPane fx:id="loginStatusbarPlaceholder"/>
+
         <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
           <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>

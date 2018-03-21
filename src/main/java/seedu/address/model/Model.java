@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
-import seedu.address.model.login.exceptions.AuthenticationFailedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -49,27 +48,28 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    /** @@auther kaisertanqr
-     *
+    //@@author kaisertanqr
+    /**
      * Checks the login credentials.
      *
      * @param username
      * @param password
      *
      * @throws AlreadyLoggedInException if user has already logged in.
-     * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given
-     *                                          in ModelManager.
      */
-    void checkLoginCredentials(Username username, Password password)
-            throws AlreadyLoggedInException, AuthenticationFailedException;
+    boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException;
 
-    /** @@author kaisertanqr
-     *
+    /**
      * Returns whether the AddressBook has already been logged into.
      *
      */
     boolean hasLoggedIn();
 
+    /**
+     * Set login status in AddressBook to {@code status}.
+     *
+     * @param status
+     */
     void setLoginStatus(boolean status);
 
 }

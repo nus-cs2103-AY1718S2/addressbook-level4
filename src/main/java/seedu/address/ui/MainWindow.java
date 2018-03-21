@@ -46,6 +46,8 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private LoginStatusBar loginStatusBar;
+
 
     @FXML
     private StackPane browserPlaceholder;
@@ -91,6 +93,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane loginStatusbarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -152,21 +157,25 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        //@@author jaronchan
-        personDetailsPanel = new PersonDetailsPanel();
-        calendarPanel = new CalendarPanel();
-        dailySchedulerPanel = new DailySchedulerPanel();
 
-        personDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
-        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
-        dailySchedulerPlaceholder.getChildren().add(dailySchedulerPanel.getRoot());
-        //@@author
+        loginStatusBar = new LoginStatusBar();
+        loginStatusbarPlaceholder.getChildren().add(loginStatusBar.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        personDetailsPanel = new PersonDetailsPanel();
+        personDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
+
+        calendarPanel = new CalendarPanel();
+        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
+
+        dailySchedulerPanel = new DailySchedulerPanel();
+        dailySchedulerPlaceholder.getChildren().add(dailySchedulerPanel.getRoot());
+
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -183,11 +192,13 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    /** @@author {kaisertanqr}
-     *
+    //@@author kaisertanqr
+
+    /**
      * Hides browser and person list panel.
      */
     void hideBeforeLogin() {
+        loginStatusBar.updateLoginStatus(false);
         featuresTabPane.setVisible(false);
         personDetailsPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(false);
@@ -195,17 +206,19 @@ public class MainWindow extends UiPart<Stage> {
         personListPanelPlaceholder.setVisible(false);
     }
 
-    /** @@author {kaisertanqr}
-     *
+    /**
      * Unhide browser and person list panel.
      */
     public void showAfterLogin() {
+        loginStatusBar.updateLoginStatus(true);
         featuresTabPane.setVisible(true);
         personDetailsPlaceholder.setVisible(true);
         calendarPlaceholder.setVisible(true);
         dailySchedulerPlaceholder.setVisible(true);
         personListPanelPlaceholder.setVisible(true);
     }
+
+    //@@author
 
     private void setTitle(String appTitle) {
         primaryStage.setTitle(appTitle);

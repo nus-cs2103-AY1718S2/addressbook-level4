@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
-import seedu.address.model.login.exceptions.AuthenticationFailedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -70,39 +69,44 @@ public class AddressBook implements ReadOnlyAddressBook {
         hasLoggedIn = loggedin;
     }
 
+    //@@author kaisertanqr
     /// login authentication operations
 
+    /**
+     * Returns the login status of the user.
+     */
     public boolean hasLoggedIn() {
         return hasLoggedIn;
     }
 
+    /**
+     * Sets the login status of the user to {@code status}.
+     * @param status
+     */
     public void setLoginStatus(boolean status) {
         hasLoggedIn = status;
     }
 
 
-    /** @@author kaisertanqr
-     *
-     * Checks the login credentials whether it matches the one in addressbook
+    /**
+     * Checks the login credentials whether it matches the one in addressbook.
      *
      * @param username
      * @param password
      * @throws AlreadyLoggedInException is the user is already logged in.
-     * @throws AuthenticationFailedException if {@code username} and {@code password} does not match the one given
-     *                                       in ModelManager.
      */
-
-    public void checkLoginCredentials(Username username, Password password)
-            throws AlreadyLoggedInException, AuthenticationFailedException {
+    public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
         if (hasLoggedIn) {
             throw new AlreadyLoggedInException();
         } else if (!username.equals(this.username) || !password.equals(this.password)) {
-            throw new AuthenticationFailedException();
+            return hasLoggedIn;
         } else {
             hasLoggedIn = true;
+            return hasLoggedIn;
         }
-
     }
+
+    //@@author
 
     //// list overwrite operations
 

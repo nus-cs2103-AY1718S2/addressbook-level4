@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -104,6 +105,7 @@ public class LogicManager extends ComponentManager implements Logic {
     @Subscribe
     private void handleTimetableEntryAddedEvent(TimetableEntryAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Calendar c = Calendar.getInstance();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

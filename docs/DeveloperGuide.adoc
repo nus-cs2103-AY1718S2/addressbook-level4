@@ -1193,16 +1193,23 @@ API is a set of subroutine definitions, protocols, and tools for building applic
 
 [[CI]] CI::
 Abbreviation of **Continuous Integration**.
++
 CI is the practice of merging all developer working copies to a shared mainline several times a day. Definition taken from link:https://en.wikipedia.org/wiki/Continuous_integration[wiki].
 
 [[CLI]] CLI::
 Abbreviation of **Command Line Interface**.
 +
-CLI is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). Definition taken from link:https://en.wikipedia.org/wiki/Command-line_interface[wiki].
+As contrast to <<GUI,GUI>>, CLI is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). Definition taken from link:https://en.wikipedia.org/wiki/Command-line_interface[wiki].
 
 [[CSS]] CSS::
 Abbreviation of **Cascading Style Sheets**.
++
 CSS is is a style sheet language used for describing the presentation of a document written in a markup language. Definition taken from link:https://en.wikipedia.org/wiki/Cascading_Style_Sheets[wiki]. All visual effects in ReciRecipé are written in CSS.
+
+[[GUI]] GUI::
+Abbreviation of **Graphical User Interface**.
++
+As contrast to <<CLI,CLI>>, GUI is a type of user interface that allows users to interact with electronic devices through graphical icons and visual indicators such as secondary notation, instead of text-based user interfaces, typed command labels or text navigation. Definition taken from link:https://en.wikipedia.org/wiki/Graphical_user_interface[wiki].
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X

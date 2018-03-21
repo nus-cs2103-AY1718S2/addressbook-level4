@@ -28,9 +28,9 @@ import seedu.address.model.person.Rating;
 public class InfoPanel extends UiPart<Region> {
 
     public static final Person DEFAULT_PERSON = null;
+    public static final int SPLIT_MIN_WIDTH = 550;
 
     private static final String FXML = "InfoPanel.fxml";
-    private static final int SPLIT_MIN_WIDTH = 550;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -107,6 +107,11 @@ public class InfoPanel extends UiPart<Region> {
         handleResponsive((int) infoPaneWrapper.getWidth());
     }
 
+    /**
+     * Handle resize when width changed event occurred, then decide whether should trigger responsive handler or not
+     * @param oldValue of the width property
+     * @param newValue of the width property
+     */
     private void handleResize(int oldValue, int newValue) {
         // Process only if there are differences
         int smaller = Math.min(oldValue, newValue);
@@ -117,6 +122,10 @@ public class InfoPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Handle responsiveness by checking if window should split into two based on {@code SPLIT_MIN_WIDTH}
+     * @param width of {@code InfoPanel}
+     */
     private void handleResponsive(int width) {
         if (width >= SPLIT_MIN_WIDTH) {
             infoSplitPane.setVisible(true);

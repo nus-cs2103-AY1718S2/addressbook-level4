@@ -33,6 +33,7 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -152,6 +153,10 @@ public abstract class AddressBookSystemTest {
         assertTrue(getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size());
     }
 
+    protected void showPersonsWithDate(String keyword) {
+        executeCommand(FilterCommand.COMMAND_WORD + " " + keyword);
+        assertTrue(getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size());
+    }
     /**
      * Selects the person at {@code index} of the displayed list.
      */

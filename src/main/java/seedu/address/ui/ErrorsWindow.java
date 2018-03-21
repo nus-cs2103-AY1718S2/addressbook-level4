@@ -1,4 +1,4 @@
-//@@author {ifalluphill}
+//@@author ifalluphill
 
 package seedu.address.ui;
 
@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.Logic;
 
 /**
  * The ErrorWindow Window. Provides the basic window generation,
@@ -31,19 +32,25 @@ public class ErrorsWindow extends UiPart<Stage> {
      *
      * @param root Stage to use as the root of the ErrorsWindow.
      */
-    public ErrorsWindow(Stage root) {
+    public ErrorsWindow(Stage root, Logic logic) {
         super(FXML, root);
 
-        String errorLog = getErrorLogAsHtmlString();
-        String errorWindowHtml = createErrorLogPageAsHtmlString(errorLog);
-        browser.getEngine().loadContent(errorWindowHtml, "text/Html");
+        if (logic.hasLoggedIn()) {
+            String errorLog = getErrorLogAsHtmlString();
+            String errorWindowHtml = createErrorLogPageAsHtmlString(errorLog);
+            browser.getEngine().loadContent(errorWindowHtml, "text/Html");
+        } else {
+            browser.getEngine().loadContent("<html>You must be logged in to view the error log.</html>",
+                    "text/Html");
+        }
+
     }
 
     /**
      * Creates a new ErrorsWindow.
      */
-    public ErrorsWindow() {
-        this(new Stage());
+    public ErrorsWindow(Logic logic) {
+        this(new Stage(), logic);
     }
 
     /**

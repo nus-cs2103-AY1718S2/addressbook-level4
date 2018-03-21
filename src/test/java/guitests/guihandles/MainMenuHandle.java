@@ -30,7 +30,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
         guiRobot.push(KeyCode.F1);
     }
 
-    //@@author {ifalluphill}
+    //@@author ifalluphill
     /**
      * Opens the {@code CalendarWindow} using the menu bar in {@code MainWindow}.
      */
@@ -44,6 +44,13 @@ public class MainMenuHandle extends NodeHandle<Node> {
      */
     public void openCalendarWindowUsingAccelerator() {
         guiRobot.push(KeyCode.F8);
+    }
+
+    /**
+     * Opens the {@code ErrorLog} using the menu bar in {@code MainWindow}.
+     */
+    public void openErrorLogUsingMenu() {
+        clickOnMenuItemsSequentially("View", "Show Error Log");
     }
     //@@author
 

@@ -6,9 +6,13 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seedu.recipe.MainApp;
 import seedu.recipe.commons.core.LogsCenter;
@@ -37,6 +41,8 @@ public class BrowserPanel extends UiPart<Region> {
             + "user_events,user_photos,user_friends,user_games_activity,user_hometown,user_likes,user_location,user_photos,user_relationship_details,"
             + "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
             + "manage_pages,publish_actions,read_insights,read_page_mailboxes,rsvp_event,publish_actions";
+
+    private String accessToken;
     //@@author
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -52,6 +58,8 @@ public class BrowserPanel extends UiPart<Region> {
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
+
+        setUpBrowserUrlListener();
     }
 
     private void loadRecipePage(Recipe recipe) {
@@ -83,8 +91,35 @@ public class BrowserPanel extends UiPart<Region> {
         loadRecipePage(event.getNewSelection().recipe);
     }
 
+    //@@author RyanAngJY
     @Subscribe
     private void handleShareRecipeEvent(ShareRecipeEvent event) {
         loadPage(AUTH_URL);
     }
+
+    private String getAccessToken() {
+        return null;
+    }
+
+    private void setUpBrowserUrlListener() {
+        WebEngine browserEngine = browser.getEngine();
+        browserEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+            @Override
+            public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
+                if (newState == Worker.State.SUCCEEDED) {
+                    String url = browserEngine.getLocation();
+                    System.out.println("Url: " + url); //NEW URL
+
+                    if (url.contains("#access_token=")) {
+                        accessToken = url.replaceAll(".*#access_token=(.+)&.*", "$1");
+                        System.out.println("Access Token: " + accessToken);
+                        postRecipeOnFacebook();
+                    }
+                }
+            }
+        });
+    }
+
+    private void postRecipeOnFacebook() {}
+    //@@author
 }

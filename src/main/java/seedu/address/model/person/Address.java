@@ -55,4 +55,12 @@ public class Address {
         return value.hashCode();
     }
 
+    /**
+     * Change address into a form that will be used by Google Map
+     *
+     */
+    public String getGoogleMapSearchForm() {
+        return this.value.replaceAll(" ", "+");
+    }
+
 }

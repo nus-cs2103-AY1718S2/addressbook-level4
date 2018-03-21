@@ -34,16 +34,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private InsuranceCalendar calendar;
 
-     /*
+    /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */ {
+     */
+    {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        calendar = new InsuranceCalendar(); }
+        calendar = new InsuranceCalendar();
+    }
 
     public AddressBook() {
     }
@@ -87,6 +89,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
     //// calendar-level operations
+
     /**
      * Adds a appointment entry to the calendar.
      *
@@ -132,6 +135,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, syncedEditedPerson);
     }
 
+
+    /**
+     * Gets the matrix of list of persons with selected fields for calculation
+     */
+    public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
+        ArrayList<ArrayList<Double>> matrix = new ArrayList<>();
+        ObservableList<Person> list = this.persons.asObservableList();
+
+
+        list.forEach(person -> {
+
+        });
+
+        return matrix;
+
+    }
+
     /**
      * Updates the master tag list to include tags in {@code person} that are not in the list.
      *
@@ -152,7 +172,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                correctTagReferences, person.getIncome());
+                correctTagReferences, person.getIncome(), person.getActualSpending(),
+                person.getExpectedSpending());
     }
 
     /**

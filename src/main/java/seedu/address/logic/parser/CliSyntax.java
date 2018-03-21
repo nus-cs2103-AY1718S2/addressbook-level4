@@ -14,6 +14,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_START_INTERVAL = new Prefix("S/");
     public static final Prefix PREFIX_END_INTERVAL = new Prefix("E/");
     public static final Prefix PREFIX_INCOME = new Prefix("i/");
+    public static final Prefix PREFIX_ACTUALSPENDING = new Prefix("as/");
+    public static final Prefix PREFIX_EXPECTEDSPENDING = new Prefix("es/");
 
 
 }

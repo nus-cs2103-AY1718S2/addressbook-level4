@@ -12,7 +12,6 @@ import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 
 /**
  * The calendar in the address book.
- *
  */
 public class InsuranceCalendar {
 
@@ -33,7 +32,7 @@ public class InsuranceCalendar {
      *
      * @throws DuplicateAppointmentException if the appointment to add is a duplicate of an existing appointments.
      */
-    public void addAppointment(AppointmentEntry entry)throws DuplicateAppointmentException {
+    public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
         if (contains(entry)) {
             throw new DuplicateAppointmentException();
         }

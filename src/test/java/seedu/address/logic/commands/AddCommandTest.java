@@ -148,6 +148,10 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
+            return null;
+        }
     }
 
     /**

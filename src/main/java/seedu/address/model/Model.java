@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import com.calendarfx.model.CalendarSource;
@@ -56,4 +57,9 @@ public interface Model {
     /** returns the calendar in the addressbook */
     CalendarSource getCalendar();
 
+
+    /**
+     * Gets the matrix of list of persons with selected fields for calculation
+     */
+    ArrayList<ArrayList<Double>> getPersonAttrMatrix();
 }

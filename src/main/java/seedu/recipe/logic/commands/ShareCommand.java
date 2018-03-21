@@ -6,6 +6,7 @@ import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
+import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.recipe.Recipe;
 
@@ -45,7 +46,7 @@ public class ShareCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        EventsCenter.getInstance().post(new ShareRecipeEvent(targetIndex));
         recipeToShare = lastShownList.get(targetIndex.getZeroBased());
         shareRecipeOnFacebook(recipeToShare);
 

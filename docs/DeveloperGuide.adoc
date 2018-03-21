@@ -385,6 +385,30 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== NUSmods Integration
+==== Current Implementation
+
+Fastis uses the available `NUSmods API` to retrieve module information from the API server.
+
+On startup, the network component makes a connection to the API server and checks the `lastmodified` field of the `JSON` file on the server. If the `lastmodified` date is more recent that the `JSON` file held in storage, the network component will download and overwrite the existing file on disk.
+
+The `Storage` component then converts the JSON file into a hashMap of modules to be held in the `Model`
+
+When a the schedule of a `Person` is needed, the `Model` component will pass the person's `TimeTableLink` to the `Network` component. The `Network` component will make a `URLConnection` to the short URL in the `TimeTableLink` to retrieve the query of the full URL.
+
+`QueryParser` then takes the query and parses them into modules and lessons, which get passed back to the `Model` component. `ModelManager` then searches for these modules and lessons and returns a list of `Events`
+
+==== Design Considerations
+
+===== Aspect: Storage of Module information
+
+* **Alternative 1 (current choice):** Store a complete dataset of all modules
+** Pros: Information still available offline
+** Cons: Requires more memory space
+* **Alternative 2:** Store nothing, retrieve only module information of single module each time.
+** Pros: No storage and small memory needed
+** Cons: Reliant on good internet connection
+
 == Documentation
 
 We use asciidoc for writing documentation.

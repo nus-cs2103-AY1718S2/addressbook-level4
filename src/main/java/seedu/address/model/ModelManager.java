@@ -101,8 +101,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortPersonListByName() {
-        addressBook.sortByName();
+    public void sortPersonList(String parameter) {
+        addressBook.sort(parameter);
     }
 
     @Override

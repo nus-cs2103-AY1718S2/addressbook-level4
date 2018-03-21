@@ -411,6 +411,33 @@ each implementation and the pros and cons of each implementation:
 ** Cons: Will require a method in Patient to update and verify validity of remark. Violates Single Responsibility Principle and Separation of Concerns as `Patient` now needs to do two * different things.
 // end::remark[]
 
+// tag::morefields[]
+=== Implement more fields for the patient information feature
+==== Current Implementation
+
+The additional detail fields added is managed by the `AddCommand` and `EditCommand`.
+They are included as fields to be filled in when adding a new `Patient` or when editing an existing `Patient`.
+
+Both `AddCommand` and `EditCommand` have been modified to accept new inputs corresponding with the new fields implemented.
+
+Suppose that the user has just launched the application. The current list is shown in Figure 3.3.1.1. below.
+
+image::Figure3-3-1-1.png[width="800"]
+
+The user now decides to edit the blood type of the first person in the list.
+
+`EditCommand` will search for the first person in the list and store it as the person to be edited as shown in Figure 3.3.1.2. below.
+`EditCommand` will then create a new patient with the same attributes as the patient to be edited, except the remarks attribute
+which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 3.3.1.2. below.
+
+image::Figure3-3-1-2.png[width="800"]
+
+`EditCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
+the new list will be as shown in Figure 3.3.1.2. below.
+
+image::Figure3-3-1-3.png[width="650"]
+// end::morefields[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

@@ -35,7 +35,7 @@ public class Mailer {
 
     /**
      * Send an email to the
-     * @param recipients' list
+     * @param recipients
      */
     private static void email(List<String> recipients) {
         Properties props = System.getProperties();

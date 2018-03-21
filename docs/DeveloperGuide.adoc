@@ -893,6 +893,18 @@ be able to see and read the storage file easily, especially when the user is log
 * As a social worker, I want to secure my SLAP and only ensure that it is only accessible to me, hence a login function
 is needed to maintain the C-I-A security framework.
 
+**Clarissa Yong**
+
+`Major feature:` Organisation of Contacts 
+
+* Allows users to filter, sort, mark contacts as favourite, etc.
+* This allows users to view cases by decreasing priority and view a subset of their contacts quiuckly.
+
+`Minor feature:` Detect Contacts that User Frequently Interacts with
+
+* Detect and track contacts that the user frequently interacts with and allow user to access this list of contacts.
+* This allows the user to quickly and conveniently retrieve the contact information of these contacts. 
+
 [appendix]
 
 == User Stories

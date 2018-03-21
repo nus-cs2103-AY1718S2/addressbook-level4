@@ -14,19 +14,22 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Recipe Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is an application for users to add their own recipes, as well as save their favourite online text and video recipes via a URL.
-* Features:
+Are you a professional chef who is too lazy to manually flip through each page of your recipe book to find your favorite recipe? Are you a home cook who is lost and doesn't know what to have to dinner? Or are you just a perfectionist who prefers to have all of his recipes in one place, organized, systematic, well-structured?
+
+Then **ReciRecipé** is the solution for you!
+
+* It is a CLI (Command Line Interface) application, so you can save time using your keyboard instead of your mouse to nagivate.
+* What you can do with **ReciRecipé**:
 ** Keyboard shortcuts to speed up the process of typing and adding a recipe.
 ** Social media compatibility for sharing of recipes.
 ** Ability to add images to recipes.
 ** Cloud storage to access recipes anytime, anywhere.
+** And a lot more!
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 

@@ -41,10 +41,8 @@ public class TimetableEntryTimeParserUtil {
                 Integer.parseInt(input.substring(HOUR_BEGIN_INDEX, HOUR_END_INDEX)) + TIMEZONE_HOUR_OFFSET,
                 Integer.parseInt(input.substring(MINUTE_BEGIN_INDEX, MINUTE_END_INDEX)),
                 Integer.parseInt(input.substring(SECOND_BEGIN_INDEX, SECOND_END_INDEX)));
-        System.out.println("ParsedTime: " + tet.getYear() + " " + tet.getMonth() + " " + tet.getDate() + " " + tet
-                .getHour
-                () + " " +
-                tet.getMinute() + " " + tet.getSeconds());
+        System.out.println("ParsedTime: " + tet.getYear() + " " + tet.getMonth() + " " + tet.getDate() + " "
+                + tet.getHour() + " " + tet.getMinute() + " " + tet.getSeconds());
         return tet;
     }
 }

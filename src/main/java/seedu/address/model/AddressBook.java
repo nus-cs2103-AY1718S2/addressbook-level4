@@ -159,6 +159,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Chooses the sorting method based on the parameter given
+     */
     public void sort(String parameter) {
         if (parameter.equals("name")) {
             persons.sortNames();

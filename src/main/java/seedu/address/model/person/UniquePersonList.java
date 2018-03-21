@@ -104,6 +104,9 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.sort(compareName);
     }
 
+    /**
+     * Sorts {@code internalList} by tag in alphabetical order (case insensitive)
+     */
     public void sortTags() {
         Comparator<Person> compareTags = (person1, person2) -> +person1.getTags().toString()
                 .compareToIgnoreCase(person2.getTags().toString());

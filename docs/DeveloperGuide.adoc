@@ -379,6 +379,36 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+//tag::findcommand
+=== Find Command
+
+==== Current Implementation
+
+The `find` command allows campus recruiters to search for students with exact keywords in `compulsory` fields of the student entry. This command is supported by the `FindCommandParser` class.
+
+The `find` command will be supporting more compulsory fields that will be added in subsequent weeks.
+
+The sequence diagram shown below illustrates how the `Logic` and `Model` component interacts when the `find` command is executed:
+
+image::FindCommandSequenceDiagram.png[width="800"]
+
+Execution of the `find` command comprises the following steps:
+
+1. `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
+
+2. During the `parseCommand` method call, an instance of `FindCommandParser` will be created.
+
+3. `FindCommandParser` calls the `parseFindArgs` method of `FindUtil` and returns a `Predicate<Person>` object.
+
+4. The `FindCommand` object is initialized with this `Predicate<Person>` object.
+
+5. The `FindCommand` object calls the method `updateFilteredPersonList` with this `Predicate<Person>` object.
+
+==== Design Considerations
+
+In the current implementation, creating the `Predicate<Person>` object is done in the `FindUtil` class. As more predicates get added in the future, we may need to consider breaking up the utility methods into separate classes.
+//end::findcommand
+
 //tag::filtercommand
 === Filter Command
 

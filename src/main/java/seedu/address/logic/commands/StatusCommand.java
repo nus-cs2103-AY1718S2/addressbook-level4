@@ -25,17 +25,18 @@ public class StatusCommand extends UndoableCommand {
             + "Existing status will be overwritten by the input value.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "STATUS_INDEX(by the list below)\n"
-            + "1. new\n"
-            + "2. interview first round\n"
-            + "3. interview second round\n"
-            + "4. rejected\n"
-            + "5. on waitlist\n"
-            + "6. position offered\n"
-            + "7. offer accepted\n"
+            + "1. " + Status.STATUS_NEW + "\n"
+            + "2. " + Status.STATUS_INTERVIEW_FIRST_ROUND + "\n"
+            + "3. " + Status.STATUS_INTERVIEW_SECOND_ROUND + "\n"
+            + "4. " + Status.STATUS_REJECTED + "\n"
+            + "5. " + Status.STATUS_WAITLIST + "\n"
+            + "6. " + Status.STATUS_OFFERED + "\n"
+            + "7. " + Status.STATUS_ACCEPTED + "\n"
+            + "8. " + Status.STATUS_WITHDRAWN + "\n"
             + "Example: " + COMMAND_WORD + " 1 2";
 
     public static final String MESSAGE_STATUS_SUCCESS =
-            "Status of person named %1$s has been updated tp '%2$s'";
+            "Status of person named %1$s has been updated to '%2$s'";
 
     private final Index index;
     private final Status updatedStatus;
@@ -73,9 +74,9 @@ public class StatusCommand extends UndoableCommand {
             model.updatePerson(personToUpdateStatus, updatedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("The target person cannot become a duplicate of another person "
-                    + "via updating status");
+                    + "via updating status.");
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target person cannot be missing.");
         }
 
         return new CommandResult(String.format(MESSAGE_STATUS_SUCCESS,

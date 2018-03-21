@@ -7,7 +7,7 @@
         <address isPrivate="false">4th street</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Science</major>
-        <status>offer accepted</status>
+        <status>Accepted</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -20,7 +20,7 @@
         <address isPrivate="false">81th street</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Engineering</major>
-        <status>new</status>
+        <status>New</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -33,7 +33,7 @@
         <address isPrivate="false">wall street</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Information Security</major>
-        <status>interview first round</status>
+        <status>1st round</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -46,7 +46,7 @@
         <address isPrivate="false">10th street</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Science</major>
-        <status>interview second round</status>
+        <status>2nd round</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -59,7 +59,7 @@
         <address isPrivate="false">michegan ave</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Information Systems</major>
-        <status>rejected</status>
+        <status>Rejected</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -72,7 +72,7 @@
         <address isPrivate="false">little tokyo</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Business Analytics</major>
-        <status>on waitlist</status>
+        <status>Waitlist</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -85,7 +85,7 @@
         <address isPrivate="false">4th street</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Science</major>
-        <status>position offered</status>
+        <status>Offered</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -98,7 +98,7 @@
         <address isPrivate="false">little india</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Engineering</major>
-        <status>new</status>
+        <status>Withdrawn</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -111,7 +111,7 @@
         <address isPrivate="false">chicago ave</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Information Security</major>
-        <status>new</status>
+        <status>New</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>

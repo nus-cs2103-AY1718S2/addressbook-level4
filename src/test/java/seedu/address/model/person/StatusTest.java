@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import javafx.scene.paint.Color;
 import seedu.address.testutil.Assert;
 
 public class StatusTest {
@@ -28,33 +27,30 @@ public class StatusTest {
 
         //invalid status
         assertFalse(Status.isValidStatus(0)); //index out of range
-        assertFalse(Status.isValidStatus(8));
+        assertFalse(Status.isValidStatus(Status.STATUS_TYPE_CONUT + 1));
         // valid status
-        assertTrue(Status.isValidStatus(1));
-        assertTrue(Status.isValidStatus(2));
-        assertTrue(Status.isValidStatus(3));
-        assertTrue(Status.isValidStatus(4));
-        assertTrue(Status.isValidStatus(5));
-        assertTrue(Status.isValidStatus(6));
-        assertTrue(Status.isValidStatus(7));
+        assertTrue(Status.isValidStatus(Status.INDEX_STATUS_REJECTED));
+        assertTrue(Status.isValidStatus(Status.INDEX_STATUS_INTERVIEW_SECOND_ROUND));
+        assertTrue(Status.isValidStatus(Status.INDEX_STATUS_OFFERED));
+        assertTrue(Status.isValidStatus(Status.INDEX_STATUS_WITHDRAWN));
     }
 
     @Test
     public void constructor_validStatus_rightColor() {
-        Status s = new Status(1);
-        assertEquals(Color.GREY, s.color);
-        s = new Status(5);
-        assertEquals(Color.BROWN, s.color);
-        s = new Status(7);
-        assertEquals(Color.GREEN, s.color);
+        Status s = new Status(Status.INDEX_STATUS_INTERVIEW_FIRST_ROUND);
+        assertEquals(Status.COLOR_INTERVIEW_FIRST_ROUND, s.color);
+        s = new Status(Status.INDEX_STATUS_WAITLIST);
+        assertEquals(Status.COLOR_WAITLIST, s.color);
+        s = new Status(Status.INDEX_STATUS_ACCEPTED);
+        assertEquals(Status.COLOR_ACCEPTED, s.color);
         s = new Status();
-        assertEquals(Color.GREY, s.color);
+        assertEquals(Status.COLOR_NEW, s.color);
     }
 
     @Test
     public void equals() {
         Status status1 = new Status();
-        Status status2 = new Status("new");
+        Status status2 = new Status(Status.STATUS_NEW);
         assertEquals(status1, status2);
     }
 }

@@ -1193,7 +1193,7 @@ API is a set of subroutine definitions, protocols, and tools for building applic
 
 [[CI]] CI::
 Abbreviation of **Continuous Integration**.
-CI is the practice of merging all developer working copies to a shared mainline several times a day.[1] Grady Booch first named and proposed CI in his 1991 method,[2] although he did not advocate integrating several times a day. Definition taken from link:https://en.wikipedia.org/wiki/Continuous_integration[wiki].
+CI is the practice of merging all developer working copies to a shared mainline several times a day. Definition taken from link:https://en.wikipedia.org/wiki/Continuous_integration[wiki].
 
 [[CLI]] CLI::
 Abbreviation of **Command Line Interface**.

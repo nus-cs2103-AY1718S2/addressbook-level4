@@ -52,7 +52,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        // date.setText(person.getDate().value);
+        date.setText(person.getDate().value);
         labelTag(person);
     }
 

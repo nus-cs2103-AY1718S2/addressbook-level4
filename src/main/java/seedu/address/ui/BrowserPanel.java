@@ -48,7 +48,7 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Show direction from Kent Ridge MRT to the person address
      */
-    private void loadPersonDirection(Person person, GetDistance distance) {
+    private void loadPersonDirection(Person person) {
         String addressValue = person.getAddress().value.trim();
         int stringCutIndex;
         String addressWithoutUnit;
@@ -62,8 +62,7 @@ public class BrowserPanel extends UiPart<Region> {
         }
 
         readPersonName(person);
-        num = distance.getDistance("kent", addressWithoutUnit);
-        System.out.println(num);
+        // num = distance.getDistance("27 Prince Georges Park", addressWithoutUnit);
 
         loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
     }
@@ -104,6 +103,6 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         GetDistance distance = new GetDistance();
-        loadPersonDirection(event.getNewSelection().person, distance);
+        loadPersonDirection(event.getNewSelection().person);
     }
 }

@@ -7,7 +7,6 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 
-
 /**
  * Testing retrieve distance data
  */
@@ -15,6 +14,7 @@ public class GetDistance {
     /**
      * get driving distance from origin to destination
      */
+
     public double getDistance(String origin, String destination) {
         String distanceWithoutUnit = "";
 
@@ -27,27 +27,17 @@ public class GetDistance {
 
             DistanceMatrix matrix =
                     DistanceMatrixApi.getDistanceMatrix(context, origins, destinations).await();
-            String distance = matrix.rows[0].elements[0].distance.toString();
+            String distance = matrix.rows[0].elements[0].duration.toString();
             distanceWithoutUnit = distance.substring(0, distance.length() - 3);
 
         } catch (InterruptedException e) {
-            e.getStackTrace();
+            e.getMessage();
         } catch (ApiException e) {
-            e.getStackTrace();
+            e.getMessage();
         } catch (IOException e) {
-            e.getStackTrace();
+            e.getMessage();
         }
         return Double.parseDouble(distanceWithoutUnit);
     }
 
-    /**
-     * Build Google Map API Geo context with API key
-     */
-    private GeoApiContext buildGeoContext() {
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyA1bGYFWFjIe4GknIrK_2fHZSOaPcGu7Io")
-                .build();
-
-        return context;
-    }
 }

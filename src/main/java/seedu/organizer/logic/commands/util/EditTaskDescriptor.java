@@ -1,11 +1,14 @@
 package seedu.organizer.logic.commands.util;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.organizer.commons.util.CollectionUtil;
+import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
@@ -24,6 +27,7 @@ public class EditTaskDescriptor {
     private Description description;
     private Status status;
     private Set<Tag> tags;
+    private List<Subtask> subtasks;
 
     public EditTaskDescriptor() {
     }
@@ -39,6 +43,7 @@ public class EditTaskDescriptor {
         setDescription(toCopy.description);
         setStatus(toCopy.status);
         setTags(toCopy.tags);
+        setSubtasks(toCopy.subtasks);
     }
 
     /**
@@ -87,6 +92,23 @@ public class EditTaskDescriptor {
 
     public Optional<Status> getStatus() {
         return Optional.ofNullable(status);
+    }
+
+    /**
+     * Sets {@code subtasks} to this object's {@code subtasks}.
+     * A defensive copy of {@code subtasks} is used internally.
+     */
+    public void setSubtasks(List<Subtask> subtasks) {
+        this.subtasks = (subtasks != null) ? new ArrayList<>(subtasks) : null;
+    }
+
+    /**
+     * Returns an unmodifiable subtask set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     * Returns {@code Optional#empty()} if {@code subtasks} is null.
+     */
+    public Optional<List<Subtask>> getSubtasks() {
+        return (subtasks != null) ? Optional.of(Collections.unmodifiableList(subtasks)) : Optional.empty();
     }
 
     /**

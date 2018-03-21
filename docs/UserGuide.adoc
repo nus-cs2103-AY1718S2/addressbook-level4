@@ -66,6 +66,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ** By default, every new task is marked as "Not Done".
 * `TAG`
 ** A task can have any number of tags (including 0).
+* `SUBTASK`
+** A task can have any number of subtasks (including 0).
+** A subtask has these parameters:
+*** `NAME`
+*** `STATUS`
 ====
 
 ====
@@ -120,6 +125,20 @@ Examples:
 Edits the priority level and deadline of the 1st task to be `9` and `2018-12-30` respectively.
 * `edit 2 n/CS2101 Final Assignment t/` +
 Edits the name of the 2nd task to be `CS2101 Final Assignment` and clears all existing tags.
+
+=== Adding a subtask to a task : `adds` or `as`
+
+Add a subtask to an existing task. +
+Format: `edit INDEX [n/NAME]`
+
+****
+* Index usage is same with `edit`. Please refer to `select` for more details.
+****
+
+Example: +
+* `adds 1 n/Submit report` +
+Add a subtask with name `Submit report` to the 1st task.
+
 
 === Locating tasks: `find` or `f`
 
@@ -348,10 +367,6 @@ _{ coming in v2.0 }_
 
 _{ coming in v2.0 }_
 
-=== Adding a subtask to a task `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
 === Deleting a subtask from a task `[coming in v2.0]`
 
 _{ coming in v2.0 }_
@@ -394,6 +409,8 @@ e.g. `add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​` +
 e.g. `edit 1 p/9 d/2018-12-30`
+* *Add Subtask*: `adds INDEX n/NAME` +
+e.g. `adds 1 n/Submit Report`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` +
 e.g. `find CS2103 update 2018-03-17`
 * *Find Name* : `findn KEYWORD [MORE_KEYWORDS]` or `fn KEYWORD [MORE_KEYWORDS]` +

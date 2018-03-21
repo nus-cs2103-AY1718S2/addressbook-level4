@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.organizer.model.Organizer;
+import seedu.organizer.storage.XmlAdaptedSubtask;
 import seedu.organizer.storage.XmlAdaptedTag;
 import seedu.organizer.storage.XmlAdaptedTask;
 import seedu.organizer.storage.XmlSerializableOrganizer;
@@ -43,6 +44,8 @@ public class XmlUtilTest {
     private static final String VALID_DESCRIPTION = "Refactor Address to Description";
     private static final Boolean VALID_STATUS = null;
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final List<XmlAdaptedSubtask> VALID_SUBTASKS = Collections.singletonList(new XmlAdaptedSubtask(
+            "Find some friends to play dota or csgo", false));
     //temporary fix for xml file bug due to PrioriTask's dependence on the current date
     private static final String current_date = "current_date";
 
@@ -86,7 +89,7 @@ public class XmlUtilTest {
                 MISSING_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 null, VALID_PRIORITY, VALID_DEADLINE, current_date,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS);
         assertEquals(expectedTask, actualTask);
     }
 
@@ -96,7 +99,7 @@ public class XmlUtilTest {
                 INVALID_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, current_date,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS);
         assertEquals(expectedTask, actualTask);
     }
 
@@ -106,7 +109,7 @@ public class XmlUtilTest {
                 VALID_TASK_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, current_date,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS);
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS);
         assertEquals(expectedTask, actualTask);
     }
 

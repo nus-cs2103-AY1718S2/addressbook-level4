@@ -62,7 +62,7 @@ public class ToggleCommandTest {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
         ToggleCommand toggleCommand = prepareCommand(outOfBoundsIndex);
 
-        assertCommandFailure(toggleCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(toggleCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
@@ -98,7 +98,8 @@ public class ToggleCommandTest {
                 task.getDateAdded(),
                 task.getDescription(),
                 task.getStatus().getInverse(),
-                task.getTags()
+                task.getTags(),
+                task.getSubtasks()
         );
     }
 

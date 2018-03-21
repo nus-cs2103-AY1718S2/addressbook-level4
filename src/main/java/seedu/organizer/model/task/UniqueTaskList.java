@@ -156,18 +156,18 @@ public class UniqueTaskList implements Iterable<Task> {
 
         if (dateAdded.isEqual(LocalDate.now())) {
             newTask = new Task(task.getName(), task.getPriority(), task.getDeadline(), task.getDateAdded(),
-                    task.getDescription(), task.getStatus(), task.getTags());
+                    task.getDescription(), task.getStatus(), task.getTags(), task.getSubtasks());
         } else if (currentDate.isBefore(deadline)) {
             int priorityToIncrease = (int) (priorityDifferenceFromMax
                     * ((double) (dayDifferenceAddedToDeadline - dayDifferenceCurrentToDeadline)
                     / (double) dayDifferenceAddedToDeadline));
             newPriority = new Priority(String.valueOf(Integer.parseInt(curPriority.value) + priorityToIncrease));
             newTask = new Task(task.getName(), newPriority, task.getDeadline(), task.getDateAdded(),
-                    task.getDescription(), task.getStatus(), task.getTags());
+                    task.getDescription(), task.getStatus(), task.getTags(), task.getSubtasks());
         } else {
             newPriority = new Priority(Priority.HIGHEST_SETTABLE_PRIORITY_LEVEL);
             newTask = new Task(task.getName(), newPriority, task.getDeadline(), task.getDateAdded(),
-                    task.getDescription(), task.getStatus(), task.getTags());
+                    task.getDescription(), task.getStatus(), task.getTags(), task.getSubtasks());
         }
 
         requireNonNull(newTask);

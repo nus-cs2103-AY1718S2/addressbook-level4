@@ -42,4 +42,8 @@ public class TaskUtil {
         );
         return sb.toString();
     }
+
+    public static String getSubtaskDetails(Task task) {
+        return PREFIX_NAME + task.getName().fullName;
+    }
 }

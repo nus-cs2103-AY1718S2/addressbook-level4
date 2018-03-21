@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.organizer.logic.commands.AddCommand;
+import seedu.organizer.logic.commands.AddSubtaskCommand;
 import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.EditCommand;
@@ -33,6 +34,7 @@ import seedu.organizer.logic.commands.ToggleCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.logic.parser.exceptions.ParseException;
+import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.task.DeadlineContainsKeywordsPredicate;
 import seedu.organizer.model.task.DescriptionContainsKeywordsPredicate;
 import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
@@ -86,6 +88,20 @@ public class OrganizerParserTest {
                 + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getPersonDetails(task));
         assertEquals(new EditCommand(INDEX_FIRST_TASK, descriptor), command);
         assertEquals(new EditCommand(INDEX_FIRST_TASK, descriptor), commandAlias);
+    }
+
+    @Test
+    public void parseCommand_addSubtask() throws Exception {
+        Task task = new TaskBuilder().build();
+        Subtask subtask = new Subtask(task.getName());
+        AddSubtaskCommand command = (AddSubtaskCommand) parser.parseCommand(
+                AddSubtaskCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getSubtaskDetails(task));
+        AddSubtaskCommand commandAlias = (AddSubtaskCommand) parser.parseCommand(
+                AddSubtaskCommand.COMMAND_ALIAS + " "
+                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getSubtaskDetails(task));
+        assertEquals(new AddSubtaskCommand(INDEX_FIRST_TASK, subtask), command);
+        assertEquals(new AddSubtaskCommand(INDEX_FIRST_TASK, subtask), commandAlias);
     }
 
     @Test

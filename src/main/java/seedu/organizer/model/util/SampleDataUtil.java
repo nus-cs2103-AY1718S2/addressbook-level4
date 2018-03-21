@@ -1,15 +1,19 @@
 package seedu.organizer.model.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.ReadOnlyOrganizer;
+import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 
@@ -64,4 +68,15 @@ public class SampleDataUtil {
         return tags;
     }
 
+    /**
+     * Returns a subtask set containing the list of strings given.
+     */
+    public static List<Subtask> getSubtaskList(String... strings) {
+        List<Subtask> subtasks = new ArrayList<>();
+        for (String s : strings) {
+            subtasks.add(new Subtask(new Name(s), new Status(false)));
+        }
+
+        return subtasks;
+    }
 }

@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.organizer.logic.commands.AddCommand;
+import seedu.organizer.logic.commands.AddSubtaskCommand;
 import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.Command;
 import seedu.organizer.logic.commands.DeleteCommand;
@@ -81,6 +82,12 @@ public class OrganizerParser {
 
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
+
+        case AddSubtaskCommand.COMMAND_WORD:
+            return new AddSubtaskCommandParser().parse(arguments);
+
+        case AddSubtaskCommand.COMMAND_ALIAS:
+            return new AddSubtaskCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();

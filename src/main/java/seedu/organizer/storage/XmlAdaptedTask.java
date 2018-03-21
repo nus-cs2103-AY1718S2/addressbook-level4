@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.organizer.commons.exceptions.IllegalValueException;
+import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.DateAdded;
 import seedu.organizer.model.task.Deadline;
@@ -41,6 +42,9 @@ public class XmlAdaptedTask {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement
+    private List<XmlAdaptedSubtask> subtasks = new ArrayList<>();
+
     /**
      * Constructs an XmlAdaptedTask.
      * This is the no-arg constructor that is required by JAXB.
@@ -52,8 +56,8 @@ public class XmlAdaptedTask {
      * Constructs an {@code XmlAdaptedTask} with the given task details.
      */
     public XmlAdaptedTask(String name, String priority, String deadline, String dateadded,
-                          String description, Boolean status, List<XmlAdaptedTag>
-            tagged) {
+                          String description, Boolean status, List<XmlAdaptedTag> tagged,
+                          List<XmlAdaptedSubtask> subtasks) {
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
@@ -62,6 +66,9 @@ public class XmlAdaptedTask {
         this.status = status;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+        if (subtasks != null) {
+            this.subtasks = new ArrayList<>(subtasks);
         }
     }
 
@@ -81,6 +88,10 @@ public class XmlAdaptedTask {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        subtasks = new ArrayList<>();
+        for (Subtask subtask: source.getSubtasks()) {
+            subtasks.add(new XmlAdaptedSubtask(subtask));
+        }
     }
 
     /**
@@ -92,6 +103,11 @@ public class XmlAdaptedTask {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+
+        final List<Subtask> personSubtasks = new ArrayList<>();
+        for (XmlAdaptedSubtask subtask : subtasks) {
+            personSubtasks.add(subtask.toModelType());
         }
 
         if (this.name == null) {
@@ -141,7 +157,8 @@ public class XmlAdaptedTask {
         final Status status = new Status(this.status);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Task(name, priority, deadline, dateadded, description, status, tags);
+        final List<Subtask> subtasks = new ArrayList<>(personSubtasks);
+        return new Task(name, priority, deadline, dateadded, description, status, tags, subtasks);
     }
 
     @Override

@@ -6,4 +6,8 @@
     <dateadded>current_date</dateadded>
     <description>Refactor Address to Description</description>
     <tagged>friends</tagged>
+    <subtasks>
+        <subtaskName>Find some friends to play dota or csgo</subtaskName>
+        <subtaskStatus>false</subtaskStatus>
+    </subtasks>
 </task>

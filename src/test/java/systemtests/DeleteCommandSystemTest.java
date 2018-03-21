@@ -1,7 +1,7 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.organizer.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 import static seedu.organizer.testutil.TestUtil.getLastIndex;
@@ -71,7 +71,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         showTasksWithName(KEYWORD_MATCHING_REVISION);
         int invalidIndex = getModel().getOrganizer().getTaskList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
         /* --------------------- Performing delete operation while a task card is selected ------------------------ */
 
@@ -100,7 +100,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getOrganizer().getTaskList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);

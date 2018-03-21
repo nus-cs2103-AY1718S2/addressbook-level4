@@ -21,7 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
-    public static final String TOTAL_TASKS_STATUS = "%d task(s) total";
+    public static final String TOTAL_TASKS_STATUS = "%d subtask(s) total";
 
     /**
      * Used to generate time stamps.

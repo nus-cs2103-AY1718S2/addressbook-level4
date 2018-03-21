@@ -147,7 +147,7 @@ public class Organizer implements ReadOnlyOrganizer {
         taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Task(
                 task.getName(), task.getPriority(), task.getDeadline(), task.getDateAdded(),
-                task.getDescription(), task.getStatus(), correctTagReferences);
+                task.getDescription(), task.getStatus(), correctTagReferences, task.getSubtasks());
     }
 
     /**

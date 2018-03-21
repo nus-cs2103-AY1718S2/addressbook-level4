@@ -158,6 +158,20 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Filtering contacts by tag: `filter`
+
+Filters persons whose contact contains the given tag. +
+Format: `filter TAG`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends` 
+****
+
+Examples:
+
+* `filter friends` +
+Returns any person that has the tag `friends`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +

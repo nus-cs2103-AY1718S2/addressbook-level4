@@ -268,8 +268,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tagToBeReplaced)) {
             tagList.add(tagToBePlaced);
-            Person newPerson = new Person(person.getName(), person.getNric(),
-                    tagList);
+            Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects());
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {

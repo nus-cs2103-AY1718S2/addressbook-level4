@@ -53,16 +53,15 @@ public class Calendar extends UiPart<Region> {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode apn = new AnchorPaneNode();
-                apn.setPrefSize(200,200);
+                apn.setPrefSize(200, 200);
                 apn.getStyleClass().add("date");
-                calendar.add(apn,j,i);
+                calendar.add(apn, j, i);
                 allCalendarDays.add(apn);
             }
         }
         // Days of the week
-        Text[] dayNames = new Text[]{ new Text("Mon"), new Text("Tue"),
-                new Text("Wed"), new Text("Thu"), new Text("Fri"),
-                new Text("Sat"), new Text("Sun") };
+        Text[] dayNames = new Text[]{ new Text("Mon"), new Text("Tue"), new Text("Wed"), 
+            new Text("Thu"), new Text("Fri"), new Text("Sat"), new Text("Sun") };
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         dayLabels.setGridLinesVisible(true);
@@ -103,7 +102,7 @@ public class Calendar extends UiPart<Region> {
         // Get the month and year to display
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         //Roll the day back to MONDAY in order to fill up the whole calendar
-        while (!calendarDate.getDayOfWeek().toString().equals("MONDAY") ) {
+        while (!calendarDate.getDayOfWeek().toString().equals("MONDAY")) {
             calendarDate = calendarDate.minusDays(1);
         }
         // Fill the calendar
@@ -203,6 +202,9 @@ public class Calendar extends UiPart<Region> {
         Pane calendarPane;
     }*/
 
+    /**
+     * Node to display each cell/day of the calendar
+     */
     private class AnchorPaneNode extends AnchorPane {
 
         private LocalDate date;

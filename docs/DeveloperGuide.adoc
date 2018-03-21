@@ -404,6 +404,12 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::calendarview[]
+
+{To fill in JASON}
+
+// end::calendarview[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -850,18 +856,20 @@ up in the morning to take her to the lawyer’s office to file for a divorce fro
 **Jason Manson-Hing**
 
 `Major Feature:` Calendar Integration
-
 * Functional calendar within the application with add/view/delete/edit functionality.
 * This is useful for social workers to keep track of all of the things that they have to do now and in the future.
 This calendar will be seperate from their personal calendar so as to keep business and personal information seperate.
 Additionally, this calendar will integrat with the daily scheduler function to help optimize their time in a day.
 
 `Minor Feature:` Daily Scheduler (Events)
-
 * Collates the user's list of calendar events for the day into an easily consumable view.
 * Allows the user to plan the most optimal route of travel for their beneficiary visits for the day and creates the
 optimal schedule for them.
 
+`Minor Feature:` View Error Log in App
+* Allows the user to view the application's error from within the application itself.
+* This is useful as it allows an advanced user to send the application developer a log of the events that occurred before an exception was encountered. 
+* This feature is unobtrustive as the information contained within the log is essentially meaningless to everyone except for the developer. Additionally, the command is relatively hard to invoke accidentally, and thus has a low chance of being discovered. Additionally, this command only shows read-only information and thus cannot cause any harm to the system. 
 
 **Chan Jin Jia**
 

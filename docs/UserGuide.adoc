@@ -79,10 +79,6 @@ Format: `login u/USERNAME p/PASSWORD`
 Logs the user out of the application.
 Format: `logout`
 
-=== Viewing calendar : `calendar`
-
-Format: `calendar`
-
 === Switching between feature interfaces : `switch`
 
 Switches to the user interface feature identified by the user. +
@@ -222,6 +218,38 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Opening a calendar : `calendar`
+
+Opens a calendar in a webview. Will eventually have the option to be opened in the in application scene switcher.
+Format: `calendar`
+
+[NOTE]
+====
+The user can also open the calendar by pressing the `F8` function key, or by pressing `View > Open Calendar`
+====
+
+=== Adding and event to the calendar : `calendar-add`
+
+Todo
+
+=== Deleting an event from the calendar : `calendar-delete`
+
+Todo
+
+=== Editing an event in the calendar : `calendar-edit`
+
+Todo
+
+=== Opening the Error Log : `errorlog`
+
+Opens the error log in a new window.
+Format: `errorlog`
+
+[NOTE]
+====
+The user can also open the error log by pressing `View > Show Error Log`
+====
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
@@ -324,7 +352,8 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
-* *Calendar* : `calendar`
+* *Calendar* : `calendar` `[Since v1.1]`
+* *Error* : `errorlog` `[Since v1.2]`
 * *Switch* : `switch FEATURE` +
 e.g.`switch scheduler`
 * *Select* : `select INDEX` +

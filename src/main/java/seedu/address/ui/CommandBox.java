@@ -26,6 +26,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private MainWindow mainWindow;
 
     @FXML
     private TextField commandTextField;
@@ -36,6 +37,14 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+    }
+
+    /**
+     * Initialise MainWindow
+     * @param mainWindow
+     */
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
     }
 
     /**
@@ -102,12 +111,20 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
+            if (logic.hasLoggedIn()) {
+                mainWindow.showAfterLogin();
+            }
             initHistory();
             historySnapshot.next();
             // process result of the command
             commandTextField.setText("");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            if (commandResult != null) {
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } else {
+                logger.info("Result: " + "User is not logged in yet.");
+                raise(new NewResultAvailableEvent("You have not logged in yet. Please log in."));
+            }
 
         } catch (CommandException | ParseException e) {
             initHistory();

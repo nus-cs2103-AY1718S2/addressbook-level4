@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Social Worker Session Logger and Planner - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -782,13 +782,77 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+Our SLAP aims to target social workers who have to visit different less privileged families and/or high-risk
+stay-at-home patients as their daily routine. Social workers regularly make visits to these beneficiaries to assist them
+ in overcoming obstacles in their lives.
+
+Our SLAP will allow them to organise their schedule for the day as they may have to visit multiple locations, take
+copious notes and help in many different ways. For example, a social worker may have to pick a victim of domestic abuse
+up in the morning to take her to the lawyer’s office to file for a divorce from her abusive husband and after taking her
+ home, the social worker might have to visit another family to check on a disabled patient.
+
+
 * has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
+* handles sensitive contacts
+* plans and manages their daily visits on desktop
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* manage contacts faster than a typical mouse/GUI driven app
+* easily add and manage calendar events without a full-blown application experience
+* organize key meetings and keep track of key contacts in one place
+* able to provide routes from one location to another
+* uses minimal system resources
+* more secure than a traditional address book
+
+*Feature contribution:*
+
+**Jason Manson-Hing**
+
+`Major Feature:` Calendar Integration
+
+* Functional calendar within the application with add/view/delete/edit functionality.
+* This is useful for social workers to keep track of all of the things that they have to do now and in the future.
+This calendar will be seperate from their personal calendar so as to keep business and personal information seperate.
+Additionally, this calendar will integrat with the daily scheduler function to help optimize their time in a day.
+
+`Minor Feature:` Daily Scheduler (Events)
+
+* Collates the user's list of calendar events for the day into an easily consumable view.
+* Allows the user to plan the most optimal route of travel for their beneficiary visits for the day and creates the
+optimal schedule for them.
+
+
+**Chan Jin Jia**
+
+`Major Feature:` Map Location and Main UI
+
+* As our application aims to better the day-to-day operations of a social worker, integrating maps into our application
+greatly aids their visitation process. This integration aims to make the locating of beneficiaries much more convenient.
+* In addition, a cleaner Main UI will be required to better display our Session Logger and Planner (SLAP) for
+Social Worker application as it will contain several major features (beneficiary details, calendar, and daily
+scheduler).
+
+`Minor Feature:` Daily Scheduler (Navigation)
+
+* Rather than just seeing where the beneficiary is located, the daily scheduler feature of our app will display the
+route between addresses of the beneficiaries on the daily agenda to facilitate ease of movement.
+
+**Kaiser Tan**
+
+`Major feature:` Export function with Secure Encryption
+
+* The storage file of our application will always be encrypted when logged out. User can also export and transfer the
+ storage file securely.
+* The social worker will have many sensitive data which needs to be kept confidential, hence a external user should not
+be able to see and read the storage file easily, especially when the user is logged out.
+
+`Minor feature:` User Login
+
+* User can login and logout safely, preventing external users from accessing the SLAP without authorisation
+* As a social worker, I want to secure my SLAP and only ensure that it is only accessible to me, hence a login function
+is needed to maintain the C-I-A security framework.
 
 [appendix]
 == User Stories
@@ -809,9 +873,75 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
 
-_{More to be added}_
+|`* * *` |user |add calendar events |keep track of my interactions with my contacts
+
+|`* * *` |user |view calendar events |quickly check my schedule
+
+|`* * *` |user |edit/delete calendar events |keep my schedule up to date
+
+|`*` |advanced user |view error logs in app |help the developer resolve the issues that I encountered
+
+|`* *` |novice user |get a command correction suggestion |easily fix my mistakes
+
+|`*` |user |have command autocomplete |enter commands faster
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |edit the details of an existing contact |update a contact's information to the most current information
+
+|`* *` |user with many persons in the address book |filter contacts by tags |quickly view a subset of my contacts list
+
+|`* *` |user |sort contacts by tags |view contacts listed in decreasing level of urgency (in terms of their case)/priority
+
+|`*` |user |get the number of contacts that I have added |see how many contacts I have
+
+|`*` |advanced user |change the location of my address book |more easily back it up
+
+|`* *` |user |back up my address book |restore it to a previous state in case of emergency
+
+|`*` |user |export one or several contacts |easily share them with other address book users
+
+|`* *` |user |add the address of my contacts |keep track of where they live
+
+|`* *` |user |view the address of my contacts on a map |visually see where they live
+
+|`* *` |user |edit/delete the address of my contacts |keep contacts up to date
+
+|`*` |advanced user |export my entire address book as a CSV or JSON |for use in other applications
+
+|`* * *` |user |favourite contacts |keep track of particularly important contacts
+
+|`* *` |user |view frequently interacted-with contacts |quickly access frequently-contacted people
+
+|`* *` |user |view recently interacted-with contacts |quickly access recently interacted-with people
+
+|`* * *` |user |switch between views of features |easily navigate the address book features
+
+|`* * *` |social worker |view a daily schedule of planned visits |know where to visit and order of events for the day
+
+|`* *` |social worker |view pre-planned route between visit addresses |have a general direction between addresses planned for the day
+
+|`*` |social worker |export daily schedule as pdf file |view the document outside of the programme and/or be able to print out a physical copy
+
+|`*` |social worker |view fully-detailed directions between addresses |know what modes of transport to take and navigate the way between addresses
+
+|`*` |social worker |send reminder email from address book |be efficient with reminding beneficies of scheduled visits
+
+|`* * *` |secure user |login |gain access to my address book
+
+|`* * *` |secure user |logout |prevent others from having authorised access to my address book
+
+|`* * *` |user |change my password |update and secure access to my address book whenever I want
+
+|`* *` |user |reset my password |still recover my password when I forget what it is
+
+|`* *` |secure user |encrypt and export my address book |so that I can securely transport my address from one computer to another
+
+|`*` |secure user |lock my address book |so that it is convenient for me to secure and access my address book while it is still running
+
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -844,7 +974,203 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Add Calendar Event
+
+*MSS*
+
+1.  User attempts to add calendar event.
+2.  AddressBook updates calendar events and updates the main window to show the events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User formats the command incorrectly.
++
+[none]
+** 1a1. AddressBook notifies user of incorrect syntax.
++
+Use case ends.
+
+[discrete]
+=== Use case: View Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook retrieves calendar events and updates the main window to show the events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook retrieves calendar events and updates the main window to show the events.
+3.  User selects calendar event to edit.
+4.  AddressBook returns calendar event info as editable string.
+5.  User edits information and confirms action.
+6.  AddressBook saves changes and refreshes the main window.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook retrieves calendar events and updates the main window to show the events.
+3.  User selects calendar event to delete.
+4.  AddressBook asks for user confirmation.
+5.  User confirms action.
+6.  AddressBook deletes calendar event and refreshes the main window.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+* 3a. User selects invalid index.
++
+[none]
+** 3a1. AddressBook notifies user that they have selected an incorrect index.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Show Error Log
+
+*MSS*
+
+1.  User presses ‘View’ menu option and requests to see error log.
+2.  AddressBook retrieves error log and displays it in a new window.
+
+*Extensions*
+
+[none]
+* 1a. There is no error log.
++
+[none]
+** 1a1. AddressBook notifies user that there is no error log.
++
+Use case ends.
+
+[discrete]
+=== Use case: Switch Views of Features
+
+*MSS*
+
+1.  User requests to change view (between calendar, details, daily schedule)
+2.  AddressBook updates main window to show specified feature
++
+Use case ends.
+
+[discrete]
+=== Use case: View Daily Schedule
+
+*MSS*
+
+1.  User requests to view daily schedule for specified date.
+2.  AddressBook retrieves calendar events for the specified date.
+3.  AddressBook retrieves addresses of specified contacts to be visited on specified day.
+4.  AddressBook requests for Google navigation between specified addresses.
+5.  AddressBook updates main window to show the listed events with suggested navigation.
+6.  User receives automatically generated daily schedule.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Specified date is invalid
++
+[none]
+** 1a1. AddressBook notifies user of invalid date
++
+Use case ends.
+
+* 2a. Specified date has no calendar events.
++
+[none]
+** 2a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+[discrete]
+=== Use case: User Login
+
+*MSS*
+1.  User enters username
+2.  AddressBook requests for password
+3.  User enters password
+4.  AddressBook allows access to UI
+
+*Extensions*
+
+[none]
+* 1a. AddressBook detects invalid username
++
+[none]
+** 1a1. AddressBook displays “invalid username” and request for username followed by Step 1
++
+Use case resumes at step 1.
+
+*3a. AddressBook detects invalid password
++
+[none]
+** 3a1. AddressBook displays “invalid password” and request for username followed by Step 1
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: User Logout
+
+*MSS*
+1.  User attempts to logout
+2.  AddressBook prompts for confirmation to logout
+3.  User confirms
+4.  AddressBook logs the user out
+
+[discrete]
+=== Use case: Export AddressBook
+
+*MSS*
+1.  User attempts to export AddressBook
+2.  AddressBook prompts for directory to export the file
+3.  User enters directory
+4.  Address prompts for confirmation
+5.  User confirms
+6.  AddressBook exports storage file into specified directory
+
+
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +1178,22 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should come with automated unit tests and open source code.
+.  Should preserve user data when the program is restarted or updated.
+.  Should still retain basic functionality even when not connected to the internet.
+.  Should support both 32-bit and 64-bit operating systems.
+.  Should not be graphically intensive for maximum compatibility.
+.  Should be backward compatible with previous versions of AddressBook.
+.  Should have all features and commands documented.
+.  Should be easily usable by an infrequent computer user.
+.  Should gracefully handle incorrect user input and return friendly error messages to the user.
+.  Should be easy to setup and install for an infrequent computer user.
+.  Should not unnecessarily collect data about a user.
+.  Should sanitize sensitive user data before logging.
+.  Should not allow non-users to access storage file
+.  Should not allow non-users to read storage file
+.  Should not exit the program without encrypting the storage file
+.  Should not hang
 
 [appendix]
 == Glossary
@@ -863,6 +1203,15 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[infrequent-computer-user]] Infrequent computer user::
+A user who does not use a computer regularly (only a couple times a week)
+
+[[events]] Events::
+A pre-planned visit by the social worker to check on beneficiary
+
+[[daily-schedule]] Daily schedule::
+A list of events of a specified date with navigation details
 
 [appendix]
 == Product Survey

@@ -809,7 +809,6 @@ is to give the users a warm and comfortable feeling when they are doing their bu
 - Major enhancement: Add a customers' past orders count feature +
 The restaurant can identify the frequent and loyal customers to give discounts.
 
-
 * Zhang Zequn
 - Minor enhancement: Add colours to different tags +
 Same tags will be assigned the same colours which makes the differentiation of tags clearer.

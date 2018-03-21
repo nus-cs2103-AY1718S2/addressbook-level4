@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.LinkedList;
@@ -27,7 +28,7 @@ public class TagReplaceCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + "1A " + PREFIX_TAG + "2A\n"
             + "Example: " + COMMAND_ALIAS + " " + PREFIX_TAG + "1A " + PREFIX_TAG + "2A";
 
-    public static final String MESSAGE_REPLACE_TAG_SUCCESS = "Replaced Tag: %1$s";
+    public static final String MESSAGE_REPLACE_TAG_SUCCESS = "Replaced Tag: From %1$s to %2$s";
 
     private Tag tagToReplace;
     private List<Tag> tagSet = new LinkedList<>();
@@ -46,7 +47,7 @@ public class TagReplaceCommand extends UndoableCommand {
         } catch (TagNotFoundException error) {
             throw new AssertionError("The target tag cannot be missing");
         }
-        return new CommandResult(String.format(MESSAGE_REPLACE_TAG_SUCCESS, tagArray[0]));
+        return new CommandResult(String.format(MESSAGE_REPLACE_TAG_SUCCESS, tagArray[0], tagArray[1]));
     }
 
     @Override
@@ -54,7 +55,9 @@ public class TagReplaceCommand extends UndoableCommand {
         ReadOnlyAddressBook addressBook = model.getAddressBook();
         List<Tag> lastShownList = addressBook.getTagList();
         tagSet.toArray(tagArray);
-        if (!lastShownList.contains(tagArray[0])) {
+        if (tagSet.isEmpty() || tagSet.size() == 1) {
+            throw new CommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagReplaceCommand.MESSAGE_USAGE));
+        }else if (!lastShownList.contains(tagArray[0])) {
             throw new CommandException(Messages.MESSAGE_INVALID_TAG_ENTERED);
         }
 

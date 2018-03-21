@@ -356,6 +356,51 @@ image::UndoRedoActivityDiagram.png[width="650"]
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+
+// end::undoredo[]
+
+// tag::upload[]
+=== Upload feature
+==== Planned Implementation
+
+The Upload command will allow users to upload their preferred image to replace the default profile photo.
+
+Upload can be undoable. The following diagram shows the inheritance diagram for upload command:
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+UploadCommand is implemented this way:
+[source,java]
+----
+public class UploadCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.uploadPhoto(toUpload);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (FileNotFoundException e) {
+            throw new CommandException(MESSAGE_IMAGE_NOT_FOUND);
+        } catch (IOException e) {
+            throw new CommandException("Caught IOException!");
+        }
+    }
+}
+----
+
+[NOTE]
+If the path is invalid or the image cannot be found, the upload will not be successful. User will be asked to write the correct path to image again. Users are allowed to reload the image if they want to update the profile photo.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `UploadCommand`
+
+* **Alternative 1 (current choice):** user will provide the path of image
+** Pros: The path can be used directly to find the image and display it in the app.
+** Cons: Image may be a local file. When other users open the app, they cannot see the update.
+* **Alternative 2:** user will upload image into our github folder manually
+** Pros: Everyone can see the update of profile photo.
+** Cons: Quite trobulesome to upload photo manually first.
 // end::undoredo[]
 
 === Dynamic Search Implementation

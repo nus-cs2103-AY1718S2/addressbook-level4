@@ -714,7 +714,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the recipe book.
+. Modify the link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of recipes in the recipe book.
 +
 **Before**
 +
@@ -731,7 +731,7 @@ image::getting-started-ui-status-after.png[width="500"]
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of recipes when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter#handleRecipeBookChangedEvent(RecipeBookChangedEvent)`] to update the number of recipes whenever there are new changes to the Recipe Book.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
+** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of recipes status, just like what we did for save location and sync status.
 ** For system tests, modify link:{repoURL}/src/test/java/systemtests/RecipeBookSystemTest.java[`RecipeBookSystemTest`] to also verify the new total number of recipes status bar.
 ** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
 ****
@@ -1190,6 +1190,10 @@ This name is derived from "**Reci**te" and "**Recipé**", an alternate spelling 
 Abbreviation of **Application Programming Interface**.
 +
 API is a set of subroutine definitions, protocols, and tools for building application software. In general terms, it is a set of clearly defined methods of communication between various software components. Definition taken from link:https://en.wikipedia.org/wiki/Application_programming_interface[wiki].
+
+[[CI]] CI::
+Abbreviation of **Continuous Integration**.
+CI is the practice of merging all developer working copies to a shared mainline several times a day.[1] Grady Booch first named and proposed CI in his 1991 method,[2] although he did not advocate integrating several times a day. Definition taken from link:https://en.wikipedia.org/wiki/Continuous_integration[wiki].
 
 [[CLI]] CLI::
 Abbreviation of **Command Line Interface**.

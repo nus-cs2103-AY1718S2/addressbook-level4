@@ -815,7 +815,8 @@ Same tags will be assigned the same colours which makes the differentiation of t
 - Minor enhancement: Add Halal/Non-halal and Vegetarian/Non-vegetarian features +
 Halal/Non-halal and Vegetarian/Non-vegetarian features now are available for Add command. Since these two features
 are optional, if no input is given, the default value is Non-halal and Non-vegetarian.
-- Major enhancement: Add a new feature
+- Major enhancement: Add a menu (storage for all the dishes customers can order) +
+The restaurant can modify the menu and customers can only order what are on the menu.
 
 [appendix]
 == User Stories

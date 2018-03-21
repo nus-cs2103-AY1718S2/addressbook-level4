@@ -58,9 +58,6 @@ public interface Model {
             throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException;
 
     Schedule getSchedule();
-  
-    /**
-     *
-     */
+    
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 }

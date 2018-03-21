@@ -236,7 +236,7 @@ public class ParserUtil {
         requireNonNull(day);
         return day.isPresent() ? Optional.of(parseDay(day.get())) : Optional.empty();
     }
-  
+
     /**
      * Parses a {@code String date} into a {@code Date}.
      * Leading and trailing whitespaces will be trimmed.
@@ -260,4 +260,5 @@ public class ParserUtil {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
+
 }

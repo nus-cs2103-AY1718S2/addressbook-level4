@@ -28,7 +28,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `progresschecker.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your ProgressChecker.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -63,16 +63,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help OR h`
 
-=== Adding a person: `add OR a`
+=== Adding a teammate: `add OR a`
 
 
-Adds a person to the ProgressChecker +
+Adds a teammate to the ProgressChecker +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
         `OR` +
        `a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A teammate can have any number of tags (including 0)
 
 Examples:
 
@@ -81,40 +81,40 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com m/Computer Engineering p/1234567 y/3 t/criminal`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com m/Information Security y/2 p/1234567 t/criminal`
 
-=== Listing all persons : `list OR l`
+=== Listing all teammates : `list OR l`
 
-Shows a list of all persons in the ProgressChecker. +
+Shows a list of all teammates in the ProgressChecker. +
 Format: `list OR l`
 
-=== Sorting all persons : `sort`
+=== Sorting all teammates : `sort`
 
-Sorts all persons in the ProgressChecker with their names in alphabetical order. +
+Sorts all teammates in the ProgressChecker with their names in alphabetical order. +
 Format: `sort`
 
-=== Editing a person : `edit OR e`
+=== Editing a teammate : `edit OR e`
 
-Edits an existing person in the ProgressChecker. +
+Edits an existing teammate in the ProgressChecker. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the teammate at the specified `INDEX`. The index refers to the index number shown in the last teammate listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the teammate will be removed i.e adding of tags is not cumulative.
+* You can remove all the teammate's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st teammate to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd teammate to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find OR search`
+=== Locating teammates by name: `find OR search`
 
-Finds persons whose names contain any of the given keywords. +
+Finds teammates whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD {MORE_KEYWORDS]`
 
 ****
@@ -123,7 +123,7 @@ Format: `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD {MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Teammates matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
@@ -131,15 +131,15 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `search Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any teammate having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete or d`
+=== Deleting a teammate : `delete or d`
 
-Deletes the specified person from the ProgressChecker. +
+Deletes the specified teammate from the ProgressChecker. +
 Format: `delete INDEX OR d INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the teammate at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -148,18 +148,18 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the ProgressChecker.
+Deletes the 2nd teammate in the ProgressChecker.
 * `find Betsy` +
 `d 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st teammate in the results of the `find` command.
 
-=== Selecting a person : `select OR s`
+=== Selecting a teammate : `select OR s`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the teammate identified by the index number used in the last teammate listing. +
 Format: `select INDEX OR s INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the teammate and loads the Google search page the teammate at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -168,10 +168,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the ProgressChecker.
+Selects the 2nd teammate in the ProgressChecker.
 * `find Betsy` +
 `s 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st teammate in the results of the `find` command.
 
 
 === Mark a learning outcome as completed : `complete INDEX` `[coming in v2.0]`
@@ -184,7 +184,18 @@ Format: `complete INDEX`
 Answer an exercise based off the given question number.
 Format: `answer INDEX ANSWER`
 
-=== Change view to a specific week : `view`
+****
+* Answer an exercise at the specified `INDEX`.
+* The index refers to the question number.
+* The index must be of format `section number`.`question number`, 2.1.1, 3.2.5, 6.1.7
+****
+
+[NOTE]
+====
+`ANSWER` should be in the form of listed choices if the exercise is a multiple choice question. For example, in a question with 4 four choices, one can choose choice 1 and 3 as the answer by using `answer 2.1.1 a c`.
+====
+
+=== Change view to a specific week : `view OR v`
 
 Change the browser view to display contents identified by the week number.
 Format: `view INDEX`
@@ -269,6 +280,11 @@ Format: `refresh OR r`
 Clears all entries from the ProgressChecker. +
 Format: `clear OR c`
 
+=== Toggle theme : `theme` `[coming in v2.0]`
+
+Toggle between a light and dark theme.
+Format: `theme OR t`
+
 === Exiting the program : `exit OR e`
 
 Exits the program. +
@@ -289,6 +305,7 @@ There is no need to save manually.
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
 `a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com m/Computer Science y/2 t/friend t/colleague`
+* *Answer*: `answer INDEX ANSWER`
 * *Clear* : `clear OR c`
 * *Delete* : `delete INDEX OR d INDEX` +
 e.g. `delete 3`
@@ -301,7 +318,8 @@ e.g. `search James Jake` +
 * *Help* : `help OR h`
 * *Select* : `select INDEX OR s INDEX` +
 e.g.`select 2`
-* *View* : `view INDEX` +
+* *Theme*: `theme OR t`
+* *View* : `view INDEX OR v INDEX` +
 e.g. `view 5`
 * *History* : `history`
 * *Undo* : `undo OR u`

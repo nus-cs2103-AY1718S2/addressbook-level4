@@ -403,6 +403,7 @@ If the path is invalid or the image cannot be found, the upload will not be succ
 ** Cons: Quite trobulesome to upload photo manually first.
 // end::undoredo[]
 
+// tag::search[]
 === Dynamic Search Implementation
 ==== Current Implementation
 
@@ -460,13 +461,59 @@ The entered key is not instantly updated in the command box thats why after the 
 **Alternative 2:** Show the search results WITH highlighting the keywords in the searched name. +
 **Pros**: It will make it easier for the user to view the user to identify the searched keyword in the displayed results. +
 **Cons**: Adding highlights to the results might make the displayed results a bit too cluttered specially with the presence of tags which are colored as well.
+// end::search[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::answerexercise[]
+=== [Planned] Answering an exercise
+==== Planned Implementation
 
-_{Explain here how the data encryption feature will be implemented}_
+The exercises for all weeks would be stored as a local file upon which it would be loaded by the `StorageManager` on start up.
 
-// end::dataencryption[]
+The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `answer 2.1.1 a d`.
+
+.Component interactions for `answer 2.1.1 a d` command (part 1)
+image::SDforAnswerExercise.png[width="800"]
+
+[NOTE]
+Note how the `Model` simply raises a `ExercisesChangedEvent` when the exercises data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+
+The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the exercises display of the UI being updated to reflect the newly given answers.
+
+.Component interactions for `answer 2.1.1 a d` command (part 2)
+image::SDforExercisesEventHandling.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AnswerCommand`
+
+* Add a new command that extends `Command`
+
+===== Aspect: Format of answer command
+
+* **Alternative 1 (current choice):** Use same command formatting `answer INDEX ANSWER` regardless of the type of question (e.g. text based question, multiple choice question)
+** Pros: Less parser files to manage altogether
+** Cons: Can be unintuitive for users when it comes to answer different question with the same formatting
+
+* **Alternative 2:** Use different command based on the type of question (e.g. `answert INDEX ANSWER` for answering text based question and `answerm INDEX CHOICE` for answering multiple choice questions)
+** Pros: Can be clearer on what is being answered for the user
+** Cons: More commands and formatting to learn and remember
+
+===== Aspect: How answering executes
+
+* Trigger an event change in `Logic` to signal `UI` for a change in text display in `ExercisesPanel`
+* Process checking of correctness in `Model`
+* Save data to local file in `Storage`
+
+===== Aspect: Storing of exercise questions
+
+* **Alternative 1 (current choice):** Load from a local file
+** Pros: Implementation becomes a lot more modular.
+** Cons: Have to implement extra text file parser and involves `Storage` that might be seen as extra load to learn for new programmers
+
+* **Alternative 2:** Include in `UI` file together with where the text display is being changed at
+** Pros: Easier to see where everything is
+** Cons: Formatting the exercises becomes harder and the implementation is less modular
+// end::answerexercise[]
 
 === Logging
 

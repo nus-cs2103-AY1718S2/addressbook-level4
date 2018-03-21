@@ -399,16 +399,27 @@ by the user. If the patient already exist in the system then the patient will be
 
 Suppose that the user has just launched the application and login as medical staffs. The empty queue is shown in figure below.
 
-image::emptyVisitQueue.png[width="600"]
+image::emptyVisitQueue.png[width="300"]
 
 The user now decides to add a patient into the queues.
 
 `AddPatientQueueCommand` will search for the patient in the patient list. If the patient is found in the list, `AddPatientQueueCommand` will finally call the for the utility method addPatientToQueue under `Model`, to add the patient into the visit queue,
 the new list will be as shown in figure below.
 
-image::patientInQueue.png[width="600"]
+image::patientInQueue.png[width="300"]
 
-// end::addqremoveq
+The remove patient from visiting queue mechanism functions like that of the `Delete` but without any parameters. It removes the first patient of the queue. The `RemovePatientQueueCommand` then calls for the utility method removePatientFromQueue under `Model`, to update the visiting queue and trigger a ImdbChangedEvent to UI to update PatientListPanel.
+
+Suppose that the queue contains patients as shown in figure below.
+
+image::patientsInQueue.png[width="300"]
+
+The user now decides to remove the first patient from the queues.
+
+`RemovePatientQueueCommand` will finally call the for the utility method removePatientFromQueue under `Model`, to remove the patient from the visit queue,
+the new list will be as shown in figure below.
+
+image::patientInQueueRemoveState.png[width="300"]
 
 ==== Design Considerations
 
@@ -432,7 +443,7 @@ each implementation and the pros and cons of each implementation:
 * **Alternative 2:** Create a String that is stored in `Patient`
 ** Pros: Will use less memory (no need to create new remark object).
 ** Cons: Will require a method in Patient to update and verify validity of remark. Violates Single Responsibility Principle and Separation of Concerns as `Patient` now needs to do two * different things.
-// end::remark[]
+// end::addqremoveq
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

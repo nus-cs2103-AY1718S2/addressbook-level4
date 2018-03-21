@@ -411,7 +411,7 @@ The `find` command shows the searched contact currently. However, the user does 
 
 The following diagram shows the UML diagram for `find` command :
 
-image::FindCommandUMLDiagram.png[width="600"]
+image::FindCommandUMLDiagram.png[width="115"]
 
 To implement the dynamic search, we used the following method - as soon as the user enters any character in the command box, the text is retrieved from
 the command box and checked if it is the `find` command. If it is the `find` command, dynamic search is started. After the `find` command is detected in the

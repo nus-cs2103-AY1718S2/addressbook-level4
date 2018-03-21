@@ -387,6 +387,30 @@ the new list will be as shown in Figure 3.2.1.2. below.
 
 image::Figure 3.2.1.3.PNG[width="650"]
 
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: Implementation of `RemarkCommand`
+
+* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise updatePerson to edit the remarks
+** Pros: Will be easy to implement due to existing utility methods.
+** Cons: May have performance issues in terms of memory usage.
+* **Alternative 2:** Create a public method in `Remark` for updating the remark which will be called by `Patient`
+** Pros: Will use less memory (no need to create new patient object).
+** Cons: Will require public access to `Remark` stored in `Patient` (possible security concerns).
+
+===== Aspect: Data structure to support the remark command
+
+* **Alternative 1 (current choice):** Create a `Remark` that is stored in `Patient`
+** Pros: Will be easy to understand for new developers as it follows existing structures.
+** Cons: May have performance issues in terms of memory usage.
+* **Alternative 2:** Create a String that is stored in `Patient`
+** Pros: Will use less memory (no need to create new remark object).
+** Cons: Will require a method in Patient to update and verify validity of remark. Violates Single Responsibility Principle and Separation of Concerns as `Patient` now needs to do two * different things.
+// end::remark[]
+
 // tag::addqremoveq[]
 === Patient Visting Queue (waiting list for registration)
 ==== Current Implementation

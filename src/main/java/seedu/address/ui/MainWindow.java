@@ -260,7 +260,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewErrors() {
-        ErrorsWindow errorsWindow = new ErrorsWindow();
+        ErrorsWindow errorsWindow = new ErrorsWindow(logic);
         errorsWindow.show();
     }
 
@@ -269,7 +269,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewCalendar() throws IOException {
-        CalendarWindow calendarWindow = new CalendarWindow();
+        CalendarWindow calendarWindow = new CalendarWindow(logic);
         calendarWindow.show();
     }
     //@@author

@@ -15,7 +15,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
-
+import seedu.address.logic.Logic;
 
 /**
  * The CalendarWindow Window. Provides the basic window generation,
@@ -35,24 +35,30 @@ public class CalendarWindow extends UiPart<Stage> {
      *
      * @param root Stage to use as the root of the CalendarWindow.
      */
-    public CalendarWindow(Stage root) throws IOException {
+    public CalendarWindow(Stage root, Logic logic) throws IOException {
         super(FXML, root);
-        WebEngine engine = browser.getEngine();
-        String googleCalendarLink = "https://calendar.google.com/calendar/r";
-        URI uri = URI.create(googleCalendarLink);
-        Map<String, List<String>> headers = new LinkedHashMap<>();
-        headers.put("Set-Cookie", Arrays.asList("name=value"));
-        java.net.CookieHandler.getDefault().put(uri, headers);
-        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-        engine.setUserAgent(engine.getUserAgent().replace("Macintosh; ", ""));
-        engine.load(googleCalendarLink);
+        if (logic.hasLoggedIn()) {
+            WebEngine engine = browser.getEngine();
+            String googleCalendarLink = "https://calendar.google.com/calendar/r";
+            URI uri = URI.create(googleCalendarLink);
+            Map<String, List<String>> headers = new LinkedHashMap<>();
+            headers.put("Set-Cookie", Arrays.asList("name=value"));
+            java.net.CookieHandler.getDefault().put(uri, headers);
+            System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+            engine.setUserAgent(engine.getUserAgent().replace("Macintosh; ", ""));
+            engine.load(googleCalendarLink);
+        } else {
+            browser.getEngine().loadContent("<html>You must be logged in to view the calendar log.</html>",
+                    "text/Html");
+        }
+
     }
 
     /**
      * Creates a new CalendarWindow.
      */
-    public CalendarWindow() throws IOException {
-        this(new Stage());
+    public CalendarWindow(Logic logic) throws IOException {
+        this(new Stage(), logic);
     }
 
     /**

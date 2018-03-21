@@ -463,6 +463,26 @@ When a the schedule of a `Person` is needed, the `Model` component will pass the
 ** Pros: No storage and small memory needed
 ** Cons: Reliant on good internet connection
 
+//tag::ListGroupMembers[]
+=== ListGroupMembers Feature
+==== Current Implementation
+Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
+tag.
+
+Then it stores the list in `UniqueGroupList` , which is under `Model` component.
+
+When user types in command line `ListGroupMembers` , Fastis will use the keyword provided to search for the group tag
+and list out all members under the same tag.
+
+==== Design Considerations
+* **Alternative 1 (current choice):** Add a new abstract method `ListGroupMembersCommand(`
+** Pros: Edit `ListGroupMembersCommand()` easily to suit our needs
+** Cons: Hard for new developers to understand the template pattern.
+* **Alternative 2:** Just override `execute()`
+** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Cons: Classes that inherit from `ListGroupMembersCommand()` must remember to call `super.execute()`
+
+
 == Documentation
 
 We use asciidoc for writing documentation.

@@ -89,8 +89,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_filter() throws Exception {
         List<String> keywords = Arrays.asList("2018-03-23", "2018-03-24");
-        FilterCommand command = (FilterCommand) parser.parseCommand(FilterCommand.COMMAND_WORD + " " +
-                keywords.stream().collect(Collectors.joining(" ")));
+        FilterCommand command = (FilterCommand) parser.parseCommand(FilterCommand.COMMAND_WORD + " "
+                + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FilterCommand(new DatePredicate(keywords)), command);
     }
     @Test

@@ -358,12 +358,289 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::orders[]
+=== Orders
+
+Orders refer to the sales orders that will be added by the salesperson to ContactSails.
+These orders can be added to any particular person of the address book.
+After being added, orders can be edited and deleted.
+
+==== Current Implementation
+
+An `Order` is represented in the application as shown in _Figure 11_ given below.
+
+// UML Diagram for Order
+.UML Diagram for Order
+image::OrderUMLDiagram.png[width="500" align="center"]
+
+An `Order` is implemented in the following manner:
+[source,java]
+----
+public class Order {
+
+    private final OrderInformation orderInformation;
+    private final OrderStatus orderStatus;
+    private final Price price;
+    private final Quantity quantity;
+    private final DeliveryDate deliveryDate;
+
+    // ... Order attribute getters and setters ...
+
+}
+----
+
+A brief description of each of the attributes of an `Order` is given below: +
+
+* OrderInformation: Represents information about the order item. +
+* OrderStatus: Denotes whether the sales order is ongoing or has been fulfilled by the salesperson. +
+* Price: Represents the price of a single item of the sales order. +
+* Quantity: Represents the number of items in the sales order. +
+* DeliveryDate: Represents the date by which the sales order must be fulfilled. +
+
+As orders are added to a particular person, there exists an association between a `Person` object and an `Order` object.
+This relationship is shown in _Figure 12_ given below.
+
+// UML Diagram showing association between a Person and an Order
+.UML Diagram showing association between a Person and an Order
+image::PersonOrderAssociationUMLDiagram.png[width="500" align="center"]
+
+The association is implemented in the following manner:
+[source,java]
+----
+public class Person {
+
+    // ... other Person attributes ...
+
+    private final UniquePersonOrderList personOrders;
+}
+----
+
+----
+public class PersonOrder {
+
+    Person person;
+    Order order;
+
+    // ... PersonOrder attribute getters and setters ...
+}
+----
+
+Operations on orders can be done using the `AddOrderCommand`, `EditOrderCommand`, and `DeleteOrderCommand` commands.
+These commands are described in more detail below. +
+
+===== Adding Orders
+
+The `AddOrderCommand` adds an order to the person specified by their `index` in the last shown listing of persons.
+The code snippet below shows the constructor of this class:
+[source,java]
+----
+public AddOrderCommand extends UndoableCommand {
+    public AddOrderCommand(Index index, Order orderToAdd) {
+        requireNonNull(index);
+        requireNonNull(orderToAdd);
+
+        this.index = index;
+        this.orderToAdd = orderToAdd;
+    }
+}
+----
+
+The following snippet shows how the `executeUndoableCommand()` method updates the `model` of the address book
+application by adding `orderToAdd` to the list of orders of the `person` specified. Note that `orderToAdd` will
+not be added if the `person` has not been found or a duplicate order has already been assigned to this `person`.
+
+[source,java]
+----
+public class AddOrderCommand extends UndoableCommand {
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addOrderToPerson(person, orderToAdd);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicateOrderException e) {
+            throw new CommandException(MESSAGE_ORDER_NOT_ADDED);
+        }
+
+        // ... display updated address book ...
+    }
+}
+----
+
+The order added will be displayed in the address book.
+
+===== Editing Orders
+
+The `EditOrderCommand` edits the `targetOrder` with the provided information which is specified by its `index`
+in the last shown listing of orders. The order will be updated with the information stored in `editOrderDescriptor`
+object.
+
+The code snippet below shows the constructor of the class:
+
+[source,java]
+----
+public class EditOrderCommand extends UndoableCommand {
+    public EditCommand(Index index, EditOrderDescriptor editOrderDescriptor) {
+        requireNonNull(index);
+        requireNonNull(editOrderDescriptor);
+
+        this.index = index;
+        this.editOrderDescriptor = new EditOrderDescriptor(editOrderDescriptor);
+    }
+}
+----
+
+A new class called `EditOrderDescriptor` is defined to create the `editOrderDescriptor` object that stores the new values
+of the fields that need to be edited. Each non-empty field value will replace the corresponding field value of the `order`.
+
+The constructors of this class are shown below:
+[source,java]
+----
+public static class EditOrderDescriptor {
+    public EditOrderDescriptor() {}
+
+    /**
+     * Copy constructor.
+     */
+    public EditOrderDescriptor(EditOrderDescriptor toCopy) {
+        setOrderInformation(toCopy.orderInformation);
+        setOrderStatus(toCopy.orderStatus);
+        setPrice(toCopy.price);
+        setQuantity(toCopy.quantity);
+        setDeliveryDate(toCopy.deliveryDate);
+    }
+}
+----
+
+The `EditOrderDescriptor` uses Optionals to return `Optional.empty()` if any of the field values are null.
+If `Optional.empty()` is returned for any field, that particular field does not need to be edited.
+
+The code snippet below shows the methods in `EditOrderDescriptor` that implement this functionality for the
+`OrderInformation` field of the `order` to be edited:
+
+[source,java]
+----
+public static class EditOrderDescriptor {
+    public void setOrderInformation(OrderInformation orderInformation) {
+        this.orderInformation = orderInformation;
+    }
+
+    public Optional<OrderInformation> getOrderInformation() {
+        return Optional.ofNullable(name);
+    }
+}
+----
+
+The code snippet below shows the `createEditedOrder()` method that constructs the edited order:
+
+[source,java]
+----
+public class EditOrderCommand extends UndoableCommand {
+    private static Order createEditedOrder(Person orderToEdit, EditOrderDescriptor editOrderDescriptor) {
+        assert orderToEdit != null;
+
+        OrderInformation updatedOrderInformation = editOrderDescriptor.getOrderInformation().orElse(orderToEdit.getOrderInformation());
+
+        // ... OrderStatus, Price, and Quantity ...
+
+        DeliveryDate updatedDeliveryDate = editOrderDescriptor.getDeliveryDate().orElse(orderToEdit.getDeliveryDate());
+
+        return new Order(updatedOrderInformation, updatedOrderStatus, updatedPrice, updatedQuantity, updatedDeliveryDate);
+    }
+}
+----
+
+Finally, the `executeUndoableCommand()` method calls the `createEditedOrder()` for getting the edited order and update
+`model` of the application.
+
+[source,java]
+----
+public class EditOrderCommand extends UndoableCommand {
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.updateOrder(orderToEdit, editedOrder);
+        } catch (DuplicateOrderException doe) {
+            throw new CommandException(MESSAGE_DUPLICATE_ORDER);
+        } catch (OrderNotFoundException onfe) {
+            throw new AssertionError("The target order cannot be missing");
+        }
+
+        // ... display updated address book ...
+    }
+}
+----
+
+The new order returned is now stored in the address book in the place of the old order.
+
+===== Deleting Orders
+
+The `DeleteOrderCommand` deletes the order specified by its `index` in the last shown listing of orders.
+
+The code snippet below shows the `executeUndoableMethod()` of the `DeleteOrderCommand` class:
+
+[source,java]
+----
+public class DeleteOrderCommand extends UndoableCommand {
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(orderToDelete);
+        try {
+            model.deleteOrder(orderToDelete);
+        } catch (OrderNotFoundException onfe) {
+            throw new AssertionError("The target order cannot be missing");
+        }
+
+        // ... display updated address book ...
+    }
+}
+----
+
+The above method deletes `orderToDelete` from the `model` of the address book and the resulting list of orders is displayed.
+
+===== Displaying Orders In GUI
+
+A single `Order` is displayed using an `OrderListCard` (refer to Figure 13 below). The list of all orders in the address book is then displayed in a list
+using the `OrderListPanel`.
+
+.OrderListCard FXML Render
+image::OrderListCardFXMLRender.png[width="150" align="center"]
+
+==== Design Considerations
+
+===== Aspect: Data structures to support order operations
+
+* **Alternative 1 (current choice):** Using the `PersonOrder` association class.
+** Pros: Duplicate orders (with the same information except the person associated with it) will just be stored as a
+single order in memory. If multiple persons have the same order, there will be multiple references to one `Order` object.
+** Cons: Harder to implement as updating or deleting orders for one person must not affect orders of another person having
+the same order.
+* **Alternative 2:** Store a `UniqueOrderList` of orders in each person.
+** Pros: Easier to implement.
+** Cons: Higher memory usage might affect the performance of the application.
+// end::orders[]
+
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+==== Current Implementation
 
+The address book will decrypt and encrypt the XML data file every time there is an update that needs to be made to the data
+being stored.
+
+The secret key for encryption/decryption is generated using the `javax.crypto` library.
+
+The actual encryption/decryption is done using the `org.apache.xml.security` library, specifically the `XMLCipher` class.
+
+==== Design Considerations
 // end::dataencryption[]
+
+===== Aspect: Time of encryption of XML data file
+
+* **Alternative 1 (current choice):** Encrypt/decrypt the whole file each time there is an update to what information needs to stored.
+** Pros: A new secret key can be used for each encryption/decryption, which would make it more secure against tampering or outsider access.
+** Cons: Encryption of data file for every minor change can reduce the performance of the application.
+* **Alternative 2:** Encrypt/decrypt the file only after a set time interval.
+** Pros: Performance will be improved.
+** Cons: Approach might be less secure. Implementation can also be harder.
 
 === Logging
 

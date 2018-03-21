@@ -32,6 +32,10 @@ public class ShareCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+    private void shareRecipeOnFacebook(Recipe recipe) {
+
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -41,9 +45,9 @@ public class ShareCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
         }
 
-        // EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         recipeToShare = lastShownList.get(targetIndex.getZeroBased());
-        System.out.println(recipeToShare.getIngredient());
+        shareRecipeOnFacebook(recipeToShare);
 
         return new CommandResult(String.format(MESSAGE_SELECT_RECIPE_SUCCESS, targetIndex.getOneBased()));
 

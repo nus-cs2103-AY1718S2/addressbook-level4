@@ -9,8 +9,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Subject {
 
-    public static final String[] SUBJECT_NAME = new String[] {"English", "Mathematics",
-            "Additional Mathematics", "Mother Tongue", "Physics", "Chemistry", "Biology", "Humanities"};
+    public static final String[] SUBJECT_NAME = new String[] {"English", "Mathematics", "Additional Mathematics",
+                                                              "Mother Tongue", "Physics", "Chemistry", "Biology",
+                                                              "Humanities"};
     public static final String MESSAGE_SUBJECT_NAME_CONSTRAINTS = "Subject names should be alphabetic and should be "
             + "one of the following: " + String.join(",", SUBJECT_NAME) + ".";
     public static final String[] SUBJECT_GRADE = new String[] {"A1", "A2", "B3", "B4", "C5", "C6", "D7", "E8", "F9"};

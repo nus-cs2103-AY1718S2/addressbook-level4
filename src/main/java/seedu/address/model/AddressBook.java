@@ -269,7 +269,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (tagList.remove(tagToBeReplaced)) {
             tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(),
-                    tagList);
+                    tagList, person.getSubjects());
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {

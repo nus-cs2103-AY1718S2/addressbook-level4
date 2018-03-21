@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.lesson.Day;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
@@ -30,12 +31,13 @@ public class AddLessonCommand extends UndoableCommand {
             + PREFIX_START_TIME + "START_TIME "
             + PREFIX_END_TIME + "END_TIME \n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_DAY + " Monday "
+            + PREFIX_DAY + "mon "
             + PREFIX_START_TIME + "10:00 "
             + PREFIX_END_TIME + "10:30 ";
 
     public static final String MESSAGE_SUCCESS = "New lesson added for %1$s";
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the schedule";
+    public static final String MESSAGE_INVALID_TIME_SLOT = "This lesson clashes with another lesson in the schedule";
 
     private final Index index;
     private final Day day;
@@ -66,6 +68,8 @@ public class AddLessonCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.addLesson(studentToAddLesson, day, startTime, endTime);
+        } catch (InvalidLessonTimeSlotException iltse) {
+            throw new CommandException(MESSAGE_INVALID_TIME_SLOT);
         } catch (DuplicateLessonException dle) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
         } catch (StudentNotFoundException pnfe) {

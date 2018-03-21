@@ -81,4 +81,11 @@ public class Lesson {
         return builder.toString();
     }
 
+    public boolean clashesWith(Lesson other){
+        return (this.getStartTime().compareTo(other.getStartTime()) >= 0 &&
+                    this.getStartTime().compareTo(other.getEndTime()) <= 0)
+                        || (this.getEndTime().compareTo(other.getStartTime()) >= 0 &&
+                            this.getEndTime().compareTo(other.getEndTime()) <= 0);
+    }
+
 }

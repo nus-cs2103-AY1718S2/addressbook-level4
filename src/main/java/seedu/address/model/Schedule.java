@@ -7,9 +7,10 @@ import java.util.Objects;
 import javafx.collections.ObservableList;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.LessonList;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 
 /**
- * Wraps all data at the address-book level
+ * Wraps all data at the schedule level
  * Duplicates are not allowed (by .equals comparison)
  */
 public class Schedule implements ReadOnlySchedule {
@@ -18,11 +19,20 @@ public class Schedule implements ReadOnlySchedule {
     {
         lessons = new LessonList();
     }
-    public void addLesson(Lesson l) {
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any student
-        // in the student list.
+    public void addLesson(Lesson l) throws InvalidLessonTimeSlotException {
+        if(!isValidSlot(l)) {
+            throw new InvalidLessonTimeSlotException();
+        }
         lessons.add(l);
+    }
+
+    private boolean isValidSlot(Lesson l){
+        for(Lesson lesson : lessons){
+            if(l.clashesWith(lesson)){
+                return false;
+            }
+        }
+        return true;
     }
 
     //// util methods

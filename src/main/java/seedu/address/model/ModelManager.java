@@ -16,6 +16,7 @@ import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -95,7 +96,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
-            throws DuplicateLessonException, StudentNotFoundException {
+            throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
         requireAllNonNull(studentToAddLesson, day, startTime, endTime);
 
         Lesson newLesson = new Lesson(studentToAddLesson, day, startTime, endTime);

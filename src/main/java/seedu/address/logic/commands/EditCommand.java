@@ -192,9 +192,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setNric(Nric nric) { this.nric = nric; }
+        public void setNric(Nric nric) {
+            this.nric = nric;
+        }
 
-        public Optional<Nric> getNric() { return Optional.ofNullable(nric); }
+        public Optional<Nric> getNric() {
+            return Optional.ofNullable(nric);
+        }
 
         public void setPhone(Phone phone) {
             this.phone = phone;
@@ -216,15 +220,25 @@ public class EditCommand extends UndoableCommand {
             this.address = address;
         }
 
-        public Optional<Address> getAddress() { return Optional.ofNullable(address); }
+        public Optional<Address> getAddress() {
+            return Optional.ofNullable(address);
+        }
 
-        public void setDob(DateOfBirth dob) { this.dob = dob; }
+        public void setDob(DateOfBirth dob) {
+            this.dob = dob;
+        }
 
-        public Optional<DateOfBirth> getDob() { return Optional.ofNullable(dob); }
+        public Optional<DateOfBirth> getDob() {
+            return Optional.ofNullable(dob);
+        }
 
-        public void setBloodType(BloodType bloodType) { this.bloodType = bloodType; }
+        public void setBloodType(BloodType bloodType) {
+            this.bloodType = bloodType;
+        }
 
-        public Optional<BloodType> getBloodType() { return Optional.ofNullable(bloodType); }
+        public Optional<BloodType> getBloodType() {
+            return Optional.ofNullable(bloodType);
+        }
 
 
         /**

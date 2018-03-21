@@ -34,7 +34,9 @@ public class DateOfBirth {
     /**
      * Returns true if a given string is a valid patient DOB.
      */
-    public static boolean isValidDob(String test) { return test.matches(DOB_VALIDATION_REGEX); }
+    public static boolean isValidDob(String test) {
+        return test.matches(DOB_VALIDATION_REGEX);
+    }
 
 
     @Override

@@ -34,7 +34,9 @@ public class BloodType {
     /**
      * Returns true if a given string is a valid patient blood type.
      */
-    public static boolean isValidBloodType(String test) { return test.matches(BLOODTYPE_VALIDATION_REGEX); }
+    public static boolean isValidBloodType(String test) {
+        return test.matches(BLOODTYPE_VALIDATION_REGEX);
+    }
 
 
     @Override

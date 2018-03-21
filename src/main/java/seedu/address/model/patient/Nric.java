@@ -34,7 +34,9 @@ public class Nric {
     /**
      * Returns true if a given string is a valid patient NRIC.
      */
-    public static boolean isValidNric(String test) { return test.matches(NRIC_VALIDATION_REGEX); }
+    public static boolean isValidNric(String test) {
+        return test.matches(NRIC_VALIDATION_REGEX);
+    }
 
 
     @Override

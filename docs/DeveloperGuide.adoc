@@ -385,6 +385,21 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Storage
+
+Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
+
+* **Alternative 1:** Use 1 list to store objects of both classes
+** Pros: There is no need to create 2 separate lists to store the 2 different class objects.
+** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
+
+* **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
+** Pros: When we want to perform an operation on all the objects stored in a list, each object can be treated equally as they are from the same class.
+** Cons: More effort is required to create 2 separate lists.
+
+While both alternatives have advantages and disadvantages, we feel that the second alternative's advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of objects, whereby each list contains objects of the same class, especially as we make the 2 classes more specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in the long run.
+
+
 == Documentation
 
 We use asciidoc for writing documentation.

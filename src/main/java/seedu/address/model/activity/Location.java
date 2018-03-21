@@ -26,14 +26,14 @@ public class Location {
      */
     public Location(String location) {
         requireNonNull(location);
-        checkArgument(isValidName(location), MESSAGE_LOCATION_CONSTRAINTS);
+        checkArgument(isValidLocation(location), MESSAGE_LOCATION_CONSTRAINTS);
         this.value = location;
     }
 
     /**
      * Returns true if a given string is a valid activity name.
      */
-    public static boolean isValidName(String test) {
+    public static boolean isValidLocation(String test) {
         return test.matches(LOCATION_VALIDATION_REGEX);
     }
 

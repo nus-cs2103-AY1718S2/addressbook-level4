@@ -18,7 +18,7 @@ import seedu.address.model.ReadOnlyDeskBoard;
 public class XmlSerializableDeskBoard {
 
     @XmlElement
-    private List<XmlAdaptedActivity> persons;
+    private List<XmlAdaptedActivity> activities;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -27,7 +27,7 @@ public class XmlSerializableDeskBoard {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableDeskBoard() {
-        persons = new ArrayList<>();
+        activities = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
@@ -36,7 +36,7 @@ public class XmlSerializableDeskBoard {
      */
     public XmlSerializableDeskBoard(ReadOnlyDeskBoard src) {
         this();
-        persons.addAll(src.getActivityList().stream().map(XmlAdaptedActivity::new).collect(Collectors.toList()));
+        activities.addAll(src.getActivityList().stream().map(XmlAdaptedActivity::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -51,8 +51,8 @@ public class XmlSerializableDeskBoard {
         for (XmlAdaptedTag t : tags) {
             deskBoard.addTag(t.toModelType());
         }
-        for (XmlAdaptedActivity p : persons) {
-            deskBoard.addActivity(p.toModelType());
+        for (XmlAdaptedActivity a : activities) {
+            deskBoard.addActivity(a.toModelType());
         }
         return deskBoard;
     }
@@ -68,6 +68,6 @@ public class XmlSerializableDeskBoard {
         }
 
         XmlSerializableDeskBoard otherAb = (XmlSerializableDeskBoard) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return activities.equals(otherAb.activities) && tags.equals(otherAb.tags);
     }
 }

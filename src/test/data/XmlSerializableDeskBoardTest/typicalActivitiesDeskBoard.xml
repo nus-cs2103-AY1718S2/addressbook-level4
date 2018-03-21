@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<deskboard>
+<!-- DeskBoard save file which contains the same Activity values as in
+{@code TypicalActivities#getTypicalDeskBoard()}-->
+<addressbook>
     <activities>
         <name>CS2101Assignment</name>
         <dateTime>04/03/2018 23:59</dateTime>
@@ -19,31 +21,37 @@
     </activities>
     <activities>
         <name>CCA</name>
-        <startDateTime>01/04/2018 20:00</startDateTime>
+        <dateTime>01/04/2018 20:00</dateTime>
         <endDateTime>01/04/2018 21:00</endDateTime>
         <location>Campus</location>
         <remark>nil</remark>
     </activities>
     <activities>
         <name>CIP</name>
-        <startDateTime>02/04/2018 08:00</startDateTime>
+        <dateTime>02/04/2018 08:00</dateTime>
         <endDateTime>02/04/2018 12:00</endDateTime>
         <location>michegan ave</location>
+        <remark></remark>
         <tagged>CIP</tagged>
     </activities>
     <activities>
         <name>CS2101Exam</name>
-        <startDateTime>28/04/2018 09:00</startDateTime>
+        <dateTime>28/04/2018 09:00</dateTime>
         <endDateTime>28/04/2018 11:00</endDateTime>
         <location>MPSH</location>
+        <remark></remark>
         <tagged>CS2101</tagged>
     </activities>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
     <activities>
         <name>InterFacultyGame</name>
-        <startDateTime>04/01/2018 20:00</startDateTime>
+        <dateTime>04/01/2018 20:00</dateTime>
         <endDateTime>04/01/2018 22:00</endDateTime>
         <location>MPSH 1</location>
+        <remark></remark>
     </activities>
-</deskboard>
+    <tags>CS2101</tags>
+    <tags>CS2102</tags>
+    <tags>MA2108</tags>
+    <tags>CS2010</tags>
+    <tags>CIP</tags>
+</addressbook>

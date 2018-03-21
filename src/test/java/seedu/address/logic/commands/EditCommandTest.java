@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_CS2010_QUIZ;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MA2108_HOMEWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_CS2010_QUIZ;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CS2010_QUIZ;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MA2108;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -65,11 +65,12 @@ public class EditCommandTest {
         Activity lastActivity = model.getFilteredActivityList().get(indexLastPerson.getZeroBased());
 
         TaskBuilder personInList = new TaskBuilder(lastActivity);
-        Activity editedActivity = personInList.withName(VALID_NAME_BOB).withDateTime(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+        Activity editedActivity = personInList.withName(VALID_NAME_CS2010_QUIZ)
+                .withDateTime(VALID_DATE_TIME_CS2010_QUIZ)
+                .withTags(VALID_TAG_MA2108).build();
 
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
+                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withTags(VALID_TAG_MA2108).build();
         EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedActivity);
@@ -103,9 +104,9 @@ public class EditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         Activity activityInFilteredList = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        Activity editedActivity = new TaskBuilder(activityInFilteredList).withName(VALID_NAME_BOB).build();
+        Activity editedActivity = new TaskBuilder(activityInFilteredList).withName(VALID_NAME_CS2010_QUIZ).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY,
-                new EditActivityDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedActivity);
 
@@ -148,7 +149,8 @@ public class EditCommandTest {
      */
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+                .withName(VALID_NAME_CS2010_QUIZ).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
@@ -166,7 +168,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getDeskBoard().getActivityList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
-                new EditActivityDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
@@ -206,7 +208,8 @@ public class EditCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+                .withName(VALID_NAME_CS2010_QUIZ).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> editCommand not pushed into undoRedoStack
@@ -254,10 +257,10 @@ public class EditCommandTest {
      * Test
      */
     public void equals() throws Exception {
-        final EditCommand standardCommand = prepareCommand(INDEX_FIRST_ACTIVITY, DESC_AMY);
+        final EditCommand standardCommand = prepareCommand(INDEX_FIRST_ACTIVITY, DESC_MA2108_HOMEWORK);
 
         // same values -> returns true
-        EditCommand.EditActivityDescriptor copyDescriptor = new EditActivityDescriptor(DESC_AMY);
+        EditCommand.EditActivityDescriptor copyDescriptor = new EditActivityDescriptor(DESC_MA2108_HOMEWORK);
         EditCommand commandWithSameValues = prepareCommand(INDEX_FIRST_ACTIVITY, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -275,10 +278,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_ACTIVITY, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_ACTIVITY, DESC_MA2108_HOMEWORK)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_ACTIVITY, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_ACTIVITY, DESC_CS2010_QUIZ)));
     }
 
     /**

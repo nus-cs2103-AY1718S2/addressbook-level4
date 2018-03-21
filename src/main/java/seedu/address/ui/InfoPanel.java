@@ -165,7 +165,8 @@ public class InfoPanel extends UiPart<Region> {
         infoMainAddress.setText(person.getAddress().value);
         infoMainPhone.setText(person.getPhone().value);
         infoMainPosition.setText("-");
-        infoMainStatus.setText("-");
+        infoMainStatus.setText(person.getStatus().value);
+        infoMainStatus.setTextFill(person.getStatus().color);
         infoMainComments.setText("-");
 
         // Process Interview info

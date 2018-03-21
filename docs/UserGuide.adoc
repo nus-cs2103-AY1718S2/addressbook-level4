@@ -257,10 +257,19 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+=== Predict Purchasing Power
+
+- User is able to type "Predict" get potential customer's expected spending based on the existing data
+- After new data has been entered, users are able to re-predict and retrain the model
+
+
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+
 
 == Command Summary
 

@@ -140,7 +140,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
                 + TAG_DESC_HUSBAND + EMAIL_DESC_BOB
                 + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB + EXPECTEDSPENDING_DESC_BOB
-                + AGE_DESC_AMY;
+                + AGE_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person, missing tags -> added */

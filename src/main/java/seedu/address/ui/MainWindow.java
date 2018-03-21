@@ -254,7 +254,7 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
-    //@@author {ifalluphill}
+    //@@author ifalluphill
     /**
      * Opens the error window.
      */
@@ -328,7 +328,7 @@ public class MainWindow extends UiPart<Stage> {
         handleHelp();
     }
 
-    //@@author {ifalluphill}
+    //@@author ifalluphill
     @Subscribe
     private void handleShowErrorsEvent(ShowErrorsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

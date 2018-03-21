@@ -405,8 +405,80 @@ _{Explain here how the data encryption feature will be implemented}_
 // end::dataencryption[]
 
 // tag::calendarview[]
+=== Google Calendar Integration
+Command line and graphical integration with Google Calendar from within SLAP. This assumes that the user already uses Google Calendar to manage their events.
 
-{To fill in JASON}
+==== Proposed Implementation
+===== Aspect: GUI
+The GUI portion of this feature will be a WebView of the Google Calendar web application. The user will have the option to either open their calendar as a new floating window by pressing the `F8` function key or by clicking `View > Open Calendar` or as a scene within the main SLAP GUI by invoking the `calendar` command. In either case, the WebView will be instantiated as a new JavaFX scene and take advantage of Java's build in WebView/WebEngine. This will allow the user to interact with the familiar Google Calendar web interface without any loss of functionality. 
+
+TODO: INSERT FINALIZED DIAGRAM HERE
+
+===== Aspect: CLI
+The CLI portion of this feature will rely on Google's Calendar API that uses the OAuth 2.0 protocol to allow an application (such as SLAP) to directly read/write to a user's calendar, provided that they have given them access to the calendar. Once a user has authorized the application to read/write to their calendar, they will gain access to the the following commands: `event-add`, `event-delete`, and `event-edit`. The Oauth authentication process will be entirely handled by Google with the only requirement being that the user must log in to their calendar using the GUI interface. 
+
+A check will eventually be added to ensure that the user has already logged in before attempting to execute any of the afformentioned commands. 
+
+TODO: INSERT FINALIZED DIAGRAM HERE
+
+==== Design Considerations
+===== Aspect: GUI
+* **Alternative 1 (current choice):** Native Google Calendar WebView
+** Pros: Minimal effort to implement as it is just a wrapper about the existing Google Calendar UI. Data is managed and secured by Google. 
+** Cons: Cannot customize the interfact without injecting customize styles. Requires complicated OAuth 2.0 authentication to work. Assumes that the user already has a Google account. 
+
+* **Alternative 2: ** https://github.com/dlemmermann/CalendarFX[CalendarFX]
+** Pros: Can more easily create a custom UI and not rely on Google Calendar.
+** Cons: Documentation does not explain how to interface with the UI / Storage. Optimal if used with Google Calendar anyway. In the absense of using Google Calendar, it would require a custom local storage layer for persistant data.
+
+* **Alternative 3: ** http://jfxtras.org/[JFXtras]
+** Pros: Simple adgenda view with relatively simple API to understand.
+** Cons: Not as feature rich as the other options and would require a custom local storage layer to have persistant data. 
+
+===== Aspect: Data Access
+* **Alternative 1 (current choice):** Use OAuth
+** Pros: Can take advantage of Google's first-party Calendar APIs for seamless CLI data manipulation.
+** Cons: Extremely complicated to configure and set up. 
+
+* **Alternative 2: ** Require the user to export their existing Google Calendar and import it into the application. New events added to the SLAP calendar would not appear in their Google Calendar.
+** Pros: Does not require complex authentication and is thus easier to implement. Solution works offline.
+** Cons: Requires additional local storage implementations and calendar events are no longer synced to the cloud. 
+
+===== Aspect: Implementation of `AddEventCommand` -> `event-add`
+* **Alternative 1 (current choice):** Use Google's Calendar API
+** Pros: First-party direct access to Google Calendar data.
+** Cons: Requires the user to authenticate our application before this feature works correctly.   
+
+* **Alternative 2: ** Use URL Params
+** Pros: Does not require Oauth and is therefore easier to implement.  
+** Cons: Requires the user to confirm the event addition through a GUI action, thus not allowing for a true CLI-only experience.
+
+===== Aspect: Implementation of `ViewEventsCommand` -> `calendar` 
+* **Alternative 1 (current choice):** Open a Webview (either as a new window or within the main application gui)
+** Pros: Low development cost as the webview exists already.
+** Cons: Requires an internet connection. Has no CLI-friendly output.
+
+* **Alternative 2: ** List events in the CLI
+** Pros: CLI-only friendly. Does not require a webview and thus makes the application less resource intensive. 
+** Cons: Higher development cost as it becomes necessary to format the response from Google's APIs (and write a new set of logic to parse and format the data.)
+
+===== Aspect: Implementaiton of `EditEventCommand` -> `event-edit` 
+* **Alternative 1 (current choice):** Use Google's Calendar API
+** Pros: First-party direct access to Google Calendar data.
+** Cons: Requires the user to authenticate our application before this feature works correctly.   
+
+* **Alternative 2: ** Only allow for graphical editing
+** Pros: No implementation required as everything happens through the spawned webview. 
+** Cons: No CLI-friendly output. More resource intensive on the end-user's system.
+
+===== Aspect: Implementation of `DeleteEventCommand` -> `event-delete`
+* **Alternative 1 (current choice):** Use Google's Calendar API
+** Pros: First-party direct access to Google Calendar data.
+** Cons: Requires the user to authenticate our application before this feature works correctly.   
+
+* **Alternative 2: ** Only allow for graphical deleting
+** Pros: No implementation required as everything happens through the spawned webview. 
+** Cons: No CLI-friendly output. More resource intensive on the end-user's system.
 
 // end::calendarview[]
 

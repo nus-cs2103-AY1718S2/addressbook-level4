@@ -30,7 +30,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
         guiRobot.push(KeyCode.F1);
     }
 
-    //@@author {ifalluphill}
+    //@@author ifalluphill
     /**
      * Opens the {@code CalendarWindow} using the menu bar in {@code MainWindow}.
      */

@@ -1,4 +1,4 @@
-//@@author {ifalluphill}
+//@@author ifalluphill
 
 package seedu.address.ui;
 

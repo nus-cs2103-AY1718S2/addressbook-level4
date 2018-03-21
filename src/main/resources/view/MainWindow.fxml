@@ -32,7 +32,7 @@
           <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
           </Menu>
-          <!-- @@author {ifalluphill} -->
+          <!-- @@author ifalluphill -->
           <Menu mnemonicParsing="false" text="View">
             <MenuItem fx:id="viewCalendarMenuItem" mnemonicParsing="false" onAction="#handleViewCalendar" text="Open Calendar" />
             <MenuItem fx:id="viewErrorsMenuItem" mnemonicParsing="false" onAction="#handleViewErrors" text="Show Error Log" />

@@ -1,4 +1,4 @@
-//@@author {ifalluphill}-reused
+//@@author ifalluphill-reused
 //{Based on HelpCommandTest}
 package seedu.address.logic.commands;
 

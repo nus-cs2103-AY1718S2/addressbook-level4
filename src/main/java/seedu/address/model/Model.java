@@ -9,7 +9,7 @@ import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.lesson.Time;
-import seedu.address.model.student.Name;
+import seedu.address.model.lesson.Day;
 
 /**
  * The API of the Model component.
@@ -53,7 +53,7 @@ public interface Model {
     /** Removes the given {@code tag} from all {@code Student}s. */
     void deleteTag(Tag tag);
 
-    void addLesson(Student student, Time startTime, Time endTime)
+    void addLesson(Student student, Day day, Time startTime, Time endTime)
             throws DuplicateLessonException, StudentNotFoundException;
 
     Schedule getSchedule();

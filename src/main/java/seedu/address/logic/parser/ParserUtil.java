@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
+import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
@@ -196,7 +197,6 @@ public class ParserUtil {
     /**
      * Parses {@code String time} into a {@code Time}.
      */
-
     public static Time parseTime(String time) throws IllegalValueException {
         requireNonNull(time);
         String trimmedSubject = time.trim();
@@ -213,5 +213,26 @@ public class ParserUtil {
     public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
         requireNonNull(time);
         return time.isPresent() ? Optional.of(parseTime(time.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code String day} into a {@code Day}.
+     */
+    public static Day parseDay(String day) throws IllegalValueException {
+        //requireNonNull(day);
+        String trimmedSubject = day.trim();
+        if (!Day.isValidDay(trimmedSubject)) {
+            throw new IllegalValueException(Day.MESSAGE_DAY_CONSTRAINTS);
+        }
+        return new Day(trimmedSubject);
+    }
+
+    /**
+     * Parses a {@code Optional<String> day} into an {@code Optional<Day>} if {@code day} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Day> parseDay(Optional<String> day) throws IllegalValueException {
+        //requireNonNull(day);
+        return day.isPresent() ? Optional.of(parseDay(day.get())) : Optional.empty();
     }
 }

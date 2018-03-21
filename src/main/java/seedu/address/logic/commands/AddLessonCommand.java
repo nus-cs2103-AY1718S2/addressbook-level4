@@ -12,15 +12,9 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.Time;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Student;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Phone;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
+import seedu.address.model.lesson.Day;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Adds a lesson to the schedule for a student in the address book.
@@ -44,26 +38,23 @@ public class AddLessonCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the schedule";
 
     private final Index index;
+    private final Day day;
     private final Time startTime;
     private final Time endTime;
-    private final Student student;
     private Student studentToAddLesson;
     /**
      * Creates an AddLessonCommand to add the specified {@code Lesson}
      */
-    public AddLessonCommand(Index index, Time startTime, Time endTime) {
+    public AddLessonCommand(Index index, Day day, Time startTime, Time endTime) {
         requireNonNull(index);
+        requireNonNull(day);
         requireNonNull(startTime);
         requireNonNull(endTime);
 
         this.index = index;
+        this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
-
-        this.student = new StudentBuilder().withName("Alice Pauline")
-                .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-                .withPhone("85355255")
-                .withTags("friends").withProgrammingLanguage("Java").build();
     }
 
     /**
@@ -74,7 +65,7 @@ public class AddLessonCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.addLesson(studentToAddLesson, startTime, endTime);
+            model.addLesson(studentToAddLesson, day, startTime, endTime);
         } catch (DuplicateLessonException dle) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
         } catch (StudentNotFoundException pnfe) {
@@ -86,7 +77,6 @@ public class AddLessonCommand extends UndoableCommand {
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
         List<Student> lastShownList = model.getFilteredStudentList();
-
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }

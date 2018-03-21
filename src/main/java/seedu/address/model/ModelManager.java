@@ -13,6 +13,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.student.Student;
@@ -93,11 +94,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addLesson(Student studentToAddLesson, Time startTime, Time endTime)
+    public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
             throws DuplicateLessonException, StudentNotFoundException {
-        requireAllNonNull(studentToAddLesson, startTime, endTime);
+        requireAllNonNull(studentToAddLesson, day, startTime, endTime);
 
-        Lesson newLesson = new Lesson(studentToAddLesson, startTime, endTime);
+        Lesson newLesson = new Lesson(studentToAddLesson, day, startTime, endTime);
         schedule.addLesson(newLesson);
     }
     @Override

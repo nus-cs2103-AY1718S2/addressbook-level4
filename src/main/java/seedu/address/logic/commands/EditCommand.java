@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTEDSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
@@ -23,6 +24,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
@@ -51,6 +53,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_INCOME + "INCOME] "
             + "[" + PREFIX_ACTUALSPENDING + "ACTUALSPENDING] "
             + "[" + PREFIX_EXPECTEDSPENDING + "EXPECTEDSPENDING] "
+            + "[" + PREFIX_AGE + "AGE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -120,9 +123,10 @@ public class EditCommand extends UndoableCommand {
                 .orElse((personToEdit.getActualSpending()));
         Expenditure updatedExpectedSpending = editPersonDescriptor.getExpectedSpending()
                 .orElse((personToEdit.getExpectedSpending()));
+        Age updatedAge = editPersonDescriptor.getAge().orElse(personToEdit.getAge());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
-                updatedIncome, updatedActualSpending, updatedExpectedSpending);
+                updatedIncome, updatedActualSpending, updatedExpectedSpending, updatedAge);
     }
 
     @Override
@@ -157,6 +161,7 @@ public class EditCommand extends UndoableCommand {
         private Income income;
         private Expenditure actualSpending;
         private Expenditure expectedSpending;
+        private Age age;
 
         public EditPersonDescriptor() {
         }
@@ -174,6 +179,7 @@ public class EditCommand extends UndoableCommand {
             setIncome(toCopy.income);
             setActualSpending(toCopy.actualSpending);
             setExpectedSpending(toCopy.expectedSpending);
+            setAge(toCopy.age);
         }
 
         /**
@@ -181,7 +187,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags,
-                    this.income, this.actualSpending, this.expectedSpending);
+                    this.income, this.actualSpending, this.expectedSpending, this.age);
         }
 
         public void setName(Name name) {
@@ -238,6 +244,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Expenditure> getExpectedSpending() {
             return Optional.ofNullable(expectedSpending);
+        }
+
+        public void setAge(Age age) {
+            this.age = age;
+        }
+
+        public Optional<Age> getAge() {
+            return Optional.ofNullable(age);
         }
 
         /**

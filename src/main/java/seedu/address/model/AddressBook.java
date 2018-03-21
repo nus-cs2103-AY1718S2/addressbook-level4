@@ -173,7 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
                 correctTagReferences, person.getIncome(), person.getActualSpending(),
-                person.getExpectedSpending());
+                person.getExpectedSpending(), person.getAge());
     }
 
     /**

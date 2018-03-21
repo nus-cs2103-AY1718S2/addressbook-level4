@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
@@ -25,6 +26,7 @@ public class PersonBuilder {
     public static final Double DEFAULT_INCOME = 1234.56;
     public static final Double DEFAULT_ACTUALSPENDING = 1234.56;
     public static final Double DEFAULT_EXPECTEDSPENDING = 1234.56;
+    public static final Integer DEFAULT_AGE = 20;
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -34,6 +36,7 @@ public class PersonBuilder {
     private Income income;
     private Expenditure actualSpending;
     private Expenditure expectedSpending;
+    private Age age;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -44,6 +47,7 @@ public class PersonBuilder {
         income = new Income(DEFAULT_INCOME);
         actualSpending = new Expenditure(DEFAULT_ACTUALSPENDING);
         expectedSpending = new Expenditure(DEFAULT_EXPECTEDSPENDING);
+        age = new Age(DEFAULT_AGE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -59,6 +63,7 @@ public class PersonBuilder {
         income = personToCopy.getIncome();
         actualSpending = personToCopy.getActualSpending();
         expectedSpending = personToCopy.getExpectedSpending();
+        age = personToCopy.getAge();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -119,6 +124,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code age} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAge(Integer age) {
+        this.age = new Age(age);
+        return this;
+    }
+
+    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withEmail(String email) {
@@ -127,7 +140,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, income, actualSpending, expectedSpending);
+        return new Person(name, phone, email, address, tags, income, actualSpending, expectedSpending, age);
     }
 
 }

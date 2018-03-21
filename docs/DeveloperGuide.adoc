@@ -230,6 +230,27 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Rate feature
+==== Current Implementation
+The `rate` command allows campus recruiters to evaluate candidates' performance in interviews against four specific criteria, namely technical skills, communication skills, problem solving skills and experience. The format of this command is `rate INDEX t/TECHNICAL SKILLS SCORE c/COMMUNICATINO SKILLS SCORE p/PROBLEM SOLVING SKILLS SCORE e/EXPERIENCE SCORE`.
+
+In our current implementation, the `rate` command inherits from the `UndoableCommands` class. Two components, `Logic` and `Model`, are involved in the execution of this command. The `Logic` component is responsible for parsing user inputs while the `Model` component deals with updating of filtered person list.
+
+Below is a sequence diagram that illustrates how these two components interact when the `rate` command is executed:
+
+image::RateCommandSequenceDiagram.png[width="800"]
+Figure 3.1.1.1 Sequence diagram to illustrate component interactions for the `rate` command
+
+As shown above, execution of the `rate` command comprises the following steps:
+
+. `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
+. During the `parseCommand` method call, an instance of `RateCommandParser` will be created when the keyword "rate" is matched. `RateCommandParser` then extracts the remaining user inputs and a `RateCommand` instance r will be return, provided that the format of user's input is correct.
+. `LogicManager` then calls `executeUndoableCommand` of the `RateCommand` r instantiated in step 2. Another component, `Model`, will be involved as the `RateCommand` requests to update the rating scores of the person.
+. The `Model` component gets the filtered persons list and replaces `Person` p1 with `Person` p2 which is identical to p2 except rating scores. A `CommandResult` will be generated and returned to `LogicManager`.
+
+==== Design Considerations
+In the current implementation, adding ratings for a `Person` is done through a new command, `rate`. Alternatively, we can modify the `add` command by making it support more prefixes and accept rating scores as well. We can also update the `edit` command, allowing it to modifying rating scores of a person. However, this approach might result in very long `add` commands that are not user-friendly.
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation

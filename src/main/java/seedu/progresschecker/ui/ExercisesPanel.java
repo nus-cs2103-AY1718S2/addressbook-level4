@@ -11,7 +11,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.events.ui.PageLoadChangedEvent;
-import seedu.progresschecker.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 /**
  * The Exercises Panel of the App.
@@ -30,11 +29,6 @@ public class ExercisesPanel extends UiPart<Region> {
         super(FXML);
         exercisesPanel.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
     }
 
     @Subscribe

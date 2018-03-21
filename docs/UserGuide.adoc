@@ -164,7 +164,7 @@ Filters persons whose contact contains the given tag. +
 Format: `filter TAG`
 
 ****
-* The search is case insensitive. e.g `Friends` will match `friends` 
+* The search is case insensitive. e.g `Friends` will match `friends`
 ****
 
 Examples:

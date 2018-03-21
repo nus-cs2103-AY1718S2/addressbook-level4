@@ -14,7 +14,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Activity in the desk board.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Activity {
+public abstract class Activity {
 
     private static final String ACTIVITY_TYPE = "BASE TYPE";
 
@@ -59,9 +59,9 @@ public class Activity {
     }
 
     //TODO: Make this method abstract
-    public String getActivityType() {
-        return ACTIVITY_TYPE;
-    }
+    public abstract String getActivityType();
+
+    public abstract Activity copy();
 
     public Activity setCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
@@ -86,25 +86,6 @@ public class Activity {
         return otherActivity.getName().equals(this.getName())
                 && otherActivity.getDateTime().equals(this.getDateTime())
                 && otherActivity.getRemark().equals(this.getRemark());
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, dateTime, remark, tags);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Date/Time: ")
-                .append(getDateTime())
-                .append(" Remark: ")
-                .append(getRemark())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
-        return builder.toString();
     }
 
 }

@@ -23,6 +23,7 @@ import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
 import seedu.address.model.activity.Name;
 import seedu.address.model.activity.Remark;
+import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
@@ -108,7 +109,7 @@ public class EditCommand extends UndoableCommand {
         Remark updatedRemark = editActivityDescriptor.getRemark().orElse(activityToEdit.getRemark());
         Set<Tag> updatedTags = editActivityDescriptor.getTags().orElse(activityToEdit.getTags());
 
-        return new Activity(updatedName, updatedDateTime, updatedRemark, updatedTags);
+        return new Task(updatedName, updatedDateTime, updatedRemark, updatedTags);
     }
 
     @Override

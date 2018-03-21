@@ -92,4 +92,8 @@ public class Task extends Activity {
         return builder.toString();
     }
 
+    @Override
+    public Activity copy() {
+        return new Task(getName(), getDueDateTime(), getRemark(), getTags());
+    }
 }

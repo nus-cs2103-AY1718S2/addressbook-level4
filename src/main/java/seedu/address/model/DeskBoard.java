@@ -132,8 +132,7 @@ public class DeskBoard implements ReadOnlyDeskBoard {
         // Rebuild the list of activity tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         activityTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Activity(
-                activity.getName(), activity.getDateTime(), activity.getRemark(), correctTagReferences);
+        return activity.copy();
     }
 
     /**

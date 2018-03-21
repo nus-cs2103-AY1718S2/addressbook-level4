@@ -409,7 +409,7 @@ overdue correctly.
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-<<<<<<< HEAD
+
 === [Major Improvement] Modify `Model` Component
 
 The `Model` component was originally implemented to store personal contact details.
@@ -451,8 +451,7 @@ Other component can easily distinguish two types of record.
 
 **Cons:
 Since the interface is now completely changed, other component would now required to change a lot of coding to coped with the change.
-=======
-=== Storage
+====== Storage
 
 Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
 
@@ -465,7 +464,7 @@ Our application deals with 2 main classes: Task and Event. Hence, when we store 
 ** Cons: More effort is required to create 2 separate lists.
 
 While both alternatives have advantages and disadvantages, we feel that the second alternative's advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of objects, whereby each list contains objects of the same class, especially as we make the 2 classes more specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in the long run.
->>>>>>> 1b1190408050db6a36dafa1431024135f812d55e
+
 
 
 == Documentation
@@ -960,11 +959,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |procrastinating student |add estimated time needed to complete a task |estimate when to start on a task to complete it on time
 
-<<<<<<< HEAD
 |`* *` |procrastinating student |view contact details of activity in-charge for a deadline extension |have enough time to complete my assignments despite my tight schedule
 =======
 |`* *` |procrastinating student |view contact details of person in-charge for a deadline extension |have enough time to complete my task despite my tight schedule
->>>>>>> bcc4a6f9a77ed80f400940d3605ee3a8f559251b
+
 
 |`* *` |busy student |view free time slots before a deadline |know how much time I have when I'm actually free to finish my tasks
 

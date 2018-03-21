@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,6 +28,8 @@ public class XmlAdaptedPerson {
     private String nric;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedSubject> subjects = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -37,11 +40,14 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects) {
         this.name = name;
         this.nric = nric;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+        if (subjects != null) {
+            this.subjects = new ArrayList<>(subjects);
         }
     }
 
@@ -57,6 +63,10 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        subjects = new ArrayList<>();
+        for (Subject subject : source.getSubjects()) {
+            subjects.add(new XmlAdaptedSubject(subject));
+        }
     }
 
     /**
@@ -66,8 +76,12 @@ public class XmlAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
+        final List<Subject> personSubjects = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+        for (XmlAdaptedSubject subject : subjects) {
+            personSubjects.add(subject.toModelType());
         }
 
         if (this.name == null) {
@@ -87,7 +101,8 @@ public class XmlAdaptedPerson {
         final Nric nric = new Nric(this.nric);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, nric, tags);
+        final Set<Subject> subjects = new HashSet<>(personSubjects);
+        return new Person(name, nric, tags, subjects);
     }
 
     @Override
@@ -103,6 +118,7 @@ public class XmlAdaptedPerson {
         XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
         return Objects.equals(name, otherPerson.name)
                 && Objects.equals(nric, otherPerson.nric)
-                && tagged.equals(otherPerson.tagged);
+                && tagged.equals(otherPerson.tagged)
+                && subjects.equals(otherPerson.subjects);
     }
 }

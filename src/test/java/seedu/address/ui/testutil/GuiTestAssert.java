@@ -66,16 +66,21 @@ public class GuiTestAssert {
      */
     private static String getTagColorStyleFor(String tag) {
         switch (tag) {
+            case "neighbours":
+            case "colleagues":
             case "priority":
             case "fragile":
                 return "red";
 
+            case "friend":
+            case "husband":
             case "repeat":
-            case "spiky":
                 return "blue";
 
-            case "premium":
-            case "standard":
+            case "friends":
+            case "owesMoney":
+            case "classmates":
+            case "family":
                 return "green";
 
             default:

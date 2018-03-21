@@ -44,26 +44,30 @@ public class Status {
     public static final Color COLOR_ACCEPTED = Color.GREEN;
     public static final Color COLOR_WITHDRAWN = Color.PURPLE;
 
-    private static final HashMap<Integer, String> STATUS_MAP = new HashMap<Integer, String>() {{
-            put(INDEX_STATUS_NEW, STATUS_NEW);
-            put(INDEX_STATUS_INTERVIEW_FIRST_ROUND, STATUS_INTERVIEW_FIRST_ROUND);
-            put(INDEX_STATUS_INTERVIEW_SECOND_ROUND, STATUS_INTERVIEW_SECOND_ROUND);
-            put(INDEX_STATUS_REJECTED, STATUS_REJECTED);
-            put(INDEX_STATUS_WAITLIST, STATUS_WAITLIST);
-            put(INDEX_STATUS_OFFERED, STATUS_OFFERED);
-            put(INDEX_STATUS_ACCEPTED, STATUS_ACCEPTED);
-            put(INDEX_STATUS_WITHDRAWN, STATUS_WITHDRAWN); }};
-
-    private static final HashMap<String, Color> COLOR_MAP = new HashMap<String, Color>() {{
-            put(STATUS_NEW, COLOR_NEW);
-            put(STATUS_INTERVIEW_FIRST_ROUND, COLOR_INTERVIEW_FIRST_ROUND);
-            put(STATUS_INTERVIEW_SECOND_ROUND, COLOR_INTERVIEW_SECOND_ROUND);
-            put(STATUS_REJECTED, COLOR_REJECTED);
-            put(STATUS_WAITLIST, COLOR_WAITLIST);
-            put(STATUS_OFFERED, COLOR_OFFERED);
-            put(STATUS_ACCEPTED, COLOR_ACCEPTED);
-            put(STATUS_WITHDRAWN, COLOR_WITHDRAWN); }};
-
+    private static final HashMap<Integer, String> STATUS_MAP;
+    static {
+        STATUS_MAP = new HashMap<Integer, String>() {{
+                put(INDEX_STATUS_NEW, STATUS_NEW);
+                put(INDEX_STATUS_INTERVIEW_FIRST_ROUND, STATUS_INTERVIEW_FIRST_ROUND);
+                put(INDEX_STATUS_INTERVIEW_SECOND_ROUND, STATUS_INTERVIEW_SECOND_ROUND);
+                put(INDEX_STATUS_REJECTED, STATUS_REJECTED);
+                put(INDEX_STATUS_WAITLIST, STATUS_WAITLIST);
+                put(INDEX_STATUS_OFFERED, STATUS_OFFERED);
+                put(INDEX_STATUS_ACCEPTED, STATUS_ACCEPTED);
+                put(INDEX_STATUS_WITHDRAWN, STATUS_WITHDRAWN); }};
+    }
+    private static final HashMap<String, Color> COLOR_MAP;
+    static {
+        COLOR_MAP = new HashMap<String, Color>() {{
+                put(STATUS_NEW, COLOR_NEW);
+                put(STATUS_INTERVIEW_FIRST_ROUND, COLOR_INTERVIEW_FIRST_ROUND);
+                put(STATUS_INTERVIEW_SECOND_ROUND, COLOR_INTERVIEW_SECOND_ROUND);
+                put(STATUS_REJECTED, COLOR_REJECTED);
+                put(STATUS_WAITLIST, COLOR_WAITLIST);
+                put(STATUS_OFFERED, COLOR_OFFERED);
+                put(STATUS_ACCEPTED, COLOR_ACCEPTED);
+                put(STATUS_WITHDRAWN, COLOR_WITHDRAWN); }};
+    }
     public final String value;
     public final Color color;
 

@@ -10,14 +10,6 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
-'''
-
 === Jacqueline Cheong
 image::aquarinte.png[width="150", align="left"]
 {empty}[http://github.com/aquarinte[github]] [<<johndoe#, portfolio>>]
@@ -29,7 +21,7 @@ Responsibilities: Logic component, managing documentation
 
 === Chia Le Jing
 image::lejing.jpg[width="150", align="left"]
-{empty}[https://github.com/chialejing[github]] [<<chilejing#, portfolio>>]
+{empty}[https://github.com/chialejing[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage component, managing documentation

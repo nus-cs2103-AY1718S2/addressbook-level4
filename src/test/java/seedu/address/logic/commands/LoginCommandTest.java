@@ -7,13 +7,11 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
-import seedu.address.model.login.exceptions.AuthenticationFailedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -33,7 +31,7 @@ public class LoginCommandTest {
     public void execute_loginAcceptedByModel_loginSuccessful() throws Exception {
         ModelStubAcceptingLogin modelStub = new ModelStubAcceptingLogin();
 
-        LoginAttempt loginAttempt = new LoginAttempt();
+        LoginAttempt loginAttempt = new LoginAttempt("slap", "password");
 
         CommandResult commandResult = getLoginCommandForLoginAttempt(loginAttempt.getUsername(),
                 loginAttempt.getPassword(), modelStub).execute();
@@ -43,20 +41,19 @@ public class LoginCommandTest {
 
     @Test
     public void execute_loginAcceptedByModel_loginFailure() throws Exception {
-        ModelStubThrowingAuthenticationFailedException modelStub = new ModelStubThrowingAuthenticationFailedException();
-        LoginAttempt validloginAttempt = new LoginAttempt();
+        ModelStubAcceptingLogin modelStub = new ModelStubAcceptingLogin();
+        LoginAttempt invalidloginAttempt = new LoginAttempt("slapsdad", "password");
 
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(LoginCommand.MESSAGE_LOGIN_FAILURE);
+        CommandResult commandResult = getLoginCommandForLoginAttempt(invalidloginAttempt.getUsername(),
+                invalidloginAttempt.getPassword(), modelStub).execute();
 
-        getLoginCommandForLoginAttempt(validloginAttempt.getUsername(),
-                validloginAttempt.getPassword(), modelStub).execute();
+        assertEquals(LoginCommand.MESSAGE_LOGIN_SUCCESS, commandResult.feedbackToUser);
     }
 
     @Test
     public void execute_alreadyLoggedIn_throwsCommandException() throws Exception {
         ModelStubThrowingDuplicatePersonException modelStub = new ModelStubThrowingDuplicatePersonException();
-        LoginAttempt validloginAttempt = new LoginAttempt();
+        LoginAttempt validloginAttempt = new LoginAttempt("slap", "password");
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(LoginCommand.MESSAGE_LOGIN_ALREADY);
@@ -124,9 +121,9 @@ public class LoginCommandTest {
         }
 
         @Override
-        public void checkLoginCredentials(Username username, Password password)
-                throws AlreadyLoggedInException, AuthenticationFailedException {
+        public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
             fail("This method should not be called.");
+            return false;
         }
 
         @Override
@@ -147,8 +144,8 @@ public class LoginCommandTest {
         public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
             requireNonNull(username);
             requireNonNull(password);
-
             setLoginStatus(true);
+            return true;
         }
 
 
@@ -169,16 +166,21 @@ public class LoginCommandTest {
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
-        public void checkLoginCredentials(Username username, Password password)
-                throws AlreadyLoggedInException, AuthenticationFailedException {
+        public boolean checkLoginCredentials(Username username, Password password)
+                throws AlreadyLoggedInException {
             throw new AlreadyLoggedInException();
         }
 
     }
 
     private class LoginAttempt {
-        Username username = new Username("slap");
-        Password password = new Password("password");
+        Username username;
+        Password password;
+
+        public LoginAttempt(String username, String password){
+            this.username = new Username(username);
+            this.password = new Password(password);
+        }
 
         public Password getPassword() {
             return password;

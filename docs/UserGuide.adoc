@@ -85,8 +85,8 @@ Profile Picture indicates the profile picture's file path
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pp/C:\\Downloads\\john.jpg`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pp/C:\\Downloads\\john.jpg t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pp//home/trafalgarandre/Desktop/John.jpg`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pp//home/trafalgarandre/Desktop/John.jpg t/criminal`
 
 === Listing all persons : `list`
 
@@ -201,15 +201,15 @@ Loads the LinkedIn search of 1st person in the results of the `find` command.
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
-=== Clearing list of entered commands : `clearhistory`
-
-You can clear your history of entered commands using the following format. +
-Format: `clearhistory`
-
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+=== Clearing list of entered commands : `clearhistory`
+
+You can clear your history of entered commands using the following format. +
+Format: `clearhistory`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -290,9 +290,12 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 // tag::dataencryption[]
 
-=== Set reminders `[comming in v1.5]`
+=== Set reminders `[coming in v1.5]`
 
 You can set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
+
+=== Emailing a person `[coming in v1.5]`
+You can send email to any person you have saved in contactHeRo, without having to leave the app!
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
@@ -311,22 +314,22 @@ The login system shall provide security to your data stored in contactHeRo.
 
 == Command Summary
 
-* *<<Adding-a-person, Add>>* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *<<adding-a-person-code-add-code, Add>>* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *<<Clearing-all-entries, Clear>>* : `clear`
-* *<<ClearHistory>>* : `clearhistory`
-* *<<Deleting-a-person, Delete>>* : `delete INDEX` +
+* *<<clearing-all-entries-code-clear-code, Clear>>* : `clear`
+* *<<clearing-list-of-entered-commands-code-clearhistory-code, ClearHistory>>* : `clearhistory`
+* *<<deleting-a-person-code-delete-code, Delete>>* : `delete INDEX` +
 e.g. `delete 3`
-* *<<Editing-a-person, Edit>>* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *<<editing-a-person-code-edit-code, Edit>>* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *<<Locating-persons-by-name, Find>>* : `find KEYWORD [MORE_KEYWORDS]` +
+* *<<locating-persons-by-name-code-find-code, Find>>* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *<<Listing-all-persons, List>>* : `list`
-* *<<Viewing-help, Help>>* : `help`
-* *<<Selecting-a-person, Select>>* : `select INDEX` +
+* *<<listing-all-persons-code-list-code, List>>* : `list`
+* *<<viewing-help-code-help-code, Help>>* : `help`
+* *<<viewing-the-contact-details-of-a-person-code-select-code, Select>>* : `select INDEX` +
 e.g.`select 2`
-* *<<Listing-entered-commands, History>>* : `history`
-* *<<Undoing-previous-command, Undo>>* : `undo`
-* *<<Redoing-the-previously-undone-command, Redo>>* : `redo`
-* *<<Viewing-the-LinkedIn-search-of-the-person, LinkedIn>>*: `linkedIn INDEX` +
+* *<<listing-entered-commands-code-history-code, History>>* : `history`
+* *<<undoing-previous-command-code-undo-code, Undo>>* : `undo`
+* *<<redoing-the-previously-undone-command-code-redo-code, Redo>>* : `redo`
+* *<<viewing-the-linkedin-search-of-a-person-code-linkedin-code, LinkedIn>>*: `linkedIn INDEX` +
 e.g. `linkedIn 2`

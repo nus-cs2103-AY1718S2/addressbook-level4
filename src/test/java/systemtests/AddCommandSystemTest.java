@@ -85,7 +85,7 @@ public class AddCommandSystemTest extends ImdbSystemTest {
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + NRIC_DESC_AMY + "  "
                 + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + DOB_DESC_AMY + "   "
-                + BLOODTYPE_DESC_AMY + "   " +TAG_DESC_FRIEND + " ";
+                + BLOODTYPE_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */

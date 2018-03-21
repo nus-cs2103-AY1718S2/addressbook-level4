@@ -142,7 +142,7 @@ public class EditCommandSystemTest extends ImdbSystemTest {
         selectPerson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + NRIC_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY +TAG_DESC_FRIEND;
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new patient's name
         assertCommandSuccess(command, index, AMY, index);

@@ -8,7 +8,9 @@ import org.junit.rules.TemporaryFolder;
 
 import guitests.guihandles.LoginPaneHandle;
 
-import seedu.address.login.*;
+import seedu.address.login.Login;
+import seedu.address.login.LoginManager;
+import seedu.address.login.UserPassStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;

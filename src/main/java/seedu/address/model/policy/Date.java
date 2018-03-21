@@ -1,7 +1,7 @@
 package seedu.address.model.policy;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a Date.
@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Date {
     public static final String DATE_CONSTRAINTS =
-            "Day must be between 1 and 28, 29, 30 or 31 depending on the month and year. Year must be from 1950 to 2150.";
+            "Day must be from 1 to 28, 29, 30 or 31 depending on the month and year. Year must be from 1950 to 2150.";
 
     public final Integer day;
     public final Month month;
@@ -27,14 +27,17 @@ public class Date {
         return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
     }
 
+    /**
+     * Returns true if a given (Integer, Month, Integer) tuple represents a valid date.
+     */
     public static boolean isValidDate(Integer day, Month month, Integer year) {
         boolean yearCorrect = year >= 1950 && year <= 2150;
 
         int daysInMonth = 31;
-        if(month == Month.APRIL || month == Month.JUNE || month == Month.SEPTEMBER || month == Month.NOVEMBER) {
+        if (month == Month.APRIL || month == Month.JUNE || month == Month.SEPTEMBER || month == Month.NOVEMBER) {
             daysInMonth = 30;
         } else if (month == Month.FEBRUARY) {
-            daysInMonth = isLeapYear(year)? 29 : 28;
+            daysInMonth = isLeapYear(year) ? 29 : 28;
         }
 
         return yearCorrect && day >= 0 && day <= daysInMonth;

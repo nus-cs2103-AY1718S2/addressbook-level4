@@ -174,9 +174,10 @@ public abstract class AddressBookSystemTest {
      * and the person list panel displays the persons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
-            Model expectedModel) {
+                                                     Model expectedModel) {
         //assertEquals(expectedCommandInput, getCommandBox().getInput());
         //assertEquals(expectedResultMessage, getResultDisplay().getText());
+
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
@@ -211,10 +212,21 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getAddress();
         URL expectedUrl;
+        int stringCutIndex;
+        String addressWithoutUnit;
+
+        if (selectedCardName.indexOf('#') > 2) {
+            stringCutIndex = selectedCardName.indexOf('#') - 2;
+            addressWithoutUnit = selectedCardName.substring(0, stringCutIndex);
+        } else {
+            addressWithoutUnit = selectedCardName;
+        }
+
         try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
+            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL
+                    + addressWithoutUnit.replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

@@ -15,11 +15,16 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ExitLoginRequestEvent;
+import seedu.address.commons.events.ui.LoginAccessGrantedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.login.Login;
+import seedu.address.login.LoginManager;
+import seedu.address.login.UserPassStorage;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -34,6 +39,7 @@ import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
+
 
 /**
  * The main entry point to the application.
@@ -50,7 +56,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-
+    protected Login login;
 
     @Override
     public void init() throws Exception {
@@ -62,7 +68,9 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        UserPassStorage userPassStorage = new UserPassStorage();
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
+        StorageManager storageManager = (StorageManager) storage;
 
         initLogging(config);
 
@@ -70,7 +78,9 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model);
 
-        ui = new UiManager(logic, config, userPrefs);
+        login = new LoginManager(storageManager);
+
+        ui = new UiManager(logic, config, userPrefs, login);
 
         initEventsCenter();
     }
@@ -183,8 +193,28 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        logger.info("Starting Login to Pigeons AddressBook " + MainApp.VERSION);
+        ui.startLogin(primaryStage);
+    }
+
+    /**
+     * Starts Application after login success
+     */
+    public void startApp(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+        readWelcomeMessage();
         ui.start(primaryStage);
+    }
+
+    /**
+     * read welcome "username" message
+     */
+    private void readWelcomeMessage() {
+        try {
+            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
+        } catch (IOException e) {
+            System.out.println("Unable to load welcome message.");
+        }
     }
 
     @Override
@@ -204,6 +234,20 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
+    }
+
+    @Subscribe
+    public void handleExitLoginRequestEvent(ExitLoginRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @Subscribe
+    public void handleAccessGrantedEvent(LoginAccessGrantedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ui.stopLogin();
+        this.startApp(new Stage());
     }
 
     public static void main(String[] args) {

@@ -65,7 +65,6 @@ Format: `help OR h`
 
 === Adding a teammate: `add OR a`
 
-
 Adds a teammate to the ProgressChecker +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
         `OR` +
@@ -173,10 +172,24 @@ Selects the 2nd teammate in the ProgressChecker.
 `s 1` +
 Selects the 1st teammate in the results of the `find` command.
 
+=== Adding the default task list: `newtasklist OR nl`
+
+Adds the default task list to Google account +
+Format: `newtasklist` +
+        `OR` +
+        `nl`
+
+[TIP]
+Only the command word. No parameters at all.
+
+Examples:
+
+* `newtasklist`
+* `nl`
 
 === Mark a learning outcome as completed : `complete INDEX` `[coming in v2.0]`
 
-Check a learning outcome as completed based by the given task index.
+Check a learning outcome as completed based on the given task index.
 Format: `complete INDEX`
 
 === Answering and saving an exercise : `answer INDEX ANSWER` `[coming in v2.0]`

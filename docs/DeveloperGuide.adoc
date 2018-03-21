@@ -515,6 +515,94 @@ image::SDforExercisesEventHandling.png[width="800"]
 ** Cons: Formatting the exercises becomes harder and the implementation is less modular
 // end::answerexercise[]
 
+// tag::adddefaulttasklist[]
+=== [Ongoing] add default task command (Google Tasks API relevant commands)
+==== Current+Planned Implementation
+
+The default LOs and todos for all weeks would be stored as a local file upon which it would be loaded by the `StorageManager` on start up.
+
+The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `newtasklist`.
+
+.Component interactions for `newtasklist` command (part 1)
+image::SDforAddDefaultTaskList.png[width="800"]
+
+[NOTE]
+This command has no parameter regarding user input. The arguments passed are pre-initialized constant variables stored in the AddDefaultTasksCommand Class itself.
+
+We apply Google Tasks API to help us save user tasks data online (there will be cases where data of teammates are needed, thus only local data is not enough).
+To use Google Tasks API, we fist need to register this project on google developer console and retrieve a client credential file (client_id.json) to authorize our project.
+Then, add corresponding dependencies to build.gradle, the JAR files will be downloaded automatically upon project rebuild.
+
+Here is the code snippet to add dependencies:
+[source,java]
+----
+compile (
+    ['com.google.api-client:google-api-client:1.23.0'],
+    ['com.google.apis:google-api-services-tasks:v1-rev49-1.23.0'],
+    ['com.google.oauth-client:google-oauth-client-jetty:1.23.0'],
+)
+----
+[NOTE]
+Simply downloading JAR files without editing gradle is not suggested. JARs are not in git thus our co-developers will rely on the dependencies to retrieve the libraries.
+
+We write a program to authorize our project (by loading the aforementioned client credential file), trigger user loggin and build service.
+Note that when users are using ProgressChecker, only the first google task command requires them to log in with their google accounts,
+later other commands that use google tasks api will not trigger user login again. Also, very important, we import the APIs at the beginning of the program.
+
+Google Tasks API helps us save time building massive data structures (ie. Tasks, TaskLists, Lists of TaskLists, with many methods and exceptions).
+However, we do have a few classes in the modeling part that further add customized methods which are useful for current commands and even future commands.
+In this way, we avoid repetition of code snippet and having big chunks of import statements in numerous commands.
+
+Here is a code snippet that can find a task list by its title (while the native method only finds task by its id which is not memorable):
+[source,java]
+----
+/**
+ * Finds the task list with title {@code String} from the current list of task lists
+ *
+ * @param listTitle title of the task list we look for
+ * @return the task list instance
+ */
+public static TaskList searchTaskList(String listTitle) throws CommandException {
+    TaskList taskList = null;
+    ConnectTasksApi connection = new ConnectTasksApi();
+    try {
+        connection.authorize();
+    } catch (Exception e) {
+        throw new CommandException(AUTHORIZE_FAILURE);
+    }
+    Tasks service = connection.getTasksService();
+    try {
+    TaskLists taskLists = service.tasklists().list().execute();
+        taskList = taskLists.getItems().stream()
+                .filter(t -> t.getTitle().equals(listTitle))
+                .findFirst()
+                .orElse(null);
+    } catch (IOException ioe) {
+        throw new CommandException(LOAD_FAILURE);
+    }
+
+    return taskList;
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddDefaultTasksCommand`
+
+* Add a new command that extends `Command`. We do not extend `UndoableCommand` because updating google tasks online cannot be handled by the undo command.
+
+===== Aspect: Format of add default task list command
+
+* **Alternative 1 (current choice):** only one command word, without any other argument
+** Pros: Less parser files to manage altogether. Very simple and easy to type.
+
+===== Aspect: How the task is added
+
+* Authorization with client credential file and user login
+* Create a new task list with default given name and push to user's google account
+* Load the local file that contains all the default LOs and todos, parse it, create tasks one by one and add the the previously created task
+// end::adddefaulttasklist[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -1109,16 +1197,16 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User types find
-2.  ProgressCheck automatically shows the list dynamically without the user needing to press enter key
+2.  ProgressChecker automatically shows the list dynamically without the user needing to press enter key
 3.  User need not need to type the whole name, substrings will generate results
-4.  ProgressCheck displays the necessary results
+4.  ProgressChecker displays the necessary results
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The tasks list is empty.
+* 2a. The contact list is empty.
 +
 Use case resumes at step 2.
 
@@ -1153,9 +1241,71 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Add the default task list
+
+*MSS*
+
+1.  User requests to add the task list
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker loads and parses local file, adds the task list to user's google account
++
+Use case ends.
+
+*Extensions*
+
+* 2a. No Intenet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+* 3a. The file is not found.
++
+Use case ends.
+
+* 3b. The file is corrupted.
++
+Use case ends.
+
+* 3c. The list already exists.
++
+Use case ends.
+
+[discrete]
 === Use case: Mark a learning outcome as completed
 
-_{ to be added }_
+*MSS*
+
+1.  User requests to list tasks(LOs)
+2.  ProgressChecker shows a list of tasks(LOs)
+3.  User provides an index to requests to mark the corresponding LO in the list as completed
+4.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+5.  ProgressChecker executes command to mark the LO as completed in google tasks under the user's google account
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 2b. The list has not been created yet (invalid list name).
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+
+** 3a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Answer a question and save

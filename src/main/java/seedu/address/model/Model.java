@@ -30,7 +30,7 @@ public interface Model {
     void addPerson(Person person) throws DuplicatePersonException;
 
     /** Sorts the person list by name in alphabetical order */
-    void sortPersonListByName();
+    void sortPersonList(String parameter);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

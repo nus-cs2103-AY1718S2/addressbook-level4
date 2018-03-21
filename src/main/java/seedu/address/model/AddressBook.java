@@ -190,7 +190,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeTimetableEntry(String timetableEntryId) throws TimetableEntryNotFoundException {
         boolean found = false;
         for (TimetableEntry t: timetableEntries) {
-            if (t.getId().equals(timetableEntryId)) {
+            if (t != null && t.getId() != null && t.getId().equals(timetableEntryId)) {
                 timetableEntries.remove(t);
                 found = true;
             }

@@ -12,6 +12,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
 import seedu.address.commons.events.model.TimetableEntryAddedEvent;
 import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
 import seedu.address.logic.commands.Command;
@@ -37,6 +38,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
     private HashMap<TimerTask, Boolean> timetableEntriesStatus;
+    private HashMap<TimerTask, String> timerTaskToTimetableEntryIdMap;
     private HashMap<String, TimerTask> scheduledTimerTasks;
 
     public LogicManager(Model model) {
@@ -47,6 +49,7 @@ public class LogicManager extends ComponentManager implements Logic {
         isLocked = false;
         timetableEntriesStatus = new HashMap<>();
         scheduledTimerTasks = new HashMap<>();
+        timerTaskToTimetableEntryIdMap = new HashMap<>();
     }
 
     @Override
@@ -126,6 +129,7 @@ public class LogicManager extends ComponentManager implements Logic {
                     System.out.println("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
+                raise(new RequestToDeleteTimetableEntryEvent(timerTaskToTimetableEntryIdMap.get(this)));
             }
         };
         long duration = c.getTimeInMillis() - System.currentTimeMillis();
@@ -134,8 +138,9 @@ public class LogicManager extends ComponentManager implements Logic {
         } else {
             task.run();
         }
-        timetableEntriesStatus.put(task, false);
+        timetableEntriesStatus.put(task, true);
         scheduledTimerTasks.put(event.timetableEntry.getId(), task);
+        timerTaskToTimetableEntryIdMap.put(task, event.timetableEntry.getId());
         System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
                 .currentTimeMillis()));
 

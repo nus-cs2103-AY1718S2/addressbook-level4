@@ -13,7 +13,7 @@ public class LoginCommandTest {
 
     @Test
     public void execute_throwsCommandException() throws Exception {
-        LoginCommand command = new LoginCommand();
+        LoginCommand command = new LoginCommand(username, password);
 
         thrown.expect(CommandException.class);
         thrown.expectMessage("Test");

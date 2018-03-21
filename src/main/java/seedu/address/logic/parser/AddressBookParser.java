@@ -50,7 +50,7 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case LoginCommand.COMMAND_WORD:
-            return new LoginCommand();
+            return new LoginCommandParser().parse(arguments);
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);

@@ -23,7 +23,8 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
-
+    public static final String PERSON_PAGE =".html";
+    public static final String profileDirectory = "/StudentPage/";
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -42,7 +43,10 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+
+        URL personPage = MainApp.class.getResource(profileDirectory + person.getName().fullName + PERSON_PAGE);
+        loadPage(personPage.toExternalForm());
+       // loadPage(SEARCH_PAGE_URL + person.getName().fullName);
     }
 
     public void loadPage(String url) {

@@ -23,13 +23,13 @@ public class Status {
     private static final String STATUS_OFFERED = "position offered";
     private static final String STATUS_ACCEPTED = "offer accepted";
 
-    private static final String INDEX_STATUS_NEW = "1";
-    private static final String INDEX_STATUS_INTERVIEW_FIRST_ROUND = "2";
-    private static final String INDEX_STATUS_INTERVIEW_SECOND_ROUND = "3";
-    private static final String INDEX_STATUS_REJECTED = "4";
-    private static final String INDEX_STATUS_WAITLIST = "5";
-    private static final String INDEX_STATUS_OFFERED = "6";
-    private static final String INDEX_STATUS_ACCEPTED = "7";
+    private static final int INDEX_STATUS_NEW = 1;
+    private static final int INDEX_STATUS_INTERVIEW_FIRST_ROUND = 2;
+    private static final int INDEX_STATUS_INTERVIEW_SECOND_ROUND = 3;
+    private static final int INDEX_STATUS_REJECTED = 4;
+    private static final int INDEX_STATUS_WAITLIST = 5;
+    private static final int INDEX_STATUS_OFFERED = 6;
+    private static final int INDEX_STATUS_ACCEPTED = 7;
 
     private static final Color COLOR_NEW = Color.GREY;
     private static final Color COLOR_INTERVIEW_FIRST_ROUND = Color.YELLOW;
@@ -39,7 +39,7 @@ public class Status {
     private static final Color COLOR_OFFERED = Color.CYAN;
     private static final Color COLOR_ACCEPTED = Color.GREEN;
 
-    private static final HashMap<String, String> statusMap = new HashMap<String, String>() {{
+    private static final HashMap<Integer, String> statusMap = new HashMap<Integer, String>() {{
             put(INDEX_STATUS_NEW, STATUS_NEW);
             put(INDEX_STATUS_INTERVIEW_FIRST_ROUND, STATUS_INTERVIEW_FIRST_ROUND);
             put(INDEX_STATUS_INTERVIEW_SECOND_ROUND, STATUS_INTERVIEW_SECOND_ROUND);
@@ -65,23 +65,37 @@ public class Status {
      *
      * @param statusIndex A valid status index.
      */
-    public Status(String statusIndex) {
-        requireNonNull(statusIndex);
-        String trimmedStatusIndex = statusIndex.trim();
-        checkArgument(isValidStatus(trimmedStatusIndex), MESSAGE_STATUS_CONSTRAINTS);
-        this.value = getStatus(trimmedStatusIndex);
+    public Status(int statusIndex) {
+        checkArgument(isValidStatus(statusIndex), MESSAGE_STATUS_CONSTRAINTS);
+        this.value = getStatus(statusIndex);
+        this.color = getColor(value);
+    }
+
+    public Status(String status) {
+        requireNonNull(status);
+        checkArgument(isValidXmlStatus(status), MESSAGE_STATUS_CONSTRAINTS);
+        this.value = status;
+        this.color = getColor(value);
+    }
+
+    public Status() {
+        this.value = getStatus(INDEX_STATUS_NEW);
         this.color = getColor(value);
     }
 
     /**
      * Returns true if a given string is a valid person major.
      */
-    public static boolean isValidStatus(String test) {
+    public static boolean isValidStatus (int test) {
         return statusMap.containsKey(test);
     }
 
-    private static String getStatus(String trimmedStatusIndex) {
-        return statusMap.get(trimmedStatusIndex);
+    public static boolean isValidXmlStatus(String test) {
+        return colorMap.containsKey(test);
+    }
+
+    private static String getStatus(int statusIndex) {
+        return statusMap.get(statusIndex);
     }
 
     private static Color getColor(String status) {
@@ -96,7 +110,7 @@ public class Status {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Major // instanceof handles nulls
+                || (other instanceof Status // instanceof handles nulls
                 && this.value.equals(((Status) other).value)); // state check
     }
 

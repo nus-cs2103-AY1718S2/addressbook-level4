@@ -24,6 +24,7 @@ public class Person {
     private final Rating rating;
     private final Resume resume;
     private final InterviewDate interviewDate;
+    private final Status status;
 
     private final UniqueTagList tags;
 
@@ -31,9 +32,10 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, ExpectedGraduationYear expectedGraduationYear,
-                  Major major, Rating rating, Resume resume, InterviewDate interviewDate, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, expectedGraduationYear,
-                major, rating, resume, interviewDate, tags);
+                  Major major, Rating rating, Resume resume, InterviewDate interviewDate, Status status,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, expectedGraduationYear, major, rating, resume, interviewDate,
+                status, tags);
 
         this.name = name;
         this.phone = phone;
@@ -44,6 +46,7 @@ public class Person {
         this.rating = rating;
         this.resume = resume;
         this.interviewDate = interviewDate;
+        this.status = status;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -84,6 +87,10 @@ public class Person {
         return interviewDate;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -116,7 +123,7 @@ public class Person {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, phone, email, address, expectedGraduationYear,
-                major, rating, resume, interviewDate, tags);
+                major, rating, resume, interviewDate, status, tags);
     }
 
     @Override
@@ -135,6 +142,8 @@ public class Person {
                 .append(getMajor())
                 .append(" Resume: ")
                 .append(getResume())
+                .append(" Status: ")
+                .append(getStatus())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

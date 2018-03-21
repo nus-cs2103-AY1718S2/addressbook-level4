@@ -16,6 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
+import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -47,6 +48,7 @@ public class PersonBuilder {
     private Rating rating;
     private Resume resume;
     private InterviewDate interviewDate;
+    private Status status;
 
     private Set<Tag> tags;
 
@@ -63,6 +65,7 @@ public class PersonBuilder {
                 Double.valueOf(DEFAULT_EXPERIENCE_SCORE));
         resume = new Resume(formPathFromFileName(DEFAULT_RESUME));
         interviewDate = new InterviewDate();
+        status = new Status();
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -79,6 +82,7 @@ public class PersonBuilder {
         rating = personToCopy.getRating();
         resume = personToCopy.getResume();
         interviewDate = personToCopy.getInterviewDate();
+        status = personToCopy.getStatus();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -166,11 +170,19 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Status} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withStatus(int statusIndex) {
+        this.status = new Status(statusIndex);
+        return this;
+    }
+
+    /**
      * Builds and returns a {@code Person}.
      */
     public Person build() {
         return new Person(name, phone, email, address, expectedGraduationYear,
-                major, rating, resume, interviewDate, tags);
+                major, rating, resume, interviewDate, status, tags);
     }
 
     /**

@@ -9,6 +9,7 @@
         <address>123, Jurong West Ave 6, #08-111</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Science</major>
+        <status>new</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -22,6 +23,7 @@
         <address>311, Clementi Ave 2, #02-25</address>
         <expectedGraduationYear>2021</expectedGraduationYear>
         <major>Computer Engineering</major>
+        <status>interview first round</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -36,6 +38,7 @@
         <address>wall street</address>
         <expectedGraduationYear>2019</expectedGraduationYear>
         <major>Computer Science</major>
+        <status>new</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -48,6 +51,7 @@
         <address>10th street</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Information Security</major>
+        <status>new</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -60,6 +64,7 @@
         <address>michegan ave</address>
         <expectedGraduationYear>2018</expectedGraduationYear>
         <major>Business Analytics</major>
+        <status>offer accepted</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -72,6 +77,7 @@
         <address>little tokyo</address>
         <expectedGraduationYear>2019</expectedGraduationYear>
         <major>Computer Science</major>
+        <status>new</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -84,6 +90,7 @@
         <address>4th street</address>
         <expectedGraduationYear>2022</expectedGraduationYear>
         <major>Information Systems</major>
+        <status>position offered</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>

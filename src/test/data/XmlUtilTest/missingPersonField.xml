@@ -6,6 +6,7 @@
     <address>4th street</address>
     <expectedGraduationYear>2020</expectedGraduationYear>
     <major>Computer Science</major>
+    <status>offer accepted</status>
     <tagged>friends</tagged>
     <interviewDate>1540814400</interviewDate>
 </person>

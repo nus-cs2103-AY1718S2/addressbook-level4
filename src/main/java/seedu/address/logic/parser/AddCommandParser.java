@@ -27,6 +27,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
+import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -60,22 +61,21 @@ public class AddCommandParser implements Parser<AddCommand> {
                     .getValue(PREFIX_EXPECTED_GRADUATION_YEAR)).get();
             Major major = ParserUtil.parseMajor(argMultimap.getValue(PREFIX_MAJOR)).get();
 
-            // Add command does not allow adding rating straight away
-            Rating rating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,
-                    Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE);
-
             // Optional fields
             Optional<Resume> resumeOptional = ParserUtil.parseResume(argMultimap.getValue(PREFIX_RESUME));
             Resume resume = resumeOptional.isPresent() ? resumeOptional.get() : new Resume(null);
 
-            // Fixed fields
+            // Default-valued fields
+            Rating rating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,
+                    Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE);
             InterviewDate interviewDate = new InterviewDate();
+            Status status = new Status();
 
             // Other fields
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Person person = new Person(name, phone, email, address, expectedGraduationYear,
-                    major, rating, resume, interviewDate, tagList);
+                    major, rating, resume, interviewDate, status, tagList);
             return new AddCommand(person);
 
         } catch (IllegalValueException ive) {

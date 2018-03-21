@@ -40,7 +40,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_MAJOR + "Computer Science "
             + PREFIX_RESUME + "jdoe.pdf "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "owesMoney\n"
+            + "The status is initialised to be 'new'.";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

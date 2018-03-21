@@ -21,6 +21,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
+import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -43,6 +44,8 @@ public class XmlAdaptedPerson {
     private String expectedGraduationYear;
     @XmlElement(required = true)
     private String major;
+    @XmlElement(required = true)
+    private String status;
     //optional fields
     @XmlElement(nillable = true)
     private String resume;
@@ -73,7 +76,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
                             String major, String technicalSkillsScore, String communicationSkillsScore,
                             String problemSolvingSkillsScore, String experienceScore,
-                            String resume, String interviewDate, List<XmlAdaptedTag> tagged) {
+                            String resume, String interviewDate, String status, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -86,6 +89,7 @@ public class XmlAdaptedPerson {
         this.experienceScore = experienceScore;
         this.resume = resume;
         this.interviewDate = interviewDate;
+        this.status = status;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -109,6 +113,7 @@ public class XmlAdaptedPerson {
         experienceScore = Double.toString(source.getRating().experienceScore);
         resume = source.getResume().value;
         interviewDate = source.getInterviewDate().toString();
+        status = source.getStatus().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -176,6 +181,14 @@ public class XmlAdaptedPerson {
         }
         final Major major = new Major(this.major);
 
+        if (this.status == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName()));
+        }
+        if(!Status.isValidXmlStatus(status)){
+            throw new IllegalValueException(Status.MESSAGE_STATUS_CONSTRAINTS);
+        }
+        final Status status = new Status(this.status);
+
         if (technicalSkillsScore == null || communicationSkillsScore == null
                 || technicalSkillsScore == null || experienceScore == null
                 || !Rating.isValidOrDefaultScore(Double.valueOf(technicalSkillsScore))
@@ -203,7 +216,7 @@ public class XmlAdaptedPerson {
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, expectedGraduationYear,
-                major, rating, resume, interviewDate, tags);
+                major, rating, resume, interviewDate, status, tags);
     }
 
     @Override
@@ -224,6 +237,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(expectedGraduationYear, otherPerson.expectedGraduationYear)
                 && Objects.equals(major, otherPerson.major)
                 && Objects.equals(interviewDate, otherPerson.interviewDate)
+                && Objects.equals(status, otherPerson.status)
                 && tagged.equals(otherPerson.tagged);
     }
 }

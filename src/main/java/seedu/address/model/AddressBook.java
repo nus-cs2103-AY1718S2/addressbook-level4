@@ -135,7 +135,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
                 person.getExpectedGraduationYear(), person.getMajor(), person.getRating(), person.getResume(),
-                person.getInterviewDate(), correctTagReferences);
+                person.getInterviewDate(), person.getStatus(), correctTagReferences);
     }
 
     /**
@@ -177,9 +177,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void removeTagFromEachPerson(Person person, Tag tag) {
         Set<Tag> editedTags = new HashSet<>(person.getTags());
         if (editedTags.remove(tag)) {
-            Person editedPerson = new Person(person.getName(), person.getPhone(),
-                    person.getEmail(), person.getAddress(), person.getExpectedGraduationYear(),
-                    person.getMajor(), person.getRating(), person.getResume(), person.getInterviewDate(), editedTags);
+            Person editedPerson = new Person(person.getName(), person.getPhone(),person.getEmail(),
+                    person.getAddress(), person.getExpectedGraduationYear(), person.getMajor(), person.getRating(),
+                    person.getResume(), person.getInterviewDate(), person.getStatus(), editedTags);
             try {
                 updatePerson(person, editedPerson);
             } catch (DuplicatePersonException dpe) {

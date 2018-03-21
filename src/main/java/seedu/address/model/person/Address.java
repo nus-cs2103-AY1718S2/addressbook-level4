@@ -56,24 +56,11 @@ public class Address {
     }
 
     /**
-     * Change address into a form that will be used by
+     * Change address into a form that will be used by Google Map
      *
      */
     public String getGoogleMapSearchForm() {
-        String[] words = getWords();
-        return getWordsWithPlusSign(words);
-    }
-
-    private String getWordsWithPlusSign(String[] words) {
-        String googleMapSearchForm = "";
-        for (String word:words) {
-            googleMapSearchForm = googleMapSearchForm + word + "+";
-        }
-        return googleMapSearchForm;
-    }
-
-    private String[] getWords() {
-        return value.split("\\s+");
+        return this.value.replaceAll(" ", "+");
     }
 
 }

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 
 /**
@@ -21,6 +22,7 @@ public class DisplayPic {
     public static final String MESSAGE_DISPLAY_PIC_NOT_IMAGE =
             "The filepath should point to a valid image file.";
     public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
+    public static final String SAVE_LOCATION = "/images/displayPic/";
 
     public final String value;
 
@@ -33,13 +35,34 @@ public class DisplayPic {
      *
      * @param filePath A valid string containing the path to the file.
      */
-    public DisplayPic(String filePath) {
+    public DisplayPic(String name, String filePath) throws IllegalValueException {
         requireNonNull(filePath);
         checkArgument(isValidPath(filePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
         checkArgument(isValidImage(filePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
 
+        String fileType = FileUtil.getFileType(filePath);
+        if (saveDisplayPic(name.trim(), filePath, fileType)) {
+            this.value = SAVE_LOCATION + name.trim() + '.' + fileType;
+        } else {
+            this.value = DEFAULT_DISPLAY_PIC;
+        }
+    }
 
-        this.value = filePath;
+    /**
+     * Tries to save a copy of the image provided by the user into a default location.
+     * @param name the name of the new image file
+     * @param filePath the location of the current image file
+     * @param fileType the file extension of the current image file
+     * @return whether the image was successfully copied
+     */
+    public boolean saveDisplayPic(String name, String filePath, String fileType) {
+        try {
+            BufferedImage image = ImageIO.read(new File(filePath));
+            FileUtil.copyImage(image, fileType, SAVE_LOCATION + name.trim() + '.' + fileType);
+            return true;
+        } catch (IOException | IllegalValueException exp) {
+            return false;
+        }
     }
 
     /**

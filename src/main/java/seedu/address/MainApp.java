@@ -3,6 +3,7 @@ package seedu.address;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -41,7 +42,7 @@ import seedu.address.ui.UiManager;
 public class MainApp extends Application {
 
     public static final Version VERSION = new Version(0, 6, 0, true);
-
+    private static boolean isTest = false;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     protected Ui ui;
@@ -54,6 +55,34 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
+        if (isTest) {
+            runInitSequence();
+        } else {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter username: ");
+
+            String username = sc.nextLine();
+
+            if (username.equals("correctUsername")) {
+                System.out.println("Enter password: ");
+
+                String password = sc.nextLine();
+
+                if (password.equals("correctPassword")) {
+                    runInitSequence();
+                } else {
+                    System.out.println("Wrong password entered. Try again.");
+                }
+            } else {
+                System.out.println("Wrong username entered. Try again.");
+            }
+        }
+    }
+
+    /**
+     * runs the initialising sequence.
+     */
+    private void runInitSequence() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
@@ -73,6 +102,8 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+
+        setIsTest(false);
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -198,6 +229,10 @@ public class MainApp extends Application {
         }
         Platform.exit();
         System.exit(0);
+    }
+
+    public void setIsTest(boolean set) {
+        isTest = set;
     }
 
     @Subscribe

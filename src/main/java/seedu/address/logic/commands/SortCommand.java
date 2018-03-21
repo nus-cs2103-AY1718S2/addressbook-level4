@@ -24,7 +24,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute() {
         model.sortPersonList(parameter);
-        if (parameter.equals("name")) {
+        if (("name").equals(parameter)) {
             return new CommandResult(MESSAGE_SUCCESS_SORT_BY_NAME);
         }
         return new CommandResult(MESSAGE_SUCCESS_SORT_BY_TAG);

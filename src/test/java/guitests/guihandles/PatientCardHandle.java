@@ -58,17 +58,25 @@ public class PatientCardHandle extends NodeHandle<Node> {
         return idLabel.getText();
     }
 
-    public String getName() { return nameLabel.getText(); }
+    public String getName() {
+        return nameLabel.getText();
+    }
 
-    public String getNric() { return nricLabel.getText(); }
+    public String getNric() {
+        return nricLabel.getText();
+    }
 
     public String getAddress() {
         return addressLabel.getText();
     }
 
-    public String getDob() { return dobLabel.getText(); }
+    public String getDob() {
+        return dobLabel.getText();
+    }
 
-    public String getBloodType() { return bloodTypeLabel.getText(); }
+    public String getBloodType() {
+        return bloodTypeLabel.getText();
+    }
 
     public String getPhone() {
         return phoneLabel.getText();

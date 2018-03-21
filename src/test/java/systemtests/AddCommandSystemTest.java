@@ -28,15 +28,12 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -85,8 +82,10 @@ public class AddCommandSystemTest extends ImdbSystemTest {
          * -> added
          */
         Patient toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + NRIC_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + DOB_DESC_AMY + "   " + BLOODTYPE_DESC_AMY + "   " +TAG_DESC_FRIEND + " ";
+        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + NRIC_DESC_AMY + "  "
+                + PHONE_DESC_AMY + " "
+                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + DOB_DESC_AMY + "   "
+                + BLOODTYPE_DESC_AMY + "   " +TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -101,30 +100,42 @@ public class AddCommandSystemTest extends ImdbSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a patient with all fields same as another patient in the address book except name -> added */
-        toAdd = new PatientBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withDob(VALID_DOB_AMY).withBloodType(VALID_BLOODTYPE_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+        toAdd = new PatientBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withDob(VALID_DOB_AMY)
+                .withBloodType(VALID_BLOODTYPE_AMY).withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + NRIC_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + DOB_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a patient with all fields same as another patient in the address book except phone -> added */
-        toAdd = new PatientBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withDob(VALID_DOB_AMY).withBloodType(VALID_BLOODTYPE_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+        toAdd = new PatientBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withDob(VALID_DOB_AMY).withBloodType(VALID_BLOODTYPE_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_BOB
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + DOB_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a patient with all fields same as another patient in the address book except email -> added */
-        toAdd = new PatientBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_AMY).withDob(VALID_DOB_AMY).withBloodType(VALID_BLOODTYPE_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
+        toAdd = new PatientBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
+                .withAddress(VALID_ADDRESS_AMY).withDob(VALID_DOB_AMY).withBloodType(VALID_BLOODTYPE_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + DOB_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a patient with all fields same as another patient in the address book except address -> added */
-        toAdd = new PatientBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_BOB).withDob(VALID_DOB_AMY).withBloodType(VALID_BLOODTYPE_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
+        toAdd = new PatientBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_BOB).withDob(VALID_DOB_AMY).withBloodType(VALID_BLOODTYPE_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
                 + DOB_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
@@ -168,31 +179,38 @@ public class AddCommandSystemTest extends ImdbSystemTest {
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: missing name -> rejected */
-        command = AddCommand.COMMAND_WORD + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing nric -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing dob -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing blood type -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -200,35 +218,43 @@ public class AddCommandSystemTest extends ImdbSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid nric -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_NRIC_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_NRIC_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, Nric.MESSAGE_NRIC_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + INVALID_ADDRESS_DESC + DOB_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: invalid dob -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + INVALID_DOB_DESC + BLOODTYPE_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + INVALID_DOB_DESC + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, DateOfBirth.MESSAGE_DOB_CONSTRAINTS);
 
         /* Case: invalid blood type -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + INVALID_BLOODTYPE_DESC;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + INVALID_BLOODTYPE_DESC;
         assertCommandFailure(command, BloodType.MESSAGE_BLOODTYPE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY
                 + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }

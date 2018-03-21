@@ -92,7 +92,8 @@ public class XmlUtilTest {
         XmlAdaptedPatient actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPatientWithRootElement.class);
         XmlAdaptedPatient expectedPerson = new XmlAdaptedPatient(
-                VALID_NAME, VALID_NRIC, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB, VALID_BLOODTYPE, VALID_TAGS);
+                VALID_NAME, VALID_NRIC, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB,
+                VALID_BLOODTYPE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -101,7 +102,8 @@ public class XmlUtilTest {
         XmlAdaptedPatient actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPatientWithRootElement.class);
         XmlAdaptedPatient expectedPerson = new XmlAdaptedPatient(
-                VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB, VALID_BLOODTYPE, VALID_TAGS);
+                VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB,
+                VALID_BLOODTYPE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

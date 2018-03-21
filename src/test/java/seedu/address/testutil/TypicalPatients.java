@@ -35,41 +35,41 @@ public class TypicalPatients {
             .withPhone("85355255")
             .withTags("friends")
             .withNric("S1234567A")
-            .withBloodType("B+")
-            .withDob("10/10/1991")
+            .withBloodType("A")
+            .withDob("11/11/1991")
             .build();
     public static final Patient BENSON = new PatientBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends")
-            .withNric("S1234567A")
-            .withBloodType("B+")
-            .withDob("10/10/1991").build();
+            .withNric("S7654321B")
+            .withBloodType("B-")
+            .withDob("10/10/1990").build();
     public static final Patient CARL = new PatientBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
-            .withNric("S1234567A")
-            .withBloodType("B+")
-            .withDob("10/10/1991").build();
+            .withNric("S5671234C")
+            .withBloodType("A+")
+            .withDob("09/09/1989").build();
     public static final Patient DANIEL = new PatientBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")
-            .withNric("S1234567A")
+            .withNric("S3456712D")
             .withBloodType("B+")
-            .withDob("10/10/1991").build();
+            .withDob("08/08/1988").build();
     public static final Patient ELLE = new PatientBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
-            .withNric("S1234567A")
-            .withBloodType("B+")
-            .withDob("10/10/1991").build();
+            .withNric("S5673412E")
+            .withBloodType("O")
+            .withDob("07/07/1987").build();
     public static final Patient FIONA = new PatientBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withNric("S1234567A")
-            .withBloodType("B+")
-            .withDob("10/10/1991").build();
+            .withNric("S1234512F")
+            .withBloodType("O+")
+            .withDob("06/06/1986").build();
     public static final Patient GEORGE = new PatientBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
             .withRemark("Comes for checkup every Tuesday").withNric("S1234567A")
             .withBloodType("B+")
-            .withDob("10/10/1991").build();
+            .withDob("11/11/1991").build();
 
     // Manually added
     public static final Patient HOON = new PatientBuilder().withName("Hoon Meier").withPhone("8482424")

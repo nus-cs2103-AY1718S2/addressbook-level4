@@ -25,8 +25,8 @@ public class PatientBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_DOB = "10/10/1991";
-    public static final String DEFAULT_BLOODTYPE = "B+";
+    public static final String DEFAULT_DOB = "11/11/1991";
+    public static final String DEFAULT_BLOODTYPE = "A";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
 

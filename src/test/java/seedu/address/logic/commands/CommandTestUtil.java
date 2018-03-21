@@ -44,9 +44,9 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_DOB_AMY = "10/10/1991";
-    public static final String VALID_DOB_BOB = "10/10/1991";
+    public static final String VALID_DOB_BOB = "11/11/1991";
     public static final String VALID_BLOODTYPE_AMY = "B+";
-    public static final String VALID_BLOODTYPE_BOB = "B+";
+    public static final String VALID_BLOODTYPE_BOB = "A";
     public static final String VALID_REMARK_AMY = "Monthly blood test";
     public static final String VALID_REMARK_BOB = "Weekly checkup";
     public static final String VALID_TAG_HUSBAND = "husband";

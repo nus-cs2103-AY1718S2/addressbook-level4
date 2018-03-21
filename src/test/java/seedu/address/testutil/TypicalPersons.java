@@ -23,10 +23,12 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withNric("S8535525Z")
-            .withTags("friends").build();
+            .withTags("friends")
+            .withSubjects("English A1").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withNric("S9123456X")
-            .withTags("owesMoney", "friends").build();
+            .withTags("owesMoney", "friends")
+            .withSubjects("Physics A2").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withNric("S9535256J").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withNric("S8765253I").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withNric("S9482224A").build();

@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -57,4 +58,10 @@ public interface Model {
      */
     void deleteTag(Tag tag) throws TagNotFoundException;
 
+    /**
+     * Replaces a specific tag for everyone in the address book.
+     * @param tagSet
+     * @throws TagNotFoundException
+     */
+    void replaceTag(List<Tag> tagSet) throws TagNotFoundException;
 }

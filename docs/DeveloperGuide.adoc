@@ -221,6 +221,14 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
+[[Design-Login]]
+=== Login component
+
+The `Login` component,
+
+* allows for users to login to a specific instance of the Pigeons address book,
+such that each user (Pigeon/Delivery Driver) can have a personalised list of customers to deliver to.
+
 [[Design-Commons]]
 === Common classes
 
@@ -229,6 +237,18 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::login[]
+=== Login feature
+==== Current Implementation
+
+The login feature is facilitated by a `UserPassStorage` that stores all `UserPass` (username and password pair of Strings) created before in the application.
+Each time a user attempts a login, a `UserPass` is created based on their inputs for username and password, and verified against the `UserPassStorage`.
+Upon successful verification, the user will be brought to a user-customised version of the application.
+
+The following sequence diagram shows how the checkLoginDetails method works:
+
+image::checkLoginDetails.jpg[width="800"]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -802,7 +822,7 @@ maps out ideal routes for drivers
 
 *Shi Kang*
 
-Minor: ability for correspondence with each addressee
+Minor: UI for overall application
 
 Major: Login for each delivery driver to own a separate list of addresses in his customised address book
 
@@ -985,5 +1005,3 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
-
-

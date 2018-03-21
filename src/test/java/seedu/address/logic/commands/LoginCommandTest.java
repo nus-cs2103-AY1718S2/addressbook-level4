@@ -1,5 +1,13 @@
 package seedu.address.logic.commands;
 
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import static java.util.Objects.requireNonNull;
+
+import java.util.function.Predicate;
+
 import javafx.collections.ObservableList;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,11 +24,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import java.util.function.Predicate;
-
-import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class LoginCommandTest {
 
@@ -155,7 +158,7 @@ public class LoginCommandTest {
         }
 
         @Override
-        public boolean hasLoggedIn(){
+        public boolean hasLoggedIn() {
             return this.loginStatus;
         }
     }
@@ -174,10 +177,10 @@ public class LoginCommandTest {
     }
 
     private class LoginAttempt {
-        Username username;
-        Password password;
+        private Username username;
+        private Password password;
 
-        public LoginAttempt(String username, String password){
+        public LoginAttempt(String username, String password) {
             this.username = new Username(username);
             this.password = new Password(password);
         }

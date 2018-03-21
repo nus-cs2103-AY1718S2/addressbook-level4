@@ -102,7 +102,7 @@ public class AddCommandTest {
 
         @Override
         public void replaceTag(List<Tag> tagList) {
-
+            fail("This method should not be called.");
         }
 
         @Override

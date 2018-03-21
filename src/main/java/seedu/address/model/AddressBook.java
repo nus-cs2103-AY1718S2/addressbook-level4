@@ -145,7 +145,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         studentTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Student(
                 student.getName(), student.getPhone(), student.getEmail(), student.getAddress(),
-                student.getProgrammingLanguage(), correctTagReferences, student.getFavourite());
+                student.getProgrammingLanguage(), correctTagReferences, student.getFavourite(), student.getDashboard());
     }
 
     /**

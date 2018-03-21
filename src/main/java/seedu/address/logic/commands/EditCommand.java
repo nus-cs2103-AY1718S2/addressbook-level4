@@ -23,9 +23,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
+import seedu.address.model.student.Favourite;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -112,9 +114,11 @@ public class EditCommand extends UndoableCommand {
         ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage()
                 .orElse(studentToEdit.getProgrammingLanguage());
         Set<Tag> updatedTags = editStudentDescriptor.getTags().orElse(studentToEdit.getTags());
+        Favourite isFavourite = studentToEdit.getFavourite();
+        Dashboard dashboard = studentToEdit.getDashboard();
 
         return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
-                updatedTags);
+                updatedTags, isFavourite, dashboard);
     }
 
     @Override

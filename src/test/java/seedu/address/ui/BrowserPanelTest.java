@@ -6,8 +6,6 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
-import static seedu.address.ui.BrowserPanel.profileDirectory;
-import static seedu.address.ui.BrowserPanel.PERSON_PAGE;
 
 
 import java.net.URL;
@@ -43,7 +41,7 @@ public class BrowserPanelTest extends GuiUnitTest {
       //  URL expectedPersonUrl = new URL(BrowserPanel.profileDirectory + ALICE.getName().fullName.replaceAll(" ", "%20")+PERSON_PAGE);
 
 
-      URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+     // URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
 
        /* assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 

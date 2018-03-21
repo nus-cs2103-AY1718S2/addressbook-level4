@@ -806,7 +806,8 @@ the orders faster using shortcuts for commands.
 - Minor enhancement: Add a light colour theme +
 An yellow-based light colour theme is now available as an alternative to the default dark grey colour theme. This
 is to give the users a warm and comfortable feeling when they are doing their busy work in the restaurant.
-- Major enhancement: Add a new feature
+- Major enhancement: Add a customers' past orders count feature +
+The restaurant can identify the frequent and loyal customers to give discounts.
 
 * Zhang Zequn
 - Minor enhancement: Add colours to different tags +

@@ -5,15 +5,15 @@
 
 .label {
     -fx-font-size: 13pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Helvetica";
     -fx-text-fill: #555555;
     -fx-opacity: 0.9;
 }
 
 
 .label-bright {
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 13pt;
+    -fx-font-family: "Helvetica";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
@@ -147,7 +147,7 @@
 
 .status-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-text-fill: black;
+    -fx-text-fill: #1d1d1d;
 }
 
 .result-display {
@@ -199,10 +199,10 @@
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: orange;
-    -fx-opacity: 0.9;
+    -fx-font-size: 19pt;
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: darkorange;
+    -fx-opacity: 0.95;
 }
 
 .menu .left-container {

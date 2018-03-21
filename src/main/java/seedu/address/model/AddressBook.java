@@ -31,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private LinkedList<TimetableEntry> timetableEntries;
+    private int nextId;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -43,6 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         timetableEntries = new LinkedList<>();
+        nextId = 0;
     }
 
     public AddressBook() {}
@@ -79,6 +81,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
         setTimetableEntriesList(newData.getTimetableEntriesList());
+        this.nextId = newData.getNextId();
 
         try {
             setPersons(syncedPersonList);
@@ -88,7 +91,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// person-level operations
-
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
@@ -101,6 +103,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+        if (!person.isInitialized()) {
+            person.setId(nextId);
+            nextId++;
+        }
         persons.add(person);
     }
 
@@ -144,7 +150,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         Person toReturn = new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getRating(),
-                correctTagReferences, person.getCalendarId());
+                correctTagReferences, person.getCalendarId(), person.getId());
         toReturn.setReview(person.getReview());
         return toReturn;
     }
@@ -232,6 +238,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
     }
+
+    @Override
+    public int getNextId() {
+        return nextId;
+    }
+
+    public void setNextId(int nextId) {
+        this.nextId = nextId;
+    }
+
+
     /** sort the existing persons in specific field*/
     public void sort(String field) {
         persons.sort(field);

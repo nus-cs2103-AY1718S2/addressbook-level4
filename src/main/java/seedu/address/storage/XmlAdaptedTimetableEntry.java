@@ -12,13 +12,9 @@ public class XmlAdaptedTimetableEntry {
     @XmlElement(required = true)
     private String calendarId;
     @XmlElement(required = true)
-    private String ownerName;
-    @XmlElement(required = true)
-    private String entryName;
-    @XmlElement(required = true)
     private String endDate;
     @XmlElement(required = true)
-    private String ownerEmail;
+    private String ownerId;
     @XmlElement(required = true)
     private String id;
 
@@ -31,14 +27,11 @@ public class XmlAdaptedTimetableEntry {
     /**
      * Constructs a {@code XmlAdaptedTimetableEntry} with the given timetable entry details.
      */
-    public XmlAdaptedTimetableEntry(String calendarId, String ownerName, String entryName,
-                                    String endDate, String ownerEmail, String id) {
+    public XmlAdaptedTimetableEntry(String calendarId, String id, String endDate, String ownerId) {
         this.calendarId = calendarId;
-        this.ownerName = ownerName;
-        this.entryName = entryName;
-        this.endDate = endDate;
-        this.ownerEmail = ownerEmail;
         this.id = id;
+        this.endDate = endDate;
+        this.ownerId = ownerId;
     }
 
     /**
@@ -48,10 +41,8 @@ public class XmlAdaptedTimetableEntry {
      */
     public XmlAdaptedTimetableEntry(TimetableEntry source) {
         this.calendarId = source.getCalendarId();
-        this.ownerName = source.getOwnerName();
-        this.entryName = source.getEntryName();
         this.endDate = source.getEndDate();
-        this.ownerEmail = source.getOwnerEmail();
+        this.ownerId = source.getOwnerId();
         this.id = source.getId();
     }
 
@@ -60,6 +51,6 @@ public class XmlAdaptedTimetableEntry {
      *
      */
     public TimetableEntry toModelType() {
-        return new TimetableEntry(calendarId, ownerName, entryName, ownerEmail, id, endDate);
+        return new TimetableEntry(calendarId, id, endDate, ownerId);
     }
 }

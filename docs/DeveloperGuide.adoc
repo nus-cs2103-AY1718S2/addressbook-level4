@@ -362,6 +362,47 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+=== Sort feature
+
+==== Current Implementation
+
+The sorting feature allows the user to sort the list of students according to certain
+parameters like name and tag. After the sorting process has completed, the user will be
+presented with a read only view of the sorted list on the `UI`, and the state of the
+list will not be modified.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "sort name" is typed into the `CommandBox` by the user.
+
+image::SortCommandSequenceDiagram.png[width="650"]
+
+. `Logic` uses `AddressBookParser` class to parse the user command,
+. A `SortCommand` object is created which is then executed by the `LogicManager`.
+. The command executes and calls the `sortPersonList(parameter)` method, which then affects
+  the `Model`.
+. After the sorting process has been completed, the result is encapsulated as a
+  `CommandResult` object, which is then passed back to the `Ui` as a message shown
+  to the user.
+
+Below is an example of how the list looks like before and after the command "sort name"
+is executed.
+
+image::SortCommandByName.png[width="650"]
+
+==== Design Considerations
+
+===== Aspect: How the list appears after sorting is done and the app is restarted
+* ** Alternative 1 (current choice): ** List remains in its initial state after each
+                                        restart of the app
+** Pros: Some users might prefer the default list that was created by themselves e.g. the need
+         to track which student was added last.
+** Cons: It will be a hassle to sort the list every time the app starts up if there
+         are not many changes to the list.
+* ** Alternative 2: ** List is in the sorted form after the app is restarted every time
+** Pros: Reduces the time taken to sort the list for each start up of the app.
+** Cons: If the default list is required, `SortCommand` will have to be implemented
+         as an `UndoableCommand` as well.
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

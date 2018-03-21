@@ -8,6 +8,7 @@ import seedu.recipe.logic.commands.SelectCommand;
 import seedu.recipe.logic.commands.ShareCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 
+//@@author RyanAngJY
 /**
  * Parses input arguments and creates a new ShareCommand object
  */
@@ -28,3 +29,4 @@ public class ShareCommandParser {
         }
     }
 }
+//@@author

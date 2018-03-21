@@ -7,6 +7,7 @@ import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
 
 import java.util.logging.Logger;
 
+import com.dropbox.core.DbxException;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -125,7 +126,7 @@ public class CommandBox extends UiPart<Region> {
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | DbxException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();

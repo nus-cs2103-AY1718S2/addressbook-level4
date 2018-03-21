@@ -169,4 +169,13 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    /**
+     * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
+     * A .xml extension will be added to the original filename.
+     */
+    public static String parseFilename(String filename) {
+        String XmlExtensionfilename = filename + ".xml";
+        return XmlExtensionfilename;
+    }
 }

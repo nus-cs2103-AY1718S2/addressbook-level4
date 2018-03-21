@@ -54,6 +54,7 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
     testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+    compile 'com.dropbox.core:dropbox-core-sdk:3.0.6'
 }
 
 shadowJar {

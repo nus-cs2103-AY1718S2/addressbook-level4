@@ -6,6 +6,7 @@ import java.util.Set;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -17,15 +18,18 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_NRIC = "S8535525Z";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_SUBJECTS = "Mathematics";
 
     private Name name;
     private Nric nric;
     private Set<Tag> tags;
+    private Set<Subject> subjects;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         nric = new Nric(DEFAULT_NRIC);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        subjects = SampleDataUtil.getSubjectSet(DEFAULT_SUBJECTS);
     }
 
     /**
@@ -35,6 +39,7 @@ public class PersonBuilder {
         name = personToCopy.getName();
         nric = personToCopy.getNric();
         tags = new HashSet<>(personToCopy.getTags());
+        subjects = new HashSet<>(personToCopy.getSubjects());
     }
 
     /**
@@ -61,9 +66,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Parses the {@code subjects} into a {@code Set<Subject>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withSubjects(String ... subjects) {
+        this.subjects = SampleDataUtil.getSubjectSet(subjects);
+        return this;
+    }
 
     public Person build() {
-        return new Person(name, nric, tags);
+        return new Person(name, nric, tags, subjects);
     }
 
 }

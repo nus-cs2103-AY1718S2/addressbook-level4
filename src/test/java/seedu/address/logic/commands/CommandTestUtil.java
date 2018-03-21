@@ -92,6 +92,8 @@ public class CommandTestUtil {
     public static final String VALID_THEME_PATH_LIGHT = "/view/LightTheme.css";
     public static final String VALID_THEME_PATH_DARK = "/view/DarkTheme.css";
 
+    public static final String OPTION_OWNER = "-o";
+
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

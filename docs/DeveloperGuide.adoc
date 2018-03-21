@@ -785,7 +785,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * is taking CS2103/CS2103T in NUS
 * wants to keep track on his/her learning progress
 * is willing to have good team management
-* has a need to manage a significant number of contacts
+* has a need to manage a up to 4 contacts
 * prefers desktop apps over other types
 * can type fast
 * prefers typing over mouse input
@@ -797,7 +797,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * keep track of your own progress on a week by week basis
 * keep track of your teammates' completion of TO-DO list(at most 20 tasks per day) and learning progress (providing proof for peer evaluation)
 * view the teammates' weekly plan in phase B (to know the upcoming updates even before they send any pull requests to github repo)
-* save your answers(no more than 200 words) for the exercises (as proof of completion and for future revision)
+* manage issues from github straight from the software along with other tracking
+* save your answers(no more than 100 words) for the exercises (as proof of completion and for future revision)
 * easily search for information based on key words (which is hard to achieve in the module website with nested collapsible lists)
 
 *Feature Contribution*:
@@ -835,201 +836,49 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |new user |register and account with NUS net ID |join the module community
+|`* * *` |new user |upload a photo of my face |help others recognize me
 
-|`* * *` |new user |fill in my full name and phone number (strictly 8 numbers) |provide necessary information for the platform maintenance
+|`* * *` |new user |fill in my details such as name, email, 8 digits phone number |provide necessary information for platform maintenance
 
-|`* * *` |new user |fill in optional fiels such as faculty, year of study etc |help my classmates know be better
-
-|`* * *` |user |add contacts |have more classmates to communicate with
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by NUS NET ID |locate details of persons without having to go through the entire list
-
-|`* * *` |user |search information in our module website based on keywords |nevigate and find the information I need quickly
-
-|`* * *` |user |view my TO-DO list |know all the my tasks easily
-
-|`* * *` |user |tick an item in the TO-DO list upon completion |focus on the tasks I have not done
-
-|`* * *` |user |save my answers of the exercises |show to tutor as proof of my learning outcome and revise before exams
+|`* * *` |new user |fill in optional fields such as faculty, year of study, etc. |help my teammates know me better
 
 |`* * *` |user |update information of certain field(s) |keep my information up-to-date
 
+|`* * *` |user |add a teammate's details |help myself to track my current teammates' progress
+
+|`* * *` |user |delete a teammate |remove an entry of a teammate that I'm no longer grouped with
+
+|`* * *` |user |search information in our module website based on keywords |navigate and reference the information I need quickly
+
+|`* * *` |user |view my to-do learning outcomes |know all the weekly deliverables and not miss them out
+
+|`* * *` |user |mark a to-do learning outcome as completed |focus on the tasks I have not done
+
+|`* * *` |user |answer and save my responses for the weekly exercises |show to tutor as proof of my learning outcome and revise before exams
+
+|`* * *` |user |know if my answer for an exercise is correct |learn from any mistakes I made
+
 |`* * *` |user |see the timeline showing the learning progress of me and my teammates |make sure everyone is on track
 
-|`* * *` |user |see the weekly plan of my teammates (phase B) |to know the upcoming updates even before they send any pull requests to github repo
+|`* * *` |user |see the list of completed/incomplete learning outcomes of my teammates |help to remind my teammate of the task or know which task to offer help with if they are having difficulties
 
-|`* * *` |user |post my weekly plan (phase B) |to inform my teammates of upcoming updates even before I send any pull requests to github repo
+|`* * *` |user |list issues (tasks) on GitHub |to easily inform my teammates of my upcoming plans even before I send any pull requests to the team's repository
 
-|`* *` |user |upload a profile picture |help others to recognize me
+|`* * *` |user |assign issues (tasks) to my teammates |to track who is doing what
+
+|`* * *` |user |see the issues (tasks) listed on GitHub |to easily know the upcoming plans of my teammates even before they send any pull requests to the team's repository
+
+|`* * *` |user |close issues (tasks) on GitHub |to easily inform my teammates of a completed task if no particular pull requests closes it
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the ProgressChecker |sort persons by name |locate a person easily
+|`* *` |user with many persons in the ProgressChecker |sort persons by name |locate a person easily
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `ProgressChecker` and the *Actor* is the `user`, unless specified otherwise)
-
-[discrete]
-=== Use case: View contents of a specific week
-
-*MSS*
-
-1.  User requests to view a specific week
-2.  ProgressChecker shows content of the specified week
-+
-Use case ends.
-
-*Extensions*
-
-* 1a. Specified week does not exist.
-+
-[none]
-** 1a1. ProgressChecker shows an error message.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Delete person
-
-*MSS*
-
-1.  User requests to list persons
-2.  ProgressChecker shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  ProgressChecker deletes the person
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Add a to-do
-
-*MSS*
-
-1.  User requests to view tasks in a specific week
-2.  ProgressChecker shows tasks in the specified week
-3.  User requests to add a new task in a specific week
-4.  ProgressChecker adds a new task to the existing list
-+
-Use case ends.
-
-*Extensions*
-
-* 1a. Specified week does not exist.
-+
-[none]
-** 1a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Mark a to-do as complete
-
-*MSS*
-
-1.  User requests to view tasks in a specific week
-2.  ProgressChecker shows tasks in the specified week
-3.  User requests to complete a task in a specific week
-4.  ProgressChecker marks specified task as complete
-+
-Use case ends.
-
-*Extensions*
-
-* 1a. Specified week does not exist.
-+
-[none]
-** 1a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: find person
-
-*MSS*
-
-1.  User types find
-2.  ProgressCheck automatically shows the list dynamically without the user needing to press enter key
-3.  User need not need to type the whole name, substrings will generate results
-4.  ProgressCheck displays the necessary results
-=======
-[none]
-* 2a. The tasks list is empty.
-+
-Use case resumes at step 2.
-
-* 3a. The specified task does not exist
-+
-[none]
-** 3a1. ProgressChecker shows an error message.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Answer a question and save
-
-*MSS*
-
-1.  User requests to view a specific week
-2.  ProgressChecker shows content of the specified week
-3.  User requests to key in and save an answer to a question
-4.  ProgressChecker takes in input and saves
-+
-Use case ends.
-
-*Extensions*
-
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given substring doesn't exist in any name
-+
-[none]
-** 3a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
-=======
-* 1a. Specified week does not exist.
-+
-[none]
-** 1a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
-
-[none]
-* 2a. There is no content to be shown.
-+
-Use case ends.
-
-* 3a. The question index does not exist.
-[none]
-** 3a1. ProgressChecker shows an error message.
-+
-Use case ends.
 
 [discrete]
 === Use case: Upload a photo for the profile
@@ -1053,20 +902,146 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Add teammate
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Delete teammate
+
+*MSS*
+
+1.  User requests to list teammates
+2.  ProgressChecker shows a list of teammates
+3.  User requests to delete a specific teammate in the list
+4.  ProgressChecker deletes the teammate
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+
+** 3a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find teammate
+
+*MSS*
+
+1.  User types find
+2.  ProgressCheck automatically shows the list dynamically without the user needing to press enter key
+3.  User need not need to type the whole name, substrings will generate results
+4.  ProgressCheck displays the necessary results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tasks list is empty.
++
+Use case resumes at step 2.
+
+* 3a. The given substring doesn't exist in any name
++
+[none]
+** 3a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Search for information
+
+_{ to be added }_
+
+[discrete]
+=== Use case: View contents of a specific week
+
+*MSS*
+
+1.  User requests to view a specific week
+2.  ProgressChecker shows content of the specified week
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified week does not exist.
+
+** 1a1. ProgressChecker shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Mark a learning outcome as completed
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Answer a question and save
+
+*MSS*
+
+1.  User requests to view a specific week
+2.  ProgressChecker shows content of the specified week
+3.  User requests to key in and save an answer to a question
+4.  ProgressChecker takes in input and saves
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified week does not exist.
++
+[none]
+** 1a1. ProgressChecker shows an error message.
++
+Use case ends.
+
+[none]
+* 2a. There is no content to be shown.
++
+Use case ends.
+
+* 3a. The question index does not exist.
+[none]
+** 3a1. ProgressChecker shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: List an issue
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Assign an issue to a teammate
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Close an issue
+
+_{ to be added }_
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  The product may need 3-5 minutes to build up for the first time.
 .  The data cannot be retrieved from outside
-.  User need to log in with their unique ID and corresponding password
+.  User need to authenticate with their Google Tasks credentials
 .  User can only view the information of their teammates
-
-_{More to be added}_
 
 [appendix]
 == Glossary

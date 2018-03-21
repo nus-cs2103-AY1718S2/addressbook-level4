@@ -53,11 +53,11 @@ public interface Model {
 
     /** Removes the given {@code tag} from all {@code Student}s. */
     void deleteTag(Tag tag);
-
+    
     void addLesson(Student student, Day day, Time startTime, Time endTime)
             throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException;
 
     Schedule getSchedule();
-    
+
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 }

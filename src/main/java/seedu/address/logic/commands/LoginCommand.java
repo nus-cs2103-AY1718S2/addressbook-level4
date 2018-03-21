@@ -34,7 +34,7 @@ public class LoginCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
-            if(model.checkLoginCredentials(this.username, this.password)) {
+            if (model.checkLoginCredentials(this.username, this.password)) {
                 return new CommandResult(MESSAGE_LOGIN_SUCCESS);
             } else {
                 return new CommandResult(MESSAGE_LOGIN_FAILURE);

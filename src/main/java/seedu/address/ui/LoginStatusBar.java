@@ -1,10 +1,10 @@
 package seedu.address.ui;
 
+import org.controlsfx.control.StatusBar;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
-
-import org.controlsfx.control.StatusBar;
 
 //@@author kaisertanqr
 /**

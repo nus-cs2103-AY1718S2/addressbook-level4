@@ -193,4 +193,25 @@ public class ParserUtil {
         return tagSet;
     }
 
+    /**
+     * Parses {@code String time} into a {@code Time}.
+     */
+
+    public static Time parseTime(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedSubject = time.trim();
+        if (!Time.isValidTime(trimmedSubject)) {
+            throw new IllegalValueException(Time.MESSAGE_TIME_CONSTRAINTS);
+        }
+        return new Time(trimmedSubject);
+    }
+
+    /**
+     * Parses a {@code Optional<String> time} into an {@code Optional<Time>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(parseTime(time.get())) : Optional.empty();
+    }
 }

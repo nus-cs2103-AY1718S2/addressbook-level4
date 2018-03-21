@@ -4,11 +4,15 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Arrays;
 
+import static java.util.Objects.requireNonNull;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddLessonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.student.Name;
-
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 /**
  * Parses input arguments and creates a new FindCommand object
  */
@@ -23,16 +27,28 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddLessonCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddLessonCommand.MESSAGE_USAGE));
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_START_TIME, PREFIX_END_TIME);
+
+        Index index;
+        Time startTime;
+        Time endTime;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddLessonCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        try {
+            startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START_TIME)).get();
+            endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END_TIME)).get();
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
 
-        return new AddLessonCommand(new Name(nameKeywords[NAME_INDEX]),
-                new Time(nameKeywords[START_TIME_INDEX]), new Time(nameKeywords[END_TIME_INDEX]));
+        return new AddLessonCommand(index, startTime, endTime);
     }
 
 }

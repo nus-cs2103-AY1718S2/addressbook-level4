@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Application;

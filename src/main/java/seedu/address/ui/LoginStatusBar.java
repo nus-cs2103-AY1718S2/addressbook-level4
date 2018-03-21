@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import javafx.collections.ObservableList;
 import org.controlsfx.control.StatusBar;
 
 import javafx.application.Platform;
@@ -31,8 +32,10 @@ public class LoginStatusBar extends UiPart<Region> {
     public void updateLoginStatus(boolean status) {
         if(status) {
             Platform.runLater(() -> this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_TRUE));
+            loginStatus.setStyle("-fx-background-color: rgb(0, 77, 26, 0.5)");
         } else {
             Platform.runLater(() -> this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_FALSE));
+            loginStatus.setStyle("-fx-background-color: rgb(77, 0, 0, 0.5)");
         }
     }
 

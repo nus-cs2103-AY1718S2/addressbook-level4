@@ -4,6 +4,12 @@ import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.Version;
+import com.restfb.types.FacebookType;
+import com.restfb.types.User;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -42,7 +48,8 @@ public class BrowserPanel extends UiPart<Region> {
             + "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
             + "manage_pages,publish_actions,read_insights,read_page_mailboxes,rsvp_event,publish_actions";
 
-    private String accessToken;
+    private String accessToken = null;
+    private Recipe recipeToShare;
     //@@author
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -95,10 +102,11 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleShareRecipeEvent(ShareRecipeEvent event) {
         loadPage(AUTH_URL);
-    }
-
-    private String getAccessToken() {
-        return null;
+        recipeToShare = event.getTargetRecipe();
+        System.out.println("recipe to share: " + recipeToShare.getName());
+        if (accessToken != null) {
+            postRecipeOnFacebook();
+        }
     }
 
     private void setUpBrowserUrlListener() {
@@ -120,6 +128,19 @@ public class BrowserPanel extends UiPart<Region> {
         });
     }
 
-    private void postRecipeOnFacebook() {}
+    /**
+     * Posts a recipe directly onto Facebook.
+     */
+    private void postRecipeOnFacebook() {
+        System.out.println("In PostRecipeOnFacebook recipe to share: " + recipeToShare.getName());
+        Version apiVersion = Version.VERSION_2_12;
+        FacebookClient fbClient = new DefaultFacebookClient(accessToken, apiVersion);
+        User me = fbClient.fetchObject("me", User.class);
+
+        FacebookType post =  fbClient.publish("me/feed", FacebookType.class,
+                Parameter.with("message", recipeToShare.getName().toString()));
+
+        System.out.println(me.getName());
+    }
     //@@author
 }

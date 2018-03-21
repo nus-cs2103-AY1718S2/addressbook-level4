@@ -46,9 +46,8 @@ public class ShareCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new ShareRecipeEvent(targetIndex));
         recipeToShare = lastShownList.get(targetIndex.getZeroBased());
-        shareRecipeOnFacebook(recipeToShare);
+        EventsCenter.getInstance().post(new ShareRecipeEvent(targetIndex, recipeToShare));
 
         return new CommandResult(String.format(MESSAGE_SELECT_RECIPE_SUCCESS, targetIndex.getOneBased()));
 

@@ -7,8 +7,7 @@ import seedu.address.model.person.DatePredicate;
  * Filters and lists all persons in address book whose date contains any of the argument dates.
  * Keyword matching is case sensitive.
  */
-public class FilterCommand extends Command{
-
+public class FilterCommand extends Command {
 
     public static final String COMMAND_WORD = "filter";
 

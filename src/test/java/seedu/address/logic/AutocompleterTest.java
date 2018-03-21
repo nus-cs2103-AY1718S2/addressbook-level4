@@ -20,14 +20,12 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 public class AutocompleterTest {
     private Model model;
-    private Logic logic;
     private Autocompleter autocompleter;
 
     @Before
     public void setUp() {
         model = new ModelManager();
-        logic = new LogicManager(model);
-        autocompleter = new Autocompleter(logic);
+        autocompleter = new Autocompleter(model.getAddressBook().getPersonList());
     }
 
     @Test
@@ -44,17 +42,17 @@ public class AutocompleterTest {
 
         model.addPerson(
                 new Person(
-                        new Name("John Doe"),
+                        new Name("John"),
                         new Phone("98765432"),
                         new Email("johndoe@test.com"),
                         new Address("NUS"),
                         new DelivDate("2018-03-24"),
                         Collections.emptySet()));
 
-        autocompleter = new Autocompleter(logic);
+        autocompleter = new Autocompleter(model.getAddressBook().getPersonList());
 
-        String query = "find John Doe";
-        String prefix = query.substring(0, query.length() - 6);
-        assertEquals(query.substring(query.length() - 6), autocompleter.autocomplete(prefix));
+        String query = "find John";
+        String prefix = query.substring(0, query.length() - 3);
+        assertEquals(query.substring(query.length() - 3), autocompleter.autocomplete(prefix));
     }
 }

@@ -59,7 +59,7 @@ public class CommandBox extends UiPart<Region> {
 
         case TAB:
             keyEvent.consume();
-            commandTextField.appendText(new Autocompleter(logic).autocomplete(commandTextField.getText()));
+            commandTextField.appendText(logic.autocomplete(commandTextField.getText()));
             break;
 
         default:

@@ -49,4 +49,9 @@ public interface Model {
 
     /** Removes the given {@code tag} from all {@code Student}s. */
     void deleteTag(Tag tag);
+
+    /**
+     *
+     */
+    void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 }

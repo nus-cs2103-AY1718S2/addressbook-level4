@@ -138,6 +138,11 @@ public class AddCommandTest {
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
+            fail("This method should not be called");
+        }
     }
 
     /**

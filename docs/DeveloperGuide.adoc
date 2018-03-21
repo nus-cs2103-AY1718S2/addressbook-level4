@@ -411,6 +411,116 @@ If you have a future implementation that requires the addition of a new attribut
 
 // end::favourites[]
 
+// tag::location[]
+=== Location feature
+==== Current Implementation
+Selecting a student using the `select` command will render their location on google maps.
+
+The address of the student is extracted and converted in a string to be appended to the end of the `SEARCH_PAGE_URL` in the following function
+
+----
+    private void loadStudentPage(Student student) {
+        Address location = student.getAddress();
+        String append = location.urlstyle();
+        loadPage(SEARCH_PAGE_URL + append);
+    }
+----
+
+An example is provided below when `select 1` is entered as a command:
+
+image::location_screenshot.png[width="300"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of displaying student locations
+* *Alternative 1 (current choice)*: display it on the embedded browser
+** Pros: Easy to implement, simply alter the default webpage
+** Cons: Might not be able to display student information and location simultaneously
+* *Alternative 2*: creating a new window to display the location
+** Pros: This would allow concurrent display of locations of many students
+** Cons: the UI would be messy and user has to navigate between 2 different windows
+// end::location[]
+
+// tag::programmingLanguage[]
+=== Programming Language Feature
+==== Current Implementation
+
+The programming language feature involves having an additional class to the student model called `ProgrammingLanguage`.
+It stores the name of the programming language currently being taught to each student as a string.
+
+[NOTE]
+The string for `ProgrammingLanguage` must contain visible characters.
+
+image::ModelWithPLFeature.png[width="800"]
+
+As can be seen from the diagram, the field `ProgrammingLanuage` has been added to the student model.
+
+Concerning the Logic component, when the `add` command or `edit` command is called,
+a `Student` object with attributes including `ProgrammingLanguage` will be created/edited depending on which command was entered.
+
+For example, adding a student would have the command string parsed for arguments in such a way:
+
+[source, java]
+----
+    public AddCommand parse(String args) throws ParseException {
+        // ...Tokenize the String Input...
+
+        // ...Check if prefixes are present...
+
+        try {
+            // ...Parses the other fields required of a Student...
+
+            ProgrammingLanguage programmingLanguage = ParserUtil.parseSubject(argMultimap
+                    .getValue(PREFIX_PROGRAMMING_LANGUAGE)).get();
+
+            Student student = new Student(name, phone, email, address, programmingLanguage, tagList);
+
+            return new AddCommand(student);
+		} catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+	}
+----
+
+A new student would then be added. On the other hand, editing a student's programming language will be done by creating an edited student in such a way:
+
+[source, java]
+----
+	private static Student createEditedStudent(Student studentToEdit, EditStudentDescriptor editStudentDescriptor) {
+        assert studentToEdit != null;
+
+        // ...Set other attributes of the prospective newly edited student...
+
+        ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage();
+
+        return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
+                updatedTags);
+    }
+----
+
+The editedStudent will have the new programming language attribute and will hence be used to replace in the Address Book in-memory.
+
+==== Design Considerations
+
+===== Aspect: How to store `ProgrammingLanguage` for a `Student`
+
+* **Alternative 1 (current choice):** Store as an attribute of Student.
+** Pros: Easy to keep track of as well as modify.
+** Cons: Coupling increases as more classes (`ProgrammingLanguage` and `Student`) are associated with each other.
+* **Alternative 2:** Store as a separate list and have each student index in the UniqueStudentsList be mapped to each item in the list.
+** Pros: Less coupling so less need to refactor code
+** Cons: Might be messier to implement, especially if the UniqueStudentsList have it's students swapping indexes.
+
+===== Aspect: What command to add `ProgrammingLanguage` to `Student`
+
+* **Alternative 1 (current choice):** Implement it through the existing `add` command.
+** Pros: Intuitive and the user does not have to learn an additional command
+** Cons: User will have to type a longer string for add command to include the programming language used by the student.
+* **Alternative 2:** Implement it as a new command.
+** Pros: User will be able to add or modify `ProgrammingLanguage` one or possibly even a few students at their own discretion.
+** Cons: User will have to learn a new specific command and might also be slightly difficult to implement.
+// end::programmingLanguage[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -829,13 +939,54 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Target user profile*:
 
 * has a need to plan tuition slots for large number of students
-* handle their contacts
+* wants to store students' profile information and pictures
+* wants to keep a progress log for students
+* is able to reference common important student details like contact number
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
+
 *Value proposition*: improve the planning process for scheduling time slots for all tutees
+
+
+=== Feature Contribution
+
+*Samuel Loh:*
+
+* *(Minor)* Added programmingLanguage field to student model and modified add/edit commands to fit enhancement
+** This helps the tutor to identify what programming language is being used by each student to learn coding.
+
+* *(Major)* Create a "more information" page storing other important details of the students including an optional profile picture.
+** This helps the tutor store more information about students, which are not referenced as often, in another portion and thus are not displayed on the student card.
+E.g. emergency contact and an optional profile picture
+
+*Tan Wei Hao:*
+
+* *(Minor)* Added a findTag command
+** This allows the tutor to find a student by tag labels.
+
+
+* *(Major)* Syncing timetable with Google calendar
+** This helps the tutor keep track of lessons better by syncing with his Google calendar. It also allows the use of Google calendar features.
+
+*Tan Chee Wee:*
+
+* *(Minor)* Selecting a student via 'select' commands renders their location on google maps
+** This allows the tutor to easily plan a route to the student's home.
+
+* *(Major)* Add a functionality that enables tutor to use free-form english to execute commands instead of conforming to the specific syntax
+** This makes the app more user-friendly without the need to memorise the syntax of respective commands and able to execute them more intuitively.
+
+*Yap ni:*
+
+* *(Minor)* Favourites feature where tutors can add or remove students from favourites and list students that are in their favourites
+** This helps the tutor to remember or view the list of prominent students they want to take note of easily.
+
+* *(Major)* Dashboard feature where each student has their own dashboard
+** This helps the tutor to better plan out lessons for each student and track their learning progress.
+
 
 [appendix]
 == User Stories

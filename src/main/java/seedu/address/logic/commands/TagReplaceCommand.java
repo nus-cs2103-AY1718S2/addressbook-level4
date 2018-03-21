@@ -57,7 +57,7 @@ public class TagReplaceCommand extends UndoableCommand {
         tagSet.toArray(tagArray);
         if (tagSet.isEmpty() || tagSet.size() == 1) {
             throw new CommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagReplaceCommand.MESSAGE_USAGE));
-        }else if (!lastShownList.contains(tagArray[0])) {
+        } else if (!lastShownList.contains(tagArray[0])) {
             throw new CommandException(Messages.MESSAGE_INVALID_TAG_ENTERED);
         }
 

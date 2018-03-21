@@ -28,7 +28,7 @@ public class TagReplaceCommandParser implements Parser<TagReplaceCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
         try {
             List<Tag> tagSet = ParserUtil.parseTagsForReplacement(argMultimap.getAllValues(PREFIX_TAG));
-                return new TagReplaceCommand(tagSet);
+            return new TagReplaceCommand(tagSet);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagReplaceCommand.MESSAGE_USAGE));

@@ -505,6 +505,32 @@ the new list will be as shown in Figure 3.3.1.2. below.
 image::Figure3-3-1-3.png[width="650"]
 // end::morefields[]
 
+// tag::login[]
+=== Login System
+==== Current Implementation
+The action of logging into IMDB is facilitated by `LoginCommand` and the static class `LoginManager`, which also contains a static attribute of class `LoginState`.
+
+`LoginCommand` takes in username and password input from the user, then calls the static class `LoginManager` to authenticate the given username and password, meaning that it will check through a csv file of correct usernames and passwords. If the given username and password are found in that file, then the value stored in `LoginState` will be changed to reflect the role of the user who logged in (doctor or medical staff).
+
+If `LoginState` shows that no user is currently logged in, certain commands that access the database such as `AddCommand` and `ListCommand` will throw an exception telling the user to log in. Once logged in, the user can perform those commands.
+
+There is no need for a logout command, since `ExitCommand` can be used to exit the application, and when the application is opened again, `LoginState` will be reset.
+
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: Implementation of `LoginState`
+
+* **Alternative 1 (current choice):** Use a static `LoginManager` class with a static `LoginState` attribute
+** Pros: The methods of `LoginManager` can be called anywhere, and its stored `LoginState` attribute will not be changed except through the authenticate method.
+** Cons: Need to implement as a final class with a private constructor, since Java does not support public static classes.
+* **Alternative 2:** Store a login state in LoginCommand
+** Pros: Can store login state as an int instead of an object instance.
+** Cons: Will require a method in LoginCommand to update login state and verify username and password. Violates Single Responsibility Principle and Separation of Concerns as `LoginCommand` now needs to do two different things. Also, there is a need to somehow pass the login state to ImdbParser.
+// end::login[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

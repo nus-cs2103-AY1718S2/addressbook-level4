@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
@@ -219,6 +220,30 @@ public class ParserUtil {
         requireNonNull(expectedSpending);
         return expectedSpending.isPresent()
                 ? Optional.of(parseExpectedSpending(expectedSpending.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String value} into an {@code value}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code value} is invalid.
+     */
+    public static Age parseAge(String age) throws IllegalValueException {
+        requireNonNull(age);
+        Integer trimmedAge = Integer.parseInt(age.trim());
+        if (!Age.isValidAge(trimmedAge)) {
+            throw new IllegalValueException(Age.AGE_CONSTRAINTS);
+        }
+        return new Age(trimmedAge);
+    }
+
+    /**
+     * Parses a {@code Optional<String> value} into an {@code Optional<value>} if {@code value} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Age> parseAge(Optional<String> age) throws IllegalValueException {
+        requireNonNull(age);
+        return age.isPresent() ? Optional.of(parseAge(age.get())) : Optional.empty();
     }
 
     /**

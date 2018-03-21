@@ -9,5 +9,6 @@
         <income isPrivate="false">30000</income>
         <actualSpending isPrivate="false">30000</actualSpending>
         <expectedSpending isPrivate="false">30000</expectedSpending>
+        <age isPrivate="false">20</age>
     </persons>
 </addressbook>

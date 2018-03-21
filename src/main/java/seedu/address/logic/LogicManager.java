@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Timer;
@@ -21,6 +22,8 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.timetableentry.TimetableEntryTime;
+import seedu.address.storage.TimetableEntryTimeParserUtil;
 
 /**
  * The main LogicManager of the app.
@@ -33,7 +36,8 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
-    private HashMap<String, Timer> timetableEntriesExpiry;
+    private HashMap<TimerTask, Boolean> timetableEntriesStatus;
+    private HashMap<String, TimerTask> scheduledTimerTasks;
 
     public LogicManager(Model model) {
         this.model = model;
@@ -41,7 +45,8 @@ public class LogicManager extends ComponentManager implements Logic {
         addressBookParser = new AddressBookParser();
         undoRedoStack = new UndoRedoStack();
         isLocked = false;
-        timetableEntriesExpiry = new HashMap<>();
+        timetableEntriesStatus = new HashMap<>();
+        scheduledTimerTasks = new HashMap<>();
     }
 
     @Override
@@ -105,19 +110,41 @@ public class LogicManager extends ComponentManager implements Logic {
     @Subscribe
     private void handleTimetableEntryAddedEvent(TimetableEntryAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        TimetableEntryTime parsedTime = TimetableEntryTimeParserUtil.parseTime(event.timetableEntry.getEndDate());
         Calendar c = Calendar.getInstance();
+        c.set(parsedTime.getYear(), parsedTime.getMonth(), parsedTime.getDate(), parsedTime.getHour(),
+                parsedTime.getMinute());
         Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Event ended!");
+                if (timetableEntriesStatus.get(this)) {
+                    System.out.println("An event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format
+                            (Calendar.getInstance().getTimeInMillis()));
+                } else {
+                    System.out.println("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+                            .format(Calendar.getInstance().getTimeInMillis()));
+                }
             }
-        }, 5000);
-        timetableEntriesExpiry.put(event.timetableEntry.getId(), timer);
+        };
+        long duration = c.getTimeInMillis() - System.currentTimeMillis();
+        if (duration >= 0) {
+            timer.schedule(task, duration);
+        } else {
+            task.run();
+        }
+        timetableEntriesStatus.put(task, false);
+        scheduledTimerTasks.put(event.timetableEntry.getId(), task);
+        System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
+                .currentTimeMillis()));
+
     }
 
     @Subscribe
     private void handleTimetableEntryDeletedEvent(TimetableEntryDeletedEvent event) {
-        timetableEntriesExpiry.remove(event.id);
+        TimerTask associatedTimerTask = scheduledTimerTasks.get(event.id);
+        timetableEntriesStatus.put(associatedTimerTask, false);
+        scheduledTimerTasks.remove(event.id);
     }
 }

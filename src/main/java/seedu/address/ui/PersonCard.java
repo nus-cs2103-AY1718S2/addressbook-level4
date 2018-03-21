@@ -66,7 +66,7 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         initTags(person);
-        Image image = AppUtil.getImage("/images/clock.png");
+        Image image = AppUtil.getImage(person.getDisplayPic().toString());
         displayPic.setImage(image);
     }
 

@@ -6,8 +6,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
+
 import javax.imageio.ImageIO;
 
+import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 
@@ -22,7 +26,8 @@ public class DisplayPic {
     public static final String MESSAGE_DISPLAY_PIC_NOT_IMAGE =
             "The filepath should point to a valid image file.";
     public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
-    public static final String SAVE_LOCATION = "/images/displayPic/";
+    public static final String DEFAULT_IMAGE_LOCATION = "/images/displayPic/";
+    public static final String SAVE_LOCATION = "/src/main/resources/images/displayPic/";
 
     public final String value;
 
@@ -37,15 +42,23 @@ public class DisplayPic {
      */
     public DisplayPic(String name, String filePath) throws IllegalValueException {
         requireNonNull(filePath);
-        checkArgument(isValidPath(filePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
-        checkArgument(isValidImage(filePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+        String trimmedFilePath = filePath.trim();
+        checkArgument(isValidPath(trimmedFilePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+        checkArgument(isValidImage(trimmedFilePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
 
-        String fileType = FileUtil.getFileType(filePath);
-        if (saveDisplayPic(name.trim(), filePath, fileType)) {
-            this.value = SAVE_LOCATION + name.trim() + '.' + fileType;
+
+        String fileType = FileUtil.getFileType(trimmedFilePath);
+        if (saveDisplayPic(name.trim(), trimmedFilePath, fileType)) {
+            //this.value = name.trim() + '.' + fileType;
+            this.value = DEFAULT_IMAGE_LOCATION + name.trim() + '.' + fileType;
         } else {
             this.value = DEFAULT_DISPLAY_PIC;
         }
+    }
+
+    public DisplayPic(String filePath) throws IllegalValueException {
+        requireNonNull(filePath);
+        this.value = filePath;
     }
 
     /**
@@ -58,7 +71,8 @@ public class DisplayPic {
     public boolean saveDisplayPic(String name, String filePath, String fileType) {
         try {
             BufferedImage image = ImageIO.read(new File(filePath));
-            FileUtil.copyImage(image, fileType, SAVE_LOCATION + name.trim() + '.' + fileType);
+            FileUtil.copyImage(image, fileType, Paths.get(".").toAbsolutePath().normalize().toString()
+                    + SAVE_LOCATION + name.trim() + '.' + fileType);
             return true;
         } catch (IOException | IllegalValueException exp) {
             return false;
@@ -69,8 +83,12 @@ public class DisplayPic {
      * Returns true if a given string points to a valid file.
      */
     public static boolean isValidPath(String test) {
-        File file = new File(test);
-        return FileUtil.isFileExists(file);
+        if (MainApp.class.getResourceAsStream(test) == null) {
+            File file = new File(test);
+            return FileUtil.isFileExists(file);
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -80,10 +98,24 @@ public class DisplayPic {
      */
     public static boolean isValidImage(String test) {
         try {
-            BufferedImage image = ImageIO.read(new File(test));
+            InputStream imageStream = ImageIO.class.getResourceAsStream(test);
+            if (imageStream == null) {
+                try {
+                    BufferedImage image = ImageIO.read(new File(test));
+                    return image != null;
+                } catch (IOException e3) {
+                    return false;
+                }
+            }
+            BufferedImage image = ImageIO.read(imageStream);
             return image != null;
         } catch (IOException e) {
-            return false;
+            try {
+                BufferedImage image = ImageIO.read(new File(test));
+                return image != null;
+            } catch (IOException e2) {
+                return false;
+            }
         }
     }
 

@@ -145,7 +145,7 @@ public class XmlAdaptedPerson {
         if (!DisplayPic.isValidImage(this.displayPic)) {
             throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
         }
-        final DisplayPic displayPic = new DisplayPic(this.name, this.displayPic);
+        final DisplayPic displayPic = new DisplayPic(this.displayPic);
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, matricNumber, phone, email, address, displayPic, tags);

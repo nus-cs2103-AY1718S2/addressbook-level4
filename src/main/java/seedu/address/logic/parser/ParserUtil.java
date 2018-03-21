@@ -184,7 +184,7 @@ public class ParserUtil {
             if (!DisplayPic.isValidImage(trimmedDisplayPath)) {
                 throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
             }
-            return new DisplayPic(displayPic, name);
+            return new DisplayPic(name, displayPic);
         }
     }
 

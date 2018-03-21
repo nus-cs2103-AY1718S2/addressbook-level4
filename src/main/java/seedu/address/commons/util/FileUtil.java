@@ -98,11 +98,12 @@ public class FileUtil {
 
     public static String getFileType(String filePath) throws IllegalValueException {
         requireNonNull(filePath);
-        int lastDot = filePath.lastIndexOf('.');
+        String trimmedFilePath = filePath.trim();
+        int lastDot = trimmedFilePath.lastIndexOf('.');
         if (lastDot == -1) {
             throw new IllegalValueException("THE FILE MUST HAVE A FILE EXTENSION.");
         } else {
-            return filePath.substring(lastDot + 1);
+            return trimmedFilePath.substring(lastDot + 1);
         }
     }
 

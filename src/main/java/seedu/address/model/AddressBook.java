@@ -21,6 +21,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
+
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
@@ -202,11 +203,30 @@ public class AddressBook implements ReadOnlyAddressBook {
             for (Person person : persons) {
                 removeTagFromPerson(t, person);
             }
-            tags.remove(t);
         } else {
             throw new TagNotFoundException("Specific tag is not used in the address book.");
         }
     }
+
+    /**
+     * Calls replaceTagForPerson method when tag is found in tags.
+     * @param tagSet
+     * @throws TagNotFoundException
+     */
+    public void replaceTag(List<Tag> tagSet) throws TagNotFoundException {
+        Tag[] tagArray = new Tag[2];
+        tagSet.toArray(tagArray);
+        Tag tagToBeReplaced = tagArray[0];
+        Tag tagToBePlaced = tagArray[1];
+        if (tags.contains(tagToBeReplaced)) {
+            for (Person person : persons) {
+                replaceTagForPerson(tagToBeReplaced, tagToBePlaced, person);
+            }
+        } else {
+            throw new TagNotFoundException("Specific tag is not used in the address book.");
+        }
+    }
+
 
     /**
      * Removes a specific tag from an individual person and updates the person's information.
@@ -227,6 +247,29 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         }
 
+    }
+
+    /**
+     * Removes a specific tag from an individual person and updates the person's information.
+     * @param tagToBeReplaced
+     * @param tagToBePlaced
+     * @param person
+     */
+
+    public void replaceTagForPerson(Tag tagToBeReplaced, Tag tagToBePlaced, Person person) {
+        Set<Tag> tagList = new HashSet<>(person.getTags());
+        if (tagList.remove(tagToBeReplaced)) {
+            tagList.add(tagToBePlaced);
+            Person newPerson = new Person(person.getName(), person.getNric(),
+                    tagList);
+            try {
+                updatePerson(person, newPerson);
+            } catch (DuplicatePersonException error1) {
+                throw new AssertionError("Updating person after removing tag should not have duplicate persons.");
+            } catch (PersonNotFoundException error2) {
+                throw new AssertionError("Person should exist in the address book.");
+            }
+        }
     }
 
     //// util methods

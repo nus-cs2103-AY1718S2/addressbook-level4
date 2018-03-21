@@ -39,7 +39,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a person
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_TIMEZONE_AMY = "PST";
+    public static final String VALID_TIMEZONE_AMY = "SGT";
     public static final String VALID_TIMEZONE_BOB = "SGT";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";

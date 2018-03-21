@@ -18,8 +18,8 @@ public class Mailer {
 
     private static String pigeonsMail = "pigeonscs2103@gmail.com";
     private static String password = "Pigeons2103";
-    //private static String RECIPIENT = "delepine.matthieu@gmail.com";
-    private static String RECIPIENT = "matthieu2301@hotmail.fr";
+    //private static String defaultRecipient = "delepine.matthieu@gmail.com";
+    private static String defaultRecipient = "matthieu2301@hotmail.fr";
 
     /**
      * Used for testing
@@ -28,13 +28,13 @@ public class Mailer {
     public static void main(String[] args) {
 
         List<String> to = new ArrayList<>();
-        to.add(RECIPIENT);
+        to.add(defaultRecipient);
 
         email(to);
     }
 
     /**
-     * Send an email to the @param list of recipients
+     * Send an email to the {@param recipients}'s list of recipients
      */
     private static void email(List<String> recipients) {
         Properties props = System.getProperties();

@@ -68,13 +68,19 @@ public class AddressBookParserTest {
     public void parseCommand_find() throws Exception {
         List<String> nameKeywords = Arrays.asList("foo", "bar", "baz");
         List<String> tagKeywords = Arrays.asList("friend", "family");
+        List<String> ratingKeywords = Arrays.asList("5");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD
                         + " n/"
                         + nameKeywords.stream().collect(Collectors.joining(" n/"))
                         + " t/"
-                        + tagKeywords.stream().collect(Collectors.joining(" t/")));
-        assertEquals(new FindCommand(new FieldContainKeywordsPredicate(nameKeywords, tagKeywords)), command);
+                        + tagKeywords.stream().collect(Collectors.joining(" t/"))
+                        + " r/"
+                        + ratingKeywords.stream().collect(Collectors.joining(" r/")));
+        assertEquals(new FindCommand(
+                new FieldContainKeywordsPredicate(
+                        nameKeywords, tagKeywords, ratingKeywords)),
+                        command);
     }
 
     @Test

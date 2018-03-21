@@ -28,17 +28,16 @@ public class XmlUtilTest {
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
     private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validAddressBook.xml");
-    private static final File MISSING_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingPersonField.xml");
-    private static final File INVALID_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidPersonField.xml");
-    private static final File VALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "validPerson.xml");
+    private static final File MISSING_ACTIVITY_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingActivityField.xml");
+    private static final File INVALID_ACTIVITY_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidActivityField.xml");
+    private static final File VALID_ACTIVITY_FILE = new File(TEST_DATA_FOLDER + "validActivity.xml");
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
 
-    private static final String INVALID_PHONE = "9482asf424";
+    private static final String INVALID_DATE_TIME = "9482asf424";
 
     private static final String VALID_NAME = "Hans Muster";
-    private static final String VALID_PHONE = "9482424";
-    private static final String VALID_EMAIL = "hans@example";
-    private static final String VALID_ADDRESS = "4th street";
+    private static final String VALID_DATE_TIME = "9482424";
+    private static final String VALID_REMARK = "4th street";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
@@ -79,30 +78,30 @@ public class XmlUtilTest {
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithMissingPersonField_validResult() throws Exception {
-        XmlAdaptedActivity actualPerson = XmlUtil.getDataFromFile(
-                MISSING_PERSON_FIELD_FILE, XmlAdaptedActivityWithRootElement.class);
-        XmlAdaptedActivity expectedPerson = new XmlAdaptedActivity(
-                null, VALID_PHONE, VALID_ADDRESS, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+    public void xmlAdaptedActivityFromFile_fileWithMissingActivityField_validResult() throws Exception {
+        XmlAdaptedActivity actualActivity = XmlUtil.getDataFromFile(
+                MISSING_ACTIVITY_FIELD_FILE, XmlAdaptedActivityWithRootElement.class);
+        XmlAdaptedActivity expectedActivity = new XmlAdaptedActivity(
+                null, VALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
+        assertEquals(expectedActivity, actualActivity);
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithInvalidPersonField_validResult() throws Exception {
-        XmlAdaptedActivity actualPerson = XmlUtil.getDataFromFile(
-                INVALID_PERSON_FIELD_FILE, XmlAdaptedActivityWithRootElement.class);
-        XmlAdaptedActivity expectedPerson = new XmlAdaptedActivity(
-                VALID_NAME, INVALID_PHONE, VALID_ADDRESS, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+    public void xmlAdaptedActivityFromFile_fileWithInvalidActivityField_validResult() throws Exception {
+        XmlAdaptedActivity actualActivity = XmlUtil.getDataFromFile(
+                INVALID_ACTIVITY_FIELD_FILE, XmlAdaptedActivityWithRootElement.class);
+        XmlAdaptedActivity expectedActivity = new XmlAdaptedActivity(
+                VALID_NAME, INVALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
+        assertEquals(expectedActivity, actualActivity);
     }
 
     @Test
-    public void xmlAdaptedPersonFromFile_fileWithValidPerson_validResult() throws Exception {
-        XmlAdaptedActivity actualPerson = XmlUtil.getDataFromFile(
-                VALID_PERSON_FILE, XmlAdaptedActivityWithRootElement.class);
-        XmlAdaptedActivity expectedPerson = new XmlAdaptedActivity(
-                VALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_TAGS);
-        assertEquals(expectedPerson, actualPerson);
+    public void xmlAdaptedActivityFromFile_fileWithValidActivity_validResult() throws Exception {
+        XmlAdaptedActivity actualActivity = XmlUtil.getDataFromFile(
+                VALID_ACTIVITY_FILE, XmlAdaptedActivityWithRootElement.class);
+        XmlAdaptedActivity expectedActivity = new XmlAdaptedActivity(
+                VALID_NAME, VALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
+        assertEquals(expectedActivity, actualActivity);
     }
 
     @Test

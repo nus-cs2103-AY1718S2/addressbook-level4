@@ -98,7 +98,7 @@ public class Activity {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Date And Time: ")
+                .append(" Date/Time: ")
                 .append(getDateTime())
                 .append(" Remark: ")
                 .append(getRemark())

@@ -3,7 +3,6 @@ package seedu.address.model.activity;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;

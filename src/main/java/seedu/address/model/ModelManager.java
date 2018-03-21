@@ -14,7 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
-import seedu.address.model.Schedule;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -93,9 +93,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addLesson(Student student, Time startTime, Time endTime) {
-        Lesson l = new Lesson(student, startTime, endTime);
-        schedule.addLesson(l);
+    public void addLesson(Student studentToAddLesson, Time startTime, Time endTime)
+            throws DuplicateLessonException, StudentNotFoundException {
+        requireAllNonNull(studentToAddLesson, startTime, endTime);
+
+        Lesson newLesson = new Lesson(studentToAddLesson, startTime, endTime);
+        schedule.addLesson(newLesson);
     }
     @Override
     public Schedule getSchedule() {

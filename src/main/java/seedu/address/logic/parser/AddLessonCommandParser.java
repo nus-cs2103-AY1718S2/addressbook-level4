@@ -10,11 +10,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddLessonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.lesson.Time;
-import seedu.address.model.student.Name;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new AddCommandCommand object
  */
 public class AddLessonCommandParser implements Parser<AddLessonCommand> {
     static final int NAME_INDEX = 0;

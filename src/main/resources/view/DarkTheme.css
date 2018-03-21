@@ -397,3 +397,90 @@
     -fx-text-fill: black;
     -fx-background-color: grey;
 }
+
+#calendarPlaceholder .yearMonth {
+    -fx-font: 25px Tahoma;
+    -fx-fill: #95adf0;
+}
+
+#calendarPlaceholder .button {
+    -fx-padding: 5 10 5 10;
+    -fx-margin: 20;
+    -fx-border-color: #7194cc;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: #ddeeff;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #95adf0;
+    -fx-background-insets: 2, 0, 1, 2;
+}
+
+#calendarPlaceholder .button:hover {
+    -fx-background-color: #ace;
+}
+
+#calendarPlaceholder .button:pressed, .button:default:hover:pressed {
+    -fx-border-color: #58b;
+    -fx-background-color: #7ad;
+    -fx-text-fill: #fff;
+}
+
+#calendarPlaceholder .button:disabled, .button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
+#calendarPlaceholder .button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+#calendarPlaceholder .button:default:hover {
+    -fx-background-color: derive(-fx-focus-color, 30%);
+}
+#calendarPlaceholder .weekday {
+    -fx-background-color: #e2f6ff;
+    -fx-border-width: 1px;
+    -fx-border-color: #7194cc;
+}
+
+#calendarPlaceholder .weekend {
+    -fx-background-color: #b6c4da;
+    -fx-border-width: 1px;
+    -fx-border-color: #7194cc;
+}
+
+#calendarPlaceholder .dayName {
+    -fx-font: 13px Tahoma;
+    -fx-fill: black;
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+}
+
+#calendarPlaceholder .date {
+    -fx-background-color: #e3e9f4;
+    -fx-border-width: 1px;
+    -fx-border-color: #7194cc;
+}
+
+#calendarPlaceholder .today {
+    -fx-background-color: #b6c4da;
+}
+
+#calendarPlaceholder .thisMonthDate {
+    -fx-font: 13px Tahoma;
+    -fx-fill: black;
+    -fx-stroke: black;
+    -fx-stroke-width: 0.5;
+}
+
+#calendarPlaceholder .notThisMonthDate {
+    -fx-font: 13px Tahoma;
+    -fx-fill: silver;
+    -fx-stroke: silver;
+    -fx-stroke-width: 0.5;
+}

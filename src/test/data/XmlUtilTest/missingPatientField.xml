@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Patient with missing name field -->
 <patient>
+    <name>Hans Muster</name>
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <dob>10/10/1991</dob>
+    <bloodType>B+</bloodType>
     <tagged>friends</tagged>
 </patient>

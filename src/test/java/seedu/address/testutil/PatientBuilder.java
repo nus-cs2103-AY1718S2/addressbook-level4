@@ -4,8 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.patient.Address;
+import seedu.address.model.patient.BloodType;
+import seedu.address.model.patient.DateOfBirth;
 import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.Remark;
@@ -18,24 +21,33 @@ import seedu.address.model.util.SampleDataUtil;
 public class PatientBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
+    public static final String DEFAULT_NRIC = "S1234567A";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_DOB = "11/11/1991";
+    public static final String DEFAULT_BLOODTYPE = "A";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
+    private Nric nric;
     private Phone phone;
     private Email email;
     private Address address;
+    private DateOfBirth dob;
+    private BloodType bloodType;
     private Remark remark;
     private Set<Tag> tags;
 
     public PatientBuilder() {
         name = new Name(DEFAULT_NAME);
+        nric = new Nric(DEFAULT_NRIC);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        dob = new DateOfBirth(DEFAULT_DOB);
+        bloodType = new BloodType(DEFAULT_BLOODTYPE);
         remark = new Remark(DEFAULT_REMARK);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
@@ -45,9 +57,12 @@ public class PatientBuilder {
      */
     public PatientBuilder(Patient patientToCopy) {
         name = patientToCopy.getName();
+        nric = patientToCopy.getNric();
         phone = patientToCopy.getPhone();
         email = patientToCopy.getEmail();
         address = patientToCopy.getAddress();
+        dob = patientToCopy.getDob();
+        bloodType = patientToCopy.getBloodType();
         remark = patientToCopy.getRemark();
         tags = new HashSet<>(patientToCopy.getTags());
     }
@@ -57,6 +72,14 @@ public class PatientBuilder {
      */
     public PatientBuilder withName(String name) {
         this.name = new Name(name);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Nric} of the {@code Patient} that we are building.
+     */
+    public PatientBuilder withNric(String nric) {
+        this.nric = new Nric(nric);
         return this;
     }
 
@@ -73,6 +96,22 @@ public class PatientBuilder {
      */
     public PatientBuilder withAddress(String address) {
         this.address = new Address(address);
+        return this;
+    }
+
+    /**
+     * Sets the {@code DOB} of the {@code Patient} that we are building.
+     */
+    public PatientBuilder withDob(String dob) {
+        this.dob = new DateOfBirth(dob);
+        return this;
+    }
+
+    /**
+     * Sets the {@code BloodType} of the {@code Patient} that we are building.
+     */
+    public PatientBuilder withBloodType(String bloodType) {
+        this.bloodType = new BloodType(bloodType);
         return this;
     }
 
@@ -101,7 +140,7 @@ public class PatientBuilder {
     }
 
     public Patient build() {
-        return new Patient(name, phone, email, address, remark, tags);
+        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, tags);
     }
 
 }

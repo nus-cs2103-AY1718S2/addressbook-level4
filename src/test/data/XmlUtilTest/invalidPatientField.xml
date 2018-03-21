@@ -2,8 +2,11 @@
 <!-- Patient with an invalid phone field -->
 <patient>
     <name>Hans Muster</name>
+    <nric>S1234567A</nric>
     <phone>9482asf424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <dob>10/10/1991</dob>
+    <bloodType>B+</bloodType>
     <tagged>friends</tagged>
 </patient>

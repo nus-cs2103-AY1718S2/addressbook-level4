@@ -24,6 +24,9 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
+        assertEquals(expectedCard.getNric(), actualCard.getNric());
+        assertEquals(expectedCard.getDob(), actualCard.getDob());
+        assertEquals(expectedCard.getBloodType(), actualCard.getBloodType());
 
         //@@author yamgent-reused
         //Reused from https://github.com/se-edu/addressbook-level4/pull/798/files
@@ -36,9 +39,12 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(Patient expectedPatient, PatientCardHandle actualCard) {
         assertEquals(expectedPatient.getName().fullName, actualCard.getName());
+        assertEquals(expectedPatient.getNric().value, actualCard.getNric());
         assertEquals(expectedPatient.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPatient.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPatient.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPatient.getDob().value, actualCard.getDob());
+        assertEquals(expectedPatient.getBloodType().value, actualCard.getBloodType());
         assertEquals(expectedPatient.getRemark().value, actualCard.getRemark());
         assertEquals(expectedPatient.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());

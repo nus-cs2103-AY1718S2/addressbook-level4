@@ -11,19 +11,19 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Date;
 
-import guitests.guihandles.HelpWindowHandle;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
+import guitests.guihandles.HelpWindowHandle;
 import guitests.guihandles.TitleBarHandle;
+
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.MaximizeAppRequestEvent;
 import seedu.address.commons.events.ui.MinimizeAppRequestEvent;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.model.AddressBook;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -37,10 +37,10 @@ public class TitleBarTest extends GuiUnitTest {
     private static final Clock originalClock = TitleBar.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
-    private TitleBarHandle titleBarHandle;
-
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private TitleBarHandle titleBarHandle;
 
     @BeforeClass
     public static void setUpBeforeClass() {

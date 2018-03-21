@@ -22,7 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_DATE = "2018-03-23";
-    public static final String DEFAULT_TAGS = "friends";
+    //public static final String DEFAULT_TAGS = "priority";
 
     private Name name;
     private Phone phone;
@@ -37,7 +37,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         date = new DelivDate(DEFAULT_DATE);
-        tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        //tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
     /**
@@ -49,7 +49,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         date = personToCopy.getDate();
-        tags = new HashSet<>(personToCopy.getTags());
+        //tags = new HashSet<>(personToCopy.getTags());
     }
 
     /**

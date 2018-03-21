@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import com.google.maps.errors.ApiException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -16,6 +17,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+
+import java.io.IOException;
 
 
 public class LogicManagerTest {
@@ -102,6 +105,8 @@ public class LogicManagerTest {
         } catch (CommandException | ParseException e) {
             assertEquals(expectedException, e.getClass());
             assertEquals(expectedMessage, e.getMessage());
+        } catch (InterruptedException | IOException | ApiException e) {
+            e.printStackTrace();
         }
 
         assertEquals(expectedModel, model);
@@ -119,6 +124,8 @@ public class LogicManagerTest {
             assertEquals(expectedMessage, result.feedbackToUser);
         } catch (ParseException | CommandException e) {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
+        } catch (InterruptedException | IOException | ApiException e) {
+            e.printStackTrace();
         }
     }
 }

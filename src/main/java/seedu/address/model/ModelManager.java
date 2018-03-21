@@ -12,9 +12,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.TimetableEntryAddedEvent;
+import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.timetableentry.TimetableEntry;
+import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.timetableentry.exceptions.TimetableEntryNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -66,6 +71,28 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void deleteTimetableEntry(String id) throws TimetableEntryNotFoundException {
+        addressBook.removeTimetableEntry(id);
+        indicateTimetableEntriesDeleted(id);
+        indicateAddressBookChanged();
+    }
+
+    private void indicateTimetableEntriesDeleted(String id) {
+        raise(new TimetableEntryDeletedEvent(id));
+    }
+
+    private void indicateTimetableEntryAdded(TimetableEntry e) {
+        raise(new TimetableEntryAddedEvent(e));
+    }
+
+    @Override
+    public void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException {
+        addressBook.addTimetableEntry(e);
+        indicateAddressBookChanged();
+        indicateTimetableEntryAdded(e);
+    }
+
+    @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -79,6 +106,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public Person getPerson(int index) throws IndexOutOfBoundsException {
+        return addressBook.getPersonList().get(index);
     }
 
     //=========== Filtered Person List Accessors =============================================================

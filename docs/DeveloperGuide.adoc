@@ -1,4 +1,4 @@
-= E.T. (Employee Tracker) - Developer Guide
+= E.T. (Employees Tracker) - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -384,6 +384,89 @@ The details of implementation are as follow:
 . `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
 . `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
 . `edited` Person is used to replace `toEdit` Person in `AddressBook`
+
+=== Review system
+
+A person by default upon creation will have a null `Review` field, indicated to be `-` by default. This indicate that the person is yet to be reviewed.
+
+A person can be assigned a `Review` through the command of `Review`. `Review` does not have any restriction on the content (alphanumeric and symbols without any length restriction).
+
+=== Reviewing a person
+
+Currently `review` command and `rate` command are implemented in a similar manner, and hence `review` command and `edit` command are also implemented in a similar manner.
+
+The implementation basically mirrors what has already been documented in `3.3. Editing and rating a person`, so the implementation below is basically the iteration of the said part.
+
+The implementation of `edit` and `review` command in the Logic component involves 4 objects: +
+
+. Person toEdit
+. Person edited
+. Parser: EditCommandParser or ReviewCommandParser
+. EditPersonDescriptor
+
+Since all fields of the `Person` class are immutable, we need to use `edited` Person to replace the `toEdit` Person
+
+The details of implementation are as follow:
+
+. `Parser` extracts the new information for each field from user input.
+. `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
+. `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
+. `edited` Person is used to replace `toEdit` Person in `AddressBook`
+
+=== Lock and unlock the application
+
+`lock` command and `unlock` command are implemented in a similar manner. Both have the same command format.
+
+The implementation of `lock` and `unlock` command in the Logic component involves 5 objects: +
+
+. Command: LockCommand
+. Command: UnlockCommand
+. CommandParser: LockCommandParser or UnlockCommandParser
+. AddressBookParser
+. LogicManager
+
+The details of implementation of `lock` command are as follow:
+
+. `AddressBookParser` is used to let the application accept `lock` command.
+. `LockCommandParser` extracts the password from user input.
+. `LockCommand` is used to set the password in LogicManager.
+. `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
+
+The details of implementation of `unlock` command are similar to `lock` command and are as follow:
+
+. `AddressBookParser` is used to let the application accept `unlock` command.
+. `UnlockCommandParser` extracts the password from user input.
+. `UnlockCommand` is used to compare the user input password to the password stored in LogicManager by last `lock` caommand,
+if they are the same, unlock the application, otherwise, inform incorrect password.
+. `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
+
+=== Every employee has own timetable
+
+To implement the timetables for employees, we use a third party source which is Google Calendar API. With this API, we
+can integrate the application with Google Calendar, and achieve things liking creating events as what we usually do on
+Google Calendar website through the command. The import of Google Calendar API is simple: just add the necessary
+dependencies in Build.gradle and which will import the external libraries after building.
+
+After we have the API, what we need to do is just automatically creating a new timetable (calendar) for every employee
+at the time this employee was added to the application. And this is what the CreateNewCalendar class for.
+
+Additionally, as everyone has their own unique timetables, a new field called `CalendarId` will be created for each
+employee, to indicate the associated timetables.
+
+=== Add events on anyone's timetable
+
+`addEvent` command is used to add an event on one employee's timetable. The implementation mainly touches 3 objects in
+the logic component: +
+
+. Command: TestAddEventCommand
+. CommandParser: TestAddEventCommandParser
+. AddressBookParser
+
+The details of implementation of `addEvent` command are as follow:
+
+. `AddressBookParser` is used to let the application accept `addEvent` command.
+. `TestAddEventCommandParser` is used to extracts information of the event to be added from user input.
+. `TestAddEventCommand` is used to perform the addition of the event to one's timetable with Google Calendar API.
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -819,7 +902,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: keep track of employees and their work easily through a single app
 
-*Feature Contrbution*：
+*Feature Contribution*：
 
 . Li Yufei +
 * (minor) be able to lock the application and unlock it and must use the same password
@@ -829,7 +912,10 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * (major) UI optimization (may change)
 . Ho Bing Xuan
 * (minor) add Rating features
-* (major) notification feature for timetable entry 
+* (major) notification feature for timetable entry
+. Gilbert Emerson
+* (minor) enhance on the Find feature, able to find by multiple keywords and also in multiple fields
+* (major) add Review feature
 
 [appendix]
 == User Stories
@@ -841,19 +927,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *`|new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *`|user |add a new person | include employees that have just entered the company
+|`* * *`|user |add a new person | include employee that have just entered the company
 
 |`* * *`|user |have a dedicated timetable for each employee| trace progress of that person
 
-|`* * *`|user |add a timetable entry on anyone's timetable | assign jobs to employees
+|`* * *`|user |add a timetable entry on anyone's timetable | assign jobs to employee
 
 |`* * *`|user |edit a timetable entry |update timetable entry information
 
 |`* * *`|user |delete a timetable entry | remove a job or event that is canceled
 
-|`* * *`|user |give employees a rating |evaluate their performance
+|`* * *`|user |give employee a rating |evaluate their performance
 
-|`* * *`|user |change employees' rating | update my rarting record when the performance of an employee changes
+|`* * *`|user |change employee's rating | update my rating record when the performance of an employee changes
 
 |`* * *`|user |add notes on a timetable entry or on a person | include more details about the entry
 
@@ -861,11 +947,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *`|user |identify a person with name when carrying out commands | save time by not having to browse through a long list
 
-|`* *`|user |sort employee by name |locate an employee easily
+|`* *`|user |sort employees by name |locate an employee easily
 
-|`* *`|user |sort the employees by their rating |give them bonus salaries accordingly
+|`* *`|user |sort employees by their rating |give them bonus salaries accordingly
 
-|`* *`|user |sort the employees by their salaries |see their salary conditions
+|`* *`|user |sort employees by their salaries |see their salary conditions
 
 |`* *`|user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
@@ -877,9 +963,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *`|user |be notified for any deadline for the timetable entry of my employees | be aware of employees who are late in submitting their work
 
-|`* *`|user |export my addressbook |share information with another user
+|`* *`|user |export my employees tracker |share information with another user
 
-|`* *`|user |import addressbook |obtain information from another user
+|`* *`|user |import my employees tracker |obtain information from another user
 
 |`*`|user |see timetable entries happening in other departments |be aware of the progress of other departments
 
@@ -891,11 +977,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*`|user |change the window scheme/theme/skin | have personalised experience in the app
 
-|`*`|user |know employees' location |search their location on the map
+|`*`|user |know employee's location |search their location on the map
 
-|`*`|user |lock the addressbook |leave my app open while making unauthorized people cannot access it
+|`*`|user |lock the employees tracker |leave my app open while making unauthorized people cannot access it
 
-|`*`|user |unlock the addressbook |continue to use the app after leaving it locked
+|`*`|user |unlock the employees tracker |continue to use the app after leaving it locked
 
 |`*`|user |write a review to an employee that has ever worked below me| information his/her current manager of his/her performance
 |=======================================================================
@@ -903,7 +989,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Employees Tracker` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Add a timetable entry on anyone's timetable
@@ -911,9 +997,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1. User requests to list employees
-2. EmployeeTracker shows a list of employees
+2.   shows a list of employees
 3. User requests to add a entry to an employee's timetable
-4. EmployeeTracker adds the entry
+4. Employees Tracker adds the entry
 +
 Use case ends.
 
@@ -927,20 +1013,19 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. EmployeeTracker shows an error message.
+** 3a1. Employees Tracker shows an error message.
 +
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Give employees a rating
+=== Use case: Give employee a rating
 
 *MSS*
 
 1. User requests to list employees
-2. EmployeeTracker shows a list of employees
+2. Employees Tracker shows a list of employees
 3. User requests to give an employee a rating
-4. EmployeeTracker add the rating
-
+4. Employees Tracker add the rating
 +
 Use case ends.
 
@@ -954,21 +1039,21 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. EmployeeTracker shows an error message.
+** 3a1. Employees Tracker shows an error message.
 +
 Use case resumes at step 2.
 
 * 3b. The given rating is not an integer.
 +
 [none]
-** 3b1. EmployeeTracker shows an error message.
+** 3b1. Employees Tracker shows an error message.
 +
 Use case resumes at step 2.
 
 * 4a. The person has already been rated.
 +
 [none]
-** 4a1. EmployeeTracker updates the rating for the person with the new rating.
+** 4a1. Employees Tracker updates the rating for the person with the new rating.
 +
 Use case ends.
 
@@ -978,9 +1063,9 @@ Use case ends.
 *MSS*
 
 1. User requests to list employees sorted by their ratings
-2. AdressBook accesses the list of all employees
-3. EmployeeTracker sorts the employees in the list by their ratings
-4. EmployeeTracker shows the sorted list
+2. Employees Tracker accesses the list of all employees
+3. Employees Tracker sorts the employees in the list by their ratings
+4. Employees Tracker shows the sorted list
 +
 Use case ends.
 
@@ -997,9 +1082,9 @@ Use case ends.
 *MSS*
 
 1. User requests to list all employees
-2. EmployeeTracker shows a list of all employees
+2. Employees Tracker shows a list of all employees
 3. User requests to add timetable entry to many employees
-4. EmployeeTracker add the entry to many employees
+4. Employees Tracker add the entry to many employees
 +
 Use case ends.
 
@@ -1013,7 +1098,7 @@ Use case ends.
 * 3a. The index range given is invalid.
 +
 [none]
-** 3a1. EmployeeTracker shows an error message.
+** 3a1. Employees Tracker shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1023,9 +1108,9 @@ Use case resumes at step 2.
 *MSS*
 
 1. User requests to list all employees
-2. EmployeeTracker shows a list of all employees
+2. Employees Tracker shows a list of all employees
 3. User requests to add review to an employee
-4. EmployeeTracker add the review to the employee
+4. Employees Tracker add the review to the employee
 +
 Use case ends.
 
@@ -1039,17 +1124,17 @@ Use case ends.
 * 3a. The index given is invalid.
 +
 [none]
-** 3a1. EmployeeTracker shows an error message.
+** 3a1. Employees Tracker shows an error message.
 +
 Use case resumes at step 2.
 
 [discrete]
-=== Use Case: Export EmployeeTracker
+=== Use Case: Export Employees Tracker
 
 *MSS*
 
-1. User requests export EmployeeTracker into a directory
-2. EmployeeTracker export the EmployeeTracker data in a file to the directory specified
+1. User requests export Employees Tracker into a directory
+2. Employees Tracker export the Employees Tracker data in a file to the directory specified
 +
 Use case ends.
 
@@ -1059,17 +1144,17 @@ Use case ends.
 * 1a. The directory is invalid.
 +
 [none]
-** 1a1. EmployeeTracker shows an error message.
+** 1a1. Employees Tracker shows an error message.
 +
 Use case ends.
 
 [discrete]
-=== Use Case: Import EmployeeTracker
+=== Use Case: Import Employees Tracker
 
 *MSS*
 
-1. User requests import EmployeeTracker file from a directory
-2. EmployeeTracker import the EmployeeTracker data from the file in the directory specified
+1. User requests import Employees Tracker file from a directory
+2. Employees Tracker import the Employees Tracker data from the file in the directory specified
 +
 Use case ends.
 
@@ -1079,19 +1164,20 @@ Use case ends.
 * 1a. The directory is invalid.
 +
 [none]
-** 1a1. EmployeeTracker shows an error message.
+** 1a1. Employees Tracker shows an error message.
 +
 Use case ends.
 
 [discrete]
 === Use case: edit timetable entry
+
 *MSS*
 
 1. User requests to list all persons.
 2. User requests to view the timetable of a person.
-3. EmployeeTracker shows the timetable of that person.
+3. Employees Tracker shows the timetable of that person.
 4. User requests to update the information of an entry in the timetable.
-5. EmployeeTracker updates the new information for that timetable entry.
+5. Employees Tracker updates the new information for that timetable entry.
 +
 Use case ends.
 
@@ -1105,7 +1191,7 @@ Use case ends.
 * 2a. The given index is invalid.
 +
 [none]
-** 2a1. EmployeeTracker shows an error message.
+** 2a1. Employees Tracker shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1116,31 +1202,35 @@ Use case ends.
 * 4a. The event name provided by user doesn't exist.
 +
 [none]
-** 4a1. EmployeeTracker shows an error message
+** 4a1. Employees Tracker shows an error message
 +
 Use case resumes at step 2.
 
 * 4b. The new information given by user doesn't follow command format
++
 [none]
-** 4b1. EmployeeTracker shows an error message
+** 4b1. Employees Tracker shows an error message
++
+Use case resumes at step 2.
 
-** Use case resumes at step 2.
-
-* 5a. EmployeeTracker couldn't write to save file.
+* 5a. Employees Tracker couldn't write to save file.
++
 [none]
-** 5a1. EmployeeTracker shows error message and requests user to resolve the error.
+** 5a1. Employees Tracker shows error message and requests user to resolve the error.
 ** 5a2. User resolves the error.
-** Use case resumes at step 5.
++
+Use case resumes at step 5.
 
 [discrete]
 === Use case: delete a timetable entry
+
 *MSS*
 
 1. User requests to list all persons.
 2. User requests to view the timetable of a person.
-3. EmployeeTracker shows the timetable of that person.
+3. Employees Tracker shows the timetable of that person.
 4. User requests to delete an entry in that person's timetable.
-5. EmployeeTracker deletes the timetable entry.
+5. Employees Tracker deletes the timetable entry.
 +
 Use case ends.
 
@@ -1149,167 +1239,207 @@ Use case ends.
 [none]
 * 1a. The list is empty.
 +
-[none]
 Use case ends.
 
 * 2a. The given index is invalid.
++
 [none]
-** 2a1. EmployeeTracker shows an error message.
-** Use case resumes at step 2.
+** 2a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
 * 2b. The person has no timetable entry.
-* Use case ends.
++
+Use case ends.
+
 * 4a. The event name provided by user doesn't exist.
++
 [none]
-** 4a1. EmployeeTracker shows an error message
-** Use case resumes at step 2.
-* 5a. EmployeeTracker couldn't write to save file.
+** 4a1. Employees Tracker shows an error message
++
+Use case resumes at step 2.
+
+* 5a. Employees Tracker couldn't write to save file.
++
 [none]
-** 5a1. EmployeeTracker shows error message and requests user to resolve the error.
+** 5a1. Employees Tracker shows error message and requests user to resolve the error.
 ** 5a2. User resolves the error.
-** Use case resumes at step 5.
++
+Use case resumes at step 5.
 
 [discrete]
 === Use case: start composing email
+
 *MSS*
 
 1. User requests to list all persons.
 2. User requests to email a person in the list.
-3. EmployeeTracker opens up a webpage for composing email to that person.
+3. Employees Tracker opens up a webpage for composing email to that person.
 +
 Use case ends.
 
 *Extensions*
+
 [none]
 * 1a. The list is empty.
-* Use case ends.
++
+Use case ends.
+
 * 2a. The given index is invalid.
++
 [none]
-** 2a1. EmployeeTracker shows an error message.
-** Use case resumes at step 2.
+** 2a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
 * 3a. The computer has no access to internet.
++
 [none]
-** 3a1. EmployeeTracker shows error message.
-** Use case ends.
+** 3a1. Employees Tracker shows error message.
++
+Use case ends.
 
 [discrete]
 === Use case: export a list of people as Excel spreadsheet
+
 *MSS*
 
 1. User requests to list all persons, or perform a search.
 2. User requests to export the list of persons as excel sheet and save it in a save file path.
-3. EmployeeTracker exports the list of persons as excel sheet.
+3. Employees Tracker exports the list of persons as excel sheet.
 +
 Use case ends.
 
 *Extensions*
+
 [none]
 * 1a. The list is empty.
-* Use case ends.
++
+Use case ends.
+
 * 2a. The given save file path is invalid.
++
 [none]
-** 2a1. EmployeeTracker shows an error message.
-** Use case resumes at step 2.
-* 3a. EmployeeTracker couldn't write to save file.
+** 2a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+* 3a. Employees Tracker couldn't write to save file.
++
 [none]
-** 3a1. EmployeeTracker shows error message and requests user to resolve the error.
+** 3a1. Employees Tracker shows error message and requests user to resolve the error.
 ** 3a2. User resolves the error.
-** Use case ends.
++
+Use case ends.
 
 [discrete]
 === Use case: login
+
 *MSS*
 
-1. User starts the EmployeeTracker program.
-2. EmployeeTracker requests user to enter username and password.
+1. User starts the Employees Tracker program.
+2. Employees Tracker requests user to enter username and password.
 3. User enters his username and password
-4. EmployeeTracker shows the content.
+4. Employees Tracker shows the content.
 +
 Use case ends.
 
 *Extensions*
+
 [none]
 * 3a. The user enters an invalid username or wrong password.
++
 [none]
-** 3a1. EmployeeTracker shows an error message.
-** Use case resumes at step 1.
+** 3a1. Employees Tracker shows an error message.
++
+Use case resumes at step 1.
 
 [discrete]
-=== Use case: Lock the addressbook
+=== Use case: Lock the employees tracker
+
 *MSS*
 
-1. User requests to lock the addressbook by entering "lock" and password
-2. EmployeeTracker is locked unless user unlocks it.
+1. User requests to lock the employees tracker by entering "lock" and password
+2. Employees Tracker is locked unless user unlocks it.
++
 [none]
-* 2a. When addressbook is locked, user are required to unlock the addressbook before any instruction.
+* 2a. When employees tracker is locked, user are required to unlock the employees tracker before any instruction.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Unlock the addressbook
+=== Use case: Unlock the employees tracker
+
 *MSS*
 
-1. User requests to unlock the addressbook by entering "unlock" and the password set earlier
-2. EmployeeTracker unlocked. Use case ends.
+1. User requests to unlock the employees tracker by entering "unlock" and the password set earlier
+2. Employees Tracker unlocked. Use case ends.
 
 *Extensions*
+
 [none]
 * 1a. The given password is incorrect, which means different from the one set earlier
++
 [none]
-** 1a1. Addressbook shows an error message and requires to re-enter password
+** 1a1. Employees Tracker shows an error message and requires to re-enter password
 +
 Use case resumes at step 1
 
 [discrete]
 === Use case: Change an employee's rating
+
 *MSS*
 
 1. User requests to list employees
-2. EmployeeTracker shows a list of employees
+2. Employees Tracker shows a list of employees
 3. User requests to change the rating of one of the employees from the list
-4. EmployeeTracker changes the rating of the employee.
+4. Employees Tracker changes the rating of the employee.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. The employee does not exist in addressbook.
+* 3a. The employee does not exist in employees tracker.
++
 [none]
-** 3a1. EmployeeTracker shows an error message.
+** 3a1. Employees Tracker shows an error message.
++
 Use case resumes at step 2.
+
 * 3b. The rate is out of bound.
++
 [none]
-** 3b1. EmployeeTracker shows an error message
+** 3b1. Employees Tracker shows an error message
 +
 Use case resumes at step 2.
 
 [discrete]
 === Use case: Change the window scheme/theme/skin
+
 *MSS*
 
 1. User requests to change the scheme/theme/skin on the User Interface
-2. EmployeeTracker changes the scheme/theme/skin
+2. Employees Tracker changes the scheme/theme/skin
 +
 Use case ends.
-
-_{More to be added}_
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness (i.e. response time >500ms) in performance for typical usage.
-.  A user with above average typing speed (i.e. >=45 words per minute) for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to hold up to 1000 persons without a noticeable sluggishness (i.e. response time > 500ms) in performance for typical usage.
+.  A user with above average typing speed (i.e. ≥ 45 words per minute) for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  The app should be used only by one user.
 .  Only the owner can view the data in the app
-.  The app should be able to apply to people who are generally managing <=200 other people
+.  The app should be able to apply to people who are generally managing ≤ 200 other people
 .  Should not consume memory more than 2GB
 .  Should be able to be run easily by non-technical user
 .  The save file of the app should be cross-compatible
 .  The app should be used only by one user.
 .  Only the owner can view the data in the app
 .  The app should be able to response the command within 500ms
-.  The app should be able to apply to people who are generally managing <=200 other people
+.  The app should be able to apply to people who are generally managing ≤ 200 other people
 .  Users should prefer typing over mouse input or other input methods.
 .  Users should be comfortable using CLI apps.
 .  The app should not have flow flaws when running.
@@ -1320,8 +1450,6 @@ _{More to be added}_
 .  Should be easy to use by new users
 .  This application should be stable and maintainable
 .  This application is open source
-
-_{More to be added}_
 
 [appendix]
 == Glossary

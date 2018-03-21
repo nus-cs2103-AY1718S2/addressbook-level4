@@ -65,24 +65,27 @@ public class FindCommandTest {
     @Test
     public void execute_zeroKeywords_allPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
-        FindCommand command = prepareCommand(" ", " ");
+        FindCommand command = prepareCommand(" ", " ", " ");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("Kurz Elle Kunz", "Friends Family");
+        FindCommand command = prepareCommand("Kurz Elle Kunz", "Friends Family", " ");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private FindCommand prepareCommand(String nameInput, String tagInput) {
+    private FindCommand prepareCommand(String nameInput, String tagInput, String ratingInput) {
         FindCommand command =
-                new FindCommand(new FieldContainKeywordsPredicate(Arrays.asList(nameInput.split("\\s+")),
-                        Arrays.asList(tagInput.split("\\s+"))));
+                new FindCommand(
+                        new FieldContainKeywordsPredicate(
+                                Arrays.asList(nameInput.split("\\s+")),
+                                Arrays.asList(tagInput.split("\\s+")),
+                                Arrays.asList(ratingInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

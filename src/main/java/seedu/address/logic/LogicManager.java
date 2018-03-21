@@ -1,10 +1,17 @@
 package seedu.address.logic;
 
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.TimetableEntryAddedEvent;
+import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UnlockCommand;
@@ -25,12 +32,15 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private HashMap<String, Timer> timetableEntriesExpiry;
+
     public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
         undoRedoStack = new UndoRedoStack();
         isLocked = false;
+        timetableEntriesExpiry = new HashMap<>();
     }
 
     @Override
@@ -91,5 +101,21 @@ public class LogicManager extends ComponentManager implements Logic {
         return isLocked;
     }
 
+    @Subscribe
+    private void handleTimetableEntryAddedEvent(TimetableEntryAddedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Event ended!");
+            }
+        }, 5000);
+        timetableEntriesExpiry.put(event.timetableEntry.getId(), timer);
+    }
 
+    @Subscribe
+    private void handleTimetableEntryDeletedEvent(TimetableEntryDeletedEvent event) {
+        timetableEntriesExpiry.remove(event.id);
+    }
 }

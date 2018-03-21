@@ -30,10 +30,8 @@ import seedu.address.testutil.ActivityUtil;
 
 public class AddCommandSystemTest extends RemarkBookSystemTest {
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+//TODO: TEST
+
 //    public void add() throws Exception {
 //        Model model = getModel();
 //

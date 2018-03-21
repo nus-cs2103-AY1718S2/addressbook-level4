@@ -32,10 +32,8 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
 public class EditCommandSystemTest extends RemarkBookSystemTest {
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+//TODO: TEST
+
 //    public void edit() throws Exception {
 //        Model model = getModel();
 //

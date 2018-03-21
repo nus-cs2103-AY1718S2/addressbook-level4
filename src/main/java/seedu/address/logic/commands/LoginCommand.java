@@ -6,7 +6,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
-import seedu.address.model.login.exceptions.AuthenticationFailedException;
 
 //@@author kaisertanqr
 /**
@@ -35,12 +34,13 @@ public class LoginCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
-            model.checkLoginCredentials(this.username, this.password);
-            return new CommandResult(MESSAGE_LOGIN_SUCCESS);
+            if(model.checkLoginCredentials(this.username, this.password)) {
+                return new CommandResult(MESSAGE_LOGIN_SUCCESS);
+            } else {
+                return new CommandResult(MESSAGE_LOGIN_FAILURE);
+            }
         } catch (AlreadyLoggedInException e) {
             throw new CommandException(MESSAGE_LOGIN_ALREADY);
-        } catch (AuthenticationFailedException e) {
-            throw new CommandException(MESSAGE_LOGIN_FAILURE);
         }
     }
 

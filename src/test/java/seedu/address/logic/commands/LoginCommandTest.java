@@ -144,8 +144,7 @@ public class LoginCommandTest {
         private boolean loginStatus = false;
 
         @Override
-        public void checkLoginCredentials(Username username, Password password)
-                throws AlreadyLoggedInException, AuthenticationFailedException{
+        public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
             requireNonNull(username);
             requireNonNull(password);
 
@@ -164,17 +163,6 @@ public class LoginCommandTest {
         }
     }
 
-    /**
-     * A Model stub that always throw a AuthenticationFailedException when trying to login.
-     */
-    private class ModelStubThrowingAuthenticationFailedException extends ModelStub {
-        @Override
-        public void checkLoginCredentials(Username username, Password password)
-                throws AlreadyLoggedInException, AuthenticationFailedException {
-            throw new AuthenticationFailedException();
-        }
-
-    }
 
     /**
      * A Model stub that always throw a AlreadyLoggedInException when trying to login.

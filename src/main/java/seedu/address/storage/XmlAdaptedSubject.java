@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -10,9 +12,9 @@ import seedu.address.model.subject.Subject;
  */
 public class XmlAdaptedSubject {
 
-    @XmlValue
+    @XmlElement
     private String subjectName;
-    @XmlValue
+    @XmlElement
     private String subjectGrade;
 
     /**

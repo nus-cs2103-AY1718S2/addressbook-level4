@@ -178,6 +178,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      *  list.
      */
+
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);
@@ -190,8 +191,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
+        Person correctPerson = new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        return correctPerson;
     }
 
     /**

@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -115,5 +116,38 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+
+    /**
+     * Splits a {@code String subject} into {@code String subjectName} and {@code String subjectGrade}
+     * Parses {@code String subjectName} and {@code String subjectGrade}into a {@code Subject}.
+     *
+     * @throws IllegalValueException if the given {@code subject} is invalid.
+     */
+    public static Subject parseSubject(String subject) throws IllegalValueException {
+        requireNonNull(subject);
+        String[] splitSubjectStr = subject.trim().split("\\s+");
+        String subjectName = splitSubjectStr[0];
+        String subjectGrade = splitSubjectStr[1];
+        if (!Subject.isValidSubjectName(subjectName)) {
+            throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
+        }
+        if (!Subject.isValidSubjectGrade(subjectGrade)) {
+            throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
+        }
+        return new Subject(subjectName, subjectGrade);
+    }
+
+    /**
+     * Parses {@code Collection<String> subjects} into a {@code Set<Subject}.
+     */
+    public static Set<Subject> parseSubjects(Collection<String> subjects) throws IllegalValueException {
+        requireNonNull(subjects);
+        final Set<Subject> subjectSet = new HashSet<>();
+        for (String subject : subjects) {
+            subjectSet.add(parseSubject(subject));
+        }
+        return subjectSet;
     }
 }

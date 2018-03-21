@@ -257,6 +257,19 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+=== remove existing appointment `[coming in v2.0]`
+the user is allowed to use command line to delete an existing appointment by specifying the appointment title and interval
+
+=== update existing appointment `[coming in v2.0]`
+the user is allowed to use command line to update an existing appointment by specifying the old appointment title and interval
+then the new appointment title and interval
+
+=== add task to task pad`[coming in v2.0]`
+the user is allowed to use command line to add a task to the task pad GUI  specifying the task title , task details
+
+=== remove task on task pad`[coming in v2.0]`
+the user is allowed to use command line to remove a task to the task pad GUI  specifying the task index
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

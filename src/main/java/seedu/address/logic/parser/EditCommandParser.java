@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
@@ -16,6 +17,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,7 +33,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_NRIC, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_NRIC, PREFIX_TAG, PREFIX_SUBJECT);
 
         Index index;
 
@@ -46,6 +48,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
             ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).ifPresent(editPersonDescriptor::setNric);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            parseSubjectsForEdit(argMultimap.getAllValues(PREFIX_SUBJECT)).ifPresent(editPersonDescriptor::setSubjects);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -72,4 +75,19 @@ public class EditCommandParser implements Parser<EditCommand> {
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
+    /**
+     * Parses {@code Collection<String> subjects} into a {@code Set<Subject>} if {@code subjects} is non-empty.
+     * If {@code subjects} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Subject>} containing zero subjects.
+     */
+    private Optional<Set<Subject>> parseSubjectsForEdit(Collection<String> subjects) throws IllegalValueException {
+        assert subjects != null;
+
+        if (subjects.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> subjectSet = subjects.size() == 1 && subjects.contains("")
+                ? Collections.emptySet() : subjects;
+        return Optional.of(ParserUtil.parseSubjects(subjectSet));
+    }
 }

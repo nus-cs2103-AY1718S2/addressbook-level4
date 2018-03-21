@@ -46,8 +46,8 @@ public class XmlSerializableAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         for (TimetableEntry t: src.getTimetableEntriesList()) {
-            timetableEntries.add(new XmlAdaptedTimetableEntry(t.getCalendarId(), t.getOwnerName(), t.getEntryName(),
-                    t.getEndDate(), t.getOwnerEmail(), t.getId()));
+            timetableEntries.add(new XmlAdaptedTimetableEntry(t.getCalendarId(), t.getId(), t.getEndDate(),
+                    t.getOwnerId()));
         }
         nextId = src.getNextId();
     }

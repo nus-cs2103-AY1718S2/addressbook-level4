@@ -122,8 +122,7 @@ public class Person {
     }
 
     public String getRatingDisplay() {
-        return getId() + "";
-        //return rating.getRatingDisplay();
+        return rating.getRatingDisplay();
     }
 
     public Address getAddress() {
@@ -134,7 +133,7 @@ public class Person {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

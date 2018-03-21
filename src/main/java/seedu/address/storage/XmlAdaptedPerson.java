@@ -36,9 +36,12 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
 
     private String calendarId;
+    @XmlElement
     private String rating;
     @XmlElement(required = true)
     private String review;
+    @XmlElement
+    private int id;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -63,6 +66,7 @@ public class XmlAdaptedPerson {
             this.tagged = new ArrayList<>(tagged);
         }
         this.calendarId = calendarId;
+        this.id = Person.UNINITIALISED_ID;
     }
 
     /**
@@ -74,7 +78,8 @@ public class XmlAdaptedPerson {
                             String address,
                             String rating,
                             String review,
-                            List<XmlAdaptedTag> tagged) {
+                            List<XmlAdaptedTag> tagged,
+                            int id) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -84,6 +89,7 @@ public class XmlAdaptedPerson {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.id = id;
     }
 
     /**
@@ -103,6 +109,7 @@ public class XmlAdaptedPerson {
             tagged.add(new XmlAdaptedTag(tag));
         }
         calendarId = source.getCalendarId();
+        id = source.getId();
     }
 
     /**
@@ -167,7 +174,7 @@ public class XmlAdaptedPerson {
 
         final Set<Tag> tags = new HashSet<>(personTags);
 
-        Person person = new Person(name, phone, email, address, rating, tags, calendarId);
+        Person person = new Person(name, phone, email, address, rating, tags, calendarId, id);
         person.setReview(review);
 
         return person;

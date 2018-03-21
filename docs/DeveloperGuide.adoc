@@ -358,6 +358,59 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::remark[]
+=== Edit remarks feature
+==== Current Implementation
+
+The edit remarks mechanism is facilitated by a `RemarkCommand`.
+It supports editing the remarks of a `Patient` to match the user input. `RemarkCommand` inherits from `UndoableCommand` as well.
+
+The edit remarks mechanism functions like that of the `Edit`. It searches for the patient to be edited based on the index provided
+by the user. It then creates a new patient with the same attributes as the patient to be edited, changing the remarks attribute to
+match the user input. The `RemarkCommand` then calls for the utility method updatePerson under `Model`, to replace the patient to be
+edited with the edited patient.
+
+Suppose that the user has just launched the application. The current list is shown in Figure 3.2.1.1. below.
+
+image::Figure 3.2.1.1.png[width="800"]
+
+The user now decides to edit the remarks of the first person in the list.
+
+`RemarkCommand` will search for the first person in the list and store it as the person to be edited as shown in Figure 3.2.1.2. below.
+`RemarkCommand` will then create a new patient with the same attributes as the patient to be edited, except the remarks attribute
+which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 3.2.1.2. below.
+
+image::Figure 3.2.1.2.png[width="800"]
+
+`RemarkCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
+the new list will be as shown in Figure 3.2.1.2. below.
+
+image::Figure 3.2.1.3.png[width="650"]
+
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: Implementation of `RemarkCommand`
+
+* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise updatePerson to edit the remarks
+** Pros: Will be easy to implement due to existing utility methods.
+** Cons: May have performance issues in terms of memory usage.
+* **Alternative 2:** Create a public method in `Remark` for updating the remark which will be called by `Patient`
+** Pros: Will use less memory (no need to create new patient object).
+** Cons: Will require public access to `Remark` stored in `Patient` (possible security concerns).
+
+===== Aspect: Data structure to support the remark command
+
+* **Alternative 1 (current choice):** Create a `Remark` that is stored in `Patient`
+** Pros: Will be easy to understand for new developers as it follows existing structures.
+** Cons: May have performance issues in terms of memory usage.
+* **Alternative 2:** Create a String that is stored in `Patient`
+** Pros: Will use less memory (no need to create new remark object).
+** Cons: Will require a method in Patient to update and verify validity of remark. Violates Single Responsibility Principle and Separation of Concerns as `Patient` now needs to do two * different things.
+// end::remark[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

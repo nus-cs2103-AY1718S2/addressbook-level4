@@ -19,6 +19,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -31,6 +32,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemovePatientQueueCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAppointmentCommand;
@@ -295,6 +297,44 @@ public class ImdbParserTest {
         LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS) instanceof ViewAppointmentCommand);
         assertTrue(parser.parseCommand(ViewAppointmentCommand.COMMAND_ALIAS + " 3") instanceof ViewAppointmentCommand);
+    }
+
+    @Test
+    public void parseCommand_addPatientQueue() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        AddPatientQueueCommand command = (AddPatientQueueCommand) parser.parseCommand(
+                AddPatientQueueCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new AddPatientQueueCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_addPatientQueueAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        AddPatientQueueCommand command = (AddPatientQueueCommand) parser.parseCommand(
+                AddPatientQueueCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new AddPatientQueueCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_removePatientQueue() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        RemovePatientQueueCommand command = (RemovePatientQueueCommand) parser.parseCommand(
+                RemovePatientQueueCommand.COMMAND_WORD);
+        assertEquals(new RemovePatientQueueCommand(), command);
+    }
+
+    @Test
+    public void parseCommand_removePatientQueueAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        RemovePatientQueueCommand command = (RemovePatientQueueCommand) parser.parseCommand(
+                RemovePatientQueueCommand.COMMAND_ALIAS);
+        assertEquals(new RemovePatientQueueCommand(), command);
     }
 
     @Test

@@ -139,6 +139,27 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Patient> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void addPatientToQueue(Patient patient) throws DuplicatePatientException {
+            //update later
+        }
+
+        @Override
+        public Patient removePatientFromQueue() {
+            //update later
+            return null;
+        }
+
+        @Override
+        public ObservableList<Patient> getVisitingQueue() {
+            return null;    //update later
+        }
+
+        @Override
+        public Patient getPatientFromList(Predicate<Patient> predicate) {
+            return null;
+        }
     }
 
     /**

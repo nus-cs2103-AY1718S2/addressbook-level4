@@ -430,6 +430,18 @@ Data encryption will be implemented in v2.0 to improve security and ensure confi
 Imdb will be able to switch from standalone mode to server/client mode in v2.0 to centralise the database at the server in the main branch.
 // end::centraliseddatabase[]
 
+=== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`
+
+Imdb will be able to attach images(X-ray scans) to a patient and retrieve the images for viewing.
+
+=== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
+
+Imdb will be able to view the schedule for a patient across all specialists so that medical staff can arrange non-conflicting appoinments.
+
+=== Search for drug information from a drug information website `[coming in v2.0]`
+
+Imdb will be able to search for relevant drug information from an official website so that doctors will not administer the wrong drug.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

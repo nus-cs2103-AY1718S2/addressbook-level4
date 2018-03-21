@@ -100,6 +100,12 @@ public class ImdbTest {
         imdb.getTagList().remove(0);
     }
 
+    @Test
+    public void getVisitingQueue_modifyQueue_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        imdb.getUniquePatientQueue().remove(0);
+    }
+
     /**
      * A stub ReadOnlyImdb whose patients and tags lists can violate interface constraints.
      */
@@ -107,6 +113,7 @@ public class ImdbTest {
         private final ObservableList<Patient> patients = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        private final ObservableList<Patient> visitingQueue = FXCollections.observableArrayList();
 
         ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags) {
             this.patients.setAll(patients);
@@ -127,6 +134,11 @@ public class ImdbTest {
         @Override
         public ObservableList<Appointment> getAppointmentList() {
             return appointments;
+        }
+
+        @Override
+        public ObservableList<Patient> getUniquePatientQueue() {
+            return visitingQueue;
         }
     }
 

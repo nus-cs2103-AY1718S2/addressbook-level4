@@ -42,7 +42,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         // associated web page of a person
         postNow(selectionChangedEventStub);
         URL expectedPersonUrl = new URL(BrowserPanel.GOOGLE_SEARCH_URL_PREFIX + ALICE.getName().fullName.replaceAll
-                (" ", "%20") + GOOGLE_SEARCH_URL_SUFFIX );
+                (" ", "%20") + GOOGLE_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());

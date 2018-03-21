@@ -90,6 +90,28 @@ public class WindowGuiTest extends AddressBookSystemTest {
         assertTrue(delta.equals(expectedDelta));
     }
 
+    @Test
+    public void testSplitPaneResponsive() {
+        MainWindowHandle mainWindowHandle = getMainWindowHandle();
+
+        double originalWidth = mainWindowHandle.getListPaneWidth();
+
+        // Maximize
+        EventsUtil.postNow(new MaximizeAppRequestEvent());
+        assertWindowMaximized();
+        guiRobot.pauseForHuman();
+
+        // Allow floating point error
+        assertTrue(Math.abs(mainWindowHandle.getListPaneWidth() - originalWidth) <= 1);
+
+        // Reset size and position
+        mainWindowHandle.setWindowDefaultPositionAndSize();
+        guiRobot.pauseForHuman();
+
+        // Allow floating point error
+        assertTrue(Math.abs(mainWindowHandle.getListPaneWidth() - originalWidth) <= 1);
+    }
+
     /**
      * Asserts that the window is maximized
      */

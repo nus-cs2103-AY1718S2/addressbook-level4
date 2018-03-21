@@ -14,6 +14,7 @@ import seedu.address.ui.MainWindow;
 public class MainWindowHandle extends StageHandle {
 
     public static final String TOP_PANE_ID = "#topPane";
+    public static final String BOTTOM_LIST_PANE_ID = "#bottomListPane";
 
     private final PersonListPanelHandle personListPanel;
     private final ResultDisplayHandle resultDisplay;
@@ -24,6 +25,7 @@ public class MainWindowHandle extends StageHandle {
     private final Stage stage;
 
     private final AnchorPane topPane;
+    private final AnchorPane bottomListPane;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -36,7 +38,9 @@ public class MainWindowHandle extends StageHandle {
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         titleBar = new TitleBarHandle(getChildNode(TitleBarHandle.TITLE_BAR_ID));
         infoPanel = new InfoPanelHandle(getChildNode(InfoPanelHandle.INFO_ID));
+
         topPane = getChildNode(TOP_PANE_ID);
+        bottomListPane = getChildNode(BOTTOM_LIST_PANE_ID);
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -84,6 +88,10 @@ public class MainWindowHandle extends StageHandle {
         stage.setHeight(MainWindow.MIN_WINDOW_HEIGHT);
         stage.setX(screenBound.getMinX());
         stage.setY(screenBound.getMinY());
+    }
+
+    public double getListPaneWidth() {
+        return bottomListPane.getWidth();
     }
 
     public Rectangle2D getSceenBound() {

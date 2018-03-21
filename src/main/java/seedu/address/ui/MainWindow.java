@@ -29,10 +29,10 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
+    public static final double MIN_WINDOW_WIDTH = 800;
+    public static final double MIN_WINDOW_HEIGHT = 600;
+    public static final int WINDOW_CORNER_SIZE = 8;
     private static final String FXML = "MainWindow.fxml";
-    private static final double MIN_WINDOW_WIDTH = 800;
-    private static final double MIN_WINDOW_HEIGHT = 600;
-    private static final int WINDOW_CORNER_SIZE = 8;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -173,13 +173,17 @@ public class MainWindow extends UiPart<Stage> {
 
     }
 
+    /**
+     * Handle responsiveness by fixing the width of {@code bottomListPane}
+     * when increasing the width of {@code bottomPaneSplit}
+     */
     private void handleSplitPaneResponsive() {
         int splitHandleSize = 5;
 
         bottomPaneSplit.widthProperty().addListener((observable, oldValue, newValue) -> {
             if (bottomInfoPane.getWidth() > bottomInfoPane.getMinWidth() - splitHandleSize) {
-                bottomPaneSplit.setDividerPosition(0,
-                        (bottomListPane.getWidth() + splitHandleSize) / newValue.doubleValue());
+                bottomPaneSplit.setDividerPosition(0, (
+                        bottomListPane.getWidth() + splitHandleSize) / newValue.doubleValue());
             }
         });
     }

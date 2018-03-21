@@ -1,6 +1,9 @@
 package seedu.progresschecker.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.events.ui.NewResultAvailableEvent;
+import seedu.progresschecker.logic.CommandFormatListUtil;
 import seedu.progresschecker.logic.ListElementPointer;
 import seedu.progresschecker.logic.Logic;
 import seedu.progresschecker.logic.commands.CommandResult;
@@ -57,6 +61,10 @@ public class CommandBox extends UiPart<Region> {
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+        case TAB:
+            keyEvent.consume();
+            autocompleteCommad(commandTextField.getText());
             break;
         default:
             try {
@@ -170,5 +178,24 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Sets the commandbox to completed command format if the entered substring of the command is valid
+     * @param text is the command which is to be autocompleted
+     */
+    private void autocompleteCommad(String text) {
+        ArrayList<String> commandFormatList = CommandFormatListUtil.getCommandFormatList();
+
+        //retrieve the list of words which begin with text
+        List<String> autocompleteCommandList = commandFormatList.stream()
+                .filter(s -> s.startsWith(text))
+                .collect(Collectors.toList());
+
+        //replace input in text field with matched keyword
+        if (!autocompleteCommandList.isEmpty()) {
+            replaceText(autocompleteCommandList.get(0));
+        }
+
     }
 }

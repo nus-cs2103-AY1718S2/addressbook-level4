@@ -1,7 +1,0 @@
-lover:red
-colleagues:yellow
-classmates:teal
-neighbours:green
-family:brown
-gay:undefined
-friends:pink

@@ -20,19 +20,22 @@ public class Person {
     private final Email email;
     private final Address address;
     private final TimeTableLink link;
+    private final Detail detail;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, TimeTableLink link, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, link, tags);
+    public Person(Name name, Phone phone, Email email, Address address, TimeTableLink link, Detail detail,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, link, detail, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.link = link;
+        this.detail = detail;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -55,6 +58,10 @@ public class Person {
 
     public  TimeTableLink getTimeTableLink() {
         return link;
+    }
+
+    public  Detail getDetail() {
+        return detail;
     }
 
     /**
@@ -80,13 +87,14 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getTimeTableLink().equals(this.getTimeTableLink());
+                && otherPerson.getTimeTableLink().equals(this.getTimeTableLink())
+                && otherPerson.getDetail().equals(this.getDetail());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, link, tags);
+        return Objects.hash(name, phone, email, address, link, detail, tags);
     }
 
     @Override
@@ -101,6 +109,8 @@ public class Person {
                 .append(getAddress())
                 .append(" Timetable link: ")
                 .append(getTimeTableLink())
+                .append(" Detail: ")
+                .append(getDetail())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

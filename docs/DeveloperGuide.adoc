@@ -382,6 +382,28 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+=== Overdue command
+
+The user is able to list down overdue tasks by using the overdue command. Note that overdue only lists down overdue tasks; overdue events are marked as
+completed automatically.
+
+We will be making use of the LocalDateTime class in Java. The class has a `now` method, which allows us to obtain the current system clock.
+
+There will be a class in the Model component, which has access to the UniqueActivityList class in that component. The class will go through the UniqueActivityList and obtain
+the DateTime of Task, and the end DateTime of Event. It will then perform a check of the DateTime with LocalDateTime.now() and if it is overdue (for tasks), it will mark the task
+as overdue, while if it is overdue (for Event), it will mark it as completed.
+
+==== Design Considerations
+
+* **Alternative 1**: Put the checking method together with UniqueActivityList class
+** Pros: Less one class and it is easier for the developer to understand
+** Cons: Violates Single Responsibility Principle (SRP). The UniqueAcitivtyList class should not perform the checking.
+
+* **Alternative 2**: Using Google Maps API to obtain current time
+** Pros: LocalDateTime.now() is reliant on system clock, thus if the system clock is in error, tasks that are overdue will not be marked as
+overdue correctly.
+** Cons: Reliant on Google Maps API, and might be difficult for the developer to understand.
+
 [[Implementation-Configuration]]
 === Configuration
 

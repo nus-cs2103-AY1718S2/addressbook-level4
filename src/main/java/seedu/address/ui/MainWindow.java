@@ -4,19 +4,22 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.MaximizeAppRequestEvent;
+import seedu.address.commons.events.ui.MinimizeAppRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -26,36 +29,55 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
+    public static final double MIN_WINDOW_WIDTH = 800;
+    public static final double MIN_WINDOW_HEIGHT = 600;
+    public static final int WINDOW_CORNER_SIZE = 8;
     private static final String FXML = "MainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
-
-    // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private UiResizer uiResizer;
     private Config config;
     private UserPrefs prefs;
 
-    @FXML
-    private StackPane browserPlaceholder;
+    // Independent UI parts residing in this UI container
+    private PersonListPanel personListPanel;
+
+    // X and Y offset of the window (Use for draggable title bar
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @FXML
-    private StackPane commandBoxPlaceholder;
+    private AnchorPane topPane;
+
 
     @FXML
-    private MenuItem helpMenuItem;
+    private AnchorPane infoPanePlaceholder;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private AnchorPane topCommandPlaceholder;
 
     @FXML
-    private StackPane resultDisplayPlaceholder;
+    private AnchorPane listPersonsPlaceholder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
+    private AnchorPane centerPanePlaceholder;
+
+    @FXML
+    private AnchorPane topTitlePlaceholder;
+
+    // Responsive
+    @FXML
+    private SplitPane bottomPaneSplit;
+
+    @FXML
+    private AnchorPane bottomListPane;
+
+    @FXML
+    private AnchorPane bottomInfoPane;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -66,11 +88,21 @@ public class MainWindow extends UiPart<Stage> {
         this.config = config;
         this.prefs = prefs;
 
+        // Setup custom UI
+        setBorderlessWindow();
+        setDraggableTitleBar();
+        setDoubleClickMaximize();
+        this.uiResizer = new UiResizer(primaryStage, prefs.getGuiSettings(),
+                MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT, WINDOW_CORNER_SIZE);
+
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
 
-        setAccelerators();
+        // Handle responsive
+        handleSplitPaneResponsive();
+
+        // Handle minimize and maximize request
         registerAsAnEventHandler(this);
     }
 
@@ -78,58 +110,25 @@ public class MainWindow extends UiPart<Stage> {
         return primaryStage;
     }
 
-    private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
-    }
-
-    /**
-     * Sets the accelerator of a MenuItem.
-     * @param keyCombination the KeyCombination value of the accelerator
-     */
-    private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
-        menuItem.setAccelerator(keyCombination);
-
-        /*
-         * TODO: the code below can be removed once the bug reported here
-         * https://bugs.openjdk.java.net/browse/JDK-8131666
-         * is fixed in later version of SDK.
-         *
-         * According to the bug report, TextInputControl (TextField, TextArea) will
-         * consume function-key events. Because CommandBox contains a TextField, and
-         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key event is consumed by
-         * the TextInputControl(s).
-         *
-         * For now, we add following event filter to capture such key events and open
-         * help window purposely so to support accelerators even when focus is
-         * in CommandBox or ResultDisplay.
-         */
-        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-                menuItem.getOnAction().handle(new ActionEvent());
-                event.consume();
-            }
-        });
-    }
-
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        InfoPanel infoPanel = new InfoPanel();
+        infoPanePlaceholder.getChildren().add(infoPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        listPersonsPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        centerPanePlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        TitleBar titleBar = new TitleBar(prefs.getAddressBookFilePath());
+        topTitlePlaceholder.getChildren().add(titleBar.getRoot());
+        setAccelerator(titleBar.getControlHelp(), KeyCombination.valueOf("F1"));
 
         CommandBox commandBox = new CommandBox(logic);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        topCommandPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
     void hide() {
@@ -160,38 +159,93 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
-    /**
-     * Opens the help window.
-     */
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
-    }
-
     void show() {
         primaryStage.show();
-    }
-
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        raise(new ExitAppRequestEvent());
     }
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    public void requestFocus() {
+        primaryStage.requestFocus();
+    }
+
+    /**
+     * Handle responsiveness by fixing the width of {@code bottomListPane}
+     * when increasing the width of {@code bottomPaneSplit}
+     */
+    private void handleSplitPaneResponsive() {
+        int splitHandleSize = 5;
+
+        bottomPaneSplit.widthProperty().addListener((observable, oldValue, newValue) -> {
+            if (bottomInfoPane.getWidth() > bottomInfoPane.getMinWidth() - splitHandleSize) {
+                bottomPaneSplit.setDividerPosition(0, (
+                        bottomListPane.getWidth() + splitHandleSize) / newValue.doubleValue());
+            }
+        });
+    }
+
+    /**
+     * Sets the accelerator of help button pane.
+     *
+     * @param keyCombination the KeyCombination value of the accelerator
+     */
+    private void setAccelerator(Pane pane, KeyCombination keyCombination) {
+        primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+                pane.getOnMouseClicked().handle(new javafx.scene.input.MouseEvent(
+                        javafx.scene.input.MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0,
+                        MouseButton.PRIMARY, 0, false, false, false,
+                        false, false, false, false,
+                        false, false, false, null));
+                event.consume();
+            }
+        });
+    }
+
+    private void setBorderlessWindow() {
+        // StageStyle.UNDECORATED is buggy
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+    }
+
+    private void setDoubleClickMaximize() {
+        topPane.setOnMouseClicked(event -> {
+            if (MouseButton.PRIMARY.equals(event.getButton()) && event.getClickCount() == 2) {
+                raise(new MaximizeAppRequestEvent());
+            }
+        });
+    }
+
+    private void setDraggableTitleBar() {
+        double minY = Screen.getPrimary().getVisualBounds().getMinY();
+
+        topPane.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        topPane.setOnMouseDragged(event -> {
+            // Only allow in title bar (Blue area)
+            if (xOffset > 120 && yOffset > 40 && xOffset + yOffset - 200 > 0) {
+                return;
+            }
+
+            double newY = event.getScreenY() - yOffset;
+            primaryStage.setX(event.getScreenX() - xOffset);
+            primaryStage.setY(Math.max(newY, minY));
+        });
     }
 
     @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
+    public void handleMinimizeAppRequestEvent(MinimizeAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleHelp();
+        primaryStage.setIconified(true);
+    }
+
+    @Subscribe
+    public void handleMaximizeAppRequestEvent(MaximizeAppRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        uiResizer.toggleMaximize();
     }
 }

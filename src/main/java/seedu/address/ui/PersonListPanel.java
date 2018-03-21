@@ -25,7 +25,7 @@ public class PersonListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     @FXML
-    private ListView<PersonCard> personListView;
+    private ListView<PersonCard> listPersons;
 
     public PersonListPanel(ObservableList<Person> personList) {
         super(FXML);
@@ -36,13 +36,13 @@ public class PersonListPanel extends UiPart<Region> {
     private void setConnections(ObservableList<Person> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
-        personListView.setItems(mappedList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+        listPersons.setItems(mappedList);
+        listPersons.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        personListView.getSelectionModel().selectedItemProperty()
+        listPersons.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
@@ -56,8 +56,8 @@ public class PersonListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            personListView.scrollTo(index);
-            personListView.getSelectionModel().clearAndSelect(index);
+            listPersons.scrollTo(index);
+            listPersons.getSelectionModel().clearAndSelect(index);
         });
     }
 

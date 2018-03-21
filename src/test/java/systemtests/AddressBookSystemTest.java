@@ -1,17 +1,13 @@
 package systemtests;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
+import static guitests.guihandles.InfoPanelUtil.waitUntilInfoPanelLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
+import static seedu.address.ui.TitleBar.SYNC_STATUS_INITIAL;
+import static seedu.address.ui.TitleBar.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -21,14 +17,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.MainMenuHandle;
+import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
+import guitests.guihandles.TitleBarHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -39,8 +33,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
-import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.InfoPanel;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -69,7 +63,6 @@ public abstract class AddressBookSystemTest {
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -105,16 +98,12 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
-    public MainMenuHandle getMainMenu() {
-        return mainWindowHandle.getMainMenu();
+    public InfoPanelHandle getInfoPanel() {
+        return mainWindowHandle.getInfoPanel();
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
-    }
-
-    public StatusBarFooterHandle getStatusBarFooter() {
-        return mainWindowHandle.getStatusBarFooter();
+    public TitleBarHandle getTitleBar() {
+        return mainWindowHandle.getTitleBar();
     }
 
     public ResultDisplayHandle getResultDisplay() {
@@ -123,7 +112,6 @@ public abstract class AddressBookSystemTest {
 
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
-     * Method returns after UI components have been updated.
      */
     protected void executeCommand(String command) {
         rememberStates();
@@ -132,8 +120,16 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
+    }
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+    /**
+     * Executes {@code command} in the application's {@code CommandBox}.
+     * Method returns after UI components have been updated.
+     */
+    protected void executeCommandWaitForUi(String command) {
+        getInfoPanel().resetLoadedStatus();
+        executeCommand(command);
+        waitUntilInfoPanelLoaded(getInfoPanel());
     }
 
     /**
@@ -183,53 +179,48 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code InfoPanelHandle}, {@code PersonListPanelHandle} and {@code TitleBarHandle} to remember
      * their current state.
      */
     private void rememberStates() {
-        StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
-        statusBarFooterHandle.rememberSaveLocation();
-        statusBarFooterHandle.rememberSyncStatus();
+        TitleBarHandle titleBarHandle = getTitleBar();
+        getInfoPanel().rememberPerson();
+        titleBarHandle.rememberSaveLocation();
+        titleBarHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
      * of the previously selected person.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see InfoPanelHandle#isPersonChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getInfoPanel().isPersonChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see InfoPanelHandle#isPersonChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.");
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
+        // TODO: Match Person instead of just Name
+        assertEquals(selectedCardName, getInfoPanel().getLoadedPerson().getName().toString());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see InfoPanelHandle#isPersonChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getInfoPanel().isPersonChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
@@ -251,7 +242,7 @@ public abstract class AddressBookSystemTest {
      * Asserts that the entire status bar remains the same.
      */
     protected void assertStatusBarUnchanged() {
-        StatusBarFooterHandle handle = getStatusBarFooter();
+        TitleBarHandle handle = getTitleBar();
         assertFalse(handle.isSaveLocationChanged());
         assertFalse(handle.isSyncStatusChanged());
     }
@@ -261,7 +252,7 @@ public abstract class AddressBookSystemTest {
      * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
      */
     protected void assertStatusBarUnchangedExceptSyncStatus() {
-        StatusBarFooterHandle handle = getStatusBarFooter();
+        TitleBarHandle handle = getTitleBar();
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
@@ -276,9 +267,9 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
-            assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
-            assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+            assertEquals(InfoPanel.DEFAULT_PERSON, getInfoPanel().getLoadedPerson());
+            assertEquals("./" + testApp.getStorageSaveLocation(), getTitleBar().getSaveLocation());
+            assertEquals(SYNC_STATUS_INITIAL, getTitleBar().getSyncStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }

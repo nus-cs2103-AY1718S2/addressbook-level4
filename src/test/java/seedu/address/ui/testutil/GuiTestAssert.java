@@ -3,7 +3,6 @@ package seedu.address.ui.testutil;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -18,12 +17,13 @@ public class GuiTestAssert {
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
-        assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAddress(), actualCard.getAddress());
-        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getName(), actualCard.getName());
+        assertEquals(expectedCard.getUniversity(), actualCard.getUniversity());
+        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
-        assertEquals(expectedCard.getTags(), actualCard.getTags());
+        assertEquals(expectedCard.getRating(), actualCard.getRating());
+        assertEquals(expectedCard.getStatus(), actualCard.getStatus());
+        assertEquals(expectedCard.getId(), actualCard.getId());
     }
 
     /**
@@ -31,11 +31,11 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals("-", actualCard.getUniversity());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
-                actualCard.getTags());
+        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals("-", actualCard.getRating());
+        assertEquals("-", actualCard.getStatus());
     }
 
     /**

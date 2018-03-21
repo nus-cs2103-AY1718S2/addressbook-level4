@@ -20,7 +20,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class CommandBox extends UiPart<Region> {
 
-    public static final String ERROR_STYLE_CLASS = "error";
+    public static final String ERROR_STYLE_CLASS = "command-error";
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
@@ -28,13 +28,13 @@ public class CommandBox extends UiPart<Region> {
     private ListElementPointer historySnapshot;
 
     @FXML
-    private TextField commandTextField;
+    private TextField commandInput;
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandInput.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -48,13 +48,14 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+
         default:
             // let JavaFx handle the keypress
         }
@@ -66,11 +67,10 @@ public class CommandBox extends UiPart<Region> {
      */
     private void navigateToPreviousInput() {
         assert historySnapshot != null;
-        if (!historySnapshot.hasPrevious()) {
-            return;
-        }
 
-        replaceText(historySnapshot.previous());
+        if (historySnapshot.hasPrevious()) {
+            replaceText(historySnapshot.previous());
+        }
     }
 
     /**
@@ -79,11 +79,10 @@ public class CommandBox extends UiPart<Region> {
      */
     private void navigateToNextInput() {
         assert historySnapshot != null;
-        if (!historySnapshot.hasNext()) {
-            return;
-        }
 
-        replaceText(historySnapshot.next());
+        if (historySnapshot.hasNext()) {
+            replaceText(historySnapshot.next());
+        }
     }
 
     /**
@@ -91,8 +90,8 @@ public class CommandBox extends UiPart<Region> {
      * positions the caret to the end of the {@code text}.
      */
     private void replaceText(String text) {
-        commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        commandInput.setText(text);
+        commandInput.positionCaret(commandInput.getText().length());
     }
 
     /**
@@ -101,19 +100,21 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
+            CommandResult commandResult = logic.execute(commandInput.getText());
             initHistory();
             historySnapshot.next();
-            // process result of the command
-            commandTextField.setText("");
+
+            // Process result of the command
+            commandInput.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 
         } catch (CommandException | ParseException e) {
             initHistory();
-            // handle command failure
+
+            // Handle command failure
             setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
+            logger.info("Invalid command: " + commandInput.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }
@@ -132,20 +133,18 @@ public class CommandBox extends UiPart<Region> {
      * Sets the command box style to use the default style.
      */
     private void setStyleToDefault() {
-        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        commandInput.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
     /**
      * Sets the command box style to indicate a failed command.
      */
     private void setStyleToIndicateCommandFailure() {
-        ObservableList<String> styleClass = commandTextField.getStyleClass();
+        ObservableList<String> styleClass = commandInput.getStyleClass();
 
-        if (styleClass.contains(ERROR_STYLE_CLASS)) {
-            return;
+        if (!styleClass.contains(ERROR_STYLE_CLASS)) {
+            styleClass.add(ERROR_STYLE_CLASS);
         }
-
-        styleClass.add(ERROR_STYLE_CLASS);
     }
 
 }

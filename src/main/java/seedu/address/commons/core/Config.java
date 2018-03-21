@@ -11,7 +11,7 @@ public class Config {
     public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     // Config values customizable through config file
-    private String appTitle = "Address App";
+    private String appTitle = "HR+";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
 
@@ -63,9 +63,9 @@ public class Config {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("App title : " + appTitle);
-        sb.append("\nCurrent log level : " + logLevel);
-        sb.append("\nPreference file Location : " + userPrefsFilePath);
+        sb.append("App title: " + appTitle);
+        sb.append("\nCurrent log level: " + logLevel);
+        sb.append("\nPreference file Location: " + userPrefsFilePath);
         return sb.toString();
     }
 

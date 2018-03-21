@@ -14,7 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 /**
- * A ui for the status bar that is displayed at the header of the application.
+ * A UI for the result display box that is displayed at the header of the application.
  */
 public class ResultDisplay extends UiPart<Region> {
 
@@ -24,11 +24,11 @@ public class ResultDisplay extends UiPart<Region> {
     private final StringProperty displayed = new SimpleStringProperty("");
 
     @FXML
-    private TextArea resultDisplay;
+    private TextArea commandResult;
 
     public ResultDisplay() {
         super(FXML);
-        resultDisplay.textProperty().bind(displayed);
+        commandResult.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
     }
 

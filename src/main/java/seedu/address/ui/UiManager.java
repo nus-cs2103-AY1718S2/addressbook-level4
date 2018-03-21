@@ -7,9 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
@@ -30,7 +28,6 @@ public class UiManager extends ComponentManager implements Ui {
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
 
     private Logic logic;
     private Config config;
@@ -48,13 +45,14 @@ public class UiManager extends ComponentManager implements Ui {
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
 
-        //Set the application icon.
-        primaryStage.getIcons().add(getImage(ICON_APPLICATION));
+        // Set it to borderless
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
+            mainWindow.requestFocus();
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
@@ -66,16 +64,11 @@ public class UiManager extends ComponentManager implements Ui {
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
-        mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
         final String content = details + ":\n" + cause.toString();
         showAlertDialogAndWait(AlertType.ERROR, FILE_OPS_ERROR_DIALOG_STAGE_TITLE, description, content);
-    }
-
-    private Image getImage(String imagePath) {
-        return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
 
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
@@ -89,7 +82,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.getDialogPane().getStylesheets().add("view/HRTheme.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

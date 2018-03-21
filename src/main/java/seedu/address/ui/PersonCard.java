@@ -2,8 +2,6 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
 
@@ -25,29 +23,31 @@ public class PersonCard extends UiPart<Region> {
     public final Person person;
 
     @FXML
-    private HBox cardPane;
+    private Label cardPersonName;
     @FXML
-    private Label name;
+    private Label cardPersonUniversity;
     @FXML
-    private Label id;
+    private Label cardPersonEmail;
     @FXML
-    private Label phone;
+    private Label cardPersonContact;
     @FXML
-    private Label address;
+    private Label cardPersonRating;
     @FXML
-    private Label email;
+    private Label cardPersonStatus;
     @FXML
-    private FlowPane tags;
+    private Label cardPersonNumber;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
-        id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        cardPersonName.setText(person.getName().fullName);
+        cardPersonUniversity.setText("-");
+        cardPersonEmail.setText(person.getEmail().value);
+        cardPersonContact.setText(person.getPhone().value);
+        cardPersonRating.setText("-");
+        cardPersonStatus.setText("-");
+        cardPersonNumber.setText(String.valueOf(displayedIndex));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class PersonCard extends UiPart<Region> {
 
         // state check
         PersonCard card = (PersonCard) other;
-        return id.getText().equals(card.id.getText())
+        return cardPersonNumber.getText().equals(card.cardPersonNumber.getText())
                 && person.equals(card.person);
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="topTitle" alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <Label fx:id="topStatusMessage" maxWidth="Infinity" HBox.hgrow="SOMETIMES"/>
+    <Label fx:id="topStatusFile" HBox.hgrow="SOMETIMES"/>
+    <HBox fx:id="topControl" minWidth="-Infinity">
+        <Pane fx:id="controlHelp" onMouseClicked="#handleHelp" layoutX="21.0" layoutY="21.0" maxHeight="18.0" maxWidth="18.0" minHeight="18.0" minWidth="18.0" prefHeight="18.0" prefWidth="18.0" HBox.hgrow="NEVER">
+            <Pane fx:id="controlHelpInner" styleClass="icon-help" layoutX="3.29" maxHeight="18.0" maxWidth="11.42" minHeight="18.0" minWidth="11.42" prefHeight="18.0" prefWidth="11.42" />
+            <HBox.margin>
+                <Insets right="20.0" />
+            </HBox.margin>
+        </Pane>
+        <Pane fx:id="controlMinimize" onMouseClicked="#handleMinimize" maxHeight="18.0" maxWidth="18.0" minHeight="18.0" minWidth="18.0" prefHeight="18.0" prefWidth="18.0" HBox.hgrow="NEVER">
+            <HBox.margin>
+                <Insets right="10.0" />
+            </HBox.margin>
+            <Pane fx:id="controlMinimizeInner" layoutY="16.2" maxHeight="1.8" maxWidth="18.0" minHeight="1.8" minWidth="18.0" prefHeight="1.8" prefWidth="18.0" />
+        </Pane>
+        <Pane fx:id="controlMaximize" styleClass="icon-expand" onMouseClicked="#handleMaximize" maxHeight="18.0" maxWidth="18.0" minHeight="18.0" minWidth="18.0" prefHeight="18.0" prefWidth="18.0" HBox.hgrow="NEVER">
+            <HBox.margin>
+                <Insets right="10.0" />
+            </HBox.margin>
+        </Pane>
+        <Pane fx:id="controlClose" styleClass="icon-close" onMouseClicked="#handleExit" maxHeight="18.0" maxWidth="18.0" minHeight="18.0" minWidth="18.0" prefHeight="18.0" prefWidth="18.0" HBox.hgrow="NEVER" />
+        <padding>
+            <Insets bottom="11.0" left="11.0" right="11.0" top="11.0" />
+        </padding>
+    </HBox>
+</HBox>

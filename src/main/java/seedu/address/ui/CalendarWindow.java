@@ -2,7 +2,6 @@
 
 package seedu.address.ui;
 
-import javafx.fxml.FXML;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
@@ -11,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javafx.fxml.FXML;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;

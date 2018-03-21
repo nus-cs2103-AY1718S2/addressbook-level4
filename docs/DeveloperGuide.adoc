@@ -461,6 +461,33 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 ** Pros: User is able to select which `Person`, `Tag` or `Alias` to be imported.
 ** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported.
 
+=== Birthdays feature
+==== Current Implementation
+Birthdays Command uses the existing Events system and stacks a additional StackPane over the existing BrowserPane.
+
+Calling `birthdays` command will create a event, which retrieves the current UniquePersonList from Model as an observableList to the UI
+The BirthdayList UI class then converts the list into an editable list.
+It further parses the day and month of the given Birthday and sorts the list.
+Afterwards, it brings the birthdayPlaceholder to the front, replacing the browserPlaceholder.
+
+
+==== Design Considerations
+
+===== Aspect: How BirthdayList parses its Data
+
+* **Alternative 1: Updating Birthday Class to have separate classes Day and Month.
+** Pros: More modularity
+** Cons: Not apparent in usage by User. Functionality remains the same but code becomes more coupled.
+* **Alternative 2: Use Natural Language Processing for parsing Birthday
+** Pros: Users can enter their birthday in any format
+** Cons: External API will be used. May introduce unforeseen bugs
+
+===== Aspect: How BirthdayList presents its data
+* ** Alternative 1: Notification at the start of app if a birthday is occuring today
+** Pros: More intuitive for User. Provides additional functionality for user stories
+** Cons: Currently, StardyTogether does not have settings to switch on/off the feature if implemented. May clash with encryption.
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

@@ -169,6 +169,10 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
+    public void requestFocus() {
+        primaryStage.requestFocus();
+    }
+
     void releaseResources() {
 
     }

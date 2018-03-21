@@ -25,12 +25,15 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
+import static seedu.address.commons.util.GeocodeUtil.getGeocode;
+
 //@@author jaronchan
 /**
  * The Person Details Panel of the App.
  * To be UPDATED
  */
-public class PersonDetailsPanel extends UiPart<Region> implements Initializable, MapComponentInitializedListener {
+public class PersonDetailsPanel extends UiPart<Region>
+        implements Initializable, MapComponentInitializedListener {
 
     private static final String FXML = "PersonDetailsPanel.fxml";
 
@@ -45,6 +48,7 @@ public class PersonDetailsPanel extends UiPart<Region> implements Initializable,
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
+
         getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
     }
@@ -52,13 +56,20 @@ public class PersonDetailsPanel extends UiPart<Region> implements Initializable,
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapView.addMapInializedListener(this);
+
     }
 
     private void loadPersonMapAddress(Person person) {
-//      LatLong addressAsGeocode = retrieveGeocode(person.getAddress());
+        LatLong addressAsGeocode = getGeocode(person.getAddress().toString());
 
-        mapView.setZoom(12);
-        mapView.setCenter(1.3521, 103.78);
+        mapView.setZoom(17);
+        mapView.setCenter(addressAsGeocode.getLatitude(), addressAsGeocode.getLongitude());
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(addressAsGeocode);
+
+        Marker marker = new Marker(markerOptions);
+        map.addMarker(marker);
 
     }
 
@@ -69,7 +80,6 @@ public class PersonDetailsPanel extends UiPart<Region> implements Initializable,
     @Override
     public void mapInitialized() {
 
-        //Set the initial properties of the map.
         MapOptions mapOptions = new MapOptions();
 
         mapOptions.center(new LatLong(1.3521, 103.8198))
@@ -92,6 +102,8 @@ public class PersonDetailsPanel extends UiPart<Region> implements Initializable,
     public void freeResources() {
         map = null;
     }
+
+
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

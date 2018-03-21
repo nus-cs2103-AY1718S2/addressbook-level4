@@ -3,21 +3,14 @@ package seedu.address.model.subject;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Represents a subject in the address book.
- * Guarantees: immutable; subject name is valid as declared in {@link #isValidSubjectName(String)}
+ * Guarantees: details are present and not null, field values are validated, immutable.
  */
-@XmlRootElement(name = "subject")
-@XmlAccessorType(XmlAccessType.NONE)
 public class Subject {
 
     public static final String[] SUBJECT_NAME = new String[] {"English", "Mathematics",
-        "Additional Mathematics", "Mother Tongue", "Physics", "Chemistry", "Biology", "Humanities"};
+            "Additional Mathematics", "Mother Tongue", "Physics", "Chemistry", "Biology", "Humanities"};
     public static final String MESSAGE_SUBJECT_NAME_CONSTRAINTS = "Subject names should be alphabetic and should be "
             + "one of the following: " + String.join(",", SUBJECT_NAME) + ".";
     public static final String[] SUBJECT_GRADE = new String[] {"A1", "A2", "B3", "B4", "C5", "C6", "D7", "E8", "F9"};
@@ -32,7 +25,7 @@ public class Subject {
      *
      * @param subjectName A valid subject name.
      * @param subjectGrade A valid subject grade.
-    */
+     */
     public Subject(String subjectName, String subjectGrade) {
         requireNonNull(subjectName);
         checkArgument(isValidSubjectName(subjectName), MESSAGE_SUBJECT_NAME_CONSTRAINTS);
@@ -98,7 +91,7 @@ public class Subject {
      * Format state as text for viewing.
      */
     public String toString() {
-        return subjectName;
+        return subjectName + ' ' + subjectGrade;
     }
 
 }

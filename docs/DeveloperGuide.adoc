@@ -387,29 +387,72 @@ the new list will be as shown in Figure 3.2.1.2. below.
 
 image::Figure 3.2.1.3.PNG[width="650"]
 
+// tag::addqremoveq[]
+=== Patient Visting Queue (waiting list for registration)
+==== Current Implementation
+
+The patient visiting queue mechanism is facilitated by `UniquePatientVisitingQueue`, `AddPatientQueueCommand` and `RemovePatientQueueCommand`.
+It supports adding and removing a patient from the visiting queue. `AddPatientQueueCommand` and `RemovePatientQueueCommand` inherit from `Command`.
+
+The add patient into visiting queue mechanism functions like that of the `Add` but with patient name only. It searches for the patient to be added based on the patient name provided
+by the user. If the patient already exist in the system then the patient will be added into the visiting queue. The `AddPatientQueueCommand` then calls for the utility method addPatientToQueue under `Model`, to update the visiting queue and trigger a ImdbChangedEvent to UI to update PatientListPanel.
+
+Suppose that the user has just launched the application and login as medical staffs. The empty queue is shown in figure below.
+
+image::emptyVisitQueue.png[width="400"]
+
+The user now decides to add a patient into the queues.
+
+`AddPatientQueueCommand` will search for the patient in the patient list. If the patient is found in the list, `AddPatientQueueCommand` will finally call the for the utility method addPatientToQueue under `Model`, to add the patient into the visit queue,
+the new list will be as shown in figure below.
+
+image::patientInQueue.png[width="400"]
+
+The remove patient from visiting queue mechanism functions like that of the `Delete` but without any parameters. It removes the first patient of the queue. The `RemovePatientQueueCommand` then calls for the utility method removePatientFromQueue under `Model`, to update the visiting queue and trigger a ImdbChangedEvent to UI to update PatientListPanel.
+
+Suppose that the queue contains patients as shown in figure below.
+
+image::patientsInQueue.png[width="400"]
+
+The user now decides to remove the first patient from the queues.
+
+`RemovePatientQueueCommand` will finally call the for the utility method removePatientFromQueue under `Model`, to remove the patient from the visit queue,
+the new list will be as shown in figure below.
+
+image::patientInQueueRemoveState.png[width="400"]
+
 ==== Design Considerations
 
 The following is an exploration of possible alternative implementations, the various aspects of
 each implementation and the pros and cons of each implementation:
 
-===== Aspect: Implementation of `RemarkCommand`
+===== Aspect: Data structure to support the AddPatientQueue and RemovePatientQueue command
 
-* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise updatePerson to edit the remarks
+* **Alternative 1 (current choice):** Using LinkedList as queue to store patients
 ** Pros: Will be easy to implement due to existing utility methods.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Create a public method in `Remark` for updating the remark which will be called by `Patient`
-** Pros: Will use less memory (no need to create new patient object).
-** Cons: Will require public access to `Remark` stored in `Patient` (possible security concerns).
+** Cons: May have utility limitation.
+* **Alternative 2:** Create a data structure class like linked list to store patient in a queue
+** Pros: Can customise functionalities of the data structure.
+** Cons: Will require time and more knowledge to do.
 
-===== Aspect: Data structure to support the remark command
+===== Aspect: Implementation of `AddPatientQueueCommand`
 
-* **Alternative 1 (current choice):** Create a `Remark` that is stored in `Patient`
-** Pros: Will be easy to understand for new developers as it follows existing structures.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Create a String that is stored in `Patient`
-** Pros: Will use less memory (no need to create new remark object).
-** Cons: Will require a method in Patient to update and verify validity of remark. Violates Single Responsibility Principle and Separation of Concerns as `Patient` now needs to do two * different things.
-// end::remark[]
+* **Alternative 1 (current choice):** Patient will only added at the back of the list
+** Pros: Easy to implement.
+** Cons: User cannot add patient in the position they want in the queue.
+* **Alternative 2:** Patient can be added in any position in the queue
+** Pros: Improve the functionality of AddPatientQueue command.
+** Cons: Will require another implentation to add patient in the specified position in the queue.
+
+===== Aspect: Implementation of `RemovePatientQueueCommand`
+
+* **Alternative 1 (current choice):** Patient will only removed from the top of the list
+** Pros: Easy to implement.
+** Cons: User cannot remove a patient in a certain position.
+* **Alternative 2:** Patient can be removed from the queue no matter which position the patient is in the queue
+** Pros: Improve the functionality of RemovePatientQueue command.
+** Cons: Will require another implentation to remove patient in the specified position from the queue.
+// end::addqremoveq
 
 // tag::morefields[]
 === Implement more fields for the patient information feature

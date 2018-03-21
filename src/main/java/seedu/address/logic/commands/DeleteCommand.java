@@ -43,7 +43,7 @@ public class DeleteCommand extends UndoableCommand {
             throw new AssertionError("The target student cannot be missing");
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SUCCESS, studentToDelete));
+        return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SUCCESS,  studentToDelete));
     }
 
     @Override

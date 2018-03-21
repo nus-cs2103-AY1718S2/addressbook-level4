@@ -65,7 +65,7 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_PROGRAMMING_LANGUAGE_DESC = " "
-            + PREFIX_PROGRAMMING_LANGUAGE + "Java*"; // '*' not allowed in Programming Language
+            + PREFIX_PROGRAMMING_LANGUAGE + "\t"; // '\t' not allowed in Programming Language
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

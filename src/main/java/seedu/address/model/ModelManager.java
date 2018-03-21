@@ -17,6 +17,7 @@ import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
+import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -89,6 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
     @Override
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
@@ -106,6 +108,17 @@ public class ModelManager extends ComponentManager implements Model {
     public Schedule getSchedule() {
         return schedule;
     }
+
+    public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
+        addressBook.checkForStudentInAdressBook(target);
+        indicateBrowserPanelToDisplayStudent(target);
+    }
+
+    /** Raises an event to indicate Browser Panel display changed to display student's information */
+    private void indicateBrowserPanelToDisplayStudent(Student target) {
+        raise(new StudentInfoDisplayEvent(target));
+    }
+
 
     //=========== Filtered Student List Accessors =============================================================
 

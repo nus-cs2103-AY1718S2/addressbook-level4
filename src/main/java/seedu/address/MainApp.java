@@ -201,7 +201,7 @@ public class MainApp extends Application {
      * Starts Application after login success
      */
     public void startApp(Stage primaryStage) {
-        logger.info("Starting Pigeons AddressBook " + MainApp.VERSION);
+        logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 

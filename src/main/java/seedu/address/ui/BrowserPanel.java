@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -52,7 +53,7 @@ public class BrowserPanel extends UiPart<Region> {
         String addressValue = person.getAddress().value.trim();
         int stringCutIndex;
         String addressWithoutUnit;
-        Double num;
+        List<Person> num;
 
         if (addressValue.indexOf('#') > 2) {
             stringCutIndex = addressValue.indexOf('#') - 2;
@@ -62,8 +63,6 @@ public class BrowserPanel extends UiPart<Region> {
         }
 
         readPersonName(person);
-        // num = distance.getDistance("27 Prince Georges Park", addressWithoutUnit);
-
         loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
     }
 

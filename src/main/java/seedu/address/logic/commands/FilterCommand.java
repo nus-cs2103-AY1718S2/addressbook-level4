@@ -1,6 +1,10 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
+
+import seedu.address.logic.RouteOptimization;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.DatePredicate;
 
 /**
@@ -25,7 +29,10 @@ public class FilterCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
+        RouteOptimization route = new RouteOptimization();
+
         model.updateFilteredPersonList(predicate);
+        route.getAddresses(model);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 
     }

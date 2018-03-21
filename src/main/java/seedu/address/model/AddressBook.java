@@ -180,7 +180,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             for (Person person : persons) {
                 removeTagFromPerson(t, person);
             }
-            tags.remove(t);
         } else {
             throw new TagNotFoundException("Specific tag is not used in the address book.");
         }

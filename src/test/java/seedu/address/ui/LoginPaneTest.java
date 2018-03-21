@@ -1,12 +1,12 @@
 package seedu.address.ui;
 
-import guitests.guihandles.LoginPaneHandle;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import guitests.guihandles.LoginPaneHandle;
 
 import seedu.address.login.*;
 import seedu.address.storage.JsonUserPrefsStorage;

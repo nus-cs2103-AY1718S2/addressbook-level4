@@ -26,7 +26,7 @@ public class DailySchedulerPanel extends UiPart<Region> {
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
-    private static final String FXML = "PersonDetailsPanel.fxml";
+    private static final String FXML = "DailySchedulerPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 

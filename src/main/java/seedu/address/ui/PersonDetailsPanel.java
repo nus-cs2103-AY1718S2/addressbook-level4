@@ -1,16 +1,25 @@
 package seedu.address.ui;
 
+import static seedu.address.commons.util.GeocodeUtil.getGeocode;
+
 import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.Marker;
+import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebView;
-import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -20,55 +29,84 @@ import seedu.address.model.person.Person;
  * The Person Details Panel of the App.
  * To be UPDATED
  */
-public class PersonDetailsPanel extends UiPart<Region> {
-
-    public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+public class PersonDetailsPanel extends UiPart<Region>
+        implements Initializable, MapComponentInitializedListener {
 
     private static final String FXML = "PersonDetailsPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private WebView browser;
+    private GoogleMapView mapView;
+
+    private GoogleMap map;
 
     public PersonDetailsPanel() {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
 
-        loadDefaultPage();
+        getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
-    }
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        mapView.addMapInializedListener(this);
 
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
     }
 
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Update the map based on new selection event.
      */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+
+    private void loadPersonMapAddress(Person person) {
+        LatLong addressAsGeocode = getGeocode(person.getAddress().toString());
+
+        mapView.setZoom(17);
+        mapView.setCenter(addressAsGeocode.getLatitude(), addressAsGeocode.getLongitude());
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(addressAsGeocode);
+
+        Marker marker = new Marker(markerOptions);
+        map.addMarker(marker);
+
+    }
+
+    /**
+     * Set the initial properties of the map.
+     */
+
+    @Override
+    public void mapInitialized() {
+
+        MapOptions mapOptions = new MapOptions();
+
+        mapOptions.center(new LatLong(1.3521, 103.8198))
+                .mapType(MapTypeIdEnum.ROADMAP)
+                .mapTypeControl(false)
+                .overviewMapControl(false)
+                .panControl(false)
+                .rotateControl(false)
+                .scaleControl(false)
+                .streetViewControl(false)
+                .zoomControl(false)
+                .zoom(10);
+
+        map = mapView.createMap(mapOptions);
     }
 
     /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
-        browser = null;
+        map = null;
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadPersonMapAddress(event.getNewSelection().person);
     }
 }

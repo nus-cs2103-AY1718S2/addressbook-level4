@@ -30,7 +30,8 @@ public class TypicalPersons {
             .withTags("owesMoney", "friends")
             .withSubjects("Physics A2").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withNric("S9535256J").build();
-    public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withNric("S8765253I").build();
+    public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withNric("S8765253I").
+                                            withSubjects("Physics A2").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withNric("S9482224A").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withNric("S9482427J").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withNric("S9482442U").build();

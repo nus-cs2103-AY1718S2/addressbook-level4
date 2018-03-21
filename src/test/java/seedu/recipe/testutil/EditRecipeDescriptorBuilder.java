@@ -10,6 +10,7 @@ import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -36,6 +37,7 @@ public class EditRecipeDescriptorBuilder {
         descriptor.setPreparationTime(recipe.getPreparationTime());
         descriptor.setIngredient(recipe.getIngredient());
         descriptor.setInstruction(recipe.getInstruction());
+        descriptor.setUrl(recipe.getUrl());
         descriptor.setTags(recipe.getTags());
     }
 
@@ -68,6 +70,14 @@ public class EditRecipeDescriptorBuilder {
      */
     public EditRecipeDescriptorBuilder withInstruction(String instruction) {
         descriptor.setInstruction(new Instruction(instruction));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Url} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditRecipeDescriptorBuilder withUrl(String url) {
+        descriptor.setUrl(new Url(url));
         return this;
     }
 

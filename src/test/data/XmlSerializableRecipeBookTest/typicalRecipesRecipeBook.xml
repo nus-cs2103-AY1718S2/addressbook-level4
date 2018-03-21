@@ -7,6 +7,7 @@
         <preparationTime>85355255</preparationTime>
         <ingredient>alice@example.com</ingredient>
         <instruction>123, Jurong West Ave 6, #08-111</instruction>
+        <url>https://www.bbcgoodfood.com/recipes/collection/baked-potato</url>
         <tagged>family</tagged>
     </recipes>
     <recipes>
@@ -14,6 +15,7 @@
         <preparationTime>98765432</preparationTime>
         <ingredient>johnd@example.com</ingredient>
         <instruction>311, Clementi Ave 2, #02-25</instruction>
+        <url>https://www.bbcgoodfood.com/recipes/collection/burger</url>
         <tagged>owesMoney</tagged>
         <tagged>family</tagged>
     </recipes>
@@ -22,6 +24,7 @@
         <preparationTime>95352563</preparationTime>
         <ingredient>heinz@example.com</ingredient>
         <instruction>wall street</instruction>
+        <url>https://www.bbcgoodfood.com/recipes/collection/casserole</url>
         <tagged>owesMoney</tagged>
     </recipes>
     <recipes>
@@ -29,24 +32,28 @@
         <preparationTime>87652533</preparationTime>
         <ingredient>cornelia@example.com</ingredient>
         <instruction>10th street</instruction>
+        <url>https://www.bbcgoodfood.com/recipes/collection/curry</url>
     </recipes>
     <recipes>
         <name>Elle Meyer</name>
         <preparationTime>9482224</preparationTime>
         <ingredient>werner@example.com</ingredient>
         <instruction>michegan ave</instruction>
+        <url>https://www.bbcgoodfood.com/recipes/collection/fish-pie</url>
     </recipes>
     <recipes>
         <name>Fiona Kunz</name>
         <preparationTime>9482427</preparationTime>
         <ingredient>lydia@example.com</ingredient>
         <instruction>little tokyo</instruction>
+        <url>https://www.bbcgoodfood.com/recipes/collection/chicken-salad</url>
     </recipes>
     <recipes>
         <name>George Best</name>
         <preparationTime>9482442</preparationTime>
         <ingredient>anna@example.com</ingredient>
         <instruction>4th street</instruction>
+        <url>https://www.bbcgoodfood.com/recipes/collection/crumble</url>
     </recipes>
     <tags>friends</tags>
     <tags>owesMoney</tags>

@@ -14,6 +14,7 @@ import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
 
 /**
@@ -30,7 +31,10 @@ public class XmlAdaptedRecipe {
     @XmlElement(required = true)
     private String ingredient;
     @XmlElement(required = true)
+    private String url;
+    @XmlElement(required = true)
     private String instruction;
+
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -45,11 +49,12 @@ public class XmlAdaptedRecipe {
      * Constructs an {@code XmlAdaptedRecipe} with the given recipe details.
      */
     public XmlAdaptedRecipe(String name, String preparationTime, String ingredient, String instruction,
-                            List<XmlAdaptedTag> tagged) {
+                            String url, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.preparationTime = preparationTime;
         this.ingredient = ingredient;
         this.instruction = instruction;
+        this.url = url;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -65,6 +70,7 @@ public class XmlAdaptedRecipe {
         preparationTime = source.getPreparationTime().value;
         ingredient = source.getIngredient().value;
         instruction = source.getInstruction().value;
+        url = source.getUrl().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -117,8 +123,18 @@ public class XmlAdaptedRecipe {
         }
         final Instruction instruction = new Instruction(this.instruction);
 
+        //@@author RyanAngJY
+        if (this.url == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Url.class.getSimpleName()));
+        }
+        if (!Url.isValidUrl(this.url)) {
+            throw new IllegalValueException(Url.MESSAGE_URL_CONSTRAINTS);
+        }
+        final Url url = new Url(this.url);
+        //@@author
+
         final Set<Tag> tags = new HashSet<>(recipeTags);
-        return new Recipe(name, preparationTime, ingredient, instruction, tags);
+        return new Recipe(name, preparationTime, ingredient, instruction, url, tags);
     }
 
     @Override
@@ -136,6 +152,7 @@ public class XmlAdaptedRecipe {
                 && Objects.equals(preparationTime, otherRecipe.preparationTime)
                 && Objects.equals(ingredient, otherRecipe.ingredient)
                 && Objects.equals(instruction, otherRecipe.instruction)
+                && Objects.equals(url, otherRecipe.url)
                 && tagged.equals(otherRecipe.tagged);
     }
 }

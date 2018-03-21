@@ -188,6 +188,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    public void addSubject(Subject s) throws UniqueSubjectList.DuplicateSubjectException {
+        subjects.add(s);
+    }
+
     /**
      * Calls removeTagFromPerson method when tag is found in tags.
      * @param t

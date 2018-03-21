@@ -177,7 +177,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void removeTagFromEachPerson(Person person, Tag tag) {
         Set<Tag> editedTags = new HashSet<>(person.getTags());
         if (editedTags.remove(tag)) {
-            Person editedPerson = new Person(person.getName(), person.getPhone(),person.getEmail(),
+            Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
                     person.getAddress(), person.getExpectedGraduationYear(), person.getMajor(), person.getRating(),
                     person.getResume(), person.getInterviewDate(), person.getStatus(), editedTags);
             try {

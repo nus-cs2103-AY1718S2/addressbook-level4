@@ -184,13 +184,13 @@ public class XmlAdaptedPerson {
         if (this.status == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName()));
         }
-        if(!Status.isValidXmlStatus(status)){
+        if (!Status.isValidXmlStatus(status)) {
             throw new IllegalValueException(Status.MESSAGE_STATUS_CONSTRAINTS);
         }
         final Status status = new Status(this.status);
 
         if (technicalSkillsScore == null || communicationSkillsScore == null
-                || technicalSkillsScore == null || experienceScore == null
+                || problemSolvingSkillsScore == null || experienceScore == null
                 || !Rating.isValidOrDefaultScore(Double.valueOf(technicalSkillsScore))
                 || !Rating.isValidOrDefaultScore(Double.valueOf(communicationSkillsScore))
                 || !Rating.isValidOrDefaultScore(Double.valueOf(problemSolvingSkillsScore))

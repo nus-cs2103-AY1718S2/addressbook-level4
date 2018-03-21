@@ -4,6 +4,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_MATHEMATICS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -22,12 +23,10 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withNric("S8535525Z")
-            .withTags("friends")
-            .withSubjects("English A1").build();
+            .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withNric("S9123456X")
-            .withTags("owesMoney", "friends")
-            .withSubjects("Physics A2").build();
+            .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withNric("S9535256J").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withNric("S8765253I").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withNric("S9482224A").build();
@@ -40,9 +39,9 @@ public class TypicalPersons {
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
-            .withTags(VALID_TAG_FRIEND).build();
+            .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_BOB)
-            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

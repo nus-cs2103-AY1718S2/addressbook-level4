@@ -194,6 +194,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
+
 === Model component
 
 .Structure of the Model Component
@@ -229,6 +230,29 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+=== Route Optimization feature
+Since this program is meant for deliveries the route for the daily delivery must be optimized for the user.
+The RouteOptimization class will get the distance (getDistance function in GetDistance class) between all the addresses for the day.
+
+The addresses will then be sorted based on optimal sortest route.
+Example:
+3 deliveries for a day at Point A, B, C
+
+Point A --> Point B = 14km (12min)
+Point A --> Point C = 13km (13min)
+Point C --> Point B = 12km (10min)
+
+Optimal Route = Point A --> Point C --> Point B (based on least about of km travelled)
+
+In the RouteOptimization class the sorting function will be responsible to determine the optimal route once the distances are obtained
+
+To getDistance - google API is required to get the geocodes for the locations and the DistanceMatrix can be obtained
+Once the matrix is obtained the distances between the places can be recorded.
+The addresses will be obtained for the filtered list in the database.
+
+The optimized route will the be fed into a mapping function to display the route and get the directions for the driver.
+
 
 // tag::undoredo[]
 === Undo/Redo feature

@@ -119,6 +119,18 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Filtering person by date: `filter`
+
+Filers the list of people by date (only one date)
+Format: `filter DATE`
+
+****
+* The search can only look for one date
+* Persons with the delivery date matching the argument will be returned
+* This filter can be used to obtain a delivery route for a day
+****
+
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +

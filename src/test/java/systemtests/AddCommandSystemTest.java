@@ -58,9 +58,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     public void add() throws Exception {
         Model model = getModel();
 
-        /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
+        /* ------------------------ Perform add operations on the shown unfiltered list --------------------------- */
 
-        /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing
+         * spaces
          * -> added
          */
         Person toAdd = AMY;
@@ -120,19 +121,19 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);
 
-        /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
+        /* -------------------------- Perform add operation on the shown filtered list ---------------------------- */
 
         /* Case: filters the person list before adding -> added */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(IDA);
 
-        /* ------------------------ Perform add operation while a person card is selected --------------------------- */
+        /* ------------------------ Perform add operation while a person card is selected ------------------------- */
 
         /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
         selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(CARL);
 
-        /* ----------------------------------- Perform invalid add operations --------------------------------------- */
+        /* ----------------------------------- Perform invalid add operations ------------------------------------- */
 
         /* Case: add a duplicate person -> rejected */
         command = PersonUtil.getAddCommand(HOON);

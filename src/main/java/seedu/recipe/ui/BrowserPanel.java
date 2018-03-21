@@ -29,12 +29,11 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
-
+    public static final String REDIRECT_DOMAIN = "https://www.facebook.com/connect/login_success.html";
     private static final String FXML = "BrowserPanel.fxml";
 
     //@@author RyanAngJY
     private final String APP_ID = "177615459696708";
-    private final String REDIRECT_DOMAIN = "https://www.facebook.com/connect/login_success.html";
     private final String ACCESS_RIGHTS = "publish_actions";
 
 

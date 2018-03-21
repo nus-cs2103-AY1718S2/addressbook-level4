@@ -1,6 +1,8 @@
 //@@author RyanAngJY
 package seedu.recipe.ui.util;
 
+import static seedu.recipe.ui.BrowserPanel.REDIRECT_DOMAIN;
+
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -14,7 +16,8 @@ import seedu.recipe.model.recipe.Recipe;
  * Manages Facebook related commands and execution
  */
 public class FacebookHandler {
-    private final String ACCESS_TOKEN_REGEX = ".*#access_token=(.+)&.*";
+
+    private final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&.*";
     private final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
     private final String POST_TYPE_MESSAGE = "message";
     private final String USER = "me";

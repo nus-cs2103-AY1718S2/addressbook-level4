@@ -175,8 +175,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  list.
      */
 
-    //@@author {clarissayong}
-
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);

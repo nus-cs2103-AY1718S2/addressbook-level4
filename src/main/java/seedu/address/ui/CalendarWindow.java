@@ -37,14 +37,14 @@ public class CalendarWindow extends UiPart<Stage> {
      */
     public CalendarWindow(Stage root, Logic logic) throws IOException {
         super(FXML, root);
+        WebEngine engine = browser.getEngine();
+
         if (logic.hasLoggedIn()) {
-            WebEngine engine = browser.getEngine();
             String googleCalendarLink = "https://calendar.google.com/calendar/r";
             URI uri = URI.create(googleCalendarLink);
             Map<String, List<String>> headers = new LinkedHashMap<>();
             headers.put("Set-Cookie", Arrays.asList("name=value"));
             java.net.CookieHandler.getDefault().put(uri, headers);
-            System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
             engine.setUserAgent(engine.getUserAgent().replace("Macintosh; ", ""));
             engine.load(googleCalendarLink);
         } else {

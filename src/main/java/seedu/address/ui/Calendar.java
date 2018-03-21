@@ -60,7 +60,7 @@ public class Calendar extends UiPart<Region> {
             }
         }
         // Days of the week
-        Text[] dayNames = new Text[]{ new Text("Mon"), new Text("Tue"), new Text("Wed"), 
+        Text[] dayNames = new Text[]{ new Text("Mon"), new Text("Tue"), new Text("Wed"),
             new Text("Thu"), new Text("Fri"), new Text("Sat"), new Text("Sun") };
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);

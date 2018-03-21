@@ -127,7 +127,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing gr
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]` +
-Alias: `f`
+Alias: `f KEYWORD [MORE KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -151,7 +151,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 Finds persons whose groups matches any of the given keywords. +
 Format: `findgroup KEYWORD [MORE_KEYWORDS]` +
-Alias: `fg`
+Alias: `fg KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `Friends` will match `friends`
@@ -174,7 +174,7 @@ Returns any person having groups `neighbours`, `friends`, or `colleagues`
 
 Finds persons whose preferences matches any of the given keywords. +
 Format: `findpref KEYWORD [MORE_KEYWORDS]` +
-Alias: `fp`
+Alias: `fp KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `Computers` will match `computers`
@@ -357,6 +357,118 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` OR `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Displaying Calendar in specified format : `calendar` `Coming in V1.5`
+
+Displays the Calendar at centre of window, in a specified viewing format, such as Week, Month or Year. +
+Format: `calendar [VIEW_FORMAT]` +
+Alias: `cal [VIEW_FORMAT]` +
+
+****
+* VIEW_FORMAT refers to a specific viewing format the Calendar will display in.
+* There are 3 viewing formats available, Week-View, Month-View and Year-View.
+* Calendar shows the current week, current month and current year depending on which viewing format it is using.
+* If no format is given, the Calendar will appear in Month-View by default.
+* VIEW_FORMAT *only accepts "week", "month" or "year".
+* The VIEW_FORMAT is case-insensitve. E.g. `cal WEEK` will display the Calendar in Week-View.
+* Calendar will display all incoming events within timeframe of the current View.
+****
+
+Examples:
+
+* `calendar year` OR +
+`cal year` +
+Shows Calendar in Year-View.
+
+* `calendar` OR `calendar month` OR +
+`cal` OR `cal month` +
+Shows Calendar in Month-View
+
+* `calendar week` OR +
+`cal week` +
+Shows Calendar in Week-View
+
+=== Listing all events : `listevent` `Coming in V1.5`
+
+Shows a list of all events in the address book. +
+Format: `listevents` +
+Alias: `le`
+
+=== Adding events to Event list : `addevent` `Coming in V1.5`
+
+Adds an event to the Event list. +
+Format: `addevent t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+Alias: `ae t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+
+****
+* If input does not contain START_DATE but contains START_TIME, it is assumed that event starts and ends on END_DATE.
+* TITLE is alphanumeric and accepts white space. TITLE accepts maximum of 20 characters.
+* Person at the specified INDEX shown in the last person listing will be tagged to the event.
+* START_DATE and END_DATE must follow the format: DD-MM-YYYY (E.g. 04-04-2020 represents 4 April 2020)
+* START_TIME and END_TIME must follow the 24-Hour format: HHMM (E.g. 2359)
+****
+
+Examples:
+
+* `addevent t/meet with boss` OR +
+`ae t/meet with boss ed/05-05-2020 st/1000 et/1200` +
+Creates an event with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
+Event appears on specified date in the Calendar.
+
+* `addevent t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800` OR +
+`ae t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800` +
+Event starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
+
+=== editing events in Event list : `editevent` `Coming in V1.5`
+
+Edits an existing event in the Event List. +
+Format: `editevent e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+Alias: `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+
+****
+* Edits the event at specified EVENT_INDEX. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Person at the specified INDEX shown in the last person listing will be tagged to the event.
+* When editing INDEX, the existing persons tagged to the event will be removed i.e adding of person indexes is not cumulative.
+* You can remove all persons tagged to the event by typing `i/` without specifying any positive integer after it.
+****
+
+Examples:
+
+* `editevent e/1 t/meet with bosses et/1400` OR +
+`ee e/1 t/meet with bosses et/1400` +
+Edits title and end time of 1st event in Event list to "meet with bosses" and 1400 respectively. +
+Changes reflect on the Calendar.
+
+* `editevent e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800 i/` OR +
+`ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800 i/` +
+Edits starting date and time, ending date and time of the 3rd event in Event list. +
+Removes all persons tagged to the event.
+
+=== Deleting events in Event list : `deleteevent` `Coming in V1.5`
+
+Deletes an existing event in Event list. +
+Format: `deleteevent EVENT_INDEX` +
+Alias: `de EVENT_INDEX` +
+
+****
+* Deletes event at specified EVENT_INDEX of Event list.
+* The index refers to index number shown in the most recent event listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `deleteevent 1` OR +
+`de 1` +
+Deletes the event at index 1 of most recent event listing. +
+Event is removed from the Calendar.
+
+=== Clearing all entries in Event List : `clearevent` `Coming in V1.5`
+
+Clears all event list entries from the address book. +
+Format: `clearevent` +
+Alias: `ce`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -383,11 +495,20 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
+* *Add Event [Coming in V1.5]* : `addevent t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+e.g. `addevent t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
+* *Calendar [Coming in V1.5]* : `calendar [VIEW_FORMAT]` +
+e.g. `calendar year`
 * *Clear* : `clear`
+* *Clear Event list [Coming in V1.5]* : `clearevent`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Event [Coming in V1.5]* : `deleteevent INDEX` +
+e.g. `deleteevent 2`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit Event [Coming in V1.5]* : `editevent e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+e.g. `editevent e/2 t/meeting with Jason ed/20-20-2020 i/2`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Findgroup* : findgroup KEYWORD [MORE_KEYWORDS]` +
@@ -413,11 +534,20 @@ e.g. `orderdelete 5`
 
 * *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
+* *Add Event [Coming in V1.5]* : `ae t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+e.g. `ae t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
+* *Calendar [Coming in V1.5]* : `cal [VIEW_FORMAT]` +
+e.g. `cal year`
 * *Clear* : `c`
+* *Clear Event list [Coming in V1.5]* : `ce`
 * *Delete* : `d INDEX` +
 e.g. `d 3`
+* *Delete Event [Coming in V1.5]* : `de INDEX` +
+e.g. `de 2`
 * *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `e 2 n/James Lee e/jameslee@example.com`
+* *Edit Event [Coming in V1.5]* : `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+e.g. `ee e/2 t/meeting with Jason ed/20-20-2020 i/2`
 * *Find* : `f KEYWORD [MORE_KEYWORDS]` +
 e.g. `f James Jake`
 * *Findgroup* : fg KEYWORD [MORE_KEYWORDS]` +

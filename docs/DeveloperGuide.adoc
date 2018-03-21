@@ -657,6 +657,72 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+
+// tag::calendarEvents[]
+=== Calendar and events tracking feature "Coming in V1.5"
+
+==== Current Implementation
+
+The event tracking feature is facilitated by `UserEvents`, which resides inside `Model`.
+It is supported by `UserEventsManager` residing inside `UserEvents`, which supports the adding, removing and editing of `CalendarEvent`(e.g. `addEvent`, `deleteEvent`).
+Orders of a person will also appear as `CalendarEvent` based on the `DeliveryDate` attribute of the Order.
+
+The following diagram shows class diagram of `Model` Component related to `UserEvents` and `CalendarEvent`.
+
+image::CalendarClassDiagram.png[width="800"]
+
+In the diagram, `ModelManager` creates an instance of `UserEvents` interface, which provides the `UserEvents` API for `ModelManager` to use.
+`UserEventsManager` implements methods used by users to add, edit or delete `CalendarEvent`, which contains information of an event. `CalendarEvent` is stored in the `UniqueEventList`. +
+`Logic` Components contains the commands required to manage user's events (e.g. `AddEventCommand`, `deleteEventCommand`) and to change display format of the calendar ui (e.g. `ShowCalendarCommand`).
+
+The sequence diagram below shows how add event operation works:
+
+image::AddEventSD.png[width="800"]
+
+A `CalendarEvent` is implemented in the following manner:
+[source,java]
+----
+public class CalendarEvent {
+
+    private final String eventTitle;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final EventTime startTime;
+    private final EventTime endTime;
+    private final List<Person> taggedPersons;
+
+    // ... Order attribute getters and setters ...
+
+}
+----
+
+The following is a brief description of the attributes of `CalendarEvent`:
+
+* eventTitle: Represents title of event.
+* startDate: Represents starting date of the event in DD-MM-YYYY format.
+* endDate: Represents ending date of the event in DD-MM-YYYY format.
+* startTime: Represents starting time of the event in HHMM format (24-Hour format).
+* endTime: Represents ending time of the event in HHMM format (24-Hour format).
+* taggedPerson: Represents list of Persons in address book that are tagged to the event.
+
+
+Events added, removed or modified by users will have their intended results displayed by the `CalendarUi` residing inside `Ui` Component, which displays a calendar showing any future events.
+The `CalendarUi` can display dates in a week, month and year format, depending on user inputs. +
+Storing of `CalendarEvent` data is managed by `CalendarStorage` within `Storage` Component, converting `CalendarEvent` to `XmlAdaptedEvent` to store in a .xml file.
+
+==== Design Considerations
+
+===== Aspect: Implementation of feature as a whole
+* **Alternative 1 (current choice):** Creates a localised version of Calendar where all data related to it is stored locally.
+** Pros: Does not require constant Internet access to manage data of Calendar.
+** Cons: Disallows quick synchronisation between this Calendar and other Calendar applications, such as Google Calendar, that users might use. There are much more areas in the code that potentially contains hidden bugs.
+
+* **Alternative 2:** Uses a third-party library such as Google Calendar API to manage.
+** Pros: Does not require substantial maintenance of related code as less code is required to implement the feature. Some third-party libraries allows users to access some existing calendar applications, saving time required to transfer their calendar events.
+** Cons: Some third-party libraries use REST APIs, which would require users to have Internet access to edit their Calendars. Some libraries will periodically prompt for authentication of user to continue to use their API, which can be a problematic if authentication process is changed in the future.
+
+// end::calendarEvents[]
+
 [[Implementation-Configuration]]
 === Configuration
 
@@ -1150,9 +1216,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |organized user |delete multiple contacts at a time |remove the contacts I no longer need quickly |2.0
 
-|`* * *` |user with many contacts |remove a specific tag |all contacts with that tag will have the tag removed instead of removing the tag from from every one of them |1.1
+|`* * *` |user with many contacts |remove a specific tag |all contacts with that tag will have the tag removed instead of removing the tag from from every one of them |1.2
 
-|`* * *` |user with many contacts |find contacts based on the group they are in |see all contacts belonging to a certain group |1.1
+|`* * *` |user with many contacts |find contacts based on the group they are in |see all contacts belonging to a certain group |1.2
 
 |`* * *` |user with many contacts |sort the contacts by last contacted time |find contacts I corresponded with recently |2.0
 
@@ -1162,9 +1228,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |salesperson |send promotions to a group of contacts |ensure my differentiated marketing strategies work |2.0
 
-|`* * *` |salesperson |add a list of preferences to contact |know what my customers are interested in |2.0
+|`* * *` |salesperson |add a list of preferences to contact |know what my customers are interested in |1.2
 
-|`* * *` |salesperson |edit contact’s preferences |update my customers' changing interests |2.0
+|`* * *` |salesperson |edit contact’s preferences |update my customers' changing interests |1.2
 
 |`* * *` |salesperson |see the top preference among all contacts |know what products I should focus on |2.0
 

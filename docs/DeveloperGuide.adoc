@@ -385,6 +385,56 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::count[]
+=== Customers’ Orders Count feature
+==== Current Implementation
+The counting of customers’ past orders can be stored in an additional local database. The data can be kept in a local XmlCustomerStats file.
+
+The data file consists of CustomerStats. It can be implemented using a HashMap since each customer is identified by his / her unique phoneNumber and has a counter numOfOrders keep counting the number of orders. So, the keys of the HashMap are the phone number Strings and the values are the order count integers corresponding to the phone number String.
+
+As you can see from the diagram below, these are the interactions among the components during an “add” command. After the Model component raises an AddressBookChangedEvent to update the content of the AddressBook, it raises another CustomerStatsChangedEvent to update the current customer’s order count.
+
+image::figure3.5.1a.png[width="800"]
+(To be updated)
+
+The diagram below shows how EventsCenter reacts to the event. It finds the customer in the database using the phoneNumber provided and add 1 to the corresponding numOfOrders value.
+
+image::figure3.5.1b.png[width="800"]
+(To be updated)
+
+To implement this feature, there are some modifications to the existing Model component and Storage component to support the additional data structure.
+
+image::figure3.5.1c.png[width="800"]
+(To be updated)
+
+As the diagram shown above, besides AddressBook and UserPref, now ModelManager has an additional CustomerStats class. It consists a Data field which has many Phone numbers and numOfOrders counters. Phone numbers and the numOfOrders counters are 1-1 mapped and each pair represent one customer that has placed at least one order before.
+
+image::figure3.5.1d.png[width="800"]
+(To be updated)
+
+In the Storage component, there is an additional CustomerStatsStorage interface and it is implemented by a XmlCustomerStatsStorage class to read and write the XML file on local machine.
+
+==== Design Considerations
+
+===== Aspect: Identification of customers
+
+* **Alternative 1 (current choice):** Identify a customer by his/her phone number.
+** Pros: Easy to implement.
+** Cons: Customers will lose their past orders count if they change phone number.
+* **Alternative 2:** Identify customers using individual accounts.
+** Pros: Customers can still have the counting kept going on even if they change phone numbers, as long as the account does not change.
+** Cons: It requires additional data structures and a server system. Too hard to implement.
+
+===== Aspect: Data structure to store data for orders count
+
+* **Alternative 1 (current choice):** Use a HashMap to store the phoneNumber-numOfOrders pair.
+** Pros: Efficient to search for a given key and update its value.
+** Cons: Information not fully encapsulated.
+* **Alternative 2:** Use an ArrayList of Customer objects and each Customer object contains a numOfOrders attribute.
+** Pros: Better encapsulation of information
+** Cons: It takes up more space and it requires a much longer time to find a customer and update the counter.
+// end::count[]
+
 == Documentation
 
 We use asciidoc for writing documentation.

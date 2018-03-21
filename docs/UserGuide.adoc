@@ -65,7 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
-=== Logging into the system: `login` or `lg` [coming in v1.2]
+=== Logging into the system: `login` or `lg` [since v1.2]
 
 Logs the user into the Imdb, given a matching username and password.
 Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
@@ -73,16 +73,16 @@ Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
 === Adding a patient: `add` or `a`
 
 Adds a patient to the Imdb +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/CONDITION]...` or
-        `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/CONDITION]...`
+Format: `add n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...` or
+        `a n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...`
 
 [TIP]
 A patient can have any number of conditions (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `a n/Betsy Crowe c/peanuts e/betsycrowe@example.com a/Newgate Prison p/1234567 c/aspirin`
+* `add n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01, dob/01/01/1991 b/A-`
+* `a n/Betsy Crowe ic/NRIC c/peanuts e/betsycrowe@example.com a/Newgate Prison p/1234567 dob/12/12/1992 b/B+ c/aspirin`
 
 === Listing all patients : `list` or `ls`
 
@@ -92,8 +92,8 @@ Format: `list` or `ls`
 === Editing a patient : `edit` or `e`
 
 Edits an existing patient in the Imdb. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CONDITION]...` or
-        `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CONDITION]...`
+Format: `edit INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE][c/CONDITION]...` or
+        `e INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE] [c/CONDITION]...`
 
 ****
 * Edits the patient at the specified `INDEX`. The index refers to the index number shown in the last patient listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -230,7 +230,7 @@ Illness:Flu Treatment:Zyrtec`.
 Formats and prints out a patient's medical records. +
 Format: `print INDEX`
 
-=== Add patient into visiting queue with patient name: `addq` [coming in v1.2]
+=== Add patient into visiting queue with patient name: `addq` [since v1.2]
 
 Add patient into visiting queue (registration).
 Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
@@ -243,7 +243,7 @@ Betsy will be added at the back of the visiting queue.
 * `aq John` +
 John will be added at the back of the visiting queue.
 
-=== Remove patient into visiting queue with patient name: `removeq` [coming in v1.2]
+=== Remove patient into visiting queue with patient name: `removeq` [since v1.2]
 
 Remove the first patient from the visiting queue (check-out).
 Format: `removeq` or `rq`

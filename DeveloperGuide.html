@@ -49,6 +49,7 @@
 <li><a href="#logging">3.3. Logging</a></li>
 <li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
 <li><a href="#tag-colors">3.5. Tag colors</a></li>
+<li><a href="#add-remove-one-tag-for-a-person">3.6. Add/Remove one Tag for a person</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -953,6 +954,39 @@ Use an array of pre-defined colors.<br></p>
 <p><strong>Alternative 2:</strong> Have tag colors to be a random hexadecimal color value<br>
 <strong>Pros:</strong> Number of different color is very big (i.e. there is less repetitive color used)  <br>
 <strong>Cons:</strong> The color for each tag value might be different between app launchs<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="add-remove-one-tag-for-a-person"><a class="link" href="#add-remove-one-tag-for-a-person">3.6. Add/Remove one Tag for a person</a></h3>
+<div class="paragraph">
+<p>As Person may have a long list of tags, we need to have a convenient way to update them.+
+Command syntax: EDIT [-OPTIONS] [PARAMETERS]…​, where:<br></p>
+</div>
+<div class="paragraph">
+<p>The EDIT specifies the edit action to be performed,<br></p>
+</div>
+<div class="paragraph">
+<p>OPTIONS are prefixed with a dash: <code>add-tag</code> to add new tags the current list of tags and
+<code>delete-tag</code> to delete tags from the current list of tags.</p>
+</div>
+<div class="paragraph">
+<p>PARAMETERS provide information for the Edit command to be executed with.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.6.1. Design Considerations*</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of removing/adding a single tag<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Modify EditPersonDescriptor<br>
+<strong>Pros:</strong> Maintain the current structure and coupling.<br>
+<strong>Cons:</strong> May cause conflicts with other features.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Retrieve the list of tags then modify it<br>
+<strong>Pros:</strong> Keep the Edit Command logic  <br>
+<strong>Cons:</strong> Have to rely on Model, which is not flexible.</p>
 </div>
 </div>
 </div>
@@ -2615,7 +2649,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-21 02:32:02 UTC
+Last updated 2018-03-21 02:48:42 UTC
 </div>
 </div>
 </body>

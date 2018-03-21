@@ -10,6 +10,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -157,6 +158,7 @@ public class Autocompleter {
                 EditCommand.COMMAND_WORD,
                 ExitCommand.COMMAND_WORD,
                 FindCommand.COMMAND_WORD,
+                FilterCommand.COMMAND_WORD,
                 HelpCommand.COMMAND_WORD,
                 HistoryCommand.COMMAND_WORD,
                 ListCommand.COMMAND_WORD,

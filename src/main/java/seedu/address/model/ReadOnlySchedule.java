@@ -10,7 +10,7 @@ public interface ReadOnlySchedule {
 
     /**
      * Returns an unmodifiable view of the schedule.
-     * This list will not contain any duplicate students.
+     * This list will not contain any duplicate lessons or lessons that clash.
      */
     ObservableList<Lesson> getSchedule();
 

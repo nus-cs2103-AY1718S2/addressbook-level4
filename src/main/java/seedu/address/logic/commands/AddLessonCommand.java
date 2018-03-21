@@ -79,6 +79,8 @@ public class AddLessonCommand extends UndoableCommand {
         List<Student> lastShownList = model.getFilteredStudentList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        } else if (startTime.compareTo(endTime) >= 0) {
+            throw new CommandException(Messages.MESSAGE_INVALID_START_END_TIME);
         }
 
         studentToAddLesson = lastShownList.get(index.getZeroBased());

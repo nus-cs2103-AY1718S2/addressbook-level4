@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 
 /**
- * A list of students that enforces uniqueness between its elements and does not allow nulls.
+ * A list of lessons that enforces uniqueness between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *

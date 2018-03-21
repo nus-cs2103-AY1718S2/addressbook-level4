@@ -26,6 +26,7 @@ public class Card {
     private final UUID id;
     private final String front;
     private final String back;
+    private final Schedule schedule;
 
     public Card(String front, String back) {
         this(UUID.randomUUID(), front, back);
@@ -38,6 +39,7 @@ public class Card {
         this.front = front;
         this.back = back;
         this.id = id;
+        this.schedule = new Schedule();
     }
 
     public UUID getId() {
@@ -50,6 +52,10 @@ public class Card {
 
     public String getBack() {
         return back;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
     }
 
     /**

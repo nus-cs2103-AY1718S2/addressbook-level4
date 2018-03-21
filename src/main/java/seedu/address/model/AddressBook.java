@@ -2,11 +2,14 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.card.Card;
 import seedu.address.model.card.UniqueCardList;
 import seedu.address.model.card.exceptions.CardNotFoundException;
@@ -155,6 +158,17 @@ public class AddressBook implements ReadOnlyAddressBook {
             throws DuplicateCardException, CardNotFoundException {
         requireNonNull(editedCard);
         cards.setCard(target, editedCard);
+    }
+
+    //// predicate for card review
+    public Predicate<Card> isBefore () {
+        return c -> c.getSchedule().getNextReview()
+                .isBefore(LocalDateTime.now());
+    }
+
+    //// get list of cards for review
+    public ObservableList<Card> getTodayReviewList() {
+        return new FilteredList<Card>(cards.asObservableList(), isBefore());
     }
 
     //// util methods

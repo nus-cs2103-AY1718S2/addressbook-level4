@@ -53,7 +53,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         income = personToCopy.getIncome();
         address = personToCopy.getAddress();
-        income = personToCopy.getIncome();
+        age = personToCopy.getAge();
         tags = new HashSet<>(personToCopy.getTags());
     }
 

@@ -217,7 +217,6 @@ public class Calendar extends UiPart<Region> {
             super(children);
             // Add action handler for mouse clicked
             this.setOnMouseClicked(e -> {
-                System.out.println("This pane's date is: " + date);
                 LogsCenter.getLogger(this.getClass()).info(e.toString());
             });
         }

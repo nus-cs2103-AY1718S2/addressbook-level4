@@ -45,6 +45,13 @@ public class MainMenuHandle extends NodeHandle<Node> {
     public void openCalendarWindowUsingAccelerator() {
         guiRobot.push(KeyCode.F8);
     }
+
+    /**
+     * Opens the {@code ErrorLog} using the menu bar in {@code MainWindow}.
+     */
+    public void openErrorLogUsingMenu() {
+        clickOnMenuItemsSequentially("View", "Show Error Log");
+    }
     //@@author
 
     /**

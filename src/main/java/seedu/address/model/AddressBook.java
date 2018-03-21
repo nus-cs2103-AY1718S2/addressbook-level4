@@ -15,6 +15,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.subject.Subject;
+import seedu.address.model.subject.UniqueSubjectList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
@@ -27,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueSubjectList subjects;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -38,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        subjects = new UniqueSubjectList();
     }
 
     public AddressBook() {}
@@ -60,6 +64,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects.setSubjects(subjects);
+    }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -67,7 +74,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
         List<Person> syncedPersonList = newData.getPersonList().stream()
-                .map(this::syncWithMasterTagList)
+                .map(this::syncWithMasterTagSubjectList)
                 .collect(Collectors.toList());
 
         try {
@@ -81,13 +88,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Also checks the new person's tags and subjects and updates {@link #tags #subjects} with any new
+     * tags or subjects found, and updates the Tag objects and Subject objects in the person
+     * to point to those in {@link #tags #subjects}.
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(Person p) throws DuplicatePersonException {
-        Person person = syncWithMasterTagList(p);
+        Person person = syncWithMasterTagSubjectList(p);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -96,19 +104,19 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
+     * {@code AddressBook}'s tag and subject list will be updated with the tags and subjects of {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncWithMasterTagList(Person)
+     * @see #syncWithMasterTagSubjectList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
-        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+        Person syncedEditedPerson = syncWithMasterTagSubjectList(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -127,24 +135,35 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.setTags(tagsInPersons);
     }
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
-     *  list.
+     *  Updates the master tag list to include tags and subjects in {@code person} that are not in the list.
+     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object
+     *  and a Subject Object in the master list.
      */
-    private Person syncWithMasterTagList(Person person) {
+    private Person syncWithMasterTagSubjectList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);
+
+        final UniqueSubjectList personSubjects = new UniqueSubjectList((person.getSubjects()));
+        subjects.mergeFrom(personSubjects);
 
         // Create map with values = tag object references in the master list
         // used for checking person tag references
         final Map<Tag, Tag> masterTagObjects = new HashMap<>();
         tags.forEach(tag -> masterTagObjects.put(tag, tag));
 
+        // Create map with values = subject object references in the master list
+        // used for checking person subject references
+        final Map<Subject, Subject> masterSubjectObjects = new HashMap<>();
+        subjects.forEach(subject -> masterSubjectObjects.put(subject, subject));
+
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        // Rebuild the list of person subjects to point to the relevant subjects in the master subject list.
+        final Set<Subject> correctSubjectReferences = new HashSet<>();
+        personSubjects.forEach(subject -> correctSubjectReferences.add(masterSubjectObjects.get(subject)));
         return new Person(
-                person.getName(), person.getNric(), correctTagReferences);
+                person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences);
     }
 
     /**
@@ -157,6 +176,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    public void sortByName() {
+        persons.sortPersons();
     }
 
     //// tag-level operations
@@ -183,14 +206,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes a specific tag from an individual person and updates the person's information.
+     * Person needs to have the specific tag in his/her tag list.
      * @param tag
      * @param person
      */
     public void removeTagFromPerson(Tag tag, Person person) {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tag)) {
-            Person newPerson = new Person(person.getName(), person.getNric(),
-                    tagList);
+            Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects());
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {
@@ -206,7 +229,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
+                + subjects.asObservableList().size() + " subjects";
         // TODO: refine later
     }
 
@@ -221,16 +245,22 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Subject> getSubjectList() {
+        return subjects.asObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.subjects.equalsOrderInsensitive(((AddressBook) other).subjects));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, subjects);
     }
 }

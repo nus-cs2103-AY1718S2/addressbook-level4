@@ -90,11 +90,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteGroup(Group targetGroup) throws GroupNotFoundException {
         addressBook.removeGroup(targetGroup);
+        indicateAddressBookChanged();
     }
 
     @Override
     public void deletePreference(Preference targetPreference) throws PreferenceNotFoundException {
         addressBook.removePreference(targetPreference);
+        indicateAddressBookChanged();
     }
 
     @Override

@@ -37,6 +37,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Group;
 import seedu.address.model.tag.Preference;
+import seedu.address.model.tag.exceptions.GroupNotFoundException;
+import seedu.address.model.tag.exceptions.PreferenceNotFoundException;
 import seedu.address.testutil.OrderBuilder;
 
 /**
@@ -158,12 +160,12 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void deleteGroup(Group targetGroup) throws Exception {
+        public void deleteGroup(Group targetGroup) throws GroupNotFoundException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void deletePreference(Preference targetPreference) throws Exception {
+        public void deletePreference(Preference targetPreference) throws PreferenceNotFoundException {
             fail("This method should not be called.");
         }
 

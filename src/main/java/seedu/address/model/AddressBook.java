@@ -199,10 +199,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeGroup(Group toRemove) throws GroupNotFoundException {
         if (groupTags.contains(toRemove)) {
-            ObservableList<Person> list = persons.getInternalList();
-            for (Person p: list) {
-                p.removeGroupTag(toRemove);
-            }
+            persons.removeGroupFromAllPersons(toRemove);
             groupTags.remove(toRemove);
         } else {
             throw new GroupNotFoundException();
@@ -215,10 +212,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePreference(Preference toRemove) throws PreferenceNotFoundException {
         if (prefTags.contains(toRemove)) {
-            ObservableList<Person> list = persons.getInternalList();
-            for (Person p: list) {
-                p.removePreferenceTag(toRemove);
-            }
+            persons.removePrefFromAllPersons(toRemove);
             prefTags.remove(toRemove);
         } else {
             throw new PreferenceNotFoundException();

@@ -87,24 +87,11 @@ public class Person {
     }
 
     /**
-     * Removes given group if found in group set.
-     */
-    public void removeGroupTag(Group groupToRemove) {
-        groupTags.remove(groupToRemove);
-    }
-    /**
      * Returns an immutable preference set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Preference> getPreferenceTags() {
         return Collections.unmodifiableSet(prefTags.toSet());
-    }
-
-    /**
-     * Removes given preference if found in preference set.
-     */
-    public void removePreferenceTag(Preference prefToRemove) {
-        prefTags.remove(prefToRemove);
     }
 
     /**

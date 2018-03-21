@@ -3,14 +3,18 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -120,5 +124,54 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
+    }
+
+
+    /**
+     * Removes specified group from all persons who have the group.
+     */
+    public void removeGroupFromAllPersons (Group toRemove) {
+        for (Person p: internalList) {
+            Set<Group> newGroups = new HashSet<>(p.getGroupTags());
+            if (!newGroups.remove(toRemove)) {
+                continue;
+            }
+
+            Person newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
+                    newGroups, p.getPreferenceTags());
+            try {
+                setPerson(p, newPerson);
+            } catch (DuplicatePersonException e) {
+                throw new AssertionError("There should not be any duplicates as only groups are edited.");
+            } catch (PersonNotFoundException e) {
+                throw new AssertionError("Method is called only specified Group exists. internalList "
+                        + "cannot be empty.");
+            }
+        }
+    }
+
+    /**
+     * Removes specified preference from all persons who have the preference.
+     */
+    public void removePrefFromAllPersons(Preference toRemove) {
+        for (Person p: internalList) {
+            Set<Preference> newPreferences = new HashSet<>(p.getPreferenceTags());
+            if (!newPreferences.remove(toRemove)) {
+                continue;
+            }
+
+            Person newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
+                    p.getGroupTags(), newPreferences);
+            try {
+                setPerson(p, newPerson);
+            } catch (DuplicatePersonException e) {
+                throw new AssertionError("There should not be any duplicates as only preferences"
+                        + " are edited.");
+            } catch (PersonNotFoundException e) {
+                throw new AssertionError("Method is called only specified Preference exists. "
+                        + "internalList cannot be empty.");
+            }
+
+        }
     }
 }

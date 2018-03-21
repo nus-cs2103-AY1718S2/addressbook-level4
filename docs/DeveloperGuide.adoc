@@ -1521,10 +1521,8 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to remove a group
-2.  ContactSails shows a list of all the groups used in the application
-3.  User enters the group they want to remove
-4.  ContactSails removes the specific group from all contacts who have this group assigned to them
+1.  User requests to remove a group and enters group they want to remove
+2.  ContactSails removes the specific group from all contacts who have this group assigned to them
 +
 Use case ends.
 
@@ -1539,21 +1537,19 @@ Use case ends.
 Use case ends.
 
 [none]
-* 3a. User enters invalid group
+* 2a. User enters invalid group
 +
 [none]
-** 3a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message
 +
-Use case resumes at step 2.
+Use case resumes at step 1.
 
 [discrete]
 === Use case: Remove specific preference
 
 *MSS*
 
-1.  User requests to remove a preference
-2.  ContactSails shows a list of all the preferences used in the application
-3.  User enters the preference they want to remove
+1.  User requests to remove a preference enters the preference they want to remove
 4.  ContactSails removes the specific preference from all contacts who have this group assigned to them
 +
 Use case ends.
@@ -1569,12 +1565,12 @@ Use case ends.
 Use case ends.
 
 [none]
-* 3a. User enters invalid preference
+* 2a. User enters invalid preference
 +
 [none]
-** 3a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message
 +
-Use case resumes at step 2.
+Use case resumes at step 1.
 
 [discrete]
 === Use case: Export contacts

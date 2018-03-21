@@ -5,7 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalGroups.FRIENDS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPreferences.COMPUTERS;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +21,8 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddOrderCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteGroupCommand;
+import seedu.address.logic.commands.DeletePreferenceCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -104,6 +108,34 @@ public class AddressBookParserTest {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_deleteGroup() throws Exception {
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_WORD + " " + "friends");
+        assertEquals(new DeleteGroupCommand(FRIENDS), command);
+    }
+
+    @Test
+    public void parseCommand_deleteGroupAlias() throws Exception {
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_ALIAS + " " + "friends");
+        assertEquals(new DeleteGroupCommand(FRIENDS), command);
+    }
+
+    @Test
+    public void parseCommand_deletePreference() throws Exception {
+        DeletePreferenceCommand command = (DeletePreferenceCommand) parser.parseCommand(
+                DeletePreferenceCommand.COMMAND_WORD + " " + "computers");
+        assertEquals(new DeletePreferenceCommand(COMPUTERS), command);
+    }
+
+    @Test
+    public void parseCommand_deletePreferenceAlias() throws Exception {
+        DeletePreferenceCommand command = (DeletePreferenceCommand) parser.parseCommand(
+                DeletePreferenceCommand.COMMAND_ALIAS + " " + "computers");
+        assertEquals(new DeletePreferenceCommand(COMPUTERS), command);
     }
 
     @Test

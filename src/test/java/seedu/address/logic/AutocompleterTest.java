@@ -38,7 +38,7 @@ public class AutocompleterTest {
     }
 
     @Test
-    public void completeField() throws  DuplicatePersonException {
+    public void completeField() throws DuplicatePersonException {
 
         model.addPerson(
                 new Person(
@@ -54,5 +54,32 @@ public class AutocompleterTest {
         String query = "find John";
         String prefix = query.substring(0, query.length() - 3);
         assertEquals(query.substring(query.length() - 3), autocompleter.autocomplete(prefix));
+    }
+
+    @Test
+    public void completeOptions() throws DuplicatePersonException {
+        model.addPerson(
+                new Person(
+                        new Name("John"),
+                        new Phone("98765432"),
+                        new Email("johndoe@test.com"),
+                        new Address("NUS"),
+                        new DelivDate("2018-03-24"),
+                        Collections.emptySet()));
+
+        autocompleter = new Autocompleter(model.getAddressBook().getPersonList());
+
+        String query = "add n/";
+        query += autocompleter.autocomplete(query);
+        query += " p/";
+        query += autocompleter.autocomplete(query);
+        query += " e/";
+        query += autocompleter.autocomplete(query);
+        query += " a/";
+        query += autocompleter.autocomplete(query);
+        query += " d/";
+        query += autocompleter.autocomplete(query);
+        assertEquals("add n/John p/98765432 e/johndoe@test.com a/NUS d/2018-03-24", query);
+
     }
 }

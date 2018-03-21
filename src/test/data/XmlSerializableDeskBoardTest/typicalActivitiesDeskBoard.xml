@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- DeskBoard save file which contains the same Activity values as in
+{@code TypicalActivities#getTypicalDeskBoard()}-->
+<addressbook>
+    <activities>
+        <name>CS2101Assignment</name>
+        <dateTime>04/03/2018 23:59</dateTime>
+        <remark> </remark>
+        <tagged>CS2101</tagged>
+    </activities>
+    <activities>
+        <name>CS2102Assignment</name>
+        <dateTime>15/03/2018 23:59</dateTime>
+        <remark> </remark>
+        <tagged>CS2102</tagged>
+    </activities>
+    <activities>
+        <name>CS2101Quiz</name>
+        <dateTime>19/03/2018 23:59</dateTime>
+        <remark>IVLE Quiz</remark>
+    </activities>
+    <activities>
+        <name>CCA</name>
+        <dateTime>01/04/2018 20:00</dateTime>
+        <endDateTime>01/04/2018 21:00</endDateTime>
+        <location>Campus</location>
+        <remark>nil</remark>
+    </activities>
+    <activities>
+        <name>CIP</name>
+        <dateTime>02/04/2018 08:00</dateTime>
+        <endDateTime>02/04/2018 12:00</endDateTime>
+        <location>michegan ave</location>
+        <remark></remark>
+        <tagged>CIP</tagged>
+    </activities>
+    <activities>
+        <name>CS2101Exam</name>
+        <dateTime>28/04/2018 09:00</dateTime>
+        <endDateTime>28/04/2018 11:00</endDateTime>
+        <location>MPSH</location>
+        <remark></remark>
+        <tagged>CS2101</tagged>
+    </activities>
+    <activities>
+        <name>InterFacultyGame</name>
+        <dateTime>04/01/2018 20:00</dateTime>
+        <endDateTime>04/01/2018 22:00</endDateTime>
+        <location>MPSH 1</location>
+        <remark></remark>
+    </activities>
+    <tags>CS2101</tags>
+    <tags>CS2102</tags>
+    <tags>MA2108</tags>
+    <tags>CS2010</tags>
+    <tags>CIP</tags>
+</addressbook>

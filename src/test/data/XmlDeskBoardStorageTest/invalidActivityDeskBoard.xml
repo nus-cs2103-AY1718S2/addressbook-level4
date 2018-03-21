@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- Activity with invalid name field -->
+    <activities>
+        <name>Ellen's B'day</name>
+        <dateTime>10/10/2010 10:10</dateTime>
+        <remark> </remark>
+    </activities>
+</addressbook>

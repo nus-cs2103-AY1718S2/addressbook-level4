@@ -10,12 +10,12 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 
+//@@author Kyomian
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  * {@code ParserUtil} contains methods that take in {@code Optional} as parameters. However, it goes against Java's
@@ -68,75 +68,52 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Parses a {@code String phone} into a {@code DateTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws IllegalValueException if the given {@code datetime} is invalid.
      */
-    public static Phone parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+
+    public static DateTime parseDateTime(String datetime) throws IllegalValueException {
+        requireNonNull(datetime);
+        String trimmedDateTime = datetime.trim();
+        if (!DateTime.isValidDateAndTime(trimmedDateTime)) {
+            throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new DateTime(trimmedDateTime);
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code Optional<String> name} into an {@code Optional<DateTime>} if {@code datetime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
+    public static Optional<DateTime> parseDateTime(Optional<String> datetime) throws IllegalValueException {
+        requireNonNull(datetime);
+        return datetime.isPresent() ? Optional.of(parseDateTime(datetime.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String address} into an {@code Address}.
+     * Parses a {@code String remark} into a {@code Remark}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code address} is invalid.
+     * @throws IllegalValueException if the given {@code remark} is invalid.
      */
-    public static Address parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+    public static Remark parseRemark(String remark) throws IllegalValueException {
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        if (!Remark.isValidRemark(trimmedRemark)) {
+            throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new Remark(trimmedRemark);
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code email} is invalid.
-     */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        return new Email(trimmedEmail);
-    }
-
-    /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
     }
 
     /**
@@ -165,4 +142,5 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
 }

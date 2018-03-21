@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= CLIndar - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W13-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -185,7 +185,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a activity) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
@@ -204,9 +204,11 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Desk Board data.
+* use two class to store information about 'Event' and 'Task' separately
+* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
 
 [[Design-Storage]]
 === Storage component
@@ -219,12 +221,12 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Desk Board data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.address.commons` package.
 
 == Implementation
 
@@ -234,13 +236,13 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the desk board (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the desk board before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,20 +277,20 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th activity in the desk board. The current state of the desk board is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new activity.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the activity was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the desk board to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -299,7 +301,7 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the desk board to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -329,22 +331,22 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire desk board.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+** Pros: Will use less memory (e.g. for `delete`, just save the activity being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
+* **Alternative 1 (current choice):** Only include commands that modifies the desk board (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+** Cons: User have no way of skipping such commands if he or she just want to reset the state of the remark * book and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
@@ -380,10 +382,90 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+=== Overdue command
+
+The user is able to list down overdue tasks by using the overdue command. Note that overdue only lists down overdue tasks; overdue events are marked as
+completed automatically.
+
+We will be making use of the LocalDateTime class in Java. The class has a `now` method, which allows us to obtain the current system clock.
+
+There will be a class in the Model component, which has access to the UniqueActivityList class in that component. The class will go through the UniqueActivityList and obtain
+the DateTime of Task, and the end DateTime of Event. It will then perform a check of the DateTime with LocalDateTime.now() and if it is overdue (for tasks), it will mark the task
+as overdue, while if it is overdue (for Event), it will mark it as completed.
+
+==== Design Considerations
+
+* **Alternative 1**: Put the checking method together with UniqueActivityList class
+** Pros: Less one class and it is easier for the developer to understand
+** Cons: Violates Single Responsibility Principle (SRP). The UniqueAcitivtyList class should not perform the checking.
+
+* **Alternative 2**: Using Google Maps API to obtain current time
+** Pros: LocalDateTime.now() is reliant on system clock, thus if the system clock is in error, tasks that are overdue will not be marked as
+overdue correctly.
+** Cons: Reliant on Google Maps API, and might be difficult for the developer to understand.
+
 [[Implementation-Configuration]]
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+
+=== [Major Improvement] Modify `Model` Component
+
+The `Model` component was originally implemented to store personal contact details.
+As we modified the application to `CLInder` we need to store information of activities instead.
+
+==== Current Implementation
+
+The original application `Address Book` store information in the `Person` Class.
+
+Since we need now to store information of event and task in the memory now.
+The `Person` Class need to change to `Activity` Class.
+
+The `UniquePersonList` is now modified to `UniqueActivityList` Class to store a list of `Activity` instead of a list of `Person`.
+
+
+
+==== Design Consideration
+
+==== Aspect: Data Structure
+
+* ** Alternative 1 (Current Choice):**
+Use the `Activity` Class as a place holder for events and tasks to be stored.
+Hence we created two new Class `Task` and `Event` to store the information.
+Both classes were iherited  from the `Activity` Class.
+** Pros:
+No need to make major change to the current interface (except some renaming).
+** Cons:
+It would be a hassle to retrieve information about information stored in other class
+Since `Task` and `Event` contains extra information and hence have extra excess method.
+Need to cast the object to retrieve the information.
+
+* **Alternative 2 :**
+Replace the `Person` Class with two different class completely: `Task` and `Event`.
+Instead of only `UniquePersonList` Class, we create two different class `UniqueTaskList` and `UniqueEventList`.
+Relevant interface and access method will also be modified to cope with the change.
+
+**Pros:
+Other component can easily distinguish two types of record.
+
+**Cons:
+Since the interface is now completely changed, other component would now required to change a lot of coding to coped with the change.
+====== Storage
+
+Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
+
+* **Alternative 1:** Use 1 list to store objects of both classes
+** Pros: There is no need to create 2 separate lists to store the 2 different class objects.
+** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
+
+* **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
+** Pros: When we want to perform an operation on all the objects stored in a list, each object can be treated equally as they are from the same class.
+** Cons: More effort is required to create 2 separate lists.
+
+While both alternatives have advantages and disadvantages, we feel that the second alternative's advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of objects, whereby each list contains objects of the same class, especially as we make the 2 classes more specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in the long run.
+
+
 
 == Documentation
 
@@ -452,7 +534,7 @@ We have two types of tests:
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
+e.g. `seedu.adress.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
 e.g. `seedu.address.storage.StorageManagerTest`
 ..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
@@ -520,7 +602,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all activities in the list.
 +
 ****
 * Hints
@@ -536,20 +618,20 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the desk board, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the desk board.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a activity, and link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each activity, and remove the `tag` from each activity.
 ** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
@@ -560,12 +642,12 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your desk board application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last activity in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside activity cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
 +
 **Before**
 +
@@ -610,7 +692,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the desk board.
 +
 **Before**
 +
@@ -623,24 +705,24 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the desk board is updated.
 * Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of activities when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of activities whenever there are new changes to the addressbook.
 ** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
+** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of activities status bar.
 ** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
 ****
 
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the desk board to the cloud. However, the current implementation of the application constantly saves the desk board after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the desk board storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the desk board can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -658,15 +740,15 @@ By creating this command, you will get a chance to learn how to implement a feat
 *Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a activity specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first activity to `Likes to drink coffee.`
 * `remark 1 r/` +
-Removes the remark for the first person.
+Removes the remark for the first activity.
 
 ==== Step-by-step Instructions
 
@@ -700,7 +782,7 @@ for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each activity later.
 
 **Main:**
 
@@ -712,11 +794,11 @@ Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
 
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/activity/Address.java[`Address`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
@@ -724,13 +806,13 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
 ===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`].
 
 **Main:**
 
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`].
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the activity will be created without a remark).
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `deskBoard.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
@@ -744,11 +826,11 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 . Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`].
 
 **Tests:**
 
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
+. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the activity that it is currently building.
 . Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
@@ -767,7 +849,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 **Main:**
 
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a activity.
 
 **Tests:**
 
@@ -780,15 +862,42 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user*: University Computing students
 
-* has a need to manage a significant number of contacts
+*Target user profile*: Our target users are expected to have the following characteristics:
+
+* have a need to manage a significant number of tasks and events
 * prefer desktop apps over other types
 * can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* prefer typing over mouse input
+* are reasonably comfortable using Linux-style commands and CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: The user will have all their tasks and events in one app.
+This creates convenience for the user. The CLI also makes it
+faster than a typical mouse/GUI-driven app
+
+=== Feature contribution
+The following section describes the major and minor enhancements that each of our members contributes to the development of our product.
+
+==== Jarrett
+*Major enhancement*: Creating 'overdue' command. This command shows a list of overdue tasks.
+
+*Minor enhancement*: Creating 'task' and 'event' commands which add Task and Event objects respectively.
+
+==== Jasmund
+*Major enhancement*: Modifying the GUI to fit our task/event manager application. This includes but is not limited to allowing the UI to display 2 panes for showing the Task and Event lists separately.
+
+*Minor enhancement*: Modifying the 'help' command. In our application, 'help' can be followed by a command word (e.g. 'help task') so that instructions for only the command desired are shown. Moreover, 'man' command -- an alias for 'help' -- is also added for users who are familiar with Linux commands.
+
+==== Karen
+*Major enhancement*: Modifying the Storage component to allow storage of Tasks and Events in an xml file.
+
+*Minor enhancement*: Creating 'ls' command. This command shows the Event and Task objects added to the Desk Board in 2 separate lists.
+
+==== Yuan Quan
+*Major enhancement*: Modifying the Model component. This includes creation of Event and Task classes, as well as their superclass, Activity. Other classes relevant to tasks and events are also created, such as DateTime.
+
+*Minor enhancement*: Creating 'complete' command. This command marks a Task object as completed.
 
 [appendix]
 == User Stories
@@ -798,51 +907,167 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |figure out how to use the application
 
-|`* * *` |user |add a new person |
+|`* * *` |student |add a new task |record a new task to remind myself
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |student |add a new event |record a new event to remind myself
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |student |add the location of an event |be in the right location
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |student |add items to bring for an event |attend an event with all the required items
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |student |view upcoming tasks (in order of earliest to latest) |manage my time and finish my tasks on time
+
+|`* * *` |student |view upcoming events (in order of earliest to latest) |attend my events
+
+|`* * *` |student |view free time slots |arrange for other events
+
+|`* * *` |student |change the deadline of a task |adjust my schedule when a deadline changes
+
+|`* * *` |student |change the time of an event |see the updated schedule in case there are changes
+
+|`* * *` |student |change the location of an event |be in the right location when the location changes
+
+|`* * *` |student |delete a task |remove tasks I no longer need to complete
+
+|`* * *` |student |delete an event |remove events I no longer need to attend
+
+|`* * *` |student |find a task by name |locate details of a task without having to go through the entire list
+
+|`* * *` |student |find an event by name |locate details of an event without having to go through the entire list
+
+|`* * *` |student |mark a task as complete |tell which tasks are completed and which are not
+
+|`* * *` |student |view completed tasks |be assured I have completed a task
+
+|`* * *` |forgetful student |view overdue tasks |be assured I did not miss any deadline
+
+|`* * *` |forgetful student |get notification for upcoming tasks |never forget to complete my tasks
+
+|`* * *` |forgetful student |get notification for upcoming events |never forget to attend my events
+
+|`* *` |busy student |sort tasks based on priority |allocate sufficient time for each task
+
+|`* *` |busy student |filter tasks based on time period |view only tasks with deadlines within a certain time period
+
+|`* *` |busy student |filter events based on time period |view only events within a certain time period
+
+|`* *` |busy student |filter tasks based on tags |view only certain tasks when there are too many tasks to view
+
+|`* *` |busy student |filter events based on tags |view only certain events when there are too many events to view
+
+|`* *` |procrastinating student |add estimated time needed to complete a task |estimate when to start on a task to complete it on time
+
+|`* *` |procrastinating student |view contact details of activity in-charge for a deadline extension |have enough time to complete my assignments despite my tight schedule
+=======
+|`* *` |procrastinating student |view contact details of person in-charge for a deadline extension |have enough time to complete my task despite my tight schedule
+
+
+|`* *` |busy student |view free time slots before a deadline |know how much time I have when I'm actually free to finish my tasks
+
+|`* *` |student |view common free time slots among my group mates |arrange a group meeting
+
+|`* *` |organised student |add multiple deadlines for a task |keep track of project progress
+
+|`* *` |NUS student |import timetable from NUSMods |avoid the trouble of keying in my lecture and tutorial schedules manually
+
+|`*` |student |be rewarded for completing a task |feel a sense of achievement
+
+|`*` |student |hide private events |minimize chance of someone else seeing them by accident
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `CLIndar` and the *Actor* is the `User`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+
+=== Use case: Add task
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User adds a task into CLIndar by typing a command
+2. CLIndar parses command typed and adds in the task
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+** 2a. CLIndar detects that the format of the command typed is invalid
++
+[none]
+** 3a1. CLIndar shows an error message
++
+Use case ends.
+
+=== Use case: Add events
+
+*MSS*
+
+1. User adds an event into CLIndar by typing a command
+2. CLIndar parses command typed and adds in the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+** 3a. CLIndar detects that the format of the command typed is invalid
++
+[none]
+** 3a1. CLIndar shows an error message
++
+Use case ends.
+
+=== Use case: Complete task
+
+*MSS*
+
+1. User requests to mark a task as completed by typing a command
+2. CLIndar shows a list of uncompleted tasks
+3. User selects the task to be marked as completed by the index
+4. CLIndar marks the selected task as completed
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
 +
 Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CLIndar shows an error message
 +
 Use case resumes at step 2.
+
+
+=== Use case: Show urgent task
+
+*MSS*
+
+1. User requests to show all tasks before a certain date by typing a command
+2. CLIndar shows a list of uncompleted tasks with deadline before the provided date
++
+Use case ends.
+
+*Extensions*
+* 1a. The given date is invalid
++
+[none]
+** 1a1. CLIndar shows an error message
++
+Use case resumes at step 1.
+
+* 2a. The list is empty.
++
+Use case ends.
 
 _{More to be added}_
 
@@ -850,19 +1075,50 @@ _{More to be added}_
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 500 tasks and 500 events without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should respond within two seconds when the user enters a command.
+.  The system CLI commands should be easy to remember for the average English speaker.
+.  A novice user should be able to understand how to use the system in a short period of time.
+.  The notification feature should not be deemed too annoying for the user.
 
 _{More to be added}_
 
 [appendix]
 == Glossary
 
+[[tasks]] Tasks::
+A particular work assigned by a professor.
+
+[[completed]] Completed::
+A task or event that has finished.
+
+[[deadline]] Deadline::
+The date and time by which an event will happen or a task is due.
+
+[[duration]] Duration::
+The amount of time left to complete a task or prepare for an event.
+
+[[events]] Events::
+A thing that will occur in a certain place at a particular interval of time.
+
+[[location]] Location::
+The place where the event will occur.
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
+
+[[overdue]] Overdue::
+A task that has not been completed past the deadline.
+
+[[things-to-bring]] Things to bring::
+Things to be brought for an event that is going to happen.
+
+[[urgent]] Urgent::
+A task due or event that will happen within the next 24 hours.
 
 [appendix]
 == Product Survey
@@ -905,15 +1161,15 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a activity
 
-. Deleting a person while all persons are listed
+. Deleting a activity while all activities are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all activities using the `list` command. Multiple activities in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No activity is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 

@@ -49,8 +49,6 @@ public class TitleBar extends UiPart<Region> {
 
     @FXML
     private Pane controlHelp;
-    @FXML
-    private Pane controlClose;
 
 
     public TitleBar(String saveLocation) {

@@ -15,7 +15,6 @@ import seedu.address.commons.core.GuiSettings;
  */
 public class UiResizer {
 
-    private ResizeListener resizeListener;
     private Stage stage;
 
     private double lastX;
@@ -27,7 +26,7 @@ public class UiResizer {
         this.stage = stage;
 
         // Set listeners
-        this.resizeListener = new ResizeListener(stage, minWidth, minHeight, cornerSize);
+        ResizeListener resizeListener = new ResizeListener(stage, minWidth, minHeight, cornerSize);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_MOVED, resizeListener);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_PRESSED, resizeListener);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_DRAGGED, resizeListener);
@@ -154,8 +153,7 @@ public class UiResizer {
          * @param width of the stage
          */
         private void setStageWidth(double width) {
-            width = Math.max(width, minWidth);
-            stage.setWidth(width);
+            stage.setWidth(Math.max(width, minWidth));
         }
 
         /**
@@ -164,8 +162,7 @@ public class UiResizer {
          * @param height of the stage
          */
         private void setStageHeight(double height) {
-            height = Math.max(height, minHeight);
-            stage.setHeight(height);
+            stage.setHeight(Math.max(height, minHeight));
         }
 
     }

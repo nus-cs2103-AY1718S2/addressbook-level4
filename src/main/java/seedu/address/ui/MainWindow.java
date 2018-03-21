@@ -43,9 +43,7 @@ public class MainWindow extends UiPart<Stage> {
     private UserPrefs prefs;
 
     // Independent UI parts residing in this UI container
-    private InfoPanel infoPanel;
     private PersonListPanel personListPanel;
-    private TitleBar titleBar;
 
     // X and Y offset of the window (Use for draggable title bar
     private double xOffset = 0;
@@ -116,7 +114,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        infoPanel = new InfoPanel();
+        InfoPanel infoPanel = new InfoPanel();
         infoPanePlaceholder.getChildren().add(infoPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -125,7 +123,7 @@ public class MainWindow extends UiPart<Stage> {
         ResultDisplay resultDisplay = new ResultDisplay();
         centerPanePlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        titleBar = new TitleBar(prefs.getAddressBookFilePath());
+        TitleBar titleBar = new TitleBar(prefs.getAddressBookFilePath());
         topTitlePlaceholder.getChildren().add(titleBar.getRoot());
         setAccelerator(titleBar.getControlHelp(), KeyCombination.valueOf("F1"));
 
@@ -171,10 +169,6 @@ public class MainWindow extends UiPart<Stage> {
 
     public void requestFocus() {
         primaryStage.requestFocus();
-    }
-
-    void releaseResources() {
-
     }
 
     /**

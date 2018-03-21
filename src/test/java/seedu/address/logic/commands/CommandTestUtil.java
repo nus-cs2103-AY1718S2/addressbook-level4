@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -40,6 +41,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TIMETABLE_LINK_AMY = "http://modsn.us/hwWlG";
     public static final String VALID_TIMETABLE_LINK_BOB = "http://modsn.us/d8zfG";
+    public static final String VALID_DETAIL_AMY = "Likes boy";
+    public static final String VALID_DETAIL_BOB = "Likes girl";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friends";
     public static final String VALID_TAG_COLOR_RED = "red";
@@ -55,6 +58,8 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TIMETABLE_LINK_DESC_AMY = " " + PREFIX_TIMETABLE_LINK + VALID_TIMETABLE_LINK_AMY;
     public static final String TIMETABLE_LINK_DESC_BOB = " " + PREFIX_TIMETABLE_LINK + VALID_TIMETABLE_LINK_BOB;
+    public static final String DETAIL_DESC_AMY = " " + PREFIX_DETAIL + VALID_DETAIL_AMY;
+    public static final String DETAIL_DESC_BOB = " " + PREFIX_DETAIL + VALID_DETAIL_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -64,6 +69,8 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TIMETABLE_LINK_DESC = " " + PREFIX_TIMETABLE_LINK
             + "https:modn.us/aoubo"; //URL head not correct
+    public static final String INVALID_DETAIL_DESC = " " + PREFIX_DETAIL
+            + "Likes &"; //'&' not allowed in detail
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_TAG_COLOR = " rainbow"; // doesn't support
 
@@ -72,6 +79,14 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final String CONTENT_E = "ToDo E";
+    public static final String CONTENT_B = "ToDo B";
+
+
+
+    public static final String VALID_CONTENT = "Something to do";
+    public static final String INVALID_CONTENT = "Something to do&"; // '&' not allowed in contents
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)

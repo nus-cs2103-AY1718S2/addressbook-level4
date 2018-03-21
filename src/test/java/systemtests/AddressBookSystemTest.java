@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.StatusBarFooter.TOTAL_PERSONS_STATUS;
@@ -42,6 +43,7 @@ import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.ResultDisplay;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -54,6 +56,9 @@ public abstract class AddressBookSystemTest {
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
+
+    private List<String> defaultStyleOfResultDisplay;
+    private List<String> errorStyleOfResultDisplay;
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
@@ -69,6 +74,10 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
+
+        defaultStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
+        errorStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
+        errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
 
         //waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
@@ -216,7 +225,8 @@ public abstract class AddressBookSystemTest {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
+            expectedUrl = new URL(BrowserPanel.GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ",
+                    "%20") + GOOGLE_SEARCH_URL_SUFFIX);
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
@@ -236,16 +246,16 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the command box's shows the default style.
+     * Asserts that the command box and result display shows the default style.
      */
-    protected void assertCommandBoxShowsDefaultStyle() {
+    protected void assertCommandBoxAndResultDisplayShowsDefaultStyle() {
         assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
     }
 
     /**
      * Asserts that the command box's shows the error style.
      */
-    protected void assertCommandBoxShowsErrorStyle() {
+    protected void assertCommandBoxAndResultDisplayShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
     }
 

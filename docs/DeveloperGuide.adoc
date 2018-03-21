@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Fastis-Meetup Manager - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -358,6 +358,60 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::addToDo[]
+=== Add ToDo feature
+==== Current Implementation
+
+The add todos mechanism is facilitated by `AddToDoCommand`, which resides inside `Logic` component. It supports adding ToDo objects to the address book. AddToDoCommand inherits from `UndoableCommand`.
+
+Hence, AddToDoCommand can be undone using `UndoRedoStack`.
+With the extra layer, the AddToDoCommand that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class AddToDoCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+The to-dos in the to-do list are facilitated by `ToDo` class. Each `ToDo` object have a `Content` object, representing the content of the to-do.
+Address book stores all to-dos in `UniqueToDoList`.
+`ToDo`,`Content` and `UniqueToDoList` class reside inside `Model` component. The following is the class diagram showing the relationship between `ToDo` and `Content`:
+
+image::ToDoContentClassDiagram.png[width="800"]
+
+Suppose that the user has just launched the application. The `UniqueToDoList` in the address book will be empty if no to-dos have been added previously.
+
+The user executes a new `AddToDoCommand` with `Content`, to add a new to-do to the address book.
+The new to-do is added to the `UniqueToDoList` and the current state of the address book is saved.
+The following sequence diagram shows how the addToDo operation works:
+
+image::AddToDoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddToDoCommand`
+
+* **Alternative 1 (current choice):** Add a new abstract method `executeAddToDoCommand()`
+** Pros: We will not lose any addToDo functionality as it is now part of the default behaviour. Classes that deal with `AddToDoCommand` do not have to know that `executeAddToDoCommand()` exist.
+** Cons: Hard for new developers to understand the template pattern.
+* **Alternative 2:** Just override `execute()`
+** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Cons: Classes that inherit from `AddToDoCommand` must remember to call `super.execute()`, or lose the ability to addToDo.
+
+// end::addToDo[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
@@ -384,6 +438,50 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== NUSmods Integration
+==== Current Implementation
+
+Fastis uses the available `NUSmods API` to retrieve module information from the API server.
+
+On startup, the network component makes a connection to the API server and checks the `lastmodified` field of the `JSON` file on the server. If the `lastmodified` date is more recent that the `JSON` file held in storage, the network component will download and overwrite the existing file on disk.
+
+The `Storage` component then converts the JSON file into a hashMap of modules to be held in the `Model`
+
+When a the schedule of a `Person` is needed, the `Model` component will pass the person's `TimeTableLink` to the `Network` component. The `Network` component will make a `URLConnection` to the short URL in the `TimeTableLink` to retrieve the query of the full URL.
+
+`QueryParser` then takes the query and parses them into modules and lessons, which get passed back to the `Model` component. `ModelManager` then searches for these modules and lessons and returns a list of `Events`
+
+==== Design Considerations
+
+===== Aspect: Storage of Module information
+
+* **Alternative 1 (current choice):** Store a complete dataset of all modules
+** Pros: Information still available offline
+** Cons: Requires more memory space
+* **Alternative 2:** Store nothing, retrieve only module information of single module each time.
+** Pros: No storage and small memory needed
+** Cons: Reliant on good internet connection
+
+//tag::ListGroupMembers[]
+=== ListGroupMembers Feature
+==== Current Implementation
+Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
+tag.
+
+Then it stores the list in `UniqueGroupList` , which is under `Model` component.
+
+When user types in command line `ListGroupMembers` , Fastis will use the keyword provided to search for the group tag
+and list out all members under the same tag.
+
+==== Design Considerations
+* **Alternative 1 (current choice):** Add a new abstract method `ListGroupMembersCommand(`
+** Pros: Edit `ListGroupMembersCommand()` easily to suit our needs
+** Cons: Hard for new developers to understand the template pattern.
+* **Alternative 2:** Just override `execute()`
+** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Cons: Classes that inherit from `ListGroupMembersCommand()` must remember to call `super.execute()`
+
 
 == Documentation
 
@@ -605,7 +703,7 @@ image::getting-started-ui-result-after.png[width="200"]
 ** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
 ** You can write two different kinds of tests to ensure that the functionality works:
 *** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
+*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxAndResultDisplayShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxAndResultDisplayShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
 ** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
@@ -795,6 +893,43 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * Are reasonably comfortable using CLI apps
 
 *Value proposition*: Help students manage the humongous amount of events that they might have
+
+*Feature contribution*
+
+* Detail field for person (minor):
+** Detail for person is additional information such as remark, hobbies, comments, etc
+** Detail allows user to add information that does not fall unser categories such as phone, email, etc
+** Detail allows storing person information to become more flexible
+
+* Timetable link field for person (minor):
+** Timetable link for person is an NUSMods website link
+** Timetable link displays the actual link of NUSMods website shown when person is selected
+** Timetable link allows user to manage NUSMods link of person
+
+* Customizable tags color (minor):
+** User can set color of specific tags
+** Customizable tags color allows user to better personalise the application
+
+* Dark color theme for application bar and background (minor):
+** Application bar and background are changed to dark grey color
+** Dark color theme makes the application comfortable to use in different light conditions
+
+* Personal To-do list (major):
+** User can add to-dos, notes, upcomming tasks and organize them in the todo-list
+** To-do list serves to remind user of important tasks, events in group projects
+
+* Meetup Time Generator (major):
+** Generator parses information from persons' NUSMods timetables and generate a suitable project meetup time
+** Meetup Time Generator allows user to quickly decide meetup time without manually checcking timetables
+
+* Meetup Calendar (major):
+** User can add meetups with specific start, end time and display meetups on the calendar
+** Meetup Calendar allows user to visualise and remember upcomming group events/meetups
+
+* Organize persons in groups (major):
+** User can store specific persons in project groups
+** User can have a group list and display persons in each group
+** Groups allows user to manage persons based on the project groups they belongs to
 
 
 [appendix]

@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -12,6 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMETABLE_LINK_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMETABLE_LINK_BOB;
+import static seedu.address.testutil.TypicalToDos.getTypicalToDos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +23,8 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.todo.ToDo;
+import seedu.address.model.todo.exceptions.DuplicateToDoException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -28,43 +33,45 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255").withTimeTableLink("http://modsn.us/MYwiD")
+            .withPhone("85355255").withTimeTableLink("http://modsn.us/MYwiD").withDetail("Likes tennis")
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432").withTimeTableLink("http://modsn.us/gka24")
-            .withTags("owesMoney", "friends").build();
+            .withDetail("Likes tennis").withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withTimeTableLink("http://modsn.us/gOVE5")
+            .withEmail("heinz@example.com").withTimeTableLink("http://modsn.us/gOVE5").withDetail("Likes tennis")
             .withAddress("wall street").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withTimeTableLink("http://modsn.us/NejPO")
+            .withEmail("cornelia@example.com").withTimeTableLink("http://modsn.us/NejPO").withDetail("Likes tennis")
             .withAddress("10th street").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withTimeTableLink("http://modsn.us/TJmxw")
+            .withEmail("werner@example.com").withTimeTableLink("http://modsn.us/TJmxw").withDetail("Likes tennis")
             .withAddress("michegan ave").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withTimeTableLink("http://modsn.us/MQcxm")
+            .withEmail("lydia@example.com").withTimeTableLink("http://modsn.us/MQcxm").withDetail("Likes tennis")
             .withAddress("little tokyo").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withTimeTableLink("http://modsn.us/hwWlG")
+            .withEmail("anna@example.com").withTimeTableLink("http://modsn.us/hwWlG").withDetail("Likes tennis")
             .withAddress("4th street").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withTimeTableLink("http://modsn.us/MYwiD")
+            .withEmail("stefan@example.com").withTimeTableLink("http://modsn.us/MYwiD").withDetail("Likes tennis")
             .withAddress("little india").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withTimeTableLink("http://modsn.us/MYwiD")
+            .withEmail("hans@example.com").withTimeTableLink("http://modsn.us/MYwiD").withDetail("Likes tennis")
             .withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-            .withTimeTableLink(VALID_TIMETABLE_LINK_AMY).withTags(VALID_TAG_FRIEND).build();
+            .withTimeTableLink(VALID_TIMETABLE_LINK_AMY).withDetail(VALID_DETAIL_AMY).withTags(VALID_TAG_FRIEND)
+            .build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-            .withTimeTableLink(VALID_TIMETABLE_LINK_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .withTimeTableLink(VALID_TIMETABLE_LINK_BOB).withDetail(VALID_DETAIL_BOB).withTags(VALID_TAG_HUSBAND,
+                    VALID_TAG_FRIEND)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
@@ -81,6 +88,13 @@ public class TypicalPersons {
             try {
                 ab.addPerson(person);
             } catch (DuplicatePersonException e) {
+                throw new AssertionError("not possible");
+            }
+        }
+        for (ToDo todo : getTypicalToDos()) {
+            try {
+                ab.addToDo(todo);
+            } catch (DuplicateToDoException e) {
                 throw new AssertionError("not possible");
             }
         }

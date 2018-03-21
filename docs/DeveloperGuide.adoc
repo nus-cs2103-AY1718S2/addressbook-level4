@@ -208,6 +208,12 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+*Method* : GradientDescent.java
+
+* Extract targeted fields from user list in addressbook.
+* Do some predictive calculation based on gradient descent method.
+* Output the "ExpectedSpending" back to the view
+
 [[Design-Storage]]
 === Storage component
 

@@ -21,7 +21,6 @@ public class PredictCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         GradientDescent gd = new GradientDescent(model);
-        gd.solve();
-        return new CommandResult(SUCCESS_MESSAGE);
+        return gd.solve();
     }
 }

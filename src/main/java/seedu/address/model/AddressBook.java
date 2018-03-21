@@ -40,8 +40,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */
-    {
+     */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         calendar = new InsuranceCalendar();
@@ -135,22 +134,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, syncedEditedPerson);
     }
 
-
-    /**
-     * Gets the matrix of list of persons with selected fields for calculation
-     */
-    public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
-        ArrayList<ArrayList<Double>> matrix = new ArrayList<>();
-        ObservableList<Person> list = this.persons.asObservableList();
-
-
-        list.forEach(person -> {
-
-        });
-
-        return matrix;
-
-    }
 
     /**
      * Updates the master tag list to include tags in {@code person} that are not in the list.

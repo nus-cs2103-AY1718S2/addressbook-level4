@@ -41,7 +41,19 @@ public class Person {
         this.income = income;
         this.age = new Age(30);
         this.actualSpending = actualSpending == null ? new Expenditure(0.0) : actualSpending;
-        this.expectedSpending = expectedSpending == null ? new Expenditure(0.0) : expectedSpending;;
+        this.expectedSpending = expectedSpending == null ? new Expenditure(0.0) : expectedSpending;
+        ;
+    }
+
+    /**
+     * Special method used solely for machine learning result model update
+     *
+     * @param income
+     * @return
+     */
+    public Person mlUpdatPerson(double income) {
+        return new Person(name, phone, email, address, getTags(), new Income(income),
+                actualSpending, expectedSpending);
     }
 
 
@@ -105,7 +117,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, income, actualSpending, expectedSpending);
     }
 
     @Override
@@ -118,6 +130,12 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Income: ")
+                .append(getIncome())
+                .append(" ActualSpending: ")
+                .append(getActualSpending())
+                .append(" ExpectedSpeding: ")
+                .append(getExpectedSpending())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

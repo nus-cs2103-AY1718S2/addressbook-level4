@@ -58,8 +58,5 @@ public interface Model {
     CalendarSource getCalendar();
 
 
-    /**
-     * Gets the matrix of list of persons with selected fields for calculation
-     */
-    ArrayList<ArrayList<Double>> getPersonAttrMatrix();
+
 }

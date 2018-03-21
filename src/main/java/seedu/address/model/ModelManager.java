@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -47,16 +46,6 @@ public class ModelManager extends ComponentManager implements Model {
     //self instantiate new AddressBook and UserPrefs
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
-    }
-
-
-    /**
-     * Gets the matrix of list of persons with selected fields for calculation
-     */
-    @Override
-    public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
-
-        return this.addressBook.getPersonAttrMatrix();
     }
 
     @Override

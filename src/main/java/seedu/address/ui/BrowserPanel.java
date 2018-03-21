@@ -11,9 +11,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
+
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.GetDistance;
+
 import seedu.address.model.person.Person;
 
 /**
@@ -45,10 +48,11 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Show direction from Kent Ridge MRT to the person address
      */
-    private void loadPersonDirection(Person person) {
+    private void loadPersonDirection(Person person, GetDistance distance) {
         String addressValue = person.getAddress().value.trim();
         int stringCutIndex;
         String addressWithoutUnit;
+        Double num;
 
         if (addressValue.indexOf('#') > 2) {
             stringCutIndex = addressValue.indexOf('#') - 2;
@@ -58,6 +62,8 @@ public class BrowserPanel extends UiPart<Region> {
         }
 
         readPersonName(person);
+        num = distance.getDistance("kent", addressWithoutUnit);
+        System.out.println(num);
 
         loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
     }
@@ -97,6 +103,7 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonDirection(event.getNewSelection().person);
+        GetDistance distance = new GetDistance();
+        loadPersonDirection(event.getNewSelection().person, distance);
     }
 }

@@ -32,7 +32,7 @@ public class ExercisesPanel extends UiPart<Region> {
         exercisesPanel.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
     }
-    
+
     // TODO: Replace with loading all exercises from locally stored file
     /**
      * Display the set of exercises in the given week specified by {@code index}.
@@ -40,7 +40,7 @@ public class ExercisesPanel extends UiPart<Region> {
     void displayExercises(int index) {
         final String header = "Week " + index + "'s Exercises\n\n";;
         final String message;
-        
+
         switch (index) {
         case 2:
             message = "2.1.1 Compare Software Engineering with Civil Engineering in terms of how work products\n"

@@ -209,6 +209,7 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+
 [[Design-Storage]]
 === Storage component
 
@@ -386,12 +387,48 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== [Major Improvement] Modify `Model` Component
 
-=== [Purposed Minor Enhancement]
+The `Model` component was originally implemented to store personal contact details.
+As we modified the application to `CLInder` we need to store information of activities instead.
 
-=== [Purposed Major Enhancement]
+==== Current Implementation
 
-Add in
+The original application `Address Book` store information in the `Person` Class.
+
+Since we need now to store information of event and task in the memory now.
+The `Person` Class need to change to `Activity` Class.
+
+The `UniquePersonList` is now modified to `UniqueActivityList` Class to store a list of `Activity` instead of a list of `Person`.
+
+
+
+==== Design Consideration
+
+==== Aspect: Data Structure
+
+* ** Alternative 1 (Current Choice):**
+Use the `Activity` Class as a place holder for events and tasks to be stored.
+Hence we created two new Class `Task` and `Event` to store the information.
+Both classes were iherited  from the `Activity` Class.
+** Pros:
+No need to make major change to the current interface (except some renaming).
+** Cons:
+It would be a hassle to retrieve information about information stored in other class
+Since `Task` and `Event` contains extra information and hence have extra excess method.
+Need to cast the object to retrieve the information.
+
+* **Alternative 2 :**
+Replace the `Person` Class with two different class completely: `Task` and `Event`.
+Instead of only `UniquePersonList` Class, we create two different class `UniqueTaskList` and `UniqueEventList`.
+Relevant interface and access method will also be modified to cope with the change.
+
+**Pros:
+Other component can easily distinguish two types of record.
+
+**Cons:
+Since the interface is now completely changed, other component would now required to change a lot of coding to coped with the change.
+
 
 == Documentation
 

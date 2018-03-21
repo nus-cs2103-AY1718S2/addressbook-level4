@@ -4,12 +4,6 @@ import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.Version;
-import com.restfb.types.FacebookType;
-import com.restfb.types.User;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -25,6 +19,7 @@ import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.ui.util.FacebookHandler;
 
 /**
  * The Browser Panel of the App.
@@ -39,13 +34,11 @@ public class BrowserPanel extends UiPart<Region> {
 
     //@@author RyanAngJY
     private final String APP_ID = "177615459696708";
-    private final String DOMAIN = "https://www.facebook.com/connect/login_success.html";
+    private final String REDIRECT_DOMAIN = "https://www.facebook.com/connect/login_success.html";
     private final String ACCESS_RIGHTS = "publish_actions";
-    private final String ACCESS_TOKEN_IDENTIFER = "#access_token=";
-    private final String ACCESS_TOKEN_REGEX = ".*#access_token=(.+)&.*";
 
-    // https://www.facebook.com/v2.12/dialog/oauth?client_id=615711762098255&redirect_uri=https://meusicate.herokuapp.com/&state={}
-/*  private final String AUTH_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + APP_ID + "&redirect_uri=" + DOMAIN + "&scope=user_about_me,"
+
+    /*  private final String AUTH_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + APP_ID + "&redirect_uri=" + DOMAIN + "&scope=user_about_me,"
             + "user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_birthday,user_education_history,"
             + "user_events,user_photos,user_friends,user_games_activity,user_hometown,user_likes,user_location,user_photos,user_relationship_details,"
             + "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
@@ -53,13 +46,15 @@ public class BrowserPanel extends UiPart<Region> {
 */
 
     private final String AUTHENTICATION_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id="
-            + APP_ID + "&redirect_uri=" + DOMAIN + "&scope=" + ACCESS_RIGHTS;
+            + APP_ID + "&redirect_uri=" + REDIRECT_DOMAIN + "&scope=" + ACCESS_RIGHTS;
+    // https://www.facebook.com/v2.12/dialog/oauth?client_id=615711762098255&redirect_uri=https://meusicate.herokuapp.com/&state={}
 
-    private String accessToken = null;
     private Recipe recipeToShare;
     //@@author
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private final FacebookHandler facebookHandler = new FacebookHandler();
 
     @FXML
     private WebView browser;
@@ -110,11 +105,14 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleShareRecipeEvent(ShareRecipeEvent event) {
         loadPage(AUTHENTICATION_URL);
         recipeToShare = event.getTargetRecipe();
-        if (accessToken != null) {
-            postRecipeOnFacebook();
+        if (facebookHandler.hasAccessToken()) {
+            facebookHandler.postRecipeOnFacebook(recipeToShare);
         }
     }
 
+    /**
+     * Sets up a URL listener on the browser to watch for access token.
+     */
     private void setUpBrowserUrlListener() {
         WebEngine browserEngine = browser.getEngine();
         browserEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
@@ -123,29 +121,12 @@ public class BrowserPanel extends UiPart<Region> {
                 if (newState == Worker.State.SUCCEEDED) {
                     String url = browserEngine.getLocation();
 
-                    if (url.contains(ACCESS_TOKEN_IDENTIFER)) {
-                        setAccessToken(url);
-                        postRecipeOnFacebook();
+                    if (facebookHandler.checkAndSetAccessToken(url)) {
+                        facebookHandler.postRecipeOnFacebook(recipeToShare);
                     }
                 }
             }
         });
-    }
-
-    private void setAccessToken(String url) {
-        accessToken = url.replaceAll(ACCESS_TOKEN_REGEX, "$1");
-    }
-
-    /**
-     * Posts a recipe directly onto Facebook.
-     */
-    private void postRecipeOnFacebook() {
-        Version apiVersion = Version.VERSION_2_12;
-        FacebookClient fbClient = new DefaultFacebookClient(accessToken, apiVersion);
-        User me = fbClient.fetchObject("me", User.class);
-
-        FacebookType post =  fbClient.publish("me/feed", FacebookType.class,
-                Parameter.with("message", recipeToShare.getName().toString()));
     }
     //@@author
 }

@@ -5,7 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagPredicate;
 
 //@@author {clarissayong}
 
@@ -26,7 +26,7 @@ public class FilterCommandParser {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
 
-        return new FilterCommand(new Tag(trimmedArgs));
+        return new FilterCommand(new TagPredicate(trimmedArgs));
     }
 
 }

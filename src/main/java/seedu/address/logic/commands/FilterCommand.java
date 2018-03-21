@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.tag.*;
 
+
 //@@author {clarissayong}
 
 /**
@@ -18,15 +19,15 @@ public class FilterCommand extends Command {
             + "Parameters: TAG\n"
             + "Example: " + COMMAND_WORD + " diabetes";
 
-    private final Tag tag;
+    private final TagPredicate predicate;
 
-    public FilterCommand(Tag tag) {
-        this.tag = tag;
+    public FilterCommand(TagPredicate predicate) {
+        this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute() {
-        model.setFilteredPersonList(model.getAddressBook().filter(tag));
+        model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

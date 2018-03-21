@@ -4,6 +4,10 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalOrders.BOOKS;
+import static seedu.address.testutil.TypicalOrders.CHOCOLATES;
+import static seedu.address.testutil.TypicalOrders.FACEWASH;
+import static seedu.address.testutil.TypicalOrders.SHOES;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
@@ -38,6 +42,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.order.UniqueOrderList;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
@@ -83,7 +88,17 @@ public abstract class AddressBookSystemTest {
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
     protected AddressBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+        AddressBook ab = TypicalPersons.getTypicalAddressBook();
+        try {
+            ab.addOrderToOrderList(BOOKS);
+            ab.addOrderToOrderList(CHOCOLATES);
+            ab.addOrderToOrderList(FACEWASH);
+            ab.addOrderToOrderList(SHOES);
+        } catch (UniqueOrderList.DuplicateOrderException doe) {
+            throw new AssertionError("not possible");
+        }
+
+        return ab;
     }
 
     /**

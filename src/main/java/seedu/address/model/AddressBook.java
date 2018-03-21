@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.OrderNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -256,6 +257,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
         orders.add(orderToAdd);
+    }
+
+    /**
+     * Removes order from list of orders.
+     */
+    public void deleteOrder(Order targetOrder) throws OrderNotFoundException {
+        orders.remove(targetOrder);
     }
 
     //// util methods

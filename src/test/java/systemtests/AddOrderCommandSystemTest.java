@@ -2,29 +2,29 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERY_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ORDER_INFORMATION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PRICE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_QUANTITY_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.ORDER_INFORMATION_DESC_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.ORDER_INFORMATION_DESC_CHOC;
-import static seedu.address.logic.commands.CommandTestUtil.PRICE_DESC_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.ORDER_INFORMATION_DESC_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.PRICE_DESC_CHOC;
-import static seedu.address.logic.commands.CommandTestUtil.QUANTITY_DESC_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.PRICE_DESC_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.QUANTITY_DESC_CHOC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.QUANTITY_DESC_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_CHOC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_CHOC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_CHOC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_COMPUTER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalOrders.BOOKS;
-import static seedu.address.testutil.TypicalOrders.CHOCOLATES;
+import static seedu.address.testutil.TypicalOrders.COMICBOOK;
+import static seedu.address.testutil.TypicalOrders.COMPUTER;
 
 import org.junit.Test;
 
@@ -44,7 +44,6 @@ import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
 
 public class AddOrderCommandSystemTest extends AddressBookSystemTest {
-
     @Test
     public void addOrder() throws Exception {
         Model model = getModel();
@@ -52,14 +51,14 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
         /* --------------------- Perform addOrder operations on the shown unfiltered list -------------------------- */
 
         Index index = INDEX_FIRST_PERSON;
-        Order toAdd = BOOKS;
+        Order toAdd = COMPUTER;
 
         /* Case: add an order to a non-empty address book,
          * command with leading spaces and trailing spaces -> added
          */
         String command = "   " + AddOrderCommand.COMMAND_WORD + " " + index.getOneBased() + " "
-                + ORDER_INFORMATION_DESC_BOOKS + "   " + PRICE_DESC_BOOKS + "   " + QUANTITY_DESC_BOOKS + "  "
-                + DELIVERY_DATE_DESC_BOOKS + "   ";
+                + ORDER_INFORMATION_DESC_COMPUTER + "   " + PRICE_DESC_COMPUTER + "   " + QUANTITY_DESC_COMPUTER + "  "
+                + DELIVERY_DATE_DESC_COMPUTER + "   ";
         assertCommandSuccess(command, index, toAdd);
 
         /* Case: undo adding Books to the list -> Books deleted */
@@ -76,51 +75,55 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
         /* Case: add order with all fields same as another order in address book except order information -> added */
         toAdd = new OrderBuilder()
                 .withOrderInformation(VALID_ORDER_INFORMATION_CHOC)
-                .withPrice(VALID_PRICE_BOOKS)
-                .withQuantity(VALID_QUANTITY_BOOKS)
-                .withDeliveryDate(VALID_DELIVERY_DATE_BOOKS)
+                .withPrice(VALID_PRICE_COMPUTER)
+                .withQuantity(VALID_QUANTITY_COMPUTER)
+                .withDeliveryDate(VALID_DELIVERY_DATE_COMPUTER)
                 .build();
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + ORDER_INFORMATION_DESC_CHOC + PRICE_DESC_BOOKS + QUANTITY_DESC_BOOKS + DELIVERY_DATE_DESC_BOOKS;
+                + ORDER_INFORMATION_DESC_CHOC + PRICE_DESC_COMPUTER
+                + QUANTITY_DESC_COMPUTER + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandSuccess(command, index, toAdd);
 
         /* Case: add order with all fields same as another order in address book except price -> added */
         toAdd = new OrderBuilder()
-                .withOrderInformation(VALID_ORDER_INFORMATION_BOOKS)
+                .withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
                 .withPrice(VALID_PRICE_CHOC)
-                .withQuantity(VALID_QUANTITY_BOOKS)
-                .withDeliveryDate(VALID_DELIVERY_DATE_BOOKS)
+                .withQuantity(VALID_QUANTITY_COMPUTER)
+                .withDeliveryDate(VALID_DELIVERY_DATE_COMPUTER)
                 .build();
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + ORDER_INFORMATION_DESC_BOOKS + PRICE_DESC_CHOC + QUANTITY_DESC_BOOKS + DELIVERY_DATE_DESC_BOOKS;
+                + ORDER_INFORMATION_DESC_COMPUTER + PRICE_DESC_CHOC
+                + QUANTITY_DESC_COMPUTER + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandSuccess(command, index, toAdd);
 
         /* Case: add order with all fields same as another order in address book except quantity -> added */
         toAdd = new OrderBuilder()
-                .withOrderInformation(VALID_ORDER_INFORMATION_BOOKS)
-                .withPrice(VALID_PRICE_BOOKS)
+                .withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
+                .withPrice(VALID_PRICE_COMPUTER)
                 .withQuantity(VALID_QUANTITY_CHOC)
-                .withDeliveryDate(VALID_DELIVERY_DATE_BOOKS)
+                .withDeliveryDate(VALID_DELIVERY_DATE_COMPUTER)
                 .build();
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + ORDER_INFORMATION_DESC_BOOKS + PRICE_DESC_BOOKS + QUANTITY_DESC_CHOC + DELIVERY_DATE_DESC_BOOKS;
+                + ORDER_INFORMATION_DESC_COMPUTER + PRICE_DESC_COMPUTER
+                + QUANTITY_DESC_CHOC + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandSuccess(command, index, toAdd);
 
         /* Case: add order with all fields same as another order in address book except delivery date -> added */
         toAdd = new OrderBuilder()
-                .withOrderInformation(VALID_ORDER_INFORMATION_BOOKS)
-                .withPrice(VALID_PRICE_BOOKS)
-                .withQuantity(VALID_QUANTITY_BOOKS)
+                .withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
+                .withPrice(VALID_PRICE_COMPUTER)
+                .withQuantity(VALID_QUANTITY_COMPUTER)
                 .withDeliveryDate(VALID_DELIVERY_DATE_CHOC)
                 .build();
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + ORDER_INFORMATION_DESC_BOOKS + PRICE_DESC_BOOKS + QUANTITY_DESC_BOOKS + DELIVERY_DATE_DESC_CHOC;
+                + ORDER_INFORMATION_DESC_COMPUTER + PRICE_DESC_COMPUTER
+                + QUANTITY_DESC_COMPUTER + DELIVERY_DATE_DESC_CHOC;
         assertCommandSuccess(command, index, toAdd);
 
         /* Case: add an order command with parameters in random order -> added */
-        toAdd = CHOCOLATES;
+        toAdd = COMICBOOK;
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + DELIVERY_DATE_DESC_CHOC + ORDER_INFORMATION_DESC_CHOC + QUANTITY_DESC_CHOC + PRICE_DESC_CHOC;
+                + " d/01-01-2018" + " i/Comic Book" + " q/1" + " pr/17.99";
         assertCommandSuccess(command, index, toAdd);
 
         /* --------------------- Perform addOrder operations on the shown filtered list -------------------------- */
@@ -128,28 +131,30 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
         /* --------------------------------- Perform invalid addOrder operations --------------------------------- */
 
         /* Case: missing person index -> rejected */
-        command = AddOrderCommand.COMMAND_WORD + ORDER_INFORMATION_DESC_BOOKS +  PRICE_DESC_BOOKS + QUANTITY_DESC_BOOKS
-                + DELIVERY_DATE_DESC_BOOKS;
+        command = AddOrderCommand.COMMAND_WORD + ORDER_INFORMATION_DESC_COMPUTER
+                + PRICE_DESC_COMPUTER + QUANTITY_DESC_COMPUTER
+                + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
 
         /* Case: missing order information -> rejected */
-        command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased() +  PRICE_DESC_BOOKS + QUANTITY_DESC_BOOKS
-                + DELIVERY_DATE_DESC_BOOKS;
+        command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
+                + PRICE_DESC_COMPUTER + QUANTITY_DESC_COMPUTER
+                + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
 
         /* Case: missing price -> rejected */
-        command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased() + ORDER_INFORMATION_DESC_BOOKS
-                + QUANTITY_DESC_BOOKS + DELIVERY_DATE_DESC_BOOKS;
+        command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased() + ORDER_INFORMATION_DESC_COMPUTER
+                + QUANTITY_DESC_COMPUTER + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
 
         /* Case: missing quantity -> rejected */
-        command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased() + ORDER_INFORMATION_DESC_BOOKS
-                + PRICE_DESC_BOOKS + DELIVERY_DATE_DESC_BOOKS;
+        command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased() + ORDER_INFORMATION_DESC_COMPUTER
+                + PRICE_DESC_COMPUTER + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
 
         /* Case: missing delivery date -> rejected */
-        command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased() + ORDER_INFORMATION_DESC_BOOKS
-                + PRICE_DESC_BOOKS + QUANTITY_DESC_BOOKS;
+        command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased() + ORDER_INFORMATION_DESC_COMPUTER
+                + PRICE_DESC_COMPUTER + QUANTITY_DESC_COMPUTER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -158,22 +163,26 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid order information -> rejected */
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + INVALID_ORDER_INFORMATION_DESC + PRICE_DESC_BOOKS + QUANTITY_DESC_BOOKS + DELIVERY_DATE_DESC_BOOKS;
+                + INVALID_ORDER_INFORMATION_DESC + PRICE_DESC_COMPUTER
+                + QUANTITY_DESC_COMPUTER + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandFailure(command, OrderInformation.MESSAGE_ORDER_INFORMATION_CONSTRAINTS);
 
         /* Case: invalid price -> rejected */
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + ORDER_INFORMATION_DESC_BOOKS + INVALID_PRICE_DESC + QUANTITY_DESC_BOOKS + DELIVERY_DATE_DESC_BOOKS;
+                + ORDER_INFORMATION_DESC_COMPUTER + INVALID_PRICE_DESC
+                + QUANTITY_DESC_COMPUTER + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandFailure(command, Price.MESSAGE_PRICE_CONSTRAINTS);
 
         /* Case: invalid quantity -> rejected */
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + ORDER_INFORMATION_DESC_BOOKS + PRICE_DESC_BOOKS + INVALID_QUANTITY_DESC + DELIVERY_DATE_DESC_BOOKS;
+                + ORDER_INFORMATION_DESC_COMPUTER + PRICE_DESC_COMPUTER
+                + INVALID_QUANTITY_DESC + DELIVERY_DATE_DESC_COMPUTER;
         assertCommandFailure(command, Quantity.MESSAGE_QUANTITY_CONSTRAINTS);
 
         /* Case: invalid delivery date -> rejected */
         command = AddOrderCommand.COMMAND_WORD + " " + index.getOneBased()
-                + ORDER_INFORMATION_DESC_BOOKS + PRICE_DESC_BOOKS + QUANTITY_DESC_BOOKS + INVALID_DELIVERY_DATE_DESC;
+                + ORDER_INFORMATION_DESC_COMPUTER + PRICE_DESC_COMPUTER
+                + QUANTITY_DESC_COMPUTER + INVALID_DELIVERY_DATE_DESC;
         assertCommandFailure(command, DeliveryDate.MESSAGE_DELIVERY_DATE_CONSTRAINTS);
     }
 

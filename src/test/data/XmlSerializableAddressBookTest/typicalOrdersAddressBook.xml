@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- Person -->
+    <persons>
+        <name>Alice Pauline</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <groups>friends</groups>
+        <preferences>shoes</preferences>
+        <preferences>necklaces</preferences>
+    </persons>
+    <!-- Shoes -->
+    <orders>
+        <orderInformation>Shoes</orderInformation>
+        <price>129.99</price>
+        <quantity>3</quantity>
+        <deliveryDate>10-09-2018</deliveryDate>
+    </orders>
+    <!-- Face Wash -->
+    <orders>
+        <orderInformation>Face Wash</orderInformation>
+        <price>24.75</price>
+        <quantity>1</quantity>
+        <deliveryDate>05-11-2018</deliveryDate>
+    </orders>
+    <!-- Books -->
+    <orders>
+        <orderInformation>Books</orderInformation>
+        <price>15.00</price>
+        <quantity>3</quantity>
+        <deliveryDate>04-12-2018</deliveryDate>
+    </orders>
+    <!-- Chocolates -->
+    <orders>
+        <orderInformation>Chocolates</orderInformation>
+        <price>10.00</price>
+        <quantity>15</quantity>
+        <deliveryDate>12-08-2018</deliveryDate>
+    </orders>
+    <groups>friends</groups>
+    <preferences>shoes</preferences>
+    <preferences>necklaces</preferences>
+</addressbook>

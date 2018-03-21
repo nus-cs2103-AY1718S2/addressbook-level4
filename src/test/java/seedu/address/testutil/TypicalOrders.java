@@ -2,18 +2,26 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_COMPUTER;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.AddressBook;
 import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A utility class containing a list of {@code Order} objects to be used in tests.
@@ -21,7 +29,7 @@ import seedu.address.model.order.Order;
 public class TypicalOrders {
 
     public static final Order SHOES = new OrderBuilder()
-            .withOrderInformation("Books")
+            .withOrderInformation("Shoes")
             .withPrice("129.99")
             .withQuantity("3")
             .withDeliveryDate("10-09-2018")
@@ -48,9 +56,45 @@ public class TypicalOrders {
             .withDeliveryDate(VALID_DELIVERY_DATE_CHOC)
             .build();
 
+    public static final Order COMPUTER = new OrderBuilder()
+            .withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
+            .withPrice(VALID_PRICE_COMPUTER)
+            .withQuantity(VALID_QUANTITY_COMPUTER)
+            .withDeliveryDate(VALID_DELIVERY_DATE_COMPUTER)
+            .build();
+
+    public static final Order COMICBOOK = new OrderBuilder()
+            .withOrderInformation("Comic Book")
+            .withPrice("17.99")
+            .withQuantity("1")
+            .withDeliveryDate("01-01-2018")
+            .build();
+
     private TypicalOrders() {} // prevents instantiation
 
-    public static List<Order> getTypicalOrder() {
+    /**
+     * Returns an {@code AddressBook} with one person and all typical orders.
+     */
+    public static AddressBook getTypicalAddressBookWithOrders() {
+        AddressBook ab = new AddressBook();
+
+        try {
+            ab.addPerson(ALICE);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("not possible");
+        }
+
+        for (Order order : getTypicalOrders()) {
+            try {
+                ab.addOrderToOrderList(order);
+            } catch (UniqueOrderList.DuplicateOrderException doe) {
+                throw new AssertionError("not possible");
+            }
+        }
+        return ab;
+    }
+
+    public static List<Order> getTypicalOrders() {
         return new ArrayList<>(Arrays.asList(SHOES, FACEWASH, BOOKS, CHOCOLATES));
     }
 }

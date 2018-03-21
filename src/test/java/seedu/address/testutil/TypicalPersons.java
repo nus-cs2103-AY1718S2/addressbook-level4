@@ -71,7 +71,7 @@ public class TypicalPersons {
         for (Person person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);
-            } catch (DuplicatePersonException e) {
+            } catch (DuplicatePersonException dpe) {
                 throw new AssertionError("not possible");
             }
         }

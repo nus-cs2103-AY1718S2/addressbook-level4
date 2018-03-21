@@ -23,6 +23,11 @@ public class AddOrderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "orderadd";
     public static final String COMMAND_ALIAS = "oa";
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
+            + PREFIX_ORDER_INFORMATION + "ORDER INFO "
+            + PREFIX_PRICE + "PRICE "
+            + PREFIX_QUANTITY + "QUANTITY "
+            + PREFIX_DELIVERY_DATE + "DELIVERY DATE ";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an order to the selected person in the "
             + "address book.\n"

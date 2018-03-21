@@ -55,6 +55,10 @@ public class CommandTestUtil {
     public static final String VALID_PRICE_BOOKS = "15.00";
     public static final String VALID_QUANTITY_BOOKS = "3";
     public static final String VALID_DELIVERY_DATE_BOOKS = "04-12-2018";
+    public static final String VALID_ORDER_INFORMATION_COMPUTER = "Computer";
+    public static final String VALID_PRICE_COMPUTER = "2000.00";
+    public static final String VALID_QUANTITY_COMPUTER = "1";
+    public static final String VALID_DELIVERY_DATE_COMPUTER = "18-07-2018";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -80,6 +84,11 @@ public class CommandTestUtil {
     public static final String PRICE_DESC_BOOKS = " " + PREFIX_PRICE + VALID_PRICE_BOOKS;
     public static final String QUANTITY_DESC_BOOKS = " " + PREFIX_QUANTITY + VALID_QUANTITY_BOOKS;
     public static final String DELIVERY_DATE_DESC_BOOKS = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_BOOKS;
+    public static final String ORDER_INFORMATION_DESC_COMPUTER = " " + PREFIX_ORDER_INFORMATION
+            + VALID_ORDER_INFORMATION_COMPUTER;
+    public static final String PRICE_DESC_COMPUTER = " " + PREFIX_PRICE + VALID_PRICE_COMPUTER;
+    public static final String QUANTITY_DESC_COMPUTER = " " + PREFIX_QUANTITY + VALID_QUANTITY_COMPUTER;
+    public static final String DELIVERY_DATE_DESC_COMPUTER = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_COMPUTER;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

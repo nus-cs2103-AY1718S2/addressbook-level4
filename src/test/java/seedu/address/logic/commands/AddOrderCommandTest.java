@@ -32,6 +32,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.OrderNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -155,6 +156,11 @@ public class AddOrderCommandTest {
         }
 
         @Override
+        public ObservableList<Order> getFilteredOrderList() {
+            return model.getFilteredOrderList();
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             filteredPersons.setPredicate(predicate);
         }
@@ -171,6 +177,11 @@ public class AddOrderCommandTest {
 
         @Override
         public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteOrder(Order targetOrder) throws OrderNotFoundException {
             fail("This method should not be called.");
         }
     }

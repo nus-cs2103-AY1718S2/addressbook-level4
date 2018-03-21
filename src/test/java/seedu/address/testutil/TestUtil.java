@@ -6,6 +6,7 @@ import java.io.IOException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
 /**
@@ -46,9 +47,30 @@ public class TestUtil {
     }
 
     /**
+     * Returns the middle index of the order in the {@code model}'s order list.
+     */
+    public static Index getMidOrderIndex(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getOrderList().size() / 2);
+    }
+
+    /**
+     * Returns the last index of the order in the {@code model}'s order list.
+     */
+    public static Index getLastOrderIndex(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getOrderList().size());
+    }
+
+    /**
      * Returns the person in the {@code model}'s person list at {@code index}.
      */
     public static Person getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
+    }
+
+    /**
+     * Returns the order in the {@code model}'s order list at {@code index}.
+     */
+    public static Order getOrder(Model model, Index index) {
+        return model.getAddressBook().getOrderList().get(index.getZeroBased());
     }
 }

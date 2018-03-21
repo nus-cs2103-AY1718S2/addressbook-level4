@@ -142,7 +142,8 @@ public class XmlAdaptedPatient {
         final Address address = new Address(this.address);
 
         if (this.dob == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateOfBirth.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DateOfBirth.class.getSimpleName()));
         }
         if (!DateOfBirth.isValidDob(this.dob)) {
             throw new IllegalValueException(DateOfBirth.MESSAGE_DOB_CONSTRAINTS);
@@ -150,7 +151,8 @@ public class XmlAdaptedPatient {
         final DateOfBirth dob = new DateOfBirth(this.dob);
 
         if (this.bloodType == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, BloodType.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    BloodType.class.getSimpleName()));
         }
         if (!BloodType.isValidBloodType(this.bloodType)) {
             throw new IllegalValueException(BloodType.MESSAGE_BLOODTYPE_CONSTRAINTS);

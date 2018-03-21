@@ -44,6 +44,6 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         //assertEquals(expectedPersonUrl, new URL(browserPanelHandle.getLoadedUrl()
-                //.toString().substring(0, browserPanelHandle.getLoadedUrl().toString().indexOf("?"))));
+        //.toString().substring(0, browserPanelHandle.getLoadedUrl().toString().indexOf("?"))));
     }
 }

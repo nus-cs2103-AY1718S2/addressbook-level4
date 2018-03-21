@@ -159,8 +159,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    public void sortByName() {
-        persons.sortPersons();
+    public void sort(String parameter) {
+        if (parameter.equals("name")) {
+            persons.sortNames();
+        }
+        if (parameter.equals("tag")) {
+            persons.sortTags();
+        }
     }
 
     //// tag-level operations

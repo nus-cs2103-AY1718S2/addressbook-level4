@@ -13,8 +13,8 @@ public class Time {
             + "and adhere to the following constraints:\n"
             + "1. The hour HH should only contain numbers and be in range [00, 24] inclusive\n"
             + "2. This is followed by a ':' and then minutes MM. "
-            + "3. The minutes MM should only contain numbers and be in range [00, 60] inclusive\n";
-    // alphanumeric and special characters
+            + "3. The minutes MM should only contain numbers and be in range [00, 59] inclusive\n";
+    // Numeric characters in Hour or Minute ranges
     private static final String HOUR_PART_REGEX = "([01]?[0-9]|2[0-3])";
     private static final String MINUTE_PART_REGEX = "([0-5][0-9])";
     public static final String TIME_VALIDATION_REGEX = HOUR_PART_REGEX + ":"

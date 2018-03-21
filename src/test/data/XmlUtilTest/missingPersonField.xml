@@ -5,6 +5,6 @@
     <email>hans@example</email>
     <address>4th street</address>
     <timeZone>PST</timeZone>
-    <isArchived>false</isArchived>
     <tagged>friends</tagged>
+    <isArchived>false</isArchived>
 </person>

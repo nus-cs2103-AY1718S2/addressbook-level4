@@ -4,6 +4,7 @@
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
-    <isArchived>false</isArchived>
+    <timeZone>PST</timeZone>
     <tagged>friends</tagged>
+    <isArchived>false</isArchived>
 </person>

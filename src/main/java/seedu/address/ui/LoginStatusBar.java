@@ -1,11 +1,10 @@
 package seedu.address.ui;
 
-import javafx.collections.ObservableList;
-import org.controlsfx.control.StatusBar;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+
+import org.controlsfx.control.StatusBar;
 
 //@@author kaisertanqr
 /**
@@ -28,9 +27,12 @@ public class LoginStatusBar extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-
+    /**
+     * Updates the UI with the login status, {@code status}.
+     * @param status
+     */
     public void updateLoginStatus(boolean status) {
-        if(status) {
+        if (status) {
             Platform.runLater(() -> this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_TRUE));
             loginStatus.setStyle("-fx-background-color: rgb(0, 77, 26, 0.5)");
         } else {

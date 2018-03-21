@@ -1,10 +1,13 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-//import seedu.address.model.login.exceptions.AlreadyLoggedOutException;
-
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+
+//@@ author kaisertanqr
+/**
+ * Logs user out from application
+ */
 public class LogoutCommand extends Command {
 
 

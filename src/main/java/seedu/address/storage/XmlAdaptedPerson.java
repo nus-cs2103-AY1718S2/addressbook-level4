@@ -34,7 +34,6 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
-
     private String calendarId;
     @XmlElement
     private String rating;

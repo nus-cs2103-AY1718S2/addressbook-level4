@@ -16,12 +16,15 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person {
 
+    public static final int UNINITIALISED_ID = -1;
+
     private final Name name;
     private final Phone phone;
     private final Email email;
     private final Address address;
     private Rating rating;
     private Review review;
+    private int id;
 
     private final UniqueTagList tags;
     private final String calendarId;
@@ -41,10 +44,11 @@ public class Person {
         this.calendarId = calendarId;
         this.rating = new Rating();
         this.review = new Review();
+        this.id = UNINITIALISED_ID;
     }
 
     /**
-     * Only rating specified.
+     * Only rating specified, calendarId not specified
      * Note: To remove when test cases are integrated to Calendar feature
      */
     public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags) {
@@ -58,10 +62,11 @@ public class Person {
         this.calendarId = "";
         this.rating = rating;
         this.review = new Review();
+        this.id = UNINITIALISED_ID;
     }
 
     /**
-    * All fields specified
+    * All fields specified except id not specified
     */
     public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags,
                   String calendarId) {
@@ -75,6 +80,25 @@ public class Person {
         this.calendarId = calendarId;
         this.rating = rating;
         this.review = new Review();
+        this.id = UNINITIALISED_ID;
+    }
+
+    /**
+    * All fields specified
+    */
+    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags,
+                  String calendarId, Integer id) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.calendarId = calendarId;
+        this.rating = rating;
+        this.review = new Review();
+        this.id = id;
     }
 
     public Name getName() {
@@ -98,11 +122,20 @@ public class Person {
     }
 
     public String getRatingDisplay() {
-        return rating.getRatingDisplay();
+        return getId() + "";
+        //return rating.getRatingDisplay();
     }
 
     public Address getAddress() {
         return address;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getCalendarId() {
@@ -168,5 +201,9 @@ public class Person {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    public boolean isInitialized() {
+        return id != UNINITIALISED_ID;
     }
 }

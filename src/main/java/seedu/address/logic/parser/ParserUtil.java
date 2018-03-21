@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
@@ -164,6 +165,41 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String displayPic} into an {@code DisplayPic}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code displayPic} is invalid.
+     */
+    public static DisplayPic parseDisplayPic(String displayPic, String name) throws IllegalValueException {
+        if (displayPic == null) {
+            return new DisplayPic();
+        } else {
+            String trimmedDisplayPath = displayPic.trim();
+            if (!DisplayPic.isValidPath(trimmedDisplayPath)) {
+                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+            }
+            if (!DisplayPic.isValidImage(trimmedDisplayPath)) {
+                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+            }
+            return new DisplayPic(displayPic, name);
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
+     * if {@code displayPic} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPic> parseDisplayPic(Optional<String> displayPic,
+                                                       String name) throws IllegalValueException {
+        if (displayPic.isPresent()) {
+            return Optional.of(parseDisplayPic(displayPic.get(), name));
+        } else {
+            return Optional.of(parseDisplayPic((String) null, name));
+        }
     }
 
     /**

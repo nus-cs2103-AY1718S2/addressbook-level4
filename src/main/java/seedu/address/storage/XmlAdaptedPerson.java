@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
@@ -36,6 +37,8 @@ public class XmlAdaptedPerson {
     private String address;
 
     @XmlElement
+    private String displayPic;
+    @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
@@ -48,12 +51,13 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String matricNumber, String phone,
-        String email, String address, List<XmlAdaptedTag> tagged) {
+        String email, String address, String displayPic, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.matricNumber = matricNumber;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.displayPic = displayPic;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -70,6 +74,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        displayPic = source.getDisplayPic().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -130,8 +135,20 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        if (this.displayPic == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DisplayPic.class.getSimpleName()));
+        }
+        if (!DisplayPic.isValidPath(this.displayPic)) {
+            throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+        }
+        if (!DisplayPic.isValidImage(this.displayPic)) {
+            throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+        }
+        final DisplayPic displayPic = new DisplayPic(this.name, this.displayPic);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, matricNumber, phone, email, address, tags);
+        return new Person(name, matricNumber, phone, email, address, displayPic, tags);
     }
 
     @Override
@@ -150,6 +167,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(displayPic, otherPerson.displayPic)
                 && tagged.equals(otherPerson.tagged);
     }
 }

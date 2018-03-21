@@ -4,7 +4,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CalendarCommand.SHOWING_CALENDAR_MESSAGE;
+import static seedu.address.logic.commands.CalendarCommand.MESSAGE_SHOWING_CALENDAR;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class CalendarCommandTest {
     @Test
     public void execute_help_success() {
         CommandResult result = new CalendarCommand().execute();
-        assertEquals(SHOWING_CALENDAR_MESSAGE, result.feedbackToUser);
+        assertEquals(MESSAGE_SHOWING_CALENDAR, result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowCalendarRequestEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }

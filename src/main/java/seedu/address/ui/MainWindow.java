@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -267,7 +268,7 @@ public class MainWindow extends UiPart<Stage> {
      * Opens the calendar window.
      */
     @FXML
-    public void handleViewCalendar() {
+    public void handleViewCalendar() throws IOException {
         CalendarWindow calendarWindow = new CalendarWindow();
         calendarWindow.show();
     }
@@ -335,7 +336,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleViewCalendarEvent(ShowCalendarRequestEvent event) {
+    private void handleViewCalendarEvent(ShowCalendarRequestEvent event) throws IOException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleViewCalendar();
     }

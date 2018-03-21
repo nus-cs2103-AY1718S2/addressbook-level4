@@ -62,7 +62,7 @@ public class CalendarCommandSystemTest extends AddressBookSystemTest {
         executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
-        assertNotEquals(CalendarCommand.SHOWING_CALENDAR_MESSAGE, getResultDisplay().getText());
+        assertNotEquals(CalendarCommand.MESSAGE_SHOWING_CALENDAR, getResultDisplay().getText());
         assertNotEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
         assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
 

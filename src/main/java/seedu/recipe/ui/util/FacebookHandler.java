@@ -19,6 +19,7 @@ public class FacebookHandler {
 
     private final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&.*";
     private final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
+    private final String EXTRACT_PORTION = "$1";
     private final String POST_TYPE_MESSAGE = "message";
     private final String USER = "me";
     private final String USER_FEED = "me/feed";
@@ -53,7 +54,7 @@ public class FacebookHandler {
      * @param url Url should contain embedded access token.
      */
     public void setAccessToken(String url) {
-        accessToken = url.replaceAll(ACCESS_TOKEN_REGEX, "$1");
+        accessToken = url.replaceAll(ACCESS_TOKEN_REGEX, EXTRACT_PORTION);
     }
 
     /**

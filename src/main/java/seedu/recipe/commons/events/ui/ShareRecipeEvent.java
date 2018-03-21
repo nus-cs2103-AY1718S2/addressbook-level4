@@ -26,6 +26,5 @@ public class ShareRecipeEvent extends BaseEvent {
     public Recipe getTargetRecipe() {
         return recipe;
     }
-
 }
 //@@author

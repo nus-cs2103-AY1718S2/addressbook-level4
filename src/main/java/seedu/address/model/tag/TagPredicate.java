@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import seedu.address.model.person.Person;
 
 /**
+ * @@author {clarissayong}
  * Tests that a {@code Person}'s {@code Tag} matches any of the keywords given.
  */
 public class TagPredicate implements Predicate<Person> {

@@ -91,10 +91,10 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-        
+
         case FilterCommand.COMMAND_WORD:
             return new FilterCommandParser().parse(arguments);
-        
+
         case SwitchCommand.COMMAND_WORD:
             return new SwitchCommandParser().parse(arguments);
 

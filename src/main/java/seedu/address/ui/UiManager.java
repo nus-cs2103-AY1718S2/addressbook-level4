@@ -69,14 +69,13 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void stop() {
-        try{
+        try {
             prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
             mainWindow.hide();
             mainWindow.releaseResources();
         } catch (NullPointerException e) {
             logger.info("Illegal exit occurred. Please click proper exit button in the future.");
         }
-
     }
 
     @Override

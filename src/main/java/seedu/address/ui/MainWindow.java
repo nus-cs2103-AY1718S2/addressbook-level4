@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+//import com.calendarfx.view.CalendarView;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private CalendarWindow calendarView;
+    private CalendarWindow calendarWindow;
     //private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -119,8 +120,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         //browserPanel = new BrowserPanel();
-        calendarView = new CalendarWindow();
-        calendarPlaceholder.getChildren().add(calendarView.getRoot());
+        calendarWindow = new CalendarWindow(logic.getFilteredPersonList());
+        calendarPlaceholder.getChildren().add(calendarWindow.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());

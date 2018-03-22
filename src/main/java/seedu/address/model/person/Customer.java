@@ -37,7 +37,7 @@ public class Customer extends Person {
     public String getMoneyOwed() {
         return moneyOwed;
     }
-
+    //moneyOwed = moneyOwed*(monthlyInterest)^(monthsElapsed)
     public String getInterestRate() {
         return interestRate;
     }

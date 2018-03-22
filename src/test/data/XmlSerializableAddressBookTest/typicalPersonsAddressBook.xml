@@ -25,16 +25,12 @@
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
-        <groups>friends</groups>
-        <preferences>computers</preferences>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
-        <groups>friends</groups>
-        <preferences>computers</preferences>
     </persons>
     <persons>
         <name>Elle Meyer</name>
@@ -59,7 +55,7 @@
         <email>anna@example.com</email>
         <address>4th street</address>
         <groups>friends</groups>
-        <preferences>computers</preferences>
+        <preferences>videoGames</preferences>
     </persons>
     <groups>friends</groups>
     <groups>neighbours</groups>

@@ -27,6 +27,20 @@ public class PersonCardTest extends GuiUnitTest {
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithGroups, 2);
 
+        // no preference
+        Person personWithNoPref = new PersonBuilder().withPreferences(new String[0]).build();
+        personCard = new PersonCard(personWithNoPref, 1);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithNoPref, 1);
+
+        // with preferences
+        Person personWithPrefs = new PersonBuilder().build();
+        personCard = new PersonCard(personWithPrefs, 2);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithPrefs, 2);
+
+
+
     }
 
     @Test

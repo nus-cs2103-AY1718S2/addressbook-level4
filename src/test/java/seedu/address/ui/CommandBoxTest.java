@@ -135,22 +135,32 @@ public class CommandBoxTest extends GuiUnitTest {
 
     /**
      * Runs a command that fails, then verifies that <br>
+     *      - {@code NewResultAvailableEvent} is posted
      *      - the text remains <br>
      *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
      */
     private void assertBehaviorForFailedCommand() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
+        assertFalse(((NewResultAvailableEvent) eventsCollectorRule.eventsCollector.getMostRecent()).isSuccessful());
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+        eventsCollectorRule.eventsCollector.reset();
+
         assertEquals(COMMAND_THAT_FAILS, commandBoxHandle.getInput());
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 
     /**
      * Runs a command that succeeds, then verifies that <br>
+     *      - {@code NewResultAvailableEvent} is posted
      *      - the text is cleared <br>
      *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
      */
     private void assertBehaviorForSuccessfulCommand() {
         commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
+        assertTrue(((NewResultAvailableEvent) eventsCollectorRule.eventsCollector.getMostRecent()).isSuccessful());
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+        eventsCollectorRule.eventsCollector.reset();
+
         assertEquals("", commandBoxHandle.getInput());
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }

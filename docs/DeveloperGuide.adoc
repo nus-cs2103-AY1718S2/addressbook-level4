@@ -1059,7 +1059,7 @@ Use case ends.
 ** 1a1. RecipeBook shows user suggestion on the correct format.
 +
 Use case resumes at step 1.
-* 1b. One of the required field (Name, PreparationTime, Ingredient, Instruction) is missing.
+* 1b. One of the required field (Name, Ingredient, Instruction) is missing.
 ** 1b1. RecipeBook reminds user of missing required fields.
 +
 Use case resumes at step 1.

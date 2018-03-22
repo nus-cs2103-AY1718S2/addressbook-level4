@@ -33,10 +33,11 @@ public class RecordCommand extends UndoableCommand {
             + PREFIX_TREATMENT + "TREATMENT "
             + "\n"
             + "Example: " + COMMAND_WORD + " "
+            + "1 "
             + PREFIX_DATE + "1st March 2018 "
             + PREFIX_SYMPTOM + "Headache, runny nose "
             + PREFIX_ILLNESS + "Flu "
-            + PREFIX_TREATMENT + "Zyrtec ";
+            + PREFIX_TREATMENT + "Zyrtec";
 
     public static final String MESSAGE_EDIT_RECORD_SUCCESS = "Medical record updated: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already exists in the address book.";
@@ -91,7 +92,7 @@ public class RecordCommand extends UndoableCommand {
 
         return new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),
                 patientToEdit.getEmail(), patientToEdit.getAddress(), patientToEdit.getDob(),
-                patientToEdit.getBloodType(), patientToEdit.getRemark(), patientToEdit.getRecord(), patientToEdit.getTags());
+                patientToEdit.getBloodType(), patientToEdit.getRemark(), record, patientToEdit.getTags());
     }
 
     @Override

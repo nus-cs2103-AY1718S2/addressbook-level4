@@ -4,6 +4,7 @@ import static seedu.recipe.ui.util.KeyboardShortcutsMapping.COMMAND_SUBMISSION;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.LAST_COMMAND;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
+import static seedu.recipe.ui.util.KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND;
 
 import java.util.logging.Logger;
 
@@ -27,7 +28,7 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static final String LF = "\n";
+    private static final char LF = '\n';
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -35,6 +36,7 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextArea commandTextArea;
+    private SuggestionsPopUp suggestionsPopUp;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -42,6 +44,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextArea.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        suggestionsPopUp = new SuggestionsPopUp(this);
     }
 
     /**
@@ -49,6 +52,7 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
+        suggestionsPopUp.hideSuggestions();
         if (COMMAND_SUBMISSION.match(keyEvent)) {
             keyEvent.consume();
             submitCommand();
@@ -61,6 +65,9 @@ public class CommandBox extends UiPart<Region> {
         } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             createNewLine();
+        } else if (SHOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
+            keyEvent.consume();
+            suggestionsPopUp.showSuggestions();
         }
     }
 
@@ -94,7 +101,7 @@ public class CommandBox extends UiPart<Region> {
      * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.
      */
-    private void replaceText(String text) {
+    protected void replaceText(String text) {
         commandTextArea.setText(text);
         commandTextArea.positionCaret(commandTextArea.getText().length());
     }
@@ -164,4 +171,10 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    /**
+     * Gets TextArea object in CommandBox
+     */
+    protected TextArea getCommandTextArea() {
+        return commandTextArea;
+    }
 }

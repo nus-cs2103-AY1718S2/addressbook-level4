@@ -8,27 +8,27 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.logic.commands.FindWithTagCommand;
+import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 public class FindWithTagCommandParserTest {
 
-    private FindCommandParser parser = new FindCommandParser();
+    private FindWithTagCommandParser parser = new FindWithTagCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindWithTagCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parse_validArgs_returnsFindWithTagCommand() {
         // no leading and trailing whitespaces
-        FindCommand expectedFindCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
+        FindWithTagCommand expectedFindWithTagCommand =
+                new FindWithTagCommand(new TagContainsKeywordsPredicate(Arrays.asList("neighbour", "owesMoney")));
+        assertParseSuccess(parser, "neighbour owesMoney", expectedFindWithTagCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+        assertParseSuccess(parser, " \n neighbour \n \t owesMoney  \t", expectedFindWithTagCommand);
     }
 
 }

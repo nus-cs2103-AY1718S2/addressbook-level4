@@ -31,7 +31,8 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+.The GUI you see when you start the application
+image::UiDisplay.png[width="800"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will list all possible commands and their formats.
@@ -66,27 +67,86 @@ Format: `help`
 
 Adds a person to the address book +
 Alias: `a` and `+` +
-Format: `add n/NAME m/MATRICULATION NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS dp/IMAGE_PATH [t/TAG]...`
+Format: `add n/NAME m/MATRICULATION NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS dp/[IMAGE PATH] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
-[NOTE]
-You may leave out `dp/` if you do not wish to add a display picture.
+[TIP]
+You can choose not to enter `dp/` if you do not have picture.
 
 [NOTE]
 The tags "lecturer", "TA" "student" and "T1" will appear red, yellow, blue and green respectively.
 
 Examples:
 
-* `add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dp/C:/display.png`
-* `add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+The address book initially starts with default inputs:
+
+.Initial address book state +
+image::UiInitial.png[width="800"]
+
+Command: `add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01`:
+
+.Application after first person is added +
+image::UiAfterFirst.png[width="800"]
+
+Command: `add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`:
+
+.Application after second person is added +
+image::UiAfterSecond.png[width="800"]
+
+=== Locating persons by name or by matriculation number: `find`
+
+
+Finds persons whose names contain any of the given keywords. +
+Or, finds a person whose matriculation number corresponds to the given keyword. +
+
+Alias: `f` +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name and the matriculation number is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+Before finding:
+
+.Application before find command +
+image::UiAfterSecond.png[width="800"]
+
+Command: `find John`:
+
+.Returns `john` and `John Doe` +
+image::FindJohn.png[width="800"]
+
+Command `find Betsy Tim John`:
+
+.Returns any person having names `Betsy`, `Tim`, or `John` +
+image::FindBTJ.png[width="800"]
+
+Command `find A0111111X`:
+
+.Returns John Doe having the matriculation number A0111111X +
+image::FindMatric.png[width="800"]
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the application. +
 Alias: `ls` +
 Format: `list`
+
+Example:
+
+Command: 'list':
+
+.All people in the application listed +
+image::AllListed.png[width="800"]
+
 
 === Editing a person : `edit`
 
@@ -104,10 +164,20 @@ Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADD
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Before edit:
+
+.Application before edit +
+image::AllListed.png[width="800"]
+
+Command: `edit 3 p/91234567 e/johndoe@example.com`:
+
+.Phone number and email of 3rd person (John Doe) edited +
+image::FirstEdit.png[width="800"]
+
+Command: `edit 4 n/Betsy Crower t/`:
+
+.Name changed to "Betsy Crower" and all tags cleared on 4th person (Betsy Crowe) +
+image::SecondEdit.png[width="800"]
 
 === Emailing a person : `email`
 
@@ -129,33 +199,6 @@ Emails the 2nd person in the address book.
 `email 1` +
 Emails the 1st person in the results of the `find` command.
 
-=== Locating persons by name: `find`
-=== Locating persons by name or by matriculation number: `find`
-
-
-Finds persons whose names contain any of the given keywords. +
-Or, finds a person whose matriculation number corresponds to the given keyword. +
-
-Alias: `f` +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name and the matriculation number is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`.
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`.
-* `find A0123456X` +
-Returns any person having the matriculation number A0123456X.
-
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -170,12 +213,20 @@ Format: `delete INDEX`
 
 Examples:
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Before delete:
+
+.Application before delete +
+image::SecondEdit.png[width="800']
+
+Command: `list`, `delete 3`:
+
+.Deletes the 3rd person in the address book +
+image::FirstDelete.png[width="800"]
+
+Command: `find Betsy`,`delete 1`:
+
+.Deletes the 1st person in the results of the `find` command +
+image::SecondDelete.png[width="800"]
 
 === Selecting a person : `select`
 
@@ -184,19 +235,27 @@ Alias: `s` +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+Before selecting:
+
+.Application before select +
+image::UiInitial.png[width="800"]
+
+Command: `list`, `select 1`:
+
+.Selects the 2nd person in the address book +
+image::FirstSelect.png[width="800"]
+
+Command: `find Elle`, `select 1`:
+
+.Selects the 1st person in the results of the `find` command +
+image::SecondSelect.png[width="800"]
 
 === Listing entered commands : `history`
 
@@ -223,19 +282,22 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+Before any commands or undos:
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+.Application before any tampering +
+image::UiInitial.png[width="800"]
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+Command: `delete 1`, `list`, `undo`:
+
+The `delete 1` command will be reversed. End result should look the same as Figure 18.
+
+Command: `select 1`, `list`, `undo`:
+
+The `undo` command fails as there are no undoable commands executed previously. End result should look the same as Figure 18.
+
+Command: `delete 1`, `clear`, `undo`, `undo`:
+
+Both commands reversed. End result should look the same as Figure 18.
 
 === Redoing the previously undone command : `redo`
 
@@ -245,21 +307,19 @@ Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+Command: `delete 1`, `undo`, `redo`:
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+.Delete command reapplied +
+image::FirstRedo.png[width="800"]
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+Command: `delete 1`, `redo`:
+
+The `redo` command fails as there are no `undo` commands executed previously. End result should look the same as Figure 19.
+
+Command: `delete 1`, `clear`, `undo` (reverses the `clear` command), `undo` (reverses the `delete 1` command), `redo` (reapplies the `delete 1` command), `redo` (reapplies the `clear` command):
+
+.Both commands reapplied, application is cleared +
+image::SecondRedo.png[width="800"]
 
 === Clearing all entries : `clear`
 

@@ -31,18 +31,23 @@ This app will not work with earlier versions of Java 8.
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
+. Sufficient *Java* and *Javafx* knowledge
++
+[NOTE]
+This application is written in Java and Javafx. A good amount of experience with the language (about 10k lines of code written in *Java* and *Javafx*) is required to understand and work in the application.
+
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repository, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
@@ -68,7 +73,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-F09-B1/main` repository. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-F09-B1/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -114,14 +119,15 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of five components.
 
+* <<Design-Login, *`Login`*>>: Authenticates access to App.
 * <<Design-Ui,*`UI`*>>: The UI of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the last four components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -152,6 +158,18 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+[[Design-Login]]
+=== Login Component
+.Interactions for Login Component
+image::Login.png[width="800"]
+
+Upon setting up the app, the Login component takes in two inputs from the user: `Username` and `Password`, then stores the user's login credentials into a `.xml` file.
+[Optional] `.xml` file is encrypted.
+
+* The login credentials are therefore immutable (cannot be changed).
+* The same username and password have to be used every time the user wishes to access the app.
+* Only upon successful authentication will the app load data from the `Storage` Component.
+
 [[Design-Ui]]
 === UI component
 
@@ -160,9 +178,44 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+
+The `UI` component loads the layout of each part from the `.fxml` file and then does the bindings to various variables in the address book model in the corresponding `.java` file.
+
+[NOTE]
+It may be difficult to edit the `.fxml` file directly. *Javafx* "Scene Builder" is recommended to be used to edit or creat new `.fxml` files.
+
+.Layout of the UI
+image::UiDisplay.png[width="800"]
+
+As seen from the layout in figure 6, from top to bottom: +
+
+* MenuBar, `File` and `Help` are dropdown menus that perform their usual functions. As seen in Figure 7 below.
+
+.Menu bar of the UI
+image::MenuBar.png[width="800"]
+
+* Down to the left, is the list of people in the address book. As seen in Figure 8 below.
+** It implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonListPanel.java[`PersonListPanel`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonListPanel.fxml[`PersonListPanel.fxml`].
+** The individual person cards implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonCard.fxml[`PersonCard.fxml`].
+
+.Person list of the UI
+image::PersonList.png[width="350"]
+
+* To the right, is the calendar of the address book, in V2.0 task can be scheduled into this calendar. As seen in Figure 9 below.
+** It implements the link:{repoURL}/src/main/java/seedu/address/ui/CalendarView.java[`CalendarView`] class whose layout is specified in link:{repoURL}/src/main/resources/view/CalendarView.fxml[`CalendarView.fxml`].
+
+.Calendar of the UI
+image::Calendar.png[width="800"]
+
+* At the bottom are the command line and results panel. This command line is where the user would type in the commands for the application to execute, and the results of the command will be displayed below in the result panel. as seen in Figure 10 below.
+** The command line implements the link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] class whose layout is specified in link:{repoURL}/src/main/resources/view/CommandBox.fxml[`CommandBox.fxml`].
+** The results panel implements the link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] class whose layout is specified in link:{repoURL}/src/main/resources/view/ResultDisplay.fxml[`ResultDisplay.fxml`].
+
+.Command line of the UI
+image::CommandLine.png[width="800"]
 
 The `UI` component,
 
@@ -170,6 +223,8 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 * Default tags have background colours to identify them as of v1.2.
+* Calendar added as of v1.3.
+* Calendar responds to events raised by the App in V2.0.
 
 [[Design-Logic]]
 === Logic component
@@ -196,8 +251,6 @@ image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
-
-(needs new image here that includes MatriculationNumber in person)
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
@@ -212,8 +265,26 @@ The `Model`,
 
 The `Person` Class,
 
-* Stores the information of a specific person(student) in the AddressBook
+* Stores the information of a specific person (student) in the AddressBook
 * Information includes: Name, Matriculation Number, Phone Number, Email, Address and different tags to associate with that person.
+* Implements `UniquePersonList` that enforces uniqueness of its elements and disallows nulls.
+* `Name`: Object that stores the name of the `Person` Object.
+[NOTE]
+Person's name should only contain alphanumeric characters, and should not be null.
+* `Matriculation Number`: Object that stores the matriculation number of the `Person` Object.
+[NOTE]
+Matriculation number should start with either 'A' or 'U', followed by 7 digits and ending with an alphabet (A-Z).
+* `Phone Number`: Object that stores the phone number of the `Person` Object.
+* `Email`: Object that stores the email address of the `Person` Object.
+[NOTE]
+Email address should be of the format _local-part@domain_.
+
+The `Tag` Class,
+
+* An immutable object that has to be valid.
+* Checks are implemented to guarantee validity.
+[TIP]
+For every `Person` object, there can be multiple (or zero) tags.
 
 [[Design-Storage]]
 === Storage component
@@ -240,9 +311,7 @@ This section describes some noteworthy details on how certain features are imple
 === Help feature
 ==== Current Implementation
 
-The help command displays a list of all the possible commands the user can make, followed by an example on its use.
-
-[This section is to be expanded when the help command is reworked into the help window.]
+The help command opens a new window, opening the user guide.
 
 // tag::undoredo[]
 === Undo/Redo feature

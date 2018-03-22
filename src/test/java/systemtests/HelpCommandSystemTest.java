@@ -29,7 +29,7 @@ public class HelpCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void openHelpWindow() {
-        //use accelerator
+        // use accelerator
         getCommandBox().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
@@ -46,11 +46,11 @@ public class HelpCommandSystemTest extends BibliotekSystemTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        //use menu button
+        // use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
 
-        //use command box
+        // use command box
         executeCommand(HelpCommand.COMMAND_WORD);
         assertHelpWindowOpen();
 

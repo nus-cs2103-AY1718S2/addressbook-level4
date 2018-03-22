@@ -19,8 +19,7 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
         Model model = getModel();
 
         /* Case: clear non-empty book shelf, command with leading spaces and trailing alphanumeric characters and
-         * spaces -> cleared
-         */
+         * spaces -> cleared */
         assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
         assertSelectedBookListCardUnchanged();
 
@@ -69,22 +68,4 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
-    /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedBookListCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
 }

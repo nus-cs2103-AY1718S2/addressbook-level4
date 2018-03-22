@@ -124,6 +124,13 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Returns a defensive copy of the current model.
+     */
+    protected Model getModel() {
+        return testApp.getModel();
+    }
+
+    /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
      */
@@ -174,6 +181,27 @@ public abstract class BibliotekSystemTest {
     protected void deleteAllBooks() {
         executeCommand(ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getBookShelf().getBookList().size());
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, and {@code SearchResultsPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by {@code assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see #assertApplicationDisplaysExpected(String, String, Model)
+     */
+    protected void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedBookListCardUnchanged();
+        assertSelectedSearchResultsCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
     }
 
     /**
@@ -333,10 +361,4 @@ public abstract class BibliotekSystemTest {
         }
     }
 
-    /**
-     * Returns a defensive copy of the current model.
-     */
-    protected Model getModel() {
-        return testApp.getModel();
-    }
 }

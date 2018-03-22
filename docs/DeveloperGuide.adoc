@@ -388,7 +388,7 @@ This brings us to the next section on the design considerations of AddPetPatient
 ** Cons: Users are unable to undo their mistakes. Instead, they will have to go through the hassle of editing / deleting pet patients to resolve the error on their part.
 
 ==== Current Limitations
-As of now, the linking of pet patients to their respective owners (and also appointments) has not been implemented. 
+As of now, the linking of pet patients to their respective owners (and also appointments) has not been implemented.
 
 The implementation of `PetPatient` tags (i.e. having a separate list of tags from `Person`) is currently ongoing; as such, there is no support for tagging of pet patients yet.
 

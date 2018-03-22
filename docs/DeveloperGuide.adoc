@@ -456,7 +456,7 @@ image::figure3.5.1b.png[width="800"]
 
 To implement this feature, there are some modifications to the existing Model component and Storage component to support the additional data structure.
 
-image::figure3.5.1c.png[width="800"]
+image::menuStorage.png[width="800"]
 (To be updated)
 
 As the diagram shown above, besides AddressBook and UserPref, now ModelManager has an additional CustomerStats class. It consists a Data field which has many Phone numbers and numOfOrders counters. Phone numbers and the numOfOrders counters are 1-1 mapped and each pair represent one customer that has placed at least one order before.

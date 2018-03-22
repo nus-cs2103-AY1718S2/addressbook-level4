@@ -20,6 +20,7 @@ import seedu.address.model.Model;
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void select() {
+        executeCommand("login admin admin");
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces

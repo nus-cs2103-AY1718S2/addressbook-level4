@@ -25,6 +25,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void find() {
+        executeCommand("login admin admin");
+
         /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
          * -> 2 persons found
          */

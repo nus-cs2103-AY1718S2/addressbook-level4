@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.model.Model;
 
 /**
  * Format full help instructions for every command for display.
@@ -15,9 +16,16 @@ public class HelpCommand extends Command {
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 
+    public static final int PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_GUEST;
+
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ShowHelpRequestEvent());
         return new CommandResult(SHOWING_HELP_MESSAGE);
+    }
+
+    @Override
+    public int getPrivilegeLevel(){
+        return PRIVILEGE_LEVEL;
     }
 }

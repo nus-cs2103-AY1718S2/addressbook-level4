@@ -14,6 +14,10 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    int PRIVILEGE_LEVEL_GUEST = 0;
+    int PRIVILEGE_LEVEL_STUDENT = 1;
+    int PRIVILEGE_LEVEL_LIBRARIAN = 2;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -44,5 +48,11 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    int authenticate(String username, String password);
+
+    void logout();
+
+    int getPrivilegeLevel();
 
 }

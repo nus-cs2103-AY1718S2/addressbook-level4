@@ -133,6 +133,21 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public int authenticate(String username, String password) {
+            return 0;
+        }
+
+        @Override
+        public void logout() {
+
+        }
+
+        @Override
+        public int getPrivilegeLevel() {
+            return 0;
+        }
     }
 
     /**

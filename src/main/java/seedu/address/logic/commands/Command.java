@@ -14,6 +14,8 @@ public abstract class Command {
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
 
+    public static final String MESSAGE_UNPRIVILEGED = "You are not allowed to execute this command, login and try again";
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
@@ -40,4 +42,6 @@ public abstract class Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
     }
+
+    public int getPrivilegeLevel(){ return Model.PRIVILEGE_LEVEL_GUEST; };
 }

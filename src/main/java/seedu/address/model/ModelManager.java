@@ -23,8 +23,11 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private int privilegeLevel;
+
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.privilegeLevel = PRIVILEGE_LEVEL_GUEST;
     }
 
     public ModelManager() {
@@ -96,6 +100,55 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public int authenticate(String username, String password) {
+        if (isStudent(username,password)){
+            setPrivilegeLevel(PRIVILEGE_LEVEL_STUDENT);
+            return PRIVILEGE_LEVEL_STUDENT;
+        }
+        if (isLibrarian(username,password)){
+            setPrivilegeLevel(PRIVILEGE_LEVEL_LIBRARIAN);
+            return PRIVILEGE_LEVEL_LIBRARIAN;
+        }
+        //if not found
+        return PRIVILEGE_LEVEL_GUEST;
+    }
+
+    @Override
+    public void logout() {
+        setPrivilegeLevel(PRIVILEGE_LEVEL_GUEST);
+    }
+
+    @Override
+    public int getPrivilegeLevel() {
+        return this.privilegeLevel;
+    }
+
+
+    private boolean isStudent(String username, String password) {
+        //This is temporary before we add in account database
+        if (username.equals("student") && password.equals("student")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean isLibrarian(String username, String password) {
+        //This is temporary before we add in account database
+        if (username.equals("admin") && password.equals("admin")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private void setPrivilegeLevel(int level) {
+        this.privilegeLevel = level;
     }
 
     @Override

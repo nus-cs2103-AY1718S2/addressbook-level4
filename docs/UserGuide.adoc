@@ -11,7 +11,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T16-B1/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -56,14 +56,24 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+=== Login as Student/Librarian : `Login`
+
+Format: `login [username] [password]` +
+Privilege Level: 0(Guest)
+
+[NOTE]
+Different accounts might have different privilege levels. A command can only be executed when the privilege level of the current user is greater or equal to the command's required level.
+
 === Viewing help : `help`
 
-Format: `help`
+Format: `help` +
+Privilege Level: 0(Guest)
 
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+Privilege Level: 2(Librarian)
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -76,12 +86,14 @@ Examples:
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` +
+Privilege Level: 0(Guest)
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Privilege Level: 2(Librarian)
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -101,7 +113,8 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+ Privilege Level: 0(Guest)
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -121,7 +134,8 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` +
+                       Privilege Level: 2(Librarian)
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -141,7 +155,8 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` +
+                       Privilege Level: 0(Guest)
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -161,7 +176,8 @@ Selects the 1st person in the results of the `find` command.
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Privilege Level: 2(Librarian)
 
 [NOTE]
 ====
@@ -172,7 +188,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
+Privilege Level: 2(Librarian)
 
 [NOTE]
 ====
@@ -198,7 +215,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Privilege Level: 2(Librarian)
 
 Examples:
 
@@ -221,12 +239,14 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` +
+Privilege Level: 2(Librarian)
 
 === Exiting the program : `exit`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Privilege Level: 2(Librarian)
 
 === Saving the data
 

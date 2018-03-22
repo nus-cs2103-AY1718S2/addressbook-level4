@@ -247,6 +247,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertCommandBoxAndResultDisplayShowsDefaultStyle() {
         assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
+        assertEquals(defaultStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
     /**
@@ -254,6 +255,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertCommandBoxAndResultDisplayShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
+        assertEquals(errorStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
     /**

@@ -285,6 +285,11 @@ _{explain how the user can enable/disable data encryption}_
 
 === Count the number of orders a customer has placed in the past `[coming in v2.0]`
 
+// tag::menu[]
+=== Menu feature
+
+// end::menu[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

@@ -222,6 +222,14 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
+[[Design-Login]]
+=== Login component
+
+The `Login` component,
+
+* allows for users to login to a specific instance of the Pigeons address book,
+such that each user (Pigeon/Delivery Driver) can have a personalised list of customers to deliver to.
+
 [[Design-Commons]]
 === Common classes
 
@@ -253,6 +261,17 @@ The addresses will be obtained for the filtered list in the database.
 
 The optimized route will the be fed into a mapping function to display the route and get the directions for the driver.
 
+// tag::login[]
+=== Login feature
+==== Current Implementation
+
+The login feature is facilitated by a `UserPassStorage` that stores all `UserPass` (username and password pair of Strings) created before in the application.
+Each time a user attempts a login, a `UserPass` is created based on their inputs for username and password, and verified against the `UserPassStorage`.
+Upon successful verification, the user will be brought to a user-customised version of the application.
+
+The following sequence diagram shows how the checkLoginDetails method works:
+
+image::checkLoginDetails.jpg[width="800"]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -381,6 +400,21 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
+
+// tag::autocompletion[]
+=== Autocompletion feature
+
+We use an `Autocompleter` class which stores the list of `Command` and all the different fields (`Name`, `Address`, etc) created in the `LogicManager`.
+The `Autocompleter` can complete:
+
+* a command word, if it's the first of a query
+* an option, starting by "n/" for example
+* a name, if the current query doesn't match the first two cases: if we only have "John Doe" in the `AddressBook` we can complete the query by either "John" or "Doe" (this is useful to complete the `FindCommand`).
+
+This class is used in `CommandBox` which send the content of the command line and then append the result of the autocomplete operation.
+
+
+// end::autocompletion[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -826,7 +860,7 @@ maps out ideal routes for drivers
 
 *Shi Kang*
 
-Minor: ability for correspondence with each addressee
+Minor: UI for overall application
 
 Major: Login for each delivery driver to own a separate list of addresses in his customised address book
 
@@ -856,15 +890,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person | add entry into my address book
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |*have a separate address book for different user profiles* |minimize chance of someone else seeing my address book by accident
 
 |`* * *` |user with many persons in the address book |sort persons by name, address |locate a person easily
 
@@ -872,17 +907,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |driver |quickly indicate that I have completed a delivery |always know which are the remaining parcels that I have to deliver
 
-|`* * *` |driver |be able to communicate with the customer |resolve any delivery issues I face
+|`* * *` |driver |*have a map view of the route to my next customer* | easily figure out the way I should take
+
+|`* * *` |driver |*be able to communicate with the customer* |resolve any delivery issues I face
 
 |`* * *` |customer |receive updates about my parcel |know when it's gonna come
 
-|`* *` |driver |be able to find the optimal route to the next destination easily |focus on just driving to the next location
+|`* * *` |driver |*be able to find the optimal route to the next destination easily* |focus on just driving to the next location
 
-|`*` |driver|my whole day by ordering the deliveries I want to do |avoid losing time during the day
+|`* *` |driver| schedule my whole day by ordering the deliveries I want to do |avoid losing time during the day
 
-|`*` |driver |have users automatically downloaded from a central database |avoid having to add users one by one myself
+|`* *` |driver |have users automatically downloaded from a central database |avoid having to add users one by one myself
 
-|`*` |driver |get traffic updates |follow my schedule
+|`* *` |driver |get traffic updates |follow my schedule
+
+|`*` |customer |real-time geo-locate my delivery | to have a better idea of when my delivery will arrive
 |=======================================================================
 
 _{More to be added}_
@@ -1009,5 +1048,3 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
-
-

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="loginPanePlaceholder" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane blendMode="DARKEN" cache="true" depthTest="ENABLE" pickOnBounds="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <PasswordField fx:id="passwordField" layoutX="163.0" layoutY="335.0" />
+                <TextField fx:id="usernameTextField" layoutX="163.0" layoutY="300.0" />
+                <Button fx:id="loginButton" layoutX="106.0" layoutY="388.0" mnemonicParsing="false" onAction="#checkLoginDetails" text="Login" />
+                <Button fx:id="createButton" layoutX="183.0" layoutY="388.0" mnemonicParsing="false" onAction="#createNewAccount" text="Create" />
+                <Button fx:id="exitButton" layoutX="264.0" layoutY="388.0" mnemonicParsing="false" onAction="#closeApplication" text="Exit" />
+                <ImageView blendMode="SOFT_LIGHT" cacheHint="QUALITY" depthTest="ENABLE" fitHeight="243.0" fitWidth="243.0" layoutX="78.0" layoutY="45.0" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/pigeons logo 2.jpg" />
+                    </image>
+                </ImageView>
+                <Text layoutX="93.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " />
+                <Text layoutX="93.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+            <Text fx:id="loginStatus" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Status: " textOrigin="CENTER" x="165.0" y="464.0" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

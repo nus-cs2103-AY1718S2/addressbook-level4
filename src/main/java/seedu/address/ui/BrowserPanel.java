@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -11,9 +12,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
+
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.GetDistance;
+
 import seedu.address.model.person.Person;
 
 /**
@@ -49,6 +53,7 @@ public class BrowserPanel extends UiPart<Region> {
         String addressValue = person.getAddress().value.trim();
         int stringCutIndex;
         String addressWithoutUnit;
+        List<Person> num;
 
         if (addressValue.indexOf('#') > 2) {
             stringCutIndex = addressValue.indexOf('#') - 2;
@@ -58,7 +63,6 @@ public class BrowserPanel extends UiPart<Region> {
         }
 
         readPersonName(person);
-
         loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
     }
 
@@ -97,6 +101,7 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        GetDistance distance = new GetDistance();
         loadPersonDirection(event.getNewSelection().person);
     }
 }

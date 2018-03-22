@@ -6,6 +6,7 @@ import java.util.Optional;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.login.UserPassStorage;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
@@ -35,4 +36,10 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+    // ================ UserPass methods ==============================
+
+    public UserPassStorage getUserPassStorage();
+
+    public void setUserPassStorage(UserPassStorage userPassStorage);
 }

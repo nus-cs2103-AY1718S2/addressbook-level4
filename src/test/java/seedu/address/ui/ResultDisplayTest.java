@@ -14,8 +14,10 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
-    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB =
+    private static final NewResultAvailableEvent NEW_RESULT_SUCCESS_EVENT_STUB =
             new NewResultAvailableEvent("Stub", true);
+    private static final NewResultAvailableEvent NEW_RESULT_FAILURE_EVENT_STUB =
+            new NewResultAvailableEvent("Stub", false);
 
     private ResultDisplayHandle resultDisplayHandle;
 

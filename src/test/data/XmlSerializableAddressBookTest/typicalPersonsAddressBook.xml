@@ -13,6 +13,10 @@
             <name>friends</name>
             <color>undefined</color>
         </tagged>
+        <tagged>
+            <name>CS3230</name>
+            <color>undefined</color>
+        </tagged>
     </persons>
     <persons>
         <name>Benson Meier</name>
@@ -27,6 +31,10 @@
         </tagged>
         <tagged>
             <name>friends</name>
+            <color>undefined</color>
+        </tagged>
+        <tagged>
+            <name>CS3230</name>
             <color>undefined</color>
         </tagged>
     </persons>
@@ -65,6 +73,8 @@
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
+
+
         <email>anna@example.com</email>
         <address>4th street</address>
         <link>http://modsn.us/hwWlG</link>
@@ -76,6 +86,10 @@
     </tags>
     <tags>
         <name>owesMoney</name>
+        <color>undefined</color>
+    </tags>
+    <tags>
+        <name>CS3230</name>
         <color>undefined</color>
     </tags>
 </addressbook>

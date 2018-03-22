@@ -10,5 +10,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX = "The milestone index provided is invalid";
     public static final String MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX = "The student index provided is invalid";
     public static final String MESSAGE_STUDENT_LISTED_OVERVIEW = "%1$d students listed!";
+    public static final String MESSAGE_INVALID_START_END_TIME = "End time cannot be chronologically "
+                                                                    + "smaller than the Start time!";
 
 }

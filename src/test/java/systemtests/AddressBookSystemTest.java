@@ -245,14 +245,14 @@ public abstract class AddressBookSystemTest {
     /**
      * Asserts that the command box's shows the default style.
      */
-    protected void assertCommandBoxShowsDefaultStyle() {
+    protected void assertCommandBoxAndResultDisplayShowsDefaultStyle() {
         assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
     }
 
     /**
      * Asserts that the command box's shows the error style.
      */
-    protected void assertCommandBoxShowsErrorStyle() {
+    protected void assertCommandBoxAndResultDisplayShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
     }
 

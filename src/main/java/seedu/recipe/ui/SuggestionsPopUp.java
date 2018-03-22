@@ -14,6 +14,9 @@ import javafx.scene.control.TextArea;
 import seedu.recipe.ui.util.TextInputProcessorUtil;
 
 //@@author hoangduong1607
+/**
+ * The component that is responsible for showing a suggestion list for auto-completion
+ */
 public class SuggestionsPopUp extends ContextMenu {
 
     private CommandBox commandBox;
@@ -83,8 +86,8 @@ public class SuggestionsPopUp extends ContextMenu {
      * Finds Y-coordinate to display SuggestionsPopUp in CommandBox
      */
     double findDisplayPositionY(double caretPositionY) {
-        return Math.min(-commandTextArea.getHeight() + commandTextArea.getInsets().getTop() +
-                commandTextArea.getInsets().getBottom() + caretPositionY, -commandTextArea.getInsets().getBottom());
+        return Math.min(-commandTextArea.getHeight() + commandTextArea.getInsets().getTop()
+                + commandTextArea.getInsets().getBottom() + caretPositionY, -commandTextArea.getInsets().getBottom());
     }
 
     /**

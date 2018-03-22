@@ -4,6 +4,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 //@@author hoangduong1607
+/**
+ * Provides basic functions for processing text input
+ */
 public class TextInputProcessorUtil {
 
     private static final char LF = '\n';

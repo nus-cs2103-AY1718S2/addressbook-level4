@@ -11,8 +11,7 @@ import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
-//import seedu.address.MainApp;
-
+import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 
@@ -86,13 +85,12 @@ public class DisplayPic {
      * Returns true if a given string points to a valid file.
      */
     public static boolean isValidPath(String test) {
-        /*if (MainApp.class.getResourceAsStream(test) == null) {
+        if (MainApp.class.getResourceAsStream(test) == null) {
             File file = new File(test);
             return FileUtil.isFileExists(file);
         } else {
             return true;
-        }*/
-        return true;
+        }
     }
 
     /**

@@ -461,7 +461,13 @@ As seen from above, all key combinations implemented consume the default effect 
 ** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
 // end::keyboard-shortcut[]
 
+// tag::cloud-storage[]
+=== Cloud storage support
+==== Current implementation
 
+Formerly, there was no function to upload the data in the recipe book on to the cloud. All these data were only stored locally in a specific file on the user's computer.
+
+Currently, a new command `UploadCommand` has been added that takes in a `String` filename and parses it to 
 
 // tag::dataencryption[]
 === [Proposed] Data encryption

@@ -54,9 +54,25 @@ public class UiManagerTest {
     @Test
     public void checkUiValidity() {
         assertNotNull(ui);
+    }
+
+    @Test
+    public void checkStartLogin() {
         Assert.assertThrows(NullPointerException.class, () -> ui.startLogin(null));
-        Assert.assertThrows(NullPointerException.class, () -> ui.start(null));
+    }
+
+    @Test
+    public void checkStopLogin() {
         Assert.assertThrows(NullPointerException.class, () -> ui.stopLogin());
+    }
+
+    @Test
+    public void checkAppStart() {
+        Assert.assertThrows(NullPointerException.class, () -> ui.start(null));
+    }
+
+    @Test
+    public void checkAppStop() {
         Assert.assertThrows(NullPointerException.class, () -> ui.stop());
     }
 

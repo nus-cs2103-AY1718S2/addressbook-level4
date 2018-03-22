@@ -385,6 +385,56 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::deletebefore[]
+=== Delete dated persons
+
+==== Current Implementation
+The delete dated persons mechanism supports deleting all persons added before a date who possess all the tags specified by the user.
+This function is facilitated by adding a `DateAdded` attribute whenever a `Person` is added to the address book. This
+date stamp is added automatically by the application whenever the user adds a new person. Furthermore, to check if a `Person` is to be deleted,
+additional predicate classes are implemented.
+
+The command for this function, `DeleteBeforeCommand` inherits from the `UndoableCommand`. This allows user to undo the delete should he/she does it by mistake.
+The `DeleteBeforeCommand` takes in `d/DATE` and `[t/TAG...]` as parameters. The `TAG`s parameter allows the user to delete only persons with the
+specified tags and not everyone added before a certain date. This enhances the flexibility of this delete function.
+
+The implementation of this function adheres closely to the Object Oriented Principle as well as the Single Responsibility Principle.
+
+Following is a sequence diagram describing how the delete dated persons function works:
+
+image::DeleteBeforeSequenceDiagram.png[width="900"]
+
+
+==== Design Considerations
+
+===== Aspect: Implementation of `DeleteBeforeCommand`
+
+* **Alternative 1 (current choice):** Follows the general design of the `delete` command
+** Pros: Consistencies in implementation of commands and command parsers
+** Cons: Requires additional methods for removing persons in the `AddressBook` and `UniquePersonList` classes
+* **Alternative 2:** Extends the `delete` command
+** Pros: Does not require "exploratory" modifications in the Model component
+** Cons: Needs to call the `delete` command multiple times to delete all targeted persons
+
+===== Aspect: Implementation of `DateAdded`
+
+* **Alternative 1 (current choice):** Add `DateAdded` as an attribute of a `Person`
+** Pros: Consistencies in implementation of the `Person` model that is in line with the OOP and Single Responsibility Principle
+** Cons: Requires additional tests and overheads in maintaining an extra attribute
+* **Alternative 2:** Include the `DateAdded` directly inside the `Person` class
+** Pros: Less overhead needed to maintain the DateAdded attribute
+** Cons: Reduces consistencies in the existing architecture and reduces coherence of the `Person` class
+
+===== Aspect: Who adds the `DateAdded` attribute
+
+* **Alternative 1 (current choice):** The application automatically creates a `DateAdded` attribute for every `Person` added
+** Pros: Avoids unnecessary errors in user-input date
+** Cons: Additional stubs are needed to carry out tests in order to manually fix and manipulate `DateAdded`
+* **Alternative 2:** Let the user input the current date
+** Pros: The user might input the wrong date or date with invalid format
+** Cons: Ease of implementation
+// end::deletebefore[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -798,6 +848,22 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 * A comprehensive, reliable and convenient address book for insurance agents built on a simple belief -- efficiency and elegance.
 
+=== Feature Contribution
+
+*Joshua Lee Kai Sheng*
+
+Minor Enhancement :
+
+** Implements the delete dated persons, aka `DeleteBefore`, function which allows the user to delete persons added before a
+date who matches all tags specified by the user
+
+Major Enhancement :
+
+** Implements a group of scheduling functions to manage the user's appointments. This includes:
+*** Implementing a calendar reflecting the scheduled appointments
+*** Implementing `Appointment` objects and their storage
+*** Implementing `add appointment` command to support the creation of new appointments by the user.
+
 [appendix]
 == User Stories
 
@@ -946,40 +1012,56 @@ Use case ends.
 +
 Use case ends.
 
-[discrete]
-=== Use case: Delete old contacts
+
+=== Use case: Email contacts
 
 *MSS*
 
-1.  User requests to delete old contacts.
-2.  AddressBook prompts user for cut off date input.
-3.  User enters cut off date.
-4.  AddressBook prompts user for confirmation.
-5.  User confirms deletion.
-6.  AddressBook deletes all contact created before the cut off date.
-7.  AddressBook shows success message.
+1. User requests to email person and enters a word in the name of the person
+2. AddressBook emails the person requested a sample template.
++
+Use case ends.
+
+*Extensions*
+[none]
+* 2a.  The list of people is empty.
++
+[none]
+** 2a1.  AddressBook shows an error message.
++
+Use case ends.
+
+* 2b.  The person is not in the list.
++
+** 2b1.  AddressBook returns error message.
++
+Use case ends.
+
+=== Use case: Delete dated persons
+
+*MSS*
+
+1.  User requests to delete dated persons and enters the cut of date and tags.
+2.  AddressBook deletes all persons created before the cut off date.
+3.  AddressBook shows success message.
 +
 Use case ends.
 
 
 *Extensions*
 [none]
-* 3a.  If user input invalid date.
+* 2a.  If user input invalid date.
 +
 [none]
-** 3a1.  AddressBook prompts user for cut off date input.
-** 3a2.  User enters cut off date.
+** 2a1.  AddressBook prompts user for valid cut off date input.
+** 2a2.  User enters cut off date.
 +
-Steps 3a1 - 3a2 are repeated until date entered is correct.
+Steps 2a1 - 2a2 are repeated until date entered is correct.
 +
-Use case resumes from step 4.
+Use case resumes from step 3.
 
-* 5a.  If user decline the deletion.
-+
-Use case ends.
-
-* 6a.  If there is no contact before the cut off date
-** 6a1.  AddressBook shows error message
+* 3a.  If there is no matched persons added before the cut off date
+** 3a1.  AddressBook shows error message
 +
 Use case ends.
 

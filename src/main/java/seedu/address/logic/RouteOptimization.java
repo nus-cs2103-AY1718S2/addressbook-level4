@@ -58,12 +58,37 @@ public class RouteOptimization {
             String value1 = entry1.getValue();
             for (Map.Entry<String, String> entry2 : filtered.entrySet()) {
                 String key2 = entry2.getKey();
-                if (hash1 > System.identityHashCode(key2)) continue;
+                if (hash1 > System.identityHashCode(key2)) { continue; }
                 String value2 = entry2.getValue();
-                allDistances.put(key1, distance.getDistance(value1, value2));
+                allDistances.put(labelRoutes(value1, value2, filtered), distance.getDistance(value1, value2));
             }
         }
         return allDistances;
+    }
+
+    /**
+     *
+     * @param origin - starting point
+     * @param destination - ending point
+     * @param filtered - map of person and their address
+     * @return
+     */
+    public String labelRoutes(String origin, String destination, Map<String, String> filtered) {
+        String originKey = "";
+        String destinationKey = "";
+        String routeKey;
+        //only works if unique key val pair
+        for (Map.Entry<String, String> entry : filtered.entrySet()) {
+            if (origin.equals(entry.getValue())) {
+                originKey = entry.getKey();
+            }
+            if (destination.equals(entry.getValue())) {
+                destinationKey = entry.getKey();
+            }
+        }
+        routeKey = originKey + "_" + destinationKey;
+
+        return routeKey;
     }
 }
 

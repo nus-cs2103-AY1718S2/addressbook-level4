@@ -1,10 +1,7 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
 import seedu.address.logic.RouteOptimization;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.DatePredicate;
 
 /**

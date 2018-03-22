@@ -2,6 +2,8 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_AMY;
@@ -15,14 +17,18 @@ import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.SERVINGS_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_CALORIES_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_COOKING_TIME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_SERVINGS_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_URL_BOB;
@@ -65,12 +71,19 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
          */
         Index index = INDEX_FIRST_RECIPE;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
-            + PREPARATION_TIME_DESC_BOB + " " + INGREDIENT_DESC_BOB + "  " + INSTRUCTION_DESC_BOB + " "
-            + URL_DESC_BOB + TAG_DESC_HUSBAND + " ";
-        Recipe editedRecipe =
-            new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_BOB)
-                .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB)
-                    .withUrl(VALID_URL_BOB).withTags(VALID_TAG_HUSBAND).build();
+                + INGREDIENT_DESC_BOB + "  " + INSTRUCTION_DESC_BOB + " " + PREPARATION_TIME_DESC_BOB + " "
+                + COOKING_TIME_DESC_BOB + " " + CALORIES_DESC_BOB + " " + SERVINGS_DESC_BOB + " "
+                + URL_DESC_BOB + TAG_DESC_HUSBAND + " ";
+        Recipe editedRecipe = new RecipeBuilder()
+                .withName(VALID_NAME_BOB)
+                .withIngredient(VALID_INGREDIENT_BOB)
+                .withInstruction(VALID_INSTRUCTION_BOB)
+                .withCookingTime(VALID_COOKING_TIME_BOB)
+                .withPreparationTime(VALID_PREPARATION_TIME_BOB)
+                .withCalories(VALID_CALORIES_BOB)
+                .withServings(VALID_SERVINGS_BOB)
+                .withUrl(VALID_URL_BOB)
+                .withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedRecipe);
 
         /* Case: undo editing the last recipe in the list -> last recipe restored */
@@ -87,7 +100,8 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
 
         /* Case: edit a recipe with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
-            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+                + COOKING_TIME_DESC_BOB + PREPARATION_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB
+                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
@@ -190,12 +204,14 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         index = INDEX_FIRST_RECIPE;
         assertFalse(getModel().getFilteredRecipeList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
-            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+                + COOKING_TIME_DESC_BOB + PREPARATION_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB
+                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_RECIPE);
 
         /* Case: edit a recipe with new values same as another recipe's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
-            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_HUSBAND;
+                + COOKING_TIME_DESC_BOB + PREPARATION_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB
+                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_RECIPE);
     }
 

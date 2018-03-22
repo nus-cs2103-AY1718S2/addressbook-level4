@@ -11,10 +11,13 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.recipe.commons.exceptions.IllegalValueException;
+import seedu.recipe.model.recipe.Calories;
+import seedu.recipe.model.recipe.CookingTime;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
+import seedu.recipe.model.recipe.Servings;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.testutil.Assert;
 
@@ -64,23 +67,7 @@ public class XmlAdaptedRecipeTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
-    @Test
-    public void toModelType_invalidPreparationTime_throwsIllegalValueException() {
-        XmlAdaptedRecipe recipe =
-                new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_COOKING_TIME,
-                        INVALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
-        String expectedMessage = PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
-    }
-
-    @Test
-    public void toModelType_nullPreparationTime_throwsIllegalValueException() {
-        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION,
-                VALID_COOKING_TIME, null, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, PreparationTime.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
-    }
-
+    //@@Author kokonguyen191
     @Test
     public void toModelType_invalidIngredient_throwsIllegalValueException() {
         XmlAdaptedRecipe recipe =
@@ -109,12 +96,79 @@ public class XmlAdaptedRecipeTest {
 
     @Test
     public void toModelType_nullInstruction_throwsIllegalValueException() {
-        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, null, VALID_COOKING_TIME,
-                VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, null,
+                VALID_COOKING_TIME, VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Instruction.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
+    @Test
+    public void toModelType_invalidPreparationTime_throwsIllegalValueException() {
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_COOKING_TIME,
+                        INVALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+        String expectedMessage = PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullPreparationTime_throwsIllegalValueException() {
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION,
+                VALID_COOKING_TIME, null, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, PreparationTime.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidCookingTime_throwsIllegalValueException() {
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, INVALID_COOKING_TIME,
+                        VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+        String expectedMessage = CookingTime.MESSAGE_COOKING_TIME_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullCookingTime_throwsIllegalValueException() {
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION,
+                null, VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, CookingTime.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidCalories_throwsIllegalValueException() {
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_PREPARATION_TIME,
+                        VALID_COOKING_TIME, INVALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+        String expectedMessage = Calories.MESSAGE_CALORIES_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullCalories_throwsIllegalValueException() {
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION,
+                VALID_PREPARATION_TIME, VALID_COOKING_TIME, null, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Calories.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidServings_throwsIllegalValueException() {
+        XmlAdaptedRecipe recipe =
+                new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_PREPARATION_TIME,
+                        VALID_COOKING_TIME, VALID_CALORIES, INVALID_SERVINGS, VALID_URL, VALID_TAGS);
+        String expectedMessage = Servings.MESSAGE_SERVINGS_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullServings_throwsIllegalValueException() {
+        XmlAdaptedRecipe recipe = new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION,
+                VALID_PREPARATION_TIME, VALID_COOKING_TIME, VALID_CALORIES, null, VALID_URL, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Servings.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
+    }
 
     //@@author RyanAngJY
     @Test

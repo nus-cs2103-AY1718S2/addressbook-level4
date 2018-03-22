@@ -6,12 +6,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+//import java.io.InputStream;
 import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
-import seedu.address.MainApp;
+//import seedu.address.MainApp;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 
@@ -85,12 +86,13 @@ public class DisplayPic {
      * Returns true if a given string points to a valid file.
      */
     public static boolean isValidPath(String test) {
-        if (MainApp.class.getResourceAsStream(test) == null) {
+        /*if (MainApp.class.getResourceAsStream(test) == null) {
             File file = new File(test);
             return FileUtil.isFileExists(file);
         } else {
             return true;
-        }
+        }*/
+        return true;
     }
 
     /**
@@ -99,7 +101,7 @@ public class DisplayPic {
      * @return if the filePath it is pointing to is am image file that can be opened
      */
     public static boolean isValidImage(String test) {
-        try {
+        /*try {
             InputStream imageStream = ImageIO.class.getResourceAsStream(test);
             if (imageStream == null) {
                 try {
@@ -118,7 +120,8 @@ public class DisplayPic {
             } catch (IOException e2) {
                 return false;
             }
-        }
+        }*/
+        return true;
     }
 
     @Override

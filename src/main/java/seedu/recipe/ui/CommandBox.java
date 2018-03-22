@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -37,7 +36,6 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextArea commandTextArea;
-    private ContextMenu suggestionPopUp;
     private SuggestionsPopUp suggestionsPopUp;
 
     public CommandBox(Logic logic) {

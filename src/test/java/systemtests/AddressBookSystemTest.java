@@ -73,6 +73,11 @@ public abstract class AddressBookSystemTest {
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
+        defaultStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
+
+        errorStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
+        errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
+
         waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }

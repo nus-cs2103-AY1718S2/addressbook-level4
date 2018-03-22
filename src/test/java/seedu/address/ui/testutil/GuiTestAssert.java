@@ -66,26 +66,26 @@ public class GuiTestAssert {
      */
     private static String getTagColorStyleFor(String tag) {
         switch (tag) {
-            case "neighbours":
-            case "colleagues":
-            case "priority":
-            case "fragile":
-                return "red";
+        case "neighbours":
+        case "colleagues":
+        case "priority":
+        case "fragile":
+            return "red";
 
-            case "friend":
-            case "husband":
-            case "repeat":
-                return "blue";
+        case "friend":
+        case "husband":
+        case "repeat":
+            return "blue";
 
-            case "friends":
-            case "owesMoney":
-            case "classmates":
-            case "family":
-                return "green";
+        case "friends":
+        case "owesMoney":
+        case "classmates":
+        case "family":
+            return "green";
 
-            default:
-                fail(tag + " does not have a color assigned.");
-                return "";
+        default:
+            fail(tag + " does not have a color assigned.");
+            return "";
         }
     }
 

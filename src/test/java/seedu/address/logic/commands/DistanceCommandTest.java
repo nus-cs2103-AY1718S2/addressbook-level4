@@ -1,5 +1,11 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,14 +13,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import com.google.maps.errors.ApiException;
-import com.google.maps.model.Distance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -27,9 +26,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.ui.testutil.EventsCollectorRule;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code DistanceCommand}.
@@ -114,7 +110,7 @@ public class DistanceCommandTest {
             String address = person.getAddress().toString();
             String headQuarterAddress = "Kent Ridge MRT";
             RouteOptimization route = new RouteOptimization();
-            Double distance = route.getDistance(headQuarterAddress,address);
+            Double distance = route.getDistance(headQuarterAddress, address);
 
             assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_PERSON_SUCCESS, distance),
                     commandResult.feedbackToUser);

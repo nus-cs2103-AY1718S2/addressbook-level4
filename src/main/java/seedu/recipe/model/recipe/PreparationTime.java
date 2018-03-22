@@ -11,8 +11,8 @@ public class PreparationTime {
 
 
     public static final String MESSAGE_PREPARATION_TIME_CONSTRAINTS =
-            "PreparationTime numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PREPARATION_TIME_VALIDATION_REGEX = "\\d{3,}";
+            "PreparationTime can be in any of these format: 1h20m, 80m, 1 hour 20 minutes, 1 h 20 min, 80.";
+    public static final String PREPARATION_TIME_VALIDATION_REGEX = "([\\d]+[ ]{0,1}(minute[s]{0,1}|min[s]{0,1}|m|hour[s]{0,1}|h){0,1}[ ]{0,1}){1,2}";
     public final String value;
 
     /**

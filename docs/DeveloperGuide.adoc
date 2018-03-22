@@ -894,9 +894,12 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * Minor feature: task pad GUI plus task assignment related functions, allow user to add,remove,modify tasks and reflect these changes on a task pad GUI
 
 *jstarw*:
+
 * Minor feature: added an age field to the Person class, so that now insurance companies can now use age as a factor for
 determining insurance policies
-
+* Major feature: adding enhanced Search functionality. This will allow things like a drop down list, quick filtering,
+and various other features. This will help improve the experience of the client as well as increase the efficiency of
+their workflow.
 
 [appendix]
 == User Stories

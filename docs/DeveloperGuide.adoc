@@ -466,6 +466,9 @@ image::figure3.5.1d.png[width="800"]
 
 In the Storage component, there is an additional CustomerStatsStorage interface and it is implemented by a XmlCustomerStatsStorage class to read and write the XML file on local machine.
 
+// tag
+
+
 ==== Design Considerations
 
 ===== Aspect: Restriction for ordering

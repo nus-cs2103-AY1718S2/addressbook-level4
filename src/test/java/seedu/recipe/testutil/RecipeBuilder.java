@@ -102,7 +102,7 @@ public class RecipeBuilder {
     }
 
     public Recipe build() {
-        return new Recipe(name, preparationTime, ingredient, instruction, url, tags);
+        return new Recipe(name, ingredient, instruction, , preparationTime, , , url, tags);
     }
     //@@author
 }

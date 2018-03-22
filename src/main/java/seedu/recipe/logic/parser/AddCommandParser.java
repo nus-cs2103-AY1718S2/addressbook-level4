@@ -51,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Url url = ParserUtil.parseUrlOnInitialAdd(argMultimap.getValue(PREFIX_URL)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Recipe recipe = new Recipe(name, preparationTime, ingredient, instruction, url, tagList);
+            Recipe recipe = new Recipe(name, ingredient, instruction, , preparationTime, , , url, tagList);
 
             return new AddCommand(recipe);
         } catch (IllegalValueException ive) {

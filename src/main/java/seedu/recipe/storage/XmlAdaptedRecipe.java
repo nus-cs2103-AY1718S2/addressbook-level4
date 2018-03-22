@@ -134,7 +134,7 @@ public class XmlAdaptedRecipe {
         //@@author
 
         final Set<Tag> tags = new HashSet<>(recipeTags);
-        return new Recipe(name, preparationTime, ingredient, instruction, url, tags);
+        return new Recipe(name, ingredient, instruction, , preparationTime, , , url, tags);
     }
 
     @Override

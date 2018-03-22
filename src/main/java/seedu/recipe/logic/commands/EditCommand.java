@@ -113,8 +113,8 @@ public class EditCommand extends UndoableCommand {
         Instruction updatedInstruction = editRecipeDescriptor.getInstruction().orElse(recipeToEdit.getInstruction());
         Set<Tag> updatedTags = editRecipeDescriptor.getTags().orElse(recipeToEdit.getTags());
 
-        return new Recipe(updatedName, updatedPreparationTime, updatedIngredient, updatedInstruction,
-                updatedUrl, updatedTags);
+        return new Recipe(updatedName, updatedIngredient, updatedInstruction, ,
+                updatedPreparationTime, , , updatedUrl, updatedTags);
     }
 
     @Override

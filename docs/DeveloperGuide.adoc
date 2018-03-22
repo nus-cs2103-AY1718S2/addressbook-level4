@@ -464,9 +464,9 @@ As seen from above, all key combinations implemented consume the default effect 
 
 
 // tag::embedded-url[]
-== Embedded URL
+=== Embedded URL
 
-=== Current Implementation
+==== Current Implementation
 
 The URL field is an optional field in the `add` command and can be omitted. In the case when a URL is embedded to a recipe, the `BrowserPanel` will load the given URL.
 

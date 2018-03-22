@@ -1,6 +1,6 @@
 package seedu.address.storage;
 
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
@@ -10,8 +10,10 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedTag {
 
-    @XmlValue
-    private String tagName;
+    @XmlElement (required = true)
+    private String name;
+    @XmlElement
+    private String color;
 
     /**
      * Constructs an XmlAdaptedTag.
@@ -20,10 +22,19 @@ public class XmlAdaptedTag {
     public XmlAdaptedTag() {}
 
     /**
-     * Constructs a {@code XmlAdaptedTag} with the given {@code name}.
+     * Constructs a {@code XmlAdaptedTag} with the given {@code name} and color undefined.
      */
-    public XmlAdaptedTag(String tagName) {
-        this.tagName = tagName;
+    public XmlAdaptedTag(String name) {
+        this.name = name;
+        this.color = "undefined";
+    }
+
+    /**
+     * Constructs a {@code XmlAdaptedTag} with the given {@code name} and {@code color}.
+     */
+    public XmlAdaptedTag(String name, String color) {
+        this.name = name;
+        this.color = color;
     }
 
     /**
@@ -32,7 +43,8 @@ public class XmlAdaptedTag {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedTag(Tag source) {
-        tagName = source.name;
+        name = source.name;
+        color = source.color;
     }
 
     /**
@@ -41,10 +53,13 @@ public class XmlAdaptedTag {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Tag toModelType() throws IllegalValueException {
-        if (!Tag.isValidTagName(tagName)) {
+        if (!Tag.isValidTagName(name)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
-        return new Tag(tagName);
+        if (!Tag.isValidTagColor(color)) {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_COLOR_CONSTRAINTS);
+        }
+        return new Tag(name, color);
     }
 
     @Override
@@ -57,6 +72,6 @@ public class XmlAdaptedTag {
             return false;
         }
 
-        return tagName.equals(((XmlAdaptedTag) other).tagName);
+        return name.equals(((XmlAdaptedTag) other).name) && color.equals(((XmlAdaptedTag) other).color);
     }
 }

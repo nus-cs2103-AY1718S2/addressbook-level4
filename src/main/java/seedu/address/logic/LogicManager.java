@@ -132,18 +132,17 @@ public class LogicManager extends ComponentManager implements Logic {
                 raise(new RequestToDeleteTimetableEntryEvent(timerTaskToTimetableEntryIdMap.get(this)));
             }
         };
+        timetableEntriesStatus.put(task, true);
+        scheduledTimerTasks.put(event.timetableEntry.getId(), task);
+        timerTaskToTimetableEntryIdMap.put(task, event.timetableEntry.getId());
+        System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
+                .currentTimeMillis()));
         long duration = c.getTimeInMillis() - System.currentTimeMillis();
         if (duration >= 0) {
             timer.schedule(task, duration);
         } else {
             task.run();
         }
-        timetableEntriesStatus.put(task, true);
-        scheduledTimerTasks.put(event.timetableEntry.getId(), task);
-        timerTaskToTimetableEntryIdMap.put(task, event.timetableEntry.getId());
-        System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
-                .currentTimeMillis()));
-
     }
 
     @Subscribe

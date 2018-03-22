@@ -153,6 +153,11 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
+            fail("This method should not be called.");
+        }
     }
 
     /**

@@ -367,9 +367,11 @@ It inherits from `UndoableCommand` and thus supports the undo/redo mechanism, en
 
 When the user executes the `SortCommand` using the command word `sort`, the current list of persons shown in the GUI will be retained.
 As illustrated, a filtered list of persons will be displayed in a sorted manner once the command is executed:
+
 image::SortFilteredListDiagram.png[width="850"]
 
 The command can also handle multiple persons with similar names (i.e. different letter-casings) as shown below:
+
 image::SortSimilarNamesDiagram.png[width="850"]
 
 During sorting, names of two different persons are compared using the static method, `nameComparator`, found in the person class:
@@ -383,6 +385,7 @@ public static Comparator<Person> nameComparator() {
 As seen, casing is ignored when names are first compared with each other. The usual lexicographical order will instead be used when encountering identical names.
 
 The following sequence diagram shows how the sort operation works:
+
 image::SortCommandSequenceDiagram.png[width="800"]
 
 ==== Design Considerations

@@ -78,7 +78,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Options with `...` after them can be used multiple times including zero times. e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/cheap`, `t/active t/fav` etc.
 * If an option without `...` is used multiple times, only the latest one will be used.
 * Parameters can be in any order. e.g. if the command specifies `t/TAG a/VALUE`, `a/VALUE t/TAG` is also acceptable.
-* Items in curly braces indicate multiple possibilities. e.g. `buy {NAME, TAG} AMOUNT`, is a command where the first parameter can either be a NAME or a TAG. 
+* Items in curly braces indicate multiple possibilities. e.g. `buy {NAME, TAG} AMOUNT`, is a command where the first parameter can either be a NAME or a TAG.
 ****
 
 === Viewing help : `help` / `?`
@@ -90,7 +90,7 @@ help
 
 Opens the help window.
 
-=== Buying Coin for an account: `buy` / `b`
+=== Buying Coin for an account: `buy` / `b` `[coming in v1.5]`
 
 .Format
 ----
@@ -104,7 +104,7 @@ Adds value into the specified Coin account.
 buy BTC 0.5
 ----
 
-=== Selling Coin from an account: `sell` / `s`
+=== Selling Coin from an account: `sell` / `s` `[coming in v1.5]`
 
 Removes value from a given Coin account. +
 Format: `sell {INDEX, NAME, TAG} VALUE`
@@ -117,7 +117,7 @@ Example:
 Shows a list of all Coin accounts in the CoinBook. +
 Format: `list`
 
-=== Locating Coin accounts: `find` / `f`
+=== Locating Coin accounts: `find` / `f` `[coming in v1.5]`
 
 Finds coin accounts whose details satisfy the query. +
 
@@ -242,12 +242,13 @@ Format: `clear`
 
 Adds a tag attribute to an entry in the CoinBook, so that they can be grouped for other commands. +
 Format: `tag {INDEX, NAME} TAG_NAME`
-****
 
-****
+Example:
+
 `tag 1 fav` +
 `tag 3 fav` +
 `tag 5 fav` +
+
 The first, third, and fifth entry in the list is now tagged with the `fav` attribute.
 
 [TIP]
@@ -255,7 +256,7 @@ A Coin account can have any number of tags (including 0)
 [NOTE]
     Bear in mind that if multiple items are tagged, then the command will be applied to all accounts under the same tag.
 
-=== Setting up notifications : `notifyme` / `n`
+=== Setting up notifications : `notifyme` / `n` `[coming in v1.5]`
 
 Sets a condition that triggers a desktop notification when met. +
 Format: `notifyme {INDEX, NAME, TAG} CONDITION [LOGICAL_OPERATOR CONDITION]...`
@@ -277,7 +278,22 @@ Example:
 * `notifyme 1 price > 50` +
 When the price of the first entry has exceeded 50 dollars, a desktop notification will be triggered.
 
-=== Updating the information : `update` / `u`
+=== Ordering the information `order` / `o` `[coming in v1.5]`
+
+Orders or sorts the `Coin` listing based on fields such as: name, price, amount held etc. +
+Format: `order OPTION/{a, d}...`
+
+Example:
+
+* `order p/a` +
+The `Coin` listing is now ordered in ascending order based on their prices+
+
+* `order p/d n/a` +
+The `Coin` listing is now ordered in descending order based on their prices first, then if two coins have
+the same price, they will be sorted by name in ascending order. +
+
+
+=== Updating the information : `update` / `u` `[coming in v1.5]`
 
 Obtains the latest prices and refreshes the news feed using the Internet.
 Format: `update`

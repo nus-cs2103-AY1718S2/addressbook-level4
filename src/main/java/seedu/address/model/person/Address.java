@@ -12,7 +12,7 @@ public class Address {
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
             "Person addresses can take any values, and it should not be blank";
 
-    public static String USER_OWN_ADDRESS = "NUS";
+    public static final String ADDRESS_USER_OWN = "NUS";
 
     /*
      * The first character of the address must not be a whitespace,

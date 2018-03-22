@@ -12,8 +12,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelPathChangedEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Person;
 
@@ -50,7 +50,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadGoogleMapPathPage(Person person) {
-        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.USER_OWN_ADDRESS + "/" + person.getAddress().getGoogleMapSearchForm());
+        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.USER_OWN_ADDRESS
+                + "/" + person.getAddress().getGoogleMapSearchForm());
     }
 
     public void loadPage(String url) {

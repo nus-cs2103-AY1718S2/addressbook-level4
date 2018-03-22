@@ -2,9 +2,9 @@ package seedu.address.commons.core;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import java.util.Arrays;
+
+import org.junit.Test;
 
 public class MailerTest {
 

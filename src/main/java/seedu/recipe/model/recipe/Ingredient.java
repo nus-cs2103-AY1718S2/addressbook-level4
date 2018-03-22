@@ -41,7 +41,7 @@ public class Ingredient {
     }
 
     /**
-     * Returns if a given string is a valid recipe ingredient.
+     * Returns true if a given string is a valid recipe ingredient.
      */
     public static boolean isValidIngredient(String test) {
         return test.matches(INGREDIENT_VALIDATION_REGEX);

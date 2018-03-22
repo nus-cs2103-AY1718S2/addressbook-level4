@@ -6,6 +6,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
+:experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -13,6 +14,11 @@ endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F09-B2/main/tree/master
 
 By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
+
+== Introduction
+<<ReciRecipe,ReciRecipé>> is a desktop recipe management application for users who prefer working their keyboard instead of a mouse to manage their recipes more efficiently. It is useful for cooks who have experience with typing and want all of their recipes in one place.
+
+The Developer Guide will give you a stroll through the design and implementation of ReciRecipé. If you want to understand _how_, and hopefully _why_, ReciRecipé works, you are at the right place.
 
 == Setting up
 
@@ -65,10 +71,6 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
-
-==== Updating documentation to match your fork
-
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -123,10 +125,10 @@ The rest of the App consists of four components.
 
 Each of the four components
 
-* Defines its _API_ in an `interface` with the same name as the Component.
+* Defines its <<API,API>> in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below) defines its <<API,API>> in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
@@ -137,15 +139,15 @@ image::LogicClassDiagram.png[width="800"]
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
+image::SDforDeleteRecipe.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `RecipeBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `RecipeBookChangedEvent` when the Recipe Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
+image::SDforDeleteRecipeEventHandling.png[width="800"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -160,7 +162,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/recipe/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `RecipeListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/recipe/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -191,7 +193,7 @@ link:{repoURL}/src/main/java/seedu/recipe/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
-image::DeletePersonSdForLogic.png[width="800"]
+image::DeleteRecipeSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
@@ -204,8 +206,8 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Recipe Book data.
+* exposes an unmodifiable `ObservableList<Recipe>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -219,12 +221,12 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Recipe Book data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.recipe.commons` package.
 
 == Implementation
 
@@ -358,8 +360,111 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::multiple-lines[]
+=== Multiple lines input support
+==== Current implementation
+
+Former implementation of the `CommandBox` used `TextField`, which only allows single-line inputs but supports automatic handler of kbd:[Enter]. To support commands with multiple lines, another class has to be used for `CommandBox`. Current implementation of `CommandBox` uses `TextArea`, a class which has fewer restrictions on the number of input lines allowed. However, the tradeoff for `TextArea` is that it does not support automatic handler of kbd:[Enter].
+
+Currently, the solution for this is to consume the use of kbd:[Enter] and invoke the function `submitCommand()` whenever RecipeBook receives a keyboard combination that is assigned to command submission (default is kbd:[Enter]).
+
+[source,java]
+----
+private void handleKeyPress(KeyEvent keyEvent) {
+    // COMMAND_SUBMISSION default is KeyCode.ENTER
+    if (COMMAND_SUBMISSION.match(keyEvent)) {
+        keyEvent.consume();
+        submitCommand();
+    }
+    // Other keyboard combinations
+}
+----
+
+Because the default use of kbd:[Enter] has been replaced by command submission, another key combination is used for line breaks. The default combination for line breaks is kbd:[Shift]+kbd:[Enter] (like in Facebook). Note that these two combinations, line breaks and command submission, are interchangeable according to how the user set ups ReciRecipé preferences.
+
+When RecipeBook receives a keyboard combination that is assigned to line breaks (default is kbd:[Shift]+kbd:[Enter]), `CommandBox` generates a `StringBuilder` from current text inside `CommandBox`, gets the caret location. The `StringBuilder` then inserts a new line at the given caret location, returns a `String` and `CommandBox` replaces its entire body with the new `String`.
+
+The implementation for line breaks is below:
+[source,java]
+----
+private void handleKeyPress(KeyEvent keyEvent) {
+    // NEW_LINE_IN_COMMAND default is KeyCodeCombination(KeyCode.SHIFT, KeyCode.ENTER)
+    if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        createNewLine();
+    }
+    // Other keyboard combinations
+}
+
+private void createNewLine() {
+    int caretPosition = commandTextArea.getCaretPosition();
+    StringBuilder commandTextStringBuilder = new StringBuilder(commandTextArea.getText());
+    commandTextStringBuilder.insert(caretPosition, LF);
+    String newCommandText = commandTextStringBuilder.toString();
+    commandTextArea.setText(newCommandText);
+    commandTextArea.positionCaret(caretPosition + 1);
+}
+----
+
+==== Design considerations
+
+===== Aspect: Usage of a component that support multiple lines input
+
+* **Alternative 1 (current choice):** `TextArea`
+** Pros: Easy to use, intuitive.
+** Cons: No default handler for kbd:[Enter]. Furthermore, the <<CSS,CSS>> is particularly hard to handle due to the way `TextArea` and its body function separately.
+* **Alternative 2:** `TextField` with support for "\n"
+** Pros: Hardly needs any change in the codes.
+** Cons: Unintuitive and ugly inputs. Also, a long line with hundreds of characters is unavoidable. And once the line gets too long, it is near impossible to make changes to the input.
+* **Alternative 3:** `HTMLEditor`
+** Pros: Abundant formatting features.
+** Cons: Too complex to implement, unintuitive inputs.
+// end::multiple-lines[]
+
+// tag::keyboard-shortcut[]
+=== Keyboard shortcuts
+==== Current implementation
+
+Currently, only `CommandBox` accepts keyboard shortcuts. All shortcuts are stored in the `KeyboardShortcutsMapping` class inside the `Ui` component. `CommandBox` listens for key combinations and executes actions mapped to these key presses, which are defined in the `handleKeyPress()` method as shown below:
+
+[source,java]
+----
+private void handleKeyPress(KeyEvent keyEvent) {
+    if (COMMAND_SUBMISSION.match(keyEvent)) {
+        keyEvent.consume();
+        submitCommand();
+    } else if (LAST_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        navigateToPreviousInput();
+    } else if (NEXT_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        navigateToNextInput();
+    } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        createNewLine();
+    }
+    // Can have more mappings
+}
+----
+
+As seen from above, all key combinations implemented consume the default effect of the combinations. However, this is not a must as there may be future mappings that do not require consuming the `KeyEvent`.
+
+==== Design considerations
+
+===== Aspect: Location of the shortcuts
+
+* **Alternative 1 (current choice):** Store in the `KeyboardShortcutsMapping` class
+** Pros: Good modularity, easier to keep track of the mappings.
+** Cons: The shortcuts have to be imported to be used.
+* **Alternative 2:** Store in the `CommandBox` class
+** Pros: No needs for imports. Also it is possible to declare new mappings on the run and use it directly in the `CommandBox`.
+** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
+// end::keyboard-shortcut[]
+
+
+
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== [Proposed] Data encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
@@ -493,7 +598,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Recipe Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -536,18 +641,18 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the recipe book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from every entry in the recipe book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the recipe book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from every entry in the recipe book.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/recipe/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/recipe/model/RecipeBook.java[`RecipeBook`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/recipe/model/RecipeBook.java[`RecipeBook`] and link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/recipe/model/RecipeBook.java[`RecipeBook`] allows you to update a recipe, and link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/recipe/model/RecipeBook.java[`RecipeBook`] and link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/recipe/model/RecipeBook.java[`RecipeBook`] allows you to update a recipe, and link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`] allows you to update the tags.
 * Solution
 ** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/recipe/model/RecipeBook.java[`RecipeBook`]. Loop through each recipe, and remove the `tag` from each recipe.
 ** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/recipe/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/recipe/model/ModelManager.java[`ModelManager`] should call `RecipeBook#removeTag(Tag)`.
@@ -560,7 +665,7 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your recipe book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last recipe in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your recipe book application. You realize that one of the users occasionally tries to delete non-existent tags from a recipe, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last recipe in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
@@ -577,11 +682,11 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/recipe/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[the `RecipeCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
+** You can modify the existing test methods for `RecipeCard` 's to include testing the tag's color as well.
 ** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
 *** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
 ****
@@ -610,7 +715,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the recipe book.
+. Modify the link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of recipes in the recipe book.
 +
 **Before**
 +
@@ -626,8 +731,8 @@ image::getting-started-ui-status-after.png[width="500"]
 ** link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the recipe book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of recipes when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter#handleRecipeBookChangedEvent(RecipeBookChangedEvent)`] to update the number of recipes whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
+** Use link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter#handleRecipeBookChangedEvent(RecipeBookChangedEvent)`] to update the number of recipes whenever there are new changes to the Recipe Book.
+** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of recipes status, just like what we did for save location and sync status.
 ** For system tests, modify link:{repoURL}/src/test/java/systemtests/RecipeBookSystemTest.java[`RecipeBookSystemTest`] to also verify the new total number of recipes status bar.
 ** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
 ****
@@ -655,7 +760,7 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
+*Scenario:* You are a software maintainer for ReciRecipé, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular recipe, by providing a flexible `remark` field for each recipe, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
 Edits the remark for a recipe specified in the `INDEX`. +
@@ -699,41 +804,41 @@ Let's teach the application to parse arguments that our `remark` command will ac
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/recipe/logic/parser/RecipeBookParserTest.java[`RecipeBookParserTest`] to test that the correct command is generated according to the user input.
 
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/recipe/ui/PersonCard.java[`PersonCard`] s to display a remark for each recipe later.
+===== [Step 3] Ui: Add a placeholder for remark in `RecipeCard`
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] s to display a remark for each recipe later.
 
 **Main:**
 
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/recipe/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
+. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/RecipeListCard.fxml[`RecipeListCard.fxml`].
+. Add FXML annotation in link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] to tie the variable to the actual label.
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
+. Modify link:{repoURL}/src/test/java/guitests/guihandles/RecipeCardHandle.java[`RecipeCardHandle`] so that future tests can read the contents of the remark label.
 
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Instruction.java[`Instruction`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
 
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Person.java[`Person`].
+===== [Step 5] Model: Modify `Recipe` to support a `Remark` field
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 
 **Main:**
 
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Person.java[`Person`].
+. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the recipe will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/recipe/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `recipeBook.xml` so that the application will load the sample data when you launch it.)
 
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/recipe/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
+===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedRecipe` class
+We now have `Remark` s for `Recipe` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/recipe/storage/XmlAdaptedRecipe.java[`XmlAdaptedRecipe`] to include a `Remark` field so that it will be saved.
 
 **Main:**
 
@@ -741,26 +846,26 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `invalidAndValidPersonRecipeBook.xml`, `typicalPersonsRecipeBook.xml`, `validRecipeBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `invalidAndValidRecipeRecipeBook.xml`, `typicalRecipesRecipeBook.xml`, `validRecipeBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/recipe/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Person.java[`Person`].
+===== [Step 6b] Test: Add withRemark() for `RecipeBuilder`
+Since `Recipe` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/recipe/testutil/RecipeBuilder.java[`RecipeBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 
 **Tests:**
 
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/recipe/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the recipe that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/recipe/testutil/TypicalPersons.java[`TypicalPersons`].
+. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/recipe/testutil/RecipeBuilder.java[`RecipeBuilder`]. This method will create a new `Remark` for the recipe that it is currently building.
+. Try and use the method on any sample `Recipe` in link:{repoURL}/src/test/java/seedu/recipe/testutil/TypicalRecipes.java[`TypicalRecipes`].
 
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/recipe/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
+===== [Step 7] Ui: Connect `Remark` field to `RecipeCard`
+Our remark label in link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
 **Main:**
 
-. Modify link:{repoURL}/src/main/java/seedu/recipe/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
+. Modify link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`]'s constructor to bind the `Remark` field to the `Recipe` 's remark.
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/seedu/recipe/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
+. Modify link:{repoURL}/src/test/java/seedu/recipe/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysRecipe(...)`] so that it will compare the now-functioning remark label.
 
 ===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
@@ -780,15 +885,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target User Profile*:
+*Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of recipes
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using <<CLI,CLI>> apps
 
-*Value Proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value Proposition*: manage recipes faster than a typical mouse/GUI driven app
 
 *Feature Contribution*:
 
@@ -804,7 +909,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * save files online (cloud storage)
 * search recipes by tags `minor`
 
-`Huang Duong` - Efficiency: As a user, I want to efficiently manage my recipes so that I can save time.
+`Hoang Duong` - Efficiency: As a user, I want to efficiently manage my recipes so that I can save time.
 
 * find recipe by name, ingredient, cuisine `minor`
 * filter and sort recipes by cooking time/difficulty level
@@ -918,7 +1023,7 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User types find “chicken”
+1.  User types `find chicken`
 2.  RecipeBook shows a list of recipes that contain chicken
 3.  User clicks on a particular recipe
 4.  RecipeBook displays full recipe and details on the main area
@@ -929,6 +1034,88 @@ Use case ends.
 
 [none]
 * 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Adding a recipe
+
+*MSS*
+
+1.  User types in a format like below.
+[source]
+add chicken rice
+Ingredients: chicken, rice, chili, cucumber
+Preparation time: 15 mins
+Instruction: Boil water, put in chicken, cook till done
+Wash rice, drain, put in rice cooker
+Slice cucumber
+Put everything on plate
+2.  RecipeBook adds the recipe with all data given.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User types in invalid format.
+** 1a1. RecipeBook shows user suggestion on the correct format.
++
+Use case resumes at step 1.
+* 1b. One of the required field (Name, Ingredient, Instruction) is missing.
+** 1b1. RecipeBook reminds user of missing required fields.
++
+Use case resumes at step 1.
+* 1c. User types in an already existing recipe.
+** 1c1. RecipeBook reminds user that such recipe already exists, show the user the recipe.
++
+RecipeBook reminds user to put in a version number for the recipe if user wants to add a variation to the recipe.
++
+Use case ends.
+
+[discrete]
+=== Use case: Searching a recipe from the Internet
+
+*MSS*
+
+1.  User requires to search for a recipe from the Internet.
+2.  RecipeBook shows the search results on the BrowserPanel, RecipeBook also shows the tips on how to navigate with keyboard.
+3.  User types in the index of the result, starting from 1, or types in the exact name of the result, or navigate with mouse.
+4.  RecipeBook shows the result page on the BrowserPanel.
+5.  RecipeBook reminds user that user can parse the data to add a recipe quickly.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The recipe does not exist.
+** 1a1. This will be handled by the API. No results will show.
+** 1a2. RecipeBook tells user to try another recipe name.
++
+Use case ends.
+
+* 3a. The index / name the user types in is invalid / does not exist.
+** 3a1. RecipeBook tells user the index / name the user just inputs does not match any results.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Parsing a recipe from a site
+
+*MSS*
+
+1.  User requires to parse for a recipe from a site.
+2.  RecipeBook parses the site and put data into their corresponding field in an `add` command.
+3.  User fills the missing fields and submits the command.
+4.  RecipeBook adds the recipe with given data.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User requires to parse while nothing is being displayed on the BrowserPanel.
+** 1a1. RecipeBook reminds user that parsing is only possible when a recipe site is shown on the BrowserPanel.
+* 1b. User requires to parse while an invalid site is being displayed on the BrowserPanel.
+** 1b1. RecipeBook reminds user that the current site displayed is not a valid recipe site.
 +
 Use case ends.
 
@@ -951,32 +1138,7 @@ _{More to be added}_
 _{More to be added}_
 
 [appendix]
-== Glossary
 
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
-
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
-
-[appendix]
 == Instructions for Manual Testing
 
 Given below are instructions to test the app manually.
@@ -990,7 +1152,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   Expected: Shows the GUI with a set of sample recipes. The window size may not be optimum.
 
 . Saving window preferences
 
@@ -1006,7 +1168,7 @@ _{ more test cases ... }_
 
 .. Prerequisites: List all recipes using the `list` command. Multiple recipes in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First recipe is deleted from the list. Details of the deleted recipe shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No recipe is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
@@ -1021,3 +1183,37 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+[appendix]
+== Glossary
+
+[[ReciRecipe]] ReciRecipé / RecipeBook::
+This name is derived from "**Reci**te" and "**Recipé**", an alternate spelling of "Recipe". ReciRecipé is what will tell you all the info you need about your recipes so you don't have to remember your recipes anymore. Also, ReciRecipé sounds fun and kinda French.
+
+[[API]] API::
+Abbreviation of **Application Programming Interface**.
++
+API is a set of subroutine definitions, protocols, and tools for building application software. In general terms, it is a set of clearly defined methods of communication between various software components. Definition taken from link:https://en.wikipedia.org/wiki/Application_programming_interface[wiki].
+
+[[CI]] CI::
+Abbreviation of **Continuous Integration**.
++
+CI is the practice of merging all developer working copies to a shared mainline several times a day. Definition taken from link:https://en.wikipedia.org/wiki/Continuous_integration[wiki].
+
+[[CLI]] CLI::
+Abbreviation of **Command Line Interface**.
++
+As contrast to <<GUI,GUI>>, CLI is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). Definition taken from link:https://en.wikipedia.org/wiki/Command-line_interface[wiki].
+
+[[CSS]] CSS::
+Abbreviation of **Cascading Style Sheets**.
++
+CSS is is a style sheet language used for describing the presentation of a document written in a markup language. Definition taken from link:https://en.wikipedia.org/wiki/Cascading_Style_Sheets[wiki]. All visual effects in ReciRecipé are written in CSS.
+
+[[GUI]] GUI::
+Abbreviation of **Graphical User Interface**.
++
+As contrast to <<CLI,CLI>>, GUI is a type of user interface that allows users to interact with electronic devices through graphical icons and visual indicators such as secondary notation, instead of text-based user interfaces, typed command labels or text navigation. Definition taken from link:https://en.wikipedia.org/wiki/Graphical_user_interface[wiki].
+
+[[mainstream-os]] Mainstream OS::
+Windows, Linux, Unix, OS-X

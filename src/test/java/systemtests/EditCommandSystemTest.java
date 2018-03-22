@@ -17,12 +17,15 @@ import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_URL_BOB;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.recipe.model.Model.PREDICATE_SHOW_ALL_RECIPES;
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
@@ -63,11 +66,11 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         Index index = INDEX_FIRST_RECIPE;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
             + PREPARATION_TIME_DESC_BOB + " " + INGREDIENT_DESC_BOB + "  " + INSTRUCTION_DESC_BOB + " "
-            + TAG_DESC_HUSBAND + " ";
+            + URL_DESC_BOB + TAG_DESC_HUSBAND + " ";
         Recipe editedRecipe =
             new RecipeBuilder().withName(VALID_NAME_BOB).withPreparationTime(VALID_PREPARATION_TIME_BOB)
-                .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+                .withIngredient(VALID_INGREDIENT_BOB).withInstruction(VALID_INSTRUCTION_BOB)
+                    .withUrl(VALID_URL_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedRecipe);
 
         /* Case: undo editing the last recipe in the list -> last recipe restored */
@@ -84,7 +87,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
 
         /* Case: edit a recipe with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
-            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
@@ -128,7 +131,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         index = INDEX_FIRST_RECIPE;
         selectRecipe(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY
-            + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY + TAG_DESC_FRIEND;
+            + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY  + URL_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new recipe's name
         assertCommandSuccess(command, index, AMY, index);
@@ -187,12 +190,12 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         index = INDEX_FIRST_RECIPE;
         assertFalse(getModel().getFilteredRecipeList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
-            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_RECIPE);
 
         /* Case: edit a recipe with new values same as another recipe's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
-            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + TAG_DESC_HUSBAND;
+            + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_RECIPE);
     }
 

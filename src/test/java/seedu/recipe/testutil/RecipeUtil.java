@@ -5,6 +5,7 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
 
 import seedu.recipe.logic.commands.AddCommand;
 import seedu.recipe.model.recipe.Recipe;
@@ -30,6 +31,7 @@ public class RecipeUtil {
         sb.append(PREFIX_PREPARATION_TIME + recipe.getPreparationTime().value + " ");
         sb.append(PREFIX_INGREDIENT + recipe.getIngredient().value + " ");
         sb.append(PREFIX_INSTRUCTION + recipe.getInstruction().value + " ");
+        sb.append(PREFIX_URL + recipe.getUrl().value + " ");
         recipe.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

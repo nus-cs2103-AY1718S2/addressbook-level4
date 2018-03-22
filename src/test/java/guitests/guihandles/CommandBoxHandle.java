@@ -37,6 +37,7 @@ public class CommandBoxHandle extends NodeHandle<TextArea> {
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }
 
+    //@@author kokonguyen191
     /**
      * Append the given string to text already existing in the Command box
      */
@@ -44,6 +45,7 @@ public class CommandBoxHandle extends NodeHandle<TextArea> {
         guiRobot.interact(() -> getRootNode().appendText(text));
         guiRobot.pauseForHuman();
     }
+    //@@author
 
     /**
      * Returns the list of style classes present in the command box.

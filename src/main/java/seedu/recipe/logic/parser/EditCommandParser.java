@@ -7,6 +7,7 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -33,7 +34,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PREPARATION_TIME,
-                PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_TAG);
+                PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_URL, PREFIX_TAG);
 
         Index index;
 
@@ -52,6 +53,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .ifPresent(editRecipeDescriptor::setIngredient);
             ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION))
                     .ifPresent(editRecipeDescriptor::setInstruction);
+            ParserUtil.parseUrl(argMultimap.getValue(PREFIX_URL)).ifPresent(editRecipeDescriptor::setUrl);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editRecipeDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

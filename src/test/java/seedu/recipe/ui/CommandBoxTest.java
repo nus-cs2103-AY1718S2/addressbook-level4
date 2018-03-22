@@ -14,6 +14,7 @@ import seedu.recipe.logic.LogicManager;
 import seedu.recipe.logic.commands.ListCommand;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
+import seedu.recipe.ui.util.KeyboardShortcutsMapping;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -24,6 +25,9 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "should not work for now";
     private static final String COMMAND_THAT_HAS_MULTIPLE_LINES = FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES + LF
             + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
+    private static final String FIRST_SUGGESTION = "a/";
+    private static final String SECOND_SUGGESTION = "add";
+    private static final String COMMAND_WITH_NEW_LINE_USING_SUGGESTIONS = SECOND_SUGGESTION + LF + FIRST_SUGGESTION;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -74,14 +78,33 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 
+    //@@Author kokonguyen191
     @Test
     public void commandBox_handleMultipleLinesCommand() {
         commandBoxHandle.appendText(FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES);
-        guiRobot.push(KeyCode.SHIFT, KeyCode.ENTER);
+        guiRobot.push(KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND);
         commandBoxHandle.appendText(SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES);
         assertInput(COMMAND_THAT_HAS_MULTIPLE_LINES);
     }
+    //@@Author
 
+    //@@author hoangduong1607
+    @Test
+    public void commandBox_handleShowingSuggestions() {
+        guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.ENTER);
+        assertInput(SECOND_SUGGESTION);
+
+        guiRobot.push(KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND);
+        guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.ENTER);
+        assertInput(COMMAND_WITH_NEW_LINE_USING_SUGGESTIONS);
+    }
+
+    //@@author
     @Test
     public void handleKeyPress_startingWithUp() {
         // empty history
@@ -168,6 +191,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
 
+    //@@Author kokonguyen191
     /**
      * Checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
      */

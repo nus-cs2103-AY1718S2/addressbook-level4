@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.Record;
@@ -42,18 +41,16 @@ public class RecordCommandParser implements Parser<RecordCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
 
-        try {
-            String date = (argMultimap.getValue(PREFIX_DATE)).get();
-            String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
-            String symptom = (argMultimap.getValue(PREFIX_SYMPTOM)).get();
-            String treatment = (argMultimap.getValue(PREFIX_TREATMENT)).get();
+        //to nest following lines into try once various classes are set up
 
-            Record record = new Record(date, illness, symptom, treatment);
+        String date = (argMultimap.getValue(PREFIX_DATE)).get();
+        String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
+        String symptom = (argMultimap.getValue(PREFIX_SYMPTOM)).get();
+        String treatment = (argMultimap.getValue(PREFIX_TREATMENT)).get();
 
-            return new RecordCommand(index, record);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
+        Record record = new Record(date, illness, symptom, treatment);
+
+        return new RecordCommand(index, record);
     }
 
     /**

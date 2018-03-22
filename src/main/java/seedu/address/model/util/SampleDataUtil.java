@@ -27,7 +27,7 @@ public class SampleDataUtil {
             new Patient(new Name("Alex Yeoh"), new Nric("S1234567A"), new Phone("87438807"),
                     new Email("alexyeoh@example.com"),
                     new Address("Blk 30 Geylang Street 29, #06-40"), new DateOfBirth("11/11/1991"),
-                    new BloodType("A"), new Remark(""), new Record("", "", "", ""), getTagSet("G6PD")),
+                    new BloodType("A"), new Remark(""), new Record(), getTagSet("G6PD")),
             new Patient(new Name("Bernice Yu"), new Nric("S7654321B"), new Phone("99272758"),
                     new Email("berniceyu@example.com"),
                     new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new DateOfBirth("10/10/1990"),

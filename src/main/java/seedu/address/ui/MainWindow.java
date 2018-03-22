@@ -121,7 +121,7 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         //browserPanel = new BrowserPanel();
         calendarWindow = new CalendarWindow(logic.getFilteredPersonList());
-        calendarPlaceholder.getChildren().add(calendarWindow.getRoot());
+        this.calendarPlaceholder.getChildren().add(calendarWindow.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());

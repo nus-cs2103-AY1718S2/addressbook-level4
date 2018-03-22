@@ -54,6 +54,9 @@ public class PersonCard extends UiPart<Region> {
 
     // given a tagName, returns the String representation of a colour style
     private String getTagColourStyleFor(String tagName) {
+        // hash code of tag name used to generate random colour
+        // colour of tags changes between different runs of the application
+        // might want to tweak this behaviour in the LoanShark Tycoon context
         return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
     }
 

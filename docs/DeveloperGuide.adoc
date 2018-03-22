@@ -238,6 +238,11 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+=== Filter Command
+To add to the many commands necessary for users, filtering by date will be essential when trying to optimize the route per day.
+The filter command was added similar to how the find command has been implemented.
+When the user enters filter by a date in the UI the model with the list of data is updated using the date predicate.
+This updated model is then executed via the CommandResult class and output on the UI. It is stores as a readonly list in the model.
 
 === Route Optimization feature
 Since this program is meant for deliveries the route for the daily delivery must be optimized for the user.

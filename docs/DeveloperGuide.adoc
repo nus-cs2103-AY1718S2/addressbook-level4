@@ -463,6 +463,47 @@ As seen from above, all key combinations implemented consume the default effect 
 
 
 
+// tag::embedded-url[]
+== Embedded URL
+
+=== Current Implementation
+
+The URL field is an optional field in the `add` command and can be omitted. In the case when a URL is embedded to a recipe, the `BrowserPanel` will load the given URL.
+
+As seen below, the URL is not a required parameter during the checking of prefixes in an `add` command.
+
+[source,java]
+----
+if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_PREPARATION_TIME,
+    PREFIX_INGREDIENT) || !argMultimap.getPreamble().isEmpty()) {
+    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+}
+----
+
+In the case when a URL is not added to a recipe, a null reference '-' is put as a placeholder when parsing the URL field, unlike tag labels. This helps with identifying recipes that do not have embedded URLs.
+
+[source,java]
+----
+public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws IllegalValueException {
+    requireNonNull(url);
+    return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.of(getNullReferenceUrl());
+}
+----
+
+==== Design considerations
+
+===== Aspect: Implementation of optional property
+
+* **Alternative 1 (current choice):** Add a placeholder for omitted URL
+** Pros: Simple implementation can be used as a reference by new developers for creating optional fields. Interaction with `BrowserPanel` requires more control over the status of a recipe's URL property.
+** Cons: `Recipe` class may contain unnecessary variables.
+* **Alternative 2:** Store URL property in the same fashion as tag labels
+** Pros: `Recipe` class has better separation of optional and compulsory properties.
+** Cons: Complex implementation may confuse new developers. Interaction with other components may become needlessly complex.
+// end::embedded-url[]
+
+
+
 // tag::dataencryption[]
 === [Proposed] Data encryption
 

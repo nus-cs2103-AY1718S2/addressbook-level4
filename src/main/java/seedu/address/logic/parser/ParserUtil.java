@@ -215,6 +215,7 @@ public class ParserUtil {
     public static Optional<Appointment> parseAppointment(Optional<String> appointment) throws IllegalValueException {
         requireNonNull(appointment);
         return appointment.isPresent() ? Optional.of(parseAppointment(appointment.get())) : Optional.empty();
+    }
     
     /**
      * @param exportType
@@ -228,5 +229,6 @@ public class ParserUtil {
             throw new IncorrectExportTypeException();
         }
         return ExportType.valueOf(trimmedExportType);
+
     }
 }

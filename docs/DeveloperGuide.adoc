@@ -482,6 +482,44 @@ TODO: INSERT FINALIZED DIAGRAM HERE
 
 // end::calendarview[]
 
+// tag::mapview[]
+=== Map View feature
+==== Current Implementation
+
+The map view feature is implemented using `GMapsFX`, an imported library created by https://github.com/rterp/GMapsFX[rterp]. The library contains basic integration of Google Maps APIs into FMXL files. There feature supports the display and retrieval of `Person` addresses as a marker on Google Maps.
+
+`GeocodeUtil` residing in `Commons`, in the `Util` folder, facilitates the retrieval of geocode from specified address. Selecting other persons will pan the displayed map to the appropriate location.
+
+TODO: INSERT FINALISED DIAGRAM HERE
+
+The Map View feature will involve the UI component as while as the Model component, to retrieve the respective address of selected person.
+
+TODO: SECTION INCOMPLETE
+
+==== Design Considerations
+
+===== Aspect: GUI
+
+* **Alternative 1 (current choice):** `GMapsFX`
+** Pros: Intuitive to use. Collated various Google Map APIs to be compatible with JavaFX. Sufficient for displaying and controlling simple usage of Google Maps. Once loaded, the map does not require further initialisation calls to load different address.
+** Cons: Unclear documentation. Several methods are designed as lambda expressions but not specified in documentation. Limited flexibility.
+* **Alternative 2:** Use WebView component and load HTML file containing simple embeded Google Maps
+** Pros: Very easy to implement.
+** Cons: Requires re-loading for each call to view different person. Lacking in control. Application cannot communicate efficiently to loaded pages.
+* **Alternative 3:** Integrate Google Maps APIs directly
+** Pros: Well-documented. Full-access to Google Maps APIs allows for great flexibility.
+** Cons: Too complicated. Not built/compatible for JavaFX.
+
+===== Aspect: Retrieving Geocode
+
+* **Alternative 1 (current choice):** Use implement `GeocodeUtil` in `Commons`.
+** Pros: Abstracted the calling of geocode request. Accessible across all components.
+** Cons: May have issues with retrieving correct data.
+* **Alternative 2:** Individual calls for `GeocodingService` in each UI controller using GMapsFX.
+** Pros: Easier to implement.
+** Cons: Bad SE practice. Violates proposed architecture.
+// end::mapview[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

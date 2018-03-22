@@ -1,9 +1,6 @@
 package seedu.address.logic.commands;
 
 import seedu.address.model.person.TagContainKeywordsPredicate;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.TagNotFoundException;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Finds and lists all persons in address book whose tag name is of the argument keywords.

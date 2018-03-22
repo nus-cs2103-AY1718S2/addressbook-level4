@@ -1,40 +1,30 @@
 package seedu.address.model.person;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Customer in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Customer extends Person {
 
-    private final Name name;
-    private final Phone phone;
-    private final Email email;
-    private final Address address;
-
-    private final UniqueTagList tags;
-
-    private final String moneyOwed;
+    //TODO: create classes for these new fields rather than use primitives
+    private final String moneyOwed; //moneyOwed is a formula that DEPENDS on these other new fields
     private final String interestRate;
+    //oweStartDate
+    //oweDueDate
+    //standardInterest
+    //lateInterest
 
     /**
-     * Every field must be present and not null.
+     * Customer constructor
      */
     public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String moneyOwed,
                     String interestRate) {
-        requireAllNonNull(name, phone, email, address, tags, moneyOwed, interestRate);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.tags = new UniqueTagList(tags);
+        super(name, phone, email, address, tags);
         this.moneyOwed = moneyOwed;
         this.interestRate = interestRate;
     }
@@ -51,6 +41,11 @@ public class Customer extends Person {
     public String getInterestRate() {
         return interestRate;
     }
+
+    //TODO: add setter for moneyOwed
+    //TODO: add setter for interestRate
+    //update moneyOwed based on interest rate?
+    //other fields for pertinent information?
 
     @Override
     public boolean equals(Object other) {
@@ -75,7 +70,8 @@ public class Customer extends Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, moneyOwed, interestRate);
+        return Objects.hash(getName(), getPhone(), getEmail(), getAddress(),
+                getTags(), moneyOwed, interestRate);
     }
 
     @Override

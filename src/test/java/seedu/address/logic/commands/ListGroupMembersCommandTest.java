@@ -86,7 +86,8 @@ public class ListGroupMembersCommandTest {
      *     - the {@code FilteredList<Person>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(ListGroupMembersCommand command, String expectedMessage, List<Person> expectedList) {
+    private void assertCommandSuccess(ListGroupMembersCommand command, String expectedMessage,
+                                      List<Person> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 

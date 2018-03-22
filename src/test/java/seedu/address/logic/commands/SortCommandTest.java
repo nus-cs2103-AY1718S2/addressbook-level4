@@ -10,7 +10,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,11 +25,13 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.TypicalPersons;
 
+//@@author Nethergale
 /**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
  */
 public class SortCommandTest {
 
@@ -71,6 +75,17 @@ public class SortCommandTest {
     @Test
     public void execute_unfilteredListUnsorted_success() {
         model.resetData(customModel.getAddressBook());
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_filteredListUnsorted_success() {
+        String[] keywords = {"jane", "blake", "hob"};
+        Predicate<Person> predicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
+
+        model.resetData(customModel.getAddressBook());
+        model.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -134,8 +149,8 @@ public class SortCommandTest {
         }
         return personList;
     }
-    //@@author
 
+    //@@author Nethergale
     /**
      * Creates a model with all persons found in the list added.
      */

@@ -10,6 +10,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
+//@@author Nethergale
 /**
  * Displays the current list of persons in the address book to the user sorted alphabetically.
  */
@@ -37,7 +38,6 @@ public class SortCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.sortAllPersons();
-        model.getFilteredPersonList();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

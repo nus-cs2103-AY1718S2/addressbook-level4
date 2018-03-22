@@ -39,7 +39,7 @@ public class AddCommandTest {
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddCommand((Person) null);
     }
 
     @Test

@@ -222,22 +222,6 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_addAppointmentAlias() throws Exception {
-        Appointment appointment = new AppointmentBuilder().build();
-        AddAppointmentCommand command = (AddAppointmentCommand) parser.parseCommand(
-                AppointmentUtil.getAddAppointmentCommandAlias(appointment));
-        assertEquals(new AddAppointmentCommand(appointment), command);
-    }
-
-    @Test
-    public void parseCommand_addAppointment() throws Exception {
-        Appointment appointment = new AppointmentBuilder().build();
-        AddAppointmentCommand command = (AddAppointmentCommand) parser.parseCommand(
-                AppointmentUtil.getAddAppointmentCommand(appointment));
-        assertEquals(new AddAppointmentCommand(appointment), command);
-    }
-
-    @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));

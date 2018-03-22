@@ -34,7 +34,7 @@ public class RecordCommand extends UndoableCommand {
             + "\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DATE + "1st March 2018 "
-            + PREFIX_SYMPTOM + "Headache, runny noce "
+            + PREFIX_SYMPTOM + "Headache, runny nose "
             + PREFIX_ILLNESS + "Flu "
             + PREFIX_TREATMENT + "Zyrtec ";
 

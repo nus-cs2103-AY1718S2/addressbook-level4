@@ -107,7 +107,7 @@ public class FindWithTagCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-         /* Case: find name of person in address book -> 0 persons found */
+        /* Case: find name of person in address book -> 0 persons found */
         command = FindWithTagCommand.COMMAND_WORD + " " + DANIEL.getName().fullName;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();

@@ -62,8 +62,8 @@ public class Person {
 
     //@@author Nethergale
     /**
-     *  Returns a person comparator, which compares the names alphabetically.
-     *  Similar names are compared lexicographically.
+     * Returns a person comparator, which compares the names alphabetically.
+     * Similar names are compared lexicographically.
      */
     public static Comparator<Person> nameComparator() {
         return Comparator.comparing((Person p) -> p.getName().toString(), (
@@ -71,7 +71,7 @@ public class Person {
     }
 
     //@@author
-    
+
     /**
      * Returns the tag names of tags of a person as String.
      * @return a string of all the tag names of tags of a person.

@@ -80,7 +80,7 @@ public class GuiTestAssert {
                 .map(tag -> tag.tagName)
                 .collect(Collectors.toList());
         expectedTags.forEach(tag ->
-                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColourStyleFor(tag)),
+                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColourStyleFor(tag)),  // why two args in asList?
                         actualCard.getTagStyleClasses(tag)));
     }
 

@@ -243,7 +243,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the command box's shows the default style.
+     * Asserts that the command box and result display show the default style.
      */
     protected void assertCommandBoxAndResultDisplayShowsDefaultStyle() {
         assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
@@ -251,7 +251,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the command box's shows the error style.
+     * Asserts that the command box and result display show the error style.
      */
     protected void assertCommandBoxAndResultDisplayShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());

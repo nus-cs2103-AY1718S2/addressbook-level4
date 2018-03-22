@@ -214,7 +214,7 @@ public abstract class AddressBookSystemTest {
         String selectedAddress = getPersonListPanel().getHandleToSelectedCard().getAddress();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedAddress.replaceAll(" ", "+"));
+            expectedUrl = new URL(BrowserPanel.GOOGLE_MAP_SEARCH_PAGE + selectedAddress.replaceAll(" ", "+"));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

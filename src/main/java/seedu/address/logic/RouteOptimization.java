@@ -88,10 +88,6 @@ public class RouteOptimization {
             }
         }
         routeKey = originKey + "_" + destinationKey;
-<<<<<<< HEAD
-
-=======
->>>>>>> 053868bfcac5114c9e4331dc907fd20fc0a2085e
         return routeKey;
     }
 }

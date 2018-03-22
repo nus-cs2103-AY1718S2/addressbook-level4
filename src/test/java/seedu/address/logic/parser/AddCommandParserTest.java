@@ -5,6 +5,8 @@ import static seedu.address.logic.commands.CommandTestUtil.ACTUALSPENDING_DESC_A
 import static seedu.address.logic.commands.CommandTestUtil.ACTUALSPENDING_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.AGE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.AGE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EXPECTEDSPENDING_DESC_AMY;
@@ -28,6 +30,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ACTUALSPENDING_
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ACTUALSPENDING_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AGE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AGE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTEDSPENDING_AMY;
@@ -62,38 +66,43 @@ public class AddCommandParserTest {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND)
                 .withIncome(VALID_INCOME_BOB).withActualSpending(VALID_ACTUALSPENDING_BOB)
-                .withExpectedSpending(VALID_EXPECTEDSPENDING_BOB).build();
+                .withExpectedSpending(VALID_EXPECTEDSPENDING_BOB).withAge(VALID_AGE_BOB).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                        + EXPECTEDSPENDING_DESC_BOB, new AddCommand(expectedPerson));
+                        + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, new AddCommand(expectedPerson));
 
         // multiple names - last name accepted
         assertParseSuccess(parser, NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, new AddCommand(expectedPerson));
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, new AddCommand(expectedPerson));
 
         // multiple phones - last phone accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, new AddCommand(expectedPerson));
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, new AddCommand(expectedPerson));
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, new AddCommand(expectedPerson));
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, new AddCommand(expectedPerson));
 
         // multiple addresses - last address accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, new AddCommand(expectedPerson));
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, new AddCommand(expectedPerson));
 
         // multiple income - last income accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_AMY
                 + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, new AddCommand(expectedPerson));
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, new AddCommand(expectedPerson));
+
+        // multiple age - last age accepted
+        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
+                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + INCOME_DESC_AMY + ACTUALSPENDING_DESC_BOB
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_AMY + AGE_DESC_BOB, new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB)
@@ -102,7 +111,7 @@ public class AddCommandParserTest {
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, new AddCommand(expectedPersonMultipleTags));
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, new AddCommand(expectedPersonMultipleTags));
     }
 
     @Test
@@ -111,9 +120,9 @@ public class AddCommandParserTest {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withIncome(VALID_INCOME_AMY)
                 .withActualSpending(VALID_ACTUALSPENDING_AMY).withExpectedSpending(VALID_EXPECTEDSPENDING_AMY)
-                .build();
+                .withAge(VALID_AGE_AMY).build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                        + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY,
+                        + INCOME_DESC_AMY + ACTUALSPENDING_DESC_AMY + EXPECTEDSPENDING_DESC_AMY + AGE_DESC_AMY,
                 new AddCommand(expectedPerson));
     }
 
@@ -147,32 +156,32 @@ public class AddCommandParserTest {
         // invalid name
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, Name.MESSAGE_NAME_CONSTRAINTS);
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, Name.MESSAGE_NAME_CONSTRAINTS);
 
         // invalid phone
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, Phone.MESSAGE_PHONE_CONSTRAINTS);
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         // invalid email
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, Email.MESSAGE_EMAIL_CONSTRAINTS);
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         // invalid address
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + INVALID_TAG_DESC + VALID_TAG_FRIEND + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, Tag.MESSAGE_TAG_CONSTRAINTS);
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + INVALID_ADDRESS_DESC + INCOME_DESC_BOB + ACTUALSPENDING_DESC_BOB
-                + EXPECTEDSPENDING_DESC_BOB, Name.MESSAGE_NAME_CONSTRAINTS);
+                + EXPECTEDSPENDING_DESC_BOB + AGE_DESC_BOB, Name.MESSAGE_NAME_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

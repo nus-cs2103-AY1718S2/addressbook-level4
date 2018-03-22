@@ -34,13 +34,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private InsuranceCalendar calendar;
 
-    /*
+    /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */ {
+     */
+    {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         calendar = new InsuranceCalendar();
@@ -156,7 +157,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
                 correctTagReferences, person.getIncome(), person.getActualSpending(),
-                person.getExpectedSpending());
+                person.getExpectedSpending(), person.getAge());
     }
 
     /**

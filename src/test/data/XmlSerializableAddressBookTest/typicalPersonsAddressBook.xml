@@ -8,6 +8,7 @@
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <income>200000.0</income>
+        <age>20</age>
         <tagged>friends</tagged>
         <actualSpending>0</actualSpending>
         <expectedSpending>0</expectedSpending>
@@ -18,6 +19,7 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <income>200000.0</income>
+        <age>20</age>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
         <actualSpending>0</actualSpending>
@@ -28,6 +30,7 @@
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <income>200000.0</income>
+        <age>20</age>
         <address>wall street</address>
         <actualSpending>0</actualSpending>
         <expectedSpending>0</expectedSpending>
@@ -37,6 +40,7 @@
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <income>200000.0</income>
+        <age>20</age>
         <address>10th street</address>
         <actualSpending>0</actualSpending>
         <expectedSpending>0</expectedSpending>
@@ -46,6 +50,7 @@
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <income>200000.0</income>
+        <age>20</age>
         <address>michegan ave</address>
         <actualSpending>0</actualSpending>
         <expectedSpending>0</expectedSpending>
@@ -55,6 +60,7 @@
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <income>200000.0</income>
+        <age>20</age>
         <address>little tokyo</address>
         <actualSpending>0</actualSpending>
         <expectedSpending>0</expectedSpending>
@@ -64,6 +70,7 @@
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <income>200000.0</income>
+        <age>20</age>
         <address>4th street</address>
         <actualSpending>0</actualSpending>
         <expectedSpending>0</expectedSpending>

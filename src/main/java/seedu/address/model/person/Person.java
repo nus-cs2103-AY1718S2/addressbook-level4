@@ -30,7 +30,7 @@ public class Person {
      * Every field except actualSpending, expectedSpending must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Income income,
-                  Expenditure actualSpending, Expenditure expectedSpending) {
+                  Expenditure actualSpending, Expenditure expectedSpending, Age age) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -39,10 +39,9 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.income = income;
-        this.age = new Age(30);
         this.actualSpending = actualSpending == null ? new Expenditure(0.0) : actualSpending;
         this.expectedSpending = expectedSpending == null ? new Expenditure(0.0) : expectedSpending;
-        ;
+        this.age = age;
     }
 
     /**
@@ -53,7 +52,7 @@ public class Person {
      */
     public Person mlUpdatPerson(double income) {
         return new Person(name, phone, email, address, getTags(), new Income(income),
-                actualSpending, expectedSpending);
+                actualSpending, expectedSpending, age);
     }
 
 
@@ -62,7 +61,7 @@ public class Person {
     }
 
     public Age getAge() {
-        return age;
+        return this.age;
     }
 
     public Phone getPhone() {

@@ -13,14 +13,16 @@ import seedu.address.logic.RouteOptimization;
 import seedu.address.model.person.Person;
 
 /**
- * Selects a person identified using it's last displayed index from the address book.
+ * Finds the distance from the headquarter to a person address
+ * using his or her last displayed index from the address book.
  */
 public class DistanceCommand extends Command {
 
     public static final String COMMAND_WORD = "distance";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the person identified by the index number used in the last person listing.\n"
+            + ": Finds the distance from the headquarter to a person address " +
+            "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 

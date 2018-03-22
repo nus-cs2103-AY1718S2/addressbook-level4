@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
+ * Contains integration tests (interaction with the Model) for {@code DistanceCommand}.
  */
 public class DistanceCommandTest {
     @Rule
@@ -104,8 +104,7 @@ public class DistanceCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
-     * is raised with the correct index.
+     * Executes a {@code DistanceCommand} with the given {@code person and index}
      */
     private void assertExecutionSuccess(Person person, Index index) {
         DistanceCommand distanceCommand = prepareCommand(index);
@@ -126,7 +125,7 @@ public class DistanceCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * Executes a {@code DistanceCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
@@ -142,7 +141,7 @@ public class DistanceCommandTest {
     }
 
     /**
-     * Returns a {@code SelectCommand} with parameters {@code index}.
+     * Returns a {@code DistanceCommand} with parameters {@code index}.
      */
     private DistanceCommand prepareCommand(Index index) {
         DistanceCommand distanceCommand = new DistanceCommand(index);

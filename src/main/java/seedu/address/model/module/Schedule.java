@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 public class Schedule {
     private String classNo;
+
     private String lessonType;
     private String weekText;
     private String dayText;
@@ -31,6 +32,30 @@ public class Schedule {
         this.dayText = dayText;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public String getClassNo() {
+        return classNo;
+    }
+
+    public String getLessonType() {
+        return lessonType;
+    }
+
+    public String getWeekText() {
+        return weekText;
+    }
+
+    public String getDayText() {
+        return dayText;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
     }
 
     @Override

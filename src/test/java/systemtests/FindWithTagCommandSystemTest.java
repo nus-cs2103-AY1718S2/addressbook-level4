@@ -1,4 +1,4 @@
-package seedu.address;
+package systemtests;
 
 public class FindWithTagCommandSystemTest {
 }

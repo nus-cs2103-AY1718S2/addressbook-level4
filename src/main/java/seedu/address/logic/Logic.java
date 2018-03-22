@@ -1,7 +1,8 @@
 package seedu.address.logic;
 
-import com.google.maps.errors.ApiException;
 import java.io.IOException;
+
+import com.google.maps.errors.ApiException;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;

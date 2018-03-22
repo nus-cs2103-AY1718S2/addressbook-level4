@@ -435,6 +435,67 @@ In the Storage component, there is an additional CustomerStatsStorage interface 
 ** Cons: It takes up more space and it requires a much longer time to find a customer and update the counter.
 // end::count[]
 
+// tag::menu[]
+=== Menu feature
+==== Current Implementation
+All the dishes can be created as an object and then be stored in an additional local database. The data can be kept in a local XmlMenuStorage file.
+
+The data file consists of all the available dishes and drinks provided by the restaurant. Customers can only order those provided. In the case when anything which is not provided by the restaurant but is ordered by customers, exceptions will be thrown. Notification will be given to inform the user that customers should not order this particular dish or drink.
+
+Users will be able to update the data file by adding or deleting dishes objects inside the database.
+
+As you can see from the diagram below, these are the interactions among the components during an “add” command. After the Model component raises an AddressBookChangedEvent to update the content of the AddressBook, it raises another CustomerStatsChangedEvent to update the current customer’s order count.
+
+image::figure3.5.1a.png[width="800"]
+(To be updated)
+
+The diagram below shows how EventsCenter reacts to the event. It finds the customer in the database using the phoneNumber provided and add 1 to the corresponding numOfOrders value.
+
+image::figure3.5.1b.png[width="800"]
+(To be updated)
+
+To implement this feature, there are some modifications to the existing Model component and Storage component to support the additional data structure.
+
+image::figure3.5.1c.png[width="800"]
+(To be updated)
+
+As the diagram shown above, besides AddressBook and UserPref, now ModelManager has an additional CustomerStats class. It consists a Data field which has many Phone numbers and numOfOrders counters. Phone numbers and the numOfOrders counters are 1-1 mapped and each pair represent one customer that has placed at least one order before.
+
+image::figure3.5.1d.png[width="800"]
+(To be updated)
+
+In the Storage component, there is an additional CustomerStatsStorage interface and it is implemented by a XmlCustomerStatsStorage class to read and write the XML file on local machine.
+
+==== Design Considerations
+
+===== Aspect: Restriction for ordering
+
+* **Alternative 1 (current choice):** Allow user to input the indexes for dishes and drinks
+** Pros: Easy to implement.
+** Cons: User needs a index reference. Work needs to be done while maintaining the index reference.
+* **Alternative 2:** Allow user to input the names for dishes and drinks
+** Pros: user need not to have a index reference.
+** Cons: It could be time-consuming for typing all the names. There might be typos which make dishes can not be recognised.
+
+===== Aspect: Maintaining the menu
+
+* **Alternative 1 (current choice):** Use lazy deletion.
+** Pros: Easy to implement.
+** Cons: It may take a lot of memory space if there are a lot of dishes updated.
+* **Alternative 2:** Delete the dish object.
+** Pros: Save memory space
+** Cons: While adding back those pre-existing dishes, more work need to be done by programmer.
+
+===== Aspect: Data structure to store menu
+
+* **Alternative 1 (current choice):** Use a HashMap. Index will be the key, Dishes will be the value.
+** Pros: Efficient to search for a given key and update its value.
+** Cons: A index reference need to be generated beforehand.
+* **Alternative 2:** Use a HashMap. Dishes will be the key, prices will be the value.
+** Pros: It is easy to retrieve the price for each dishes.
+** Cons: It could be time-consuming for typing all the names. There might be typos which make dishes can not be recognised.
+// end::menu[]
+
 == Documentation
 
 We use asciidoc for writing documentation.

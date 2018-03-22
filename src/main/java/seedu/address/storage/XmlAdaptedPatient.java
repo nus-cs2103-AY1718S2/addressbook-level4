@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.RecordCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.BloodType;
 import seedu.address.model.patient.DateOfBirth;
@@ -60,7 +64,7 @@ public class XmlAdaptedPatient {
      * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
     public XmlAdaptedPatient(String name, String nric, String phone, String email, String address, String dob,
-                             String bloodType, List<XmlAdaptedTag> tagged) {
+                             String bloodType, Record record, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.nric = nric;
         this.phone = phone;
@@ -68,6 +72,7 @@ public class XmlAdaptedPatient {
         this.address = address;
         this.dob = dob;
         this.bloodType = bloodType;
+        this.record = record;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -165,9 +170,6 @@ public class XmlAdaptedPatient {
 
         final Remark remark = new Remark(this.remark);
 
-        if (!Record.isValidRecord(this.record)) {
-            throw new IllegalValueException(Record.MESSAGE_RECORD_CONSTRAINTS);
-        }
         final Record record = new Record(this.record);
 
         final Set<Tag> tags = new HashSet<>(personTags);

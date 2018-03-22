@@ -68,7 +68,8 @@ public class NameContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new RecipeBuilder().withName("Alice Bob").build()));
 
         // Keywords match preparationTime, ingredient and recipe, but does not match name
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("15m", "test", "ingredient", "here", "Main", "Street"));
+        predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("15m", "test", "ingredient", "here", "Main", "Street"));
         assertFalse(predicate.test(new RecipeBuilder().withName("Food").withPreparationTime("15m")
                 .withIngredient("test ingredient here").withInstruction("Main Street").build()));
     }

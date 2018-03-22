@@ -71,7 +71,6 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
-    
     //@@Author kokonguyen191
     /**
      * Parses a {@code String ingredient} into an {@code Ingredient}.
@@ -150,8 +149,7 @@ public class ParserUtil {
      * if {@code cookingTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<CookingTime> parseCookingTime(Optional<String> cookingTime)
-            throws IllegalValueException {
+    public static Optional<CookingTime> parseCookingTime(Optional<String> cookingTime) throws IllegalValueException {
         requireNonNull(cookingTime);
         return cookingTime.isPresent()
                 ? Optional.of(parseCookingTime(cookingTime.get())) : Optional.empty();
@@ -211,8 +209,8 @@ public class ParserUtil {
     public static Optional<PreparationTime> parsePreparationTimeOnInitialAdd(Optional<String> preparationTime)
             throws IllegalValueException {
         requireNonNull(preparationTime);
-        return preparationTime.isPresent()
-                ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.of(getNullReferencePreparationTime());
+        return preparationTime.isPresent() ? Optional.of(parsePreparationTime(preparationTime.get()))
+                : Optional.of(getNullReferencePreparationTime());
     }
 
     /**
@@ -242,8 +240,7 @@ public class ParserUtil {
      * if {@code calories} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Calories> parseCalories(Optional<String> calories)
-            throws IllegalValueException {
+    public static Optional<Calories> parseCalories(Optional<String> calories) throws IllegalValueException {
         requireNonNull(calories);
         return calories.isPresent()
                 ? Optional.of(parseCalories(calories.get())) : Optional.empty();
@@ -254,8 +251,7 @@ public class ParserUtil {
      * if {@code calories} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Calories> parseCaloriesOnInitialAdd(Optional<String> calories)
-            throws IllegalValueException {
+    public static Optional<Calories> parseCaloriesOnInitialAdd(Optional<String> calories) throws IllegalValueException {
         requireNonNull(calories);
         return calories.isPresent()
                 ? Optional.of(parseCalories(calories.get())) : Optional.of(getNullReferenceCalories());
@@ -346,8 +342,6 @@ public class ParserUtil {
     }
     //@@author
 
-
-    
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.

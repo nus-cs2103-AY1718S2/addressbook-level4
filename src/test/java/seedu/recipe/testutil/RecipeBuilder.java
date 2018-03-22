@@ -108,7 +108,7 @@ public class RecipeBuilder {
         this.cookingTime = new CookingTime(cookingTime);
         return this;
     }
-    
+
     /**
      * Sets the {@code PreparationTime} of the {@code Recipe} that we are building.
      */

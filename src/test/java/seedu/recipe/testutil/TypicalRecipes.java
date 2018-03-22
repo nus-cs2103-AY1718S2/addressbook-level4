@@ -173,7 +173,4 @@ public class TypicalRecipes {
     public static List<Recipe> getTypicalRecipes() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
-
-    private static class VALID_SERVINGS_BOB {
-    }
 }

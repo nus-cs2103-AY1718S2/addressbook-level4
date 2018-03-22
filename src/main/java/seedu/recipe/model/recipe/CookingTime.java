@@ -13,7 +13,8 @@ public class CookingTime {
     public static final String NULL_COOKING_TIME_REFERENCE = "-";
     public static final String MESSAGE_COOKING_TIME_CONSTRAINTS =
             "Cooking time can be in any of these format: 1h10m, 70m, 1 hour 10 minutes, 1 h 10 min, 70.";
-    public static final String COOKING_TIME_VALIDATION_REGEX = "([\\d]+[ ]{0,1}(minute[s]{0,1}|min[s]{0,1}|m|hour[s]{0,1}|h){0,1}[ ]{0,1}){1,2}";
+    public static final String COOKING_TIME_VALIDATION_REGEX =
+            "([\\d]+[ ]{0,1}(minute[s]{0,1}|min[s]{0,1}|m|hour[s]{0,1}|h){0,1}[ ]{0,1}){1,2}";
     public final String value;
 
     /**
@@ -31,7 +32,7 @@ public class CookingTime {
      * Returns true if a given string is a valid recipe cooking time.
      */
     public static boolean isValidCookingTime(String test) {
-        return test.equals(NULL_COOKING_TIME_REFERENCE ) || test.matches(COOKING_TIME_VALIDATION_REGEX);
+        return test.equals(NULL_COOKING_TIME_REFERENCE) || test.matches(COOKING_TIME_VALIDATION_REGEX);
     }
 
     @Override

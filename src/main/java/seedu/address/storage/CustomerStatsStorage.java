@@ -31,14 +31,14 @@ public interface CustomerStatsStorage {
 
     /**
      * Saves the given {@link ReadOnlyCustomerStats} to the storage.
-     * @param CustomerStats cannot be null.
+     * @param customerStats cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveCustomerStats(ReadOnlyCustomerStats CustomerStats) throws IOException;
+    void saveCustomerStats(ReadOnlyCustomerStats customerStats) throws IOException;
 
     /**
      * @see #saveCustomerStats(ReadOnlyCustomerStats)
      */
-    void saveCustomerStats(ReadOnlyCustomerStats CustomerStats, String filePath) throws IOException;
+    void saveCustomerStats(ReadOnlyCustomerStats customerStats, String filePath) throws IOException;
 
 }

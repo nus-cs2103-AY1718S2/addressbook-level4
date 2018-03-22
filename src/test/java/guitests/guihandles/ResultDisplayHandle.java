@@ -1,5 +1,7 @@
 package guitests.guihandles;
 
+import java.util.List;
+
 import javafx.scene.control.TextArea;
 
 /**

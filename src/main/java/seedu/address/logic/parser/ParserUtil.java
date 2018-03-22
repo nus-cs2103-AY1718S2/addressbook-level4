@@ -11,9 +11,9 @@ import seedu.address.commons.core.index.Index;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
+import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;

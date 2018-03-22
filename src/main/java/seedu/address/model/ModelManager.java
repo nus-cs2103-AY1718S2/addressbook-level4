@@ -109,6 +109,11 @@ public class ModelManager extends ComponentManager implements Model {
         return schedule;
     }
 
+    /**
+     * Displays Student details on a browser panel in the UI
+     * @param target
+     * @throws StudentNotFoundException
+     */
     public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
         addressBook.checkForStudentInAdressBook(target);
         indicateBrowserPanelToDisplayStudent(target);

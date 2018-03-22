@@ -7,8 +7,8 @@ public class ScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "schedule";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD +
-            ": Views your weekly schedule";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Views your weekly schedule";
 
     public static final String MESSAGE_SUCCESS = "Schedule displayed";
 

@@ -21,13 +21,13 @@ public class Time implements Comparable<Time> {
     public static final String TIME_VALIDATION_REGEX = HOUR_PART_REGEX
             + TIME_DELIMITER
             + MINUTE_PART_REGEX;
+    private static final int INDEX_HOUR = 0;
+    private static final int INDEX_MIN = 1;
 
     public final String value;
     private final Hour hour;
     private final Min min;
 
-    private static final int INDEX_HOUR = 0;
-    private static final int INDEX_MIN = 1;
 
     /**
      * Constructs an {@code Time}.

@@ -17,14 +17,24 @@ public class Schedule implements ReadOnlySchedule {
     {
         lessons = new LessonList();
     }
-    public void addLesson(Lesson l) throws InvalidLessonTimeSlotException {
-        if (!isValidSlot(l)) {
+
+    /**
+     * Adds lesson to schedule
+     * @param lessonToBeAdded
+     * @throws InvalidLessonTimeSlotException if invalid
+     */
+    public void addLesson(Lesson lessonToBeAdded) throws InvalidLessonTimeSlotException {
+        if (!isValidSlot(lessonToBeAdded)) {
             throw new InvalidLessonTimeSlotException();
         }
-        lessons.add(l);
+        lessons.add(lessonToBeAdded);
     }
 
-    private boolean isValidSlot(Lesson l){
+    /**
+     * Checks if lesson clashes with other lessons in the schedule
+     * @return true/false
+     */
+    private boolean isValidSlot(Lesson l) {
         for (Lesson lesson : lessons) {
             if (l.clashesWith(lesson)) {
                 return false;
@@ -33,12 +43,16 @@ public class Schedule implements ReadOnlySchedule {
         return true;
     }
 
-    public void print(){
+    /**
+     * Prints the schedule as a list
+     */
+    public void print() {
         System.out.println(this.toString());
         for (Lesson l : lessons) {
             System.out.println(l.toString());
         }
     }
+
     //// util methods
 
     @Override

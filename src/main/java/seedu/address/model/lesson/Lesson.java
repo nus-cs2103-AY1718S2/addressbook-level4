@@ -30,10 +30,6 @@ public class Lesson {
         this.endTime = endTime;
     }
 
-    /**
-     * Every field must be present and not null.
-     */
-
     public Student getStudent() {
         return student;
     }
@@ -47,6 +43,10 @@ public class Lesson {
         return endTime;
     }
 
+    /**
+     * To check if a lesson will clash with another lesson on the same day
+     * @return true/false
+     */
     public boolean clashesWith(Lesson other) {
         return (this.getStartTime().compareTo(other.getStartTime()) >= 0
                 && this.getStartTime().compareTo(other.getEndTime()) <= 0)

@@ -26,13 +26,21 @@ public class Policy {
     }
 
 
-    public Price getPrice() { return price; }
+    public Price getPrice() {
+        return price;
+    }
 
-    public Coverage getCoverage() { return coverage; }
+    public Coverage getCoverage() {
+        return coverage;
+    }
 
-    public Date getBeginning() { return beginning; }
+    public Date getBeginning() {
+        return beginning;
+    }
 
-    public Date getExpiration() { return expiration; }
+    public Date getExpiration() {
+        return expiration;
+    }
 
     @Override
     public boolean equals(Object other) {

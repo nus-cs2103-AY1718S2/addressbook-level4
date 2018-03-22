@@ -4,6 +4,7 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.GetDistance;
 import seedu.address.logic.RouteOptimization;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -42,7 +43,7 @@ public class DistanceCommand extends Command {
         int indexZeroBased = targetIndex.getZeroBased();
         Person person = lastShownList.get(indexZeroBased);
         String address = person.getAddress().toString();
-        RouteOptimization route = new RouteOptimization();
+        GetDistance route = new GetDistance();
         String headQuarterAddress = "Kent Ridge MRT";
 
         try {

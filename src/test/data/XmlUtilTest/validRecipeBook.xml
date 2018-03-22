@@ -1,66 +1,93 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <recipebook>
     <recipes>
-        <name>Hans Muster</name>
-        <preparationTime isPrivate="false">9482424</preparationTime>
+        <name>Chicken Rice</name>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
+        <preparationTime isPrivate="false">69 hours</preparationTime>
+        <cookingTime isPrivate="false">20 min</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">2</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
-        <name>Ruth Mueller</name>
-        <preparationTime isPrivate="false">87249245</preparationTime>
+        <name>Pizza</name>
         <ingredient isPrivate="false">ruth@example.com</ingredient>
         <instruction isPrivate="false">81th street</instruction>
+        <preparationTime isPrivate="false">25</preparationTime>
+        <cookingTime isPrivate="false">20m</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">3</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
-        <name>Heinz Kurz</name>
-        <preparationTime isPrivate="false">95352563</preparationTime>
+        <name>Roasted Fish</name>
         <ingredient isPrivate="false">heinz@example.com</ingredient>
         <instruction isPrivate="false">wall street</instruction>
+        <preparationTime isPrivate="false">23 minutes</preparationTime>
+        <cookingTime isPrivate="false">20 mins</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">4</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
-        <name>Cornelia Meier</name>
-        <preparationTime isPrivate="false">87652533</preparationTime>
+        <name>Boiled Egg</name>
         <ingredient isPrivate="false">cornelia@example.com</ingredient>
         <instruction isPrivate="false">10th street</instruction>
+        <preparationTime isPrivate="false">46</preparationTime>
+        <cookingTime isPrivate="false">20</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">2</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
-        <name>Werner Meyer</name>
-        <preparationTime isPrivate="false">9482224</preparationTime>
+        <name>Lasagna</name>
         <ingredient isPrivate="false">werner@example.com</ingredient>
         <instruction isPrivate="false">michegan ave</instruction>
+        <preparationTime isPrivate="false">1h20m</preparationTime>
+        <cookingTime isPrivate="false">1 hour 20 minutes</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">20</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
-        <name>Lydia Kunz</name>
-        <preparationTime isPrivate="false">9482427</preparationTime>
+        <name>Ultimate Chocolate Cake</name>
         <ingredient isPrivate="false">lydia@example.com</ingredient>
         <instruction isPrivate="false">little tokyo</instruction>
+        <preparationTime isPrivate="false">23</preparationTime>
+        <cookingTime isPrivate="false">20</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">2</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
-        <name>Anna Best</name>
-        <preparationTime isPrivate="false">9482442</preparationTime>
+        <name>Tap Water</name>
         <ingredient isPrivate="false">anna@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
+        <preparationTime isPrivate="false">54m</preparationTime>
+        <cookingTime isPrivate="false">1h20m</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">2000</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
-        <name>Stefan Meier</name>
-        <preparationTime isPrivate="false">8482424</preparationTime>
+        <name>Chicken Tacos</name>
         <ingredient isPrivate="false">stefan@example.com</ingredient>
         <instruction isPrivate="false">little india</instruction>
+        <preparationTime isPrivate="false">60</preparationTime>
+        <cookingTime isPrivate="false">20</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">1</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
     <recipes>
-        <name>Martin Mueller</name>
-        <preparationTime isPrivate="false">8482131</preparationTime>
+        <name>Beef Tenderloin with Madeira Sauce</name>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">chicago ave</instruction>
+        <preparationTime isPrivate="false">1 hour 25 mins</preparationTime>
+        <cookingTime isPrivate="false">20</cookingTime>
+        <calories isPrivate="false">5000</calories>
+        <servings isPrivate="false">50</servings>
         <url isPrivate="false">https://www.google.com</url>
     </recipes>
 </recipebook>

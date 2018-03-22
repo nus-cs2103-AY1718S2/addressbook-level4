@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Recipe with an invalid preparationTime field -->
 <recipe>
-    <name>Hans Muster</name>
-    <preparationTime>9482asf424</preparationTime>
+    <name>Chicken Rice</name>
     <ingredient>hans@example</ingredient>
     <instruction>4th street</instruction>
+    <cookingTime>20 min</cookingTime>
+    <preparationTime>9482asf424</preparationTime>
+    <calories>5000</calories>
+    <servings>2</servings>
     <url>https://www.google.com</url>
-    <tagged>friends</tagged>
+    <tagged>best</tagged>
 </recipe>

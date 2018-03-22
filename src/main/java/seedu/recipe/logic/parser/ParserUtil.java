@@ -124,40 +124,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String preparationTime} into a {@code PreparationTime}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code preparationTime} is invalid.
-     */
-    public static PreparationTime parsePreparationTime(String preparationTime) throws IllegalValueException {
-        requireNonNull(preparationTime);
-        String trimmedPreparationTime = preparationTime.trim();
-        if (!PreparationTime.isValidPreparationTime(trimmedPreparationTime)) {
-            throw new IllegalValueException(PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
-        }
-        return new PreparationTime(trimmedPreparationTime);
-    }
-
-    /**
-     * Returns a null {@code PreparationTime} object to use as the default value if no value is given.
-     */
-    public static PreparationTime getNullReferencePreparationTime() throws IllegalValueException {
-        return new PreparationTime(PreparationTime.NULL_PREPARATION_TIME_REFERENCE);
-    }
-
-    /**
-     * Parses a {@code Optional<String> preparationTime} into an {@code Optional<PreparationTime>}
-     * if {@code preparationTime} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<PreparationTime> parsePreparationTime(Optional<String> preparationTime)
-            throws IllegalValueException {
-        requireNonNull(preparationTime);
-        return preparationTime.isPresent()
-                ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.of(getNullReferencePreparationTime());
-    }
-
-    /**
      * Parses a {@code String cookingTime} into a {@code CookingTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -188,7 +154,65 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(cookingTime);
         return cookingTime.isPresent()
+                ? Optional.of(parseCookingTime(cookingTime.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> cookingTime} into an {@code Optional<CookingTime>}
+     * if {@code cookingTime} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<CookingTime> parseCookingTimeOnInitialAdd(Optional<String> cookingTime)
+            throws IllegalValueException {
+        requireNonNull(cookingTime);
+        return cookingTime.isPresent()
                 ? Optional.of(parseCookingTime(cookingTime.get())) : Optional.of(getNullReferenceCookingTime());
+    }
+
+    /**
+     * Parses a {@code String preparationTime} into a {@code PreparationTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code preparationTime} is invalid.
+     */
+    public static PreparationTime parsePreparationTime(String preparationTime) throws IllegalValueException {
+        requireNonNull(preparationTime);
+        String trimmedPreparationTime = preparationTime.trim();
+        if (!PreparationTime.isValidPreparationTime(trimmedPreparationTime)) {
+            throw new IllegalValueException(PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
+        }
+        return new PreparationTime(trimmedPreparationTime);
+    }
+
+    /**
+     * Returns a null {@code PreparationTime} object to use as the default value if no value is given.
+     */
+    public static PreparationTime getNullReferencePreparationTime() throws IllegalValueException {
+        return new PreparationTime(PreparationTime.NULL_PREPARATION_TIME_REFERENCE);
+    }
+
+    /**
+     * Parses a {@code Optional<String> preparationTime} into an {@code Optional<PreparationTime>}
+     * if {@code preparationTime} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PreparationTime> parsePreparationTime(Optional<String> preparationTime)
+            throws IllegalValueException {
+        requireNonNull(preparationTime);
+        return preparationTime.isPresent()
+                ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> preparationTime} into an {@code Optional<PreparationTime>}
+     * if {@code preparationTime} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PreparationTime> parsePreparationTimeOnInitialAdd(Optional<String> preparationTime)
+            throws IllegalValueException {
+        requireNonNull(preparationTime);
+        return preparationTime.isPresent()
+                ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.of(getNullReferencePreparationTime());
     }
 
     /**
@@ -222,6 +246,18 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(calories);
         return calories.isPresent()
+                ? Optional.of(parseCalories(calories.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> calories} into an {@code Optional<Calories>}
+     * if {@code calories} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Calories> parseCaloriesOnInitialAdd(Optional<String> calories)
+            throws IllegalValueException {
+        requireNonNull(calories);
+        return calories.isPresent()
                 ? Optional.of(parseCalories(calories.get())) : Optional.of(getNullReferenceCalories());
     }
 
@@ -246,13 +282,25 @@ public class ParserUtil {
     public static Servings getNullReferenceServings() throws IllegalValueException {
         return new Servings(Servings.NULL_SERVINGS_REFERENCE);
     }
-    
+
     /**
      * Parses a {@code Optional<String> servings} into an {@code Optional<Servings>}
      * if {@code servings} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Servings> parseServings(Optional<String> servings)
+            throws IllegalValueException {
+        requireNonNull(servings);
+        return servings.isPresent()
+                ? Optional.of(parseServings(servings.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> servings} into an {@code Optional<Servings>}
+     * if {@code servings} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Servings> parseServingsOnInitialAdd(Optional<String> servings)
             throws IllegalValueException {
         requireNonNull(servings);
         return servings.isPresent()

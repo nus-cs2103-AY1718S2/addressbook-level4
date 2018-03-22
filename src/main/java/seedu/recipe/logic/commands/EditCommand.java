@@ -176,10 +176,10 @@ public class EditCommand extends UndoableCommand {
             setName(toCopy.name);
             setIngredient(toCopy.ingredient);
             setInstruction(toCopy.instruction);
-
+            setCookingTime(toCopy.cookingTime);
             setPreparationTime(toCopy.preparationTime);
-
-
+            setCalories(toCopy.calories);
+            setServings(toCopy.servings);
             setUrl(toCopy.url);
             setTags(toCopy.tags);
         }

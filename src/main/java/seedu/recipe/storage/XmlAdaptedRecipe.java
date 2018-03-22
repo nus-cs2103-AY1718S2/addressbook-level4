@@ -33,10 +33,15 @@ public class XmlAdaptedRecipe {
     private String ingredient;
     @XmlElement(required = true)
     private String instruction;
+    @XmlElement(required = true)
     private String cookingTime;
+    @XmlElement(required = true)
     private String preparationTime;
+    @XmlElement(required = true)
     private String calories;
+    @XmlElement(required = true)
     private String servings;
+    @XmlElement(required = true)
     private String url;
 
 

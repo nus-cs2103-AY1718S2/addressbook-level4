@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Recipe with missing name field -->
 <recipe>
-    <preparationTime>9482424</preparationTime>
     <ingredient>hans@example</ingredient>
     <instruction>4th street</instruction>
+    <preparationTime>69 hours</preparationTime>
+    <cookingTime>20 min</cookingTime>
+    <calories>5000</calories>
+    <servings>2</servings>
     <url>https://www.google.com</url>
-    <tagged>friends</tagged>
+    <tagged>best</tagged>
 </recipe>

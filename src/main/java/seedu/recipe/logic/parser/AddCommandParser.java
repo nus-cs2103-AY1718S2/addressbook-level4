@@ -53,13 +53,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             Ingredient ingredient = ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).get();
             Instruction instruction = ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).get();
             CookingTime cookingTime =
-                    ParserUtil.parseCookingTime(argMultimap.getValue(PREFIX_COOKING_TIME)).get();
+                    ParserUtil.parseCookingTimeOnInitialAdd(argMultimap.getValue(PREFIX_COOKING_TIME)).get();
             PreparationTime preparationTime =
-                    ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME)).get();
+                    ParserUtil.parsePreparationTimeOnInitialAdd(argMultimap.getValue(PREFIX_PREPARATION_TIME)).get();
             Calories calories =
-                    ParserUtil.parseCalories(argMultimap.getValue(PREFIX_CALORIES)).get();
+                    ParserUtil.parseCaloriesOnInitialAdd(argMultimap.getValue(PREFIX_CALORIES)).get();
             Servings servings =
-                    ParserUtil.parseServings(argMultimap.getValue(PREFIX_SERVINGS)).get();
+                    ParserUtil.parseServingsOnInitialAdd(argMultimap.getValue(PREFIX_SERVINGS)).get();
             Url url = ParserUtil.parseUrlOnInitialAdd(argMultimap.getValue(PREFIX_URL)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 

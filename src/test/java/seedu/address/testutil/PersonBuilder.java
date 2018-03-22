@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
@@ -22,6 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -29,6 +31,7 @@ public class PersonBuilder {
     private Phone phone;
     private Email email;
     private Address address;
+    private DisplayPic displayPic;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -37,6 +40,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        displayPic = new DisplayPic(DEFAULT_DISPLAY_PIC);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -49,6 +53,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        displayPic = personToCopy.getDisplayPic();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -100,8 +105,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DisplayPic} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withDisplayPic(String displayPic) {
+        this.displayPic = new DisplayPic(displayPic);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, matricNumber, phone, email, address, tags);
+        return new Person(name, matricNumber, phone, email, address, displayPic, tags);
     }
 
 }

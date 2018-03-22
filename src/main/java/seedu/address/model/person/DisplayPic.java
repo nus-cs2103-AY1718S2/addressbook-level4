@@ -56,8 +56,10 @@ public class DisplayPic {
         }
     }
 
-    public DisplayPic(String filePath) throws IllegalValueException {
+    public DisplayPic(String filePath) {
         requireNonNull(filePath);
+        checkArgument(isValidPath(filePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+        checkArgument(isValidImage(filePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
         this.value = filePath;
     }
 

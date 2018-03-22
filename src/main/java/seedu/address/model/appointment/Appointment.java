@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -17,7 +19,8 @@ import seedu.address.model.tag.UniqueTagList;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Appointment {
-    private final Name owner; //owner of the appointment
+    private final Person owner; //owner of the appointment
+    private final PetPatient pet;
     private Remark remark; //remarks
     private LocalDateTime localDateTime; //date of appointment
 
@@ -26,18 +29,21 @@ public class Appointment {
     /**
      * Every field must be present and not null.
      */
-    public Appointment(Name owner, Remark remark, LocalDateTime localDateTime, Set<Tag> type) {
+    public Appointment(Person owner, PetPatient pet, Remark remark, LocalDateTime localDateTime, Set<Tag> type) {
         requireAllNonNull(owner, remark, localDateTime, type);
         this.owner = owner;
+        this.pet = pet;
         this.remark = remark;
         this.localDateTime = localDateTime;
         // protect internal tags from changes in the arg list
         this.type = new UniqueTagList(type);
     }
 
-    public Name getOwner() {
+    public Person getOwner() {
         return owner;
     }
+
+    public PetPatient getPetPatient() { return pet; }
 
     public Remark getRemark() {
         return remark;
@@ -84,13 +90,15 @@ public class Appointment {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Appointment Owner: ")
-                .append(getOwner())
-                .append(", Date of Appointment: ")
+        builder.append("\t")
                 .append(getFormattedLocalDateTime())
-                .append(", Remarks: ")
+                .append("\tOwner: ")
+                .append(getOwner().getName().toString())
+                .append("\tPet Patient: ")
+                .append(getPetPatient().getName().toString())
+                .append("\tRemarks: ")
                 .append(getRemark())
-                .append(", Type(s) of Appointment: ");
+                .append("\tType(s): ");
         getType().forEach(builder::append);
         return builder.toString();
     }

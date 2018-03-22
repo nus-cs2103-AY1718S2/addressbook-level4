@@ -1,10 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_COLOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -16,19 +17,19 @@ import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
  * Adds a pet patient to the address book.
  */
 public class AddPetPatientCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "addpetpatient";
-    public static final String COMMAND_ALIAS = "app";
+    public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_ALIAS = "a";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a pet patient to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " -p : Adds a pet patient to the address book. "
             + "Parameters: "
-            + PREFIX_PET_PATIENT_NAME + "NAME "
+            + PREFIX_NAME + "NAME "
             + PREFIX_PET_PATIENT_SPECIES + "SPECIES "
             + PREFIX_PET_PATIENT_BREED + "BREED "
             + PREFIX_PET_PATIENT_COLOUR + "COLOUR "
             + PREFIX_PET_PATIENT_BLOODTYPE + "BLOOD_TYPE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_PET_PATIENT_NAME + "Jewel "
+            + PREFIX_NAME + "Jewel "
             + PREFIX_PET_PATIENT_SPECIES + "Cat "
             + PREFIX_PET_PATIENT_BREED + "Persian Ragdoll "
             + PREFIX_PET_PATIENT_COLOUR + "Calico "

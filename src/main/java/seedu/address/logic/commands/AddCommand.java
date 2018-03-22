@@ -9,8 +9,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.petpatient.PetPatient;
 
 /**
  * Adds a person to the address book.
@@ -37,25 +39,61 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static String MESSAGE_SUCCESS = "New person added: %1$s\n";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final Person toAdd;
+    private Person toAddOwner;
+    private PetPatient toAddPet;
+    private Appointment toAddAppt;
+
+    /**
+     * Creates an AddCommand to add the specified {@code Person} and {@code PetPatient} and {@code Appointment}
+     */
+    public AddCommand(Person owner, PetPatient pet, Appointment appt) {
+        requireNonNull(owner);
+        requireNonNull(pet);
+        requireNonNull(appt);
+        toAddOwner = owner;
+        toAddPet = pet;
+        toAddAppt = appt;
+        MESSAGE_SUCCESS += "New pet patient added: " + toAddPet.toString()
+                + "\nNew appointment made: " + toAddAppt.toString();
+        System.out.println("ADDED ALL THREE");
+    }
+
+    /**
+     * Creates an AddCommand to add the specified {@code Person} and {@code PetPatient}
+     */
+    public AddCommand(Person owner, PetPatient pet) {
+        requireNonNull(owner);
+        requireNonNull(pet);
+        toAddOwner = owner;
+        toAddPet = pet;
+        MESSAGE_SUCCESS += "New pet patient added: " + toAddPet.toString();
+    }
+
+    /**
+     * Creates an AddCommand to add the specified {@code PetPatient}
+     */
+    public AddCommand(PetPatient pet) {
+        requireNonNull(pet);
+        toAddPet = pet;
+    }
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public AddCommand(Person person) {
-        requireNonNull(person);
-        toAdd = person;
+    public AddCommand(Person owner) {
+        requireNonNull(owner);
+        toAddOwner = owner;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addPerson(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            model.addPerson( toAddOwner);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAddOwner));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -66,6 +104,6 @@ public class AddCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
-                && toAdd.equals(((AddCommand) other).toAdd));
+                && toAddOwner.equals(((AddCommand) other).toAddOwner));
     }
 }

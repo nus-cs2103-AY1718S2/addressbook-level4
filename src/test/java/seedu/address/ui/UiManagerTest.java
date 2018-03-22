@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -54,10 +56,27 @@ public class UiManagerTest {
     @Test
     public void checkUiValidity() {
         assertNotNull(ui);
+    }
+
+    @Test
+    public void checkStartLogin() {
         Assert.assertThrows(NullPointerException.class, () -> ui.startLogin(null));
-        Assert.assertThrows(NullPointerException.class, () -> ui.start(null));
+    }
+
+    @Test
+    public void checkStopLogin() {
         Assert.assertThrows(NullPointerException.class, () -> ui.stopLogin());
+    }
+
+    @Test
+    public void checkAppStart() {
+        Assert.assertThrows(NullPointerException.class, () -> ui.start(null));
+    }
+
+    @Test
+    public void checkAppStop() {
         Assert.assertThrows(NullPointerException.class, () -> ui.stop());
     }
+
 
 }

@@ -75,6 +75,7 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow.releaseResources();
         } catch (NullPointerException e) {
             logger.info("Illegal exit occurred. Please click proper exit button in the future.");
+            throw new NullPointerException();
         }
     }
 

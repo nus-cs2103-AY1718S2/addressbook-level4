@@ -500,9 +500,9 @@ for (String suggestion : dictionary) {
 }
 ----
 
-The given dictionary and the constant `MAX_SUGGESTIONS` can be found in `AutoCompletionUtil.java`. All operations with input text such as finding the last word of user's input are supported by `TextInputProcessorUtil.java`.
+The given dictionary and the constant `MAX_SUGGESTIONS` can be found in `AutoCompletionUtil` class. All operations with input text such as finding the last word of user's input are supported by `TextInputProcessorUtil` class.
 
-To calculate position to display pop-up menu, height and width of input text (in pixels) are computed and then used to determine display position in the main window. Height and width of input text are calculated in `TextInputProcessorUtil.java`.
+To calculate position to display pop-up menu, height and width of input text (in pixels) are computed and then used to determine display position in the main window. Height and width of input text are calculated in `TextInputProcessorUtil` class.
 
 Then, the suggestion list can be shown in main window.
 

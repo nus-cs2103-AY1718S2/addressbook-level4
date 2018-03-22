@@ -19,6 +19,9 @@ public class ResultDisplayTest extends GuiUnitTest {
     private static final NewResultAvailableEvent NEW_RESULT_FAILURE_EVENT_STUB =
             new NewResultAvailableEvent("Stub", false);
 
+    private List<String> defaultStyleOfResultDisplay;
+    private List<String> errorStyleOfResultDisplay;
+
     private ResultDisplayHandle resultDisplayHandle;
 
     @Before

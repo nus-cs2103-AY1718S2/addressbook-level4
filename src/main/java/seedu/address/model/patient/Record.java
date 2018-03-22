@@ -2,8 +2,16 @@ package seedu.address.model.patient;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 
 import java.util.Objects;
+
+import seedu.address.logic.commands.RecordCommand;
+import seedu.address.logic.parser.RecordCommandParser;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Represents a Medical Record in the address book.
@@ -19,12 +27,16 @@ public class Record {
     private final String illness;
     private final String treatment;
 
+    public Record(){
+        this("", "", "", "");
+    }
+
     /**
      * Every field must be present and not null.
      */
-    public Record(String name, String symptom, String illness, String treatment) {
-        requireAllNonNull(name, symptom, illness, treatment);
-        this.date = name;
+    public Record(String date, String symptom, String illness, String treatment) {
+        requireAllNonNull(date, symptom, illness, treatment);
+        this.date = date;
         this.symptom = symptom;
         this.illness = illness;
         this.treatment = treatment;
@@ -32,6 +44,14 @@ public class Record {
 
     public Record(Record record) {
         this(record.getDate(), record.getSymptom(), record.getIllness(), record.getTreatment());
+    }
+
+    public Record(String string) throws ParseException {
+        RecordCommand command = new RecordCommandParser().parse(string); //command will not be executed
+        this.date = command.getRecord().getDate();
+        this.symptom = command.getRecord().getSymptom();
+        this.illness = command.getRecord().getIllness();
+        this.treatment = command.getRecord().getTreatment();
     }
 
     public String getDate() {
@@ -84,13 +104,27 @@ public class Record {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Date")
+        builder.append("Date: ")
                 .append(getDate())
                 .append(" Symptoms: ")
                 .append(getSymptom())
                 .append(" Illness: ")
                 .append(getIllness())
                 .append(" Treatment: ")
+                .append(getTreatment());
+        return builder.toString();
+    }
+
+    public String toCommandString(){
+        final StringBuilder builder = new StringBuilder();
+        builder.append("0") //as the command will not be executed, we will be placing a dummy index that is always out of bounds
+                .append(PREFIX_DATE)
+                .append(getDate())
+                .append(PREFIX_SYMPTOM)
+                .append(getSymptom())
+                .append(PREFIX_ILLNESS)
+                .append(getIllness())
+                .append(PREFIX_TREATMENT)
                 .append(getTreatment());
         return builder.toString();
     }

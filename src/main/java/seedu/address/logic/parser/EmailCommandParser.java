@@ -8,7 +8,7 @@ import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new DeleteCommand object
+ * Parses input arguments and creates a new EmailCommand object
  */
 public class EmailCommandParser implements Parser<EmailCommand> {
 

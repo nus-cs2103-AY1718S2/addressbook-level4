@@ -442,11 +442,65 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== [Proposed] Data Encryption (Coming in v2.0)
 
 _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
+
+=== Email (Since v1.1)
+
+This feature allows the user to call their desktop mail application from the application itself, with the to: field already populated.
+
+==== Current implementation
+
+image::EmailComponentFlow.png[width="800"]
+pass:[<div align="center"><b>Figure 3.3.1: Email Implementation</b></div>]
+
+The user will enter a command `email 1` to the application. The application will then rely on `AddressBookparser` and `EmailCommandParser` to
+parse the argument. The argument will be passed into the EmailCommand when it will be checked on whether the argument is valid. From there, it will
+call the Java `Desktop` class to launch the user's default mail application.
+
+==== Design Considerations
+
+===== Aspect: How the email is sent
+
+* **Alternative 1 (current choice):** Use the Java `Desktop` class to open the default mail app
+** Pros: It is fast and works with supported Desktop and OS.
+** Cons: Does not work on systems wihtout a default Desktop mail application.
+* **Alternative 2:** Use the in-built browser
+** Pros: Higher level of compatibility, means it can be used with a wider range of operating systems.
+** Cons: Clunky as users may use different web mail services. The API would also differ based on the email they use as well.
+
+==== Future enhancements (Coming in v1.3)
+
+Support for writing the subject title in the application as well by adding an extra parameter such as `email 1 s/ [SUBJECT]`.
+
+=== Display Picture (Since v1.2)
+
+This feature allows the user to enter a path to their selected image file and copies the image into the `images\displayPic` folder. This image
+will be shown in the application next to the details of the person.
+
+==== Current implementation
+
+The application will take in the argument through `dp/ [PATH TO IMAGE]` and then use `ImageIO` to copy the file.
+
+_{TO BE UPDATED}_
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** Copy the image file over to a designated location
+** Pros: The user does not need to maintain the image file, as the application does so itself.
+** Cons: User has to delete the original file if not there will be 2 of the same files on the user's storage.
+* **Alternative 2:** Use the location of the file the user put in
+** Pros: Potentially less space utilized.
+** Cons: User needs to ensure the file is not moved or deleted.
+
+==== Future enhancements
+
+* Support to delete photo (Coming in v1.3)
+* Support for undo/redo (Coming in v1.4)
+* Support for photo frames (Coming in v1.5)
 
 === Logging
 

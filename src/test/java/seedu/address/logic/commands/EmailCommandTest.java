@@ -92,7 +92,7 @@ public class EmailCommandTest {
             assertEquals(expectedResult, result.feedbackToUser);
         } catch (UnsupportDesktopException de) {
             // Code is running on unsupported OS
-            assertEquals(de.getMessage(), Messages.UNSUPPORTED_DESKTOP);
+            assertEquals(de.getMessage(), Messages.MESSAGE_UNSUPPORTED_DESKTOP);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
         }

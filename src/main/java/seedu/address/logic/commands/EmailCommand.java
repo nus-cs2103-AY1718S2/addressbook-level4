@@ -49,11 +49,11 @@ public class EmailCommand extends Command {
         try {
             Desktop.getDesktop().mail(new URI(MAIL_SYNTAX + emailAddress));
         } catch (HeadlessException hlError) {
-            throw new UnsupportDesktopException(Messages.UNSUPPORTED_DESKTOP);
+            throw new UnsupportDesktopException(Messages.MESSAGE_UNSUPPORTED_DESKTOP);
         } catch (URISyntaxException Urierror) {
-            throw new CommandException(Messages.MAIL_APP_ERROR);
+            throw new CommandException(Messages.MESSAGE_MAIL_APP_ERROR);
         } catch (IOException e) {
-            throw new CommandException(Messages.MAIL_APP_ERROR);
+            throw new CommandException(Messages.MESSAGE_MAIL_APP_ERROR);
         }
 
         return new CommandResult(String.format(MESSAGE_EMAIL_PERSON_SUCCESS, emailName));

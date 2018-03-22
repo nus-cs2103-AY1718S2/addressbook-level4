@@ -67,10 +67,13 @@ Format: `help`
 
 Adds a person to the address book +
 Alias: `a` and `+` +
-Format: `add n/NAME m/MATRICULATION NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME m/MATRICULATION NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS dp/[IMAGE PATH] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
+
+[TIP]
+You can choose not to enter `dp/` if you do not have picture.
 
 [NOTE]
 The tags "lecturer", "TA" "student" and "T1" will appear red, yellow, blue and green respectively.

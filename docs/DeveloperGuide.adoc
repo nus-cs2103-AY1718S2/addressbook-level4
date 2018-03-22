@@ -119,14 +119,15 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of five components.
 
+* <<Design-Login, *`Login`*>>: Authenticates access to App.
 * <<Design-Ui,*`UI`*>>: The UI of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the last four components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -156,6 +157,18 @@ image::SDforDeletePersonEventHandling.png[width="800"]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
+
+[[Design-Login]]
+=== Login Component
+.Interactions for Login Component
+image::Login.png[width="800"]
+
+Upon setting up the app, the Login component takes in two inputs from the user: `Username` and `Password`, then stores the user's login credentials into a `.xml` file.
+[Optional] `.xml` file is encrypted.
+
+* The login credentials are therefore immutable (cannot be changed).
+* The same username and password have to be used every time the user wishes to access the app.
+* Only upon successful authentication will the app load data from the `Storage` Component.
 
 [[Design-Ui]]
 === UI component
@@ -252,8 +265,26 @@ The `Model`,
 
 The `Person` Class,
 
-* Stores the information of a specific person(student) in the AddressBook
+* Stores the information of a specific person (student) in the AddressBook
 * Information includes: Name, Matriculation Number, Phone Number, Email, Address and different tags to associate with that person.
+* Implements `UniquePersonList` that enforces uniqueness of its elements and disallows nulls.
+* `Name`: Object that stores the name of the `Person` Object.
+[NOTE]
+Person's name should only contain alphanumeric characters, and should not be null.
+* `Matriculation Number`: Object that stores the matriculation number of the `Person` Object.
+[NOTE]
+Matriculation number should start with either 'A' or 'U', followed by 7 digits and ending with an alphabet (A-Z).
+* `Phone Number`: Object that stores the phone number of the `Person` Object.
+* `Email`: Object that stores the email address of the `Person` Object.
+[NOTE]
+Email address should be of the format _local-part@domain_.
+
+The `Tag` Class,
+
+* An immutable object that has to be valid.
+* Checks are implemented to guarantee validity.
+[TIP]
+For every `Person` object, there can be multiple (or zero) tags.
 
 [[Design-Storage]]
 === Storage component
@@ -280,9 +311,7 @@ This section describes some noteworthy details on how certain features are imple
 === Help feature
 ==== Current Implementation
 
-The help command displays a list of all the possible commands the user can make, followed by an example on its use.
-
-[This section is to be expanded when the help command is reworked into the help window.]
+The help command opens a new window, opening the user guide.
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -844,6 +873,77 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app, includes to-do
     list features (with prioritization, etc.) and scheduling (with calendar and reminders)
+
+=== Feature contribution
+
+*Wu Di*
+
+* *Major*: Implement the todo list
+
+** Support adding, editing and deleting of tasks
+** Works with undo/redo functions
+
+This enables the tutor to view all tasks in one glance so that he/she is able to stay organized and productive.
+
+* *Minor*: Import feature to migrate data from an external file
+
+** Imports data anywhere in any OS
+
+This helps the tutor work on different devices with the unique data set.
+
+* *Minor*: add the alias feature to some of the commands
+
+** Support majority of commands
+
+This helps the tutor remember the commands intuitively and type them more efficiently.
+
+*Daniel*
+
+* *Major*: Calendar and Scheduler for user
+
+** Supports adding of new tasks that will be slotted into the calendar(if it has a deadline)
+** Also assigns a priority value to each task based on parameters keyed in when task is added
+
+This helps the tutor to keep track of what needs to be done and which task to focus on.
+
+* *Minor*: Person has new parameter - Matriculation number
+
+** Person now stores matriculation number of the person
+** Add command supports adding person with matriculation number(compulsory parameter)
+** Find command supports search by matriculation number
+
+This helps the tutor to easily search for a certain student by their unique matriculation number instead of just
+their names (e.g. easier than searching for a common name such as Daniel).
+
+*Pearlissa*
+
+* *Major*: Login feature
+
+** Implements new User package
+** [Not confirmed] Encryption of data files containing usernames and passwords
+
+This allows multiple tutors to store their data in separate accounts, which can only be accessed by them.
+
+* *Minor*: Sorting of contacts based on selected parameters
+
+** Any number of parameters (at least 1), and in order of priority
+
+This allows tutors to be better able to go through their lists of students.
+
+*Ellery*
+
+* *Major*: Display picture for all students entered
+
+** Support adding, editing and deleting of picture
+** Also works with the redo/undo function
+
+This helps the tutor keep track of his students, and be able to easily remember them better.
+
+* *Minor*: Email feature to email students
+
+** Email multiple students quickly
+
+This helps the tutor to quickly bring up an email client to send an email to a student.
 
 [appendix]
 == User Stories

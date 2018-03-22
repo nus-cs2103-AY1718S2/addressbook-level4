@@ -35,8 +35,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static final Pattern ADD_COMMAND_FORMAT_ALL_NEW = Pattern.compile("-(o)+(?<ownerInfo>.*)"
             + "-(p)+(?<petInfo>.*)-(a)+(?<apptInfo>.*)");
     private static final Pattern ADD_COMMAND_FORMAT_OWNER = Pattern.compile("-(o)+(?<ownerInfo>.*)-(p)+(?<petInfo>.*)");
-    private static final Pattern ADD_COMMAND_FORMAT_PET = Pattern.compile("-(p)+(?<petInfo>.*)-(o)+(?<ownerNRIC>.*)");
-    private static final Pattern ADD_COMMAND_FORMAT_APPT = Pattern.compile("-(a)+(?<apptInfo>.*)-(o)(?<ownerNRIC>.*)"
+    private static final Pattern ADD_COMMAND_FORMAT_PET = Pattern.compile("-(p)+(?<petInfo>.*)-(o)+(?<ownerNric>.*)");
+    private static final Pattern ADD_COMMAND_FORMAT_APPT = Pattern.compile("-(a)+(?<apptInfo>.*)-(o)(?<ownerNric>.*)"
             + "-(p)+(?<petName>.*)");
     /**
      * Parses the given {@code String} of arguments in the context of the Person class
@@ -69,8 +69,13 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
     }
 
-    public AddCommand parse_NewOwner_NewPet_NewAppt(String ownerInfo, String petInfo, String apptInfo)
-            throws ParseException{
+    /**
+     * Parses the given {@code String} of arguments in the context of AddCommand
+     * and returns an AddCommand object.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddCommand parse_NewOwnerPetAppt(String ownerInfo, String petInfo, String apptInfo)
+            throws ParseException {
         System.out.println("I AM PARSING 3 NOW");
         Person owner = parsePerson(ownerInfo);
         PetPatient petPatient = new AddPetPatientCommandParser().parse(petInfo, owner);
@@ -78,12 +83,22 @@ public class AddCommandParser implements Parser<AddCommand> {
         return new AddCommand(owner, petPatient, appt);
     }
 
+    /**
+     * Parses the given {@code String} of arguments in the context of AddCommand
+     * and returns an AddCommand object.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public AddCommand parseNewOwnerAndPet(String ownerInfo, String petInfo) throws ParseException {
         Person owner = parsePerson(ownerInfo);
         PetPatient petPatient = new AddPetPatientCommandParser().parse(petInfo, owner);
         return new AddCommand(owner, petPatient);
     }
 
+    /**
+     * Parses the given {@code String} of arguments in the context of AddCommand
+     * and returns an AddCommand object.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public AddCommand parseNewOwnerOnly(String ownerInfo) throws ParseException {
         Person owner = parsePerson(ownerInfo);
         return new AddCommand(owner);
@@ -105,7 +120,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             String ownerInfo = matcher.group("ownerInfo");
             String petInfo = matcher.group("petInfo");
             String apptInfo = matcher.group("apptInfo");
-            return parse_NewOwner_NewPet_NewAppt(ownerInfo, petInfo, apptInfo);
+            return parse_NewOwnerPetAppt(ownerInfo, petInfo, apptInfo);
         }
 
         matcher = ADD_COMMAND_FORMAT_OWNER.matcher(trimmedArgs);
@@ -118,8 +133,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         matcher = ADD_COMMAND_FORMAT_PET.matcher(trimmedArgs);
         if (matcher.matches()) {
             String petInfo = matcher.group("petInfo");
-            String ownerNRIC = matcher.group("ownerNRIC");
-            //return new AddPetPatientCommandParser().parse(petInfo, ownerNRIC);
+            String ownerNric = matcher.group("ownerNric");
+            //return new AddPetPatientCommandParser().parse(petInfo, ownerNric);
         }
 
         matcher = ADD_COMMAND_FORMAT_OWNERONLY.matcher(trimmedArgs);

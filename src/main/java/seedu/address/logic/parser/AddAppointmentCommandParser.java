@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -15,7 +14,6 @@ import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.tag.Tag;
@@ -25,6 +23,11 @@ import seedu.address.model.tag.Tag;
  */
 public class AddAppointmentCommandParser {
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the Appointment class
+     * and returns an Appointment object.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public Appointment parse(String args, Person owner, PetPatient pet) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG);

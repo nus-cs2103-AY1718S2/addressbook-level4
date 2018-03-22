@@ -35,7 +35,7 @@ public class GetDistance {
             e.printStackTrace();
         }
         String distance = matrix.rows[0].elements[0].distance.toString();
-        distanceWithoutUnit = distance.substring(0,distance.length()-3);
+        distanceWithoutUnit = distance.substring(0, distance.length() - 3);
         return Double.parseDouble(distanceWithoutUnit);
     }
 

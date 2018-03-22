@@ -42,7 +42,9 @@ public class Appointment {
         return owner;
     }
 
-    public PetPatient getPetPatient() { return pet; }
+    public PetPatient getPetPatient() {
+        return pet;
+    }
 
     public Remark getRemark() {
         return remark;

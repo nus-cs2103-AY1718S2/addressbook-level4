@@ -45,8 +45,11 @@ public class ResultDisplayTest extends GuiUnitTest {
         assertEquals("", resultDisplayHandle.getText());
         assertEquals(defaultStyleOfResultDisplay, resultDisplayHandle.getStyleClass());
 
-        // new result received
-        postNow(NEW_RESULT_EVENT_STUB);
+        // receiving new results
+        assertResultDisplay(NEW_RESULT_SUCCESS_EVENT_STUB);
+        assertResultDisplay(NEW_RESULT_FAILURE_EVENT_STUB);
+    }
+
     /**
      * Posts the {@code event} to the {@code EventsCentre}, then verifies that <br>
      *      - the text on the result display matches the {@code event}'s message <br>

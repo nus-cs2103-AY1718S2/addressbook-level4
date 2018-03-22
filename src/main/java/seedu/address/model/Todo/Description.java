@@ -24,7 +24,7 @@ public class Description {
      * @param description A valid address.
      */
     public Description(String description) {
-        assert description != null: MESSAGE_DESCRIPTION_CONSTRAINTS;
+        assert description != null : MESSAGE_DESCRIPTION_CONSTRAINTS;
         checkArgument(isValidDescription(description));
         this.value = description;
     }

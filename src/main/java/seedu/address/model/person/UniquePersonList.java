@@ -81,6 +81,7 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    //@@author Nethergale
     /**
      * Sorts all persons in list alphabetically. Similar names are sorted lexicographically.
      */
@@ -88,6 +89,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.sort(Person.nameComparator());
     }
 
+    //@@author
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

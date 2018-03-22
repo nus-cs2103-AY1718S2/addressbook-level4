@@ -46,6 +46,8 @@ public class PatientCard extends UiPart<Region> {
     @FXML
     private Label bloodType;
     @FXML
+    private Label record;
+    @FXML
     private FlowPane tags;
 
     public PatientCard(Patient patient, int displayedIndex) {
@@ -60,6 +62,7 @@ public class PatientCard extends UiPart<Region> {
         bloodType.setText(patient.getBloodType().value);
         email.setText(patient.getEmail().value);
         remark.setText(patient.getRemark().value);
+        record.setText(patient.getRecord().toString());
 
         initTagLabels(patient);
     }

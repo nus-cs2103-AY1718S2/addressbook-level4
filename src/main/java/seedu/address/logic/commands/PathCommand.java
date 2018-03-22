@@ -19,8 +19,8 @@ public class PathCommand extends Command {
     public static final String COMMAND_ALIAS = "p";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Show the path to the address of the person identified " +
-            "by the index number used in the last person listing\n"
+            + ": Show the path to the address of the person identified "
+            + "by the index number used in the last person listing\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 3";
 

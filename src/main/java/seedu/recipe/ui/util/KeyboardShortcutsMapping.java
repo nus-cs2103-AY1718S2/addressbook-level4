@@ -16,5 +16,5 @@ public class KeyboardShortcutsMapping {
     public static final KeyCodeCombination NEW_LINE_IN_COMMAND =
         (KeyCodeCombination) KeyCodeCombination.valueOf("Shift+Enter");
     public static final KeyCodeCombination SHOW_SUGGESTIONS_COMMAND =
-        (KeyCodeCombination) KeyCodeCombination.valueOf("Ctrl+Space");
+        (KeyCodeCombination) KeyCodeCombination.valueOf("Shift+Space");
 }

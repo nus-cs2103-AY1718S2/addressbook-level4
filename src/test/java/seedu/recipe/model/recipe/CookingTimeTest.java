@@ -23,10 +23,10 @@ public class CookingTimeTest {
 
     @Test
     public void isValidCookingTime() {
-        // null cookingTime number
+        // null CookingTime
         Assert.assertThrows(NullPointerException.class, () -> CookingTime.isValidCookingTime(null));
 
-        // invalid cookingTime numbers
+        // invalid CookingTime
         assertFalse(CookingTime.isValidCookingTime("")); // empty string
         assertFalse(CookingTime.isValidCookingTime(" ")); // spaces only
         assertFalse(CookingTime.isValidCookingTime("NaN")); // not a number
@@ -34,7 +34,7 @@ public class CookingTimeTest {
         assertFalse(CookingTime.isValidCookingTime("123aaaa55555")); // unknown character p
         assertFalse(CookingTime.isValidCookingTime("1h  6666m")); // more spaces than needed
 
-        // valid cookingTime numbers
+        // valid CookingTime
         assertTrue(CookingTime.isValidCookingTime("1h10m"));
         assertTrue(CookingTime.isValidCookingTime("1 hour 10 min"));
         assertTrue(CookingTime.isValidCookingTime("1 hour 10 mins"));

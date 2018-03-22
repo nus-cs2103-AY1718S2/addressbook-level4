@@ -23,10 +23,10 @@ public class PreparationTimeTest {
 
     @Test
     public void isValidPreparationTime() {
-        // null preparationTime number
+        // null PreparationTime
         Assert.assertThrows(NullPointerException.class, () -> PreparationTime.isValidPreparationTime(null));
 
-        // invalid preparationTime numbers
+        // invalid PreparationTime
         assertFalse(PreparationTime.isValidPreparationTime("")); // empty string
         assertFalse(PreparationTime.isValidPreparationTime(" ")); // spaces only
         assertFalse(PreparationTime.isValidPreparationTime("NaN")); // not a number
@@ -34,7 +34,7 @@ public class PreparationTimeTest {
         assertFalse(PreparationTime.isValidPreparationTime("9011p041")); // unknown character p
         assertFalse(PreparationTime.isValidPreparationTime("1h  1534m")); // more spaces than needed
 
-        // valid preparationTime numbers
+        // valid PreparationTime
         assertTrue(PreparationTime.isValidPreparationTime("1h20m"));
         assertTrue(PreparationTime.isValidPreparationTime("1 hour 20 min"));
         assertTrue(PreparationTime.isValidPreparationTime("1 hour 20 mins"));

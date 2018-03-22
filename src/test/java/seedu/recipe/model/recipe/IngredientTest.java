@@ -29,35 +29,19 @@ public class IngredientTest {
         assertFalse(Ingredient.isValidIngredient("")); // empty string
         assertFalse(Ingredient.isValidIngredient(" ")); // spaces only
 
-        // missing parts
-        assertFalse(Ingredient.isValidIngredient("@example.com")); // missing local part
-        assertFalse(Ingredient.isValidIngredient("peterjackexample.com")); // missing '@' symbol
-        assertFalse(Ingredient.isValidIngredient("peterjack@")); // missing domain name
+        // invalid delimiter
+        assertFalse(Ingredient.isValidIngredient("test. ingredient")); // wrong delimiter
+        assertFalse(Ingredient.isValidIngredient("test|test")); // wrong delimiter
 
-        // invalid parts
-        assertFalse(Ingredient.isValidIngredient("peterjack@-")); // invalid domain name
-        assertFalse(Ingredient.isValidIngredient("peterjack@exam_ple.com")); // underscore in domain name
-        assertFalse(Ingredient.isValidIngredient("peter jack@example.com")); // spaces in local part
-        assertFalse(Ingredient.isValidIngredient("peterjack@exam ple.com")); // spaces in domain name
-        assertFalse(Ingredient.isValidIngredient(" peterjack@example.com")); // leading space
-        assertFalse(Ingredient.isValidIngredient("peterjack@example.com ")); // trailing space
-        assertFalse(Ingredient.isValidIngredient("peterjack@@example.com")); // double '@' symbol
-        assertFalse(Ingredient.isValidIngredient("peter@jack@example.com")); // '@' symbol in local part
-        assertFalse(Ingredient.isValidIngredient("peterjack@example@com")); // '@' symbol in domain name
-        assertFalse(Ingredient.isValidIngredient("peterjack@.example.com")); // domain name starts with a period
-        assertFalse(Ingredient.isValidIngredient("peterjack@example.com.")); // domain name ends with a period
-        assertFalse(Ingredient.isValidIngredient("peterjack@-example.com")); // domain name starts with a hyphen
-        assertFalse(Ingredient.isValidIngredient("peterjack@example.com-")); // domain name ends with a hyphen
+        // blank ingredients
+        assertFalse(Ingredient.isValidIngredient(",,,,,,,")); // no ingredients
+        assertFalse(Ingredient.isValidIngredient(", , , , , , , ")); // no ingredients
 
         // valid ingredient
-        assertTrue(Ingredient.isValidIngredient("PeterJack_1190@example.com"));
-        assertTrue(Ingredient.isValidIngredient("a@bc"));  // minimal
-        assertTrue(Ingredient.isValidIngredient("test@localhost"));   // alphabets only
-        assertTrue(Ingredient.isValidIngredient("!#$%&'*+/=?`{|}~^.-@example.org")); // special characters local part
-        assertTrue(Ingredient.isValidIngredient("123@145"));  // numeric local part and domain name
-        // mixture of alphanumeric and special characters
-        assertTrue(Ingredient.isValidIngredient("a1+be!@example1.com"));
-        assertTrue(Ingredient.isValidIngredient("peter_jack@very-very-very-long-example.com"));   // long domain name
-        assertTrue(Ingredient.isValidIngredient("if.you.dream.it_you.can.do.it@example.com"));    // long local part
+        assertTrue(Ingredient.isValidIngredient("chicken, here"));
+        assertTrue(Ingredient.isValidIngredient("more chicken here"));
+        assertTrue(Ingredient.isValidIngredient("fish"));   // 1 ingredient
+        assertTrue(Ingredient.isValidIngredient("pizza"));  // 1 ingredient
+        assertTrue(Ingredient.isValidIngredient("sugar, sugar, sugar, sugar"));
     }
 }

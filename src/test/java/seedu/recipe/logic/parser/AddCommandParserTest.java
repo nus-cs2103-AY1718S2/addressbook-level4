@@ -5,10 +5,13 @@ import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_CALORIES_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_COOKING_TIME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INGREDIENT_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INSTRUCTION_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_PREPARATION_TIME_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_SERVINGS_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_URL_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.LF;
@@ -40,11 +43,14 @@ import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess
 import org.junit.Test;
 
 import seedu.recipe.logic.commands.AddCommand;
+import seedu.recipe.model.recipe.Calories;
+import seedu.recipe.model.recipe.CookingTime;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Servings;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.testutil.RecipeBuilder;
@@ -195,12 +201,7 @@ public class AddCommandParserTest {
                 INVALID_NAME_DESC + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
                         + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
 
-        // invalid preparationTime
-        assertParseFailure(parser,
-                NAME_DESC_BOB + INVALID_PREPARATION_TIME_DESC + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
-                        + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
-
+        //@@Author kokonguyen191
         // invalid ingredient
         assertParseFailure(parser,
                 NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INVALID_INGREDIENT_DESC + INSTRUCTION_DESC_BOB
@@ -212,6 +213,30 @@ public class AddCommandParserTest {
                 NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INVALID_INSTRUCTION_DESC
                         + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS);
+
+        // invalid preparation time
+        assertParseFailure(parser,
+                NAME_DESC_BOB + INVALID_PREPARATION_TIME_DESC + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
+                        + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
+
+        // invalid cooking time
+        assertParseFailure(parser,
+                NAME_DESC_BOB + INVALID_COOKING_TIME_DESC + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
+                        + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                CookingTime.MESSAGE_COOKING_TIME_CONSTRAINTS);
+
+        // invalid calories
+        assertParseFailure(parser,
+                NAME_DESC_BOB + INVALID_CALORIES_DESC + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
+                        + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Calories.MESSAGE_CALORIES_CONSTRAINTS);
+
+        // invalid servings
+        assertParseFailure(parser,
+                NAME_DESC_BOB + INVALID_SERVINGS_DESC + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
+                        + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Servings.MESSAGE_SERVINGS_CONSTRAINTS);
 
         //@@author RyanAngJY
         // invalid url

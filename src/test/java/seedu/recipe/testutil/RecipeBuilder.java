@@ -20,13 +20,22 @@ import seedu.recipe.model.util.SampleDataUtil;
  */
 public class RecipeBuilder {
 
-    public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_INGREDIENT = "alice@gmail.com";
-    public static final String DEFAULT_INSTRUCTION = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_COOKING_TIME = "20m";
-    public static final String DEFAULT_PREPARATION_TIME = "85355255";
+    public static final String DEFAULT_NAME = "Chicken Rice";
+    public static final String DEFAULT_INGREDIENT = "demolishment,bigwig,archer,negative,appearance,afternoon";
+    public static final String DEFAULT_INSTRUCTION = "Fill a tea kettle or 2 quart saucepan with water and bring to "
+            + "a boil. Remove excess fat from chilled chicken and place in colander over a large bowl. Spread out with"
+            + " a fork. Pour hot water over meat through colander.\n"
+            + "Place chicken in plastic container with tight fitting lid.\n"
+            + "Add onions, chili powder, oregano, garlic powder, cumin, and paprika to chicken.\n"
+            + "Refrigerate chicken overnight in plastic container with tight fitting lid.\n"
+            + "To make tacos, place chicken mixture in a pan and heat slowly or heat in microwave for 2–3 minutes, "
+            + "stirring after 1½ minutes to heat evenly. Combine finely shredded lettuce and cabbage. Mix cheeses "
+            + "together. Place ¼ cup heated chicken mixture in a tortilla and top with cheese and vegetables.\n"
+            + "Add salsa as desired.";
+    public static final String DEFAULT_COOKING_TIME = "20 mins";
+    public static final String DEFAULT_PREPARATION_TIME = "69 hours";
     public static final String DEFAULT_CALORIES = "5000";
-    public static final String DEFAULT_SERVINGS = "3";
+    public static final String DEFAULT_SERVINGS = "2";
     public static final String DEFAULT_URL = "https://www.jamieoliver.com/recipes/rice-recipes/a-basic-risotto-recipe/";
     public static final String DEFAULT_TAGS = "friends";
 

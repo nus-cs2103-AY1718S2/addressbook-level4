@@ -36,8 +36,17 @@ public class XmlUtilTest {
     private static final String INVALID_PREPARATION_TIME = "9482asf424";
 
     private static final String VALID_NAME = "Chicken Rice";
-    private static final String VALID_INGREDIENT = "hans@example";
-    private static final String VALID_INSTRUCTION = "4th street";
+    private static final String VALID_INGREDIENT = "demolishment,bigwig,archer,negative,appearance,afternoon";
+    private static final String VALID_INSTRUCTION = "Fill a tea kettle or 2 quart saucepan with water and bring to "
+            + "a boil. Remove excess fat from chilled chicken and place in colander over a large bowl. Spread out with"
+            + " a fork. Pour hot water over meat through colander.\n"
+            + "Place chicken in plastic container with tight fitting lid.\n"
+            + "Add onions, chili powder, oregano, garlic powder, cumin, and paprika to chicken.\n"
+            + "Refrigerate chicken overnight in plastic container with tight fitting lid.\n"
+            + "To make tacos, place chicken mixture in a pan and heat slowly or heat in microwave for 2–3 minutes, "
+            + "stirring after 1½ minutes to heat evenly. Combine finely shredded lettuce and cabbage. Mix cheeses "
+            + "together. Place ¼ cup heated chicken mixture in a tortilla and top with cheese and vegetables.\n"
+            + "Add salsa as desired.";
     private static final String VALID_COOKING_TIME = "20 min";
     private static final String VALID_PREPARATION_TIME = "69 hours";
     private static final String VALID_CALORIES = "5000";
@@ -138,7 +147,7 @@ public class XmlUtilTest {
 
         RecipeBookBuilder builder = new RecipeBookBuilder(new RecipeBook());
         dataToWrite = new XmlSerializableRecipeBook(
-                builder.withRecipe(new RecipeBuilder().build()).withTag("Friends").build());
+                builder.withRecipe(new RecipeBuilder().build()).withTag("food").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableRecipeBook.class);

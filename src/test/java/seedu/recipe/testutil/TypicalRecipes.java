@@ -34,8 +34,18 @@ public class TypicalRecipes {
 
     public static final Recipe ALICE = new RecipeBuilder()
             .withName("Alice Pauline")
-            .withIngredient("alice@example.com")
-            .withInstruction("123, Jurong West Ave 6, #08-111")
+            .withIngredient("demolishment,bigwig,archer,negative,appearance,afternoon")
+            .withInstruction("Fill a tea kettle or 2 quart saucepan with water and bring to a boil."
+                    + " Remove excess fat from chilled chicken and place in colander over a large bowl."
+                    + " Spread out with a fork. Pour hot water over meat through colander.\n"
+                    + "Place chicken in plastic container with tight fitting lid.\n"
+                    + "Add onions, chili powder, oregano, garlic powder, cumin, and paprika to chicken.\n"
+                    + "Refrigerate chicken overnight in plastic container with tight fitting lid.\n"
+                    + "To make tacos, place chicken mixture in a pan and heat slowly or heat in microwave"
+                    + " for 2–3 minutes, stirring after 1½ minutes to heat evenly. Combine finely shredded"
+                    + " lettuce and cabbage. Mix cheeses together. Place ¼ cup heated chicken mixture in a "
+                    + "tortilla and top with cheese and vegetables.\n"
+                    + "Add salsa as desired.")
             .withCookingTime("50m")
             .withPreparationTime("85355255")
             .withCalories("5000")
@@ -44,7 +54,7 @@ public class TypicalRecipes {
             .withTags("family").build();
     public static final Recipe BENSON = new RecipeBuilder()
             .withName("Benson Meier")
-            .withIngredient("johnd@example.com")
+            .withIngredient("guest, barnyard, genuine, salt")
             .withInstruction("311, Clementi Ave 2, #02-25")
             .withCookingTime("50m")
             .withPreparationTime("98765432")
@@ -54,7 +64,7 @@ public class TypicalRecipes {
             .withTags("owesMoney", "family").build();
     public static final Recipe CARL = new RecipeBuilder()
             .withName("Carl Kurz")
-            .withIngredient("heinz@example.com")
+            .withIngredient("gadget")
             .withInstruction("wall street")
             .withCookingTime("50m")
             .withPreparationTime("95352563")
@@ -64,7 +74,7 @@ public class TypicalRecipes {
             .withTags("owesMoney").build();
     public static final Recipe DANIEL = new RecipeBuilder()
             .withName("Daniel Meier")
-            .withIngredient("cornelia@example.com")
+            .withIngredient("ebony, cold, affliction")
             .withInstruction("10th street")
             .withCookingTime("50m")
             .withPreparationTime("87652533")
@@ -73,7 +83,7 @@ public class TypicalRecipes {
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/curry").build();
     public static final Recipe ELLE = new RecipeBuilder()
             .withName("Elle Meyer")
-            .withIngredient("werner@example.com")
+            .withIngredient("frantic,aimless")
             .withInstruction("michegan ave")
             .withCookingTime("50m")
             .withPreparationTime("9482224")
@@ -82,7 +92,7 @@ public class TypicalRecipes {
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/fish-pie").build();
     public static final Recipe FIONA = new RecipeBuilder()
             .withName("Fiona Kunz")
-            .withIngredient("lydia@example.com")
+            .withIngredient("bluntness,falls")
             .withInstruction("little tokyo")
             .withCookingTime("50m")
             .withPreparationTime("9482427")
@@ -91,7 +101,7 @@ public class TypicalRecipes {
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/chicken-salad").build();
     public static final Recipe GEORGE = new RecipeBuilder()
             .withName("George Best")
-            .withIngredient("anna@example.com")
+            .withIngredient("confidence, abandon, brass, model, greed, minipill")
             .withInstruction("4th street")
             .withCookingTime("50m")
             .withPreparationTime("9482442")
@@ -102,15 +112,21 @@ public class TypicalRecipes {
     // Manually added
     public static final Recipe HOON = new RecipeBuilder()
             .withName("Hoon Meier")
-            .withPreparationTime("8482424")
-            .withIngredient("stefan@example.com")
+            .withIngredient("test, ingredients")
             .withInstruction("little india")
+            .withCookingTime("5555")
+            .withPreparationTime("420m")
+            .withCalories("15000")
+            .withServings("2")
             .withUrl("https://www.google.com").build();
     public static final Recipe IDA = new RecipeBuilder()
             .withName("Ida Mueller")
-            .withPreparationTime("8482131")
-            .withIngredient("hans@example.com")
+            .withIngredient("just,example")
             .withInstruction("chicago ave")
+            .withCookingTime("5555")
+            .withPreparationTime("420m")
+            .withCalories("15000")
+            .withServings("2")
             .withUrl("https://www.google.com").build();
 
     // Manually added - Recipe's details found in {@code CommandTestUtil}

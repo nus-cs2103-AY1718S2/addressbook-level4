@@ -41,10 +41,4 @@ public interface CustomerStatsStorage {
      */
     void saveCustomerStats(ReadOnlyCustomerStats CustomerStats, String filePath) throws IOException;
 
-    /**
-     * Backs up the given {@link ReadOnlyCustomerStats} to a local offline file.
-     * @param CustomerStats cannot be null.
-     * @throws IOException if there was any problem writing to the file.
-     */
-    void backUpCustomerStats(ReadOnlyCustomerStats CustomerStats) throws IOException;
 }

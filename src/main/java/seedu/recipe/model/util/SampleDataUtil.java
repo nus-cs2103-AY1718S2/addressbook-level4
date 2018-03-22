@@ -24,7 +24,7 @@ public class SampleDataUtil {
     public static Recipe[] getSampleRecipes() {
         return new Recipe[] {
             new Recipe(new Name("Chicken Rice"),
-                    new Ingredient("alexyeoh@example.com"),
+                    new Ingredient("this, is, some, sample, ingredient"),
                     new Instruction("Fill a tea kettle or 2 quart saucepan with water and bring to a boil. Remove e"
                             + "xcess fat from chilled chicken and place in colander over a large bowl. Spread out wi"
                             + "th a fork. Pour hot water over meat through colander. \nPlace chicken in plastic co"
@@ -42,7 +42,7 @@ public class SampleDataUtil {
                     new Url("https://www.allrecipes.com/recipe/73634/colleens-slow-cooker-jambalaya/"),
                     getTagSet("friends")),
             new Recipe(new Name("Pizza"),
-                    new Ingredient("berniceyu@example.com"),
+                    new Ingredient("this, is, some, sample, ingredient"),
                     new Instruction("Out too the been like hard off. Improve enquire welcome own beloved matt"
                             + "ers her. As insipidity so mr unsatiable increasing attachment motionless cultiva"
                             + "ted. Addition mr husbands unpacked occasion he oh. Is unsatiable if projecting "
@@ -60,7 +60,7 @@ public class SampleDataUtil {
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%203"),
                     getTagSet("colleagues", "friends")),
             new Recipe(new Name("Big Pizza"),
-                    new Ingredient("charlotte@example.com"),
+                    new Ingredient("this, is, some, sample, ingredient"),
                     new Instruction("Silent sir say desire fat him letter. Whatever settling goodness too and"
                             + " honoured she building answered her. Strongly thoughts remember mr to do conside"
                             + "r debating. Spirits musical behaved on we he farther letters. Repulsive he he as"
@@ -80,7 +80,7 @@ public class SampleDataUtil {
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%206"),
                     getTagSet("neighbours")),
             new Recipe(new Name("Kinda Big Pizza"),
-                    new Ingredient("lidavid@example.com"),
+                    new Ingredient("this, is, some, sample, ingredient"),
                     new Instruction("Enfants facteur au va cousine violets. Impute va on la ai enfuit couvr"
                             + "e charge disant.\nFanatiques cimetieres on lumineuses xv caracolent electriq"
                             + "ue je et retrouvait. Sortes forges me la cranes demain enleve. Abris bande soe"
@@ -94,7 +94,7 @@ public class SampleDataUtil {
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%2014"),
                     getTagSet("family")),
             new Recipe(new Name("Somewhat Big Pizza"),
-                    new Ingredient("irfan@example.com"),
+                    new Ingredient("this, is, some, sample, ingredient"),
                     new Instruction("Publics banques aisance verdure art ces lettres arriere les. Veux voi"
                             + "e pans on pont le donc puis. Pu officier et corolles on terrasse.\nRoc paraiss"
                             + "ait artilleurs consentiez moi eclaireurs but. Le dieu la mene ni sais si. Toi "
@@ -109,7 +109,7 @@ public class SampleDataUtil {
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%2020"),
                     getTagSet("classmates")),
             new Recipe(new Name("I Am Running Out Of Names"),
-                    new Ingredient("royb@example.com"),
+                    new Ingredient("this, is, some, sample, ingredient"),
                     new Instruction("Fill a tea kettle or 2 quart saucepan with water and bring to a boil. Re"
                             + "move excess fat from chilled chicken and place in colander over a large bowl. Sp"
                             + "read out with a fork. Pour hot water over meat through colander. \nPlace chicken "

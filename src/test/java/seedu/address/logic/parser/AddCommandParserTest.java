@@ -56,7 +56,6 @@ import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.TypicalPetPatients;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();

@@ -31,7 +31,6 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.TypicalPersons;
 
 /**
  * Contains helper methods for testing commands.

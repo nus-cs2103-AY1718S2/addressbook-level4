@@ -7,7 +7,6 @@ import java.util.Set;
 
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.tag.Tag;

@@ -61,7 +61,6 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedToDo todo : todos) {
             addressBook.addToDo(todo.toModelType());
         }
-        addressBook.addColorsToTag();
         return addressBook;
     }
 

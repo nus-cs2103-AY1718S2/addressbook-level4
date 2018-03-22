@@ -1016,11 +1016,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Student working with new teammates |Add their contact information |I can contact them if the need arises
 
-<<<<<<< HEAD
 |`* * *` |user |add info of the members involved in events|So that I know who I would need to talk to
-=======
+
 |`* * *` |Student first time using the application |See the usage instructions |Learn how to use the application
->>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
 
 |`* *` |Student that does not leave applications open |See an overview of the week’s meetup right away when the application opens |Do not have to type in any commands when I first open the application
 
@@ -1050,7 +1048,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |Student who do not how to reach the destination of the meet-up |Have the venue of the meet-up shown on google map |I can know the direction to the meetup
 
-<<<<<<< HEAD
 |`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the, map while driving
 
 |`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related

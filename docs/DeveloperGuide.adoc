@@ -370,9 +370,11 @@ As illustrated, a filtered list of persons will be displayed in a sorted manner 
 
 image::SortFilteredListDiagram.png[width="850"]
 
+
 The command can also handle multiple persons with similar names (i.e. different letter-casings) as shown below:
 
-image::SortSimilarNamesDiagram.png[width="850"]
+image::SortSimilarNamesDiagram.png[width="650"]
+
 
 During sorting, names of two different persons are compared using the static method, `nameComparator`, found in the person class:
 [source, java]
@@ -394,7 +396,7 @@ image::SortCommandSequenceDiagram.png[width="800"]
 * **Alternative 1 (current choice):** Create a custom sorting method for person names
 ** Pros: Allows list to be displayed in a uniform manner, such that similar names are also sorted.
 ** Cons: Requires extra work to write custom method.
-* **Alternative 2:** Utilise String.CASE_INSENSITIVE_ORDER for sorting
+* **Alternative 2:** Utilise `String.CASE_INSENSITIVE_ORDER` for sorting
 ** Pros: Does not require additional work to write or override compare methods.
 ** Cons: List may be inconsistent when sorting multiple persons with similar names.
 

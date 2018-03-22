@@ -6,7 +6,21 @@ import static seedu.recipe.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.recipe.logic.commands.*;
+import seedu.recipe.logic.commands.AddCommand;
+import seedu.recipe.logic.commands.ClearCommand;
+import seedu.recipe.logic.commands.Command;
+import seedu.recipe.logic.commands.DeleteCommand;
+import seedu.recipe.logic.commands.EditCommand;
+import seedu.recipe.logic.commands.ExitCommand;
+import seedu.recipe.logic.commands.FindCommand;
+import seedu.recipe.logic.commands.HelpCommand;
+import seedu.recipe.logic.commands.HistoryCommand;
+import seedu.recipe.logic.commands.ListCommand;
+import seedu.recipe.logic.commands.RedoCommand;
+import seedu.recipe.logic.commands.SelectCommand;
+import seedu.recipe.logic.commands.TagCommand;
+import seedu.recipe.logic.commands.UndoCommand;
+import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 
 /**

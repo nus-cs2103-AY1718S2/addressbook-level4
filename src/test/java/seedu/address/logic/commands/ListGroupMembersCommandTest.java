@@ -66,7 +66,7 @@ public class ListGroupMembersCommandTest {
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
-        ListGroupMembersCommand command = prepareCommand("husband owesMoney");
+        ListGroupMembersCommand command = prepareCommand("CS3230 owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON));
     }
 

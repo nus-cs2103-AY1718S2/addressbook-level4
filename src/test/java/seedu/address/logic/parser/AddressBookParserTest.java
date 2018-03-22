@@ -163,7 +163,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_listGroupMembers() throws Exception {
-        List<String> keywords = Arrays.asList("friends", "husband");
+        List<String> keywords = Arrays.asList("friends", "CS3230");
         ListGroupMembersCommand command = (ListGroupMembersCommand) parser.parseCommand(
                 ListGroupMembersCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new ListGroupMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
@@ -171,7 +171,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_listGroupMembersAlias() throws Exception {
-        List<String> keywords = Arrays.asList("friends", "husband");
+        List<String> keywords = Arrays.asList("friends", "CS3230");
         ListGroupMembersCommand command = (ListGroupMembersCommand) parser.parseCommand(
                 ListGroupMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new ListGroupMembersCommand(new TagContainKeywordsPredicate(keywords)), command);

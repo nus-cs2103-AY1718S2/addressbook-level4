@@ -25,11 +25,11 @@ public class ListGroupMembersCommandParserTest {
     public void parse_validArgs_returnsListGroupMembersCommand() {
         // no leading and trailing whitespaces
         ListGroupMembersCommand expectedListGroupMembersCommand =
-                new ListGroupMembersCommand(new TagContainKeywordsPredicate(Arrays.asList("friends", "husband")));
-        assertParseSuccess(parser, "friends husband", expectedListGroupMembersCommand);
+                new ListGroupMembersCommand(new TagContainKeywordsPredicate(Arrays.asList("friends", "CS3230")));
+        assertParseSuccess(parser, "friends CS3230", expectedListGroupMembersCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n friends \n \t husband  \t", expectedListGroupMembersCommand);
+        assertParseSuccess(parser, " \n friends \n \t CS3230  \t", expectedListGroupMembersCommand);
     }
 
 }

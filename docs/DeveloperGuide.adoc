@@ -532,18 +532,20 @@ item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastW
 
 * **Alternative 1 (current choice):** `ContextMenu`
 ** Pros: Easy to use since `ContextMenu` and `TextArea` are in the same library `javafx.scene.control`.
-** Cons: Dependent on TextArea in `CommandBox` class.
+** Cons: Dependent on `TextArea` in `CommandBox` class.
 * **Alternative 2:** `JPopupMenu`
 ** Pros: NA.
 ** Cons: Need additional works to make `JPopupMenu` compatible with `TextArea`.
+
 ===== Aspect: Abstraction of `SuggestionsPopUp`
 
 * **Alternative 1 (current choice):** A separate class `SuggestionsPopUp`
-** Pros: More intuitive approach since`SuggestionsPopUp` is a component in UI.
+** Pros: More intuitive approach since `SuggestionsPopUp` is a component in `UI`.
 ** Cons: Need to take extra information from `CommandBox` class.
 * **Alternative 2:** An inner class of `CommandBox` class
 ** Pros: Easy to implement since it has access to all attributes and methods of `CommandBox`.
 ** Cons: Limitations in reusability.
+
 ===== Aspect: Abstraction of `TextInputProcessorUtil`
 
 * **Alternative 1 (current choice):** A separate class `TextInputProcessorUtil`

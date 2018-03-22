@@ -60,6 +60,17 @@ public class PersonCard extends UiPart<Region> {
         return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
     }
 
+    private void initTags(Person person) {
+        person.getTags().forEach(tag -> {
+            // creates a new Label object for each tag
+            Label tagLabel = new Label(tag.tagName);
+            // assigns a style colour to each tag based on its name
+            tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));
+            // JavaFX statement: adds each individual tag to the FlowPane object
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

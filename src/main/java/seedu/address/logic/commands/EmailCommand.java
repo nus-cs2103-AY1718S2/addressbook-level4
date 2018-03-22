@@ -8,6 +8,8 @@ import seedu.address.commons.util.GmailUtil;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
+//@@author ng95junwei
+
 /**
  * Finds and emails all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.

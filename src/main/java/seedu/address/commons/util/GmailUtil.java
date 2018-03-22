@@ -30,6 +30,8 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 
+//@@author ng95junwei
+
 /**
  * Provides handler to send emails from logged in user
  */

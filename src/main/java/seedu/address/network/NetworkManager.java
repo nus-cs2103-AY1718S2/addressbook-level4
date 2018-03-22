@@ -1,9 +1,8 @@
 package seedu.address.network;
 
-import java.util.logging.Logger;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.Dsl;
+import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -18,33 +17,28 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.network.api.google.GoogleBooksApi;
 
 /**
- * Provides networking functionality (making API calls).
+ * Provides networking functionality (making web API calls).
  *
- * No API methods are directly exposed on this class. To make an API call,
+ * No web API methods are directly exposed on this class. To make a web API call,
  * raise the corresponding *RequestEvent. To receive the results of the call,
  * handle the corresponding *ResultEvent.
  */
 public class NetworkManager extends ComponentManager implements Network {
 
     private static final Logger logger = LogsCenter.getLogger(NetworkManager.class);
-    private static final int CONNECTION_TIMEOUT_MILLIS = 1000 * 5; // 5 seconds
-    private static final int READ_TIMEOUT_MILLIS = 1000 * 5; // 5 seconds
-    private static final int REQUEST_TIMEOUT_MILLIS = 1000 * 5; // 5 seconds
 
     private final HttpClient httpClient;
     private final GoogleBooksApi googleBooksApi;
 
     public NetworkManager() {
         super();
-        AsyncHttpClient asyncHttpClient = Dsl.asyncHttpClient(Dsl.config()
-                .setConnectTimeout(CONNECTION_TIMEOUT_MILLIS)
-                .setReadTimeout(READ_TIMEOUT_MILLIS)
-                .setRequestTimeout(REQUEST_TIMEOUT_MILLIS));
-        httpClient = new HttpClient(asyncHttpClient);
+        httpClient = new HttpClient();
         googleBooksApi = new GoogleBooksApi(httpClient);
     }
 
     protected NetworkManager(HttpClient httpClient, GoogleBooksApi googleBooksApi) {
+        super();
+        requireAllNonNull(httpClient, googleBooksApi);
         this.httpClient = httpClient;
         this.googleBooksApi = googleBooksApi;
     }

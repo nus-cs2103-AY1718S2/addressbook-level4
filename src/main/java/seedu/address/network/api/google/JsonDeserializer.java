@@ -6,12 +6,11 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.InvalidBookException;
 
 /**
  * Provides utilities to deserialize JSON responses.
@@ -24,10 +23,6 @@ public class JsonDeserializer {
 
     JsonDeserializer() {
         mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(Book.class, new BookDeserializer());
-        module.addDeserializer(BookShelf.class, new BookShelfDeserializer());
-        mapper.registerModule(module);
     }
 
     /**
@@ -35,8 +30,9 @@ public class JsonDeserializer {
      */
     public Book convertJsonStringToBook(String json) {
         try {
-            return mapper.readValue(json, Book.class);
-        } catch (IOException e) {
+            JsonBookDetails jsonBookDetails = mapper.readValue(json, JsonBookDetails.class);
+            return jsonBookDetails.toModelType();
+        } catch (IOException | InvalidBookException e) {
             logger.warning("Failed to convert JSON to book.");
             throw new CompletionException(e);
         }
@@ -47,7 +43,8 @@ public class JsonDeserializer {
      */
     public ReadOnlyBookShelf convertJsonStringToBookShelf(String json) {
         try {
-            return mapper.readValue(json, BookShelf.class);
+            JsonSearchResults jsonSearchResults = mapper.readValue(json, JsonSearchResults.class);
+            return jsonSearchResults.toModelType();
         } catch (IOException e) {
             logger.warning("Failed to convert JSON to book shelf.");
             throw new CompletionException(e);

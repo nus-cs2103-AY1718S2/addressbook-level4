@@ -1,9 +1,11 @@
 package seedu.address.network;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import org.asynchttpclient.Response;
 
 /**
- * A wrapper around the Response class from async-http-client.
+ * A wrapper around the {@link Response} class from async-http-client.
  */
 public class HttpResponse {
 
@@ -12,6 +14,7 @@ public class HttpResponse {
     private final String responseBody;
 
     public HttpResponse(int statusCode, String contentType, String responseBody) {
+        requireAllNonNull(contentType, responseBody);
         this.statusCode = statusCode;
         this.contentType = contentType;
         this.responseBody = responseBody;

@@ -1,6 +1,9 @@
 package seedu.address.network.api.google;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -30,81 +33,89 @@ public class GoogleBooksApiTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private GoogleBooksApi googleBooksApi;
+    private HttpClient mockClient;
 
     @Before
     public void setUp() {
-        googleBooksApi = new GoogleBooksApi(new HttpClientStub());
+        mockClient = mock(HttpClient.class);
+        googleBooksApi = new GoogleBooksApi(mockClient);
     }
 
     @Test
-    public void searchBooks_validParam_success() {
+    public void searchBooks_validParam_success() throws IOException {
+        when(mockClient.makeGetRequest(URL_SEARCH_BOOKS_OK))
+                .thenReturn(makeFutureResponse(200,
+                        FileUtil.readFromFile(JsonDeserializerTest.VALID_SEARCH_RESPONSE_FILE)));
+
         ReadOnlyBookShelf bookShelf = googleBooksApi.searchBooks("123").join();
         Book book1 = bookShelf.getBookList().get(0);
+
+        verify(mockClient).makeGetRequest(URL_SEARCH_BOOKS_OK);
         assertEquals("The Book Without a Title", book1.getTitle().title);
         assertEquals("This is a valid description.", book1.getDescription().description);
     }
 
     @Test
     public void searchBooks_invalidParam_throwsCompletionException() {
+        when(mockClient.makeGetRequest(URL_SEARCH_BOOKS_FAIL))
+                .thenReturn(makeFutureResponse(503, "{ \"error\": { \"code\": 503 } }"));
+
         thrown.expect(CompletionException.class);
         googleBooksApi.searchBooks("").join();
     }
 
     @Test
     public void searchBooks_badResponseType_throwsCompletionException() {
+        when(mockClient.makeGetRequest(URL_SEARCH_BOOKS_BAD_RESPONSE))
+                .thenReturn(makeFutureResponse(503, "text/html;", "{ \"error\": { \"code\": 503 } }"));
+
         thrown.expect(CompletionException.class);
         googleBooksApi.searchBooks("html").join();
     }
 
     @Test
-    public void getBookDetails_validId_success() {
+    public void getBookDetails_validId_success() throws IOException {
+        when(mockClient.makeGetRequest(URL_BOOK_DETAILS_OK))
+                .thenReturn(makeFutureResponse(200,
+                        FileUtil.readFromFile(JsonDeserializerTest.VALID_BOOK_DETAILS_RESPONSE_FILE)));
+
         Book book = googleBooksApi.getBookDetails("123").join();
+
+        verify(mockClient).makeGetRequest(URL_BOOK_DETAILS_OK);
         assertEquals("The Book Without a Title", book.getTitle().title);
         assertEquals("This is a valid description.", book.getDescription().description);
     }
 
     @Test
     public void getBookDetails_invalidId_throwsCompletionException() {
+        when(mockClient.makeGetRequest(URL_BOOK_DETAILS_FAIL))
+                .thenReturn(makeFutureResponse(503, "{ \"error\": { \"code\": 503 } }"));
+
         thrown.expect(CompletionException.class);
         googleBooksApi.getBookDetails("").join();
     }
 
     @Test
     public void getBookDetails_badResponseType_throwsCompletionException() {
+        when(mockClient.makeGetRequest(URL_BOOK_DETAILS_BAD_RESPONSE))
+                .thenReturn(makeFutureResponse(503, "text/html;", "{ \"error\": { \"code\": 503 } }"));
+
         thrown.expect(CompletionException.class);
         googleBooksApi.getBookDetails("html").join();
     }
 
-    /** A stub HttpClient that returns preset responses when given certain urls, and null for other urls. */
-    private static class HttpClientStub extends HttpClient {
-
-        public HttpClientStub() {
-            super(null);
-        }
-
-        @Override
-        public CompletableFuture<HttpResponse> makeGetRequest(String url) {
-            try {
-                if (url.equals(URL_SEARCH_BOOKS_OK)) {
-                    return CompletableFuture.completedFuture(makeResponse(200,
-                            FileUtil.readFromFile(BookShelfDeserializerTest.VALID_RESPONSE_FILE)));
-                } else if (url.equals(URL_BOOK_DETAILS_OK)) {
-                    return CompletableFuture.completedFuture(makeResponse(200,
-                            FileUtil.readFromFile(BookDeserializerTest.VALID_RESPONSE_FILE)));
-                } else if (url.equals(URL_SEARCH_BOOKS_FAIL) || url.equals(URL_BOOK_DETAILS_FAIL)) {
-                    return CompletableFuture.completedFuture(makeResponse(503, "{ \"error\": { \"code\": 503 } }"));
-                } else if (url.equals(URL_SEARCH_BOOKS_BAD_RESPONSE) || url.equals(URL_BOOK_DETAILS_BAD_RESPONSE)) {
-                    return CompletableFuture.completedFuture(
-                            new HttpResponse(503, "text/html;", "{ \"error\": { \"code\": 503 } }"));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        private HttpResponse makeResponse(int code, String body) {
-            return new HttpResponse(code, "application/json;", body);
-        }
+    /**
+     * Returns a {@link CompletableFuture} that resolves to a {@link HttpResponse} of content type JSON.
+     */
+    private static CompletableFuture<HttpResponse> makeFutureResponse(int code, String response) {
+        return makeFutureResponse(code, "application/json;", response);
     }
+
+    /**
+     * Returns a {@link CompletableFuture} that resolves to a {@link HttpResponse}.
+     */
+    private static CompletableFuture<HttpResponse> makeFutureResponse(int code, String contentType, String response) {
+        return CompletableFuture.completedFuture(new HttpResponse(code, contentType, response));
+    }
+
 }

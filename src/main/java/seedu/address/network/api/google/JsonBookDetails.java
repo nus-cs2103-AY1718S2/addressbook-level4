@@ -1,12 +1,8 @@
 package seedu.address.network.api.google;
 
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Category;
@@ -20,78 +16,63 @@ import seedu.address.model.book.exceptions.InvalidBookException;
 import seedu.address.model.util.BookDataUtil;
 
 /**
- * Custom Jackson deserializer for deserializing JSON to book.
+ * A temporary data holder used for deserialization of the JSON response
+ * from the book details endpoint of Google Books API.
  */
-public class BookDeserializer extends StdDeserializer<Book> {
+public class JsonBookDetails {
+    private int error = 0;
+    private String id = "";
+    private JsonVolumeInfo volumeInfo = new JsonVolumeInfo();
 
-    BookDeserializer() {
-        this(null);
+    // This should fail if the API returns an error, due to incompatible types.
+    public void setError(int error) {
+        this.error = error;
     }
 
-    BookDeserializer(Class<?> vc) {
-        super(vc);
+    public void setId(String id) {
+        this.id = id;
     }
 
-    @Override
-    public Book deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonRoot root = jp.readValueAs(JsonRoot.class);
-        JsonVolumeInfo volumeInfo = root.volumeInfo;
+    public void setVolumeInfo(JsonVolumeInfo volumeInfo) {
+        this.volumeInfo = volumeInfo;
+    }
+
+    /**
+     * Converts this data holder object into the model's Book object.
+     */
+    public Book toModelType() throws InvalidBookException {
         Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);
 
         if (isbn == null) {
-            throw new IOException(new InvalidBookException("No ISBN is found for the book."));
+            throw new InvalidBookException("No ISBN is found for the book.");
         }
 
-        return new Book(new Gid(root.id), isbn,
+        return new Book(new Gid(id), isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
                 getCategorySet(volumeInfo.categories), getDescription(volumeInfo.description),
                 new Publisher(volumeInfo.publisher),
                 new PublicationDate(volumeInfo.publishedDate));
     }
 
-    private Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] iiArray) {
-        for (JsonIndustryIdentifiers ii: iiArray) {
-            if ("ISBN_13".equals(ii.type)) {
-                return new Isbn(ii.identifier);
-            }
-        }
-        return null;
+    private static Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] iiArray) {
+        return Stream.of(iiArray)
+                .filter(ii -> ii.type.equals("ISBN_13"))
+                .findFirst()
+                .map(ii -> new Isbn(ii.identifier))
+                .orElse(null);
     }
 
-    private Set<Category> getCategorySet(String[] categories) {
-        Set<Category> categorySet = new HashSet<>();
-        for (String category: categories) {
-            String[] splitCats = category.split("/");
-            for (String token: splitCats) {
-                categorySet.add(new Category(token.trim()));
-            }
-        }
-        return categorySet;
+    private static Set<Category> getCategorySet(String[] categories) {
+        return Stream.of(categories)
+                .flatMap(category -> Stream.of(category.split("/")))
+                .map(token -> new Category(token.trim()))
+                .collect(Collectors.toSet());
     }
 
-    private Description getDescription(String description) {
+    private static Description getDescription(String description) {
         return new Description(description.replaceAll("<br>", "\n"));
     }
 
-    /** Temporary data holder used for deserialization. */
-    private static class JsonRoot {
-        private int error = 0;
-        private String id = "";
-        private JsonVolumeInfo volumeInfo = new JsonVolumeInfo();
-
-        // This should fail if the API returns an error, due to incompatible types.
-        public void setError(int error) {
-            this.error = error;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public void setVolumeInfo(JsonVolumeInfo volumeInfo) {
-            this.volumeInfo = volumeInfo;
-        }
-    }
 
     /** Temporary data holder used for deserialization. */
     private static class JsonVolumeInfo {
@@ -145,5 +126,4 @@ public class BookDeserializer extends StdDeserializer<Book> {
             this.type = type;
         }
     }
-
 }

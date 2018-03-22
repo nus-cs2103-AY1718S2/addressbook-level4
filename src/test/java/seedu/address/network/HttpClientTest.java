@@ -10,6 +10,12 @@ public class HttpClientTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+    public void constructor_null_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new HttpClient(null);
+    }
+
+    @Test
     public void close_executedMultipleTimes_success() {
         HttpClient httpClient = new HttpClient(Dsl.asyncHttpClient());
         httpClient.close();

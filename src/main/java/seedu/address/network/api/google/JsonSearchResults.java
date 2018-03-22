@@ -1,14 +1,11 @@
 package seedu.address.network.api.google;
 
-import java.io.IOException;
 import java.util.logging.Logger;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.BookShelf;
+import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Gid;
@@ -17,84 +14,76 @@ import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
 import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.DuplicateBookException;
+import seedu.address.model.book.exceptions.InvalidBookException;
 import seedu.address.model.util.BookDataUtil;
 
 /**
- * Custom Jackson deserializer for deserializing JSON to book shelf.
+ * A temporary data holder used for deserialization of the JSON response
+ * from the book searching endpoint of Google Books API.
  */
-public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
+public class JsonSearchResults {
 
-    private static final Logger logger = LogsCenter.getLogger(BookShelfDeserializer.class);
+    private static final Logger logger = LogsCenter.getLogger(JsonSearchResults.class);
 
-    BookShelfDeserializer() {
-        this(null);
+    private int error = 0;
+    private int totalItems = 0;
+    private JsonVolume[] items = new JsonVolume[0];
+
+    // This should fail if the API returns an error, due to incompatible types.
+    public void setError(int error) {
+        this.error = error;
     }
 
-    BookShelfDeserializer(Class<?> vc) {
-        super(vc);
+    public void setTotalItems(int totalItems) {
+        this.totalItems = totalItems;
     }
 
-    @Override
-    public BookShelf deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonRoot root = jp.readValueAs(JsonRoot.class);
+    public void setItems(JsonVolume[] items) {
+        this.items = items;
+    }
+
+    /**
+     * Converts this data holder object into the model's BookShelf object.
+     */
+    public ReadOnlyBookShelf toModelType() {
         BookShelf bookShelf = new BookShelf();
 
-        for (JsonVolume volume : root.items) {
-            convertAndAddBook(bookShelf, volume, new Gid(volume.id));
+        for (JsonVolume volume : items) {
+            try {
+                Book book = convertToBook(volume);
+                bookShelf.addBook(book);
+            } catch (InvalidBookException | DuplicateBookException e) {
+                logger.warning(e.getMessage());
+            }
         }
         return bookShelf;
     }
 
-    /** Converts a JsonVolume into a Book, and add it into the book shelf. */
-    private void convertAndAddBook(BookShelf bookShelf, JsonVolume volume, Gid gid) {
+    /**
+     * Converts a JsonVolume into a Book.
+     */
+    private static Book convertToBook(JsonVolume volume) throws InvalidBookException {
         JsonVolumeInfo volumeInfo = volume.volumeInfo;
         Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);
 
         if (isbn == null) {
-            logger.warning("Found book without ISBN");
-            return;
+            throw new InvalidBookException("Found book without ISBN");
         }
 
-        Book book = new Book(gid, isbn,
+        return new Book(new Gid(volume.id), isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
                 BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
                 new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
-
-        try {
-            bookShelf.addBook(book);
-        } catch (DuplicateBookException e) {
-            logger.warning("Found duplicate book when deserializing: " + book);
-        }
     }
 
-    private Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] iiArray) {
-        for (JsonIndustryIdentifiers ii: iiArray) {
-            if ("ISBN_13".equals(ii.type)) {
-                return new Isbn(ii.identifier);
-            }
-        }
-        return null;
+    private static Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] iiArray) {
+        return Stream.of(iiArray)
+                .filter(ii -> ii.type.equals("ISBN_13"))
+                .findFirst()
+                .map(ii -> new Isbn(ii.identifier))
+                .orElse(null);
     }
 
-    /** Temporary data holder used for deserialization. */
-    private static class JsonRoot {
-        private int error = 0;
-        private int totalItems = 0;
-        private JsonVolume[] items = new JsonVolume[0];
-
-        // This should fail if the API returns an error, due to incompatible types.
-        public void setError(int error) {
-            this.error = error;
-        }
-
-        public void setTotalItems(int totalItems) {
-            this.totalItems = totalItems;
-        }
-
-        public void setItems(JsonVolume[] items) {
-            this.items = items;
-        }
-    }
 
     /** Temporary data holder used for deserialization. */
     private static class JsonVolume {

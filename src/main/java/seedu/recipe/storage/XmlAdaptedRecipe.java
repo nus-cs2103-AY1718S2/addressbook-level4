@@ -53,8 +53,7 @@ public class XmlAdaptedRecipe {
      * Constructs an {@code XmlAdaptedRecipe} with the given recipe details.
      */
     public XmlAdaptedRecipe(String name, String ingredient, String instruction, String cookingTime,
-                            String preparationTime,
-                            String calories, String servings, String url, List<XmlAdaptedTag> tagged) {
+                            String preparationTime, String calories, String servings, String url, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.ingredient = ingredient;
         this.instruction = instruction;

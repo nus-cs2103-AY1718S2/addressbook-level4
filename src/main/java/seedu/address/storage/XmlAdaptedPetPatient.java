@@ -82,7 +82,8 @@ public class XmlAdaptedPetPatient {
         }
 
         if (this.name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName()));
         }
         if (!PetPatientName.isValidName(this.name)) {
             throw new IllegalValueException(PetPatientName.MESSAGE_PET_NAME_CONSTRAINTS);

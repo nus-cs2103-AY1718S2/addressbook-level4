@@ -1,10 +1,13 @@
 package seedu.recipe.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_SERVINGS;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
 import static seedu.recipe.model.Model.PREDICATE_SHOW_ALL_RECIPES;
@@ -20,11 +23,14 @@ import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.util.CollectionUtil;
 import seedu.recipe.logic.commands.exceptions.CommandException;
+import seedu.recipe.model.recipe.Calories;
+import seedu.recipe.model.recipe.CookingTime;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Servings;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
@@ -42,9 +48,12 @@ public class EditCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PREPARATION_TIME + "PREPARATION_TIME] "
             + "[" + PREFIX_INGREDIENT + "INGREDIENT] "
             + "[" + PREFIX_INSTRUCTION + "INSTRUCTION] "
+            + "[" + PREFIX_COOKING_TIME + "COOKING_TIME] "
+            + "[" + PREFIX_PREPARATION_TIME + "PREPARATION_TIME] "
+            + "[" + PREFIX_CALORIES + "PREFIX_CALORIES] "
+            + "[" + PREFIX_SERVINGS + "PREFIX_SERVINGS] "
             + "[" + PREFIX_URL + "URL] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -106,15 +115,21 @@ public class EditCommand extends UndoableCommand {
         assert recipeToEdit != null;
 
         Name updatedName = editRecipeDescriptor.getName().orElse(recipeToEdit.getName());
+        Ingredient updatedIngredient = editRecipeDescriptor.getIngredient().orElse(recipeToEdit.getIngredient());
+        Instruction updatedInstruction = editRecipeDescriptor.getInstruction().orElse(recipeToEdit.getInstruction());
+        CookingTime updatedCookingTime =
+                editRecipeDescriptor.getCookingTime().orElse(recipeToEdit.getCookingTime());
         PreparationTime updatedPreparationTime =
                 editRecipeDescriptor.getPreparationTime().orElse(recipeToEdit.getPreparationTime());
-        Ingredient updatedIngredient = editRecipeDescriptor.getIngredient().orElse(recipeToEdit.getIngredient());
+        Calories updatedCalories =
+                editRecipeDescriptor.getCalories().orElse(recipeToEdit.getCalories());
+        Servings updatedServings =
+                editRecipeDescriptor.getServings().orElse(recipeToEdit.getServings());
         Url updatedUrl = editRecipeDescriptor.getUrl().orElse(recipeToEdit.getUrl());
-        Instruction updatedInstruction = editRecipeDescriptor.getInstruction().orElse(recipeToEdit.getInstruction());
         Set<Tag> updatedTags = editRecipeDescriptor.getTags().orElse(recipeToEdit.getTags());
 
-        return new Recipe(updatedName, updatedIngredient, updatedInstruction, ,
-                updatedPreparationTime, , , updatedUrl, updatedTags);
+        return new Recipe(updatedName, updatedIngredient, updatedInstruction, updatedCookingTime,
+                updatedPreparationTime, updatedCalories, updatedServings, updatedUrl, updatedTags);
     }
 
     @Override
@@ -142,9 +157,12 @@ public class EditCommand extends UndoableCommand {
      */
     public static class EditRecipeDescriptor {
         private Name name;
-        private PreparationTime preparationTime;
         private Ingredient ingredient;
         private Instruction instruction;
+        private CookingTime cookingTime;
+        private PreparationTime preparationTime;
+        private Calories calories;
+        private Servings servings;
         private Url url;
         private Set<Tag> tags;
 
@@ -156,9 +174,12 @@ public class EditCommand extends UndoableCommand {
          */
         public EditRecipeDescriptor(EditRecipeDescriptor toCopy) {
             setName(toCopy.name);
-            setPreparationTime(toCopy.preparationTime);
             setIngredient(toCopy.ingredient);
             setInstruction(toCopy.instruction);
+
+            setPreparationTime(toCopy.preparationTime);
+
+
             setUrl(toCopy.url);
             setTags(toCopy.tags);
         }
@@ -167,8 +188,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.preparationTime, this.ingredient, this.instruction,
-                    this.url, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.ingredient, this.instruction, this.cookingTime,
+                    this.preparationTime, this.calories, this.servings, this.url, this.tags);
         }
 
         public void setName(Name name) {
@@ -177,14 +198,6 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
-        }
-
-        public void setPreparationTime(PreparationTime preparationTime) {
-            this.preparationTime = preparationTime;
-        }
-
-        public Optional<PreparationTime> getPreparationTime() {
-            return Optional.ofNullable(preparationTime);
         }
 
         public void setIngredient(Ingredient ingredient) {
@@ -202,6 +215,41 @@ public class EditCommand extends UndoableCommand {
         public Optional<Instruction> getInstruction() {
             return Optional.ofNullable(instruction);
         }
+
+        public void setCookingTime(CookingTime cookingTime) {
+            this.cookingTime = cookingTime;
+        }
+
+        public Optional<CookingTime> getCookingTime() {
+            return Optional.ofNullable(cookingTime);
+        }
+
+
+        public void setPreparationTime(PreparationTime preparationTime) {
+            this.preparationTime = preparationTime;
+        }
+
+        public Optional<PreparationTime> getPreparationTime() {
+            return Optional.ofNullable(preparationTime);
+        }
+
+        public void setCalories(Calories calories) {
+            this.calories = calories;
+        }
+
+        public Optional<Calories> getCalories() {
+            return Optional.ofNullable(calories);
+        }
+
+
+        public void setServings(Servings servings) {
+            this.servings = servings;
+        }
+
+        public Optional<Servings> getServings() {
+            return Optional.ofNullable(servings);
+        }
+
 
         public void setUrl(Url url) {
             this.url = url;

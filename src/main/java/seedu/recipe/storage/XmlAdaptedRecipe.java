@@ -9,11 +9,14 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.recipe.commons.exceptions.IllegalValueException;
+import seedu.recipe.model.recipe.Calories;
+import seedu.recipe.model.recipe.CookingTime;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Servings;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
 
@@ -27,13 +30,14 @@ public class XmlAdaptedRecipe {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String preparationTime;
-    @XmlElement(required = true)
     private String ingredient;
     @XmlElement(required = true)
-    private String url;
-    @XmlElement(required = true)
     private String instruction;
+    private String cookingTime;
+    private String preparationTime;
+    private String calories;
+    private String servings;
+    private String url;
 
 
     @XmlElement
@@ -48,12 +52,16 @@ public class XmlAdaptedRecipe {
     /**
      * Constructs an {@code XmlAdaptedRecipe} with the given recipe details.
      */
-    public XmlAdaptedRecipe(String name, String preparationTime, String ingredient, String instruction,
-                            String url, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedRecipe(String name, String ingredient, String instruction, String cookingTime,
+                            String preparationTime,
+                            String calories, String servings, String url, List<XmlAdaptedTag> tagged) {
         this.name = name;
-        this.preparationTime = preparationTime;
         this.ingredient = ingredient;
         this.instruction = instruction;
+        this.cookingTime = cookingTime;
+        this.preparationTime = preparationTime;
+        this.calories = calories;
+        this.servings = servings;
         this.url = url;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
@@ -67,9 +75,12 @@ public class XmlAdaptedRecipe {
      */
     public XmlAdaptedRecipe(Recipe source) {
         name = source.getName().fullName;
-        preparationTime = source.getPreparationTime().value;
         ingredient = source.getIngredient().value;
         instruction = source.getInstruction().value;
+        cookingTime = source.getCookingTime().value;
+        preparationTime = source.getPreparationTime().value;
+        calories = source.getCalories().value;
+        servings = source.getServings().value;
         url = source.getUrl().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -96,15 +107,7 @@ public class XmlAdaptedRecipe {
         }
         final Name name = new Name(this.name);
 
-        if (this.preparationTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    PreparationTime.class.getSimpleName()));
-        }
-        if (!PreparationTime.isValidPreparationTime(this.preparationTime)) {
-            throw new IllegalValueException(PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
-        }
-        final PreparationTime preparationTime = new PreparationTime(this.preparationTime);
-
+        //@@Author kokonguyen191
         if (this.ingredient == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Ingredient.class.getSimpleName()));
@@ -123,6 +126,42 @@ public class XmlAdaptedRecipe {
         }
         final Instruction instruction = new Instruction(this.instruction);
 
+        if (this.preparationTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    PreparationTime.class.getSimpleName()));
+        }
+        if (!PreparationTime.isValidPreparationTime(this.preparationTime)) {
+            throw new IllegalValueException(PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
+        }
+        final PreparationTime preparationTime = new PreparationTime(this.preparationTime);
+
+        if (this.cookingTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    CookingTime.class.getSimpleName()));
+        }
+        if (!CookingTime.isValidCookingTime(this.cookingTime)) {
+            throw new IllegalValueException(CookingTime.MESSAGE_COOKING_TIME_CONSTRAINTS);
+        }
+        final CookingTime cookingTime = new CookingTime(this.cookingTime);
+
+        if (this.calories == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Calories.class.getSimpleName()));
+        }
+        if (!Calories.isValidCalories(this.calories)) {
+            throw new IllegalValueException(Calories.MESSAGE_CALORIES_CONSTRAINTS);
+        }
+        final Calories calories = new Calories(this.calories);
+
+        if (this.servings == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Servings.class.getSimpleName()));
+        }
+        if (!Servings.isValidServings(this.servings)) {
+            throw new IllegalValueException(Servings.MESSAGE_SERVINGS_CONSTRAINTS);
+        }
+        final Servings servings = new Servings(this.servings);
+
         //@@author RyanAngJY
         if (this.url == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Url.class.getSimpleName()));
@@ -134,7 +173,7 @@ public class XmlAdaptedRecipe {
         //@@author
 
         final Set<Tag> tags = new HashSet<>(recipeTags);
-        return new Recipe(name, ingredient, instruction, , preparationTime, , , url, tags);
+        return new Recipe(name, ingredient, instruction, cookingTime, preparationTime, calories, servings, url, tags);
     }
 
     @Override
@@ -149,9 +188,12 @@ public class XmlAdaptedRecipe {
 
         XmlAdaptedRecipe otherRecipe = (XmlAdaptedRecipe) other;
         return Objects.equals(name, otherRecipe.name)
-                && Objects.equals(preparationTime, otherRecipe.preparationTime)
                 && Objects.equals(ingredient, otherRecipe.ingredient)
                 && Objects.equals(instruction, otherRecipe.instruction)
+                && Objects.equals(cookingTime, otherRecipe.cookingTime)
+                && Objects.equals(preparationTime, otherRecipe.preparationTime)
+                && Objects.equals(calories, otherRecipe.calories)
+                && Objects.equals(servings, otherRecipe.servings)
                 && Objects.equals(url, otherRecipe.url)
                 && tagged.equals(otherRecipe.tagged);
     }

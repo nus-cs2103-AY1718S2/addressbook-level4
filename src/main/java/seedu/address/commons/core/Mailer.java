@@ -19,7 +19,9 @@ public class Mailer {
     private static String pigeonsMail = "pigeonscs2103@gmail.com";
     private static String password = "Pigeons2103";
     //private static String defaultRecipient = "delepine.matthieu@gmail.com";
-    private static String defaultRecipient = "matthieu2301@hotmail.fr";
+    //private static String defaultRecipient = "matthieu2301@hotmail.fr";
+    private static String defaultRecipient = pigeonsMail;
+
 
     /**
      * Used for testing
@@ -37,7 +39,7 @@ public class Mailer {
      * Send an email to the
      * @param recipients
      */
-    private static void email(List<String> recipients) {
+    public static boolean email(List<String> recipients) {
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
@@ -69,7 +71,8 @@ public class Mailer {
 
         } catch (MessagingException ae) {
             ae.printStackTrace();
+            return false;
         }
-        System.out.println("Message sent !");
+        return true;
     }
 }

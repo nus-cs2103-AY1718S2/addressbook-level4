@@ -123,6 +123,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a null {@code CookingTime} object to use as the default value if no value is given.
+     */
+    public static CookingTime getNullReferenceCookingTime() throws IllegalValueException {
+        return new CookingTime(CookingTime.NULL_COOKING_TIME_REFERENCE);
+    }
+
+    /**
      * Parses a {@code String cookingTime} into a {@code CookingTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -135,13 +142,6 @@ public class ParserUtil {
             throw new IllegalValueException(CookingTime.MESSAGE_COOKING_TIME_CONSTRAINTS);
         }
         return new CookingTime(trimmedCookingTime);
-    }
-
-    /**
-     * Returns a null {@code CookingTime} object to use as the default value if no value is given.
-     */
-    public static CookingTime getNullReferenceCookingTime() throws IllegalValueException {
-        return new CookingTime(CookingTime.NULL_COOKING_TIME_REFERENCE);
     }
 
     /**
@@ -168,6 +168,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a null {@code PreparationTime} object to use as the default value if no value is given.
+     */
+    public static PreparationTime getNullReferencePreparationTime() throws IllegalValueException {
+        return new PreparationTime(PreparationTime.NULL_PREPARATION_TIME_REFERENCE);
+    }
+
+    /**
      * Parses a {@code String preparationTime} into a {@code PreparationTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -180,13 +187,6 @@ public class ParserUtil {
             throw new IllegalValueException(PreparationTime.MESSAGE_PREPARATION_TIME_CONSTRAINTS);
         }
         return new PreparationTime(trimmedPreparationTime);
-    }
-
-    /**
-     * Returns a null {@code PreparationTime} object to use as the default value if no value is given.
-     */
-    public static PreparationTime getNullReferencePreparationTime() throws IllegalValueException {
-        return new PreparationTime(PreparationTime.NULL_PREPARATION_TIME_REFERENCE);
     }
 
     /**
@@ -214,6 +214,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a null {@code Calories} object to use as the default value if no value is given.
+     */
+    public static Calories getNullReferenceCalories() throws IllegalValueException {
+        return new Calories(Calories.NULL_CALORIES_REFERENCE);
+    }
+
+    /**
      * Parses a {@code String calories} into a {@code Calories}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -226,13 +233,6 @@ public class ParserUtil {
             throw new IllegalValueException(Calories.MESSAGE_CALORIES_CONSTRAINTS);
         }
         return new Calories(trimmedCalories);
-    }
-
-    /**
-     * Returns a null {@code Calories} object to use as the default value if no value is given.
-     */
-    public static Calories getNullReferenceCalories() throws IllegalValueException {
-        return new Calories(Calories.NULL_CALORIES_REFERENCE);
     }
 
     /**
@@ -258,6 +258,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a null {@code Servings} object to use as the default value if no value is given.
+     */
+    public static Servings getNullReferenceServings() throws IllegalValueException {
+        return new Servings(Servings.NULL_SERVINGS_REFERENCE);
+    }
+
+    /**
      * Parses a {@code String servings} into a {@code Servings}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -273,19 +280,11 @@ public class ParserUtil {
     }
 
     /**
-     * Returns a null {@code Servings} object to use as the default value if no value is given.
-     */
-    public static Servings getNullReferenceServings() throws IllegalValueException {
-        return new Servings(Servings.NULL_SERVINGS_REFERENCE);
-    }
-
-    /**
      * Parses a {@code Optional<String> servings} into an {@code Optional<Servings>}
      * if {@code servings} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Servings> parseServings(Optional<String> servings)
-            throws IllegalValueException {
+    public static Optional<Servings> parseServings(Optional<String> servings) throws IllegalValueException {
         requireNonNull(servings);
         return servings.isPresent()
                 ? Optional.of(parseServings(servings.get())) : Optional.empty();
@@ -296,8 +295,7 @@ public class ParserUtil {
      * if {@code servings} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Servings> parseServingsOnInitialAdd(Optional<String> servings)
-            throws IllegalValueException {
+    public static Optional<Servings> parseServingsOnInitialAdd(Optional<String> servings) throws IllegalValueException {
         requireNonNull(servings);
         return servings.isPresent()
                 ? Optional.of(parseServings(servings.get())) : Optional.of(getNullReferenceServings());

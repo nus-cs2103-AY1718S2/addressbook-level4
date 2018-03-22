@@ -7,6 +7,9 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.smplatform.Facebook;
+import seedu.address.model.smplatform.Link;
+import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,18 +23,21 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final SocialMediaPlatform smp;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Link link, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.smp = new Facebook();
+        smp.setLink(link);
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -50,6 +56,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public SocialMediaPlatform getSocialMediaPlatform() {
+        return smp;
     }
 
     /**

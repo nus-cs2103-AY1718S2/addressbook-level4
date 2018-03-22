@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -22,6 +23,7 @@ import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,12 +39,13 @@ public class EditCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_NRIC + "PHONE] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_NRIC + "NRIC] "
+            + "[" + PREFIX_TAG + "TAG]..."
+            + "[" + PREFIX_SUBJECT + "SUBJECT]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NRIC + "91234567 "
+            + PREFIX_NRIC + "S9123457A"
             + "Example: " + COMMAND_ALIAS + " 1 "
-            + PREFIX_NRIC + "91234567";
+            + PREFIX_NRIC + "S9123457A";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -101,8 +104,9 @@ public class EditCommand extends UndoableCommand {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
 
-        return new Person(updatedName, updatedNric, updatedTags);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects);
     }
 
     @Override
@@ -132,6 +136,7 @@ public class EditCommand extends UndoableCommand {
         private Name name;
         private Nric nric;
         private Set<Tag> tags;
+        private Set<Subject>  subjects;
 
         public EditPersonDescriptor() {}
 
@@ -143,6 +148,7 @@ public class EditCommand extends UndoableCommand {
             setName(toCopy.name);
             setNric(toCopy.nric);
             setTags(toCopy.tags);
+            setSubjects(toCopy.subjects);
         }
 
         /**
@@ -168,10 +174,6 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(nric);
         }
 
-
-
-
-
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -187,6 +189,23 @@ public class EditCommand extends UndoableCommand {
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        /**
+         * Sets {@code subjects} to this object's {@code subjects}.
+         * A defensive copy of {@code subjects} is used internally.
+         */
+        public void setSubjects(Set<Subject> subjects) {
+            this.subjects = (subjects != null) ? new HashSet<>(subjects) : null;
+        }
+
+        /**
+         * Returns an unmodifiable subject set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code subjects} is null.
+         */
+        public Optional<Set<Subject>> getSubjects() {
+            return (subjects != null) ? Optional.of(Collections.unmodifiableSet(subjects)) : Optional.empty();
         }
 
         @Override
@@ -206,7 +225,8 @@ public class EditCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getNric().equals(e.getNric())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getSubjects().equals(e.getSubjects());
         }
     }
 }

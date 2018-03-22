@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.subject.Subject;
+import seedu.address.model.subject.UniqueSubjectList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -19,16 +21,18 @@ public class Person {
     private final Nric nric;
 
     private final UniqueTagList tags;
+    private final UniqueSubjectList subjects;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Nric nric, Set<Tag> tags) {
-        requireAllNonNull(name, nric, tags);
+    public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects) {
+        requireAllNonNull(name, nric, tags, subjects);
         this.name = name;
         this.nric = nric;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.subjects = new UniqueSubjectList(subjects);
     }
 
     public Name getName() {
@@ -47,6 +51,9 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    public Set <Subject> getSubjects() {
+        return Collections.unmodifiableSet(subjects.toSet());
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -65,7 +72,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, tags);
+        return Objects.hash(name, nric, tags, subjects);
     }
 
     @Override
@@ -76,6 +83,8 @@ public class Person {
                 .append(getNric())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" Subjects: ");
+        getSubjects().forEach(builder::append);
         return builder.toString();
     }
 

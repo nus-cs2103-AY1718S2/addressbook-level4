@@ -98,10 +98,19 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Sorts {@code internalList} by name in alphabetical order (case insensitive)
      */
-    public void sortPersons() {
+    public void sortNames() {
         Comparator<Person> compareName = (person1, person2) -> +person1.getName().toString()
                 .compareToIgnoreCase(person2.getName().toString());
         internalList.sort(compareName);
+    }
+
+    /**
+     * Sorts {@code internalList} by tag in alphabetical order (case insensitive)
+     */
+    public void sortTags() {
+        Comparator<Person> compareTags = (person1, person2) -> +person1.getTags().toString()
+                .compareToIgnoreCase(person2.getTags().toString());
+        internalList.sort(compareTags);
     }
 
     /**

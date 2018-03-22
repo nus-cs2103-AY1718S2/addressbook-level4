@@ -85,8 +85,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
+        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
@@ -116,6 +116,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private Person removePerson(Model model, Index index) {
         Person targetPerson = getPerson(model, index);
+
         try {
             model.deletePerson(targetPerson);
         } catch (PersonNotFoundException pnfe) {

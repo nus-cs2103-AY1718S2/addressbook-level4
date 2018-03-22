@@ -44,10 +44,10 @@ public class XmlCustomerStatsStorage implements CustomerStatsStorage {
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
-        File CustomerStatsFile = new File(filePath);
+        File customerStatsFile = new File(filePath);
 
-        if (!CustomerStatsFile.exists()) {
-            logger.info("CustomerStats file "  + CustomerStatsFile + " not found");
+        if (!customerStatsFile.exists()) {
+            logger.info("CustomerStats file "  + customerStatsFile + " not found");
             return Optional.empty();
         }
 
@@ -56,20 +56,20 @@ public class XmlCustomerStatsStorage implements CustomerStatsStorage {
     }
 
     @Override
-    public void saveCustomerStats(ReadOnlyCustomerStats CustomerStats) throws IOException {
-        saveCustomerStats(CustomerStats, filePath);
+    public void saveCustomerStats(ReadOnlyCustomerStats customerStats) throws IOException {
+        saveCustomerStats(customerStats, filePath);
     }
 
     /**
      * Similar to {@link #saveCustomerStats(ReadOnlyCustomerStats)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveCustomerStats(ReadOnlyCustomerStats CustomerStats, String filePath) throws IOException {
-        requireNonNull(CustomerStats);
+    public void saveCustomerStats(ReadOnlyCustomerStats customerStats, String filePath) throws IOException {
+        requireNonNull(customerStats);
         requireNonNull(filePath);
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        XmlFileStorage.saveCustomerDataToFile(file, new XmlSerializableCustomerStats(CustomerStats));
+        XmlFileStorage.saveCustomerDataToFile(file, new XmlSerializableCustomerStats(customerStats));
     }
 }

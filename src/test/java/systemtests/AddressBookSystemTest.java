@@ -41,6 +41,7 @@ import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.ResultDisplay;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -53,6 +54,9 @@ public abstract class AddressBookSystemTest {
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
+
+    private List<String> defaultStyleOfResultDisplay;
+    private List<String> errorStyleOfResultDisplay;
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
@@ -68,6 +72,10 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
+
+        defaultStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
+        errorStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
+        errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
 
         waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
@@ -189,6 +197,7 @@ public abstract class AddressBookSystemTest {
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
         getBrowserPanel().rememberUrl();
+        getBrowserPanel().rememberPersonDetail();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
@@ -198,9 +207,11 @@ public abstract class AddressBookSystemTest {
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
      * of the previously selected person.
      * @see BrowserPanelHandle#isUrlChanged()
+     * @see BrowserPanelHandle#isDetailChanged()
      */
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getBrowserPanel().isDetailChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
@@ -208,6 +219,7 @@ public abstract class AddressBookSystemTest {
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see BrowserPanelHandle#isUrlChanged()
+     * @see BrowserPanelHandle#isDetailChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
@@ -218,33 +230,34 @@ public abstract class AddressBookSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
-        assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
+     * @see BrowserPanelHandle#isDetailChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getBrowserPanel().isDetailChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
     /**
-     * Asserts that the command box's shows the default style.
+     * Asserts that the command box and result display shows the default style.
      */
-    protected void assertCommandBoxShowsDefaultStyle() {
+    protected void assertCommandBoxAndResultDisplayShowsDefaultStyle() {
         assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
+        assertEquals(defaultStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
     /**
-     * Asserts that the command box's shows the error style.
+     * Asserts that the command box and result display shows the error style.
      */
-    protected void assertCommandBoxShowsErrorStyle() {
+    protected void assertCommandBoxAndResultDisplayShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
+        assertEquals(errorStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
     /**
@@ -277,6 +290,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertTrue(getBrowserPanel().isFieldsEmpty());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

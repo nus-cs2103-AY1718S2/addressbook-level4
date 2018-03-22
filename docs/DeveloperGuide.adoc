@@ -385,6 +385,34 @@ The details of implementation are as follow:
 . `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
 . `edited` Person is used to replace `toEdit` Person in `AddressBook`
 
+=== Review system
+
+A person by default upon creation will have a null `Review` field, indicated to be `-` by default. This indicate that the person is yet to be reviewed.
+
+A person can be assigned a `Review` through the command of `Review`. `Review` does not have any restriction on the content (alphanumeric and symbols without any length restriction).
+
+=== Reviewing a person
+
+Currently `review` command and `rate` command are implemented in a similar manner, and hence `review` command and `edit` command are also implemented in a similar manner.
+
+The implementation basically mirrors what has already been documented in `3.3. Editing and rating a person`, so the implementation below is basically the iteration of the said part.
+
+The implementation of `edit` and `review` command in the Logic component involves 4 objects: +
+
+. Person toEdit
+. Person edited
+. Parser: EditCommandParser or ReviewCommandParser
+. EditPersonDescriptor
+
+Since all fields of the `Person` class are immutable, we need to use `edited` Person to replace the `toEdit` Person
+
+The details of implementation are as follow:
+
+. `Parser` extracts the new information for each field from user input.
+. `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
+. `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
+. `edited` Person is used to replace `toEdit` Person in `AddressBook`
+
 === Lock and unlock the application
 
 `lock` command and `unlock` command are implemented in a similar manner. Both have the same command format.

@@ -52,6 +52,11 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
+    // given a tagName, returns the String representation of a colour style
+    private String getTagColourStyleFor(String tagName) {
+        return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
+    }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

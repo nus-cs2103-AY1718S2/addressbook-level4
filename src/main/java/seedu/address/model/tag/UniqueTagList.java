@@ -3,6 +3,7 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -46,6 +47,19 @@ public class UniqueTagList implements Iterable<Tag> {
     public Set<Tag> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new HashSet<>(internalList);
+    }
+
+    /**
+     * Returns an array of tag names of tags of a person.
+     * @return array of tag names
+     */
+    public ArrayList<String> arrayOfTags() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        ArrayList<String> tagStringArray = new ArrayList<>();
+        for (Tag t : internalList) {
+            tagStringArray.add(t.tagName);
+        }
+        return tagStringArray;
     }
 
     /**

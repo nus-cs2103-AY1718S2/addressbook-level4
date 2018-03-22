@@ -109,4 +109,17 @@ public class Person {
         return builder.toString();
     }
 
+    /**
+     * Returns the tag names of tags of a person as String.
+     * @return a string of all the tag names of tags of a person.
+     */
+    public String getTagsAsString() {
+        final StringBuilder builder = new StringBuilder();
+        for (String tag : tags.arrayOfTags()) {
+            builder.append(tag);
+            builder.append(" ");
+        }
+        return builder.toString();
+    }
+
 }

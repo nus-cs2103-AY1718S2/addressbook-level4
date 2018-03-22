@@ -26,7 +26,7 @@ public class RecordCommandParser implements Parser<RecordCommand> {
      */
     public RecordCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_ILLNESS, PREFIX_SYMPTOM, PREFIX_TREATMENT);
+                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT);
 
         Index index;
 
@@ -36,16 +36,16 @@ public class RecordCommandParser implements Parser<RecordCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_ILLNESS, PREFIX_SYMPTOM, PREFIX_TREATMENT)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT)
+                || argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
 
         //to nest following lines into try once various classes are set up
 
         String date = (argMultimap.getValue(PREFIX_DATE)).get();
-        String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
         String symptom = (argMultimap.getValue(PREFIX_SYMPTOM)).get();
+        String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
         String treatment = (argMultimap.getValue(PREFIX_TREATMENT)).get();
 
         Record record = new Record(date, illness, symptom, treatment);

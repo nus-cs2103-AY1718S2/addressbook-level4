@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Your TA - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,9 +11,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-F09-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -34,7 +34,7 @@ This app will not work with earlier versions of Java 8.
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+e.g. typing *`help`* and pressing kbd:[Enter] will list all possible commands and their formats.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
@@ -50,6 +50,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
+* There are some equivalent shortcut commands known as alias with fewer alphabetic letters or a sign e.g. to add a person to the addressbook, you can type 'add n/John Doe', 'a n/John Doe' or '+ n/John Doe'
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -58,30 +59,37 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
+Alias: `?` +
 Format: `help`
 
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Alias: `a` and `+` +
+Format: `add n/NAME m/MATRICULATION NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
+[NOTE]
+The tags "lecturer", "TA" "student" and "T1" will appear red, yellow, blue and green respectively.
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
+Alias: `ls` +
 Format: `list`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Alias: `e` +
+Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -98,15 +106,40 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Emailing a person : `email`
+
+Email a person in the address book. This uses your default mail app to email. +
+Format: `email INDEX`
+
+****
+* Emails the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`email 2` +
+Emails the 2nd person in the address book.
+* `find Betsy` +
+`email 1` +
+Emails the 1st person in the results of the `find` command.
+
 === Locating persons by name: `find`
+=== Locating persons by name or by matriculation number: `find`
+
 
 Finds persons whose names contain any of the given keywords. +
+Or, finds a person whose matriculation number corresponds to the given keyword. +
+
+Alias: `f` +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the name and the matriculation number is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -114,13 +147,16 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
+Returns `john` and `John Doe`.
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any person having names `Betsy`, `Tim`, or `John`.
+* `find A0123456X` +
+Returns any person having the matriculation number A0123456X.
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
+Alias: `d` and `-` +
 Format: `delete INDEX`
 
 ****
@@ -141,6 +177,7 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
+Alias: `s` +
 Format: `select INDEX`
 
 ****
@@ -161,6 +198,7 @@ Selects the 1st person in the results of the `find` command.
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
+Alias: `h` +
 Format: `history`
 
 [NOTE]
@@ -172,6 +210,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
+Alias: `u` +
 Format: `undo`
 
 [NOTE]
@@ -198,6 +237,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
+Alias: `r` +
 Format: `redo`
 
 Examples:
@@ -221,7 +261,24 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+Alias: `c` +
 Format: `clear`
+
+=== Importing data from another file : `import`
+
+Extracting data from an xml formatted file and
+replaces the current stored data. +
+Format: `import FILEPATH`
+
+Examples:
+
+* `import ~/download/NewData.xml`
+
+=== Sorting all entries : `sort` `[coming in v2.0]`
+
+Sorts all entries from the address book in alphebatical order based on name. +
+Alias: `s` +
+Format: `sort`
 
 === Exiting the program : `exit`
 

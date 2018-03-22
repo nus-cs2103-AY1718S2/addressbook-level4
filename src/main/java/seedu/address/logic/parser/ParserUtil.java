@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -65,6 +66,32 @@ public class ParserUtil {
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String matricNumber} into a {@code MatriculationNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code matricNumber} is invalid.
+     */
+    public static MatriculationNumber parseMatricNumber(String matricNumber) throws IllegalValueException {
+        requireNonNull(matricNumber);
+        String trimmedMatricNumber = matricNumber.trim();
+        if (!MatriculationNumber.isValidMatricNumber(trimmedMatricNumber)) {
+            throw new IllegalValueException(MatriculationNumber.MESSAGE_MATRIC_NUMBER_CONSTRAINTS);
+        }
+        return new MatriculationNumber(trimmedMatricNumber);
+    }
+
+    /**
+     * Parses a {@code Optional<String> matricNumber} into an {@code Optional<MatriculationNumber>}
+     * if {@code matricNumber} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<MatriculationNumber>
+        parseMatricNumber(Optional<String> matricNumber) throws IllegalValueException {
+        requireNonNull(matricNumber);
+        return matricNumber.isPresent() ? Optional.of(parseMatricNumber(matricNumber.get())) : Optional.empty();
     }
 
     /**

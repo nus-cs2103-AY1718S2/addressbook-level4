@@ -867,15 +867,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person | add entry into my address book
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |*have a separate address book for different user profiles* |minimize chance of someone else seeing my address book by accident
 
 |`* * *` |user with many persons in the address book |sort persons by name, address |locate a person easily
 
@@ -883,17 +884,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |driver |quickly indicate that I have completed a delivery |always know which are the remaining parcels that I have to deliver
 
-|`* * *` |driver |be able to communicate with the customer |resolve any delivery issues I face
+|`* * *` |driver |*have a map view of the route to my next customer* | easily figure out the way I should take
+
+|`* * *` |driver |*be able to communicate with the customer* |resolve any delivery issues I face
 
 |`* * *` |customer |receive updates about my parcel |know when it's gonna come
 
-|`* *` |driver |be able to find the optimal route to the next destination easily |focus on just driving to the next location
+|`* * *` |driver |*be able to find the optimal route to the next destination easily* |focus on just driving to the next location
 
-|`*` |driver|my whole day by ordering the deliveries I want to do |avoid losing time during the day
+|`* *` |driver| schedule my whole day by ordering the deliveries I want to do |avoid losing time during the day
 
-|`*` |driver |have users automatically downloaded from a central database |avoid having to add users one by one myself
+|`* *` |driver |have users automatically downloaded from a central database |avoid having to add users one by one myself
 
-|`*` |driver |get traffic updates |follow my schedule
+|`* *` |driver |get traffic updates |follow my schedule
+
+|`*` |customer |real-time geo-locate my delivery | to have a better idea of when my delivery will arrive
 |=======================================================================
 
 _{More to be added}_

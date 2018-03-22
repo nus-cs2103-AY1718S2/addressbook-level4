@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -81,8 +82,14 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         executeCommand(SearchCommand.COMMAND_WORD + " hello");
         new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
         assertSearchResultsSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
+        assertSearchResultsSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
         assertCommandFailure(SelectCommand.COMMAND_WORD + " 39", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
+        /* -------------------- Perform select operations on the shown recent books list ------------------------- */
+        executeCommand(RecentCommand.COMMAND_WORD);
+        assertRecentBooksSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
+        assertRecentBooksSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " 39", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     /**
@@ -91,7 +98,8 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing select command with the
      * {@code expectedSelectedCardIndex} of the selected book.<br>
-     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, and {@code SearchResultsPanel} remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, {@code SearchResultsPanel},
+     * and {@code RecentBooksPanel} remain unchanged.<br>
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
@@ -104,6 +112,8 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_BOOK_SUCCESS, expectedSelectedCardIndex.getOneBased());
         int preExecutionSelectedCardIndex = getBookListPanel().getSelectedCardIndex();
+        expectedModel.addRecentBook(expectedModel.getFilteredBookList().get(
+                expectedSelectedCardIndex.getZeroBased()));
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
@@ -124,19 +134,22 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing select command with the
      * {@code expectedSelectedCardIndex} of the selected search result.<br>
-     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, and {@code SearchResultsPanel} remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, {@code SearchResultsPanel},
+     * and {@code RecentBooksPanel} remain unchanged.<br>
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
+     * @see BibliotekSystemTest#assertSelectedSearchResultsCardChanged(Index)
      */
     private void assertSearchResultsSelectSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_BOOK_SUCCESS, expectedSelectedCardIndex.getOneBased());
         int preExecutionSelectedCardIndex = getSearchResultsPanel().getSelectedCardIndex();
+        expectedModel.addRecentBook(expectedModel.getSearchResultsList().get(
+                expectedSelectedCardIndex.getZeroBased()));
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
@@ -153,10 +166,45 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
 
     /**
      * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message of executing select command with the
+     * {@code expectedSelectedCardIndex} of the selected search result.<br>
+     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, {@code SearchResultsPanel},
+     * and {@code RecentBooksPanel} remain unchanged.<br>
+     * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
+     * 6. Status bar remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see BibliotekSystemTest#assertSelectedRecentBooksCardChanged(Index)
+     */
+    private void assertRecentBooksSelectSuccess(String command, Index expectedSelectedCardIndex) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = String.format(
+                MESSAGE_SELECT_BOOK_SUCCESS, expectedSelectedCardIndex.getOneBased());
+        int preExecutionSelectedCardIndex = getRecentBooksPanel().getSelectedCardIndex();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+
+        if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
+            assertSelectedRecentBooksCardUnchanged();
+        } else {
+            assertSelectedRecentBooksCardChanged(expectedSelectedCardIndex);
+        }
+
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays {@code command}.<br>
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
-     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, and {@code SearchResultsPanel} remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, {@code SearchResultsPanel},
+     * and {@code RecentBooksPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -169,6 +217,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedBookListCardUnchanged();
         assertSelectedSearchResultsCardUnchanged();
+        assertSelectedRecentBooksCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

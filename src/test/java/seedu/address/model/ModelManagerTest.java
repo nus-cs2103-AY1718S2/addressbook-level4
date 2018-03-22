@@ -24,6 +24,13 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getRecentBooksList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getRecentBooksList().remove(0);
+    }
+
+    @Test
     public void equals() {
         BookShelf bookShelf = new BookShelfBuilder().withBook(ARTEMIS).withBook(BABYLON_ASHES).build();
         BookShelf differentBookShelf = new BookShelf();
@@ -37,6 +44,11 @@ public class ModelManagerTest {
         // same values -> returns true
         modelManager.updateSearchResults(bookShelf);
         modelManagerCopy.updateSearchResults(bookShelf);
+        assertTrue(modelManager.equals(modelManagerCopy));
+
+        // same values -> returns true
+        modelManager.addRecentBook(ARTEMIS);
+        modelManagerCopy.addRecentBook(ARTEMIS);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -54,6 +66,10 @@ public class ModelManagerTest {
         // different searchResults -> returns false
         assertFalse(modelManager.equals(new ModelManager(bookShelf, userPrefs)));
 
+        // different recentBooks -> returns false
+        modelManagerCopy.addRecentBook(BABYLON_ASHES);
+        assertFalse(modelManager.equals(modelManagerCopy));
+
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
 
@@ -61,7 +77,6 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setBookShelfName("differentName");
         ModelManager modelManagerDiffPrefs = new ModelManager(bookShelf, differentUserPrefs);
-        modelManagerDiffPrefs.updateSearchResults(bookShelf);
-        assertTrue(modelManager.equals(modelManagerDiffPrefs));
+        assertTrue(modelManagerDiffPrefs.equals(new ModelManager(bookShelf, new UserPrefs())));
     }
 }

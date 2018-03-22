@@ -32,13 +32,13 @@ public class StorageManagerTest {
     public void setUp() {
         XmlBookShelfStorage bookShelfStorage = new XmlBookShelfStorage(getTempFilePath("biblio"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(bookShelfStorage, userPrefsStorage);
+        XmlRecentBooksStorage recentBooksStorage = new XmlRecentBooksStorage(getTempFilePath("recent"));
+        storageManager = new StorageManager(bookShelfStorage, userPrefsStorage, recentBooksStorage);
     }
 
     private String getTempFilePath(String fileName) {
         return testFolder.getRoot().getPath() + fileName;
     }
-
 
     @Test
     public void prefsReadSave() throws Exception {
@@ -59,7 +59,7 @@ public class StorageManagerTest {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link XmlBookShelfStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlBookShelfStorageTest} class.
+         * More extensive testing of BookShelf saving/reading is done in {@link XmlBookShelfStorageTest} class.
          */
         BookShelf original = getTypicalBookShelf();
         storageManager.saveBookShelf(original);
@@ -76,11 +76,29 @@ public class StorageManagerTest {
     public void handleBookShelfChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlBookShelfStorageExceptionThrowingStub("dummy"),
-                                             new JsonUserPrefsStorage("dummy"));
+                new JsonUserPrefsStorage("dummy"), new XmlRecentBooksStorage("dummy"));
         storage.handleBookShelfChangedEvent(new BookShelfChangedEvent(new BookShelf()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    @Test
+    public void recentBooksReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlRecentBooksStorage} class.
+         * More extensive testing of recent books saving/reading is done in
+         * {@link XmlRecentBooksStorageTest} class.
+         */
+        BookShelf original = getTypicalBookShelf();
+        storageManager.saveRecentBooksList(original);
+        ReadOnlyBookShelf retrieved = storageManager.readRecentBooksList().get();
+        assertEquals(original, new BookShelf(retrieved));
+    }
+
+    @Test
+    public void getRecentBooksFilePath() {
+        assertNotNull(storageManager.getRecentBooksFilePath());
+    }
 
     /**
      * A Stub class to throw an exception when the save method is called

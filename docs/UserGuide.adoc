@@ -112,7 +112,7 @@ Format: `add INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-WARNING: You can only perform `add` when the list shown is a search result. +
+WARNING: You cannot perform `add` when the list shown is your book shelf. +
 You also need Internet connection.
 
 Examples:
@@ -230,18 +230,22 @@ Examples:
 `reviews 1` +
 Shows online reviews of 1st book in the search results.
 
-=== Listing recently viewed books: `recent` `[coming in v1.3]`
+=== Listing recently viewed books: `recent` `[since v1.2]`
 
 You recently selected a book in one of your searches but did not add it into your
-book shelf, and now you have trouble searching up that book again. No worries, `recent`
+book shelf, and now you have trouble searching up that book again? No worries, `recent`
 is designed to take care of this. +
 Format: `recent`
 
 ****
 * Lists the books you recently selected in reverse chronological order.
-* Limited to books selected since the last start-up of Bibliotek.
 * Limited to the last 50 books.
 ****
+
+[NOTE]
+====
+You can select books in the `recent` list, but this will not count as a newest selection.
+====
 
 === Finding a book in the library: `library` `[coming in v1.4]`
 
@@ -486,7 +490,7 @@ e.g. `add 1`
 //* *Library* : `library INDEX` +
 * *List* : `list`
 //*Order* : `order INDEX`
-//* *Recent* : `recent`
+* *Recent* : `recent`
 //* *Reviews* : `reviews INDEX`
 * *Search* : `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]` +
 e.g. `search t/Babylon's Ashes c/Science Fiction`

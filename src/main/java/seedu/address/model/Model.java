@@ -56,4 +56,13 @@ public interface Model {
 
     /** Updates the search results that should be displayed. */
     void updateSearchResults(ReadOnlyBookShelf newResults);
+
+    /** Returns an unmodifiable view of the recently selected books. */
+    ObservableList<Book> getRecentBooksList();
+
+    /** Returns the recently selected books as a ReadOnlyBookShelf*/
+    ReadOnlyBookShelf getRecentBooksListAsBookShelf();
+
+    /** Add a recently selected book. */
+    void addRecentBook(Book newBook);
 }

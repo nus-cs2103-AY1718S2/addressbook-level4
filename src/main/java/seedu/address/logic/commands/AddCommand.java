@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.network.ApiBookDetailsRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ActiveListType;
 import seedu.address.model.book.Book;
 
 /**
@@ -45,25 +43,41 @@ public class AddCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(toAdd);
-        if (model.getActiveListType() != ActiveListType.SEARCH_RESULTS) {
-            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
-        }
-        LogsCenter.getLogger(AddCommand.class).info("GID: " + toAdd.getGid().gid);
+
         EventsCenter.getInstance().post(new ApiBookDetailsRequestEvent(toAdd.getGid().gid));
         return new CommandResult(MESSAGE_ADDING);
-
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
         requireNonNull(model);
-        List<Book> lastShownList = model.getSearchResultsList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+        switch (model.getActiveListType()) {
+        case SEARCH_RESULTS:
+        {
+            List<Book> searchResultsList = model.getSearchResultsList();
+
+            if (targetIndex.getZeroBased() >= searchResultsList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            }
+
+            toAdd = searchResultsList.get(targetIndex.getZeroBased());
+            break;
         }
+        case RECENT_BOOKS:
+        {
+            List<Book> recentBooksList = model.getRecentBooksList();
 
-        toAdd = lastShownList.get(targetIndex.getZeroBased());
+            if (targetIndex.getZeroBased() >= recentBooksList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            }
+
+            toAdd = recentBooksList.get(targetIndex.getZeroBased());
+            break;
+        }
+        default:
+            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
+        }
     }
 
     @Override

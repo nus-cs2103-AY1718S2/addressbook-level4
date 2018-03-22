@@ -62,6 +62,9 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
 
         assertCommandFailure(deleteCommand, model, DeleteCommand.MESSAGE_WRONG_ACTIVE_LIST);
+
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        assertCommandFailure(deleteCommand, model, DeleteCommand.MESSAGE_WRONG_ACTIVE_LIST);
     }
 
     @Test

@@ -24,7 +24,7 @@ import seedu.address.model.book.Title;
  */
 public class XmlAdaptedBook {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Book's %s field is missing!";
 
     @XmlElement(required = true)
     private String gid;

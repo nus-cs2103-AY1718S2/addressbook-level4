@@ -22,11 +22,14 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private BookShelfStorage bookShelfStorage;
     private UserPrefsStorage userPrefsStorage;
+    private RecentBooksStorage recentBooksStorage;
 
-    public StorageManager(BookShelfStorage bookShelfStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(BookShelfStorage bookShelfStorage, UserPrefsStorage userPrefsStorage,
+                          RecentBooksStorage recentBooksStorage) {
         super();
         this.bookShelfStorage = bookShelfStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.recentBooksStorage = recentBooksStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -86,4 +89,20 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    // ================ RecentBooks methods ===============================
+
+    @Override
+    public String getRecentBooksFilePath() {
+        return recentBooksStorage.getRecentBooksFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyBookShelf> readRecentBooksList() throws DataConversionException, IOException {
+        return recentBooksStorage.readRecentBooksList();
+    }
+
+    @Override
+    public void saveRecentBooksList(ReadOnlyBookShelf recentBooksList) throws IOException {
+        recentBooksStorage.saveRecentBooksList(recentBooksList);
+    }
 }

@@ -25,6 +25,9 @@ public interface Logic {
     /** Returns an unmodifiable view of the search results list. */
     ObservableList<Book> getSearchResultsList();
 
+    /** Returns an unmodifiable view of the recently selected books list. */
+    ObservableList<Book> getRecentBooksList();
+
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 }

@@ -3,8 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +15,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
+import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.UniqueBookCircularList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
@@ -27,20 +33,33 @@ public class ModelManager extends ComponentManager implements Model {
     private final BookShelf bookShelf;
     private final FilteredList<Book> filteredBooks;
     private final BookShelf searchResults;
+    private final UniqueBookCircularList recentBooks;
 
     /**
-     * Initializes a ModelManager with the given bookShelf and userPrefs.
+     * Initializes a ModelManager with the given bookShelf, userPrefs and recentBooksList.
      */
-    public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs,
+                        ReadOnlyBookShelf recentBooksList) {
         super();
-        requireAllNonNull(bookShelf, userPrefs);
+        requireAllNonNull(bookShelf, userPrefs, recentBooksList);
 
-        logger.fine("Initializing with book shelf: " + bookShelf + " and user prefs " + userPrefs);
+        logger.fine("Initializing with book shelf: " + bookShelf + " and user prefs " + userPrefs
+                + " and recent books: " + recentBooksList);
 
         this.activeListType = ActiveListType.BOOK_SHELF;
         this.bookShelf = new BookShelf(bookShelf);
         this.filteredBooks = new FilteredList<>(this.bookShelf.getBookList());
         this.searchResults = new BookShelf();
+
+        this.recentBooks = new UniqueBookCircularList();
+        List<Book> list = recentBooksList.getBookList();
+        for (int index = list.size() - 1; index >= 0; index--) {
+            this.recentBooks.addToFront(list.get(index));
+        }
+    }
+
+    public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs) {
+        this(bookShelf, userPrefs, new BookShelf());
     }
 
     public ModelManager() {
@@ -126,6 +145,29 @@ public class ModelManager extends ComponentManager implements Model {
         searchResults.resetData(newResults);
     }
 
+    //=========== Recent books ===========================================================================
+
+    @Override
+    public ObservableList<Book> getRecentBooksList() {
+        return FXCollections.unmodifiableObservableList(recentBooks.asObservableList());
+    }
+
+    public ReadOnlyBookShelf getRecentBooksListAsBookShelf() {
+        BookShelf bookShelf = new BookShelf();
+        try {
+            bookShelf.setBooks(getRecentBooksList());
+        } catch (DuplicateBookException e) {
+            logger.warning("Should never throw DuplicateBookException");
+        }
+        return bookShelf;
+    }
+
+    @Override
+    public void addRecentBook(Book newBook) {
+        requireNonNull(newBook);
+        recentBooks.addToFront(newBook);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -142,7 +184,20 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return bookShelf.equals(other.bookShelf)
                 && filteredBooks.equals(other.filteredBooks)
-                && searchResults.equals(other.searchResults);
+                && searchResults.equals(other.searchResults)
+                && recentBooks.equals(other.recentBooks);
     }
 
+
+    @Subscribe
+    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        addRecentBook(event.getNewSelection().book);
+    }
+
+    @Subscribe
+    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        addRecentBook(event.getNewSelection().book);
+    }
 }

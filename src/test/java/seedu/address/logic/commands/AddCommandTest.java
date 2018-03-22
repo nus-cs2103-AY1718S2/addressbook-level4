@@ -34,6 +34,9 @@ public class AddCommandTest {
 
     private Model model;
 
+    /**
+     * By default, set up search results list as active list.
+     */
     @Before
     public void setUp() {
         model = new ModelManager(new BookShelf(), new UserPrefs());
@@ -49,13 +52,17 @@ public class AddCommandTest {
     @Test
     public void execute_invalidActiveListType_failure() {
         model.setActiveListType(ActiveListType.BOOK_SHELF);
-        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
+        AddCommand addCommandSmallIndex = prepareCommand(INDEX_FIRST_BOOK);
+        AddCommand addCommandLargeIndex = prepareCommand(Index.fromOneBased(100));
 
-        assertCommandFailure(addCommand, model, AddCommand.MESSAGE_WRONG_ACTIVE_LIST);
+        assertCommandFailure(addCommandSmallIndex, model, AddCommand.MESSAGE_WRONG_ACTIVE_LIST);
+
+        // Wrong active list message should take precedence over invalid index
+        assertCommandFailure(addCommandLargeIndex, model, AddCommand.MESSAGE_WRONG_ACTIVE_LIST);
     }
 
     @Test
-    public void execute_validIndex_success() throws Exception {
+    public void execute_validIndexSearchResults_success() throws Exception {
         AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
         ModelManager expectedModel = new ModelManager();
         prepareSearchResultListInModel(expectedModel);
@@ -64,8 +71,29 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_invalidIndex_failure() {
+    public void execute_invalidIndexSearchResults_failure() {
         AddCommand addCommand = prepareCommand(Index.fromOneBased(model.getSearchResultsList().size() + 1));
+
+        assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexRecentBooks_success() throws Exception {
+        prepareRecentBooksListInModel(model);
+
+        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
+        ModelManager expectedModel = new ModelManager();
+        prepareSearchResultListInModel(expectedModel);
+        prepareRecentBooksListInModel(expectedModel);
+
+        assertCommandSuccess(addCommand, model, AddCommand.MESSAGE_ADDING, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexRecentBooks_failure() {
+        prepareRecentBooksListInModel(model);
+
+        AddCommand addCommand = prepareCommand(Index.fromOneBased(model.getRecentBooksList().size() + 1));
 
         assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
@@ -134,6 +162,16 @@ public class AddCommandTest {
         model.setActiveListType(ActiveListType.SEARCH_RESULTS);
         BookShelf bookShelf = getTypicalBookShelf();
         model.updateSearchResults(bookShelf);
+    }
+
+    /**
+     * Set up {@code model} with a non-empty recently selected books list and
+     * switch active list to recent books list.
+     */
+    private void prepareRecentBooksListInModel(Model model) {
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        BookShelf bookShelf = getTypicalBookShelf();
+        bookShelf.getBookList().forEach(model::addRecentBook);
     }
 
     /**

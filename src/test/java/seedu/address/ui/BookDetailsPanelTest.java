@@ -33,39 +33,36 @@ public class BookDetailsPanelTest extends GuiUnitTest {
 
         // check that the correct details are displayed
         postNow(new BookListSelectionChangedEvent(new BookCard(ARTEMIS, 0)));
-        assertTrue(bookDetailsPanelHandle.isVisible());
         assertDetailsPanelDisplaysBook(ARTEMIS);
 
         // check that the correct details are displayed
         postNow(new BookListSelectionChangedEvent(new BookCard(BABYLON_ASHES, 1)));
-        assertTrue(bookDetailsPanelHandle.isVisible());
         assertDetailsPanelDisplaysBook(BABYLON_ASHES);
 
         // no categories
         Book bookWithNoCategories = new BookBuilder().withCategories().build();
         postNow(new BookListSelectionChangedEvent(new BookCard(bookWithNoCategories, 0)));
-        assertTrue(bookDetailsPanelHandle.isVisible());
         assertDetailsPanelDisplaysBook(bookWithNoCategories);
 
         // no authors
         Book bookWithNoAuthors = new BookBuilder().withAuthors().build();
         postNow(new BookListSelectionChangedEvent(new BookCard(bookWithNoAuthors, 0)));
-        assertTrue(bookDetailsPanelHandle.isVisible());
         assertDetailsPanelDisplaysBook(bookWithNoAuthors);
 
         // empty book
         Book emptyBook = new BookBuilder().withGid("").withTitle("").withAuthors().withCategories()
                 .withDescription("").withIsbn("").withPublicationDate("").withPublisher("").build();
         postNow(new BookListSelectionChangedEvent(new BookCard(emptyBook, 0)));
-        assertTrue(bookDetailsPanelHandle.isVisible());
         assertDetailsPanelDisplaysBook(emptyBook);
     }
 
     /**
-     * Asserts that the {@code BookDetailsPanel} displays the details of {@code expectedBook} correctly.
+     * Asserts that the {@code BookDetailsPanel} displays the details of {@code expectedBook} correctly
+     * and is visible.
      */
     private void assertDetailsPanelDisplaysBook(Book expectedBook) {
         guiRobot.pauseForHuman();
+        assertTrue(bookDetailsPanelHandle.isVisible());
         GuiTestAssert.assertDetailsPanelDisplaysBook(expectedBook, bookDetailsPanelHandle);
     }
 }

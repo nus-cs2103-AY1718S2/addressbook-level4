@@ -12,6 +12,7 @@ import seedu.address.commons.events.network.ApiBookDetailsResultEvent;
 import seedu.address.commons.events.network.ApiSearchResultEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
 import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.Command;
@@ -66,6 +67,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Book> getSearchResultsList() {
         return model.getSearchResultsList();
+    }
+
+    @Override
+    public ObservableList<Book> getRecentBooksList() {
+        return model.getRecentBooksList();
     }
 
     @Override
@@ -132,5 +138,11 @@ public class LogicManager extends ComponentManager implements Logic {
     private void handleShowSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+    }
+
+    @Subscribe
+    private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
     }
 }

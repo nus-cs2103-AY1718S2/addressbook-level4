@@ -17,12 +17,11 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.WindowSettings;
-import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
 import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -44,6 +43,7 @@ public class MainWindow extends UiPart<Stage> {
     private BookDetailsPanel bookDetailsPanel;
     private BookListPanel bookListPanel;
     private SearchResultsPanel searchResultsPanel;
+    private RecentBooksPanel recentBooksPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -133,9 +133,12 @@ public class MainWindow extends UiPart<Stage> {
 
         bookListPanel = new BookListPanel(logic.getFilteredBookList());
         searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
+        recentBooksPanel = new RecentBooksPanel(logic.getRecentBooksList());
         bookListPanelPlaceholder.getChildren().add(searchResultsPanel.getRoot());
         bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
+        bookListPanelPlaceholder.getChildren().add(recentBooksPanel.getRoot());
         searchResultsPanel.getRoot().setVisible(false);
+        recentBooksPanel.getRoot().setVisible(false);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -218,8 +221,11 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
+            bookDetailsPanel.clear();
+            bookListPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(true);
             searchResultsPanel.getRoot().setVisible(false);
+            recentBooksPanel.getRoot().setVisible(false);
         });
     }
 
@@ -227,24 +233,24 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            searchResultsPanel.scrollToTop();
+            bookDetailsPanel.clear();
+            searchResultsPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(false);
             searchResultsPanel.getRoot().setVisible(true);
+            recentBooksPanel.getRoot().setVisible(false);
         });
     }
 
     @Subscribe
-    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
+    private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookListPanel.clearSelectionAndScrollToTop();
-        bookDetailsPanel.scrollToTop();
-    }
-
-    @Subscribe
-    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        searchResultsPanel.clearSelectionAndScrollToTop();
-        bookDetailsPanel.scrollToTop();
+        Platform.runLater(() -> {
+            bookDetailsPanel.clear();
+            recentBooksPanel.clearSelectionAndScrollToTop();
+            bookListPanel.getRoot().setVisible(false);
+            searchResultsPanel.getRoot().setVisible(false);
+            recentBooksPanel.getRoot().setVisible(true);
+        });
     }
 
 }

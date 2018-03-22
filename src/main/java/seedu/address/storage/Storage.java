@@ -12,7 +12,7 @@ import seedu.address.model.UserPrefs;
 /**
  * API of the Storage component
  */
-public interface Storage extends BookShelfStorage, UserPrefsStorage {
+public interface Storage extends BookShelfStorage, UserPrefsStorage, RecentBooksStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -28,6 +28,12 @@ public interface Storage extends BookShelfStorage, UserPrefsStorage {
 
     @Override
     void saveBookShelf(ReadOnlyBookShelf bookShelf) throws IOException;
+
+    @Override
+    Optional<ReadOnlyBookShelf> readRecentBooksList() throws DataConversionException, IOException;
+
+    @Override
+    void saveRecentBooksList(ReadOnlyBookShelf recentBooksList) throws IOException;
 
     /**
      * Saves the current version of the Book Shelf to the hard disk. Creates a new file if it is missing.

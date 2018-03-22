@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import guitests.guihandles.BookCardHandle;
 import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
+import guitests.guihandles.RecentBooksPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.SearchResultsPanelHandle;
 import seedu.address.model.book.Book;
@@ -74,6 +75,16 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code searchResultsPanelHandle} displays the details of {@code books} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(RecentBooksPanelHandle recentBooksPanelHandle, Book... books) {
+        for (int i = 0; i < books.length; i++) {
+            assertCardDisplaysBook(books[i], recentBooksPanelHandle.getBookCardHandle(i));
+        }
+    }
+
+    /**
      * Asserts that the list in {@code bookListPanelHandle} displays the details of {@code books} correctly and
      * in the correct order.
      */
@@ -87,6 +98,14 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(SearchResultsPanelHandle searchResultsPanelHandle, List<Book> books) {
         assertListMatching(searchResultsPanelHandle, books.toArray(new Book[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code searchResultsPanelHandle} displays the details of {@code books} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(RecentBooksPanelHandle recentBooksPanelHandle, List<Book> books) {
+        assertListMatching(recentBooksPanelHandle, books.toArray(new Book[0]));
     }
 
     /**

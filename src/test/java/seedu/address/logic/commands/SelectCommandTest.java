@@ -18,6 +18,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.JumpToBookListIndexRequestEvent;
+import seedu.address.commons.events.ui.JumpToRecentBooksIndexRequestEvent;
 import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoStack;
@@ -80,6 +81,16 @@ public class SelectCommandTest {
     }
 
     @Test
+    public void execute_validIndexRecentBooksList_success() throws Exception {
+        model = new ModelManager();
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        model.addRecentBook(TypicalBooks.ARTEMIS);
+        model.addRecentBook(TypicalBooks.BABYLON_ASHES);
+        assertExecutionSuccess(INDEX_FIRST_BOOK);
+        assertExecutionSuccess(INDEX_SECOND_BOOK);
+    }
+
+    @Test
     public void execute_invalidIndexFilteredBookList_failure() {
         showBookAtIndex(model, INDEX_FIRST_BOOK);
 
@@ -97,6 +108,14 @@ public class SelectCommandTest {
         BookShelf bookShelf = new BookShelf();
         bookShelf.addBook(TypicalBooks.ARTEMIS);
         model.updateSearchResults(bookShelf);
+        assertExecutionFailure(INDEX_SECOND_BOOK, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexRecentBooksList_failure() throws Exception {
+        model = new ModelManager();
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        model.addRecentBook(TypicalBooks.ARTEMIS);
         assertExecutionFailure(INDEX_SECOND_BOOK, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
@@ -143,6 +162,8 @@ public class SelectCommandTest {
             targetIndex = ((JumpToBookListIndexRequestEvent) lastEvent).targetIndex;
         } else if (lastEvent instanceof JumpToSearchResultsIndexRequestEvent) {
             targetIndex = ((JumpToSearchResultsIndexRequestEvent) lastEvent).targetIndex;
+        } else if (lastEvent instanceof JumpToRecentBooksIndexRequestEvent) {
+            targetIndex = ((JumpToRecentBooksIndexRequestEvent) lastEvent).targetIndex;
         }
         assertEquals(index, Index.fromZeroBased(targetIndex));
     }

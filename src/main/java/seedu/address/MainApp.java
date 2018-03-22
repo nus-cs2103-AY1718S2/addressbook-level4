@@ -30,10 +30,12 @@ import seedu.address.network.Network;
 import seedu.address.network.NetworkManager;
 import seedu.address.storage.BookShelfStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.RecentBooksStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlBookShelfStorage;
+import seedu.address.storage.XmlRecentBooksStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -65,7 +67,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         BookShelfStorage bookShelfStorage = new XmlBookShelfStorage(userPrefs.getBookShelfFilePath());
-        storage = new StorageManager(bookShelfStorage, userPrefsStorage);
+        RecentBooksStorage recentBooksStorage = new XmlRecentBooksStorage(config.getRecentBooksFilePath());
+        storage = new StorageManager(bookShelfStorage, userPrefsStorage, recentBooksStorage);
 
         initLogging(config);
 
@@ -93,6 +96,7 @@ public class MainApp extends Application {
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyBookShelf> bookShelfOptional;
         ReadOnlyBookShelf initialData;
+        ReadOnlyBookShelf recentBooksData;
         try {
             bookShelfOptional = storage.readBookShelf();
             if (!bookShelfOptional.isPresent()) {
@@ -107,7 +111,18 @@ public class MainApp extends Application {
             initialData = new BookShelf();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            Optional<ReadOnlyBookShelf> recentBooksOptional = storage.readRecentBooksList();
+            recentBooksData = recentBooksOptional.orElse(new BookShelf());
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty recent list");
+            recentBooksData = new BookShelf();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty recent list");
+            recentBooksData = new BookShelf();
+        }
+
+        return new ModelManager(initialData, userPrefs, recentBooksData);
     }
 
     private void initLogging(Config config) {
@@ -199,6 +214,7 @@ public class MainApp extends Application {
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
+            storage.saveRecentBooksList(model.getRecentBooksListAsBookShelf());
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }

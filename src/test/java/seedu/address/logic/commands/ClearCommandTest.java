@@ -33,6 +33,10 @@ public class ClearCommandTest {
         model.setActiveListType(ActiveListType.SEARCH_RESULTS);
         ClearCommand clearCommand = prepareCommand(model);
         assertCommandFailure(clearCommand, model, ClearCommand.MESSAGE_WRONG_ACTIVE_LIST);
+
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        clearCommand = prepareCommand(model);
+        assertCommandFailure(clearCommand, model, ClearCommand.MESSAGE_WRONG_ACTIVE_LIST);
     }
 
     /**

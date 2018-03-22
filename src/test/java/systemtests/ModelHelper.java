@@ -46,6 +46,15 @@ public class ModelHelper {
     }
 
     /**
+     * Updates {@code model}'s recent books to be {@code results}.
+     */
+    public static void setRecentBooks(Model model, List<Book> results) {
+        for (int index = results.size() - 1; index >= 0; index--) {
+            model.addRecentBook(results.get(index));
+        }
+    }
+
+    /**
      * Returns a predicate that evaluates to true if this {@code Book} equals to {@code other}.
      */
     private static Predicate<Book> getPredicateMatching(Book other) {

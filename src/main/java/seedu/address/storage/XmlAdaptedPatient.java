@@ -64,7 +64,7 @@ public class XmlAdaptedPatient {
      * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
     public XmlAdaptedPatient(String name, String nric, String phone, String email, String address, String dob,
-                             String bloodType, String record, List<XmlAdaptedTag> tagged) {
+                             String bloodType, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.nric = nric;
         this.phone = phone;
@@ -72,7 +72,6 @@ public class XmlAdaptedPatient {
         this.address = address;
         this.dob = dob;
         this.bloodType = bloodType;
-        this.record = record;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }

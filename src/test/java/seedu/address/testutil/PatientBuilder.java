@@ -11,6 +11,7 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Record;
 import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -28,6 +29,10 @@ public class PatientBuilder {
     public static final String DEFAULT_DOB = "11/11/1991";
     public static final String DEFAULT_BLOODTYPE = "A";
     public static final String DEFAULT_REMARK = "";
+    public static final String DEFAULT_DATE = "";
+    public static final String DEFAULT_SYMPTOM = "";
+    public static final String DEFAULT_ILLNESS = "";
+    public static final String DEFAULT_TREATMENT = "";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -38,6 +43,7 @@ public class PatientBuilder {
     private DateOfBirth dob;
     private BloodType bloodType;
     private Remark remark;
+    private Record record;
     private Set<Tag> tags;
 
     public PatientBuilder() {
@@ -49,6 +55,7 @@ public class PatientBuilder {
         dob = new DateOfBirth(DEFAULT_DOB);
         bloodType = new BloodType(DEFAULT_BLOODTYPE);
         remark = new Remark(DEFAULT_REMARK);
+        record = new Record(DEFAULT_DATE, DEFAULT_SYMPTOM, DEFAULT_ILLNESS, DEFAULT_TREATMENT);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -64,6 +71,7 @@ public class PatientBuilder {
         dob = patientToCopy.getDob();
         bloodType = patientToCopy.getBloodType();
         remark = patientToCopy.getRemark();
+        record = patientToCopy.getRecord();
         tags = new HashSet<>(patientToCopy.getTags());
     }
 
@@ -139,8 +147,16 @@ public class PatientBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Record} of the {@code Patient} that we are building.
+     */
+    public PatientBuilder withRecord(String date, String symptom, String illness, String treatment) {
+        this.record = new Record(date, symptom, illness, treatment);
+        return this;
+    }
+
     public Patient build() {
-        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, tags);
+        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, record, tags);
     }
 
 }

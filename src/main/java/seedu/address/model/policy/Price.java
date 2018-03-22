@@ -20,10 +20,14 @@ public class Price {
         this.price = price;
     }
 
-    public static boolean isValidPrice(Double price) { return price >= 0; }
+    public static boolean isValidPrice(Double price) {
+        return price >= 0;
+    }
 
     @Override
-    public String toString() { return price.toString(); }
+    public String toString() {
+        return price.toString();
+    }
 
     @Override
     public boolean equals(Object other) {

@@ -23,6 +23,7 @@ public class Patient {
     private final DateOfBirth dob;
     private final BloodType bloodType;
     private final Remark remark;
+    private final Record record;
 
     private final UniqueTagList tags;
 
@@ -30,7 +31,7 @@ public class Patient {
      * Every field must be present and not null.
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address,
-                   DateOfBirth dob, BloodType bloodType, Remark remark, Set<Tag> tags) {
+                   DateOfBirth dob, BloodType bloodType, Remark remark, Record record, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.nric = nric;
@@ -40,6 +41,7 @@ public class Patient {
         this.dob = dob;
         this.bloodType = bloodType;
         this.remark = remark;
+        this.record = record;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -76,6 +78,10 @@ public class Patient {
         return remark;
     }
 
+    public Record getRecord() {
+        return record;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -101,13 +107,15 @@ public class Patient {
                 && otherPatient.getEmail().equals(this.getEmail())
                 && otherPatient.getAddress().equals(this.getAddress())
                 && otherPatient.getDob().equals(this.getDob())
-                && otherPatient.getBloodType().equals(this.getBloodType());
+                && otherPatient.getBloodType().equals(this.getBloodType())
+                && otherPatient.getRemark().equals(this.getRemark())
+                && otherPatient.getRecord().equals(this.getRecord());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, phone, email, address, dob, bloodType, tags);
+        return Objects.hash(name, nric, phone, email, address, dob, bloodType, remark, record, tags);
     }
 
     @Override
@@ -128,6 +136,8 @@ public class Patient {
                 .append(getBloodType())
                 .append(" Remark: ")
                 .append(getRemark())
+                .append(" Record: ")
+                .append(getRecord())
                 .append(" Conditions: ");
         getTags().forEach(builder::append);
         return builder.toString();

@@ -1,5 +1,6 @@
 package seedu.address.model.patient;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
@@ -9,6 +10,9 @@ import java.util.Objects;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Record {
+
+    public static final String MESSAGE_RECORD_CONSTRAINTS =
+            "Patient record can take any values, but each field must be populated";
 
     private final String date;
     private final String symptom;
@@ -24,6 +28,10 @@ public class Record {
         this.symptom = symptom;
         this.illness = illness;
         this.treatment = treatment;
+    }
+
+    public Record(Record record) {
+        this(record.getDate(), record.getSymptom(), record.getIllness(), record.getTreatment());
     }
 
     public String getDate() {
@@ -63,6 +71,14 @@ public class Record {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(date, symptom, illness, treatment);
+    }
+
+    /**
+     * Returns true if all fields of record are non-null.
+     */
+    public static boolean isValidRecord(Record test) {
+        requireAllNonNull(test, test.getDate(), test.getIllness(), test.getSymptom(), test.getTreatment());
+        return true;
     }
 
     @Override

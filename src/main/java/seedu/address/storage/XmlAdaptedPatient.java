@@ -17,6 +17,7 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Record;
 import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 
@@ -43,6 +44,8 @@ public class XmlAdaptedPatient {
     private String bloodType;
     @XmlElement(required = true)
     private String remark;
+    @XmlElement(required = true)
+    private Record record;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -84,6 +87,7 @@ public class XmlAdaptedPatient {
         dob = source.getDob().value;
         bloodType = source.getBloodType().value;
         remark = source.getRemark().value;
+        record = source.getRecord();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -161,8 +165,13 @@ public class XmlAdaptedPatient {
 
         final Remark remark = new Remark(this.remark);
 
+        if (!Record.isValidRecord(this.record)) {
+            throw new IllegalValueException(Record.MESSAGE_RECORD_CONSTRAINTS);
+        }
+        final Record record = new Record(this.record);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, tags);
+        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, record, tags);
     }
 
     @Override

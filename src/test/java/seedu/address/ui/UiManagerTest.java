@@ -75,5 +75,5 @@ public class UiManagerTest {
     public void checkAppStop() {
         Assert.assertThrows(NullPointerException.class, () -> ui.stop());
     }
-    
+
 }

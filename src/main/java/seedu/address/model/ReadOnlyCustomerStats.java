@@ -7,7 +7,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of customers statistics
  */
 public interface ReadOnlyCustomerStats {
 

@@ -10,6 +10,7 @@
         <link>http://modsn.us/MYwiD</link>
         <detail>Likes tennis</detail>
         <tagged>friends</tagged>
+        <tagged>CS3230</tagged>
     </persons>
     <persons>
         <name>Benson Meier</name>
@@ -20,6 +21,7 @@
         <detail>Likes tennis</detail>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
+        <tagged>CS3230</tagged>
     </persons>
     <persons>
         <name>Carl Kurz</name>
@@ -56,11 +58,14 @@
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
+
+
         <email>anna@example.com</email>
         <address>4th street</address>
         <link>http://modsn.us/hwWlG</link>
         <detail>Likes tennis</detail>
     </persons>
     <tags>friends</tags>
+    <tags>CS3230</tags>
     <tags>owesMoney</tags>
 </addressbook>

@@ -8,7 +8,10 @@
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <link>http://modsn.us/MYwiD</link>
-        <tagged>friends</tagged>
+        <tagged>
+            <name>friends</name>
+            <color>undefined</color>
+        </tagged>
     </persons>
     <persons>
         <name>Benson Meier</name>
@@ -16,8 +19,14 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <link>http://modsn.us/gka24</link>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <tagged>
+            <name>owesMoney</name>
+            <color>undefined</color>
+        </tagged>
+        <tagged>
+            <name>friends</name>
+            <color>undefined</color>
+        </tagged>
     </persons>
     <persons>
         <name>Carl Kurz</name>
@@ -54,6 +63,12 @@
         <address>4th street</address>
         <link>http://modsn.us/hwWlG</link>
     </persons>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <tags>
+        <name>friends</name>
+        <color>undefined</color>
+    </tags>
+    <tags>
+        <name>owesMoney</name>
+        <color>undefined</color>
+    </tags>
 </addressbook>

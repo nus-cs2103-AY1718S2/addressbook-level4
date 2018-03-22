@@ -24,10 +24,11 @@ import seedu.address.testutil.PersonBuilder;
  * and unit tests for ChangeTagColorCommand.
  */
 public class ChangeTagColorCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model;
 
     @Test
     public void execute_correctFields_success() throws Exception {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Person editedPerson = new PersonBuilder().build();
         ChangeTagColorCommand command = prepareCommand(VALID_TAG_FRIEND, VALID_TAG_COLOR_RED);
 
@@ -44,6 +45,7 @@ public class ChangeTagColorCommandTest {
 
     @Test
     public void execute_tagNameNotInList_failure() throws Exception {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Person editedPerson = new PersonBuilder().build();
         ChangeTagColorCommand command = prepareCommand(VALID_TAG_HUSBAND, VALID_TAG_COLOR_RED);
 

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Your TA - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F09-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -31,18 +31,23 @@ This app will not work with earlier versions of Java 8.
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
+. Sufficient *Java* and *Javafx* knowledge
++
+[NOTE]
+This application is written in Java and Javafx. A good amount of experience with the language (about 10k lines of code written in *Java* and *Javafx*) is required to understand and work in the application.
+
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repository, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
@@ -68,7 +73,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-F09-B1/main` repository. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-F09-B1/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -160,15 +165,53 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+
+The `UI` component loads the layout of each part from the `.fxml` file and then does the bindings to various variables in the address book model in the corresponding `.java` file.
+
+[NOTE]
+It may be difficult to edit the `.fxml` file directly. *Javafx* "Scene Builder" is recommended to be used to edit or creat new `.fxml` files.
+
+.Layout of the UI
+image::UiDisplay.png[width="800"]
+
+As seen from the layout in figure 6, from top to bottom: +
+
+* MenuBar, `File` and `Help` are dropdown menus that perform their usual functions. As seen in Figure 7 below.
+
+.Menu bar of the UI
+image::MenuBar.png[width="800"]
+
+* Down to the left, is the list of people in the address book. As seen in Figure 8 below.
+** It implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonListPanel.java[`PersonListPanel`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonListPanel.fxml[`PersonListPanel.fxml`].
+** The individual person cards implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonCard.fxml[`PersonCard.fxml`].
+
+.Person list of the UI
+image::PersonList.png[width="350"]
+
+* To the right, is the calendar of the address book, in V2.0 task can be scheduled into this calendar. As seen in Figure 9 below.
+** It implements the link:{repoURL}/src/main/java/seedu/address/ui/CalendarView.java[`CalendarView`] class whose layout is specified in link:{repoURL}/src/main/resources/view/CalendarView.fxml[`CalendarView.fxml`].
+
+.Calendar of the UI
+image::Calendar.png[width="800"]
+
+* At the bottom are the command line and results panel. This command line is where the user would type in the commands for the application to execute, and the results of the command will be displayed below in the result panel. as seen in Figure 10 below.
+** The command line implements the link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] class whose layout is specified in link:{repoURL}/src/main/resources/view/CommandBox.fxml[`CommandBox.fxml`].
+** The results panel implements the link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] class whose layout is specified in link:{repoURL}/src/main/resources/view/ResultDisplay.fxml[`ResultDisplay.fxml`].
+
+.Command line of the UI
+image::CommandLine.png[width="800"]
 
 The `UI` component,
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+* Default tags have background colours to identify them as of v1.2.
+* Calendar added as of v1.3.
+* Calendar responds to events raised by the App in V2.0.
 
 [[Design-Logic]]
 === Logic component
@@ -195,7 +238,6 @@ image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
-
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
@@ -203,10 +245,15 @@ image::ModelClassDiagram.png[width="800"]
 
 The `Model`,
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the Address Book data.
+* Exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other three components.
+
+The `Person` Class,
+
+* Stores the information of a specific person(student) in the AddressBook
+* Information includes: Name, Matriculation Number, Phone Number, Email, Address and different tags to associate with that person.
 
 [[Design-Storage]]
 === Storage component
@@ -229,6 +276,13 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+=== Help feature
+==== Current Implementation
+
+The help command displays a list of all the possible commands the user can make, followed by an example on its use.
+
+[This section is to be expanded when the help command is reworked into the help window.]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -780,15 +834,16 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: Tech-Savvy University Teachers/Tutors
 
-* has a need to manage a significant number of contacts
+* have the need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* prefer typing over mouse input
+* are reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app, includes to-do
+    list features (with prioritization, etc.) and scheduling (with calendar and reminders)
 
 [appendix]
 == User Stories
@@ -800,15 +855,41 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |new user |get error messages/prompts |better adapt to commands to use them properly
+
+|`* * *` |user |add a new person |better manage all my contacts at one go
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by matriculation number/email |identify people easily
+
+|`* * *` |user |sort contacts based on name/address/email/tags |work with specific groups of people
+
+|`* * *` |user |assign a to-do list to each person in address book |know what I need to do for them
+
+|`* * *` |user |add individual items to the to-do lists |update additional tasks
+
+|`* * *` |user |remove entire to-do lists or items in it |remove completed tasks
+
+|`* * *` |user |add events to the schedule |better manage work/students
+
+|`* * *` |user |add a deadline to tasks/items |know what needs to be done and by when
+
+|`* * *` |user |prioritize tasks/items |efficiently get tasks/items done on time
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |import students/people from a text file |it is easier to enter large numbers of people
+
+|`* *` |user |add profile pictures |know who the people I am working with are
+
+|`* *` |user |mass email students/people based on a tag |easily email/inform a class of students of announcements
+
+|`* *` |user |set reminders for certain events |have an email sent to me before the actual event so that I don't forget
+
+|`*` |user with many persons in the address book |combine groups/tags |better work with people who have similar interests/work
 |=======================================================================
 
 _{More to be added}_
@@ -819,14 +900,14 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete student
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list students
+2.  AddressBook shows a list of students
+3.  User requests to delete a specific student in the list
+4.  AddressBook deletes the student and all related entries (if any)
 +
 Use case ends.
 
@@ -844,6 +925,84 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Find a student by name
+
+*MSS*
+
+1.  User requests to find a student by name
+2.  AddressBook shows a list of students that match the search query
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add event to schedule
+
+*MSS*
+
+1.  User requests to add an event to a day
+2.  AddressBook shows the current schedule for the day
+3.  User requests to add the event to a timeslot for that day
+4.  AddressBook confirms the addition to the timeslot
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The schedule for the day is full.
++
+[none]
+** 2a1. AddressBook will display an error message.
++
+Use case ends.
+* 3a. User tries to add it to a non-empty timeslot
+[none]
+** 3a1. AddressBook will display an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit lesson for a student
+
+*MSS*
+
+1.  User requests to edit lesson for a student.
+2.  AddressBook shows the current lessons for a student in a list.
+3.  User enters the index of lesson to edit.
+4.  AddressBook prompts the user to enter the new entry.
+5.  User inputs the new entry.
+6.  AddressBook confirms with user on the edit.
+7.  User confirms.
+8.  AddressBook replaces the old entry with the new entry.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no lessons for the student.
++
+Use case ends.
+* 3a. User enters an invalid index
+[none]
+** 3a1. AddressBook will display an error message.
++
+Use case resumes at step 3.
+
+* 5a. User does not enter a valid lesson entry
+[none]
+** 5a1. AddressBook will display an error message.
++
+User case resumes at step 5.
+
 _{More to be added}_
 
 [appendix]
@@ -852,6 +1011,11 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be intuitive or easily understood after reading the User Guide.
+.  Should not exceed the size of 100 MB.
+.  Should respond to any requests within 3 seconds.
+.  Should not modify and copy any user's personal data on the computer.
+.  A User's data should be password protected.
 
 _{More to be added}_
 
@@ -863,6 +1027,43 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[ui]] User interface::
+The visible interface that the user will be seeing when using the application
+
+[[logic]] Logic::
+The set of commands that can be executed by the application
+
+[[model]] Model::
+The internal memory used when application is running
+
+[[storage]] Storage::
+The set of instructions to store specific states and data of the application when application is not running so that it
+can be loaded back into the application when application is started again.
+
+[[feature]] Feature::
+A specific function of the program
+
+[[parser]] Parser::
+A converting function or class that takes in raw input and separates it into its usable components for other methods
+
+[[tasks]] Tasks::
+A command to be executed
+
+[[deadline]] Deadline::
+The date for which certain tasks are due to be done
+
+[[tags]] Tags::
+Keywords tied to categories og people
+
+[[to-do-list]]To-do list::
+A list of things to do
+
+[[import]] Import::
+Bring into the application from an external source
+
+User -
+ Developer -
 
 [appendix]
 == Product Survey

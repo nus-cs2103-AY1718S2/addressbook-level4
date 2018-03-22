@@ -31,6 +31,11 @@ public class ResultDisplayTest extends GuiUnitTest {
 
         resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),
                 ResultDisplayHandle.RESULT_DISPLAY_ID));
+
+        defaultStyleOfResultDisplay = new ArrayList<>(resultDisplayHandle.getStyleClass());
+
+        errorStyleOfResultDisplay = new ArrayList<>(defaultStyleOfResultDisplay);
+        errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
     }
 
     @Test

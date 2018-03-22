@@ -20,6 +20,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemovePatientQueueCommand;
@@ -301,6 +302,12 @@ public class ImdbParser {
             case ViewAppointmentCommand.COMMAND_ALIAS:
                 return new ViewAppointmentCommand();
 
+            case RecordCommand.COMMAND_WORD:
+                return new RecordCommandParser().parse(arguments);
+
+            case RecordCommand.COMMAND_ALIAS:
+                return new RecordCommandParser().parse(arguments);
+
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
@@ -410,6 +417,12 @@ public class ImdbParser {
 
             case AddPatientQueueCommand.COMMAND_ALIAS:
                 return new AddPatientQueueCommandParser().parse(arguments);
+
+            case RecordCommand.COMMAND_WORD:
+                return new RecordCommandParser().parse(arguments);
+
+            case RecordCommand.COMMAND_ALIAS:
+                return new RecordCommandParser().parse(arguments);
 
             case RemovePatientQueueCommand.COMMAND_WORD:
                 return new RemovePatientQueueCommandParser().parse(arguments);

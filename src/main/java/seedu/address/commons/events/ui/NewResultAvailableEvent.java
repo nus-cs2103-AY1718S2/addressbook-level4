@@ -15,6 +15,10 @@ public class NewResultAvailableEvent extends BaseEvent {
         this.isSuccessful = isSuccessful;
     }
 
+    public boolean isSuccessful() {
+        return isSuccessful;
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

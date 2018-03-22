@@ -40,4 +40,15 @@ public class ResultDisplay extends UiPart<Region> {
         Platform.runLater(() -> displayed.setValue(event.message));
     }
 
+    private void setStyleToIndicateCommandSuccess() {
+        resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
+    }
+
+    private void setStyleToIndicateCommandFailure() {
+        ObservableList<String> styleClass = resultDisplay.getStyleClass();
+        if (styleClass.contains(ERROR_STYLE_CLASS)) {
+            return;
+        }
+        styleClass.add(ERROR_STYLE_CLASS);
+    }
 }

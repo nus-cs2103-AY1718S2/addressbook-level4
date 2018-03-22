@@ -67,6 +67,18 @@ public class GuiTestAssert {
                 return "";
         }
     }
+
+    /**
+     * Asserts that the tags in {@code actualCard} matches all tags in {@code expectedPerson} with correct colours.
+     */
+    public static void assertTagsEqual(Person expectedPerson, PersonCardHandle actualCard) {
+        List<String> expectedTags = expectedPerson.getTags()
+                .stream()
+                .map(tag -> tag.tagName)
+                .collect(Collectors.toList());
+        expectedTags.forEach(tag ->
+                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColourStyleFor(tag)),
+                        actualCard.getTagStyleClasses(tag)));
     }
 
     /**

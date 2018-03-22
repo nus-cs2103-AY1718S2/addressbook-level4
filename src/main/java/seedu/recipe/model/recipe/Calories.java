@@ -10,6 +10,7 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
  */
 public class Calories {
 
+    public static final String NULL_CALORIES_REFERENCE = "-";
     public static final String MESSAGE_CALORIES_CONSTRAINTS = "The number of calories must a positive integer.";
     public static final String CALORIES_VALIDATION_REGEX = "[\\d]+";
     public final String value;
@@ -29,7 +30,7 @@ public class Calories {
      * Returns true if a given string is a valid number of calories.
      */
     public static boolean isValidCalories(String test) {
-        return test.matches(CALORIES_VALIDATION_REGEX);
+        return test.equals(NULL_CALORIES_REFERENCE) || test.matches(CALORIES_VALIDATION_REGEX);
     }
 
     @Override

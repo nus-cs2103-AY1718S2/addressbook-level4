@@ -139,6 +139,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a null {@code PreparationTime} object to use as the default value if no value is given.
+     */
+    public static PreparationTime getNullReferencePreparationTime() throws IllegalValueException {
+        return new PreparationTime(PreparationTime.NULL_PREPARATION_TIME_REFERENCE);
+    }
+
+    /**
      * Parses a {@code Optional<String> preparationTime} into an {@code Optional<PreparationTime>}
      * if {@code preparationTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -147,7 +154,7 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(preparationTime);
         return preparationTime.isPresent()
-                ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.empty();
+                ? Optional.of(parsePreparationTime(preparationTime.get())) : Optional.of(getNullReferencePreparationTime());
     }
 
     /**
@@ -166,6 +173,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a null {@code CookingTime} object to use as the default value if no value is given.
+     */
+    public static CookingTime getNullReferenceCookingTime() throws IllegalValueException {
+        return new CookingTime(CookingTime.NULL_COOKING_TIME_REFERENCE);
+    }
+
+    /**
      * Parses a {@code Optional<String> cookingTime} into an {@code Optional<CookingTime>}
      * if {@code cookingTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -174,7 +188,7 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(cookingTime);
         return cookingTime.isPresent()
-                ? Optional.of(parseCookingTime(cookingTime.get())) : Optional.empty();
+                ? Optional.of(parseCookingTime(cookingTime.get())) : Optional.of(getNullReferenceCookingTime());
     }
 
     /**
@@ -193,6 +207,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a null {@code Calories} object to use as the default value if no value is given.
+     */
+    public static Calories getNullReferenceCalories() throws IllegalValueException {
+        return new Calories(Calories.NULL_CALORIES_REFERENCE);
+    }
+
+    /**
      * Parses a {@code Optional<String> calories} into an {@code Optional<Calories>}
      * if {@code calories} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -201,7 +222,7 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(calories);
         return calories.isPresent()
-                ? Optional.of(parseCalories(calories.get())) : Optional.empty();
+                ? Optional.of(parseCalories(calories.get())) : Optional.of(getNullReferenceCalories());
     }
 
     /**
@@ -220,6 +241,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a null {@code Servings} object to use as the default value if no value is given.
+     */
+    public static Servings getNullReferenceServings() throws IllegalValueException {
+        return new Servings(Servings.NULL_SERVINGS_REFERENCE);
+    }
+    
+    /**
      * Parses a {@code Optional<String> servings} into an {@code Optional<Servings>}
      * if {@code servings} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -228,7 +256,7 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(servings);
         return servings.isPresent()
-                ? Optional.of(parseServings(servings.get())) : Optional.empty();
+                ? Optional.of(parseServings(servings.get())) : Optional.of(getNullReferenceServings());
     }
 
     //@@author RyanAngJY

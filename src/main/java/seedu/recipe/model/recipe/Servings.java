@@ -10,6 +10,7 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
  */
 public class Servings {
 
+    public static final String NULL_SERVINGS_REFERENCE = "-";
     public static final String MESSAGE_SERVINGS_CONSTRAINTS = "The number of servings must a positive integer.";
     public static final String SERVINGS_VALIDATION_REGEX = "[\\d]+";
     public final String value;
@@ -29,7 +30,7 @@ public class Servings {
      * Returns true if a given string is a valid number of servings.
      */
     public static boolean isValidServings(String test) {
-        return test.matches(SERVINGS_VALIDATION_REGEX);
+        return test.equals(NULL_SERVINGS_REFERENCE) || test.matches(SERVINGS_VALIDATION_REGEX);
     }
 
     @Override

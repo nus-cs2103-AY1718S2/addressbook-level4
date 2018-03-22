@@ -45,6 +45,7 @@ public class AddCommand extends UndoableCommand {
     private Person toAddOwner;
     private PetPatient toAddPet;
     private Appointment toAddAppt;
+    private String message = "New person added: %1$s\n";
 
     /**
      * Creates an AddCommand to add the specified {@code Person} and {@code PetPatient} and {@code Appointment}
@@ -56,7 +57,7 @@ public class AddCommand extends UndoableCommand {
         toAddOwner = owner;
         toAddPet = pet;
         toAddAppt = appt;
-        MESSAGE_SUCCESS += "New pet patient added: " + toAddPet.toString()
+        message += "New pet patient added: " + toAddPet.toString()
                 + "\nNew appointment made: " + toAddAppt.toString();
         System.out.println("ADDED ALL THREE");
     }
@@ -69,7 +70,7 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(pet);
         toAddOwner = owner;
         toAddPet = pet;
-        MESSAGE_SUCCESS += "New pet patient added: " + toAddPet.toString();
+        message += "New pet patient added: " + toAddPet.toString();
     }
 
     /**
@@ -88,12 +89,16 @@ public class AddCommand extends UndoableCommand {
         toAddOwner = owner;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addPerson( toAddOwner);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAddOwner));
+            model.addPerson(toAddOwner);
+            return new CommandResult(String.format(message, toAddOwner));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }

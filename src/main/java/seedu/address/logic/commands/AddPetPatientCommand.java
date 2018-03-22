@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_COLOUR;

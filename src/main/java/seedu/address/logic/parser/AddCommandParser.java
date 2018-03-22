@@ -74,7 +74,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      * and returns an AddCommand object.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddCommand parse_NewOwnerPetAppt(String ownerInfo, String petInfo, String apptInfo)
+    public AddCommand parseNewOwnerPetAppt(String ownerInfo, String petInfo, String apptInfo)
             throws ParseException {
         System.out.println("I AM PARSING 3 NOW");
         Person owner = parsePerson(ownerInfo);
@@ -112,6 +112,11 @@ public class AddCommandParser implements Parser<AddCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    /**
+     * Parses the given {@code String} of arguments in the context of AddCommand
+     * and returns an AddCommand object.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public AddCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
 
@@ -120,7 +125,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             String ownerInfo = matcher.group("ownerInfo");
             String petInfo = matcher.group("petInfo");
             String apptInfo = matcher.group("apptInfo");
-            return parse_NewOwnerPetAppt(ownerInfo, petInfo, apptInfo);
+            return parseNewOwnerPetAppt(ownerInfo, petInfo, apptInfo);
         }
 
         matcher = ADD_COMMAND_FORMAT_OWNER.matcher(trimmedArgs);

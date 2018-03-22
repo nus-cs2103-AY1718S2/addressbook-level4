@@ -47,7 +47,20 @@ public class ResultDisplayTest extends GuiUnitTest {
 
         // new result received
         postNow(NEW_RESULT_EVENT_STUB);
+    /**
+     * Posts the {@code event} to the {@code EventsCentre}, then verifies that <br>
+     *      - the text on the result display matches the {@code event}'s message <br>
+     *      - the result display's style is the same as {@code defaultStyleOfResultDisplay} if event is successful,
+     *      - {@code errorStyleOfResultDisplay} otherwise.
+     */
+    private void assertResultDisplay(NewResultAvailableEvent event) {
+        postNow(event);
         guiRobot.pauseForHuman();
-        assertEquals(NEW_RESULT_EVENT_STUB.message, resultDisplayHandle.getText());
+        List<String> expectedStyleClass = event.isSuccessful()
+                ? defaultStyleOfResultDisplay
+                : errorStyleOfResultDisplay;
+
+        assertEquals(event.message, resultDisplayHandle.getText());
+        assertEquals(expectedStyleClass, resultDisplayHandle.getStyleClass());
     }
 }

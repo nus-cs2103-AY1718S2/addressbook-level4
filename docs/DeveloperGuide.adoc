@@ -178,7 +178,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `TodoListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -197,14 +197,21 @@ As seen from the layout in figure 6, from top to bottom: +
 .Menu bar of the UI
 image::MenuBar.png[width="800"]
 
-* Down to the left, is the list of people in the address book. As seen in Figure 8 below.
+* Down to the left, is the tab consisting list of people in the address book. As seen in Figure 9 below.
 ** It implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonListPanel.java[`PersonListPanel`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonListPanel.fxml[`PersonListPanel.fxml`].
-** The individual person cards implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonCard.fxml[`PersonCard.fxml`].
+** The individual person card implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonCard.fxml`].
 
 .Person list of the UI
 image::PersonList.png[width="350"]
 
-* To the right, is the calendar of the address book, in V2.0 task can be scheduled into this calendar. As seen in Figure 9 below.
+* The tab to the right of Person List is a list of todo tasks in the addressbook. As seen in Figure 10 below. (Not yet completed)
+** It implements the link:{repoURL}/src/main/java/seedu/address/ui/TodoListPanel.java[`TodoListPanel`] class whose layout is specified in link:{repoURL}/src/main/resources/view/TodoListPanel.fxml[`TodoListPanel.fxml`].
+** The individual todo card implements the link:{repoURL}/src/main/java/seedu/address/ui/TodoCard.java[`PersonCard`] class whose layout is specified in link:{repoURL}/src/main/resources/view/TodoListCard.fxml[`PersonCard.fxml`].
+
+.Todo list of the UI
+image::TodoList.png[width="350"]
+
+* To the right, is the calendar of the address book, in V2.0 task can be scheduled into this calendar. As seen in Figure 11 below.
 ** It implements the link:{repoURL}/src/main/java/seedu/address/ui/CalendarView.java[`CalendarView`] class whose layout is specified in link:{repoURL}/src/main/resources/view/CalendarView.fxml[`CalendarView.fxml`].
 
 .Calendar of the UI

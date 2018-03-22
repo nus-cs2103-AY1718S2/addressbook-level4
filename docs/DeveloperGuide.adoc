@@ -6,6 +6,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
+:experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -1036,6 +1037,7 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
 === Use case: Adding a recipe
 
 *MSS*
@@ -1068,8 +1070,9 @@ Use case resumes at step 1.
 +
 RecipeBook reminds user to put in a version number for the recipe if user wants to add a variation to the recipe.
 +
-User case ends.
+Use case ends.
 
+[discrete]
 === Use case: Searching a recipe from the Internet
 
 *MSS*
@@ -1095,6 +1098,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
 === Use case: Parsing a recipe from a site
 
 *MSS*

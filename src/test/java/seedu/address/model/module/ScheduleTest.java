@@ -7,7 +7,7 @@ public class ScheduleTest {
 
     private Schedule testBlank = new Schedule();
     private Schedule test = new Schedule("1", "Lecture", "EVERY WEEK", "MONDAY",
-            "0000", "2359");
+            "0000", "2359", "LT17");
 
 
     @Test
@@ -44,6 +44,12 @@ public class ScheduleTest {
     public void getEndTime() {
         Assert.assertEquals("", testBlank.getEndTime());
         Assert.assertEquals("2359", test.getEndTime());
+    }
+
+    @Test
+    public void getVenue() {
+        Assert.assertEquals("", testBlank.getVenue());
+        Assert.assertEquals("LT17", test.getVenue());
     }
 
 }

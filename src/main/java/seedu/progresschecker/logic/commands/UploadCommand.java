@@ -17,7 +17,7 @@ public class UploadCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "up";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads a photo to the profile. "
-            + "Parameter: PATH...\n"
+            + "Parameter: INDEX(must be a positive integer) PATH...\n"
             + "Example: " + COMMAND_WORD + " C:\\Users\\ProgressChecker";
 
     public static final String MESSAGE_SUCCESS = "New photo uploaded!";

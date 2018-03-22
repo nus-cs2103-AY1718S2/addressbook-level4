@@ -10,6 +10,7 @@
         <link>http://modsn.us/MYwiD</link>
         <detail>Likes tennis</detail>
         <tagged>friends</tagged>
+        <tagged>CS1010</tagged>
     </persons>
     <persons>
         <name>Benson Meier</name>
@@ -20,6 +21,7 @@
         <detail>Likes tennis</detail>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
+        <tagged>CS1010</tagged>
     </persons>
     <persons>
         <name>Carl Kurz</name>
@@ -62,5 +64,6 @@
         <detail>Likes tennis</detail>
     </persons>
     <tags>friends</tags>
+    <tags>CS1010</tags>
     <tags>owesMoney</tags>
 </addressbook>

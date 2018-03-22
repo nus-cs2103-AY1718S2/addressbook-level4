@@ -8,7 +8,7 @@ import seedu.address.model.person.TagContainKeywordsPredicate;
  */
 public class ListGroupMembersCommand extends Command {
 
-    public static final String COMMAND_WORD = "List Group Members";
+    public static final String COMMAND_WORD = "ListGroupMembers";
     public static final String COMMAND_ALIAS = "lgm";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose groups contain any of "
@@ -27,5 +27,12 @@ public class ListGroupMembersCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ListGroupMembersCommand // instanceof handles nulls
+                && this.predicate.equals(((ListGroupMembersCommand) other).predicate)); // state check
     }
 }

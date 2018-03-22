@@ -49,7 +49,7 @@ public class XmlAdaptedPatient {
     @XmlElement(required = true)
     private String remark;
     @XmlElement(required = true)
-    private Record record;
+    private String record;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -64,7 +64,7 @@ public class XmlAdaptedPatient {
      * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
     public XmlAdaptedPatient(String name, String nric, String phone, String email, String address, String dob,
-                             String bloodType, Record record, List<XmlAdaptedTag> tagged) {
+                             String bloodType, String record, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.nric = nric;
         this.phone = phone;
@@ -92,7 +92,7 @@ public class XmlAdaptedPatient {
         dob = source.getDob().value;
         bloodType = source.getBloodType().value;
         remark = source.getRemark().value;
-        record = source.getRecord();
+        record = source.getRecord().toCommandString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -170,6 +170,11 @@ public class XmlAdaptedPatient {
 
         final Remark remark = new Remark(this.remark);
 
+        try {
+            final Record record = new Record(this.record);
+        } catch(ParseException pe) {
+            throw new IllegalValueException(Record.MESSAGE_RECORD_CONSTRAINTS);
+        }
         final Record record = new Record(this.record);
 
         final Set<Tag> tags = new HashSet<>(personTags);

@@ -117,13 +117,16 @@ public class Record {
 
     public String toCommandString(){
         final StringBuilder builder = new StringBuilder();
-        builder.append("0") //as the command will not be executed, we will be placing a dummy index that is always out of bounds
+        builder.append("1 ") //as the command will not be executed, we will be placing a dummy index
                 .append(PREFIX_DATE)
                 .append(getDate())
+                .append(" ")
                 .append(PREFIX_SYMPTOM)
                 .append(getSymptom())
+                .append(" ")
                 .append(PREFIX_ILLNESS)
                 .append(getIllness())
+                .append(" ")
                 .append(PREFIX_TREATMENT)
                 .append(getTreatment());
         return builder.toString();

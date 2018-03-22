@@ -40,7 +40,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.GOOGLE_MAP_SEARCH_PAGE + ALICE.getAddress().getGoogleMapSearchForm());
+        URL expectedPersonUrl = new URL(BrowserPanel.GOOGLE_MAP_SEARCH_PAGE
+                + ALICE.getAddress().getGoogleMapSearchForm());
 
         waitUntilBrowserLoaded(browserPanelHandle);
         //assertEquals(expectedPersonUrl, new URL(browserPanelHandle.getLoadedUrl()

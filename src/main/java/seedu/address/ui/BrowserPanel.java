@@ -50,7 +50,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadGoogleMapPathPage(Person person) {
-        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.USER_OWN_ADDRESS
+        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.ADDRESS_USER_OWN
                 + "/" + person.getAddress().getGoogleMapSearchForm());
     }
 

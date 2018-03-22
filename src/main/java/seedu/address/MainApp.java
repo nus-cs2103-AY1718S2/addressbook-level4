@@ -103,7 +103,7 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs, new Schedule());
+        return new ModelManager(initialData, userPrefs);
     }
 
     private void initLogging(Config config) {

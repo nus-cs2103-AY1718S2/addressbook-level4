@@ -62,11 +62,11 @@ public class PersonCard extends UiPart<Region> {
 
     private void initTags(Person person) {
         person.getTags().forEach(tag -> {
-            // creates a new Label object for each tag
+            // 1. Creates a new Label object for each tag, initialised with the respective tag.
+            // 2. Adds a style colour attribute to each Label based on its tag.
+            // 3. Adds each properly initialised Label to the containing FlowPane object.
             Label tagLabel = new Label(tag.tagName);
-            // assigns a style colour to each tag based on its name
-            tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));
-            // JavaFX statement: adds each individual tag to the FlowPane object
+            tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));    // getStyleClass(): Node class method
             tags.getChildren().add(tagLabel);
         });
     }

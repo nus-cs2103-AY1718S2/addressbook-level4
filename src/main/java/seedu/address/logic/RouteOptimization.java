@@ -73,6 +73,7 @@ public class RouteOptimization {
      * @param filtered - map of person and their address
      * @return
      */
+
     public String labelRoutes(String origin, String destination, Map<String, String> filtered) {
         String originKey = "";
         String destinationKey = "";
@@ -87,7 +88,6 @@ public class RouteOptimization {
             }
         }
         routeKey = originKey + "_" + destinationKey;
-
         return routeKey;
     }
 }

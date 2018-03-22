@@ -370,12 +370,12 @@ As illustrated, a filtered list of persons will be displayed in a sorted manner 
 
 image::SortFilteredListDiagram.png[width="850"]
 
-
+[%hardbreaks]
 The command can also handle multiple persons with similar names (i.e. different letter-casings) as shown below:
 
 image::SortSimilarNamesDiagram.png[width="650"]
 
-
+[%hardbreaks]
 During sorting, names of two different persons are compared using the static method, `nameComparator`, found in the person class:
 [source, java]
 ----

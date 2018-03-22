@@ -461,7 +461,98 @@ As seen from above, all key combinations implemented consume the default effect 
 ** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
 // end::keyboard-shortcut[]
 
+// tag::auto-compeltion[]
+=== Auto-completion
+==== Current implementation
 
+Formerly, users need to type all application keywords and their inputs to the command line. Auto-completion feature is implemented to help users shorten the commands they need to type, by giving suggestions of words based on current input of users and automatically filling chosen words into input field.
+
+Currently, a class called `SuggestionsPopUp`, which inherits from `ContextMenu`, is created to handle all operations relating to auto-completion. The operations include displaying a pop-up window consisting of suggestions for user’s input, auto-completing input field when a word is chosen and hiding the window.
+
+Key combination kbd:[Shift]+kbd:[Space] is used to show suggestion pop-up and for other keys and key combinations, the pop-up is hidden. The code to handle these key and key combination actions is shown as below:
+
+[source,java]
+----
+private void handleKeyPress(KeyEvent keyEvent) {
+    suggestionsPopUp.hideSuggestions();
+    if (SHOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        suggestionsPopUp.showSuggestions();
+    }
+    // Other key combinations
+}
+----
+
+To display suggestions, first, a suggestion list is built, then position of pop-up menu is calculated for display.
+
+Suggestion list is built with a given list as a dictionary and last word in user input as a word that needs to be looked up. All words in the dictionary that take given word as prefix are valid suggestions and added to the list. However, since input space is limited, only a small number of words are added to the pop-up menu. The code for compiling suggestion list is given below:
+
+[source,java]
+----
+for (String suggestion : dictionary) {
+    if (suggestion.startsWith(prefix)) {
+        addSuggestion(suggestion);
+    }
+
+    if (getItems().size() == MAX_SUGGESTIONS) {
+        break;
+    }
+}
+----
+
+The given list and the constant `MAX_SUGGESTIONS` can be found in `AutoCompletionUtil.java`. All operations with input text is supported by `TextInputProcessorUtil.java`.
+
+To calculate position to display pop-up menu, height and width of input text (in pixels) are computed and then used to determine display position in the main window. Height and with of input text is calculated in `TextInputProcessorUtil.java`.
+
+The suggestion list is then shown in main window.
+
+To hide suggestion list, a method called `hide()` is simply implemented as below:
+
+[source,java]
+----
+protected void hideSuggestions() {
+    if  (isShowing()) {
+        hide();
+    }
+}
+----
+
+To automatically filling text field with chosen word, an `EventListener` is attached to each item in the pop-up menu. When an item is chosen, it replaces the last word in input field with the word associated with the item. The code is shown below:
+
+[source,java]
+----
+item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastWord(item.getText())));
+----
+
+`TextInputProcessorUtil` object `textInputProcessor` is used to handle an operation `replaceLastWord()` for the given text.
+
+==== Design considerations
+
+===== Aspect: Base class of SuggestionsPopUp
+
+* **Alternative 1 (current choice):** `ContextMenu`
+** Pros: Easy to use since `ContextMenu` and `TextArea` are in the same library `javafx.scene.control`.
+** Cons: Dependent on TextArea in `CommandBox` class.
+* **Alternative 2:** `JPopupMenu`
+** Pros: NA.
+** Cons: Need additional works to make `JPopupMenu` compatible with `TextArea`.
+===== Aspect: Abstraction of `SuggestionsPopUp`
+
+* **Alternative 1 (current choice):** A separate class `SuggestionsPopUp`
+** Pros: More intuitive approach since`SuggestionsPopUp` is a component in UI.
+** Cons: Need to take extra information from `CommandBox` class.
+* **Alternative 2:** An inner class of `CommandBox` class
+** Pros: Easy to implement since it has access to all attributes and methods of `CommandBox`.
+** Cons: Limitations in reusability.
+===== Aspect: Abstraction of `TextInputProcessorUtil`
+
+* **Alternative 1 (current choice):** A separate class `TextInputProcessorUtil`
+** Pros: Common functions can be easily used by other classes if needed.
+** Cons: NA.
+* **Alternative 2:** An inner class of `SuggestionsPopUp` class
+** Pros: Convenient to use inside the containing class.
+** Cons: Limitations in reusability.
+// end::auto-completion[]
 
 // tag::dataencryption[]
 === [Proposed] Data encryption

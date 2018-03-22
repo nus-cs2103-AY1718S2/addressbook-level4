@@ -4,8 +4,10 @@ package seedu.address.model.lesson;
  *
  */
 public class Hour implements Comparable<Hour> {
+
     private int value;
-    public Hour(String hour){
+
+    public Hour(String hour) {
         this.value = Integer.parseInt(hour);
     }
 
@@ -13,7 +15,7 @@ public class Hour implements Comparable<Hour> {
      * Get the integer value of the Hour string
      * @return value
      */
-    public int getHour(){
+    public int getHour() {
         return this.value;
     }
 

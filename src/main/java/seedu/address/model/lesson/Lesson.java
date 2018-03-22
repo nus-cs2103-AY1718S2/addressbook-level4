@@ -25,7 +25,7 @@ public class Lesson {
         requireAllNonNull(student, day, startTime, endTime);
 
         this.student = student;
-        this.day= day;
+        this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -37,12 +37,21 @@ public class Lesson {
     public Student getStudent() {
         return student;
     }
-    public Day getDay() { return day; }
+    public Day getDay() {
+        return day;
+    }
     public Time getStartTime() {
         return startTime;
     }
     public Time getEndTime() {
         return endTime;
+    }
+
+    public boolean clashesWith(Lesson other) {
+        return (this.getStartTime().compareTo(other.getStartTime()) >= 0
+                && this.getStartTime().compareTo(other.getEndTime()) <= 0)
+                || (this.getEndTime().compareTo(other.getStartTime()) >= 0
+                && this.getEndTime().compareTo(other.getEndTime()) <= 0);
     }
 
     @Override
@@ -79,13 +88,6 @@ public class Lesson {
                 .append(" Time: ")
                 .append(getStartTime() + " - " + getEndTime());
         return builder.toString();
-    }
-
-    public boolean clashesWith(Lesson other){
-        return (this.getStartTime().compareTo(other.getStartTime()) >= 0 &&
-                    this.getStartTime().compareTo(other.getEndTime()) <= 0)
-                        || (this.getEndTime().compareTo(other.getStartTime()) >= 0 &&
-                            this.getEndTime().compareTo(other.getEndTime()) <= 0);
     }
 
 }

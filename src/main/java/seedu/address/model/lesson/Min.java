@@ -6,7 +6,7 @@ package seedu.address.model.lesson;
  */
 public class Min implements Comparable<Min> {
     private int value;
-    public Min(String min){
+    public Min(String min) {
         this.value = Integer.parseInt(min);
     }
 
@@ -14,7 +14,7 @@ public class Min implements Comparable<Min> {
      * Get the integer value of the Hour string
      * @return value
      */
-    public int getMin(){
+    public int getMin() {
         return this.value;
     }
 
@@ -22,7 +22,7 @@ public class Min implements Comparable<Min> {
      * Compares 2 Hour values and returns whether the comparison is larger than itself
      * @return the compareTo value
      */
-    public int compareTo(Min other){
+    public int compareTo(Min other) {
         return this.getMin() - other.getMin();
     }
 }

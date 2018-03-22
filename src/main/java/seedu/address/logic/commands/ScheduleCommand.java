@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_FAVOURITE_STUDENTS;
-
 /**
  * Displays the user's schedule.
  */

@@ -25,8 +25,9 @@ public class Time implements Comparable<Time> {
     public final String value;
     private final Hour hour;
     private final Min min;
-    private final int HOUR_INDEX = 0;
-    private final int MIN_INDEX = 1;
+
+    private final int INDEX_HOUR = 0;
+    private final int INDEX_MIN = 1;
 
     /**
      * Constructs an {@code Time}.
@@ -37,8 +38,8 @@ public class Time implements Comparable<Time> {
         requireNonNull(time);
         checkArgument(isValidTime(time), MESSAGE_TIME_CONSTRAINTS);
         this.value = time;
-        this.hour = new Hour(value.split(TIME_DELIMITER)[HOUR_INDEX]);
-        this.min = new Min(value.split(TIME_DELIMITER)[MIN_INDEX]);
+        this.hour = new Hour(value.split(TIME_DELIMITER)[INDEX_HOUR]);
+        this.min = new Min(value.split(TIME_DELIMITER)[INDEX_MIN]);
     }
 
     /**
@@ -48,8 +49,12 @@ public class Time implements Comparable<Time> {
         return test.matches(TIME_VALIDATION_REGEX);
     }
 
-    public Hour getHour() { return this.hour; }
-    public Min getMin() { return this.min; }
+    public Hour getHour() {
+        return this.hour;
+    }
+    public Min getMin() {
+        return this.min;
+    }
 
     @Override
     public String toString() {
@@ -64,10 +69,10 @@ public class Time implements Comparable<Time> {
     }
 
     @Override
-    public int compareTo(Time other){
-        return this.getHour().compareTo(other.getHour()) != 0 ?
-                this.getHour().compareTo(other.getHour()) :
-                this.getMin().compareTo(other.getMin());
+    public int compareTo(Time other) {
+        return this.getHour().compareTo(other.getHour()) != 0
+                ? this.getHour().compareTo(other.getHour())
+                : this.getMin().compareTo(other.getMin());
     }
     @Override
     public int hashCode() {

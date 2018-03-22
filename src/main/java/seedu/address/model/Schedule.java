@@ -1,7 +1,5 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Objects;
 
 import javafx.collections.ObservableList;
@@ -20,21 +18,27 @@ public class Schedule implements ReadOnlySchedule {
         lessons = new LessonList();
     }
     public void addLesson(Lesson l) throws InvalidLessonTimeSlotException {
-        if(!isValidSlot(l)) {
+        if (!isValidSlot(l)) {
             throw new InvalidLessonTimeSlotException();
         }
         lessons.add(l);
     }
 
     private boolean isValidSlot(Lesson l){
-        for(Lesson lesson : lessons){
-            if(l.clashesWith(lesson)){
+        for (Lesson lesson : lessons) {
+            if (l.clashesWith(lesson)) {
                 return false;
             }
         }
         return true;
     }
 
+    public void print(){
+        System.out.println(this.toString());
+        for (Lesson l : lessons) {
+            System.out.println(l.toString());
+        }
+    }
     //// util methods
 
     @Override
@@ -53,12 +57,6 @@ public class Schedule implements ReadOnlySchedule {
         return other == this // short circuit if same object
                 || (other instanceof Schedule // instanceof handles nulls
                 && this.lessons.equals(((Schedule) other).lessons));
-    }
-    public void print(){
-        System.out.println(this.toString());
-        for(Lesson l : lessons){
-            System.out.println(l.toString());
-        }
     }
 
     @Override

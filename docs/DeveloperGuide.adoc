@@ -358,6 +358,15 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::findtag[]
+=== Undo/Redo feature
+==== Current Implementation
+
+The findtag feature is implemented with the same mechanism as the find feature. Instead of finding with name, the findtag feature supports finding a stored person with tags. (e.g. 'findtag friend'). Same as the 'FindCommand', the 'FindWithTagCommand'  inherit from `Command`, as such, it cannot be undone.
+
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
+// end::findtag[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

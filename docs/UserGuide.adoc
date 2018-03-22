@@ -266,6 +266,36 @@ Clears all orders from the queue. +
 Alias: `c` +
 Format: `clear`
 
+=== Find Path of an order : `path`
+
+Shows path to the order's address which is identified by the index number used in the last listing. +
+Alias: `p` +
+Format: `path INDEX`
+
+****
+* Shows path to the order’s address which is identified by the index number used in the last listing, using Google Map.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`path 2` +
+Shows path to the 2nd order in the queue.
+
+* `find Betsy` +
+`path 1` +
+Shows path the 1st order in the results of the `find` command.
+
+* `l` +
+`p 2` +
+Shows path to the 2nd order in the queue.
+
+* `f Betsy` +
+`p 1` +
+Shows path to the 1st order in the results of the `find` command.
+
 === Exiting the program : `exit`
 
 Exits the program. +

@@ -26,8 +26,8 @@ public class Time implements Comparable<Time> {
     private final Hour hour;
     private final Min min;
 
-    private final int INDEX_HOUR = 0;
-    private final int INDEX_MIN = 1;
+    private static final int INDEX_HOUR = 0;
+    private static final int INDEX_MIN = 1;
 
     /**
      * Constructs an {@code Time}.
@@ -74,6 +74,7 @@ public class Time implements Comparable<Time> {
                 ? this.getHour().compareTo(other.getHour())
                 : this.getMin().compareTo(other.getMin());
     }
+
     @Override
     public int hashCode() {
         return value.hashCode();

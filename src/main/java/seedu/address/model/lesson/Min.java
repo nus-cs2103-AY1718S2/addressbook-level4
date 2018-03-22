@@ -5,7 +5,9 @@ package seedu.address.model.lesson;
  *
  */
 public class Min implements Comparable<Min> {
+
     private int value;
+
     public Min(String min) {
         this.value = Integer.parseInt(min);
     }

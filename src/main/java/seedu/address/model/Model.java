@@ -5,11 +5,11 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
-import seedu.address.model.student.Student;
-import seedu.address.model.student.exceptions.DuplicateStudentException;
-import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
+import seedu.address.model.student.Student;
+simport seedu.address.model.student.exceptions.DuplicateStudentException;
+import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**

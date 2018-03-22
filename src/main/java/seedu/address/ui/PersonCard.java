@@ -60,11 +60,14 @@ public class PersonCard extends UiPart<Region> {
         return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
     }
 
+    /**
+     * Creates the Labels fot a given {@code Person}.
+     *  1. Creates a new Label object for each tag, initialised with the respective tag.
+     *  2. Adds a style colour attribute to each Label based on its tag.
+     *  3. Adds each properly initialised Label to the containing FlowPane object.
+     */
     private void initTags(Person person) {
         person.getTags().forEach(tag -> {
-            // 1. Creates a new Label object for each tag, initialised with the respective tag.
-            // 2. Adds a style colour attribute to each Label based on its tag.
-            // 3. Adds each properly initialised Label to the containing FlowPane object.
             Label tagLabel = new Label(tag.tagName);
             tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));    // getStyleClass(): Node class method
             tags.getChildren().add(tagLabel);

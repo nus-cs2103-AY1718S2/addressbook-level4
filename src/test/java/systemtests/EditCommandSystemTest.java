@@ -2,7 +2,9 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_BOB;
@@ -17,6 +19,7 @@ import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.SERVINGS_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.SERVINGS_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -145,7 +148,8 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         index = INDEX_FIRST_RECIPE;
         selectRecipe(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY
-            + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY  + URL_DESC_AMY + TAG_DESC_FRIEND;
+                + COOKING_TIME_DESC_AMY + SERVINGS_DESC_AMY + CALORIES_DESC_AMY
+                + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY  + URL_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new recipe's name
         assertCommandSuccess(command, index, AMY, index);

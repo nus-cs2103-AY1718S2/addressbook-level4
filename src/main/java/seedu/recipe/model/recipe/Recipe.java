@@ -96,9 +96,12 @@ public class Recipe {
 
         Recipe otherRecipe = (Recipe) other;
         return otherRecipe.getName().equals(this.getName())
-                && otherRecipe.getPreparationTime().equals(this.getPreparationTime())
                 && otherRecipe.getIngredient().equals(this.getIngredient())
                 && otherRecipe.getInstruction().equals(this.getInstruction())
+                && otherRecipe.getCookingTime().equals(this.getCookingTime())
+                && otherRecipe.getPreparationTime().equals(this.getPreparationTime())
+                && otherRecipe.getCalories().equals(this.getCalories())
+                && otherRecipe.getServings().equals(this.getServings())
                 && otherRecipe.getUrl().equals(this.getUrl());
     }
 

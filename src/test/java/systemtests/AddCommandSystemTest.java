@@ -2,7 +2,9 @@ package systemtests;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_AMY;
@@ -17,6 +19,7 @@ import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.SERVINGS_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.SERVINGS_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_AMY;
@@ -191,6 +194,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         /* Case: add a recipe with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + URL_DESC_BOB + PREPARATION_TIME_DESC_BOB
+                + COOKING_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB
                 + INSTRUCTION_DESC_BOB + NAME_DESC_BOB + TAG_DESC_HUSBAND + INGREDIENT_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 

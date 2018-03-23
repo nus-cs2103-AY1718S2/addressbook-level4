@@ -28,7 +28,7 @@ public class AliasCommand extends UndoableCommand {
     private final Alias toAdd;
 
     /**
-     * Creates an AliasCommand to add the specified {@code Person}
+     * Creates an AliasCommand to add the specified {@code Alias}
      */
     public AliasCommand(Alias alias) {
         requireNonNull(alias);

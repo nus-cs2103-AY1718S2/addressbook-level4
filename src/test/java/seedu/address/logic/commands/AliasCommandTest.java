@@ -15,6 +15,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.person.Person;
@@ -84,6 +85,11 @@ public class AliasCommandTest {
 
         @Override
         public void updatePassword(byte[] password)  {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeAlias(String toRemove) throws AliasNotFoundException {
             fail("This method should not be called.");
         }
 

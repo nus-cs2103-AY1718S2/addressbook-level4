@@ -3,6 +3,7 @@ package seedu.address.model.lesson;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 
 import javafx.collections.FXCollections;
@@ -38,6 +39,7 @@ public class LessonList implements Iterable<Lesson> {
         if (!contains(toAdd)) {
             internalList.add(toAdd);
         }
+        Collections.sort(internalList);
     }
 
     /**

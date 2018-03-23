@@ -1,6 +1,6 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    -fx-background-color: derive(white, 20%);
+    background-color: white; /* Used in the default.html file */
 }
 
 .label {
@@ -42,7 +42,7 @@
 .table-view {
     -fx-base: #1d1d1d;
     -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: white;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -90,7 +90,7 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(white, 20%);
 }
 
 .list-cell {
@@ -100,11 +100,11 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #fffcfc;
+    -fx-background-color: white;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: white;
 }
 
 .list-cell:filled:selected {
@@ -117,7 +117,7 @@
 }
 
 .list-cell .label {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .cell_big_label {
@@ -281,7 +281,7 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(white, 20%);
 }
 
 .scroll-bar .thumb {

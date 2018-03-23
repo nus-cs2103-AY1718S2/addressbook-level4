@@ -29,6 +29,7 @@ public class UploadCommand extends Command {
     private static final String ACCESS_TOKEN = "nF-Ym1zvMnAAAAAAAAAAPYd-4nRthqNAuk343dpYSiQXXHLBJFNraaaUUgPwokxl";
     private static final String RECIPE_DATA_FOLDER = FileUtil.getPath("data/");
     private static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "addressbook.xml");
+    private static final String clientIdentifier = "dropbox/recirecipe";
 
     private final String XmlExtensionFilename;
 
@@ -48,7 +49,7 @@ public class UploadCommand extends Command {
 
     private CommandResult upload() throws DbxException {
         // Create Dropbox client
-        DbxRequestConfig config = DbxRequestConfig.newBuilder("dropbox/recirecipe").build();
+        DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();
         DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
 
         // Upload "addressbook.xml" to Dropbox

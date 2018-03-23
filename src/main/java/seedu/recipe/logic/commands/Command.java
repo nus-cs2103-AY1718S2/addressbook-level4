@@ -1,7 +1,5 @@
 package seedu.recipe.logic.commands;
 
-import com.dropbox.core.DbxException;
-
 import seedu.recipe.commons.core.Messages;
 import seedu.recipe.logic.CommandHistory;
 import seedu.recipe.logic.UndoRedoStack;

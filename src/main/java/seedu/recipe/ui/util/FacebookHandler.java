@@ -59,16 +59,6 @@ public class FacebookHandler {
     }
 
     /**
-     * Extracts access token from the given URL.
-     *
-     * @param url Url should contain embedded access token.
-     */
-    public static void setAccessToken(String url) {
-        assert(url.contains(ACCESS_TOKEN_IDENTIFIER));
-        accessToken = url.replaceAll(ACCESS_TOKEN_REGEX, EXTRACT_PORTION);
-    }
-
-    /**
      * Checks if an access token is embedded in the url.
      * If access token is found, set the accessToken variable to be the found access token.
      *
@@ -76,11 +66,24 @@ public class FacebookHandler {
      */
     public static boolean checkAndSetAccessToken(String url) {
         if (url.contains(ACCESS_TOKEN_IDENTIFIER)) {
-            setAccessToken(url);
+            String token = extractAccessToken(url);
+            setAccessToken(token);
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * Extracts access token from the given URL.
+     */
+    public static String extractAccessToken(String url) {
+        assert (url.contains(ACCESS_TOKEN_IDENTIFIER));
+        return url.replaceAll(ACCESS_TOKEN_REGEX, EXTRACT_PORTION);
+    }
+
+    public static void setAccessToken(String token) {
+        accessToken = token;
     }
 
     public static String getAuthenticationUrl() {

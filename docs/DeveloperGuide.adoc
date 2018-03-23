@@ -536,12 +536,13 @@ A `Schedule` is a list of `Lessons`. A `Lesson` has a `Student` attribute, a `Da
 ----
     public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
             throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
-        requireAllNonNull(studentToAddLesson, day, startTime, endTime);
+        //Check for Duplicate Lesson, StudentNotFound, invalid input ime
 
-        Lesson newLesson = new Lesson(studentToAddLesson, day, startTime, endTime);
         schedule.addLesson(newLesson);
     }
 ----
+
+The student will be selected by the Index of the last seen list of students. A new `Lesson` will now be added for that student at the specific `Day`, `START_TIME` and `END_TIME`.
 
 [NOTE]
 If you have a future implementation that requires the addition of a new attribute in the `Schedule` class, you must take note of updating the `Model.addLesson(Student, Day, Time START_TIME, Time END_TIME)` method to reflect the new attribute.

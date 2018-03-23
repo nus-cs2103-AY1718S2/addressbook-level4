@@ -21,8 +21,8 @@ public class FacebookHandler {
     public static final String REDIRECT_DOMAIN = "https://www.facebook.com/connect/login_success.html";
     private static final String ACCESS_RIGHTS = "publish_actions";
     private static final String APP_ID = "177615459696708";
-    private static final String AUTHENTICATION_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id="
-            + APP_ID + "&redirect_uri=" + REDIRECT_DOMAIN + "&scope=" + ACCESS_RIGHTS;
+    private static final String AUTHENTICATION_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent"
+            + "&client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_DOMAIN + "&scope=" + ACCESS_RIGHTS;
 
     private static final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&.*";
     private static final String EXTRACT_PORTION = "$1";

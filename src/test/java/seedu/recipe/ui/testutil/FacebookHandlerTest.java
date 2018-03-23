@@ -33,8 +33,8 @@ public class FacebookHandlerTest {
 
     @Test
     public void postRecipeOnFacebook() {
-        Assert.assertThrows(NullPointerException.class,
-                () -> FacebookHandler.postRecipeOnFacebook(null));
+        Assert.assertThrows(NullPointerException.class, () ->
+                FacebookHandler.postRecipeOnFacebook(null));
     }
 }
 //@@author

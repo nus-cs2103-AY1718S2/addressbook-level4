@@ -5,7 +5,6 @@ import java.util.List;
 import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.core.Messages;
 import seedu.recipe.commons.core.index.Index;
-import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.recipe.Recipe;

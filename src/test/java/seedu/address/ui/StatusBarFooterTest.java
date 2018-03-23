@@ -19,7 +19,7 @@ import org.junit.Test;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.AddressBook;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalCoins;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
@@ -31,7 +31,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
-    private static AddressBookChangedEvent event_ADDED;
+    private static AddressBookChangedEvent eventADDED;
 
     private StatusBarFooterHandle statusBarFooterHandle;
 
@@ -55,8 +55,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
 
         AddressBook tempAddressBook = new AddressBook();
-        tempAddressBook.addPerson(TypicalPersons.ALICE);
-        event_ADDED = new AddressBookChangedEvent(tempAddressBook);
+        tempAddressBook.addCoin(TypicalCoins.ALICE);
+        eventADDED = new AddressBookChangedEvent(tempAddressBook);
     }
 
     @Test
@@ -69,13 +69,13 @@ public class StatusBarFooterTest extends GuiUnitTest {
         // after address book is updated
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
-                String.format(ITEM_COUNT_STATUS, EVENT_STUB.data.getPersonList().size()),
+                String.format(ITEM_COUNT_STATUS, EVENT_STUB.data.getCoinList().size()),
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
 
         // after address book is updated again
-        postNow(event_ADDED);
+        postNow(eventADDED);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
-                String.format(ITEM_COUNT_STATUS, event_ADDED.data.getPersonList().size()),
+                String.format(ITEM_COUNT_STATUS, eventADDED.data.getCoinList().size()),
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }
 

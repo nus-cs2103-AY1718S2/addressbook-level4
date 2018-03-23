@@ -44,7 +44,7 @@ public class NewsListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code CoinCard}.
      */
     class NewsListViewCell extends ListCell<NewsCard> {
 

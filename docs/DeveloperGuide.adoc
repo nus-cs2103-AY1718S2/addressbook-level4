@@ -196,7 +196,7 @@ When a user issues a command, the following steps are performed:
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a coin) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is then passed back to the UI.
 
 Given below is the Sequence Diagram (Fig. 8) for interactions within the `Logic` component for the `execute("delete{nbsp}1")` API call.
@@ -446,7 +446,7 @@ The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th entry. 
 .Undo/Redo Stack Part 1
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to issue more commands, they are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person, resulting in the below picture (Fig. 13):
+As the user continues to issue more commands, they are added into the `undoStack`. For example, the user may execute `add BTC ...` to add a new coin, resulting in the below picture (Fig. 13):
 
 .Undo/Redo Stack Part 2
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
@@ -454,7 +454,7 @@ image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the coin was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it to the `redoStack`. At the same time, the data is restored to the state before the `add` command executed. The figure below (Fig. 14) illustrates the result:
 
@@ -506,7 +506,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual commands know how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+** Pros: Will use less memory (e.g. for `delete`, just save the coin being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
@@ -1069,15 +1069,15 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a coin
 
-. Deleting a person while all persons are listed
+. Deleting a coin while all coins are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all coins using the `list` command. Multiple coins in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No coin is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 

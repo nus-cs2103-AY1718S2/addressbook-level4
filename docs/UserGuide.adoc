@@ -24,10 +24,10 @@ Text with special meaning look different. Here are the various types:
 ** kbd:[Q] means to press the `Q` key
 ** kbd:[Ctrl]+kbd:[Q] means to hold down the `Ctrl` key and then press the `Q` key
 ** kbd:[Ctrl]kbd:[Q]kbd:[E] means to press the `Ctrl` key, then press the `Q` key, followed by the `E` key; holding down is not required
-* Links are marked link:javascript:void(0);[blue with underline]
-** Cross-ref links bring you to another part of the document, and look like link:javascript:void(0);[this]
-** External cross-ref links bring you to another document, and look like [exref]#link:javascript:void(0);[this]#
-** External links bring you to another website, and look like [ext]#link:javascript:void(0);[this]#
+* Links are marked <<example,blue with underline>>
+** Cross-ref links bring you to another part of the document, and look like <<example,this>>
+** External cross-ref links bring you to another document, and look like [exref]#<<example,this>>#
+** External links bring you to another website, and look like [ext]#<<example,this>>#
 
 
 == Introduction

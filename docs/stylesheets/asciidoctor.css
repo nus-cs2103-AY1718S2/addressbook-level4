@@ -414,7 +414,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
     border-bottom: 1px dashed #999;
     text-decoration: none;
  }
-.exref, .exref > a {
+.exref {
+    background: url(../images/file-link-icon.png) center right no-repeat;
+    padding-right: 13px;
+}
+.exref > a {
     font-weight:bold;
 }
 .ext {

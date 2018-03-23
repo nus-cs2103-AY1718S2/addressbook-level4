@@ -302,7 +302,7 @@ _{Allows the teachers to key in which CCA the students are in and to keep track 
 // end::CCA section[]
 
 // tag::L.E.A.P.S System[]
-=== L.E.A.P.S System`[coming in v2.0]`
+=== L.E.A.P.S System `[coming in v2.0]`
 
 _{Allows the teachers to key in the levels attained by the student for the various domains in L.E.A.P.S
   to calculate the Co-Curricular Attainment of the student.}_

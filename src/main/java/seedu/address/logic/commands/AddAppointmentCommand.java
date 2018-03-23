@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -15,19 +14,17 @@ import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
  */
 public class AddAppointmentCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "appointment";
-    public static final String COMMAND_ALIAS = "aa";
+    public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_ALIAS = "a";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " -a : Adds an appointment. "
             + "Parameters: "
-            + PREFIX_OWNER + "OWNER "
-            + PREFIX_REMARK + "REMARK "
             + PREFIX_DATE + "DATE "
+            + PREFIX_REMARK + "REMARK "
             + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_OWNER + "John Doe "
-            + PREFIX_REMARK + "nil "
             + PREFIX_DATE + "2018-12-31 12:30 "
+            + PREFIX_REMARK + "nil "
             + PREFIX_TAG + "checkup "
             + PREFIX_TAG + "vaccination";
 

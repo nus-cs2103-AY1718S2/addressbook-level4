@@ -358,6 +358,86 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::addPetPatient[]
+=== Adding a Pet Patient
+
+==== Current Implementation
+Currently, adding of pet patients is achieved by `AddPetPatientCommand`. It allows the user to add the details of pet patients, and subsequently stores the details within the storage file.
+
+The implementation of `AddPetPatientCommand` is rather similar to that of `AddCommand`.
+
+[NOTE]
+`AddPetPatientCommand`, as well as `AddCommand`, extends `UndoableCommand`.
+----
+public class AddPetPatientCommand extends UndoableCommand {
+	// logic for AddPetPatientCommand
+}
+----
+This brings us to the next section on the design considerations of AddPetPatientCommand.
+
+==== Design Considerations
+
+===== Aspect: Implementation of AddPetPatientCommand
+
+* **Alternative 1 (current choice):** The command extends `UndoableCommand`
+** Pros: We can make use of the undo / redo function that was previously implemented. This also allows our users to correct any mistakes that they might have made while keying in the information of the pet patients.
+** Cons: Developers who join our team in the future may have trouble understanding the code base (since we have both `UndoableCommand` and `Command`).
+
+* **Alternative 2:** The command extends `Command` instead.
+** Pros: We simplify the code base by removing the use of `UndoableCommand`.
+** Cons: Users are unable to undo their mistakes. Instead, they will have to go through the hassle of editing / deleting pet patients to resolve the error on their part.
+
+==== Current Limitations
+As of now, the linking of pet patients to their respective owners (and also appointments) has not been implemented.
+
+The implementation of `PetPatient` tags (i.e. having a separate list of tags from `Person`) is currently ongoing; as such, there is no support for tagging of pet patients yet.
+
+==== Future Work
+Future work on this feature will address the current limitations that we have.
+
+Linking of pet patients to their respective owners and appointments will be implemented. Tagging of the pet patients will also be implemented, as this is crucial to the searching of medical history of pets for the user.
+
+// end::addPetPatient[]
+
+// tag::commandsyntax[]
+=== [Proposed] Command Syntax
+==== Current Implementation
+
+Command syntax can be long and complicated as there is a lot of information required from the user for each of the three classes: `Person.java`, `PetPatient.java` and `Appointment.java`.
+
+`PetPatient` is dependent on `Person`, and `Appointment` is dependent on both `Person` and `PetPatient`.
+
+* Variations of the same type of command such as:
+** **add** (Person), **add**PetPatient, **add**Appointment
+** **find** by a persons's name / **find** by a pet's name, **find** by NRIC, **find** by phone number
+** **edit** Person / **edit** Pet patient, **edit** Appointment
+
+* Many prefixes required, for example:
+** Person: n/NAME p/PHONE NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAGS]...
+** Pet patient: n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD TYPE [t/TAGS]...
+
+==== Design considerations
+
+===== Aspect: Consolidating similar commands
+
+* Combining variations of the same type of command into a single command with parsing options
+** **add Person** : add **-o** n/NAME p/PHONE NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAGS]...
+** **add Pet Patient** : add **-p** n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD TYPE [t/TAGS]... **-o** [WHO IS THE OWNER]
+** **add Appointment** : add **-a** d/DATE r/REMARK [t/TAGS]... **-o** [OWNER] -p [PET PATIENT INVOLVED]
+** add **-o** [OWNER INFO] **-p** [PET INFO] **-a** [APPOINTMENT INFO]
+
+Keeping to one main command is simpler and more user-friendly as compared to having variations of the same type of command. To reduce the amount of typing required, command syntax should be kept as compact as possible. Instead of having separate `add` commands for each of the 3 classes, combine them into a one-liner command to reduce typing redundant information from dependencies.
+
+===== Aspect: Improving user-friendliness
+
+* Command syntax highlighting
+** Use different colours to highlight [COMMAND WORDS], [PARSING OPTIONS] and [USER INPUT] --> improve readability for the user
+
+* Command auto-complete
+** auto-complete of prefixes using the `tab` key to increase efficiency of using Medeina --> reduce typing and mistypes to improve efficiency in using the application.
+
+// end::commandsyntax[]
+
 // tag::addappointment[]
 === Adding & Storing Appointments
 ==== Current Implementation
@@ -374,6 +454,7 @@ Additionally, we can look to storing the appointments in a separate file, for in
 
 As of now, Remarks cannot be null, though there may be a chance where there are no remarks. We can look to making it accept null, instead of writing a value such as `nil` to fill up the `requireNonNull(...)` component.
 //end::addappointment[]
+=======
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -824,14 +905,14 @@ To enhance user experience and usage efficiency by improving the command syntax 
 
 This allows Vets to change the application's appearance to better suit their preferences and working environment (e.g. dark theme for night time)
 
-|someone#1 |
-*MAJOR ENHANCEMENT*
+|Chia Le Jing|
+*PetPatient class and all its relevant features*
 
-DESCRIPTION HERE |
+Commands such as add, edit, delete, find. Also includes the storage of pet patient's data into the associated .xml file. |
 
-*MINOR ENHANCEMENT*
+*Implement backup function for local databases and the cloud (for v2.0)*
 
-DESCRIPTION HERE
+Allows local files to be backed up with the latest copy (in case of corruption of data). Also allows data to be backed up to the cloud for future use.
 
 |Wynona Kaan |
 *Appointment class and all relevant features*

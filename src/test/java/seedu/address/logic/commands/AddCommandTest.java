@@ -164,7 +164,7 @@ public class AddCommandTest {
         public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
             fail("This method should not be called.");
         }
-      
+  
         @Override
         public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
             fail("This method should not be called.");

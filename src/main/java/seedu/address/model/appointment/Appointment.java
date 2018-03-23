@@ -19,9 +19,9 @@ import seedu.address.model.tag.UniqueTagList;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Appointment {
-    private final Person owner = null; //owner of the appointment
-    private final Name ownerName = null;
-    private final PetPatient pet = null;
+    private Person owner = null; //owner of the appointment
+    private Name ownerName = null;
+    private PetPatient pet = null;
     private Remark remark; //remarks
     private LocalDateTime localDateTime; //date of appointment
 

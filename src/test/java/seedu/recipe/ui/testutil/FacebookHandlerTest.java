@@ -8,6 +8,7 @@ import static seedu.recipe.ui.util.FacebookHandler.REDIRECT_DOMAIN;
 
 import org.junit.Test;
 
+import seedu.recipe.testutil.Assert;
 import seedu.recipe.ui.util.FacebookHandler;
 
 //@@author RyanAngJY
@@ -28,6 +29,12 @@ public class FacebookHandlerTest {
     public void checkAndSetAccessToken() {
         assertTrue(FacebookHandler.checkAndSetAccessToken(VALID_EMBEDDED_ACCESS_TOKEN));
         assertFalse(FacebookHandler.checkAndSetAccessToken(INVALID_EMBEDDED_ACCESS_TOKEN));
+    }
+
+    @Test
+    public void postRecipeOnFacebook() {
+        Assert.assertThrows(NullPointerException.class,
+                () -> FacebookHandler.postRecipeOnFacebook(null));
     }
 }
 //@@author

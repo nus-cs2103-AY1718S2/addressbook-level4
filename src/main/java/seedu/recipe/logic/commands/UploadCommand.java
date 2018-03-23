@@ -1,15 +1,16 @@
 //@@author nicholasangcx
 package seedu.recipe.logic.commands;
 
-import com.dropbox.core.DbxException;
-import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.v2.DbxClientV2;
-import seedu.recipe.commons.util.FileUtil;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.dropbox.core.DbxException;
+import com.dropbox.core.DbxRequestConfig;
+import com.dropbox.core.v2.DbxClientV2;
+
+import seedu.recipe.commons.util.FileUtil;
 
 /**
  * Uploads all recipes online, specifically to Dropbox.
@@ -31,14 +32,14 @@ public class UploadCommand extends Command {
     private static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "addressbook.xml");
     private static final String clientIdentifier = "dropbox/recirecipe";
 
-    private final String XmlExtensionFilename;
+    private final String xmlExtensionFilename;
 
     /**
      * Creates an UploadCommand to upload addressbook.xml to Dropbox with the
      * specified {@code String XmlExtensionFilename}
      */
-    public UploadCommand(String XmlExtensionFilename) {
-        this.XmlExtensionFilename = XmlExtensionFilename;
+    public UploadCommand(String xmlExtensionFilename) {
+        this.xmlExtensionFilename = xmlExtensionFilename;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class UploadCommand extends Command {
 
         // Upload "addressbook.xml" to Dropbox
         try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
-            client.files().uploadBuilder("/" + XmlExtensionFilename).uploadAndFinish(in);
+            client.files().uploadBuilder("/" + xmlExtensionFilename).uploadAndFinish(in);
         } catch (IOException IOE) {
             return new CommandResult(MESSAGE_FAILURE);
         }

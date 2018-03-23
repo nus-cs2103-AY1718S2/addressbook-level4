@@ -19,6 +19,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Appointment {
     private final Person owner; //owner of the appointment
+    private final Name ownerName;
     private final PetPatient pet;
     private Remark remark; //remarks
     private LocalDateTime localDateTime; //date of appointment
@@ -32,6 +33,15 @@ public class Appointment {
         requireAllNonNull(owner, remark, localDateTime, type);
         this.owner = owner;
         this.pet = pet;
+        this.remark = remark;
+        this.localDateTime = localDateTime;
+        // protect internal tags from changes in the arg list
+        this.type = new UniqueTagList(type);
+    }
+    
+    public Appointment(Name owner, LocalDateTime localDateTime, Set<Tag> type) {
+        requireAllNonNull(owner, remark, localDateTime, type);
+        this.ownerName = owner;
         this.remark = remark;
         this.localDateTime = localDateTime;
         // protect internal tags from changes in the arg list

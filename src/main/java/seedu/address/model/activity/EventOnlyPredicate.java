@@ -2,6 +2,9 @@ package seedu.address.model.activity;
 
 import java.util.function.Predicate;
 
+/**
+ * This class gives a predicate that returns only the event in a list.
+ */
 public class EventOnlyPredicate implements Predicate<Activity> {
 
     public EventOnlyPredicate() {

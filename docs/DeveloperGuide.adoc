@@ -454,7 +454,6 @@ Additionally, we can look to storing the appointments in a separate file, for in
 
 As of now, Remarks cannot be null, though there may be a chance where there are no remarks. We can look to making it accept null, instead of writing a value such as `nil` to fill up the `requireNonNull(...)` component.
 //end::addappointment[]
-=======
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

@@ -81,12 +81,12 @@ public class Building {
         this.buildingsAndRooms = buildingsAndRooms;
     }
 
-    public HashMap<String, ArrayList<String>> getNusBuildingsAndRooms() {
+    public static HashMap<String, ArrayList<String>> getNusBuildingsAndRooms() {
         return nusBuildingsAndRooms;
     }
 
-    public void setNusBuildingsAndRooms(HashMap<String, ArrayList<String>> nusBuildingsAndRooms) {
-        this.nusBuildingsAndRooms = nusBuildingsAndRooms;
+    public static void setNusBuildingsAndRooms(HashMap<String, ArrayList<String>> nusBuildingsAndRooms) {
+        Building.nusBuildingsAndRooms = nusBuildingsAndRooms;
     }
 
     /**

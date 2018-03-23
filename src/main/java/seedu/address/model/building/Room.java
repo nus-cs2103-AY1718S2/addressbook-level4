@@ -71,12 +71,12 @@ public class Room {
         return roomName;
     }
 
-    public HashMap<String, Week> getNusVenues() {
+    public static HashMap<String, Week> getNusVenues() {
         return nusVenues;
     }
 
-    public void setNusVenues(HashMap<String, Week> nusVenues) {
-        this.nusVenues = nusVenues;
+    public static void setNusVenues(HashMap<String, Week> nusVenues) {
+        Room.nusVenues = nusVenues;
     }
 
     /**

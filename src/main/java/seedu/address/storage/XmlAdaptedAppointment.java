@@ -27,6 +27,8 @@ public class XmlAdaptedAppointment {
     @XmlElement(required = true)
     private String owner;
     @XmlElement(required = true)
+    private String petPatient;
+    @XmlElement(required = true)
     private String remark;
     @XmlElement(required = true)
     private String dateTime;
@@ -58,7 +60,8 @@ public class XmlAdaptedAppointment {
      * @param source future changes to this will not affect the created XmlAdaptedAppointment
      */
     public XmlAdaptedAppointment(Appointment source) {
-        owner = source.getOwner().getName().toString();
+        owner = source.getOwnerNric().toString();
+        petPatient = source.getPetPatientName().toString();
         remark = source.getRemark().value;
         dateTime = source.getFormattedLocalDateTime();
         tagged = new ArrayList<>();
@@ -127,6 +130,7 @@ public class XmlAdaptedAppointment {
 
         XmlAdaptedAppointment otherAppointment = (XmlAdaptedAppointment) other;
         return Objects.equals(owner, otherAppointment.owner)
+                && Objects.equals(petPatient, otherAppointment.petPatient)
                 && Objects.equals(remark, otherAppointment.remark)
                 && Objects.equals(dateTime, otherAppointment.dateTime)
                 && tagged.equals(otherAppointment.tagged);

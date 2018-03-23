@@ -360,6 +360,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::addappointment[]
 === Adding & Storing Appointments
+==== Current Implementation
 Appointments can currently be added, and automatically stored in `addressbook.xml`. When a user calls a command i.e. `AddAppointmentCommand`, once in `Model` -> `ModelManager` with `addAppointment(...)`, an `indicateAddressBookChanged()` event is raised to indicate that there are changes to be made to the storing `addressbook.xml` file.
 
 The `appointment` function works similarly to the `add` function for persons, except that it accepts 4 different fields: `o\Owner`, `r\Remark`, `d\DateTime`, `t\Type Of Appointment`.

@@ -276,7 +276,7 @@ Upon successful verification, the user will be brought to a user-customised vers
 
 The following sequence diagram shows how the checkLoginDetails method works:
 
-image::checkLoginDetails.jpg[width="800"]
+image::LoginDetails.png[width="800"]
 
 // tag::undoredo[]
 === Undo/Redo feature

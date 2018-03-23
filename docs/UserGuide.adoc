@@ -29,6 +29,9 @@ This app will not work with earlier versions of Java 8.
 +
 .
 .  Run the MainApp scripts and await for the GUI to open
+.  A login screen should appear. Create a profile with desired username and password if using for the first time.
+If profile has previously already been created, or after creation of profile, click login.
+The application should open into the following screen:
 +
 image::Ui.png[width="790"]
 +

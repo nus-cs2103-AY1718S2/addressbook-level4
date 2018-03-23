@@ -122,7 +122,7 @@ public class ParserUtil {
     public static Instruction getNullReferenceInstruction() throws IllegalValueException {
         return new Instruction(Instruction.NULL_INSTRUCTION_REFERENCE);
     }
-    
+
     /**
      * Parses a {@code String recipe} into an {@code Instruction}.
      * Leading and trailing whitespaces will be trimmed.
@@ -158,7 +158,7 @@ public class ParserUtil {
         return instruction.isPresent()
                 ? Optional.of(parseInstruction(instruction.get())) : Optional.of(getNullReferenceInstruction());
     }
-    
+
     /**
      * Returns a null {@code CookingTime} object to use as the default value if no value is given.
      */

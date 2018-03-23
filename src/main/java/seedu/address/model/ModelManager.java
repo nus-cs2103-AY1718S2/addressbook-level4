@@ -16,6 +16,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
@@ -110,6 +111,12 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(password);
 
         addressBook.updatePassword(password);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeAlias(String toRemove) throws AliasNotFoundException {
+        addressBook.removeAlias(toRemove);
         indicateAddressBookChanged();
     }
 

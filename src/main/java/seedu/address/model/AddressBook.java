@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.UniqueAliasList;
+import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -300,5 +301,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
+    }
+
+    public void removeAlias(String toRemove) throws AliasNotFoundException {
+        aliases.remove(toRemove);
     }
 }

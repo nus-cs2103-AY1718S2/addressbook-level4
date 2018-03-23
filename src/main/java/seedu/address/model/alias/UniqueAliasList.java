@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
 /**
@@ -52,6 +53,19 @@ public class UniqueAliasList {
             throw new DuplicateAliasException();
         }
         hashList.put(toAdd.getAlias(), toAdd.getCommand());
+    }
+
+    /**
+     * Removes an Alias to the list.
+     *
+     * @throws AliasNotFoundException if the Alias to remove is a does not exist in the list.
+     */
+    public static void remove(String toRemove) throws AliasNotFoundException {
+        requireNonNull(toRemove);
+        if (!contains(toRemove)) {
+            throw new AliasNotFoundException();
+        }
+        hashList.remove(toRemove);
     }
 
     /**

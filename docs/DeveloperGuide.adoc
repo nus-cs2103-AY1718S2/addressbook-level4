@@ -362,9 +362,11 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === [Proposed] Command Syntax
 ==== Current Implementation
 
-Command syntax can be long and complicated as there is a lot of information required from the user for each of the three classes: `Person.java`, `PetPatient.java` and `Appointment.java`. `PetPatient` is dependent on `Person`, and `Appointment` is dependent on both `Person` and `PetPatient`. 
+Command syntax can be long and complicated as there is a lot of information required from the user for each of the three classes: `Person.java`, `PetPatient.java` and `Appointment.java`. 
 
-* Multiple versions of the same command such as:
+`PetPatient` is dependent on `Person`, and `Appointment` is dependent on both `Person` and `PetPatient`. 
+
+* Variations of the same type of command such as:
 ** add Person / add Pet patient / add Appointment
 ** find by a persons's name / find by a pet's name, find by NRIC, find by phone number
 ** edit Person / edit Pet patient / edit Appointment
@@ -375,17 +377,18 @@ Command syntax can be long and complicated as there is a lot of information requ
 
 
 ==== Design considerations
-* Combining the different versions of a command into a single command with parsing options
+
+* Combining variations of the same type of command into a single command with parsing options
 ** **add Person** : add -o n/NAME p/PHONE NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAGS]... 
 ** **add Pet Patient** : add -p n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD TYPE [t/TAGS]... -o [WHO IS THE OWNER]
 ** **add Appointment** : add -a d/DATE r/REMARK [t/TAGS]... -o [OWNER] -p [PET PATIENT INVOLVED]
 ** add -o [OWNER INFO] -p [PET INFO] -a [APPOINTMENT INFO]
 
-Keeping to one main command is simpler and more user-friendly as compared to having multiple versions (name variations) of the same type of command. To reduce the amount of typing required, command syntax should be kept as compact as possible. Instead of having separate `add` commands for each of the 3 classes, combine them into a one-liner command to reduce typing redundant information from dependencies.
+Keeping to one main command is simpler and more user-friendly as compared to having variations of the same type of command. To reduce the amount of typing required, command syntax should be kept as compact as possible. Instead of having separate `add` commands for each of the 3 classes, combine them into a one-liner command to reduce typing redundant information from dependencies.
 
 * Introduce command highlighting & auto-complete of prefixes
 ** Use different colours to highlight [COMMAND WORDS], [PARSING OPTIONS] and [USER INPUT] --> improve visibility for user
-** auto-complete of prefixes using the `tab` key to increase efficiency of using Medeina --> reduce typing, typos and the need to recall what goes next after each prefix
+** auto-complete of prefixes using the `tab` key to increase efficiency of using Medeina --> reduce typing, typos, and the need to recall what goes next after each prefix
 
 // end::commandsyntax[]
 

@@ -57,8 +57,7 @@ public class FacebookHandlerTest {
     public void postRecipeOnFacebook() {
         Assert.assertThrows(NullPointerException.class, () ->
                 FacebookHandler.postRecipeOnFacebook(null));
-
-        // requires Internet connection, else a FacebookNetworkException is thrown and test fails
+        
         FacebookHandler.setAccessToken(ACCESS_TOKEN_STUB);
         if (hasInternetConnection()) {
             Assert.assertThrows(FacebookOAuthException.class, () ->

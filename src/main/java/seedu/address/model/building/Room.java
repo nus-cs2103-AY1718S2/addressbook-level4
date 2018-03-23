@@ -18,13 +18,6 @@ public class Room {
     public static final String ROOM_VALIDATION_REGEX = "[^\\s].*";
 
     /**
-     * Represents the status of the {@code Room}
-     */
-    public enum RoomStatus {
-        VACANT, OCCUPIED
-    }
-
-    /**
      * Represents all rooms in National University of Singapore
      */
     private static HashMap<String, Week> nusVenues;

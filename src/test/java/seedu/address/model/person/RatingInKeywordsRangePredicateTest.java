@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
 import seedu.address.logic.parser.FilterRange;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.PersonBuilder;
@@ -54,8 +55,8 @@ public class RatingInKeywordsRangePredicateTest {
 
         // Ranged keyword
         predicate = new RatingInKeywordsRangePredicate(new FilterRange<Rating>(
-                new Rating(2.0,2.0,2.0,2.0), new Rating(2.1,2.1,2.1,2.1)));
-        assertTrue(predicate.test(new PersonBuilder().withRating("2.3", "1.9","2.0","1.99").build()));
+                new Rating(2.0, 2.0, 2.0, 2.0), new Rating(2.1, 2.1, 2.1, 2.1)));
+        assertTrue(predicate.test(new PersonBuilder().withRating("2.3", "1.9", "2.0", "1.99").build()));
 
     }
 
@@ -69,7 +70,7 @@ public class RatingInKeywordsRangePredicateTest {
 
         // Not-in-range keyword for ranged predicate
         predicate = new RatingInKeywordsRangePredicate(new FilterRange<Rating>(
-                new Rating(2.0,2.0,2.0,2.0), new Rating(2.1,2.1,2.1,2.1)));
+                new Rating(2.0, 2.0, 2.0, 2.0), new Rating(2.1, 2.1, 2.1, 2.1)));
         assertFalse(predicate.test(new PersonBuilder().withRating("2.0", "2.2", "2.2", "2.2").build()));
     }
 

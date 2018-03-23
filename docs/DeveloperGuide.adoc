@@ -365,12 +365,12 @@ Appointments can currently be added, and automatically stored in `addressbook.xm
 
 The `appointment` function works similarly to the `add` function for persons, except that it accepts 4 different fields: `o\Owner`, `r\Remark`, `d\DateTime`, `t\Type Of Appointment`.
 
-Appointments are stored in `addressbook.xml` under the `<appointment> </appointment>` tags. The owner is stored under the `<owner> </owner>` tags, remarks are stored under `<remarks> </remarks>` tags, date and time is stored under the `<datetime> <datetime>` tags, and the type of appointment is stored under the `<type> </type>` tags.
+Appointments are stored in `addressbook.xml` under the `<appointment> </appointment>` tags. The owner is stored under the `<owner> </owner>` tags, remarks are stored under `<remarks> </remarks>` tags, date and time is stored under the `<datetime> </datetime>` tags, and the type of appointment is stored under the `<type> </type>` tags.
 
 ==== Future Considerations
 We can consider looking to check if a particular pet or owner exists before adding an appointment. As of now, there are no functions checking for the existence of a particular owner or pet before the appointment is added.
 
-Additionally, we can look to storing the appointments in a separate file, for instance `appointments.xml`. This will make the storage xml file much more cleaner. As of now, all the storing is done on only `addressbook.xml`, which may make `addressbook.xml` confusing. In addition, if there is a large amount of data, it may be unseeming to merge all into one file.
+Additionally, we can look to storing the appointments in a separate file, for instance `appointments.xml`. This will make the storage xml file much more cleaner. As of now, all the storing is done on only `addressbook.xml`, which may make `addressbook.xml` confusing. In addition, if there is a large amount of data, it may be too large to store into one file.
 
 As of now, Remarks cannot be null, though there may be a chance where there are no remarks. We can look to making it accept null, instead of writing a value such as `nil` to fill up the `requireNonNull(...)` component.
 //end::addappointment[]

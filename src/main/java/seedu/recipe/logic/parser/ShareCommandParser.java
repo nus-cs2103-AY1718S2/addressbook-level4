@@ -4,7 +4,6 @@ import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.exceptions.IllegalValueException;
-import seedu.recipe.logic.commands.SelectCommand;
 import seedu.recipe.logic.commands.ShareCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 

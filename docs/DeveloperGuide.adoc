@@ -358,7 +358,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::addPetPatient
+// tag::addPetPatient[]
 === Adding a Pet Patient
 
 ==== Current Implementation
@@ -397,7 +397,63 @@ Future work on this feature will address the current limitations that we have.
 
 Linking of pet patients to their respective owners and appointments will be implemented. Tagging of the pet patients will also be implemented, as this is crucial to the searching of medical history of pets for the user.
 
-// end::addPetPatient
+// end::addPetPatient[]
+
+// tag::commandsyntax[]
+=== [Proposed] Command Syntax
+==== Current Implementation
+
+Command syntax can be long and complicated as there is a lot of information required from the user for each of the three classes: `Person.java`, `PetPatient.java` and `Appointment.java`.
+
+`PetPatient` is dependent on `Person`, and `Appointment` is dependent on both `Person` and `PetPatient`.
+
+* Variations of the same type of command such as:
+** **add** (Person), **add**PetPatient, **add**Appointment
+** **find** by a persons's name / **find** by a pet's name, **find** by NRIC, **find** by phone number
+** **edit** Person / **edit** Pet patient, **edit** Appointment
+
+* Many prefixes required, for example:
+** Person: n/NAME p/PHONE NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAGS]...
+** Pet patient: n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD TYPE [t/TAGS]...
+
+==== Design considerations
+
+===== Aspect: Consolidating similar commands
+
+* Combining variations of the same type of command into a single command with parsing options
+** **add Person** : add **-o** n/NAME p/PHONE NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAGS]...
+** **add Pet Patient** : add **-p** n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD TYPE [t/TAGS]... **-o** [WHO IS THE OWNER]
+** **add Appointment** : add **-a** d/DATE r/REMARK [t/TAGS]... **-o** [OWNER] -p [PET PATIENT INVOLVED]
+** add **-o** [OWNER INFO] **-p** [PET INFO] **-a** [APPOINTMENT INFO]
+
+Keeping to one main command is simpler and more user-friendly as compared to having variations of the same type of command. To reduce the amount of typing required, command syntax should be kept as compact as possible. Instead of having separate `add` commands for each of the 3 classes, combine them into a one-liner command to reduce typing redundant information from dependencies.
+
+===== Aspect: Improving user-friendliness
+
+* Command syntax highlighting
+** Use different colours to highlight [COMMAND WORDS], [PARSING OPTIONS] and [USER INPUT] --> improve readability for the user
+
+* Command auto-complete
+** auto-complete of prefixes using the `tab` key to increase efficiency of using Medeina --> reduce typing and mistypes to improve efficiency in using the application.
+
+// end::commandsyntax[]
+
+// tag::addappointment[]
+=== Adding & Storing Appointments
+==== Current Implementation
+Appointments can currently be added, and automatically stored in `addressbook.xml`. When a user calls a command i.e. `AddAppointmentCommand`, once in `Model` -> `ModelManager` with `addAppointment(...)`, an `indicateAddressBookChanged()` event is raised to indicate that there are changes to be made to the storing `addressbook.xml` file.
+
+The `appointment` function works similarly to the `add` function for persons, except that it accepts 4 different fields: `o\Owner`, `r\Remark`, `d\DateTime`, `t\Type Of Appointment`.
+
+Appointments are stored in `addressbook.xml` under the `<appointment> </appointment>` tags. The owner is stored under the `<owner> </owner>` tags, remarks are stored under `<remarks> </remarks>` tags, date and time is stored under the `<datetime> </datetime>` tags, and the type of appointment is stored under the `<type> </type>` tags.
+
+==== Future Considerations
+We can consider looking to check if a particular pet or owner exists before adding an appointment. As of now, there are no functions checking for the existence of a particular owner or pet before the appointment is added.
+
+Additionally, we can look to storing the appointments in a separate file, for instance `appointments.xml`. This will make the storage xml file much more cleaner. As of now, all the storing is done on only `addressbook.xml`, which may make `addressbook.xml` confusing. In addition, if there is a large amount of data, it may be too large to store into one file.
+
+As of now, Remarks cannot be null, though there may be a chance where there are no remarks. We can look to making it accept null, instead of writing a value such as `nil` to fill up the `requireNonNull(...)` component.
+//end::addappointment[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

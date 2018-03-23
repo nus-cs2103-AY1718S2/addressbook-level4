@@ -34,6 +34,25 @@ public class PetPatient {
                       String breed,
                       String colour,
                       String bloodType,
+                      Set<Tag> tags) {
+        requireAllNonNull(name, species, breed, colour, bloodType, tags);
+        this.name = name;
+        this.species = species;
+        this.breed = breed;
+        this.colour = colour;
+        this.bloodType = bloodType;
+        this.tags = new UniqueTagList(tags);
+
+        this.owner = null;
+        this.dateOfBirth = null;
+        this.medicalHistory = new StringBuilder();
+    }
+
+    public PetPatient(PetPatientName name,
+                      String species,
+                      String breed,
+                      String colour,
+                      String bloodType,
                       Person owner,
                       Set<Tag> tags) {
         requireAllNonNull(name, species, breed, colour, bloodType, tags);
@@ -43,7 +62,7 @@ public class PetPatient {
         this.colour = colour;
         this.bloodType = bloodType;
         this.tags = new UniqueTagList(tags);
-        this.owner = null;
+        this.owner = owner;
         this.dateOfBirth = null;
         this.medicalHistory = new StringBuilder();
     }

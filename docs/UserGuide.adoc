@@ -209,19 +209,20 @@ Selects the 1st person in the results of the `find` command.
 
 === Importing address book : `import` (since v1.1)
 
-Imports an address book from filepath to the existing address book. Persons, Tags, and Aliases that are not in your address book will be added. +
-Format: `import FILEPATH`
+Imports an encrypted address book from filepath to the existing address book. Persons, Tags, and Aliases that are not in your address book will be added. +
+Format: `import FILEPATH PASSWORD`
 
 ****
 * Imports an address book from the specified `FILEPATH`.
+* Decrypt that address book using the `PASSWORD` provided.
 * The filepath refers to the filepath where the address book file is stored.
 * The address book file *must be in XML file format*.
 ****
 
-Examples:
+Example:
 
-* `import data/addressBook.xml` +
-Imports address book XML file at data folder.
+* `import data/addressBook.xml test` +
+Imports address book XML file at data folder using test as the password.
 
 === Vacant study rooms finder : `vacant` (coming in v1.3)
 
@@ -315,7 +316,7 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files : `password` (coming in v1.3)
+=== Encrypting data files : `password` (since v1.2)
 
 Changes the password used to encrypt the address book. +
 Format: `password PASSWORD`

@@ -29,6 +29,7 @@ import seedu.recipe.logic.commands.RedoCommand;
 import seedu.recipe.logic.commands.SelectCommand;
 import seedu.recipe.logic.commands.TagCommand;
 import seedu.recipe.logic.commands.UndoCommand;
+import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;
 import seedu.recipe.model.recipe.Recipe;
@@ -125,6 +126,14 @@ public class RecipeBookParserTest {
         TagCommand command = (TagCommand) parser.parseCommand(
                 TagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new TagCommand(new TagContainsKeywordsPredicate(keywords), keywords.toArray(new String[0])), command);
+    }
+
+    @Test
+    public void parseCommand_upload() throws Exception {
+        String filename = "RecipeBook";
+        UploadCommand command = (UploadCommand) parser.parseCommand(
+                UploadCommand.COMMAND_WORD + " " + filename);
+        assertEquals(new UploadCommand(filename + ".xml"), command);
     }
     //@@author
 

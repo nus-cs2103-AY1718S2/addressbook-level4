@@ -489,6 +489,58 @@ It was important to make sure that the `find` command would search through field
 
 It was also important to be able to specify the field the user was interested in searching as this would increase the relevance of search results or reduce the occurence of irrelevant results. For example, if I searched "Baker" and there was a contact whose address was "Baker Street" and there was another contact who had been tagged as "Baker" I would receive two search results. But if I wanted to only view contacts who had been _tagged_ as "Baker", then I need only enter the specifier `-t` to increase the relevance of the results. This becomes more important as the size of the addressbook gets larger. Having more relevant results also increases the speed at which a user can use the application.
 
+
+=== Location on Google Map
+
+The command locate followed by an INDEX(must be positive) shows the location of the place on Google Map in the BrowserPanel. The command takes the INDEX from the argument and get the name of the place in the list in LocateCommand.java, and pass it to the method loadUrl in browerPanel in MainWindow. The user can use 'locate' / 'lo' command with the index of the person as the parameter to locate a person on google map.
+
+The method loadUrl will pass the Google Map url to BrowserPanel to display the location in BrowserPanel.
+
+In the implementation, the `LocateCommand` takes `Index targetIndex` as an argument, and then uses that index in `execute()` to filter the list in the `Model`.
+Locate command is implemented this way:
+[source,java]
+----
+public LocateCommand (Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+----
+
+With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the location indicated by the index in BrowserPanel.
+
+----
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        Person location = lastShownList.get(targetIndex.getZeroBased());
+        // Open Google Map on BrowserPanel
+        MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
+                + location.getAddress().toString());
+
+        EventsCenter.getInstance().post(new LocateRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS, targetIndex.getOneBased()));
+    }
+----
+
+As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
+
+image::InterfaceOfLocateCommand.jpg[width="800"]
+
+==== Further Enhancement
+
+The `locate` command currently accepts only INDEX as the parameter to locate a person, if the user needs to locate a person, he would have to find out the index of the person first, which is not easy to use in this case. It should be more natural if the user can locate a person with any related information of that person. For example, the user might want to locate a person by his name with a simple command of 'locate Alice', or the user might forget the name of a person he's trying to find, but he knows the phone of the person, then he wants to use 'locate 93714378' to locate the person.
+
+In order to implement this further enhancement, we have to modify `LocateCommandParser` to use the parameters as the new "INDEX" to find the person and then find the location of the person to loacte him on Google Map.
+
+==== Rationale
+The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.
+
+It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
+
 == Documentation
 
 We use asciidoc for writing documentation.

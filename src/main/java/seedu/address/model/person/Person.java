@@ -92,16 +92,17 @@ public class Person {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Phone: ")
+        builder.append("\t")
+                .append(getName())
+                .append("\tPhone: ")
                 .append(getPhone())
-                .append(" Email: ")
+                .append("\tEmail: ")
                 .append(getEmail())
-                .append(" Address: ")
+                .append("\tAddress: ")
                 .append(getAddress())
-                .append(" NRIC: ")
+                .append("\tNRIC: ")
                 .append(getNric())
-                .append(" Tags: ");
+                .append("\tTags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

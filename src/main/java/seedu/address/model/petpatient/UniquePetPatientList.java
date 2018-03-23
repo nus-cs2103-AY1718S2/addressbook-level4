@@ -51,7 +51,7 @@ public class UniquePetPatientList implements Iterable<PetPatient> {
      * in the list.
      * @throws PetPatientNotFoundException if {@code target} could not be found in the list.
      */
-    public void setPerson(PetPatient target, PetPatient editedPetPatient)
+    public void setPetPatient(PetPatient target, PetPatient editedPetPatient)
             throws DuplicatePetPatientException, PetPatientNotFoundException {
         requireNonNull(editedPetPatient);
 

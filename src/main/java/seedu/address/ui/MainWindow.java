@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+//import com.calendarfx.view.CalendarView;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,13 +36,14 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CalendarWindow calendarWindow;
+    //private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -117,8 +119,9 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //browserPanel = new BrowserPanel();
+        calendarWindow = new CalendarWindow(logic.getFilteredPersonList());
+        this.calendarPlaceholder.getChildren().add(calendarWindow.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -186,9 +189,10 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
+
+    /*void releaseResources() {
         browserPanel.freeResources();
-    }
+    }*/
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {

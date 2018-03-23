@@ -26,9 +26,13 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.Room;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.ReadOnlyJsonVenueInformation;
+import seedu.address.storage.ReadOnlyVenueInformation;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
@@ -52,6 +56,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected ReadOnlyJsonVenueInformation venueInformation;
     private boolean passwordChanged;
 
     @Override
@@ -64,7 +69,10 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        ReadOnlyVenueInformation venueInformationStorage =
+                new ReadOnlyJsonVenueInformation(config.getVenueInformationFilePath());
+        initVenueInformation(venueInformationStorage);
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, venueInformationStorage);
 
         initLogging(config);
 
@@ -180,6 +188,29 @@ public class MainApp extends Application {
         }
 
         return initializedPrefs;
+    }
+
+    /**
+     * Initialize {@code nusVenues} and {@code nusBuildingsAndRooms} using the file at
+     * {@code storage}'s venue information file path
+     */
+    private void initVenueInformation(ReadOnlyVenueInformation storage) {
+        String venueInformationFilePath = storage.getVenueInformationFilePath();
+        logger.info("Using venueInformation file : " + venueInformationFilePath);
+
+        try {
+            Optional<Building> buildingOptional = storage.readBuildingsAndRoomsInformation();
+            Building building = buildingOptional.orElse(new Building("Test"));
+            Building.setNusBuildingsAndRooms(building.getBuildingsAndRooms());
+            Optional<Room> roomOptional = storage.readVenueInformation();
+            Room room = roomOptional.orElse(new Room("Test"));
+            Room.setNusVenues(room.getNusRooms());
+        } catch (DataConversionException de) {
+            logger.warning("UserPrefs file at " + venueInformationFilePath + " is not in the correct format.");
+        } catch (IOException ioe) {
+            logger.warning("Problem while reading from the file at " + venueInformationFilePath);
+        }
+
     }
 
     private void initEventsCenter() {

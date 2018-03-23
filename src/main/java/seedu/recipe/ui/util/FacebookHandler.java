@@ -50,10 +50,12 @@ public class FacebookHandler {
     public static void postRecipeOnFacebook(Recipe recipeToShare) {
         requireNonNull(recipeToShare);
         Version apiVersion = Version.VERSION_2_12;
-        FacebookClient fbClient = new DefaultFacebookClient(accessToken, apiVersion);
-        fbClient.fetchObject(USER , User.class);
-        fbClient.publish(USER_FEED, FacebookType.class,
-                Parameter.with(POST_TYPE_MESSAGE, recipeToShare.getName().toString()));
+        if (hasAccessToken()) {
+            FacebookClient fbClient = new DefaultFacebookClient(accessToken, apiVersion);
+            fbClient.fetchObject(USER, User.class);
+            fbClient.publish(USER_FEED, FacebookType.class,
+                    Parameter.with(POST_TYPE_MESSAGE, recipeToShare.getName().toString()));
+        }
     }
 
     /**

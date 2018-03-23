@@ -57,7 +57,7 @@ public class FacebookHandlerTest {
     public void postRecipeOnFacebook() {
         Assert.assertThrows(NullPointerException.class, () ->
                 FacebookHandler.postRecipeOnFacebook(null));
-        
+
         FacebookHandler.setAccessToken(ACCESS_TOKEN_STUB);
         if (hasInternetConnection()) {
             Assert.assertThrows(FacebookOAuthException.class, () ->
@@ -76,11 +76,10 @@ public class FacebookHandlerTest {
         try {
             URL url = new URL(VALID_URL);
             HttpURLConnection urlConnect = (HttpURLConnection) url.openConnection();
-            Object objData = urlConnect.getContent();
+            urlConnect.getContent();
         } catch (UnknownHostException e) {
             return false;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             return false;
         }
         return true;

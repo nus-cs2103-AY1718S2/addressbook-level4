@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 
 /**

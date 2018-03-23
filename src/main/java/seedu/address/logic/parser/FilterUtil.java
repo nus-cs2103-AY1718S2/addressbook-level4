@@ -167,6 +167,12 @@ public class FilterUtil {
         return combineAllPredicates(allPredicates);
     }
 
+    /**
+     * Form a single predicate from a single predicate string
+     * @param s a single predicate string
+     * @return a single predicate
+     * @throws IllegalValueException
+     */
     private static Predicate<Person> formRatingPredicateFromPredicateString(String s)
             throws IllegalValueException {
         FilterRange<Rating> filterRange;

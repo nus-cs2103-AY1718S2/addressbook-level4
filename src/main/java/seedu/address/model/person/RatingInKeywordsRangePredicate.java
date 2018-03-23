@@ -4,6 +4,9 @@ import java.util.function.Predicate;
 
 import seedu.address.logic.parser.FilterRange;
 
+/**
+ * A Predicate testing whether a person has his/her rating in the keywords range
+ */
 public class RatingInKeywordsRangePredicate implements Predicate<Person> {
     private final double low;
     private final double high;

@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Name;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -18,9 +19,9 @@ import seedu.address.model.tag.UniqueTagList;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Appointment {
-    private final Person owner; //owner of the appointment
-    private final Name ownerName;
-    private final PetPatient pet;
+    private final Person owner = null; //owner of the appointment
+    private final Name ownerName = null;
+    private final PetPatient pet = null;
     private Remark remark; //remarks
     private LocalDateTime localDateTime; //date of appointment
 
@@ -39,7 +40,7 @@ public class Appointment {
         this.type = new UniqueTagList(type);
     }
     
-    public Appointment(Name owner, LocalDateTime localDateTime, Set<Tag> type) {
+    public Appointment(Name owner, Remark remark, LocalDateTime localDateTime, Set<Tag> type) {
         requireAllNonNull(owner, remark, localDateTime, type);
         this.ownerName = owner;
         this.remark = remark;
@@ -52,6 +53,10 @@ public class Appointment {
         return owner;
     }
 
+    public Name getOwnerName() {
+        return ownerName;
+    }
+    
     public PetPatient getPetPatient() {
         return pet;
     }

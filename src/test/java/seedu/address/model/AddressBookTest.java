@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
-import static seedu.address.testutil.TypicalAppointments.ALLY;
+// import static seedu.address.testutil.TypicalAppointments.ALLY;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -116,14 +116,7 @@ public class AddressBookTest {
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         private final ObservableList<PetPatient> petPatients = FXCollections.observableArrayList();
         private final ObservableList<Tag> petPatientTags = FXCollections.observableArrayList();
-/**
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
-                        Collection<Appointment> appointments) {
-            this.persons.setAll(persons);
-            this.tags.setAll(tags);
-            this.appointments.setAll(appointments);
-        }
-**/
+        
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);

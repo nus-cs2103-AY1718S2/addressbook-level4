@@ -383,6 +383,17 @@ The 'findtag' command can handle multiple input tag keywords and, similar to 'fi
 The following sequence diagram shows how the findtag operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `FindWithTagCommand`
+
+* **Alternative 1 (current choice):** Follow the mechanism of `FindCommand`
+** Pros: 'findtag' works in the same mechanism as 'find', thus will not deviate from the overall architecture of the address book (i.e. Event Driven design).
+** Cons: May generate classes/ methods that are implemented with very similar style (i.e. a general pattern can be abstract out). Thus, additional work may be needed to handle the abstraction.
+* **Alternative 2:** Implement new mechanism specifically for `FindWithTagCommand`
+** Pros: Does not generate similar classes/ methods.
+** Cons: Hard to implement, risk deviating away from the overall architecture of the address book.
 // end::findtag[]
 
 // tag::dataencryption[]

@@ -12,8 +12,11 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_EXPECTED_GRADUATION_YEAR = new Prefix("y/");
     public static final Prefix PREFIX_MAJOR = new Prefix("m/");
-    public static final Prefix PREFIX_RESUME = new Prefix("r/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    //used only in add/edit command
+    public static final Prefix PREFIX_RESUME = new Prefix("r/");
+    //used only in filter command
+    public static final Prefix PREFIX_RATING = new Prefix("r/");
 
     public static final Prefix PREFIX_TECHNICAL_SKILLS_SCORE = new Prefix("t/");
     public static final Prefix PREFIX_COMMUNICATION_SKILLS_SCORE = new Prefix("c/");

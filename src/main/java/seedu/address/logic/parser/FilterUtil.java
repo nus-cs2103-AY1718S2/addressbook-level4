@@ -15,6 +15,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Rating;
+import seedu.address.model.person.RatingInKeywordsRangePredicate;
 
 /**
  * A utility class for parsing FilterCommand
@@ -32,7 +34,7 @@ public class FilterUtil {
         if (predicateString.isPresent()) {
             return parseExpectedGraduationYear(predicateString.get());
         } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+            return null;
         }
     }
 
@@ -52,7 +54,6 @@ public class FilterUtil {
         }
         Predicate<Person> predicate = processExpectedGraduationYearPredicateStrings(predicateStrings);
         return predicate;
-
     }
 
     /**
@@ -69,7 +70,6 @@ public class FilterUtil {
             allPredicates.add(predicate);
         }
         return combineAllPredicates(allPredicates);
-
     }
 
     /**
@@ -115,6 +115,97 @@ public class FilterUtil {
             }
         }
         Predicate<Person> predicate = new ExpectedGraduationYearInKeywordsRangePredicate(filterRange);
+        return predicate;
+    }
+
+    /**
+     * Parses a Optional of  predicateString to a Predicate used to filter Person
+     * @param predicateString a predicate string read from user input
+     * @return a Predicate for filter command
+     * @throws IllegalValueException
+     */
+    public static Predicate<Person> parseRating(Optional<String> predicateString) throws IllegalValueException {
+        requireNonNull(predicateString);
+        if (predicateString.isPresent()) {
+            return parseRating(predicateString.get());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Parses a predicateString to a Predicate used to filter Person
+     * @param predicateString a predicate string read from user input
+     * @return a Predicate for filter command
+     * @throws IllegalValueException
+     */
+    public static Predicate<Person> parseRating(String predicateString)
+            throws IllegalValueException {
+        requireNonNull(predicateString);
+        String[] predicateStrings = predicateString.split(",");
+        Arrays.stream(predicateStrings).map(String::trim).toArray(unused -> predicateStrings);
+        if (predicateStrings.length == 0) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        }
+        Predicate<Person> predicate = processRatingPredicateStrings(predicateStrings);
+        return predicate;
+    }
+
+    /**
+     * Parses the string array of all single predicate strings to a predicate
+     * @param predicateStrings array of predicateString
+     * @return the predicate user demanded
+     * @throws IllegalValueException
+     */
+    private static Predicate<Person> processRatingPredicateStrings(String[] predicateStrings)
+            throws IllegalValueException {
+        List<Predicate<Person>> allPredicates = new ArrayList<Predicate<Person>>();
+        for (String s: predicateStrings) {
+            Predicate<Person> predicate = formRatingPredicateFromPredicateString(s);
+            allPredicates.add(predicate);
+        }
+        return combineAllPredicates(allPredicates);
+    }
+
+    private static Predicate<Person> formRatingPredicateFromPredicateString(String s)
+            throws IllegalValueException {
+        FilterRange<Rating> filterRange;
+        if (s.contains("-")) { //It is a range
+            String[] range = s.split("-");
+            if (range.length != 2) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+            } else {
+                double lowerRating = Rating.DEFAULT_SCORE;
+                double higherRating = Rating.DEFAULT_SCORE;
+                try {
+                    lowerRating = Double.valueOf(range[0].trim());
+                    higherRating = Double.valueOf(range[1].trim());
+                } catch (NumberFormatException nfe) {
+                    throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+                }
+                if (Rating.isValidScore(lowerRating)
+                        && Rating.isValidScore(higherRating)) {
+                    filterRange = new FilterRange<Rating>(
+                            new Rating(lowerRating, lowerRating, lowerRating, lowerRating),
+                            new Rating(higherRating, higherRating, higherRating, higherRating));
+                } else {
+                    throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+                }
+            }
+        } else { //It is a value instead
+            double exactRating = Rating.DEFAULT_SCORE;
+            try {
+                exactRating = Double.valueOf(s);
+            } catch (NumberFormatException nfe) {
+                throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+            }
+            if (Rating.isValidScore(exactRating)) {
+                filterRange = new FilterRange<Rating>(new Rating(exactRating, exactRating, exactRating, exactRating));
+            } else {
+                throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+            }
+        }
+        Predicate<Person> predicate = new RatingInKeywordsRangePredicate(filterRange);
         return predicate;
     }
 }

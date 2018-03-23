@@ -106,12 +106,12 @@ public class AddressBook implements ReadOnlyAddressBook {
             setAppointments(syncedAppointmentList);
         } catch (DuplicateAppointmentException dae) {
             throw new AssertionError("AddressBook should not have appointments on the same slot");
-          
+        }
+        
         setPetPatientTags(new HashSet<>(newData.getPetPatientTagList()));
         List<PetPatient> syncedPetPatientList = newData.getPetPatientList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-        }
         
         try {
             setPetPatients(syncedPetPatientList);

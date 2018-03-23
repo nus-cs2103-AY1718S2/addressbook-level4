@@ -49,10 +49,18 @@ public class AppointmentBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Appointment} that we are building.
+     * Sets the {@code Person} of the {@code Appointment} that we are building.
      */
     public AppointmentBuilder withOwner(Person owner) {
         this.owner = owner;
+        return this;
+    }
+
+    /**
+     * Sets the {@code PetPatient} of the {@code Appointment} that we are building.
+     */
+    public AppointmentBuilder withPetPatient(PetPatient petPatient) {
+        this.petPatient = petPatient;
         return this;
     }
 

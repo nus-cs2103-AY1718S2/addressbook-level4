@@ -22,6 +22,8 @@ public class XmlSerializableAddressBook {
     @XmlElement
     private List<XmlAdaptedTag> tags;
     @XmlElement
+    private List<XmlAdaptedAppointment> appointments;
+    @XmlElement
     private List<XmlAdaptedPetPatient> petPatients;
     @XmlElement
     private List<XmlAdaptedTag> petPatientTags;
@@ -33,6 +35,7 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        appointments = new ArrayList<>();
         petPatients = new ArrayList<>();
         petPatientTags = new ArrayList<>();
     }
@@ -45,6 +48,8 @@ public class XmlSerializableAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new)
                 .collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new)
+                .collect(Collectors.toList()));
+        appointments.addAll(src.getAppointmentList().stream().map(XmlAdaptedAppointment::new)
                 .collect(Collectors.toList()));
         petPatients.addAll(src.getPetPatientList().stream().map(XmlAdaptedPetPatient::new)
                 .collect(Collectors.toList()));
@@ -65,6 +70,9 @@ public class XmlSerializableAddressBook {
         }
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
+        }
+        for (XmlAdaptedAppointment a : appointments) {
+            addressBook.addAppointment(a.toModelType());
         }
         for (XmlAdaptedPetPatient pp : petPatients) {
             addressBook.addPetPatient(pp.toModelType());
@@ -88,6 +96,7 @@ public class XmlSerializableAddressBook {
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
         return persons.equals(otherAb.persons)
                 && tags.equals(otherAb.tags)
+                && appointments.equals(otherAb.appointments)
                 && petPatients.equals(otherAb.petPatients)
                 && petPatientTags.equals(otherAb.petPatientTags);
     }

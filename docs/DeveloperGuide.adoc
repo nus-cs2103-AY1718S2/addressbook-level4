@@ -385,6 +385,162 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Find Command Enhancements
+
+In the original AddressBook, the `find` command only searches through the `Name` field of the `Person`. The current implementation enables the user to search through all fields in a Person. This is bound to be useful when the user may be interested in quickly finding someone whose address or tags contains a certain word. Furthermore, the current implementation allows the user to enter certain specifier parameters to narrow down the search range, which allows more relevant results to appear to the user.
+
+==== Basic Enhancement
+
+Most of the useful work done in the Find Command is done by constructing a `FindCommand` object and passing an appropriate `Predicate<>` as a parameter to it.
+
+----
+public FindCommand(Predicate<Person> predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+----
+
+In this case, the `FindCommand` object expects a `Predicate<Person>` as an argument, and then uses that Predicate object in `execute()` to filter the list in the `Model`.
+
+All that is needed now is to create an appropriate `Predicate<Person>` class that checks the correct fields in a `Person` instance.
+
+For example, in a `PersonContainsKeywordsPredicate`, the test field is overridden as such:
+
+----
+public boolean test(Person person) {
+
+        String stringOfTags = getStringOfTags(person);
+
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
+                || keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(stringOfTags, keyword))
+                || keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword))
+                || keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword))
+                || keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
+    }
+----
+
+a `stream` is generated from the user-entered keywords and each keyword is checked against all the words in specific fields such as `person.getName().fullName`.
+
+==== Further Enhancement
+
+The `find` command accepts a specifier, such as `-t` or `-p` as the first argument to the program to search through a specific field. `FindCommandParser` then recognises the specifers and constructs the correct `FindCommand` object with the correct `Predicate<Person>`. `FindCommand.execute()` is then called, and it searches for the keywords in the correct fields according to the Predicate that was passed to it.
+
+These are the names of the `Predicate<Person>` classes currently implemented:
+
+** PersonContainsKeywordsPredicate
+** NameContainsKeywordsPredicate
+** AddressContainsKeywordsPredicate
+** EmailContainsKeywordsPredicate
+** PhoneContainsKeywordsPredicate
+** TagsContainsKeywordsPredicate
+
+In order to implement this further enhancement, we have to modify `FindCommandParser` to recognize the specifier and then to construct the correct `FindCommand` object. The code is shown below.
+
+----
+ String[] arguments = trimmedArgs.split("\\s+");
+        String[] keywords;
+        //check arguments[0] for specifier
+
+        if (arguments[0].matches("\\p{Alnum}+.++")) {
+            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(arguments)));
+        }
+
+        switch (arguments[0]) {
+        case "-all":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-n":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-p":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-e":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-a":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-t":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new TagsContainsKeywordsPredicate(Arrays.asList(keywords)));
+        default:
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+----
+
+The first if-block captures the case for no specifiers, while the switch-case block captures the case for valid specifiers and throws an exception when the specifier is invalid.
+
+==== Rationale
+The rationale for improving the `find` command is the fact that users of an application containing contact data would like to be able to search for a contact easily using keywords.
+
+It was important to make sure that the `find` command would search through fields other than the Name of the Person, as relevant information may be contained in other fields.
+
+It was also important to be able to specify the field the user was interested in searching as this would increase the relevance of search results or reduce the occurence of irrelevant results. For example, if I searched "Baker" and there was a contact whose address was "Baker Street" and there was another contact who had been tagged as "Baker" I would receive two search results. But if I wanted to only view contacts who had been _tagged_ as "Baker", then I need only enter the specifier `-t` to increase the relevance of the results. This becomes more important as the size of the addressbook gets larger. Having more relevant results also increases the speed at which a user can use the application.
+
+
+=== Location on Google Map
+
+The command locate followed by an INDEX(must be positive) shows the location of the place on Google Map in the BrowserPanel. The command takes the INDEX from the argument and get the name of the place in the list in LocateCommand.java, and pass it to the method loadUrl in browerPanel in MainWindow. The user can use 'locate' / 'lo' command with the index of the person as the parameter to locate a person on google map.
+
+The method loadUrl will pass the Google Map url to BrowserPanel to display the location in BrowserPanel.
+
+In the implementation, the `LocateCommand` takes `Index targetIndex` as an argument, and then uses that index in `execute()` to filter the list in the `Model`.
+Locate command is implemented this way:
+[source,java]
+----
+public LocateCommand (Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+----
+
+With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the location indicated by the index in BrowserPanel.
+
+----
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        Person location = lastShownList.get(targetIndex.getZeroBased());
+        // Open Google Map on BrowserPanel
+        MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
+                + location.getAddress().toString());
+
+        EventsCenter.getInstance().post(new LocateRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS, targetIndex.getOneBased()));
+    }
+----
+
+As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
+
+image::InterfaceOfLocateCommand.jpg[width="800"]
+
+==== Further Enhancement
+
+The `locate` command currently accepts only INDEX as the parameter to locate a person, if the user needs to locate a person, he would have to find out the index of the person first, which is not easy to use in this case. It should be more natural if the user can locate a person with any related information of that person. For example, the user might want to locate a person by his name with a simple command of 'locate Alice', or the user might forget the name of a person he's trying to find, but he knows the phone of the person, then he wants to use 'locate 93714378' to locate the person.
+
+In order to implement this further enhancement, we have to modify `LocateCommandParser` to use the parameters as the new "INDEX" to find the person and then find the location of the person to loacte him on Google Map.
+
+==== Rationale
+The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.
+
+It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -782,13 +938,47 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Loan Shark Bosses
+* Need to manage a significant number of contacts (customers and runners).
+* Prefer desktop apps over other types since he will be operating the syndicate from his den / headquarters and not out in the field.
+* Can type fast as he is tech-savvy and is comfortable with using technology to manage data and streamline his workflow.
+* Prefer typing over mouse mouse input as he has fast fingers.
+* Is reasonable comfortable using CLI apps.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* Manage the operations of the loan shark syndicate substantially more efficiently and quickly than a typical mouse / GUI-driven app.
+* Untapped market potential.
+* Integrated with map, calendar and calculator functionality to centralise and optimise management tasks for the syndicate.
+
+*Feature Contribution:*
+
+~Zhang Rui Qi~
+
+Major: Implementation of `Locate` command to bring up address of target on
+Google Maps.
+
+Minor: Addition of command aliases to improve speed of using CLI
+
+
+~Melvin Tan~
+
+Major: Integration with Google Calendar
+
+Minor: Enhancement to `Find` command to improve searching
+
+~Jonathan Lee~
+
+Major: Natural language processing for commands
+
+Minor: UI update - colours and layout
+
+~Choi Wi Su~
+
+Major: Import and export function to update contacts and export information to other formats
+
+Minor: Addition of remarks field for each contact
+
 
 [appendix]
 == User Stories
@@ -798,17 +988,69 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |view help information |find out how to use the application
 
-|`* * *` |user |add a new person |
+|`* * *` |user |list all my customers |have an overview of all customers
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add a new customer |store the data of a new customer as well as related deals and contracts
+
+|`* * *` |user |clear the list of customers |start on a clean state
+
+|`* * *` |user |delete a customer |remove unwanted data
+
+|`* * *` |user |edit a customer's data |correct mistakes or update the data with the latest information
+
+|`* * *` |user |exit the application |call it a day
+
+|`* * *` |user |find a customer with a keyword and specify which data field to search |search up a customer quickly without looking at the whole list
+
+|`* * *` |user |view history of previously entered commands |trace my workflow
+
+|`* * *` |user |undo a command |easily revert to a previous state
+
+|`* * *` |user |redo a command |redo a command that was undone
+
+|`* * *` |user |select a person from the previously retrieved list |view more details about the particular customer
+
+|`* * *` |user |view a customer's address on Google Maps |visualize the location of the customer
+
+|`* * *` |user |back up my list |create backup copies of the current data in case of data corruption
+
+|`* * *` |user |list all my runners |get an overview of all subordinates
+
+|`* * *` |user |schedule collection of payment |plan  meetings with customers and facilitate timely collection of payments
+
+|`* * *` |user |schedule a house visit |send a friendly, personal reminder to a customer regarding payments
+
+|`* * *` |user |add a customer with partial information |add a customer entry without requiring all the details
+
+|`* * *` |user |easily make ad hoc calculations |perform simple payment calculations without disrupting my workflow
+
+|`* * *` |user |view customer or transaction statistics |make informed decisions or get relevant information about customers or transactions
+
+|`* * *` |user |rate my customers |know who the most reliable customers are
+
+|`* * *` |user |filter customers by area |make operations, collections and visitations more time and cost efficient
+
+|`* * *` |user |hide my application quickly |prevent unwanted eyes from confidential data and the activities of the syndicate
+
+|`* * *` |user |view information about a customer's collateral (family members, relatives, property)  |nalyse possible courses of action against recalcitrant customers who do not pay up
+
+|`* * *` |user |view a compact status view of customers using small symbols or pictorial representations |see general status information about customers at a glance
+
+|`* * *` |user |view different configurations of one or more routes, all together encompassing a given set of customers' locations |find the optimal route in terms of cost, time and effort that can be taken to collect from a given set of customers
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* *` |user |export data of customers and runners |view the data in another format or on another platform
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |view a route encompassing a given set of customers' locations |access the cost, time and effort involved in collecting from a set of customers
+
+|`**` |user | enter commands with aliases | type commands faster and improve speed of using the application
+
+|`*` |user |export my current view to another format |view specific information in another format or print out a hardcopy and pass the information to subordinates
+
+
 |=======================================================================
 
 _{More to be added}_
@@ -867,9 +1109,9 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*LoanShark Tycoon*
 
-Author: ...
+Author:
 
 Pros:
 

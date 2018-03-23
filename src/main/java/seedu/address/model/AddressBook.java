@@ -71,6 +71,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        this.appointments.setAppointments(appointments);
+    }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -85,6 +88,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+
+        List<Appointment> syncedAppointmentList = newData.getAppointmentList().stream()
+                .map(this::syncWithAppointmentMasterTagList)
+                .collect(Collectors.toList());
+        try {
+            setAppointments(syncedAppointmentList);
+        } catch (DuplicateAppointmentException dae) {
+            throw new AssertionError("AddressBook should not have appointments on the same slot");
         }
     }
 
@@ -302,7 +314,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags,"
+                + appointments.asObservableList().size() + " appointments";
         // TODO: refine later
     }
 
@@ -326,12 +339,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.appointments.equals(((AddressBook) other).appointments);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, appointments);
     }
 }

@@ -1,12 +1,16 @@
 package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.Person;
 
 /**
  * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
@@ -38,6 +42,42 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             throw new DuplicateAppointmentException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Replaces the appointment {@code target} in the list with {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if the replacement is equivalent to
+     * another existing appointment in the list.
+     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
+     */
+    public void setAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireNonNull(editedAppointment);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new AppointmentNotFoundException();
+        }
+
+        if (!target.equals(editedAppointment) && internalList.contains(editedAppointment)) {
+            throw new DuplicateAppointmentException();
+        }
+
+        internalList.set(index, editedAppointment);
+    }
+
+    public void setAppointments(UniqueAppointmentList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        requireAllNonNull(appointments);
+        final UniqueAppointmentList replacement = new UniqueAppointmentList();
+        for (final Appointment appointment : appointments) {
+            replacement.add(appointment);
+        }
+        setAppointments(replacement);
     }
 
     /**

@@ -39,7 +39,7 @@ public class Appointment {
         // protect internal tags from changes in the arg list
         this.type = new UniqueTagList(type);
     }
-    
+
     public Appointment(Name owner, Remark remark, LocalDateTime localDateTime, Set<Tag> type) {
         requireAllNonNull(owner, remark, localDateTime, type);
         this.ownerName = owner;
@@ -56,7 +56,7 @@ public class Appointment {
     public Name getOwnerName() {
         return ownerName;
     }
-    
+
     public PetPatient getPetPatient() {
         return pet;
     }

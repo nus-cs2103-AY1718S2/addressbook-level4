@@ -380,7 +380,7 @@ Command syntax can be long and complicated as there is a lot of information requ
 ===== Aspect: Consolidating similar commands
 
 * Combining variations of the same type of command into a single command with parsing options
-** **add Person** : add **-o** n/NAME p/PHONE NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAGS]... 
+** **add Person** : add **-o** n/NAME p/PHONE NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAGS]...
 ** **add Pet Patient** : add **-p** n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD TYPE [t/TAGS]... **-o** [WHO IS THE OWNER]
 ** **add Appointment** : add **-a** d/DATE r/REMARK [t/TAGS]... **-o** [OWNER] -p [PET PATIENT INVOLVED]
 ** add **-o** [OWNER INFO] **-p** [PET INFO] **-a** [APPOINTMENT INFO]

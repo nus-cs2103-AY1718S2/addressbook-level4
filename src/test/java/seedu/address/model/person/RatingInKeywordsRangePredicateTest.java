@@ -72,5 +72,5 @@ public class RatingInKeywordsRangePredicateTest {
                 new Rating(2.0,2.0,2.0,2.0), new Rating(2.1,2.1,2.1,2.1)));
         assertFalse(predicate.test(new PersonBuilder().withRating("2.0", "2.2", "2.2", "2.2").build()));
     }
-    
+
 }

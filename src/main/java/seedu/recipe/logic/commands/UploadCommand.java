@@ -43,7 +43,7 @@ public class UploadCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws DbxException {
+    public CommandResult execute() {
         CommandResult result = upload();
         return result;
     }
@@ -54,7 +54,7 @@ public class UploadCommand extends Command {
      * @return {@code CommandResult}
      * @throws DbxException
      */
-    private CommandResult upload() throws DbxException {
+    private CommandResult upload() {
         // Create Dropbox client
         DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();
         DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
@@ -62,7 +62,7 @@ public class UploadCommand extends Command {
         // Upload "addressbook.xml" to Dropbox
         try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
             client.files().uploadBuilder("/" + xmlExtensionFilename).uploadAndFinish(in);
-        } catch (IOException IoE) {
+        } catch (IOException | DbxException e) {
             return new CommandResult(MESSAGE_FAILURE);
         }
 

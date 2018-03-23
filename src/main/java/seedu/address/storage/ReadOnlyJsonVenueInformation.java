@@ -2,10 +2,7 @@ package seedu.address.storage;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.logging.Logger;
 
-import seedu.address.MainApp;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.building.Building;
@@ -15,8 +12,6 @@ import seedu.address.model.building.Room;
  * A class to access VenueInformation stored in the hard disk as a json file
  */
 public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
-
-    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     private String filePath;
 

@@ -17,12 +17,6 @@ public class Week {
     private ArrayList<WeekDay> weekSchedule;
     private String roomName;
 
-    /**
-     * Uses private {@code Week} constructor for Jackson JSON API to instantiate an object
-     */
-    private Week() {
-    }
-
     public ArrayList<WeekDay> getWeekSchedule() {
         return weekSchedule;
     }

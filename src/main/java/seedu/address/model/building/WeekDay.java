@@ -18,12 +18,6 @@ public class WeekDay {
     private String weekDay;
     private String roomName;
 
-    /**
-     * Uses a private {@code WeekDay} constructor for Jackson JSON API to instantiate an object
-     */
-    private WeekDay() {
-    }
-
     public HashMap<String, String> getWeekDaySchedule() {
         return weekDaySchedule;
     }
@@ -72,11 +66,11 @@ public class WeekDay {
      * Increments the time in 24 hour format by 30 minutes
      */
     private int incrementHalfHour(int time) {
-        time += 30;
-        if (time % 100 == 60) {
-            time = time - 60 + 100;
+        int timeAfterHalfHour = time + 30;
+        if (timeAfterHalfHour % 100 == 60) {
+            timeAfterHalfHour = timeAfterHalfHour - 60 + 100;
         }
-        return time;
+        return timeAfterHalfHour;
     }
 
     @Override

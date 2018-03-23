@@ -13,8 +13,9 @@ import java.util.HashMap;
 public class Room {
 
     public static final String MESSAGE_ROOM_CONSTRAINTS =
-            "Room names should only contain alphanumeric characters and it should not be blank";
-    public static final String ROOM_VALIDATION_REGEX = "\\p{Alnum}+";
+            "Room names can take any values, and it should not be blank";
+
+    public static final String ROOM_VALIDATION_REGEX = "[^\\s].*";
 
     /**
      * Represents the status of the {@code Room}
@@ -26,15 +27,18 @@ public class Room {
     /**
      * Represents all rooms in National University of Singapore
      */
-    public static HashMap<String, Week> nusVenues;
+    private static HashMap<String, Week> nusVenues;
 
     private final String roomName;
 
     private HashMap<String, Week> nusRooms;
     private Week week;
 
-    public Room() {
-        roomName = null;
+    /**
+     * Uses a private {@code Room} constructor for Jackson JSON API to instantiate an object
+     */
+    private Room() {
+        roomName = "";
     }
 
     /**
@@ -67,16 +71,23 @@ public class Room {
         return roomName;
     }
 
+    public HashMap<String, Week> getNusVenues() {
+        return nusVenues;
+    }
+
+    public void setNusVenues(HashMap<String, Week> nusVenues) {
+        this.nusVenues = nusVenues;
+    }
+
     /**
      * Retrieves the {@code Room}'s weekday schedule in an ArrayList
-     * @param roomName
      */
-    public ArrayList<String> getWeekDaySchedule(String roomName) {
-        initializeWeek(roomName);
+    public ArrayList<String> getWeekDaySchedule() {
+        initializeWeek();
         return week.getWeekDaySchedule();
     }
 
-    public void initializeWeek(String roomName) {
+    public void initializeWeek() {
         week = nusVenues.get(roomName);
     }
 

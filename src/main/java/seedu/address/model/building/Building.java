@@ -14,6 +14,7 @@ public class Building {
 
     public static final String MESSAGE_BUILDING_CONSTRAINTS =
             "Building names should only contain alphanumeric characters and it should not be blank";
+
     public static final String BUILDING_VALIDATION_REGEX = "\\p{Alnum}+";
 
     /**
@@ -25,7 +26,7 @@ public class Building {
         "S17", "E1", "E2", "E2A", "E3", "E3A", "E4", "E4A", "E5", "EA", "ERC", "UTSRC", "LT"
     };
 
-    public static HashMap<String, ArrayList<String>> nusBuildingsAndRooms;
+    private static HashMap<String, ArrayList<String>> nusBuildingsAndRooms;
 
     private final String buildingName;
 
@@ -35,7 +36,7 @@ public class Building {
      * Uses a private {@code Building} constructor for Jackson JSON API to instantiate an object
      */
     private Building() {
-        buildingName = null;
+        buildingName = "";
     }
 
     /**
@@ -76,15 +77,27 @@ public class Building {
         return buildingsAndRooms;
     }
 
+    public void setBuildingsAndRooms(HashMap<String, ArrayList<String>> buildingsAndRooms) {
+        this.buildingsAndRooms = buildingsAndRooms;
+    }
+
+    public HashMap<String, ArrayList<String>> getNusBuildingsAndRooms() {
+        return nusBuildingsAndRooms;
+    }
+
+    public void setNusBuildingsAndRooms(HashMap<String, ArrayList<String>> nusBuildingsAndRooms) {
+        this.nusBuildingsAndRooms = nusBuildingsAndRooms;
+    }
+
     /**
      * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList
      */
     public ArrayList<ArrayList<String>> getAllRoomsSchedule() {
         ArrayList<ArrayList<String>> allRoomsSchedule = new ArrayList<>();
         ArrayList<String> allRoomsInBuilding = getAllRoomsInBuilding();
-        Room sampleRoom = new Room();
-        for (String room : allRoomsInBuilding) {
-            ArrayList<String> weekDayRoomSchedule = sampleRoom.getWeekDaySchedule(room);
+        for (String roomName : allRoomsInBuilding) {
+            Room room = new Room(roomName);
+            ArrayList<String> weekDayRoomSchedule = room.getWeekDaySchedule();
             allRoomsSchedule.add(weekDayRoomSchedule);
         }
         return allRoomsSchedule;
@@ -94,7 +107,7 @@ public class Building {
      * Retrieves all {@code Room}s in the {@code Building} in an ArrayList
      */
     public ArrayList<String> getAllRoomsInBuilding() {
-        requireNonNull(buildingName);
+        checkArgument(isValidBuilding(this));
         return nusBuildingsAndRooms.get(buildingName);
     }
 

@@ -2,8 +2,8 @@ package seedu.address.model.building;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.TimeZone;
 
 /**

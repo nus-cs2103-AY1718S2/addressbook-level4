@@ -2,8 +2,8 @@ package seedu.address.model.building;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Represents a WeekDay schedule of a Room in National University of Singapore.

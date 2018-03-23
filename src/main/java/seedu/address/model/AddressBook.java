@@ -71,6 +71,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setPetPatients(List<PetPatient> petPatients) throws DuplicatePetPatientException {
+        this.petPatients.setPetPatients(petPatients);
+    }
+
+    public void setPetPatientTags(Set<Tag> petPatientTags) {
+        this.petPatientTags.setTags(petPatientTags);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -85,6 +93,17 @@ public class AddressBook implements ReadOnlyAddressBook {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+
+        setPetPatientTags(new HashSet<>(newData.getPetPatientTagList()));
+        List<PetPatient> syncedPetPatientList = newData.getPetPatientList().stream()
+                .map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
+
+        try {
+            setPetPatients(syncedPetPatientList);
+        } catch (DuplicatePetPatientException e) {
+            throw new AssertionError("AddressBooks should not have duplicate pet patients");
         }
     }
 
@@ -202,6 +221,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 petPatient.getBreed(),
                 petPatient.getColour(),
                 petPatient.getBloodType(),
+                petPatient.getOwner(),
                 correctTagReferences);
     }
 
@@ -224,7 +244,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         appointmentTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Appointment(
-                appointment.getOwner(), appointment.getRemark(), appointment.getDateTime(), correctTagReferences);
+                appointment.getOwner(), appointment.getPetPatient(), appointment.getRemark(),
+                appointment.getDateTime(), correctTagReferences);
     }
     /**
      * Removes {@code key} from this {@code AddressBook}.
@@ -257,6 +278,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    public void addPetPatientTag(Tag t) throws UniqueTagList.DuplicateTagException {
+        petPatientTags.add(t);
     }
 
     /**
@@ -302,7 +327,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
+        return persons.asObservableList().size() + " persons, "
+                + tags.asObservableList().size() + " tags, "
+                + petPatients.asObservableList().size() + " pet patients, "
+                + petPatientTags.asObservableList().size() + " pet patient tags";
         // TODO: refine later
     }
 
@@ -317,16 +345,28 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<PetPatient> getPetPatientList() {
+        return petPatients.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Tag> getPetPatientTagList() {
+        return petPatientTags.asObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.petPatients.equals(((AddressBook) other).petPatients)
+                && this.petPatientTags.equalsOrderInsensitive(((AddressBook) other).petPatientTags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, petPatients, petPatientTags);
     }
 }

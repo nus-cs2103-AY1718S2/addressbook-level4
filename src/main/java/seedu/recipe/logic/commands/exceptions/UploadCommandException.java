@@ -1,3 +1,4 @@
+//@@author nicholasangcx
 package seedu.recipe.logic.commands.exceptions;
 
 import com.dropbox.core.DbxException;
@@ -11,3 +12,4 @@ public class UploadCommandException extends DbxException {
         super(message);
     }
 }
+//@@author

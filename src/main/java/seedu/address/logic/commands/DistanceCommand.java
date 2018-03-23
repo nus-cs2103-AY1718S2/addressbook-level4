@@ -49,7 +49,6 @@ public class DistanceCommand extends Command {
             Double distance = route.getDistance(headQuarterAddress, address);
             return new CommandResult(String.format(MESSAGE_DISTANCE_PERSON_SUCCESS, distance));
         } catch (Exception e) {
-            System.out.println("The cannot find address is " + address);
             throw new CommandException(Messages.MESSAGE_PERSON_ADDRESS_CANNOT_FIND);
         }
 

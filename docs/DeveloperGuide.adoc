@@ -359,12 +359,30 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::findtag[]
-=== Undo/Redo feature
+=== Findtag feature
 ==== Current Implementation
 
-The findtag feature is implemented with the same mechanism as the find feature. Instead of finding with name, the findtag feature supports finding a stored person with tags. (e.g. 'findtag friend'). Same as the 'FindCommand', the 'FindWithTagCommand'  inherit from `Command`, as such, it cannot be undone.
+The 'findtag' feature is implemented with the same mechanism as the 'find' feature. It is used for finding stored persons with their tags instead of names. The key components of the feature are 'FindWithTagCommand', 'FindWithTagCommandParser', and 'TagContainsKeywordsPredicate'.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
+The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. The following diagram shows the inheritance diagram for 'FindWithTagCommand':
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+The user execute the FindWithTagCommand with the keyword ‘findtag’ following by the tag keywords, separated by whitespace. When the command is executed, the current list of persons shown in the GUI will only contain the persons with the tags same as the tag keywords. The following image shows the result of a 'findtag' execution:
+
+image::FindTagResultDiagram.png[width="800"]
+
+Note that the tag keywords are not case sensitive; however, the command keyword is. For example, both 'findtag friends' and 'findtag FrIeNdS' can be executed and return a list of persons with the tag 'friends'. However 'FiNdTaG friends' cannot be executed and will result in a 'Unknown Command' feedback, as shown in the following:
+
+image::InvalidCommandKeywordDiagram.png[width="800"]
+
+Note that the list of persons displayed will not change for in this case.
+
+The 'findtag' command can handle multiple input tag keywords and, similar to 'find', 'findtag' is an ‘or’ search. For example, 'findtag friends owesMoney' will find any person with the tag ‘friends’ or ‘owesMoney’ or both.
+
+The following sequence diagram shows how the findtag operation works:
+
+image::UndoRedoSequenceDiagram.png[width="800"]
 // end::findtag[]
 
 // tag::dataencryption[]

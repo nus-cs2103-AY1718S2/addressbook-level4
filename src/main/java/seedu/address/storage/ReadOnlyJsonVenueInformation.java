@@ -19,12 +19,12 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
         this.filePath = filePath;
     }
 
-    //@Override
+    @Override
     public String getVenueInformationFilePath() {
         return filePath;
     }
 
-    //@Override
+    @Override
     public Optional<Room> readVenueInformation() throws DataConversionException, IOException {
         return readVenueInformation(filePath);
     }
@@ -38,7 +38,7 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
         return JsonUtil.readJsonFile(venueInformationFilePath, Room.class);
     }
 
-    //@Override
+    @Override
     public Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException {
         return readBuildingsAndRoomsInformation(filePath);
     }

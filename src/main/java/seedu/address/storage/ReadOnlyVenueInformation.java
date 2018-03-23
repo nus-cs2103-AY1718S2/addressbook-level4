@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.building.Building;
 import seedu.address.model.building.Room;
 
 /**
@@ -24,4 +25,5 @@ public interface ReadOnlyVenueInformation {
      */
     Optional<Room> readVenueInformation() throws DataConversionException, IOException;
 
+    Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException;
 }

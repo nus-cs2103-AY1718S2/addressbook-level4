@@ -10,11 +10,13 @@ import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.Room;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, UserPrefsStorage {
+public interface Storage extends AddressBookStorage, UserPrefsStorage, ReadOnlyVenueInformation {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -41,4 +43,10 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+    @Override
+    Optional<Room> readVenueInformation() throws DataConversionException, IOException;
+
+    @Override
+    Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException;
 }

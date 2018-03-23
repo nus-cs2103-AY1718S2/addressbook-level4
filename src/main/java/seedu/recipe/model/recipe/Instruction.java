@@ -36,7 +36,7 @@ public class Instruction {
      * Returns true if a given string is a valid recipe instruction.
      */
     public static boolean isValidInstuction(String test) {
-        return test.matches(INSTRUCTION_VALIDATION_REGEX);
+        return test.equals(NULL_INSTRUCTION_REFERENCE) || test.matches(INSTRUCTION_VALIDATION_REGEX);
     }
 
     @Override

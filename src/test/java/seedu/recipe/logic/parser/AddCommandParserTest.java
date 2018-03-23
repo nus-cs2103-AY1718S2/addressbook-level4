@@ -230,6 +230,14 @@ public class AddCommandParserTest {
                 NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY
                         + URL_DESC_AMY + COOKING_TIME_DESC_AMY + CALORIES_DESC_AMY + SERVINGS_DESC_AMY,
                 new AddCommand(expectedRecipe));
+
+        expectedRecipe = new RecipeBuilder().withName(VALID_NAME_AMY)
+                .withPreparationTime(PreparationTime.NULL_PREPARATION_TIME_REFERENCE)
+                .withIngredient(Ingredient.NULL_INGREDIENT_REFERENCE)
+                .withInstruction(Instruction.NULL_INSTRUCTION_REFERENCE).withServings(Servings.NULL_SERVINGS_REFERENCE)
+                .withCalories(Calories.NULL_CALORIES_REFERENCE).withCookingTime(CookingTime.NULL_COOKING_TIME_REFERENCE)
+                .withUrl(Url.NULL_URL_REFERENCE).withTags().build();
+        assertParseSuccess(parser, NAME_DESC_AMY, new AddCommand(expectedRecipe));
     }
 
     @Test

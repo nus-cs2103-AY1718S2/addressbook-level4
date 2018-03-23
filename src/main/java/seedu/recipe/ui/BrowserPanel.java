@@ -44,8 +44,6 @@ public class BrowserPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private final FacebookHandler facebookHandler = new FacebookHandler();
-
     @FXML
     private WebView browser;
 
@@ -95,8 +93,8 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleShareRecipeEvent(ShareRecipeEvent event) {
         loadPage(AUTHENTICATION_URL);
         recipeToShare = event.getTargetRecipe();
-        if (facebookHandler.hasAccessToken()) {
-            facebookHandler.postRecipeOnFacebook(recipeToShare);
+        if (FacebookHandler.hasAccessToken()) {
+            FacebookHandler.postRecipeOnFacebook(recipeToShare);
         }
     }
 
@@ -111,8 +109,8 @@ public class BrowserPanel extends UiPart<Region> {
                 if (newState == Worker.State.SUCCEEDED) {
                     String url = browserEngine.getLocation();
 
-                    if (facebookHandler.checkAndSetAccessToken(url)) {
-                        facebookHandler.postRecipeOnFacebook(recipeToShare);
+                    if (FacebookHandler.checkAndSetAccessToken(url)) {
+                        FacebookHandler.postRecipeOnFacebook(recipeToShare);
                     }
                 }
             }

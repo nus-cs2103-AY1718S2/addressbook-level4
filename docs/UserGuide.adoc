@@ -61,46 +61,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help` or `h`
 
-=== Adding a pet patient: `addpetpatient` or `app`
+=== Adding new owner + pet patient + appointment : `add` or `a`
 
-Adds a pet patient to Mediena's address book +
-Format: `addpetpatient n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE [t/TAG]...`
-or `app n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE [t/TAG]...`
-
-[TIP]
-A pet patient can have any number of tags (including 0)
-
-Examples:
-* `addpetpatient n/Jewel s/Cat b/Persian Ragdoll c/Calico bt/AB t/Ragdoll`
-* `app n/Joker s/Cat b/Domestic Shorthair c/White bt/AB t/Shorthair`
-
-=== Adding a person: `add` or `a`
-
-Adds a person to Medeina's address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...` +
-or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...`
+To add a new owner, new pet patient and new appointment to Mediena: +
+Format: `add **-o** n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...
+**-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE [t/TAG]...
+**-a** d/DATE r/REMARK [t/TYPE OF APPOINTMENT]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+Owner, pet patient and appointment can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-=== Adding an appointment: `appointment` or `aa`
-
-Adds an appointment to Medeina's address book +
-Format: `appointment o/OWNER r/REMARK d/DATE [t/TYPE OF APPOINTMENT]...` +
-or `aa o/OWNER r/REMARK d/DATE [t/TYPE OF APPOINTMENT]...`
-
-[TIP]
-An appointment can have multiple types (checkup + vaccination etc.)
-
-Examples:
-
-* `appointment o/John Doe r/Requires homevisit d/2018-12-31 12:30 t/checkup t/vaccination`
-* `aa o/Betsy Crowe r/nil d/2018-12-31 12:30 t/surgery`
+* `add -o n/Fuji p/65123456 e/fuji@gmail.com a/Seishun Gakuen 2B nr/S1234567G -p n/jewel s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/checkup t/vaccination`
+* `a -o n/Tezuka p/65123478 e/tezuka@gmail.com a/Seishun Gakuen 2A nr/S1234599G -p n/silver s/cat b/persian c/grey bt/O -a d/2018-12-31 14:30 r/nil t/surgery`
 
 === Listing all persons : `list` or `ls`
 

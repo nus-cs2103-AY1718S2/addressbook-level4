@@ -58,7 +58,7 @@ public class XmlAdaptedAppointment {
      * @param source future changes to this will not affect the created XmlAdaptedAppointment
      */
     public XmlAdaptedAppointment(Appointment source) {
-        owner = source.getOwner().fullName;
+        owner = source.getOwner().getName().toString();
         remark = source.getRemark().value;
         dateTime = source.getFormattedLocalDateTime();
         tagged = new ArrayList<>();
@@ -112,7 +112,7 @@ public class XmlAdaptedAppointment {
 
 
         final Set<Tag> tags = new HashSet<>(appointmentTags);
-        return new Appointment(owner, remark, dateTime, tags);
+        return new Appointment(remark, dateTime, tags);
     }
 
     @Override

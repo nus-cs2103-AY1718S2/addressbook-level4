@@ -119,6 +119,7 @@ The rest of the App consists of four components.
 * <<Design-Logic,*`Logic`*>>: The command executor.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+* <<Design-Network,*`Network`*>>: Makes web API calls to online services.
 
 Each of the four components
 
@@ -139,7 +140,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeleteBook.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `BookShelfChangedEvent` when the Book Shelf data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -205,7 +206,7 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Book Shelf data.
 * exposes an unmodifiable `ObservableList<Book>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* does not depend on any of the other four components.
 
 [[Design-Storage]]
 === Storage component
@@ -220,14 +221,131 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
+[[Design-Network]]
+=== Network component
+
+.Structure of the Network Component
+image::NetworkClassDiagram.png[width="800"]
+
+*API*: link:{repoURL}/src/main/java/seedu/address/network/Network.java[`Network.java`]
+
+The `Network` component,
+
+* can make asynchronous web API calls to Google Books API.
+* does not depend on any of the other four components.
+
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.address.commons` package.
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::search[]
+=== Search feature
+==== Current Implementation
+
+[[Search-Network]]
+===== Network component
+
+As part of the implementation of the search feature, the network component was added to allow for communicating with online services.
+An overview of the network component can be found in <<Design-Network>>.
+
+The network component makes heavy use of events in the way it interacts with other components.
+The `Network` API exposes a single method `stop` that allows for graceful shutdown of the internal asynchronous HTTP client.
+All requests for web API calls should be made by raising the relevant `Api*RequestEvent`.
+To retrieve the results of the web API calls, interested classes should subscribe to the respective `Api*ResultEvent`.
+
+For example, to retrieve search results from Google Books API, an `ApiSearchRequestEvent` can be raised.
+The following sequence diagram shows how an `ApiSearchRequestEvent` will be handled:
+
+image::SearchRequestSequenceDiagram.png[width="800"]
+
+The methods shown above are asynchronous - they will not wait for the completion of the HTTP request.
+In particular, note that when `handleApiSearchRequestEvent` finishes execution, the HTTP request might not have completed yet.
+This is accomplished through the use of a chain of `CompletableFuture` objects, which holds the operations that the above methods wish to apply to the data.
+This is most evident in the `executeGetAndApply` method, as shown below:
+[source,java]
+----
+    private <T> CompletableFuture<T> executeGetAndApply(String url, Function<String, ? extends T> fn) {
+        return httpClient
+                .makeGetRequest(url)
+                .thenApply(GoogleBooksApi::requireJsonContentType)
+                .thenApply(GoogleBooksApi::requireHttpStatusOk)
+                .thenApply(HttpResponse::getResponseBody)
+                .thenApply(fn);
+    }
+----
+
+Once the HTTP request completes, the operations in the `CompletableFuture` objects will be executed. These operations are summarized by the following activity diagram:
+
+image::SearchRequestActivityDiagram.png[width="650"]
+
+If the HTTP request fails, the response is unexpected, or the conversion to `BookShelf` fails, then the proceeding operations added by the calls to `thenApply` will be skipped,
+and the resulting `ApiSearchResultEvent` that is raised will have a `ResultOutcome` of `FAILURE`.
+[source,java]
+----
+    @Subscribe
+    protected void handleGoogleApiSearchRequestEvent(ApiSearchRequestEvent event) {
+        googleBooksApi.searchBooks(event.searchParameters)
+                .thenApply(bookShelf -> {
+                    raise(new ApiSearchResultEvent(ResultOutcome.SUCCESS, bookShelf));
+                    return bookShelf;
+                })
+                .exceptionally(e -> {
+                    raise(new ApiSearchResultEvent(ResultOutcome.FAILURE, null));
+                    return null;
+                });
+    }
+----
+
+===== Search command
+
+With the network component in place, the `search` command can now be implemented.
+The `search` command allows the user to search for books on Google Books that matches some user-specified parameters.
+
+When a `search` command is entered, a `SearchCommand` will be created if the parsing of the command was successful, which will raise an `ApiSearchRequestEvent`, as shown in the sequence diagram below:
+
+image::SearchCommandSequenceDiagram.png[width="800"]
+
+As described in <<Search-Network>>, when the event is handled by `NetworkManager`, this will result in an asynchronous HTTP request being made to Google Books API.
+Once the request and the parsing of the response completes successfully, an `ApiSearchResultEvent` will be raised, which will be handled in `LogicManager`.
+The below sequence diagram shows how the `ApiSearchResultEvent` will be handled:
+
+image::SearchCommandResultSequenceDiagram.png[width="650"]
+
+==== Design Considerations
+
+===== Aspect: Asynchronous vs synchronous
+
+* **Alternative 1 (current choice):** HTTP requests are made asynchronously.
+** Pros: The application will be more responsive, as potentially long-running HTTP requests will not block the application thread.
+** Cons: Not straightforward to implement, especially considering that changes to the UI has to be made on the JavaFX application thread.
+* **Alternative 2:** HTTP requests are made synchronously (on the JavaFX application thread).
+** Pros: More straightforward to implement, as well as to understand the implementation.
+** Cons: The UI will be unresponsive for the duration of the HTTP requests, and this can degrade the user experience.
+
+===== Aspect: Design of network API
+
+* **Alternative 1 (current choice):** Use events to request for web API calls and retrieve the results.
+** Pros: Less coupling - no component will be directly depending on the network component.
+** Cons: The flow of data can become less explicit and clear, and it becomes more complicated to use a single web API call for multiple purposes.
+* **Alternative 2:** Call methods on the `Network` API directly, which return `Future` objects.
+** Pros: More explicit flow of data, making it easier to understand and debug.
+** Cons: Since web API calls are made by certain commands, the `NetworkManager` will have to be passed from `MainApp` all the way into each `Command`.
+
+===== Aspect: Converting JSON responses to model types
+
+* **Alternative 1 (current choice):** Convert to a temporary data holder before converting to model type.
+** Pros: Easier and more straightforward implementation - a large part of the conversion work is done by the Jackson library.
+** Cons: Slower and less efficient - due to the double conversion and the use of the Reflection API (in the Jackson library).
+* **Alternative 2:** Convert parsed JSON directly to model type.
+** Pros: Faster and more efficient.
+** Cons: Code will be more complicated and tedious - we will need to traverse through the JSON node tree manually.
+
+// end:search[]
 
 // tag::undoredo[]
 === Undo/Redo feature

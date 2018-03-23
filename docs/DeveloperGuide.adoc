@@ -358,8 +358,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-=======
-// tag::addPetPatient
+// tag::addPetPatient[]
 === Adding a Pet Patient
 
 ==== Current Implementation
@@ -398,7 +397,7 @@ Future work on this feature will address the current limitations that we have.
 
 Linking of pet patients to their respective owners and appointments will be implemented. Tagging of the pet patients will also be implemented, as this is crucial to the searching of medical history of pets for the user.
 
-// end::addPetPatient
+// end::addPetPatient[]
 
 // tag::commandsyntax[]
 === [Proposed] Command Syntax

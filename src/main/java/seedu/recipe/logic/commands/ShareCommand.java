@@ -22,7 +22,8 @@ public class ShareCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SHARE_RECIPE_SUCCESS = "Shared Recipe: %1$s";
+    public static final String MESSAGE_SHARE_RECIPE_SUCCESS = "Recipe To Share: %1$s. "
+            + "Do make sure that you have an Internet connection.";
 
     private final Index targetIndex;
 

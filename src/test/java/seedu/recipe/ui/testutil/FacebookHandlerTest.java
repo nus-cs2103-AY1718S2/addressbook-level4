@@ -8,7 +8,6 @@ import static seedu.recipe.ui.util.FacebookHandler.REDIRECT_DOMAIN;
 
 import org.junit.Test;
 
-import com.restfb.exception.FacebookNetworkException;
 import com.restfb.exception.FacebookOAuthException;
 
 import seedu.recipe.model.recipe.Recipe;

@@ -521,6 +521,44 @@ The editedStudent will have the new programming language attribute and will henc
 ** Cons: User will have to learn a new specific command and might also be slightly difficult to implement.
 // end::programmingLanguage[]
 
+// tag::schedule[]
+=== Schedule feature
+==== Current Implementation
+
+To get better control of one's weekly schedule, we will now attach a component called `Schedule` to `Model`.
+
+image::ScheduleClassDiagram.png[width="800"]
+
+A `Schedule` is a list of `Lessons`. A `Lesson` has a `Student` attribute, a `Day` attribute, a starting `TIME START_TIME` and an ending `TIME END_TIME` attribute
+
+* A `Lesson` object called `newLesson` will be created by `ModelManager.addLesson(Student, Day, Time START_TIME, Time END_TIME)`, which is implemented as such:
+[source, java]
+----
+    public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
+            throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
+        //Check for Duplicate Lesson, StudentNotFound, invalid input ime
+
+        schedule.addLesson(newLesson);
+    }
+----
+
+The student will be selected by the Index of the last seen list of students. A new `Lesson` will now be added for that student at the specific `Day`, `START_TIME` and `END_TIME`.
+
+[NOTE]
+If you have a future implementation that requires the addition of a new attribute in the `Schedule` class, you must take note of updating the `Model.addLesson(Student, Day, Time START_TIME, Time END_TIME)` method to reflect the new attribute.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `Schedule`
+* *Alternative 1 (current choice)*: `Schedule` contains `Lesson` classes that is made up of one layer, with attributes directly attached to `Lesson`
+** Pro: It is easier implement, just add `Lesson` to a `Schedule`, which is a list of `Lessons`
+** Con: Results in more coupling, attributes could have been furthur separated out. It is inefficient to search by `Day`. Searching for empty slot requires linear searching.
+* *Alternative 2*: `Lesson` contains two layers of classes, `Day` is attached to `Schedule` and `Lesson` is attached to `Day`
+** Pro: Less coupling and more cohesive design
+** Con: Much harder to implement and gets overly complicated
+
+// end::schedule[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

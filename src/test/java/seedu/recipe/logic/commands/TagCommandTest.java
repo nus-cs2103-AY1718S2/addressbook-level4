@@ -1,3 +1,4 @@
+//@@author nicholasangcx
 package seedu.recipe.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -107,3 +108,4 @@ public class TagCommandTest {
         assertEquals(expectedRecipeBook, model.getRecipeBook());
     }
 }
+//@@author

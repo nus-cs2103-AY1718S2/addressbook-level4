@@ -1,3 +1,4 @@
+//@@author nicholasangcx
 package seedu.recipe.logic.commands;
 
 import java.util.Arrays;
@@ -40,3 +41,4 @@ public class TagCommand extends Command {
                 && this.predicate.equals(((TagCommand) other).predicate)); // state check
     }
 }
+//@@author

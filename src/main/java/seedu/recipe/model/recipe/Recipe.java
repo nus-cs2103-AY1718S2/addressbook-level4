@@ -16,22 +16,29 @@ import seedu.recipe.model.tag.UniqueTagList;
 public class Recipe {
 
     private final Name name;
-    private final PreparationTime preparationTime;
     private final Ingredient ingredient;
     private final Instruction instruction;
+    private final CookingTime cookingTime;
+    private final PreparationTime preparationTime;
+    private final Calories calories;
+    private final Servings servings;
     private final Url url;
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Recipe(Name name, PreparationTime preparationTime, Ingredient ingredient, Instruction instruction,
-                  Url url, Set<Tag> tags) {
+    public Recipe(Name name, Ingredient ingredient, Instruction instruction,
+                  CookingTime cookingTime, PreparationTime preparationTime,
+                  Calories calories, Servings servings, Url url, Set<Tag> tags) {
         requireAllNonNull(name, preparationTime, ingredient, instruction, url, tags);
         this.name = name;
-        this.preparationTime = preparationTime;
         this.ingredient = ingredient;
         this.instruction = instruction;
+        this.cookingTime = cookingTime;
+        this.preparationTime = preparationTime;
+        this.calories = calories;
+        this.servings = servings;
         this.url = url;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
@@ -41,16 +48,28 @@ public class Recipe {
         return name;
     }
 
-    public PreparationTime getPreparationTime() {
-        return preparationTime;
-    }
-
     public Ingredient getIngredient() {
         return ingredient;
     }
 
     public Instruction getInstruction() {
         return instruction;
+    }
+
+    public CookingTime getCookingTime() {
+        return cookingTime;
+    }
+
+    public PreparationTime getPreparationTime() {
+        return preparationTime;
+    }
+
+    public Calories getCalories() {
+        return calories;
+    }
+
+    public Servings getServings() {
+        return servings;
     }
 
     public Url getUrl() {
@@ -77,9 +96,12 @@ public class Recipe {
 
         Recipe otherRecipe = (Recipe) other;
         return otherRecipe.getName().equals(this.getName())
-                && otherRecipe.getPreparationTime().equals(this.getPreparationTime())
                 && otherRecipe.getIngredient().equals(this.getIngredient())
                 && otherRecipe.getInstruction().equals(this.getInstruction())
+                && otherRecipe.getCookingTime().equals(this.getCookingTime())
+                && otherRecipe.getPreparationTime().equals(this.getPreparationTime())
+                && otherRecipe.getCalories().equals(this.getCalories())
+                && otherRecipe.getServings().equals(this.getServings())
                 && otherRecipe.getUrl().equals(this.getUrl());
     }
 

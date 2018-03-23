@@ -2,14 +2,14 @@
 <recipebook>
     <!-- Valid Recipe -->
     <recipes>
-        <name>Hans Muster</name>
+        <name>Chicken Rice</name>
         <preparationTime isPrivate="false">9482424</preparationTime>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>
     </recipes>
     <!-- Recipe with invalid preparationTime field -->
     <recipes>
-        <name>Hans Muster</name>
+        <name>Chicken Rice</name>
         <preparationTime isPrivate="false">948asdf2424</preparationTime>
         <ingredient isPrivate="false">hans@example.com</ingredient>
         <instruction isPrivate="false">4th street</instruction>

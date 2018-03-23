@@ -38,7 +38,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list` or `l`* : lists all students
-* **`add` or `a`**`n/John Doe p/91234567 ic/S9315585J t/1A t/20` : adds a student named `John Doe` to the Address Book.
+* **`add` or `a`**`n/John Doe p/91234567 ic/S9315585J t/1A t/20 sub/English B3` : adds a student named `John Doe` to the Address Book.
 * **`delete` or `d`**`3` : deletes the 3rd student shown in the current list
 * *`exit`* : exits the app
 
@@ -63,15 +63,15 @@ Format: `help`
 === Adding a person: `add` or `a`
 
 Adds a person to EduBuddy +
-Format: `add n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER` +
-Format: `a n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER`
+Format: `add n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER sub/English A2`+
+Format: `a n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER sub/English A2`
 
 
 Examples:
 
-* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20`
+* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3`
 * `add n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
-* `a n/John Doe p/91234567 ic/S9500186H t/1A t/20`
+* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3`
 * `a n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
 
 === Listing all student : `list` or `l`
@@ -86,8 +86,8 @@ Format: `sort`
 
 === Editing a student : `edit` or `e`
 Edits an existing student in EduBuddy. +
-Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER]` +
-        `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER]`
+Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
+        `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]`
 
 ****
 * Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -97,12 +97,12 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGIS
 
 Examples:
 
-* `edit 1 p/91234567` +
-Edits the nric number of the 1st student to be `91234567` respectively.
+* `edit 1 ic/S9123456A` +
+Edits the nric number of the 1st student to be `S9123456A` respectively.
 * `edit 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
-* `e 1 p/91234567` +
-Edits the nric number of the 1st student to be `91234567` respectively.
+* `e 1 ic/S9123456A` +
+Edits the nric number of the 1st student to be `S9123456A` respectively.
 * `e 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 
@@ -288,16 +288,16 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER` +
-e.g. `add n/James Ho p/22224444 ic/S9500186H t/1A t/20` +
-e.g. `a n/James Ho p/22224444 ic/S9500186H t/1A t/20` +
+* *Add* `add n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE` +
+e.g. `add n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
+e.g. `a n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
 
 * *Clear* : `clear` or `c`
 * *Delete* : `delete INDEX` or `d INDEX` +
 e.g. `delete 3` +
 e.g. `d 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER]` +
-`e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER]` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
+`e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
 e.g. `edit 2 n/James Lee` +
 e.g. `e 2 n/James Lee`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` +

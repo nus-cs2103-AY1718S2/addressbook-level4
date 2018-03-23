@@ -8,12 +8,15 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.SUBJECT_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.SUBJECT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_MATHEMATICS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -53,7 +56,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         Person toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + NRIC_DESC_AMY + " "
-                   + TAG_DESC_FRIEND + " ";
+                   + TAG_DESC_FRIEND + " " + SUBJECT_DESC_AMY + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -69,14 +72,14 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + NRIC_DESC_AMY + TAG_DESC_FRIEND;
+                .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + NRIC_DESC_AMY + TAG_DESC_FRIEND + SUBJECT_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_BOB)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_BOB + TAG_DESC_FRIEND;
+                .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + NRIC_DESC_BOB + TAG_DESC_FRIEND + SUBJECT_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -86,7 +89,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + NRIC_DESC_BOB + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND;
+                + TAG_DESC_HUSBAND + SUBJECT_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person, missing tags -> added */

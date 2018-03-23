@@ -362,6 +362,47 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+=== Sort feature
+
+==== Current Implementation
+
+The sorting feature allows the user to sort the list of students according to certain
+parameters like name and tag. After the sorting process has completed, the user will be
+presented with a read only view of the sorted list on the `UI`, and the state of the
+list will not be modified.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "sort name" is typed into the `CommandBox` by the user.
+
+image::SortCommandSequenceDiagram.png[width="650"]
+
+. `Logic` uses `AddressBookParser` class to parse the user command,
+. A `SortCommand` object is created which is then executed by the `LogicManager`.
+. The command executes and calls the `sortPersonList(parameter)` method, which then affects
+  the `Model`.
+. After the sorting process has been completed, the result is encapsulated as a
+  `CommandResult` object, which is then passed back to the `Ui` as a message shown
+  to the user.
+
+Below is an example of how the list looks like before and after the command "sort name"
+is executed.
+
+image::SortCommandByName.png[width="650"]
+
+==== Design Considerations
+
+===== Aspect: How the list appears after sorting is done and the app is restarted
+* ** Alternative 1 (current choice): ** List remains in its initial state after each
+                                        restart of the app
+** Pros: Some users might prefer the default list that was created by themselves e.g. the need
+         to track which student was added last.
+** Cons: It will be a hassle to sort the list every time the app starts up if there
+         are not many changes to the list.
+* ** Alternative 2: ** List is in the sorted form after the app is restarted every time
+** Pros: Reduces the time taken to sort the list for each start up of the app.
+** Cons: If the default list is required, `SortCommand` will have to be implemented
+         as an `UndoableCommand` as well.
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
@@ -797,7 +838,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 
-
+[appendix]
 == Feature Contribution
 
 [width="85%",cols="22%,<23%,<40%",options="header",]
@@ -805,7 +846,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 |Name | Major |Minor
 |Johnny  |Display Panel: Add display panel functionalities to UI window | Data Integration: Integrate data input from user into display window
 
-|Xin Hui |Subject Window: Add L1R5 calculation support into subject inputs | Subject Class Database: Create subject class and integrate input into command.
+|Xin Hui |Academic Section: Helps teachers to view and manage students' academic information | Subject Class Database: Create subject class and integrate input into command. Add L1R5 calculation support into subject inputs.
 
 |Kun Hong |Administrative Information: Add support for automatic register number calculation and class allocation | Tag Support: Enhance tag functionalities in EduBuddy
 
@@ -830,6 +871,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |teacher |sort students' results |know who are the ones that need more academic help easily
 
 |`* * *` |teacher |update students' classes |know which classes they are in easily
+
+|`* * *` |teacher |update students' academic results |view and obtain students' streaming score (eg.L1R5)
 
 |`* * *` |teacher |access student's academic and non-academic achievements |stream the students properly (e.g. Normal Academic, Normal Technical, Express)
 
@@ -968,6 +1011,57 @@ Use case resumes at step 2.
 +
 [none]
 ** 3c1. AddressBook prompts user to input another date or time.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Update students' academic results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to update students' academic results
+4.  AddressBook shows updated details of academic results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+[discrete]
+=== Use case: Sort students by the students' academic streaming results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to sort students by students' academic results
+4.  AddressBook shows sorted list of students
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Students do not have subjects assigned to them.
++
+[none]
+** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 

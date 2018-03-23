@@ -10,6 +10,8 @@ import seedu.address.model.timetableentry.TimetableEntry;
 public class XmlAdaptedTimetableEntry {
 
     @XmlElement(required = true)
+    private String title;
+    @XmlElement(required = true)
     private String calendarId;
     @XmlElement(required = true)
     private String endDate;
@@ -27,7 +29,8 @@ public class XmlAdaptedTimetableEntry {
     /**
      * Constructs a {@code XmlAdaptedTimetableEntry} with the given timetable entry details.
      */
-    public XmlAdaptedTimetableEntry(String calendarId, String id, String endDate, String ownerId) {
+    public XmlAdaptedTimetableEntry(String title, String calendarId, String id, String endDate, String ownerId) {
+        this.title = title;
         this.calendarId = calendarId;
         this.id = id;
         this.endDate = endDate;
@@ -40,6 +43,7 @@ public class XmlAdaptedTimetableEntry {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedTimetableEntry(TimetableEntry source) {
+        this.title = title;
         this.calendarId = source.getCalendarId();
         this.endDate = source.getEndDate();
         this.ownerId = source.getOwnerId();
@@ -51,6 +55,6 @@ public class XmlAdaptedTimetableEntry {
      *
      */
     public TimetableEntry toModelType() {
-        return new TimetableEntry(calendarId, id, endDate, ownerId);
+        return new TimetableEntry(title, calendarId, id, endDate, ownerId);
     }
 }

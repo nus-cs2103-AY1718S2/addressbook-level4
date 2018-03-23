@@ -15,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
 import seedu.address.commons.events.model.TimetableEntryAddedEvent;
 import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
+import seedu.address.commons.events.ui.ShowWindowsNotificationEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UnlockCommand;
@@ -23,6 +24,7 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.timetableentry.TimetableEntry;
 import seedu.address.model.timetableentry.TimetableEntryTime;
 import seedu.address.storage.TimetableEntryTimeParserUtil;
 
@@ -38,7 +40,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
     private HashMap<TimerTask, Boolean> timetableEntriesStatus;
-    private HashMap<TimerTask, String> timerTaskToTimetableEntryIdMap;
+    private HashMap<TimerTask, TimetableEntry> timerTaskToTimetableEntryMap;
     private HashMap<String, TimerTask> scheduledTimerTasks;
 
     public LogicManager(Model model) {
@@ -49,7 +51,7 @@ public class LogicManager extends ComponentManager implements Logic {
         isLocked = false;
         timetableEntriesStatus = new HashMap<>();
         scheduledTimerTasks = new HashMap<>();
-        timerTaskToTimetableEntryIdMap = new HashMap<>();
+        timerTaskToTimetableEntryMap = new HashMap<>();
     }
 
     @Override
@@ -129,12 +131,13 @@ public class LogicManager extends ComponentManager implements Logic {
                     System.out.println("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
-                raise(new RequestToDeleteTimetableEntryEvent(timerTaskToTimetableEntryIdMap.get(this)));
+                raise(new RequestToDeleteTimetableEntryEvent(timerTaskToTimetableEntryMap.get(this).getId()));
+                raise(new ShowWindowsNotificationEvent(timerTaskToTimetableEntryMap.get(this)));
             }
         };
         timetableEntriesStatus.put(task, true);
         scheduledTimerTasks.put(event.timetableEntry.getId(), task);
-        timerTaskToTimetableEntryIdMap.put(task, event.timetableEntry.getId());
+        timerTaskToTimetableEntryMap.put(task, event.timetableEntry);
         System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
                 .currentTimeMillis()));
         long duration = c.getTimeInMillis() - System.currentTimeMillis();

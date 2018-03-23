@@ -9,6 +9,7 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
  */
 public class Instruction {
 
+    public static final String NULL_INSTRUCTION_REFERENCE = "-";
     public static final String MESSAGE_INSTRUCTION_CONSTRAINTS =
             "Recipe instructions can take any values, new lines included and it should not be blank";
 

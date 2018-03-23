@@ -230,14 +230,6 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         command = AddCommand.COMMAND_WORD + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing ingredient -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INSTRUCTION_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
-        /* Case: missing recipe -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
         /* Case: invalid keyword -> rejected */
         command = "adds " + RecipeUtil.getRecipeDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);

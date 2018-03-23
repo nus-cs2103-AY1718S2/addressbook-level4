@@ -73,6 +73,13 @@ public class ParserUtil {
 
     //@@Author kokonguyen191
     /**
+     * Returns a null {@code Ingredient} object to use as the default value if no value is given.
+     */
+    public static Ingredient getNullReferenceIngredient() throws IllegalValueException {
+        return new Ingredient(Ingredient.NULL_INGREDIENT_REFERENCE);
+    }
+
+    /**
      * Parses a {@code String ingredient} into an {@code Ingredient}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -97,7 +104,25 @@ public class ParserUtil {
         return ingredient.isPresent() ? Optional.of(parseIngredient(ingredient.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code Optional<String> ingredient} into an {@code Optional<Ingredient>}
+     * if {@code ingredient} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Ingredient> parseIngredientOnInitialAdd(Optional<String> ingredient)
+            throws IllegalValueException {
+        requireNonNull(ingredient);
+        return ingredient.isPresent()
+                ? Optional.of(parseIngredient(ingredient.get())) : Optional.of(getNullReferenceIngredient());
+    }
 
+    /**
+     * Returns a null {@code Instruction} object to use as the default value if no value is given.
+     */
+    public static Instruction getNullReferenceInstruction() throws IllegalValueException {
+        return new Instruction(Instruction.NULL_INSTRUCTION_REFERENCE);
+    }
+    
     /**
      * Parses a {@code String recipe} into an {@code Instruction}.
      * Leading and trailing whitespaces will be trimmed.
@@ -122,6 +147,18 @@ public class ParserUtil {
         return instruction.isPresent() ? Optional.of(parseInstruction(instruction.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code Optional<String> instruction} into an {@code Optional<Instruction>}
+     * if {@code instruction} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Instruction> parseInstructionOnInitialAdd(Optional<String> instruction)
+            throws IllegalValueException {
+        requireNonNull(instruction);
+        return instruction.isPresent()
+                ? Optional.of(parseInstruction(instruction.get())) : Optional.of(getNullReferenceInstruction());
+    }
+    
     /**
      * Returns a null {@code CookingTime} object to use as the default value if no value is given.
      */

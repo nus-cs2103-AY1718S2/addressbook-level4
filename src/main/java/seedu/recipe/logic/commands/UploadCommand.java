@@ -56,7 +56,7 @@ public class UploadCommand extends Command {
         // Upload "addressbook.xml" to Dropbox
         try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
             client.files().uploadBuilder("/" + xmlExtensionFilename).uploadAndFinish(in);
-        } catch (IOException IOE) {
+        } catch (IOException IoE) {
             return new CommandResult(MESSAGE_FAILURE);
         }
 

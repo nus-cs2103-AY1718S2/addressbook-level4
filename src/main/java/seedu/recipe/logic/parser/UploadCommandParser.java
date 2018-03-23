@@ -1,10 +1,10 @@
 //@@author nicholasangcx
 package seedu.recipe.logic.parser;
 
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
-
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments and creates a new UploadCommand object

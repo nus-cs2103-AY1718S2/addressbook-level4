@@ -12,7 +12,7 @@ import seedu.recipe.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new ShareCommand object
  */
-public class ShareCommandParser {
+public class ShareCommandParser implements Parser<ShareCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the ShareCommand
@@ -25,7 +25,7 @@ public class ShareCommandParser {
             return new ShareCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShareCommand.MESSAGE_USAGE));
         }
     }
 }

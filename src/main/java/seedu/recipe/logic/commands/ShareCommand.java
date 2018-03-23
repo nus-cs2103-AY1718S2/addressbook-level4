@@ -22,7 +22,7 @@ public class ShareCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_RECIPE_SUCCESS = "Shared Recipe: %1$s";
+    public static final String MESSAGE_SHARE_RECIPE_SUCCESS = "Shared Recipe: %1$s";
 
     private final Index targetIndex;
 
@@ -48,7 +48,7 @@ public class ShareCommand extends Command {
         recipeToShare = lastShownList.get(targetIndex.getZeroBased());
         EventsCenter.getInstance().post(new ShareRecipeEvent(targetIndex, recipeToShare));
 
-        return new CommandResult(String.format(MESSAGE_SELECT_RECIPE_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_SHARE_RECIPE_SUCCESS, targetIndex.getOneBased()));
 
     }
 

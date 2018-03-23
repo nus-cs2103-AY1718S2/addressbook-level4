@@ -1,11 +1,14 @@
 package seedu.address.model.alias;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
@@ -92,5 +95,15 @@ public class UniqueAliasList {
         internalList = FXCollections.observableArrayList();
         convertToList();
         return internalList;
+    }
+
+
+    /**
+     * Replaces the Aliases in this list with those in the argument alias list.
+     */
+    public void setAliases(Set<Alias> aliases) {
+        requireAllNonNull(aliases);
+        internalList.setAll(aliases);
+        assert CollectionUtil.elementsAreUnique(internalList);
     }
 }

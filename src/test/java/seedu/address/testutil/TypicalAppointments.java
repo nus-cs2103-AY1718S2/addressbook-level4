@@ -11,10 +11,10 @@ import seedu.address.model.appointment.Appointment;
  */
 public class TypicalAppointments {
 
-    public static final Appointment ALLY = new AppointmentBuilder().withOwner(TypicalPersons.ALICE)
+    public static final Appointment ALLY = new AppointmentBuilder().withOwner(TypicalPersons.ALICE.getNric())
             .withRemark("Requires Home Visit").withDateTime("2018-12-31 12:30")
             .withTags("checkup").build();
-    public static final Appointment BENNY = new AppointmentBuilder().withOwner(TypicalPersons.BENSON)
+    public static final Appointment BENNY = new AppointmentBuilder().withOwner(TypicalPersons.BENSON.getNric())
             .withRemark("May require isolation").withDateTime("2018-12-31 14:30")
             .withTags("surgery").build();
 

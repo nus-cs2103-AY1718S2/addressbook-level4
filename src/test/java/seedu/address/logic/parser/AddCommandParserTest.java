@@ -67,20 +67,18 @@ public class AddCommandParserTest {
                 .withNric(VALID_NRIC_BOB).withTags(VALID_TAG_FRIEND).build();
 
         PetPatient expectedPet = new PetPatient(new PetPatientName("joker"), "cat", "domestic shorthair",
-                "brown and white", "O", expectedPerson, new HashSet<>());
+                "brown and white", "" +
+                "O", expectedPerson.getNric(), new HashSet<>());
 
-        //add new owner and new pet patient
-        assertParseSuccess(parser, OPTION_OWNER + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + NRIC_DESC_BOB + TAG_DESC_FRIEND + OPTION_PET + NAME_DESC_JOKER
-                + SPECIES_DESC_JOKER + BREED_DESC_JOKER + COLOUR_DESC_JOKER + BLOODTYPE_DESC_JOKER,
-                new AddCommand(expectedPerson, expectedPet));
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + OPTION_OWNER + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + NRIC_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
+
         // multiple names - last name accepted
-        assertParseSuccess(parser, OPTION_OWNER + NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB
+        assertParseSuccess(parser,
+                OPTION_OWNER + NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + NRIC_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple phones - last phone accepted

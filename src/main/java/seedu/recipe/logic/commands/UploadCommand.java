@@ -1,6 +1,8 @@
 //@@author nicholasangcx
 package seedu.recipe.logic.commands;
 
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
 
 import seedu.recipe.commons.util.FileUtil;
+import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 
 /**
  * Uploads all recipes online, specifically to Dropbox.
@@ -22,14 +25,14 @@ public class UploadCommand extends Command {
     public static final String MESSAGE_FAILURE = "Failed to upload!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
-            + "specified filename, with no spaces. It will only take in the first parameter and filenames that "
-            + "do not already exist in your Dropbox.\n"
+            + "specified filename, with no spaces. It will only take in the first parameter. Filename cannot start "
+            + "with blackslash or frontslash or have two slashes consecutively.\n"
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD + " RecipeBook";
 
     private static final String ACCESS_TOKEN = "nF-Ym1zvMnAAAAAAAAAAPYd-4nRthqNAuk343dpYSiQXXHLBJFNraaaUUgPwokxl";
     private static final String RECIPE_DATA_FOLDER = FileUtil.getPath("data/");
-    private static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "addressbook.xml");
+    private static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "recipebook.xml");
     private static final String clientIdentifier = "dropbox/recirecipe";
 
     private final String xmlExtensionFilename;
@@ -43,7 +46,7 @@ public class UploadCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws UploadCommandException {
         CommandResult result = upload();
         return result;
     }
@@ -54,18 +57,21 @@ public class UploadCommand extends Command {
      * @return {@code CommandResult}
      * @throws DbxException
      */
-    private CommandResult upload() {
+    private CommandResult upload() throws UploadCommandException {
         // Create Dropbox client
         DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();
         DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
 
         // Upload "addressbook.xml" to Dropbox
         try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
-            client.files().uploadBuilder("/" + xmlExtensionFilename).uploadAndFinish(in);
-        } catch (IOException | DbxException e) {
+            client.files().uploadBuilder("/" + xmlExtensionFilename)
+                    .withAutorename(true)
+                    .uploadAndFinish(in);
+        } catch (IOException e) {
             return new CommandResult(MESSAGE_FAILURE);
+        } catch (DbxException dbe) {
+            throw new UploadCommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
-
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

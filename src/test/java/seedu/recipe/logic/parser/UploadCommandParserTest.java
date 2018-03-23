@@ -1,3 +1,4 @@
+//@@author nicholasangcx
 package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -28,3 +29,4 @@ public class UploadCommandParserTest {
         assertParseSuccess(parser, " \n RecipeBook \n \t otherBook \t", expectedUploadCommand);
     }
 }
+//@@author

@@ -73,6 +73,7 @@ public class XmlSerializableAddressBook {
         }
         for (XmlAdaptedAppointment a : appointments) {
             addressBook.addAppointment(a.toModelType());
+        }
         for (XmlAdaptedPetPatient pp : petPatients) {
             addressBook.addPetPatient(pp.toModelType());
         }

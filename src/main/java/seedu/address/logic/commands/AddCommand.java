@@ -158,7 +158,7 @@ public class AddCommand extends UndoableCommand {
 
     public PetPatient getPetPatientOfNricAndName() {
         for (PetPatient p : model.getAddressBook().getPetPatientList()) {
-            if(p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
+            if (p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
                 return p;
             }
         }
@@ -169,7 +169,7 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            switch (type){
+            switch (type) {
             case 1: //add new owner, new pet patient, and new appointment
                 model.addPerson(toAddOwner);
                 model.addPetPatient(toAddPet);

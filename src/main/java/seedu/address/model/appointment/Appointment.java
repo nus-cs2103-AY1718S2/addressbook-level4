@@ -31,7 +31,7 @@ public class Appointment {
      * Every field must be present and not null.
      */
     public Appointment(Nric ownerNric, PetPatientName petPatientName, Remark remark,
-                       LocalDateTime localDateTime,Set<Tag> type) {
+                       LocalDateTime localDateTime, Set<Tag> type) {
         requireAllNonNull(ownerNric, petPatientName, remark, localDateTime, type);
         this.ownerNric = ownerNric;
         this.petPatientName = petPatientName;

@@ -60,6 +60,7 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    //@@author Nethergale
     /**
      * Returns a person comparator, which compares the names alphabetically.
      * Similar names are compared lexicographically.
@@ -69,6 +70,7 @@ public class Person {
             s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2));
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -104,6 +106,19 @@ public class Person {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        return builder.toString();
+    }
+
+    /**
+     * Returns the tag names of tags of a person as String.
+     * @return a string of all the tag names of tags of a person.
+     */
+    public String getTagsAsString() {
+        final StringBuilder builder = new StringBuilder();
+        for (String tag : tags.arrayOfTags()) {
+            builder.append(tag);
+            builder.append(" ");
+        }
         return builder.toString();
     }
 

@@ -147,6 +147,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author Nethergale
     /**
      * Sorts all persons by name in alphabetical order in the address book.
      */
@@ -154,6 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.sort();
     }
 
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

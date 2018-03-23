@@ -43,15 +43,17 @@ public class AddCommandParser implements Parser<AddCommand> {
                 .tokenize(args, PREFIX_NAME, PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_COOKING_TIME,
                         PREFIX_PREPARATION_TIME, PREFIX_CALORIES, PREFIX_SERVINGS, PREFIX_TAG, PREFIX_URL);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_INGREDIENT)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Ingredient ingredient = ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).get();
-            Instruction instruction = ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).get();
+            Ingredient ingredient = ParserUtil.parseIngredientOnInitialAdd(argMultimap.getValue(PREFIX_INGREDIENT))
+                    .get();
+            Instruction instruction =
+                    ParserUtil.parseInstructionOnInitialAdd(argMultimap.getValue(PREFIX_INSTRUCTION)).get();
             CookingTime cookingTime =
                     ParserUtil.parseCookingTimeOnInitialAdd(argMultimap.getValue(PREFIX_COOKING_TIME)).get();
             PreparationTime preparationTime =

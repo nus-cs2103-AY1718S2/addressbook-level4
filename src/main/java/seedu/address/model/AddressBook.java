@@ -202,6 +202,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 petPatient.getBreed(),
                 petPatient.getColour(),
                 petPatient.getBloodType(),
+                petPatient.getOwner(),
                 correctTagReferences);
     }
 
@@ -224,7 +225,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         appointmentTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Appointment(
-                appointment.getOwner(), appointment.getRemark(), appointment.getDateTime(), correctTagReferences);
+                appointment.getOwner(), appointment.getPetPatient(), appointment.getRemark(),
+                appointment.getDateTime(), correctTagReferences);
     }
     /**
      * Removes {@code key} from this {@code AddressBook}.

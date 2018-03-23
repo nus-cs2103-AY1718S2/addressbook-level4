@@ -111,7 +111,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<PetPatient> syncedPetPatientList = newData.getPetPatientList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-
+        }
+        
         try {
             setPetPatients(syncedPetPatientList);
         } catch (DuplicatePetPatientException e) {

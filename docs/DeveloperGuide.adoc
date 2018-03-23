@@ -400,6 +400,36 @@ Linking of pet patients to their respective owners and appointments will be impl
 // end::addPetPatient[]
 
 // tag::commandsyntax[]
+
+=== Show Appointments on calendar
+==== Current Implementation
+
+In the original AddressBook app, there's no appointment class to show. Since veterinarians and their assistants have the need to constantly check their schedule for upcoming appointments, a calender feature is required to show future appointments.
+
+Third party API `CalendarF` is used as a Java calendar frame to show Appointments.
+
+==== Design Consideration
+* **Alternative 1:** Use `iCalendar` from Jfxtra library
+
+** Pros: Easy to implement, convenient to use. Can easily import from Jfxtra library.
+** Cons: UI styles are limited, the API is limited;
+
+* **Alternative 2 (current choice):** Implement CalendarFX API library.
+** Pros: Versatile APIs such as set style for each calendar, and much better looking UI than iCalendar.
+** Cons: Extra work required to integrate CalendarFX files into project, and may cause build problems if not implemented properly.
+
+==== Current Limitations
+
+As of now, the appointment class is yet to be properly developed, thus we are not able to show appointments inside the calendar yet.
+
+Only the UI of CalendarFX is integrated to show calendar view.
+
+==== Future Work
+
+After the appointment class being finished, we'll be able to implement `setAppointment` function in CalendarFX, the user will then be able to see future appointments in either All-day/weekly/monthly/yearly view.
+
+We may also make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
+
 === [Proposed] Command Syntax
 ==== Current Implementation
 

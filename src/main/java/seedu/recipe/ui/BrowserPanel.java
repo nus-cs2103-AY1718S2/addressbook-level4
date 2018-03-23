@@ -29,18 +29,9 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
-    public static final String REDIRECT_DOMAIN = "https://www.facebook.com/connect/login_success.html";
     private static final String FXML = "BrowserPanel.fxml";
 
-    //@@author RyanAngJY
-    private final String APP_ID = "177615459696708";
-    private final String ACCESS_RIGHTS = "publish_actions";
-
-    private final String AUTHENTICATION_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id="
-            + APP_ID + "&redirect_uri=" + REDIRECT_DOMAIN + "&scope=" + ACCESS_RIGHTS;
-
     private Recipe recipeToShare;
-    //@@author
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -91,7 +82,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author RyanAngJY
     @Subscribe
     private void handleShareRecipeEvent(ShareRecipeEvent event) {
-        loadPage(AUTHENTICATION_URL);
+        loadPage(FacebookHandler.getAuthenticationUrl());
         recipeToShare = event.getTargetRecipe();
         if (FacebookHandler.hasAccessToken()) {
             FacebookHandler.postRecipeOnFacebook(recipeToShare);

@@ -3,8 +3,6 @@ package seedu.recipe.ui.util;
 
 import static java.util.Objects.requireNonNull;
 
-import static seedu.recipe.ui.BrowserPanel.REDIRECT_DOMAIN;
-
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -20,8 +18,15 @@ import seedu.recipe.model.recipe.Recipe;
 public class FacebookHandler {
 
     public static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
+    public static final String REDIRECT_DOMAIN = "https://www.facebook.com/connect/login_success.html";
+    private static final String ACCESS_RIGHTS = "publish_actions";
+    private static final String APP_ID = "177615459696708";
+    private static final String AUTHENTICATION_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id="
+            + APP_ID + "&redirect_uri=" + REDIRECT_DOMAIN + "&scope=" + ACCESS_RIGHTS;
+
     private static final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&.*";
     private static final String EXTRACT_PORTION = "$1";
+
     private static final String POST_TYPE_MESSAGE = "message";
     private static final String USER = "me";
     private static final String USER_FEED = "me/feed";
@@ -76,8 +81,8 @@ public class FacebookHandler {
         }
     }
 
-    public static String getAccessToken() {
-        return accessToken;
+    public static String getAuthenticationUrl() {
+        return AUTHENTICATION_URL;
     }
 }
 //@@author

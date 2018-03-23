@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
@@ -76,4 +77,9 @@ public interface Model {
      * Updates the password with the given password.
      */
     void updatePassword(byte[] password);
+
+    /**
+     * Removes alias given the alias string to remove.
+     */
+    void removeAlias(String toRemove) throws AliasNotFoundException;
 }

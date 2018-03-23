@@ -72,6 +72,7 @@ Format: `add **-o** n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...
 Owner, pet patient and appointment can have any number of tags (including 0)
 
 Examples:
+
 * `add -o n/Fuji p/65123456 e/fuji@gmail.com a/Seishun Gakuen 2B nr/S1234567G -p n/jewel s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/checkup t/vaccination`
 * `a -o n/Tezuka p/65123478 e/tezuka@gmail.com a/Seishun Gakuen 2A nr/S1234599G -p n/silver s/cat b/persian c/grey bt/O -a d/2018-12-31 14:30 r/nil t/surgery`
 

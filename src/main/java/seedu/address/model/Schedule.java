@@ -47,9 +47,10 @@ public class Schedule implements ReadOnlySchedule {
      * Prints the schedule as a list
      */
     public void print() {
+        int index = 1;
         System.out.println(this.toString());
         for (Lesson l : lessons) {
-            System.out.println(l.toString());
+            System.out.println(index++ +  ": " + l.toString());
         }
     }
 

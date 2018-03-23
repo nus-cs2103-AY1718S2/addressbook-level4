@@ -40,6 +40,7 @@ public class LessonList implements Iterable<Lesson> {
             internalList.add(toAdd);
         }
         Collections.sort(internalList);
+        System.out.print("Number 1: " + internalList.get(0).toString());
     }
 
     /**

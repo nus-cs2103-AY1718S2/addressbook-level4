@@ -113,7 +113,6 @@ public class Day implements Comparable<Day> {
 
     @Override
     public int compareTo(Day other) {
-        System.out.println("Today: " + this.value + " comparing with " + other.value + " " + (intValue() - other.intValue()));
         return this.intValue() - other.intValue();
     }
 }

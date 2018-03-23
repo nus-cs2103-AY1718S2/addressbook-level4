@@ -528,7 +528,7 @@ With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the locat
 
 As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
 
-image::InterfaceOfLocateCommand.jpg[width="800"]
+image::InterfaceOfLocateCommand.png[width="800"]
 
 ==== Further Enhancement
 

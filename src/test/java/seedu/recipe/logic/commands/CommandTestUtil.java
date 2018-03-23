@@ -97,7 +97,9 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - a {@code DBx}
+     * - or <br>
+     * - a {@code UploadCommandException} is thrown <br>
+     * - the UploadCommandException message matches {@code expectedMessage} <br>
      * - the recipe book and the filtered recipe list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
@@ -111,6 +113,10 @@ public class CommandTestUtil {
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
+            assertEquals(expectedRecipeBook, actualModel.getRecipeBook());
+            assertEquals(expectedFilteredList, actualModel.getFilteredRecipeList());
+        } catch (UploadCommandException uce) {
+            assertEquals(expectedMessage, uce.getMessage());
             assertEquals(expectedRecipeBook, actualModel.getRecipeBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredRecipeList());
         }

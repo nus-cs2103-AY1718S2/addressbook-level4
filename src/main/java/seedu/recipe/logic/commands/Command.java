@@ -6,6 +6,7 @@ import seedu.recipe.commons.core.Messages;
 import seedu.recipe.logic.CommandHistory;
 import seedu.recipe.logic.UndoRedoStack;
 import seedu.recipe.logic.commands.exceptions.CommandException;
+import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 import seedu.recipe.model.Model;
 
 /**
@@ -44,7 +45,7 @@ public abstract class Command {
      * @return feedback message of the operation result for display
      * @throws CommandException If an error occurs during command execution.
      */
-    public abstract CommandResult execute() throws CommandException, DbxException;
+    public abstract CommandResult execute() throws CommandException, UploadCommandException;
 
     /**
      * Provides any needed dependencies to the command.

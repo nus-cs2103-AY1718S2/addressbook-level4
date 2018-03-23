@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.model.building.Building.BUILDINGS;
+import static seedu.address.model.building.Building.NUS_BUILDINGS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import seedu.address.model.building.Building;
  */
 public class VacantCommandParser {
 
-    private String[] buildingArray = BUILDINGS;
+    private String[] buildingArray = NUS_BUILDINGS;
     private List<String> buildings = new ArrayList<String>(Arrays.asList(buildingArray));
 
     /**

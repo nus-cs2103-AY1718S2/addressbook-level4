@@ -1,6 +1,5 @@
 package seedu.address.commons.events.ui;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 /**
@@ -8,10 +7,10 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class LocateRequestEvent extends BaseEvent {
 
-    public final int targetInex;
+    public final int target;
 
-    public LocateRequestEvent(Index targetIndex) {
-        this.targetInex = targetIndex.getZeroBased();
+    public LocateRequestEvent(int target) {
+        this.target = target;
     }
 
     @Override

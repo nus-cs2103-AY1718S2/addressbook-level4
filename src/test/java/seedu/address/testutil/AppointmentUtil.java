@@ -31,7 +31,7 @@ public class AppointmentUtil {
      */
     public static String getAppointmentDetails(Appointment appointment) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_OWNER + appointment.getOwner().fullName + " ");
+        sb.append(PREFIX_OWNER + appointment.getOwner().getName().toString() + " ");
         sb.append(PREFIX_REMARK + appointment.getRemark().value + " ");
         sb.append(PREFIX_DATE + appointment.getFormattedLocalDateTime() + " ");
         appointment.getType().stream().forEach(

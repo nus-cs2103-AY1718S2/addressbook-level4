@@ -31,6 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Appointment> filteredAppointments;
+    private final FilteredList<PetPatient> filteredPetPatients;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,6 +45,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredAppointments = new FilteredList<>(this.addressBook.getAppointmentList());
+        filteredPetPatients = new FilteredList<>(this.addressBook.getPetPatientList());
     }
 
     public ModelManager() {
@@ -82,6 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
         addressBook.addPetPatient(petPatient);
+        updateFilteredPetPatientList(PREDICATE_SHOW_ALL_PET_PATIENTS);
         indicateAddressBookChanged();
     }
 
@@ -141,6 +144,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
+        requireNonNull(predicate);
+        filteredPetPatients.setPredicate(predicate);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
@@ -156,7 +165,8 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
-                && filteredAppointments.equals(other.filteredAppointments);
+                && filteredAppointments.equals(other.filteredAppointments)
+                && filteredPetPatients.equals(other.filteredPetPatients);
     }
 
 }

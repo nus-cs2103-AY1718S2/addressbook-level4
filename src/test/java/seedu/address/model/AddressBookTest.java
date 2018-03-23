@@ -24,6 +24,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
+import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -112,6 +113,8 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        private final ObservableList<PetPatient> petPatients = FXCollections.observableArrayList();
+        private final ObservableList<Tag> petPatientTags = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
                         Collection<Appointment> appointments) {
@@ -133,6 +136,16 @@ public class AddressBookTest {
         @Override
         public ObservableList<Appointment> getAppointmentList() {
             return appointments;
+        }
+
+        @Override
+        public ObservableList<PetPatient> getPetPatientList() {
+            return petPatients;
+        }
+
+        @Override
+        public ObservableList<Tag> getPetPatientTagList() {
+            return petPatientTags;
         }
     }
 

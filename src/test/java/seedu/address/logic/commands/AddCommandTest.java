@@ -39,7 +39,7 @@ public class AddCommandTest {
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddCommand((Person) null);
     }
 
     @Test
@@ -162,6 +162,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+            fail("This method should not be called.");
+        }
+      
+        @Override
+        public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
             fail("This method should not be called.");
         }
     }

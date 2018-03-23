@@ -162,6 +162,23 @@ Examples:
 * `tagdelete Class1A` or `td Class1A` +
 Deletes the 'Class 1A' tag from every student in the EduBuddy.
 
+=== Replacing a tag : `tagreplace` or `tr` ===
+
+
+Replaces the specified tag from every student in EduBuddy with a specific tag. +
+Format: `tagreplace t/TAGNAME t/TAGNAME` or `tr t/TAGNAME t/TAGNAME`
+
+****
+* Replaces the specified tag from every student in Edubuddy with a specific tag.
+* The tag refers to the index number shown in the most recent listing.
+* The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
+****
+
+Examples:
+
+* `tagreplace t/Class1A t/Class2A` or `tr t/Class1A t/Class2A` +
+Replaces the 'Class 1A' tag from every student in the EduBuddy with 'Class 2A'.
+
 === Selecting a person : `select` or `s`
 
 Selects the student identified by the index number used in the last student listing. +
@@ -270,6 +287,27 @@ Examples:
 * `create 1 date/01022018 time/1500` +
 Creates an appointment with the 1st student on `01022018` at `1500`
 
+// tag::remarks Command[]
+=== Remarks Command `[coming in v2.0]`
+
+_{Allows the teachers to write a remark for the student for all other teachers to see. e.g. Medical/Injuries history}_
+
+// end::remarks Command[]
+
+// tag::CCA section[]
+=== CCA section `[coming in v2.0]`
+
+_{Allows the teachers to key in which CCA the students are in and to keep track of attendance.}_
+
+// end::CCA section[]
+
+// tag::L.E.A.P.S System[]
+=== L.E.A.P.S System`[coming in v2.0]`
+
+_{Allows the teachers to key in the levels attained by the student for the various domains in L.E.A.P.S
+  to calculate the Co-Curricular Attainment of the student.}_
+// end::L.E.A.P.S System[]
+
 === Saving the data
 
 EduBuddy data are saved in the hard disk automatically after any command that changes the data. +
@@ -296,6 +334,12 @@ e.g. `a n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
 * *Delete* : `delete INDEX` or `d INDEX` +
 e.g. `delete 3` +
 e.g. `d 3`
+* *TagDelete* : `tagdelete TAGNAME` or `td TAGNAME` +
+e.g. `tagdelete CLASS2A` +
+e.g. `td CLASS2A`
+* *TagReplace* : `tagreplace t/TAGNAME t/TAGNAME` or `tr t/TAGNAME t/TAGNAME` +
+e.g. `tagreplace t/CLASS2A t/CLASS3A` +
+e.g. `tr t/CLASS2A t/CLASS3A`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
 `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
 e.g. `edit 2 n/James Lee` +

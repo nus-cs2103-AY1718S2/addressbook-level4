@@ -33,10 +33,6 @@ public class ShareCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
-    private void shareRecipeOnFacebook(Recipe recipe) {
-
-    }
-
     @Override
     public CommandResult execute() throws CommandException {
 

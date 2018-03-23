@@ -541,6 +541,55 @@ The rationale for implementing the `locate` command is that there's actual need 
 
 It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
 
+=== Tag Colours Enhancement
+
+In the original AddressBook, all tags were of the same colour, irrespective of the `Person` they were tagged to or the content of the tag. Users were able to visually identify the tags a `Person` is associated with by the textual content of each tag. The current implementation enables colours for tags and tags with the same textual content will consistently bear the same colour. This is substantially more useful than the previous application as users are able to visually identify multiple `Person` objects with the same tag with much more ease. Also, users can now more easily compare and contrast the tags that two distinct `Person` objects are associated with.
+
+==== Basic Enhancement
+
+The colours for the tags are first created in `resources/main/view/DarkTheme.css`.
+
+The textual representations of the colours are then initialised and placed into a `String[]`.
+
+----
+private static final String[] TAG_COLOUR_STYLES =
+	{ "teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+----
+
+A helper method is then created to return a specific tag colour style given a `String` input. The `hashcode()` method of each `String` is utilised in this method to ensure that the colour assigned is **consistently random**: equivalent `Strings` will receive identical colours while different `Strings` will receive "random" colours that will be in most cases distinct. This behaviour is consistent over repeated runs of the Application.
+
+----
+private String getTagColourStyleFor(String tagName) {
+    return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
+}
+----
+
+All that remains to be done is to implement a new method to initialise all tags of a Person object with the appropriate colours. This method calls the above helper method, utilising it to associate each tag with a appropriate colour based on its `String` content.
+
+----
+private void initTags(Person person) {
+    person.getTags().forEach(tag -> {
+        Label tagLabel = new Label(tag.tagName);
+        tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));
+        tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));
+        tags.getChildren().add(tagLabel);
+     });
+}
+----
+
+==== Further Enhancement
+
+This enhancement can be taken steps further in the coming weeks by assigning certain set colours to certain tags instead of using the `hashCode()` method to assign colours.
+
+This would be useful in the content of our Application as it is important for the User to discern between `Runners` and `Customers`, and to be able to tell at a glance whether and what actions need to be taken or assigned to respective `Customers` or `Runners`.
+
+==== Rationale
+The rationale for adding tag colours stems from two facts: firstly, that in the context of this Application, tags are used to categorise, group and distinguish between `Person` objects and that secondly, colours are an excellent way to visually and manually group and distinguish between groups of objects.
+
+As a result, implementing tag colours utilises these two facts in tandom to make it significantly easier for the User to group different `Persons` and in combination with our newly implement `find` command, which enables wide sweeping, flexible search and filtering functionality, these tag colours add much value to the searching and filtering user experience.
+
+These tag colours will be significantly more useful with the further enhancement mentioned above and hence, this basic enhancement is the first step towards the finished product.
+
 == Documentation
 
 We use asciidoc for writing documentation.

@@ -5,11 +5,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.recipe.logic.commands.EditCommand.EditRecipeDescriptor;
+import seedu.recipe.model.recipe.Calories;
+import seedu.recipe.model.recipe.CookingTime;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Servings;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
 
@@ -34,9 +37,12 @@ public class EditRecipeDescriptorBuilder {
     public EditRecipeDescriptorBuilder(Recipe recipe) {
         descriptor = new EditRecipeDescriptor();
         descriptor.setName(recipe.getName());
-        descriptor.setPreparationTime(recipe.getPreparationTime());
         descriptor.setIngredient(recipe.getIngredient());
         descriptor.setInstruction(recipe.getInstruction());
+        descriptor.setCookingTime(recipe.getCookingTime());
+        descriptor.setPreparationTime(recipe.getPreparationTime());
+        descriptor.setCalories(recipe.getCalories());
+        descriptor.setServings(recipe.getServings());
         descriptor.setUrl(recipe.getUrl());
         descriptor.setTags(recipe.getTags());
     }
@@ -49,14 +55,7 @@ public class EditRecipeDescriptorBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code PreparationTime} of the {@code EditRecipeDescriptor} that we are building.
-     */
-    public EditRecipeDescriptorBuilder withPreparationTime(String preparationTime) {
-        descriptor.setPreparationTime(new PreparationTime(preparationTime));
-        return this;
-    }
-
+    //@@Author kokonguyen191
     /**
      * Sets the {@code Ingredient} of the {@code EditRecipeDescriptor} that we are building.
      */
@@ -74,12 +73,46 @@ public class EditRecipeDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code CookingTime} of the {@code EditRecipeDescriptor} that we are building.
+     */
+    public EditRecipeDescriptorBuilder withCookingTime(String cookingTime) {
+        descriptor.setCookingTime(new CookingTime(cookingTime));
+        return this;
+    }
+
+    /**
+     * Sets the {@code PreparationTime} of the {@code EditRecipeDescriptor} that we are building.
+     */
+    public EditRecipeDescriptorBuilder withPreparationTime(String preparationTime) {
+        descriptor.setPreparationTime(new PreparationTime(preparationTime));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Calories} of the {@code EditRecipeDescriptor} that we are building.
+     */
+    public EditRecipeDescriptorBuilder withCalories(String calories) {
+        descriptor.setCalories(new Calories(calories));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Servings} of the {@code EditRecipeDescriptor} that we are building.
+     */
+    public EditRecipeDescriptorBuilder withServings(String servings) {
+        descriptor.setServings(new Servings(servings));
+        return this;
+    }
+
+    //@@Author RyanAngJY
+    /**
      * Sets the {@code Url} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditRecipeDescriptorBuilder withUrl(String url) {
         descriptor.setUrl(new Url(url));
         return this;
     }
+    //@@Author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditRecipeDescriptor}

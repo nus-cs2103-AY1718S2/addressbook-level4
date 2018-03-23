@@ -60,12 +60,12 @@ public class SuggestionsPopUp extends ContextMenu {
      * Finds possible suggestions from {@code word} and
      * list of valid suggestions {@code textList}.
      */
-    private void findSuggestions(String word, List<String> textList) {
+    private void findSuggestions(String prefix, List<String> dictionary) {
         getItems().clear();
-        Collections.sort(textList);
+        Collections.sort(dictionary);
 
-        for (String suggestion : textList) {
-            if (suggestion.startsWith(word)) {
+        for (String suggestion : dictionary) {
+            if (suggestion.startsWith(prefix)) {
                 addSuggestion(suggestion);
             }
 

@@ -131,8 +131,9 @@ public class RecipeBook implements ReadOnlyRecipeBook {
         // Rebuild the list of recipe tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         recipeTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Recipe(recipe.getName(), recipe.getPreparationTime(), recipe.getIngredient(),
-                recipe.getInstruction(), recipe.getUrl(), correctTagReferences);
+        return new Recipe(recipe.getName(), recipe.getIngredient(), recipe.getInstruction(), recipe.getCookingTime(),
+                recipe.getPreparationTime(), recipe.getCalories(), recipe.getServings(), recipe.getUrl(),
+                correctTagReferences);
     }
 
     /**

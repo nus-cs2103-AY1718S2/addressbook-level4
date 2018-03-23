@@ -1,10 +1,13 @@
 package seedu.recipe.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_SERVINGS;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
 
@@ -22,19 +25,25 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a recipe to the recipe book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PREPARATION_TIME + "PREPARATION_TIME "
             + PREFIX_INGREDIENT + "INGREDIENT "
             + PREFIX_INSTRUCTION + "INSTRUCTION "
+            + "[" + PREFIX_COOKING_TIME + "COOKING_TIME] "
+            + "[" + PREFIX_PREPARATION_TIME + "PREPARATION_TIME] "
+            + "[" + PREFIX_CALORIES + "CALORIES] "
+            + "[" + PREFIX_SERVINGS + "SERVINGS] "
             + "[" + PREFIX_URL + "URL]\n"
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PREPARATION_TIME + "98765432 "
-            + PREFIX_INGREDIENT + "johnd@example.com "
-            + PREFIX_INSTRUCTION + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_URL + "https://www.bbcgoodfood.com/recipes/ "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + "Example:\n" + COMMAND_WORD + " "
+            + PREFIX_NAME + "Chicken Rice\n"
+            + PREFIX_INGREDIENT + "chicken, rice\n"
+            + PREFIX_INSTRUCTION + "Cook rice\nCook chicken\nEnjoy\n"
+            + PREFIX_COOKING_TIME + "15 mins\n"
+            + PREFIX_PREPARATION_TIME + "5 mins\n"
+            + PREFIX_CALORIES + "500\n"
+            + PREFIX_SERVINGS + "2\n"
+            + PREFIX_URL + "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice\n"
+            + PREFIX_TAG + "yummy "
+            + PREFIX_TAG + "best";
 
     public static final String MESSAGE_SUCCESS = "New recipe added: %1$s";
     public static final String MESSAGE_DUPLICATE_RECIPE = "This recipe already exists in the recipe book";

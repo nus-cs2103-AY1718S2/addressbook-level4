@@ -117,8 +117,11 @@ public class Event extends Activity {
     }
 
     @Override
-    public Activity copy() {
-        return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), getTags());
+    public Activity copy(Set<Tag> tags) {
+        if (tags == null) {
+            return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), getTags());
+        }
+        return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), tags);
     }
 
 }

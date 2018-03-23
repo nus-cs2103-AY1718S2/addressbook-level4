@@ -57,10 +57,9 @@ public abstract class Activity {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
-    //TODO: Make this method abstract
     public abstract String getActivityType();
 
-    public abstract Activity copy();
+    public abstract Activity copy(Set<Tag> tags);
 
     public Activity setCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
@@ -71,20 +70,6 @@ public abstract class Activity {
         return isCompleted;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
 
-        if (!(other instanceof Activity)) {
-            return false;
-        }
-
-        Activity otherActivity = (Activity) other;
-        return otherActivity.getName().equals(this.getName())
-                && otherActivity.getDateTime().equals(this.getDateTime())
-                && otherActivity.getRemark().equals(this.getRemark());
-    }
 
 }

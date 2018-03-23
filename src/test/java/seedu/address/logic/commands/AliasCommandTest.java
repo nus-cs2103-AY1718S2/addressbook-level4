@@ -15,6 +15,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -86,12 +88,17 @@ public class AliasCommandTest {
         }
 
         @Override
-        public void importAddressBook(String filepath) throws DataConversionException, IOException {
+        public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException {
             fail("This method should not be called.");
         }
 
         @Override
         public void addAlias(Alias alias) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void getRoomsFrom(Building building) throws BuildingNotFoundException {
             fail("This method should not be called.");
         }
     }

@@ -114,8 +114,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * @return              modified AddressBook
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public AddressBook importAddressBook(String filePath, AddressBook addressBook) throws DataConversionException,
-            IOException {
+    public AddressBook importAddressBook(String filePath, AddressBook addressBook, byte[] password)
+            throws DataConversionException, IOException, WrongPasswordException {
         requireNonNull(filePath);
 
         File addressBookFile = new File(filePath);
@@ -124,7 +124,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             logger.info("AddressBook file "  + addressBookFile + " not found");
             throw new FileNotFoundException();
         }
-
+        SecurityUtil.decrypt(new File(filePath), password);
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
         try {
             return xmlAddressBook.addToAddressBook(addressBook);

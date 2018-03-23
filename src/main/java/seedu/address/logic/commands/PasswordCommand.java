@@ -15,7 +15,7 @@ public class PasswordCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the password used for en. "
             + "Parameters: password PASSWORD"
             + "Example: " + COMMAND_WORD + "test";
-    public static final String INVALID_PASSWORD = "Password cannot be blank.";
+    public static final String INVALID_PASSWORD = "Password cannot be blank!";
 
     public static final String MESSAGE_SUCCESS = "Password updated.";
 

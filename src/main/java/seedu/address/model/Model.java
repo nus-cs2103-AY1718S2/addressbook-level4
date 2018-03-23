@@ -5,8 +5,11 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -33,6 +36,9 @@ public interface Model {
 
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
+
+    /** returns rooms for the given building */
+    void getRoomsFrom(Building building) throws BuildingNotFoundException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -62,7 +68,8 @@ public interface Model {
     /**
      * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
      */
-    void importAddressBook(String filepath) throws DataConversionException, IOException;
+    void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
+            WrongPasswordException;
 
     /**
      * Updates the password with the given password.

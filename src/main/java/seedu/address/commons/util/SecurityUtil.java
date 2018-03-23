@@ -47,6 +47,17 @@ public class SecurityUtil {
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
      */
+    public static void encrypt(String file, String password)throws IOException, WrongPasswordException {
+        byte[] hashedPassword = hashPassword(password);
+        encrypt(new File(file), hashedPassword);
+    }
+
+    /**
+     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
+     *
+     * @param file Points to a valid file containing data
+     * @throws IOException thrown if cannot open file
+     */
     public static void encrypt(File file, byte[] password)throws IOException, WrongPasswordException {
         try {
             Key secretAesKey = createKey(password);

@@ -39,15 +39,20 @@ public class Building {
      * Returns true if a given string is a valid building name.
      */
     public static boolean isValidBuilding(String test) {
-        boolean isFound = false;
-        for (String building : BUILDINGS) {
-            if (building.equals(test)) {
-                isFound = true;
-            }
-        }
-        return isFound && test.matches(BUILDING_VALIDATION_REGEX);
+        return test.matches(BUILDING_VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a given string is a valid building name.
+     */
+    public static boolean isValidBuilding(Building test) {
+        for (String building : BUILDINGS) {
+            if (building.equals(test.buildingName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public String toString() {

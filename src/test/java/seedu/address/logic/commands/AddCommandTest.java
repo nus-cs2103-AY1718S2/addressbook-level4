@@ -149,8 +149,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void getRoomsFrom(Building building) throws BuildingNotFoundException {
+        public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override

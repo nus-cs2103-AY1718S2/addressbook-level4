@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -90,11 +91,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void getRoomsFrom(Building building) throws BuildingNotFoundException {
-        //TODO: get vacancy of all rooms in building
+    public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
         if (!Building.isValidBuilding(building)) {
             throw new BuildingNotFoundException();
         }
+        return building.getAllRoomsSchedule();
     }
 
     @Override

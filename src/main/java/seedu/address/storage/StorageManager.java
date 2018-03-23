@@ -15,6 +15,8 @@ import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.Room;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -24,12 +26,15 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private ReadOnlyVenueInformation venueInformationStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          ReadOnlyVenueInformation venueInformationStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.venueInformationStorage = venueInformationStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -115,6 +120,24 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+
+    // ================ VenueInformation methods ==============================
+
+    @Override
+    public String getVenueInformationFilePath() {
+        return venueInformationStorage.getVenueInformationFilePath();
+    }
+
+    @Override
+    public Optional<Room> readVenueInformation() throws DataConversionException, IOException {
+        return venueInformationStorage.readVenueInformation();
+    }
+
+    @Override
+    public Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException {
+        return venueInformationStorage.readBuildingsAndRoomsInformation();
     }
 
 }

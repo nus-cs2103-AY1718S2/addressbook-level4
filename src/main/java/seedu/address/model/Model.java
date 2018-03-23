@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -38,8 +39,8 @@ public interface Model {
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
 
-    /** returns rooms for the given building */
-    void getRoomsFrom(Building building) throws BuildingNotFoundException;
+    /** Returns rooms for the given building */
+    ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

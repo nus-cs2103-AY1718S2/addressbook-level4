@@ -2,12 +2,15 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 
 /**
- * Checks for vacant rooms in a given building
+ * Retrieves all vacant rooms in a given building
  */
 public class VacantCommand extends Command {
     public static final String COMMAND_WORD = "vacant";
@@ -17,13 +20,14 @@ public class VacantCommand extends Command {
             + "Example: " + COMMAND_WORD + " COM1";
 
     public static final String MESSAGE_SUCCESS = "List of rooms in building successfully retrieved.";
-    public static final String MESSAGE_INVALID_BUILDING = "Building does not exist.";
+    public static final String MESSAGE_INVALID_BUILDING =
+            "Building is not in the list of NUS Buildings given below: \n"
+            + Arrays.toString(Building.NUS_BUILDINGS);
 
     private final Building building;
 
     /**
-     * Creates an ImportCommand to import the specified {@code AddressBook} from filepath to
-     * current {@code AddressBook}
+     * Creates a VacantCommand to retrieve all vacant rooms in a given building
      */
     public VacantCommand(Building building) {
         requireNonNull(building);
@@ -34,11 +38,11 @@ public class VacantCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
-            model.getRoomsFrom(building);
+            ArrayList<ArrayList<String>> allRoomsSchedule = model.getAllRoomsSchedule(building);
+            return new CommandResult(String.format(MESSAGE_SUCCESS + "\n" + allRoomsSchedule));
         } catch (BuildingNotFoundException e) {
             throw new CommandException(MESSAGE_INVALID_BUILDING);
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
 
     }
 

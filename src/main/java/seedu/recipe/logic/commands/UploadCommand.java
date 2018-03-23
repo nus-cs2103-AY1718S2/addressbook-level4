@@ -48,6 +48,12 @@ public class UploadCommand extends Command {
         return result;
     }
 
+    /**
+     * Creates a Dropbox client with the user's {@code ACCESS_TOKEN}
+     * and uploads file specified by {@code RECIPE_BOOK_FILE} to their Dropbox account
+     * @return {@code CommandResult}
+     * @throws DbxException
+     */
     private CommandResult upload() throws DbxException {
         // Create Dropbox client
         DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();

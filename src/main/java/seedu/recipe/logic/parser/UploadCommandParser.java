@@ -25,9 +25,9 @@ public class UploadCommandParser implements Parser<UploadCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
 
         }
-        String XmlExtensionFilename = ParserUtil.parseFilename(filename);
+        String xmlExtensionFilename = ParserUtil.parseFilename(filename);
 
-        return new UploadCommand(XmlExtensionFilename);
+        return new UploadCommand(xmlExtensionFilename);
     }
 }
 //@author

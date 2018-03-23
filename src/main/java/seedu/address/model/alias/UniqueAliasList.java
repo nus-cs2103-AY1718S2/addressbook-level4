@@ -59,7 +59,7 @@ public class UniqueAliasList {
     }
 
     /**
-     * Removes an Alias to the list.
+     * Removes an Alias from the list.
      *
      * @throws AliasNotFoundException if the Alias to remove is a does not exist in the list.
      */

@@ -90,7 +90,7 @@ public class AliasCommandTest {
 
         @Override
         public void removeAlias(String toRemove) throws AliasNotFoundException {
-
+            fail("This method should not be called.");
         }
 
         @Override

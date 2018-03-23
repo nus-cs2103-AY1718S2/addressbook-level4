@@ -41,24 +41,24 @@ public class LocateCommandParser implements Parser<LocateCommand> {
         }
 
         switch (arguments[0]) {
-            case "-n":
-                keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-                return new LocateCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-            case "-p":
-                keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-                return new LocateCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
-            case "-e":
-                keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-                return new LocateCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
-            case "-a":
-                keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-                return new LocateCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
-            case "-t":
-                keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-                return new LocateCommand(new TagsContainsKeywordsPredicate(Arrays.asList(keywords)));
-            default:
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, LocateCommand.MESSAGE_USAGE));
+        case "-n":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new LocateCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-p":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new LocateCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-e":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new LocateCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-a":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new LocateCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-t":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new LocateCommand(new TagsContainsKeywordsPredicate(Arrays.asList(keywords)));
+        default:
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, LocateCommand.MESSAGE_USAGE));
         }
     }
 

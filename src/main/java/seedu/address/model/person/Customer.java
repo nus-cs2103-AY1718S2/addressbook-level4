@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,41 +12,56 @@ import seedu.address.model.tag.Tag;
  */
 public class Customer extends Person {
 
-    //TODO: create classes for these new fields rather than use primitives
-    private final String moneyOwed; //moneyOwed is a formula that DEPENDS on these other new fields
-    private final String interestRate;
-    //oweStartDate
-    //oweDueDate
-    //standardInterest
-    //lateInterest
+    //TODO: create classes for these new fields rather than use primitives???
+    private final double moneyBorrowed; //moneyOwed is a formula that DEPENDS on these other new fields
+    private final Date oweStartDate;
+    private final Date oweDueDate;
+    private final double standardInterest;
+    private final double lateInterest;
 
     /**
      * Customer constructor
      */
-    public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String moneyOwed,
-                    String interestRate) {
+    public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(name, phone, email, address, tags);
-        this.moneyOwed = moneyOwed;
-        this.interestRate = interestRate;
+        this.moneyBorrowed = 0;
+        this.standardInterest = 0;
+        this.lateInterest = 0;
+        this.oweStartDate = new Date();
+        this.oweDueDate = new Date();
+    }
+
+    public double getMoneyBorrowed() {
+        return moneyBorrowed;
+    }
+
+    public Date getOweStartDate() {
+        return oweStartDate;
+    }
+
+    public Date getOweDueDate() {
+        return oweDueDate;
+    }
+
+    public double getStandardInterest() {
+        return standardInterest;
+    }
+
+    public double getLateInterest() {
+        return lateInterest;
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
+     * @return amount of money owed, after compounded standardInterest, based on num of weeks that has passed since
+     * oweStartDate
      */
-
-    public String getMoneyOwed() {
-        return moneyOwed;
+    public double getMoneyCurrentlyOwed() {
+        final int numOfMsInAWeek = 10080 * 1000;
+        Date currentDate = new Date();
+        long elapsedTime = currentDate.getTime() - oweStartDate.getTime();
+        long elapsedWeeks = elapsedTime / numOfMsInAWeek;
+        return moneyBorrowed * Math.pow(standardInterest, (double) elapsedWeeks);
     }
-    //moneyOwed = moneyOwed*(monthlyInterest)^(monthsElapsed)
-    public String getInterestRate() {
-        return interestRate;
-    }
-
-    //TODO: add setter for moneyOwed
-    //TODO: add setter for interestRate
-    //update moneyOwed based on interest rate?
-    //other fields for pertinent information?
 
     @Override
     public boolean equals(Object other) {
@@ -61,9 +77,7 @@ public class Customer extends Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getMoneyOwed().equals(this.getMoneyOwed())
-                && otherPerson.getInterestRate().equals(this.getInterestRate());
+                && otherPerson.getAddress().equals(this.getAddress());
 
     }
 
@@ -71,7 +85,7 @@ public class Customer extends Person {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(getName(), getPhone(), getEmail(), getAddress(),
-                getTags(), moneyOwed, interestRate);
+                getTags());
     }
 
     @Override
@@ -84,13 +98,8 @@ public class Customer extends Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Money Owed: ")
-                .append(getMoneyOwed())
-                .append(" Interest Rate: ")
-                .append(getInterestRate())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
 }

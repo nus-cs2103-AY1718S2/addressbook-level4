@@ -125,7 +125,8 @@ public class RecipeBookParserTest {
         List<String> keywords = Arrays.asList("friends", "family", "owesMoney");
         TagCommand command = (TagCommand) parser.parseCommand(
                 TagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new TagCommand(new TagContainsKeywordsPredicate(keywords), keywords.toArray(new String[0])), command);
+        assertEquals(new TagCommand(new TagContainsKeywordsPredicate(keywords),
+                keywords.toArray(new String[0])), command);
     }
 
     @Test

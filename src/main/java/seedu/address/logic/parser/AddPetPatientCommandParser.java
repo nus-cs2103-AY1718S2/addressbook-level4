@@ -1,10 +1,10 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_COLOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddPetPatientCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
@@ -21,17 +22,17 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses input arguments and creates a new AddPetPatientCommand object
  */
-public class AddPetPatientCommandParser implements Parser<AddPetPatientCommand> {
+public class AddPetPatientCommandParser {
     /**
-     * Parses the given {@code String} of arguments in the context of the AddPetPatientCommand
-     * and returns an AddPetPatientCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the PetPatient class
+     * and returns an PetPatient object.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddPetPatientCommand parse(String args) throws ParseException {
+    public PetPatient parse(String petInfo, Person owner) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(
-                        args,
-                        PREFIX_PET_PATIENT_NAME,
+                        petInfo,
+                        PREFIX_NAME,
                         PREFIX_PET_PATIENT_SPECIES,
                         PREFIX_PET_PATIENT_BREED,
                         PREFIX_PET_PATIENT_COLOUR,
@@ -40,9 +41,9 @@ public class AddPetPatientCommandParser implements Parser<AddPetPatientCommand> 
 
         if (!arePrefixesPresent(
                 argMultimap,
-                PREFIX_PET_PATIENT_NAME,
-                PREFIX_PET_PATIENT_SPECIES,
+                PREFIX_NAME,
                 PREFIX_PET_PATIENT_BREED,
+                PREFIX_PET_PATIENT_SPECIES,
                 PREFIX_PET_PATIENT_COLOUR,
                 PREFIX_PET_PATIENT_BLOODTYPE)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -50,16 +51,16 @@ public class AddPetPatientCommandParser implements Parser<AddPetPatientCommand> 
         }
 
         try {
-            PetPatientName name = ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_PET_PATIENT_NAME)).get();
+            PetPatientName name = ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME)).get();
             String species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_PET_PATIENT_SPECIES)).get();
             String breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_PET_PATIENT_BREED)).get();
             String color = ParserUtil.parseColour(argMultimap.getValue(PREFIX_PET_PATIENT_COLOUR)).get();
             String bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_PET_PATIENT_BLOODTYPE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            PetPatient petPatient = new PetPatient(name, species, breed, color, bloodType, tagList);
+            PetPatient petPatient = new PetPatient(name, species, breed, color, bloodType, owner, tagList);
 
-            return new AddPetPatientCommand(petPatient);
+            return petPatient;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.OPTION_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -19,14 +20,14 @@ public class PersonUtil {
      * Returns an add command string for adding the {@code person}.
      */
     public static String getAddCommand(Person person) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+        return AddCommand.COMMAND_WORD + " " + OPTION_OWNER + " " + getPersonDetails(person);
     }
 
     /**
      * Returns an add command string for adding the {@code person}.
      */
     public static String getAddCommandAlias(Person person) {
-        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
+        return AddCommand.COMMAND_ALIAS + " " + OPTION_OWNER + " " + getPersonDetails(person);
     }
 
     /**

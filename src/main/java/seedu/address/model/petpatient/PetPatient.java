@@ -43,9 +43,28 @@ public class PetPatient {
         this.bloodType = bloodType;
         this.tags = new UniqueTagList(tags);
 
+        this.owner = null;
         this.dateOfBirth = null;
         this.medicalHistory = new StringBuilder();
-        this.owner = null;
+    }
+
+    public PetPatient(PetPatientName name,
+                      String species,
+                      String breed,
+                      String colour,
+                      String bloodType,
+                      Person owner,
+                      Set<Tag> tags) {
+        requireAllNonNull(name, species, breed, colour, bloodType, tags);
+        this.name = name;
+        this.species = species;
+        this.breed = breed;
+        this.colour = colour;
+        this.bloodType = bloodType;
+        this.tags = new UniqueTagList(tags);
+        this.owner = owner;
+        this.dateOfBirth = null;
+        this.medicalHistory = new StringBuilder();
     }
 
     public PetPatient(PetPatientName name,
@@ -65,7 +84,6 @@ public class PetPatient {
         this.owner = owner;
         this.dateOfBirth = dateOfBirth;
         this.tags = new UniqueTagList(tags);
-
         this.medicalHistory = new StringBuilder();
     }
 
@@ -140,20 +158,19 @@ public class PetPatient {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("")
+        builder.append("\t")
                 // .append(" Owner's Name: ")
                 // .append(getOwner().getName())
-                .append(" Name: ")
                 .append(getName())
-                .append(" Species: ")
+                .append("\tSpecies: ")
                 .append(getSpecies())
-                .append(" Breed: ")
+                .append("\tBreed: ")
                 .append(getBreed())
-                .append(" Color: ")
+                .append("\tColor: ")
                 .append(getColour())
-                .append(" Blood Type: ")
+                .append("\tBlood Type: ")
                 .append(getBloodType())
-                .append(" Tags: ");
+                .append("\tTags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

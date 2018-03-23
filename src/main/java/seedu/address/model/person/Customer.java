@@ -16,19 +16,30 @@ public class Customer extends Person {
     private final double moneyBorrowed; //moneyOwed is a formula that DEPENDS on these other new fields
     private final Date oweStartDate;
     private final Date oweDueDate;
-    private final double standardInterest;
-    private final double lateInterest;
+    private final double standardInterest; //in percent
+    private final double lateInterest; //in percent
 
     /**
      * Customer constructor
      */
-    public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        super(name, phone, email, address, tags);
+    public Customer() {
+        super();
         this.moneyBorrowed = 0;
-        this.standardInterest = 0;
-        this.lateInterest = 0;
         this.oweStartDate = new Date();
         this.oweDueDate = new Date();
+        this.standardInterest = 0;
+        this.lateInterest = 0;
+    }
+
+    public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                    double moneyBorrowed, Date oweStartDate, Date oweDueDate, double standardInterest,
+                    double lateInterest) {
+        super(name, phone, email, address, tags);
+        this.moneyBorrowed = moneyBorrowed;
+        this.standardInterest = standardInterest;
+        this.lateInterest = lateInterest;
+        this.oweStartDate = oweStartDate;
+        this.oweDueDate = oweDueDate;
     }
 
     public double getMoneyBorrowed() {
@@ -56,11 +67,12 @@ public class Customer extends Person {
      * oweStartDate
      */
     public double getMoneyCurrentlyOwed() {
-        final int numOfMsInAWeek = 10080 * 1000;
+        final int numOfMsPerWeek = 60 * 60 * 24 * 7 * 1000; //10080 seconds per week; 1000 ms per second
+
         Date currentDate = new Date();
         long elapsedTime = currentDate.getTime() - oweStartDate.getTime();
-        long elapsedWeeks = elapsedTime / numOfMsInAWeek;
-        return moneyBorrowed * Math.pow(standardInterest, (double) elapsedWeeks);
+        long elapsedWeeks = elapsedTime / numOfMsPerWeek;
+        return moneyBorrowed * Math.pow(1 + standardInterest / 100, (double) elapsedWeeks);
     }
 
     @Override

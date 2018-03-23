@@ -112,7 +112,7 @@ public class XmlAdaptedAppointment {
 
 
         final Set<Tag> tags = new HashSet<>(appointmentTags);
-        return new Appointment(remark, dateTime, tags);
+        return new Appointment(owner, remark, dateTime, tags);
     }
 
     @Override

@@ -15,6 +15,7 @@ endif::[]
 By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Setting up
+Follow the instructions below set up the project in your computer.
 
 === Prerequisites
 
@@ -92,9 +93,11 @@ When you are ready to start coding,
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
+This section describes the way the application is designed.
 
 [[Design-Architecture]]
 === Architecture
+The architecture diagram of the whole application:
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
@@ -154,6 +157,8 @@ The sections below give more details of each component.
 
 [[Design-Ui]]
 === UI component
+
+The architecture diagram of the UI component:
 
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
@@ -392,6 +397,8 @@ We will be making use of the LocalDateTime class in Java. The class has a `now` 
 There will be a class in the Model component, which has access to the UniqueActivityList class in that component. The class will go through the UniqueActivityList and obtain
 the DateTime of Task, and the end DateTime of Event. It will then perform a check of the DateTime with LocalDateTime.now() and if it is overdue (for tasks), it will mark the task
 as overdue, while if it is overdue (for Event), it will mark it as completed.
+{empty} +
+{empty} +
 
 ==== Design Considerations
 
@@ -403,14 +410,17 @@ as overdue, while if it is overdue (for Event), it will mark it as completed.
 ** Pros: LocalDateTime.now() is reliant on system clock, thus if the system clock is in error, tasks that are overdue will not be marked as
 overdue correctly.
 ** Cons: Reliant on Google Maps API, and might be difficult for the developer to understand.
+{empty} +
+{empty} +
 
 [[Implementation-Configuration]]
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+{empty} +
+{empty} +
 
-
-=== [Major Improvement] Modify `Model` Component
+=== Model
 
 The `Model` component was originally implemented to store personal contact details.
 As we modified the application to `CLInder` we need to store information of activities instead.
@@ -423,12 +433,10 @@ Since we need now to store information of event and task in the memory now.
 The `Person` Class need to change to `Activity` Class.
 
 The `UniquePersonList` is now modified to `UniqueActivityList` Class to store a list of `Activity` instead of a list of `Person`.
-
-
+{empty} +
+{empty} +
 
 ==== Design Consideration
-
-==== Aspect: Data Structure
 
 * ** Alternative 1 (Current Choice):**
 Use the `Activity` Class as a place holder for events and tasks to be stored.
@@ -445,16 +453,41 @@ Need to cast the object to retrieve the information.
 Replace the `Person` Class with two different class completely: `Task` and `Event`.
 Instead of only `UniquePersonList` Class, we create two different class `UniqueTaskList` and `UniqueEventList`.
 Relevant interface and access method will also be modified to cope with the change.
-
-**Pros:
+** Pros:
 Other component can easily distinguish two types of record.
-
-**Cons:
+** Cons:
 Since the interface is now completely changed, other component would now required to change a lot of coding to coped with the change.
-====== Storage
+
+=== UI
+
+Our application deals with 2 main classes: Task and Event. These 2 classes needs to be
+displayed in the UI and our team came up with 2 possible implementations to do it:
+{empty} +
+{empty} +
+
+==== Design Consideration
+* **Alternative 1:** Have 1 panel which will display the 2 classes.
+** Pros: The coding required for this approach is much lesser.
+** Cons: The UI will be messier and less appealing.
+
+* ** Alternative 2 (current choice):** Have 2 panels which will display the 2 classes separately.
+** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory information
+tags. The design of the UI will be much more intuitive too.
+** Cons: More effort is required to create 2 seperate lists.
+
+While both alternatives have advantages and disadvantages, we feel that the second alternative adheres more closely with fundamental design principles. We feel that it is the responsibility of UI designers to make the
+UI as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
+definitely the preferred approach here.
+{empty} +
+{empty} +
+
+=== Storage
 
 Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
+{empty} +
+{empty} +
 
+==== Design Consideration
 * **Alternative 1:** Use 1 list to store objects of both classes
 ** Pros: There is no need to create 2 separate lists to store the 2 different class objects.
 ** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
@@ -499,6 +532,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+This sections describes the different ways to do testing on the application.
 
 === Running Tests
 
@@ -548,6 +582,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
+This sections features softwares which can be used to track the progress of the application development.
 
 === Build Automation
 
@@ -1058,6 +1093,8 @@ Use case resumes at step 2.
 Use case ends.
 
 *Extensions*
+
+[none]
 * 1a. The given date is invalid
 +
 [none]
@@ -1067,6 +1104,27 @@ Use case resumes at step 1.
 
 * 2a. The list is empty.
 +
+Use case ends.
+
+=== Use case: Show help for command
+
+*MSS*
+
+1. User requests to show help for command requested
+2. CLIndar shows the help message for the requested command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The command requested is invalid
++
+[none]
+** 1a1. CLIndar shows an error message
++
+Use case resumes at step 1.
+
 Use case ends.
 
 _{More to be added}_

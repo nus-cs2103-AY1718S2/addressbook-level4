@@ -56,9 +56,10 @@ public class CustomerTest {
         Email email = new Email("abc@example.com");
         Address address = new Address("address");
         Set<Tag> tags = new HashSet<>();
+        Runner runner = new Runner();
 
         return new  Customer(name, phone, email, address, tags, moneyBorrowed, oweStartDate,
-                oweDueDate, standardInterest, lateInterest);
+                oweDueDate, standardInterest, lateInterest, runner);
     }
 
 }

@@ -18,6 +18,7 @@ public class Customer extends Person {
     private final Date oweDueDate;
     private final double standardInterest; //in percent
     private final double lateInterest; //in percent
+    private final Runner runner;
 
     /**
      * Customer constructor
@@ -29,17 +30,19 @@ public class Customer extends Person {
         this.oweDueDate = new Date();
         this.standardInterest = 0;
         this.lateInterest = 0;
+        this.runner = new Runner();
     }
 
     public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
                     double moneyBorrowed, Date oweStartDate, Date oweDueDate, double standardInterest,
-                    double lateInterest) {
+                    double lateInterest, Runner runner) {
         super(name, phone, email, address, tags);
         this.moneyBorrowed = moneyBorrowed;
         this.standardInterest = standardInterest;
         this.lateInterest = lateInterest;
         this.oweStartDate = oweStartDate;
         this.oweDueDate = oweDueDate;
+        this.runner = runner;
     }
 
     public double getMoneyBorrowed() {

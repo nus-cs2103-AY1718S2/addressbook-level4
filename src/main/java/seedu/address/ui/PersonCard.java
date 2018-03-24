@@ -43,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label actualSpending;
     @FXML
+    private Label isNewClient;
+    @FXML
     private Label expectedSpending;
     @FXML
     private Label age;
@@ -54,11 +56,22 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        income.setText(person.getIncome().toString());
-        age.setText(person.getAge().toString());
+        income.setText("Income: " + person.getIncome().toString());
+        age.setText("Age: " + person.getAge().toString() + " years old");
         email.setText(person.getEmail().value);
-        actualSpending.setText(person.getActualSpending().toString());
-        expectedSpending.setText(person.getExpectedSpending().toString());
+        actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
+        expectedSpending.setText("Predicted Spending: " + person.getExpectedSpending().toString());
+        isNewClient.setText("New Client");
+        if (person.getActualSpending().value != 0.0) {
+            // the client has actual income
+            actualSpending.setVisible(true);
+            isNewClient.setVisible(false);
+            expectedSpending.setVisible(false);
+        } else {
+            actualSpending.setVisible(false);
+            isNewClient.setVisible(true);
+            expectedSpending.setVisible(true);
+        }
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 

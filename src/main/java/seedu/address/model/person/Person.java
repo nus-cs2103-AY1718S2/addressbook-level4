@@ -47,12 +47,12 @@ public class Person {
     /**
      * Special method used solely for machine learning result model update
      *
-     * @param income
+     * @param expectedSpending
      * @return
      */
-    public Person mluUpdatedPerson(double income) {
-        return new Person(name, phone, email, address, getTags(), new Income(income),
-                actualSpending, expectedSpending, age);
+    public Person mluUpdatedPerson(double expectedSpending) {
+        return new Person(name, phone, email, address, getTags(), income,
+                actualSpending, new Expenditure(expectedSpending), age);
     }
 
 

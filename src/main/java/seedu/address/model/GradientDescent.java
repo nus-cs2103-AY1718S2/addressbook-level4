@@ -158,7 +158,7 @@ public class GradientDescent {
 
             //else update the person with expected spending
             Person p = personList.get(i);
-            logger.info("Prediction results: " + this.weights.get(0));
+            logger.info("Prediction results: income coefficient-> " + this.weights.get(0));
             Person updatedPerson = p.mluUpdatedPerson(p.getExpectedSpending().value * this.weights.get(0));
             //update the model here
 

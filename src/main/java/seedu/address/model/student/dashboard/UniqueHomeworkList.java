@@ -36,6 +36,7 @@ public class UniqueHomeworkList implements Iterable<Homework> {
      * Adds a homework to the list.
      *
      * @throws DuplicateHomeworkException if the homework to add is a duplicate of an existing homework in the list.
+     * @throws NullPointerException if toAdd is null
      */
     public void add(Homework toAdd) throws DuplicateHomeworkException {
         requireNonNull(toAdd);
@@ -50,6 +51,7 @@ public class UniqueHomeworkList implements Iterable<Homework> {
      *
      * @throws DuplicateHomeworkException if the replacement is equivalent to another existing homework in the list.
      * @throws HomeworkNotFoundException if {@code target} could not be found in the list.
+     * @throws NullPointerException if target or editedHomework is null
      */
     public void setHomework(Homework target, Homework editedHomework)
             throws DuplicateHomeworkException, HomeworkNotFoundException {
@@ -71,6 +73,7 @@ public class UniqueHomeworkList implements Iterable<Homework> {
      * Removes the equivalent homework from the list.
      *
      * @throws HomeworkNotFoundException if no such homework could be found in the list.
+     * @throws NullPointerException if toRemove is null
      */
     public boolean remove(Homework toRemove) throws HomeworkNotFoundException {
         requireNonNull(toRemove);

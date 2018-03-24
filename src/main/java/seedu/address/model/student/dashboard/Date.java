@@ -58,9 +58,10 @@ public class Date {
 
     /**
      * Returns if a given string is a valid date
+     * @throws NullPointerException if input is null
      */
     public static boolean isValidDate(String input) {
-        assert input != null;
+        requireNonNull(input);
 
         Matcher matcher = dateFormatPattern.matcher(input.trim());
         if (!matcher.matches()) {

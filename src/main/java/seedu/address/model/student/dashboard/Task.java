@@ -21,7 +21,7 @@ public class Task {
     }
 
     public Task(String name, String description, boolean isCompleted) {
-        assert name != null && description != null;
+        requireAllNonNull(name, description);
 
         this.name = name;
         this.description = description;

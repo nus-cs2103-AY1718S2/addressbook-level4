@@ -18,6 +18,7 @@ import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -104,6 +105,16 @@ public class ModelManager extends ComponentManager implements Model {
         Lesson newLesson = new Lesson(studentToAddLesson, day, startTime, endTime);
         schedule.addLesson(newLesson);
     }
+
+    /**
+     * Todo: Override and indicateScheduleChanged()
+     * @param target
+     */
+    @Override
+    public synchronized void deleteLesson(Lesson target) throws LessonNotFoundException {
+        schedule.removeLesson(target);
+    }
+
     @Override
     public Schedule getSchedule() {
         return schedule;

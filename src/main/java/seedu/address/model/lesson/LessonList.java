@@ -10,6 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
+
 /**
  * A list of lessons that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -48,6 +50,20 @@ public class LessonList implements Iterable<Lesson> {
      */
     public ObservableList<Lesson> asObservableList() {
         return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Removes the equivalent lesson from the list.
+     *
+     * @throws LessonNotFoundException if no such lesson could be found in the list.
+     */
+    public boolean remove(Lesson toRemove) throws LessonNotFoundException {
+        requireNonNull(toRemove);
+        final boolean lessonFoundAndDeleted = internalList.remove(toRemove);
+        if (!lessonFoundAndDeleted) {
+            throw new LessonNotFoundException();
+        }
+        return lessonFoundAndDeleted;
     }
 
     @Override

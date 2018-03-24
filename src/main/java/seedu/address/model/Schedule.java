@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.LessonList;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 
 /**
  * Wraps all data at the schedule level
@@ -41,6 +42,18 @@ public class Schedule implements ReadOnlySchedule {
             }
         }
         return true;
+    }
+
+    /**
+     * Removes {@code key} from this {@code Schedule}.
+     * @throws LessonNotFoundException if the {@code key} is not in this {@code Schedule}.
+     */
+    public boolean removeLesson(Lesson key) throws LessonNotFoundException {
+        if (lessons.remove(key)) {
+            return true;
+        } else {
+            throw new LessonNotFoundException();
+        }
     }
 
     /**

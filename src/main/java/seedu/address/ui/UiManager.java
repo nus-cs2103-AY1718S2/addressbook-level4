@@ -1,6 +1,10 @@
 package seedu.address.ui;
 
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -140,9 +144,8 @@ public class UiManager extends ComponentManager implements Ui {
             e.printStackTrace();
         }
 
-        trayIcon.displayMessage("Timetable entry ended", event.getTimetableEntry().toDisplayString(), TrayIcon
-                .MessageType
-                .INFO);
+        trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getTitle()
+                + " ended at " + event.getEndTime(), TrayIcon.MessageType.INFO);
 
     }
 }

@@ -253,4 +253,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sort(String field) {
         persons.sort(field);
     }
+
+    /**
+     * Returns a person with the given id.
+     *
+     * @param id must be a valid id.
+     */
+    public Person findPersonById(int id) {
+        for (Person p: persons) {
+            if (p.getId() == id) {
+                return p;
+            }
+        }
+        return null;
+    }
 }

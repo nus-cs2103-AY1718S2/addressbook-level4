@@ -116,6 +116,10 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.getPersonList().get(index);
     }
 
+    public String getNameById(String id) {
+        return addressBook.findPersonById(Integer.parseInt(id)).getName().toString();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

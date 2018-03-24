@@ -1,27 +1,35 @@
 package seedu.address.commons.events.ui;
 
-import java.sql.Time;
-
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.commons.events.model.TimetableEntryAddedEvent;
-import seedu.address.model.timetableentry.TimetableEntry;
 
 /**
  * This event is raised when we need to display notification in Windows 10 notification tray
  */
 public class ShowWindowsNotificationEvent extends BaseEvent {
-    private TimetableEntry timetableEntry;
+    private String ownerName;
+    private String endTime;
+    private String title;
 
-    public ShowWindowsNotificationEvent(TimetableEntry timetableEntry) {
-        this.timetableEntry = timetableEntry;
+    public ShowWindowsNotificationEvent(String ownerName, String endTime, String title) {
+        this.ownerName = ownerName;
+        this.endTime = endTime;
+        this.title = title;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     @Override
     public String toString() {
-        return "ShowWindowsNotificationEvent{" + "timetableEntry=" + timetableEntry + '}';
-    }
-
-    public TimetableEntry getTimetableEntry() {
-        return timetableEntry;
+        return "ShowWindowsNotificationEvent: " + ownerName + " " + title + " " + endTime;
     }
 }

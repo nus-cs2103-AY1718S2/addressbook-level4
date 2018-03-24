@@ -23,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.Person;
 import seedu.address.model.timetableentry.TimetableEntry;
 import seedu.address.model.timetableentry.TimetableEntryTime;
@@ -131,8 +132,12 @@ public class LogicManager extends ComponentManager implements Logic {
                     System.out.println("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
+                TimetableEntry timetableEntry = timerTaskToTimetableEntryMap.get(this);
+                String title = timetableEntry.getTitle();
+                String endTime = timetableEntry.getEndDateDisplay();
+                String ownerName = ((ModelManager) model).getNameById(timetableEntry.getOwnerId());
+                raise(new ShowWindowsNotificationEvent(ownerName, endTime, title));
                 raise(new RequestToDeleteTimetableEntryEvent(timerTaskToTimetableEntryMap.get(this).getId()));
-                raise(new ShowWindowsNotificationEvent(timerTaskToTimetableEntryMap.get(this)));
             }
         };
         timetableEntriesStatus.put(task, true);

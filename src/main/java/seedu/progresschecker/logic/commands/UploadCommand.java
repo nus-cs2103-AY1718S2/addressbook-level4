@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 
 /**
@@ -18,19 +19,21 @@ public class UploadCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads a photo to the profile. "
             + "Parameter: INDEX(must be a positive integer) PATH...\n"
-            + "Example: " + COMMAND_WORD + " C:\\Users\\ProgressChecker";
+            + "Example: " + COMMAND_WORD + " 1 C:\\Users\\ProgressChecker";
 
     public static final String MESSAGE_SUCCESS = "New photo uploaded!";
     public static final String MESSAGE_IMAGE_NOT_FOUND = "The image cannot be found!";
 
     private final Path toUpload;
+    private final Index targetIndex;
 
     /**
      * Creates an UploadCommand to upload the profile photo with specified {@code Path}
      */
-    public UploadCommand(Path path) {
+    public UploadCommand(Index index, Path path) {
         requireNonNull(path);
-        toUpload = path;
+        this.toUpload = path;
+        this.targetIndex = index;
     }
 
     @Override

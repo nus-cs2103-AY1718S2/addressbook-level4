@@ -4,6 +4,7 @@ import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAN
 
 import java.nio.file.Paths;
 
+import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.commands.UploadCommand;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 
@@ -22,8 +23,8 @@ public class UploadCommandParser  implements Parser<UploadCommand>  {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
         }
-        String[] path = trimmedArgs.split("\\s");
-        return new UploadCommand(Paths.get(path[1]));
+        String[] content = trimmedArgs.split("\\s");
+        return new UploadCommand(new Index (Integer.parseInt(content[1])), Paths.get(content[2]));
     }
 
 }

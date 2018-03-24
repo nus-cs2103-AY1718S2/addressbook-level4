@@ -84,7 +84,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         income = source.getIncome().value;
         actualSpending = source.getActualSpending().value;
-        expectedSpending = source.getActualSpending().value;
+        expectedSpending = source.getExpectedSpending().value;
         age = source.getAge().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {

@@ -50,7 +50,7 @@ public class Person {
      * @param income
      * @return
      */
-    public Person mlUpdatPerson(double income) {
+    public Person mluUpdatedPerson(double income) {
         return new Person(name, phone, email, address, getTags(), new Income(income),
                 actualSpending, expectedSpending, age);
     }
@@ -133,7 +133,7 @@ public class Person {
                 .append(getIncome())
                 .append(" ActualSpending: ")
                 .append(getActualSpending())
-                .append(" ExpectedSpeding: ")
+                .append(" ExpectedSpending: ")
                 .append(getExpectedSpending())
                 .append(" Tags: ");
         getTags().forEach(builder::append);

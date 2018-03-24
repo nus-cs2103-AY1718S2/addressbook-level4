@@ -43,12 +43,12 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_HUSBAND = "husband";
-    public static final Double VALID_INCOME_AMY = 12345.6;
-    public static final Double VALID_INCOME_BOB = 12345.6;
-    public static final Double VALID_ACTUALSPENDING_AMY = 12345.6;
-    public static final Double VALID_ACTUALSPENDING_BOB = 12345.6;
-    public static final Double VALID_EXPECTEDSPENDING_AMY = 12345.6;
-    public static final Double VALID_EXPECTEDSPENDING_BOB = 12345.6;
+    public static final Double VALID_INCOME_AMY = 1234.56;
+    public static final Double VALID_INCOME_BOB = 1234.56;
+    public static final Double VALID_ACTUALSPENDING_AMY = 1234.56;
+    public static final Double VALID_ACTUALSPENDING_BOB = 1234.56;
+    public static final Double VALID_EXPECTEDSPENDING_AMY = 1234.56;
+    public static final Double VALID_EXPECTEDSPENDING_BOB = 1234.56;
     public static final Integer VALID_AGE_AMY = 20;
     public static final Integer VALID_AGE_BOB = 20;
 

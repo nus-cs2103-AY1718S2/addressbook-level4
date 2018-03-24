@@ -3,14 +3,18 @@ package seedu.address.model;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
-
 
 
 /**
@@ -19,43 +23,95 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class GradientDescent {
     public static final String MESSAGE_PREDICTION_SUCCESS = "Prediction success";
     public static final String MESSAGE_PREDICTION_FAIL = "Prediction failed";
-    private final Model model;
-    private final int fieldCount = 1;
+    private static GradientDescent instance;
 
-    public GradientDescent(Model model) {
+    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
+    private Model model;
+
+    /**
+     * The weights we are calculating
+     * [ x1= income ]
+     */
+    private ArrayList<Double> weights = new ArrayList<>(Arrays.asList(0.0));
+
+    /**
+     * The learning rate
+     */
+    private final Double learningRate = 0.00001;
+
+    /**
+     * The amount of epoch of looping through training data
+     */
+    private final Integer epoch = 30000;
+
+
+    /**
+     * Singleton
+     *
+     * @param model
+     */
+    private GradientDescent(Model model) {
         this.model = model;
     }
+
+    public static GradientDescent getInstance(Model model) {
+        if (instance == null) {
+            instance = new GradientDescent(model);
+        }
+        return instance;
+    }
+
 
     /**
      * Drives the whole algorithm to solve the problem
      */
     public CommandResult solve() throws CommandException {
-        ObservableList<Person> personList = this.model.getAddressBook().getPersonList();
-        int rowA = personList.size();
-        int entryCount = 0;
-        for (int i = 0; i < rowA; i++) {
-            if (personList.get(i).getActualSpending().value != 0.0) {
-                entryCount++;
-            }
-        }
 
-        double[][] matrix = new double[entryCount][this.fieldCount];
-        double[] targets = new double[entryCount];
-        double[] weights = new double[this.fieldCount];
+
+        ObservableList<Person> personList = this.model.getAddressBook().getPersonList();
+
+        /**
+         * row -> each entry of data
+         * col -> [ income ]
+         */
+        ArrayList<ArrayList<Double>> matrix = new ArrayList<>(new ArrayList<>());
+
+        /**
+         * The actual outcome, this "ActualSpending"
+         */
+        ArrayList<Double> targets = new ArrayList<>();
+
 
         //extract values
-        extractValues(personList, matrix, targets);
+        prepareData(personList, matrix, targets);
 
         //solve
-        weights[0] = 100.0;
-
+        descent(matrix, targets);
 
         //update results
         try {
-            updateResult(personList, weights);
+            updateResult(personList, this.weights);
             return new CommandResult(String.format(MESSAGE_PREDICTION_SUCCESS));
         } catch (CommandException e) {
             return new CommandResult(String.format(MESSAGE_PREDICTION_FAIL));
+        }
+    }
+
+
+    /**
+     * Perform stochastic gradient descent on the input data
+     */
+    private void descent(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
+        for (int itt = 0; itt < epoch; itt++) { // fixed amount of training epoch
+            for (int r = 0; r < matrix.size(); r++) { //going through each training data
+                ArrayList<Double> row = matrix.get(r);
+                Double outcome = predict(row);
+                Double error = targets.get(r) - outcome;
+                for (int i = 0; i < row.size(); i++) {
+                    Double deltaW = this.learningRate * error * row.get(i);
+                    this.weights.set(i, this.weights.get(i) + deltaW);
+                }
+            }
         }
     }
 
@@ -64,9 +120,11 @@ public class GradientDescent {
      *
      * @param personList
      * @param matrix
-     * @param targets
      */
-    private void extractValues(ObservableList<Person> personList, double[][] matrix, double[] targets) {
+    private void prepareData(ObservableList<Person> personList, ArrayList<ArrayList<Double>> matrix,
+                             ArrayList<Double> targets) {
+
+
         for (int i = 0; i < personList.size(); i++) {
             double as = personList.get(i).getActualSpending().value;
 
@@ -75,9 +133,12 @@ public class GradientDescent {
                 continue;
             }
 
+            ArrayList<Double> row = new ArrayList<>();
             //record down the actual value
-            targets[i] = as;
-            matrix[i][0] = personList.get(i).getIncome().value;
+            row.add(personList.get(i).getIncome().value);
+            targets.add(as);
+
+            matrix.add(row);
         }
     }
 
@@ -87,7 +148,7 @@ public class GradientDescent {
      * @param personList
      * @throws CommandException
      */
-    private void updateResult(ObservableList<Person> personList, double[] weights) throws CommandException {
+    private void updateResult(ObservableList<Person> personList, ArrayList<Double> weights) throws CommandException {
         //update person model
         for (int i = 0; i < personList.size(); i++) {
             if (personList.get(i).getActualSpending().value != 0.0) {
@@ -97,7 +158,8 @@ public class GradientDescent {
 
             //else update the person with expected spending
             Person p = personList.get(i);
-            Person updatedPerson = p.mlUpdatPerson(p.getIncome().value * weights[0]);
+            logger.info("Prediction results: " + this.weights.get(0));
+            Person updatedPerson = p.mluUpdatedPerson(p.getExpectedSpending().value * this.weights.get(0));
             //update the model here
 
 
@@ -110,5 +172,23 @@ public class GradientDescent {
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         }
+    }
+
+    /**
+     * calculate values based on the current weights
+     */
+    private Double predict(Person person) {
+        return this.weights.get(0) * person.getIncome().value;
+    }
+
+    /**
+     * calculate values based on the current weights
+     */
+    private Double predict(ArrayList<Double> row) {
+        Double sum = 0.0;
+        //sum income
+        sum += this.weights.get(0) * row.get(0);
+
+        return sum;
     }
 }

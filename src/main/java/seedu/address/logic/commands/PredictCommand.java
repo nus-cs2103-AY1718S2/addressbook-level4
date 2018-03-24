@@ -20,7 +20,7 @@ public class PredictCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        GradientDescent gd = new GradientDescent(model);
+        GradientDescent gd = GradientDescent.getInstance(model);
         return gd.solve();
     }
 }

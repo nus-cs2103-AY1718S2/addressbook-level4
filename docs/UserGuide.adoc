@@ -21,7 +21,7 @@ Welcome to *contactHero*! contactHeRo is the *perfect contact management solutio
 
 == Quick Start
 
-You can begin using contactHeRo by following a few simple steps below.
+You can begin using contactHeRo by following a few simple steps below:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -271,7 +271,7 @@ Format: `clear`
 You can exit the program using the following format. +
 Format: `exit`
 
-=== Auto-complete command
+=== Auto-completing command
 
 To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
 [NOTE]
@@ -290,7 +290,11 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 // tag::dataencryption[]
 
-=== Set reminders `[coming in v1.5]`
+=== Arranging meetings with Gmail calendar `[coming in v1.5]`
+
+You can arrange meeting on Gmail calender using contactHero.
+
+=== Setting reminders `[coming in v1.5]`
 
 You can set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
 
@@ -303,7 +307,7 @@ You can send email to any person you have saved in contactHeRo, without having t
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
-=== Login system `[coming in v2.0]`
+=== Using login system `[coming in v2.0]`
 
 The login system shall provide security to your data stored in contactHeRo.
 

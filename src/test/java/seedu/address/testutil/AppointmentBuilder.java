@@ -7,8 +7,10 @@ import java.util.Set;
 
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,15 +24,15 @@ public class AppointmentBuilder {
     public static final String DEFAULT_DATE = "2018-12-31 12:30";
     public static final String DEFAULT_TYPE = "surgery";
 
-    private Person owner;
-    private PetPatient petPatient;
+    private Nric owner;
+    private PetPatientName petPatient;
     private Remark remark;
     private LocalDateTime localDateTime;
     private Set<Tag> type;
 
     public AppointmentBuilder() {
-        owner = DEFAULT_PERSON;
-        petPatient = DEFAULT_PET_PATIENT;
+        owner = DEFAULT_PERSON.getNric();
+        petPatient = DEFAULT_PET_PATIENT.getName();
         remark = new Remark(DEFAULT_REMARK);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         localDateTime = LocalDateTime.parse(DEFAULT_DATE, formatter);
@@ -41,8 +43,8 @@ public class AppointmentBuilder {
      * Initializes the AppointmentBuilder with the data of {@code appointmentToCopy}.
      */
     public AppointmentBuilder(Appointment appointmentToCopy) {
-        owner = appointmentToCopy.getOwner();
-        petPatient = appointmentToCopy.getPetPatient();
+        owner = appointmentToCopy.getOwnerNric();
+        petPatient = appointmentToCopy.getPetPatientName();
         remark = appointmentToCopy.getRemark();
         localDateTime = appointmentToCopy.getDateTime();
         type = new HashSet<>(appointmentToCopy.getType());
@@ -51,7 +53,7 @@ public class AppointmentBuilder {
     /**
      * Sets the {@code Person} of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withOwner(Person owner) {
+    public AppointmentBuilder withOwner(Nric owner) {
         this.owner = owner;
         return this;
     }
@@ -59,7 +61,7 @@ public class AppointmentBuilder {
     /**
      * Sets the {@code PetPatient} of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withPetPatient(PetPatient petPatient) {
+    public AppointmentBuilder withPetPatient(PetPatientName petPatient) {
         this.petPatient = petPatient;
         return this;
     }

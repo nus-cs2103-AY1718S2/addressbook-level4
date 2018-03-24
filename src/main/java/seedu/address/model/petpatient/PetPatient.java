@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Nric;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,13 +22,14 @@ public class PetPatient {
     private final String breed; // different varieties of the same species
     private final String colour;
     private final String bloodType;
-    private final Person owner; // maybe we can link by NRIC?
 
     private final UniqueTagList tags;
 
     private final Optional<Date> dateOfBirth; // can be null
+    private Nric ownerNric; // can be null (initially)
     private StringBuilder medicalHistory; // can be null (initially)
 
+    //keep this constructor
     public PetPatient(PetPatientName name,
                       String species,
                       String breed,
@@ -43,7 +44,7 @@ public class PetPatient {
         this.bloodType = bloodType;
         this.tags = new UniqueTagList(tags);
 
-        this.owner = null;
+        this.ownerNric = null;
         this.dateOfBirth = null;
         this.medicalHistory = new StringBuilder();
     }
@@ -53,7 +54,7 @@ public class PetPatient {
                       String breed,
                       String colour,
                       String bloodType,
-                      Person owner,
+                      Nric ownerNric,
                       Set<Tag> tags) {
         requireAllNonNull(name, species, breed, colour, bloodType, tags);
         this.name = name;
@@ -62,26 +63,27 @@ public class PetPatient {
         this.colour = colour;
         this.bloodType = bloodType;
         this.tags = new UniqueTagList(tags);
-        this.owner = owner;
+        this.ownerNric = ownerNric;
         this.dateOfBirth = null;
         this.medicalHistory = new StringBuilder();
     }
 
+    //keep this constructor
     public PetPatient(PetPatientName name,
                       String species,
                       String breed,
                       String colour,
                       String bloodType,
-                      Person owner,
+                      Nric ownerNric,
                       Optional<Date> dateOfBirth,
                       Set<Tag> tags) {
-        requireAllNonNull(name, species, breed, colour, bloodType, owner, dateOfBirth, tags);
+        requireAllNonNull(name, species, breed, colour, bloodType, ownerNric, dateOfBirth, tags);
         this.name = name;
         this.species = species;
         this.breed = breed;
         this.colour = colour;
         this.bloodType = bloodType;
-        this.owner = owner;
+        this.ownerNric = ownerNric;
         this.dateOfBirth = dateOfBirth;
         this.tags = new UniqueTagList(tags);
         this.medicalHistory = new StringBuilder();
@@ -111,8 +113,12 @@ public class PetPatient {
         return bloodType;
     }
 
-    public Person getOwner() {
-        return owner;
+    public Nric getOwner() {
+        return ownerNric;
+    }
+
+    public void setOwnerNric(Nric ownerNric) {
+        this.ownerNric = ownerNric;
     }
 
     public StringBuilder getMedicalHistory() {

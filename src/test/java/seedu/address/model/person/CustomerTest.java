@@ -52,7 +52,7 @@ public class CustomerTest {
     private Customer createCustomer(double moneyBorrowed, Date oweStartDate, Date oweDueDate, double
             standardInterest, double lateInterest) {
         Name name = new Name("name");
-        Phone phone = new Phone("123");
+        Phone phone = new Phone("1234");
         Email email = new Email("abc@example.com");
         Address address = new Address("address");
         Set<Tag> tags = new HashSet<>();

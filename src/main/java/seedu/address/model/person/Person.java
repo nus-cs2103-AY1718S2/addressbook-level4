@@ -28,7 +28,7 @@ public class Person {
 
     public Person() {
         this.name = new Name("default");
-        this.phone = new Phone("default");
+        this.phone = new Phone("123");
         this.email = new Email("default@example.com");
         this.address = new Address("default address");
         this.tags = new UniqueTagList();

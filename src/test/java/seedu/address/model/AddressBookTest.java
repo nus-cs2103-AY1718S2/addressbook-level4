@@ -1,8 +1,9 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE_APPT;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -30,6 +32,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getAppointmentList());
     }
 
     @Test
@@ -50,11 +53,25 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Appointment> newAppointments = Arrays.asList(ALICE_APPT);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAppointments);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
+
+    //@@author jlks96
+    @Test
+    public void resetData_withDuplicateAppointments_throwsAssertionError() {
+        List<Person> newPersons = Arrays.asList(ALICE);
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Appointment> newAppointments = Arrays.asList(ALICE_APPT, ALICE_APPT); // Repeat ALICE_APPT twice
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAppointments);
+
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
+    //@@author
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
@@ -68,16 +85,27 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author jlks96
+    @Test
+    public void getAppointmentList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getAppointmentList().remove(0);
+    }
+    //@@author
+
     /**
-     * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose persons, tags and appointment lists can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(
+                Collection<Person> persons, Collection<? extends Tag> tags, Collection<Appointment> appointments) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.appointments.setAll(appointments);
         }
 
         @Override
@@ -88,6 +116,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ObservableList<Appointment> getAppointmentList() {
+            return appointments;
         }
     }
 

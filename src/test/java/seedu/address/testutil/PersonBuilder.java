@@ -9,6 +9,7 @@ import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
@@ -32,6 +33,7 @@ public class PersonBuilder {
     private static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     private static final String DEFAULT_EXPECTED_GRADUATION_YEAR = "2020";
     private static final String DEFAULT_MAJOR = "Computer Science";
+    private static final String DEFAULT_GRADE_POINT_AVERAGE = "4.96";
     private static final String DEFAULT_TECHNICAL_SKILLS_SCORE = "-1";
     private static final String DEFAULT_COMMUNICATION_SKILLS_SCORE = "-1";
     private static final String DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE = "-1";
@@ -45,6 +47,7 @@ public class PersonBuilder {
     private Address address;
     private ExpectedGraduationYear expectedGraduationYear;
     private Major major;
+    private GradePointAverage gradePointAverage;
     private Rating rating;
     private Resume resume;
     private InterviewDate interviewDate;
@@ -59,6 +62,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         expectedGraduationYear = new ExpectedGraduationYear(DEFAULT_EXPECTED_GRADUATION_YEAR);
         major = new Major(DEFAULT_MAJOR);
+        gradePointAverage = new GradePointAverage(DEFAULT_GRADE_POINT_AVERAGE);
         rating = new Rating(Double.valueOf(DEFAULT_TECHNICAL_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_COMMUNICATION_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE),
@@ -79,6 +83,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         expectedGraduationYear = personToCopy.getExpectedGraduationYear();
         major = personToCopy.getMajor();
+        gradePointAverage = personToCopy.getGradePointAverage();
         rating = personToCopy.getRating();
         resume = personToCopy.getResume();
         interviewDate = personToCopy.getInterviewDate();
@@ -125,6 +130,7 @@ public class PersonBuilder {
         this.email = new Email(email);
         return this;
     }
+
     /**
      * Sets the {@code ExpectedGraduationYear} of the {@code Person} that we are building.
      */
@@ -138,6 +144,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withMajor(String major) {
         this.major = new Major(major);
+        return this;
+    }
+
+    /**
+     * Sets the {@code GradePointAverage} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withGradePointAverage(String gradePointAverage) {
+        this.gradePointAverage = new GradePointAverage(gradePointAverage);
         return this;
     }
 
@@ -182,7 +196,7 @@ public class PersonBuilder {
      */
     public Person build() {
         return new Person(name, phone, email, address, expectedGraduationYear,
-                major, rating, resume, interviewDate, status, tags);
+                major, gradePointAverage, rating, resume, interviewDate, status, tags);
     }
 
     /**

@@ -3,9 +3,9 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_JOKER;
-import static seedu.address.logic.commands.CommandTestUtil.BREED_DESC_JOKER;
-import static seedu.address.logic.commands.CommandTestUtil.COLOUR_DESC_JOKER;
+// import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_JOKER;
+// import static seedu.address.logic.commands.CommandTestUtil.BREED_DESC_JOKER;
+// import static seedu.address.logic.commands.CommandTestUtil.COLOUR_DESC_JOKER;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
@@ -15,16 +15,16 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_JOKER;
+// import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_JOKER;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.OPTION_OWNER;
-import static seedu.address.logic.commands.CommandTestUtil.OPTION_PET;
+// import static seedu.address.logic.commands.CommandTestUtil.OPTION_PET;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.SPECIES_DESC_JOKER;
+// import static seedu.address.logic.commands.CommandTestUtil.SPECIES_DESC_JOKER;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
@@ -67,8 +67,8 @@ public class AddCommandParserTest {
                 .withNric(VALID_NRIC_BOB).withTags(VALID_TAG_FRIEND).build();
 
         PetPatient expectedPet = new PetPatient(new PetPatientName("joker"), "cat", "domestic shorthair",
-                "brown and white", "" +
-                "O", expectedPerson.getNric(), new HashSet<>());
+                "brown and white", ""
+                + "O", expectedPerson.getNric(), new HashSet<>());
 
 
         // whitespace only preamble

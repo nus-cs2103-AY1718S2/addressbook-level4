@@ -116,5 +116,13 @@ public class Event extends Activity {
         return builder.toString();
     }
 
+    @Override
+    public Activity copy(Set<Tag> tags) {
+        if (tags == null) {
+            return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), getTags());
+        }
+        return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), tags);
+    }
+
 }
 

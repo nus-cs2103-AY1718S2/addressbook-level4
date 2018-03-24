@@ -1,5 +1,6 @@
 package seedu.address.model.appointment;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -20,6 +21,11 @@ public class AppointmentTest {
     @Test
     public void isEqual_sameAppointment_success() {
         assertTrue(new Appointment(name, date, startTime, endTime, location).equals(appointment));
+    }
+
+    @Test
+    public void isEqual_compareNull_failure() {
+        assertFalse(new Appointment(name, date, startTime, endTime, location).equals(null));
     }
 
     @Test

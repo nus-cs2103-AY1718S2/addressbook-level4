@@ -15,7 +15,7 @@ import seedu.address.model.tag.Tag;
 public class CustomerTest {
 
     @Test
-    public void test_isGetMoneyCurrentlyOwed_returnsCorrect() {
+    public void test_getMoneyCurrentlyOwed_returnsCorrect() {
 
         //get a Date from a GregorianCalendar
         int year = 2018;

@@ -159,7 +159,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Person owner = parsePerson(ownerInfo);
 
         PetPatient petPatient = parsePetPatient(petInfo);
-        petPatient.setOwnerNRIC(owner.getNric());
+        petPatient.setOwnerNric(owner.getNric());
 
         Appointment appt = parseAppointment(apptInfo);
         appt.setOwnerNric(owner.getNric());

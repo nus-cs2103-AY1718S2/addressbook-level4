@@ -65,9 +65,11 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return emailLabel.getText();
     }
 
+    //@@author jlks96
     public String getDateAdded() {
         return dateAddedLabel.getText();
     }
+    //@@author
 
     public List<String> getTags() {
         return tagLabels

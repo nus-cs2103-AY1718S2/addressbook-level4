@@ -197,6 +197,7 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
     }
 
+    //@@author jlks96
     @Test
     public void parseDate_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDate((String) null));
@@ -228,6 +229,7 @@ public class ParserUtilTest {
         assertEquals(expectedDate, ParserUtil.parseDate(dateWithWhitespace));
         assertEquals(Optional.of(expectedDate), ParserUtil.parseDate(Optional.of(dateWithWhitespace)));
     }
+    //@@author
 
     @Test
     public void parseTag_null_throwsNullPointerException() throws Exception {

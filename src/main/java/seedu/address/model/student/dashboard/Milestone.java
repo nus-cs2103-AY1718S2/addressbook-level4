@@ -1,8 +1,8 @@
 package seedu.address.model.student.dashboard;
 
-import java.util.List;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Represents a milestone in a Student's dashboard
@@ -15,6 +15,8 @@ public class Milestone {
     private final String description;
 
     public Milestone(Date dueDate, String description) {
+        requireAllNonNull(dueDate, description);
+
         this.dueDate = dueDate;
         this.description = description;
         progress = new Progress();
@@ -22,6 +24,8 @@ public class Milestone {
     }
 
     public Milestone(Date dueDate, UniqueTaskList taskList, Progress progress, String description) {
+        requireAllNonNull(dueDate, taskList, progress, description);
+
         this.dueDate = dueDate;
         this.taskList = taskList;
         this.progress = progress;

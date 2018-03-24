@@ -55,7 +55,8 @@ public class AddMilestoneCommand extends UndoableCommand {
     private Student editedStudent;
 
     public AddMilestoneCommand(Index index, Milestone newMilestone) {
-        requireNonNull(newMilestone);
+        assert index != null && newMilestone != null;
+
         this.newMilestone = newMilestone;
         this.index = index;
     }

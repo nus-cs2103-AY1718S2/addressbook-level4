@@ -1,5 +1,7 @@
 package seedu.address.model.student.dashboard;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 /**
  * Represents a task in a milestone
  * Guarantees: details are present and not null, immutable.
@@ -11,12 +13,16 @@ public class Task {
     private final boolean isCompleted;
 
     public Task(String name, String description) {
+        requireAllNonNull(name, description);
+
         this.name = name;
         this.description = description;
         isCompleted = false;
     }
 
     public Task(String name, String description, boolean isCompleted) {
+        assert name != null && description != null;
+
         this.name = name;
         this.description = description;
         this.isCompleted = isCompleted;

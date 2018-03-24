@@ -1,5 +1,7 @@
 package seedu.address.model.student.dashboard;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
 
 /**
@@ -22,6 +24,8 @@ public class Dashboard {
      * Constructs a {@code Dashboard}
      */
     public Dashboard(UniqueMilestoneList milestoneList, UniqueHomeworkList homeworkList) {
+        requireAllNonNull(milestoneList, homeworkList);
+
         this.milestoneList = milestoneList;
         this.homeworkList = homeworkList;
     }

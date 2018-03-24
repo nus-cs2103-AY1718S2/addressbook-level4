@@ -1,8 +1,8 @@
 package seedu.address.model.student.dashboard;
 
-import java.util.List;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Represents a homework in a Student's Dashboard
@@ -15,12 +15,16 @@ public class Homework {
     private final boolean isCompleted;
 
     public Homework(String desc, Date dueDate) {
+        requireAllNonNull(desc, dueDate);
+
         this.desc = desc;
         this.dueDate = dueDate;
         this.isCompleted = false;
     }
 
     public Homework(String desc, Date dueDate, boolean isCompleted) {
+        requireAllNonNull(desc, dueDate);
+
         this.desc = desc;
         this.dueDate = dueDate;
         this.isCompleted = isCompleted;

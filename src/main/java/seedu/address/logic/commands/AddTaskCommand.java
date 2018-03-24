@@ -59,6 +59,8 @@ public class AddTaskCommand extends UndoableCommand {
     private Student editedStudent;
 
     public AddTaskCommand(Index studentIndex, Index milestoneIndex, Task newTask) {
+        assert studentIndex != null && milestoneIndex != null && newTask != null;
+
         this.studentIndex = studentIndex;
         this.milestoneIndex = milestoneIndex;
         this.newTask = newTask;

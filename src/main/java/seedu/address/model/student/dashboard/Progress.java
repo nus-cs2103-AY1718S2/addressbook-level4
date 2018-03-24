@@ -1,5 +1,7 @@
 package seedu.address.model.student.dashboard;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.util.Objects;
 
 /**
@@ -7,6 +9,9 @@ import java.util.Objects;
  * Guarantees: details are present and not null, immutable.
  */
 public class Progress {
+
+    public static final String MESSAGE_PROGRESS_CONSTRAINTS
+            = "totalTasks must always be more than or equals to numCompletedTask";
 
     private final int totalTasks;
     private final int numCompletedTasks;
@@ -19,9 +24,18 @@ public class Progress {
     }
 
     public Progress(int totalTasks, int numCompletedTasks) {
+        checkArgument(isValidProgress(totalTasks, numCompletedTasks), MESSAGE_PROGRESS_CONSTRAINTS);
+
         this.totalTasks = totalTasks;
         this.numCompletedTasks = numCompletedTasks;
         progressValueInPercent = (totalTasks == 0) ? 0 : ((numCompletedTasks / totalTasks) * 100);
+    }
+
+    /**
+     * Returns if a given Progress attributes are valid
+     */
+    public static boolean isValidProgress(int totalTasks, int numCompletedTasks) {
+        return totalTasks >= numCompletedTasks;
     }
 
     public int getTotalTasks() {

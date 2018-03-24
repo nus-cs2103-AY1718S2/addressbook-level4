@@ -11,18 +11,18 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W15-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B2`      Since: `March 2018`      Licence: `MIT`
 
 == Introduction
 
-Integrated Medical DataBase (Imdb) is an application for the management of health records digitally.
-Of note is the fact that Imdb is *optimized for those who prefer to work with a Command Line Interface* (CLI)
+Integrated Medical DataBase (IMDB) is an application for the management of health records digitally.
+Of note is the fact that IMDB is *optimized for those who prefer to work with a Command Line Interface* (CLI)
 while still having the benefits of a Graphical User Interface (GUI).
 This makes it perfect for doctors or staff who can type faster than they can navigate with a mouse.
-If you are a medical staff who can type fast, Imdb can get your patient management tasks done faster than traditional pen and paper or even normal GUI apps.
-Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+If your clinic has medical staff who can type fast, IMDB can get your patient management tasks done faster than traditional pen and paper or even normal GUI apps.
+Head to <<Quick Start>> to get started.
 
 == Quick Start
 
@@ -32,18 +32,21 @@ Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Imdb.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `imdb.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for IMDB.
+.  Double-click the file to start the app. The GUI should appear in a few seconds as shown in the figure below.
 +
+.IMDB in action
+[caption="Figure 1: "]
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Try out the commands below to get a feel of the app:
 
+* *`login bob password456`*: logs you into the IMDB as Bob. Note that some commands will not work unless you are logged in.
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Imdb.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the IMDB.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -61,241 +64,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help` or `h`
+=== General Commands
+
+The commands listed in this section are general commands that do not pertain to any specific functionality of IMDB.
+
+==== Viewing help : `help` or `h`
 
 Format: `help` or `h`
 
-=== Logging into the system: `login` or `lg` [since v1.2]
+==== Logging into the system: `login` or `lg` [since v1.2]
 
-Logs the user into the Imdb, given a matching username and password.
+Logs the user into the IMDB, given a matching username and password.
 Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
 
-=== Adding a patient: `add` or `a`
-
-Adds a patient to the Imdb +
-Format: `add n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...` or
-        `a n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...`
-
-[TIP]
-A patient can have any number of conditions (including 0)
-
-Examples:
-
-* `add n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01, dob/01/01/1991 b/A-`
-* `a n/Betsy Crowe ic/NRIC c/peanuts e/betsycrowe@example.com a/Newgate Prison p/1234567 dob/12/12/1992 b/B+ c/aspirin`
-
-=== Listing all patients : `list` or `ls`
-
-Shows a list of all patients in the Imdb. +
-Format: `list` or `ls`
-
-=== Editing a patient : `edit` or `e`
-
-Edits an existing patient in the Imdb. +
-Format: `edit INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE][c/CONDITION]...` or
-        `e INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE] [c/CONDITION]...`
-
-****
-* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the last patient listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing conditions, the existing conditions of the patient will be removed i.e adding of conditions is not cumulative.
-* You can remove all the patient's conditions by typing `c/` without specifying any conditions after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
-* `e 2 n/Betsy Crower c/` +
-Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing conditions.
-
-=== Locating patients by name: `find` or `f`
-
-Finds patients whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `f Betsy Tim John` +
-Returns any patient having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a patient : `delete` or `d` or `rm`
-
-Deletes the specified patient from the Imdb. +
-Format: `delete INDEX` or `d`
-
-****
-* Deletes the patient at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd patient in the Imdb.
-* `find Betsy` +
-`d 1` +
-Deletes the 1st patient in the results of the `find` command.
-
-=== Selecting a patient : `select` or `s`
-
-Selects the patient identified by the index number used in the last patient listing. +
-Format: `select INDEX` or `s INDEX`
-
-****
-* Selects the patient and loads the Google search page the patient at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd patient in the Imdb.
-* `find Betsy` +
-`s 1` +
-Selects the 1st patient in the results of the `find` command.
-
-=== Editing remarks for a patient : `remark` or `rk` [since v1.2]
-
-Edits the remark for a patient specified by the index number used in the last patient listing. +
-Format: `remark INDEX r/[REMARK]` or `rk INDEX r/[REMARK]`
-
-****
-* Selects the patient at the specified `INDEX` and edits the remarks for that patient.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first patient to Likes to drink coffee.
-* `find Betsy` +
-`remark 1 r/` +
-Removes the remark for the first patient.
-
-=== Viewing the medical records for a patient : record [coming in v1.4]
-
-Views all the medical records for a patient specified by the index number used in the last patient listing. +
-Format: record INDEX
-
-**
-* Selects the person at the specified `INDEX` and displays all the medical records for that patient.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-**
-
-Examples:
-
-* list +
-record 1 +
-Displays all the medical records for the first person in the result of the list command.
-
-=== Editing the medical records for a patient : record [coming in v1.4]
-
-Edits the medical records for a patient specified by the index number used in the last patient listing. +
-Format: record INDEX d/[DATE] s/[SYMPTOMS] i/[ILLNESS] t/[TREATMENT] r/[REMARKS]
-
-**
-* Selects the person at the specified `INDEX` and edits the medical records for that patient.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-**
-
-Examples:
-
-* list +
-record 1 d/19 March 2018 s/Runny nose, Headache i/Flu t/Zyrtec +
-Edits the record for the first person to Date:19 March 2018 Symptoms:Runny nose, Headache
-Illness:Flu Treatment:Zyrtec`.
-
-=== Printing a patient's formatted medical records : `print` [coming in v1.4]
-
-Formats and prints out a patient's medical records. +
-Format: `print INDEX`
-
-=== Add patient into visiting queue with patient name: `addq` [since v1.2]
-
-Add patient into visiting queue (registration).
-Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
-
-Examples:
-
-* `addq Betsy` +
-Betsy will be added at the back of the visiting queue.
-
-* `aq John` +
-John will be added at the back of the visiting queue.
-
-=== Remove patient into visiting queue with patient name: `removeq` [since v1.2]
-
-Remove the first patient from the visiting queue (check-out).
-Format: `removeq` or `rq`
-
-Examples:
-
-* `removeq Betsy` +
-Betsy will be removed if she is the first patient in the queue.
-
-* `rq John` +
-John will be removed if he is the first patient in the queue.
-
-=== Add condition to an existing patient: `addc` [coming in v1.3]
-
-Adds a medical condition to an existing patient.
-Format: `addc` or `ac`
-
-Examples:
-
-* `addc Betsy aspirin` +
-Aspirin will be added to the list of conditions that Betsy has.
-
-* `ac John asthma` +
-Asthma will be added to the list of conditions that John has.
-
-=== View certain details only: `filter` [coming in v1.3]
-
-Switches between showing personal details only, medical information only.
-Format: `filter` or `fil`
-
-Examples:
-
-* `filter Betsy p` +
-Displays only the personal details of Betsy.
-
-* `fil John m` +
-Displays only the medical information of John.
-
-=== Remove condition of an existing patient: `removec` [coming in v1.4]
-
-Adds a medical condition to an existing patient.
-Format: `removec` or `rc`
-
-Examples:
-
-* `removec Betsy aspirin` +
-Aspirin will be removed from the list of conditions that Betsy has.
-
-* `rc John asthma` +
-Asthma will be removed from the list of conditions that John has.
-
-=== Listing entered commands : `history` or `hi`
+==== Listing entered commands : `history` or `hi`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` or `hi`
@@ -306,14 +88,14 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo` or `u` or `z`
+==== Undoing previous command : `undo` or `u` or `z`
 
-Restores the Imdb to the state before the previous _undoable_ command was executed. +
+Restores the IMDB to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the Imdb's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the IMDB's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -332,7 +114,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo` or `r` or `y`
+==== Redoing the previously undone command : `redo` or `r` or `y`
 
 Reverses the most recent `undo` command. +
 Format: `redo` or `r`
@@ -355,43 +137,274 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== View medical appointments by patient name: `viewappt` [coming in v1.3]
+==== Clearing all entries : `clear` or `c`
 
-Shows a list of medical appointments of the patient.
-Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
+Clears all entries from the IMDB. +
+Format: `clear` or `c`
+
+==== Exiting the program : `exit` or `x`
+
+Exits the program. +
+Format: `exit` or `x`
+
+// tag::dataencryption[]
+==== Encrypting data files `[coming in v2.0]`
+
+Data encryption will be implemented in v2.0 to improve security and ensure confidentiality of patients' information.
+// end::dataencryption[]
+
+// tag::centraliseddatabase[]
+==== Centralising the database `[coming in v2.0]`
+
+IMDB will be able to switch from standalone mode to server/client mode in v2.0 to centralise the database at the server in the main branch.
+// end::centraliseddatabase[]
+
+==== Searching for drug information from a drug information website `[coming in v2.0]`
+
+IMDB will be able to search for relevant drug information from an official website so that doctors will not administer the wrong drug.
+
+=== Patient Commands
+
+The commands listed in this section are commands that pertain to the patient entries of IMDB.
+
+==== Adding a patient: `add` or `a`
+
+Adds a patient to the IMDB +
+Format: `add n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...` or
+        `a n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...`
+
+[TIP]
+A patient can have any number of conditions (including 0)
 
 Examples:
-* `viewappt Betsy` +
-List of medical appointments made by Betsy.
 
-* `va John` +
-List of medical appointments made by John.
+* `add n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01, dob/01/01/1991 b/A-`
+* `a n/Betsy Crowe ic/NRIC c/peanuts e/betsycrowe@example.com a/Newgate Prison p/1234567 dob/12/12/1992 b/B+ c/aspirin`
 
-=== Delete a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
+==== Deleting a patient : `delete` or `d` or `rm`
 
-Delete a medical appointment of the patient.
-Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
+Deletes the specified patient from the IMDB. +
+Format: `delete INDEX` or `d`
 
-Examples:
-* `delappt Betsy 2` +
-Delete a medical appointment of Betsy with index number 2.
-
-* `da John 1` +
-Delete a medical appointment of John with index number 1.
-
-=== View medical appointments by date: `viewappt` [coming in v1.4]
-
-Shows a list of medical appointments of a particular date.
-Format: `viewappt DATE` or `va DATE`
+****
+* Deletes the patient at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
 
 Examples:
-* `viewappt 19/3/2018` +
-List of medical appointments on 19/3/2018.
 
-* `va 23/3/2019` +
-List of medical appointments on 23/3/2018.
+* `list` +
+`delete 2` +
+Deletes the 2nd patient in the IMDB.
+* `find Betsy` +
+`d 1` +
+Deletes the 1st patient in the results of the `find` command.
 
-== Add a medical appointment with: `addappt` [coming in v1.4]
+==== Editing a patient : `edit` or `e`
+
+Edits an existing patient in the IMDB. +
+Format: `edit INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE][c/CONDITION]...` or
+        `e INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE] [c/CONDITION]...`
+
+****
+* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the last patient listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing conditions, the existing conditions of the patient will be removed i.e adding of conditions is not cumulative.
+* You can remove all the patient's conditions by typing `c/` without specifying any conditions after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
+* `e 2 n/Betsy Crower c/` +
+Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing conditions.
+
+==== Editing remarks for a patient : `remark` or `rk` [since v1.2]
+
+Edits the remark for a patient specified by the index number used in the last patient listing. +
+Format: `remark INDEX r/[REMARK]` or `rk INDEX r/[REMARK]`
+
+****
+* Selects the patient at the specified `INDEX` and edits the remarks for that patient.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`remark 1 r/Likes to drink coffee.` +
+Edits the remark for the first patient to Likes to drink coffee.
+* `find Betsy` +
+`remark 1 r/` +
+Removes the remark for the first patient.
+
+==== Adding a condition to an existing patient: `addc` [coming in v1.3]
+
+Adds a medical condition to an existing patient.
+Format: `addc` or `ac`
+
+Examples:
+
+* `addc Betsy aspirin` +
+Aspirin will be added to the list of conditions that Betsy has.
+
+* `ac John asthma` +
+Asthma will be added to the list of conditions that John has.
+
+==== Removing the condition of an existing patient: `removec` [coming in v1.4]
+
+Adds a medical condition to an existing patient.
+Format: `removec` or `rc`
+
+Examples:
+
+* `removec Betsy aspirin` +
+Aspirin will be removed from the list of conditions that Betsy has.
+
+* `rc John asthma` +
+Asthma will be removed from the list of conditions that John has.
+
+==== Listing all patients : `list` or `ls`
+
+Shows a list of all patients in the IMDB. +
+Format: `list` or `ls`
+
+==== Viewing certain details only: `filter` [coming in v1.3]
+
+Switches between showing personal details only, medical information only.
+Format: `filter` or `fil`
+
+Examples:
+
+* `filter Betsy p` +
+Displays only the personal details of Betsy.
+
+* `fil John m` +
+Displays only the medical information of John.
+
+==== Locating patients by name: `find` or `f`
+
+Finds patients whose names contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find John` +
+Returns `john` and `John Doe`
+* `f Betsy Tim John` +
+Returns any patient having names `Betsy`, `Tim`, or `John`
+
+==== Selecting a patient : `select` or `s`
+
+Selects the patient identified by the index number used in the last patient listing. +
+Format: `select INDEX` or `s INDEX`
+
+****
+* Selects the patient and loads the Google search page the patient at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd patient in the IMDB.
+* `find Betsy` +
+`s 1` +
+Selects the 1st patient in the results of the `find` command.
+
+==== Viewing the medical records for a patient : `record` [coming in v1.4]
+
+Views all the medical records for a patient specified by the index number used in the last patient listing. +
+Format: record INDEX
+
+**
+* Selects the person at the specified `INDEX` and displays all the medical records for that patient.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+**
+
+Examples:
+
+* list +
+record 1 +
+Displays all the medical records for the first person in the result of the list command.
+
+==== Editing the medical records for a patient : record [coming in v1.4]
+
+Edits the medical records for a patient specified by the index number used in the last patient listing. +
+Format: record INDEX d/[DATE] s/[SYMPTOMS] i/[ILLNESS] t/[TREATMENT] r/[REMARKS]
+
+**
+* Selects the person at the specified `INDEX` and edits the medical records for that patient.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+**
+
+Examples:
+
+* list +
+record 1 d/19 March 2018 s/Runny nose, Headache i/Flu t/Zyrtec +
+Edits the record for the first person to Date:19 March 2018 Symptoms:Runny nose, Headache
+Illness:Flu Treatment:Zyrtec`.
+
+==== Printing a patient's formatted medical records : `print` [coming in v1.4]
+
+Formats and prints out a patient's medical records. +
+Format: `print INDEX`
+
+==== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`
+
+IMDB will be able to attach images(X-ray scans) to a patient and retrieve the images for viewing.
+
+=== Queue Commands
+
+The commands listed in this section are commands that do not pertain to the queue.
+
+==== Adding a patient into the visiting queue with patient name: `addq` [since v1.2]
+
+Add patient into visiting queue (registration).
+Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
+
+Examples:
+
+* `addq Betsy` +
+Betsy will be added at the back of the visiting queue.
+
+* `aq John` +
+John will be added at the back of the visiting queue.
+
+==== Removing a patient from the visiting queue with patient name: `removeq` [since v1.2]
+
+Remove the first patient from the visiting queue (check-out).
+Format: `removeq` or `rq`
+
+Examples:
+
+* `removeq Betsy` +
+Betsy will be removed if she is the first patient in the queue.
+
+* `rq John` +
+John will be removed if he is the first patient in the queue.
+
+=== Appointment Commands
+
+The commands listed in this section are commands that pertain to the patient's appointment.
+
+==== Adding a medical appointment with: `addappt` [coming in v1.4]
 
 Add a medical appointment with patient name, date, time.
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
@@ -403,92 +416,75 @@ Add a medical appointment for Betsy on 19/3/2018 at 10am.
 * `aa John 23/3/2019 1430` +
 Add a medical appointment for John on 23/3/2018 at 2:30pm.
 
-=== Clearing all entries : `clear` or `c`
+==== Deleting a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
 
-Clears all entries from the Imdb. +
-Format: `clear` or `c`
+Delete a medical appointment of the patient.
+Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 
-=== Exiting the program : `exit` or `x`
+Examples:
+* `delappt Betsy 2` +
+Delete a medical appointment of Betsy with index number 2.
 
-Exits the program. +
-Format: `exit` or `x`
+* `da John 1` +
+Delete a medical appointment of John with index number 1.
+
+==== Viewing medical appointments by patient name: `viewappt` [coming in v1.3]
+
+Shows a list of medical appointments of the patient.
+Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
+
+Examples:
+* `viewappt Betsy` +
+List of medical appointments made by Betsy.
+
+* `va John` +
+List of medical appointments made by John.
+
+==== Viewing medical appointments by date: `viewappt` [coming in v1.4]
+
+Shows a list of medical appointments of a particular date.
+Format: `viewappt DATE` or `va DATE`
+
+Examples:
+* `viewappt 19/3/2018` +
+List of medical appointments on 19/3/2018.
+
+* `va 23/3/2019` +
+List of medical appointments on 23/3/2018.
+
+==== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
+
+IMDB will be able to view the schedule for a patient across all specialists so that medical staff can arrange non-conflicting appointments.
 
 === Saving the data
 
-Imdb data are saved in the hard disk automatically after any command that changes the data. +
+IMDB data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-Data encryption will be implemented in v2.0 to improve security and ensure confidentiality of patients' information.
-// end::dataencryption[]
-
-// tag::centraliseddatabase[]
-=== Centralised database `[coming in v2.0]`
-
-Imdb will be able to switch from standalone mode to server/client mode in v2.0 to centralise the database at the server in the main branch.
-// end::centraliseddatabase[]
-
-=== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`
-
-Imdb will be able to attach images(X-ray scans) to a patient and retrieve the images for viewing.
-
-=== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
-
-Imdb will be able to view the schedule for a patient across all specialists so that medical staff can arrange non-conflicting appoinments.
-
-=== Search for drug information from a drug information website `[coming in v2.0]`
-
-Imdb will be able to search for relevant drug information from an official website so that doctors will not administer the wrong drug.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Imdb folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous IMDB folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/CONDITION]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/peanuts c/aspirin`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/CONDITION]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Login* : `login USERNAME PASSWORD`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *Remark* : `remark INDEX r/[REMARK]` +
-e.g.`remark 1 r/Likes to drink coffee.`
-* *View Appointment* : `viewappt`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-
-== Command Alias Summary
-
-* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/CONDITION]...`
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/peanuts c/aspirin`
-* *Clear* : `c`
-* *Delete* : `d INDEX` or `rm INDEX` +
-e.g. `d 3`
-* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/CONDITION]...` +
-e.g. `e 2 n/James Lee e/jameslee@example.com`
-* *Find* : `f KEYWORD [MORE_KEYWORDS]` +
-e.g. `f James Jake`
-* *List* : `ls`
-* *Login* : `lg USERNAME PASSWORD`
-* *Help* : `h`
-* *Select* : `s INDEX` +
-e.g.`s 2`
-* *Remark* : `rk INDEX r/[REMARK]` +
-e.g.`rk 1 r/Likes to drink coffee.`
-* *View Appointment* : `va`
-* *History* : `hi`
-* *Undo* : `u` or `z`
-* *Redo* : `r` or `y`
+* *Add* `add` or `a n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...` +
+e.g. `add` or `a n/James Ho ic/S1234567A p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 dob/11/11/1991 b/A+ c/peanuts c/aspirin`
+* *Clear* : `clear` or `c`
+* *Delete* : `delete` or `d` or `rm INDEX` +
+e.g. `delete` or `d` or `rm 3`
+* *Edit* : `edit` or `e INDEX [n/NAME] [ic/NRIC] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE] [c/CONDITION]...` +
+e.g. `edit` or `e 2 n/James Lee e/jameslee@example.com`
+* *Find* : `find` or `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `find` or `f James Jake`
+* *List* : `list` or `ls`
+* *Login* : `login` or `lg USERNAME PASSWORD`
+* *Help* : `help` or `h`
+* *Select* : `select` or `s INDEX` +
+e.g.`select` or `s 2`
+* *Remark* : `remark` or `rk INDEX r/[REMARK]` +
+e.g.`remark` or `rk 1 r/Likes to drink coffee.`
+* *View Appointment* : `viewappt` or `va`
+* *History* : `history` or `hi`
+* *Undo* : `undo` or `u` or `z`
+* *Redo* : `redo` or `r` or `y`

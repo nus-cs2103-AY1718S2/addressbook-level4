@@ -97,6 +97,7 @@ This section describes the way the application is designed.
 
 [[Design-Architecture]]
 === Architecture
+The architecture diagram of the whole application:
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
@@ -156,6 +157,8 @@ The sections below give more details of each component.
 
 [[Design-Ui]]
 === UI component
+
+The architecture diagram of the UI component:
 
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]

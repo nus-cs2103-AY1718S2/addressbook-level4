@@ -10,7 +10,7 @@ import seedu.address.model.student.Student;
  * Represents a Student in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Lesson implements Comparable<Lesson>{
+public class Lesson implements Comparable<Lesson> {
 
     private final Student student;
     private final Day day;
@@ -32,26 +32,30 @@ public class Lesson implements Comparable<Lesson>{
     public Student getStudent() {
         return student;
     }
+
     public Day getDay() {
         return day;
     }
+
     public Time getStartTime() {
         return startTime;
     }
+
     public Time getEndTime() {
         return endTime;
     }
 
     /**
      * To check if a lesson will clash with another lesson on the same day
+     *
      * @return true/false
      */
     public boolean clashesWith(Lesson other) {
         return this.getDay().compareTo(other.getDay()) == 0
                 ? ((this.getStartTime().compareTo(other.getStartTime()) >= 0    //Same day
-                    && this.getStartTime().compareTo(other.getEndTime()) <= 0)
-                    || (this.getEndTime().compareTo(other.getStartTime()) >= 0
-                    && this.getEndTime().compareTo(other.getEndTime()) <= 0))
+                && this.getStartTime().compareTo(other.getEndTime()) <= 0)
+                || (this.getEndTime().compareTo(other.getStartTime()) >= 0
+                && this.getEndTime().compareTo(other.getEndTime()) <= 0))
                 : this.getDay().compareTo(other.getDay()) == 0; //Different day
     }
 
@@ -92,10 +96,9 @@ public class Lesson implements Comparable<Lesson>{
     }
 
     @Override
-    public int compareTo(Lesson other){
+    public int compareTo(Lesson other) {
         return this.getDay().intValue() - other.getDay().intValue() != 0
-            ? this.getDay().intValue() - other.getDay().intValue()
+                ? this.getDay().intValue() - other.getDay().intValue()
                 : this.getStartTime().compareTo(other.getStartTime());
     }
-
 }

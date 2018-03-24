@@ -5,8 +5,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.HashMap;
 
-import javax.sound.midi.SysexMessage;
-
 /**
  * Represents a Student's day in a lesson in the Schedule.
  * Guarantees: immutable; is valid as declared in {@link #isValidDay String)}
@@ -77,6 +75,10 @@ public class Day implements Comparable<Day> {
     public String fullDayName() {
         return dayToFullDayMap.get(this.value);
     }
+
+    /**
+     * Builds the Hashmap for short form to long form names of days, well as the integer value of the day in week
+     */
     private void buildMap() {
         dayToIntMap.put(STRING_MON, INTEGER_MON);
         dayToIntMap.put(STRING_TUE, INTEGER_TUE);

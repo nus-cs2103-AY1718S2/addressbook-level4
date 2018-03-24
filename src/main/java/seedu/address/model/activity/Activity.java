@@ -3,7 +3,6 @@ package seedu.address.model.activity;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
@@ -14,7 +13,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Activity in the desk board.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Activity {
+public abstract class Activity {
 
     private static final String ACTIVITY_TYPE = "BASE TYPE";
 
@@ -58,10 +57,9 @@ public class Activity {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
-    //TODO: Make this method abstract
-    public String getActivityType() {
-        return ACTIVITY_TYPE;
-    }
+    public abstract String getActivityType();
+
+    public abstract Activity copy(Set<Tag> tags);
 
     public Activity setCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
@@ -72,39 +70,6 @@ public class Activity {
         return isCompleted;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
 
-        if (!(other instanceof Activity)) {
-            return false;
-        }
-
-        Activity otherActivity = (Activity) other;
-        return otherActivity.getName().equals(this.getName())
-                && otherActivity.getDateTime().equals(this.getDateTime())
-                && otherActivity.getRemark().equals(this.getRemark());
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, dateTime, remark, tags);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Date/Time: ")
-                .append(getDateTime())
-                .append(" Remark: ")
-                .append(getRemark())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
-        return builder.toString();
-    }
 
 }

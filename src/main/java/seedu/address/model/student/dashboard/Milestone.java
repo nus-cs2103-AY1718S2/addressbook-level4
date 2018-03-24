@@ -28,27 +28,6 @@ public class Milestone {
         this.description = description;
     }
 
-    /**
-     * Creates and return a deep copy of the {@code toCopy} Milestone
-     */
-    public static Milestone copyMilestone(Milestone toCopy) {
-        // TODO: REMOVE THIS
-        Date copyDueDate = new Date(toCopy.getDueDate().getValue());
-        UniqueTaskList copyTaskList = toCopy.getTaskList();
-        Progress copyProgress = new Progress(toCopy.getProgress().getTotalTasks(),
-                toCopy.getProgress().getNumCompletedTasks());
-        String copyDescription = new String(toCopy.getDescription());
-
-        return new Milestone(copyDueDate, copyTaskList, copyProgress, copyDescription);
-    }
-
-    /**
-     * Creates and returns a deep copy of the list of Milestone.
-     */
-    public static List<Milestone> copyMilestoneList(List<Milestone> listToCopy) {
-        return listToCopy.stream().map(Milestone::copyMilestone).collect(Collectors.toList());
-    }
-
     public Date getDueDate() {
         return dueDate;
     }

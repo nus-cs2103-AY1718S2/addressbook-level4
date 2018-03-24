@@ -26,24 +26,6 @@ public class Homework {
         this.isCompleted = isCompleted;
     }
 
-    /**
-     * Creates and return a deep copy of the {@code toCopy} Homework
-     */
-    public static Homework copyHomework(Homework toCopy) {
-        String copyDesc = new String(toCopy.getDesc());
-        Date copyDate = new Date(toCopy.getDueDate().getValue());
-        boolean copyIsCompleted = toCopy.isCompleted();
-
-        return new Homework(copyDesc, copyDate, copyIsCompleted);
-    }
-
-    /**
-     * Creates and returns a deep copy of the list of Homework.
-     */
-    public static List<Homework> copyHomeworkList(List<Homework> listToCopy) {
-        return listToCopy.stream().map(Homework::copyHomework).collect(Collectors.toList());
-    }
-
     public String getDesc() {
         return desc;
     }

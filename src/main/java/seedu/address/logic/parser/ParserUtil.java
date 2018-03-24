@@ -175,7 +175,8 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code displayPic} is invalid.
      */
-    public static DisplayPic parseDisplayPic(String displayPic, String name) throws IllegalValueException {
+    public static DisplayPic parseDisplayPic(String displayPic, String name, String toHash)
+            throws IllegalValueException {
         if (displayPic == null) {
             return new DisplayPic();
         } else {
@@ -186,7 +187,7 @@ public class ParserUtil {
             if (!DisplayPicStorage.isValidImage(trimmedDisplayPath)) {
                 throw new IllegalValueException(Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
             }
-            return new DisplayPic(name, displayPic);
+            return new DisplayPic(name, displayPic, toHash);
         }
     }
 
@@ -196,11 +197,11 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<DisplayPic> parseDisplayPic(Optional<String> displayPic,
-                                                       String name) throws IllegalValueException {
+                                                       String name, String toHash) throws IllegalValueException {
         if (displayPic.isPresent()) {
-            return Optional.of(parseDisplayPic(displayPic.get(), name));
+            return Optional.of(parseDisplayPic(displayPic.get(), name, toHash));
         } else {
-            return Optional.of(parseDisplayPic((String) null, name));
+            return Optional.of(parseDisplayPic((String) null, name, toHash));
         }
     }
 

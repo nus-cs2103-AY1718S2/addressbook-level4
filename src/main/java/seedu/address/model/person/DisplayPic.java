@@ -6,6 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.NamingUtil;
 import seedu.address.storage.DisplayPicStorage;
 
 /**
@@ -27,17 +28,17 @@ public class DisplayPic {
      *
      * @param filePath A valid string containing the path to the file.
      */
-    public DisplayPic(String name, String filePath) throws IllegalValueException {
+    public DisplayPic(String name, String filePath, String personDetails) throws IllegalValueException {
         requireNonNull(filePath);
         String trimmedFilePath = filePath.trim();
         checkArgument(DisplayPicStorage.isValidPath(trimmedFilePath),
                 Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
         checkArgument(DisplayPicStorage.isValidImage(trimmedFilePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
 
-
         String fileType = FileUtil.getFileType(trimmedFilePath);
-        if (DisplayPicStorage.saveDisplayPic(name.trim(), trimmedFilePath, fileType)) {
-            this.value = DEFAULT_IMAGE_LOCATION + name.trim() + '.' + fileType;
+        String uniqueFileName = NamingUtil.generateUniqueName(name.trim(), personDetails);
+        if (DisplayPicStorage.saveDisplayPic(uniqueFileName, trimmedFilePath, fileType)) {
+            this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
         } else {
             this.value = DEFAULT_DISPLAY_PIC;
         }

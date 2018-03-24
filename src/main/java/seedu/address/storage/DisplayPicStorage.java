@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
+
 import javax.imageio.ImageIO;
 
 import javafx.scene.image.Image;
@@ -22,7 +22,7 @@ import seedu.address.model.person.DisplayPic;
  */
 public class DisplayPicStorage {
 
-    public static final String SAVE_LOCATION = "/src/main/resources/images/displayPic/";
+    public static final String SAVE_LOCATION = "src/main/resources/images/displayPic/";
 
     /**
      * Returns true if a given string points to a valid file.
@@ -74,10 +74,9 @@ public class DisplayPicStorage {
     public static boolean saveDisplayPic(String name, String filePath, String fileType) {
         try {
             BufferedImage image = ImageIO.read(new File(filePath));
-            FileUtil.copyImage(image, fileType, Paths.get(".").toAbsolutePath().normalize().toString()
-                    + SAVE_LOCATION + name.trim() + '.' + fileType);
+            FileUtil.copyImage(image, fileType, SAVE_LOCATION + name + '.' + fileType);
             return true;
-        } catch (IOException | IllegalValueException exp) {
+        } catch (IOException | IllegalValueException exc) {
             return false;
         }
     }

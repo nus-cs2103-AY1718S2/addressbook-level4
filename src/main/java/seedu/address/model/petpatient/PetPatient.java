@@ -8,7 +8,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-//import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.model.person.Nric;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -118,7 +117,7 @@ public class PetPatient {
         return ownerNric;
     }
 
-    public void setOwnerNRIC(Nric ownerNric) {
+    public void setOwnerNric(Nric ownerNric) {
         this.ownerNric = ownerNric;
     }
 

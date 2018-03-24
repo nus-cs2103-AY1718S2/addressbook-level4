@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -17,6 +18,7 @@ import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.DisplayPicStorage;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -178,11 +180,11 @@ public class ParserUtil {
             return new DisplayPic();
         } else {
             String trimmedDisplayPath = displayPic.trim();
-            if (!DisplayPic.isValidPath(trimmedDisplayPath)) {
-                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+            if (!DisplayPicStorage.isValidPath(trimmedDisplayPath)) {
+                throw new IllegalValueException(Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
             }
-            if (!DisplayPic.isValidImage(trimmedDisplayPath)) {
-                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+            if (!DisplayPicStorage.isValidImage(trimmedDisplayPath)) {
+                throw new IllegalValueException(Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
             }
             return new DisplayPic(name, displayPic);
         }

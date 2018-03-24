@@ -7,8 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.commons.util.AppUtil;
 import seedu.address.model.person.Person;
+import seedu.address.storage.DisplayPicStorage;
 
 /**
  * A UI component that displays information of a {@code Person}.
@@ -66,7 +66,7 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         initTags(person);
-        Image image = AppUtil.getImage(person.getDisplayPic().toString());
+        Image image = DisplayPicStorage.fetchDisplay(person.getDisplayPic());
         displayPic.setImage(image);
     }
 

@@ -12,7 +12,12 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B4`      Since: `Feb 2018`      Licence: `MIT`
+
+== Introduction
+StardyTogether is a command line application which provides students a way to manage their contacts.
+It is customised for students in the National University of Singapore (NUS) which allows them to find vacant rooms within NUS and also to track their timetable.
+This documentation provides information that will not only help you get started as a StardyTogether contributor, but that you'll find useful to refer to even if you are already an experienced contributor.
 
 == Setting up
 
@@ -397,15 +402,22 @@ image::ModelClassDiagram.png[width="800"]
 We are using `java.crypto.cipher` and `java.security.key` package for the encryption of the data. The `SecurityUtil` class is used to provide the `SHA-1` hashing and `AES` encryption/decryption required.
 
 Using a given password, it is first hashed using `SHA-1` to be used as the `AES` key.
-The first 16 bits of the digest created by the `SHA-1` hash is extracted.
-This is required as `AES` requires its key to be 16 bits long.
-
-Although this would subject the data to be vulnerable to brute force attack, this data encryption is not used for the purpose of preventing attacks.
-It is used to prevent data from being stored in plain text and hence a simple cipher would suffice.
+The first 128 bits of the digest created by the `SHA-1` hash is extracted.
+This is required as `AES` requires its key to be 128 bits long.
 
 * The encryption can be done simply by using `SecurityUtil.encrypt()` which will encrypt the addressbook.xml.
 * The decryption can be done simply by using `SecurityUtil.decrypt()` which will decrypt the addressbook.xml.
 * Currently, decryption/encryption is done in `XmlAddressBookStorage` class before/after `readAddressBook` and `saveAddressBook`.
+
+A default password is used if the user do not set a password.
+Users can change their password using the command `password`. +
+The sequence diagram shows how the `ModelManager` updates the password:
+
+image::PasswordSdForModel.png[width="800"]
+
+The 128 bit password used to encrypt `addressbook.xml` is saved in the address book to ensure that the password is not lost after every reset of the application.
+This is secure as even if a malicious user were to somehow get a copy of the 128 bit password, they would still need to use a computationally unfeasible pre-image attack.
+
 
 ==== Design Considerations
 
@@ -427,6 +439,16 @@ It is used to prevent data from being stored in plain text and hence a simple ci
 ** Pros: `addressbook.xml` is exposed minimally.
 ** Cons: Increase coupling of more classes and makes the implementation harder to understand.
 // end::dataencryption[]
+
+===== Aspect: Where to save the password
+* **Alternative 1 (current choice):** Save in `addressbook.xml`
+** Pros: The password is not lost after every reload of the application.
+** Cons: Plaintext of `addressbook.xml` contains the 128 bit `AES` key used.
+However, this is still secure as even if a malicious user were to somehow get a copy of the 128 bit password, they would still need to use a computationally unfeasible pre-image attack.
+
+* **Alternative 2: Password not saved
+** Pros: No chance of password being compromised.
+** Cons: Password reset after each reload of application.
 
 === Import AddressBook feature
 ==== Current Implementation

@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents a Runner in the address book.
@@ -16,36 +17,12 @@ public class Runner extends Person {
     }
 
     public Runner(List<Customer> customers) {
+        super();
         this.customers = customers;
     }
 
     public List<Customer> getCustomers() {
         return customers;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        if (!(other instanceof Customer)) {
-            return false;
-        }
-
-        Runner otherPerson = (Runner) other;
-        return otherPerson.getName().equals(this.getName())
-                && otherPerson.getPhone().equals(this.getPhone())
-                && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
-
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(getName(), getPhone(), getEmail(), getAddress(),
-                getTags());
     }
 
     @Override
@@ -58,6 +35,8 @@ public class Runner extends Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Customers: ")
+                .append(Optional.ofNullable(customers.toString()))
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
 import java.util.Date;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
@@ -79,31 +79,6 @@ public class Customer extends Person {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        if (!(other instanceof Customer)) {
-            return false;
-        }
-
-        Customer otherPerson = (Customer) other;
-        return otherPerson.getName().equals(this.getName())
-                && otherPerson.getPhone().equals(this.getPhone())
-                && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
-
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(getName(), getPhone(), getEmail(), getAddress(),
-                getTags());
-    }
-
-    @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
@@ -113,6 +88,16 @@ public class Customer extends Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Money Owed: ")
+                .append(getMoneyCurrentlyOwed())
+                .append(" Standard Interest Rate: ")
+                .append(getStandardInterest())
+                .append(" Start Date: ")
+                .append(getOweStartDate())
+                .append(" Due Date: ")
+                .append(getOweDueDate())
+                .append(" Runner: ")
+                .append(Optional.ofNullable(runner.getName()))
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

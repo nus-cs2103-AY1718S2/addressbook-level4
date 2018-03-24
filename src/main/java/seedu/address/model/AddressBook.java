@@ -267,7 +267,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void replaceTagForPerson(Tag tagToBeReplaced, Tag tagToBePlaced, Person person) {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tagToBeReplaced)) {
-            tagList.add(tagToBePlaced)
+            tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(),
                     tagList, person.getSubjects());
             try {

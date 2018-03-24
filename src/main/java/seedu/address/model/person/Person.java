@@ -73,7 +73,7 @@ public class Person {
     }
 
     public String getDetails() {
-        return name.toString() + email.toString() + phone.toString();
+        return name.toString() + phone.toString() + email.toString();
     }
 
     @Override

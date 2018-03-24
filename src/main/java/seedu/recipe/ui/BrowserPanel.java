@@ -42,7 +42,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadRecipePage(Recipe recipe) {
-        loadPage(SEARCH_PAGE_URL + recipe.getName().fullName);
+        loadPage(recipe.getUrl().toString());
     }
 
     public void loadPage(String url) {

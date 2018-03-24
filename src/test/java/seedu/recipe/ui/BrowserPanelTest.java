@@ -40,7 +40,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a recipe
         postNow(selectionChangedEventStub);
-        URL expectedRecipeUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
+        URL expectedRecipeUrl = new URL(ALICE.getUrl().toString());
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedRecipeUrl, browserPanelHandle.getLoadedUrl());

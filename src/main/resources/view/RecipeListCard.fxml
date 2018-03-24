@@ -30,6 +30,7 @@
       <Label fx:id="preparationTime" styleClass="cell_small_label" text="\$preparationTime" />
       <Label fx:id="instruction" styleClass="cell_small_label" text="\$instruction" />
       <Label fx:id="ingredient" styleClass="cell_small_label" text="\$ingredient" />
+        <Label fx:id="url" styleClass="cell_small_label" text="\$url" />
     </VBox>
   </GridPane>
 </HBox>

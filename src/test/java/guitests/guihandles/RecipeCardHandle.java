@@ -16,6 +16,7 @@ public class RecipeCardHandle extends NodeHandle<Node> {
     private static final String INSTRUCTION_FIELD_ID = "#instruction";
     private static final String PREPARATION_TIME_FIELD_ID = "#preparationTime";
     private static final String INGREDIENT_FIELD_ID = "#ingredient";
+    private static final String URL_FIELD_ID = "#url";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
@@ -23,6 +24,7 @@ public class RecipeCardHandle extends NodeHandle<Node> {
     private final Label instructionLabel;
     private final Label preparationTimeLabel;
     private final Label ingredientLabel;
+    private final Label urlLabel;
     private final List<Label> tagLabels;
 
     public RecipeCardHandle(Node cardNode) {
@@ -33,6 +35,7 @@ public class RecipeCardHandle extends NodeHandle<Node> {
         this.instructionLabel = getChildNode(INSTRUCTION_FIELD_ID);
         this.preparationTimeLabel = getChildNode(PREPARATION_TIME_FIELD_ID);
         this.ingredientLabel = getChildNode(INGREDIENT_FIELD_ID);
+        this.urlLabel = getChildNode(URL_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -60,6 +63,10 @@ public class RecipeCardHandle extends NodeHandle<Node> {
 
     public String getIngredient() {
         return ingredientLabel.getText();
+    }
+
+    public String getUrl() {
+        return urlLabel.getText();
     }
 
     public List<String> getTags() {

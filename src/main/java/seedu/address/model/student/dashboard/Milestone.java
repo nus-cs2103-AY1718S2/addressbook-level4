@@ -1,18 +1,16 @@
 package seedu.address.model.student.dashboard;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
  * Represents a milestone in a Student's dashboard
- * Guarantees: details are present and not null, immutable.
  */
 public class Milestone {
 
     private final Date dueDate;
-    private final List<Task> taskList;
+    private final UniqueTaskList taskList;
     private final Progress progress;
     private final String description;
 
@@ -20,10 +18,10 @@ public class Milestone {
         this.dueDate = dueDate;
         this.description = description;
         progress = new Progress();
-        taskList = new ArrayList<>();
+        taskList = new UniqueTaskList();
     }
 
-    public Milestone(Date dueDate, List<Task> taskList, Progress progress, String description) {
+    public Milestone(Date dueDate, UniqueTaskList taskList, Progress progress, String description) {
         this.dueDate = dueDate;
         this.taskList = taskList;
         this.progress = progress;
@@ -34,10 +32,9 @@ public class Milestone {
      * Creates and return a deep copy of the {@code toCopy} Milestone
      */
     public static Milestone copyMilestone(Milestone toCopy) {
+        // TODO: REMOVE THIS
         Date copyDueDate = new Date(toCopy.getDueDate().getValue());
-        List<Task> copyTaskList = toCopy.getTaskList().stream()
-                .map(task -> new Task(task.getName(), task.getDescription(), task.isCompleted()))
-                .collect(Collectors.toList());
+        UniqueTaskList copyTaskList = toCopy.getTaskList();
         Progress copyProgress = new Progress(toCopy.getProgress().getTotalTasks(),
                 toCopy.getProgress().getNumCompletedTasks());
         String copyDescription = new String(toCopy.getDescription());
@@ -56,7 +53,7 @@ public class Milestone {
         return dueDate;
     }
 
-    public List<Task> getTaskList() {
+    public UniqueTaskList getTaskList() {
         return taskList;
     }
 

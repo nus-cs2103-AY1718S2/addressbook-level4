@@ -1,41 +1,37 @@
 package seedu.address.model.student.dashboard;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 /**
  * Represents a Student's Dashboard
- * Guarantees: details are present and not null, immutable.
  */
 public class Dashboard {
 
-    private final List<Milestone> milestoneList;
-    private final List<Homework> homeworkList;
+    private final UniqueMilestoneList milestoneList;
+    private final UniqueHomeworkList homeworkList;
 
     /**
      * Constructs a {@code Dashboard}
      */
     public Dashboard() {
-        milestoneList = new ArrayList<>();
-        homeworkList = new ArrayList<>();
+        milestoneList = new UniqueMilestoneList();
+        homeworkList = new UniqueHomeworkList();
     }
 
     /**
      * Constructs a {@code Dashboard}
      */
-    public Dashboard(List<Milestone> milestoneList, List<Homework> homeworkList) {
+    public Dashboard(UniqueMilestoneList milestoneList, UniqueHomeworkList homeworkList) {
         this.milestoneList = milestoneList;
         this.homeworkList = homeworkList;
     }
 
-    public List<Milestone> getMilestoneList() {
-        return Collections.unmodifiableList(milestoneList);
+    public UniqueMilestoneList getMilestoneList() {
+        return milestoneList;
     }
 
-    public List<Homework> getHomeworkList() {
-        return Collections.unmodifiableList(homeworkList);
+    public UniqueHomeworkList getHomeworkList() {
+        return homeworkList;
     }
 
     @Override

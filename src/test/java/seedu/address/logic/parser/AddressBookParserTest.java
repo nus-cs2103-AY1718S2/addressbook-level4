@@ -5,6 +5,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.USERNAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_AMY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -44,8 +48,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_login() throws Exception {
-        assertTrue(parser.parseCommand(LoginCommand.COMMAND_WORD) instanceof LoginCommand);
-        assertTrue(parser.parseCommand(LoginCommand.COMMAND_WORD + " 3") instanceof LoginCommand);
+        LoginCommand command = (LoginCommand) parser.parseCommand(
+                LoginCommand.COMMAND_WORD + " " + USERNAME_DESC_AMY + PASSWORD_DESC_AMY);
+        assertEquals(new LoginCommand(VALID_USERNAME_AMY, VALID_PASSWORD_AMY), command);
     }
 
     @Test

@@ -37,11 +37,13 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.StatusCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
+import seedu.address.model.person.Status;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -132,6 +134,13 @@ public class AddressBookParserTest {
         DeleteRatingCommand command = (DeleteRatingCommand) parser.parseCommand(
                 DeleteRatingCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteRatingCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_status() throws Exception {
+        StatusCommand command = (StatusCommand) parser.parseCommand(
+                StatusCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + "3");
+        assertEquals(new StatusCommand(INDEX_FIRST_PERSON, new Status(3)), command);
     }
 
     @Test

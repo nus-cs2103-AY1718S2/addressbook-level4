@@ -52,7 +52,7 @@ public class TypicalPersons {
             .withMajor("Computer Engineering")
             .withRating("4", "4.5",
                     "3", "3.5")
-            .withTags("owesMoney", "friends").build();
+            .withStatus(2).withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
             .withExpectedGraduationYear("2019")
@@ -71,20 +71,20 @@ public class TypicalPersons {
             .withExpectedGraduationYear("2018")
             .withMajor("Business Analytics")
             .withRating("-1", "-1",
-                    "-1", "-1").build();
+                    "-1", "-1").withStatus(7).build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
             .withExpectedGraduationYear("2019")
             .withMajor("Computer Science")
             .withRating("-1", "-1",
-                    "-1", "-1").build();
+                    "-1", "-1").withStatus(1).build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
             .withExpectedGraduationYear("2022")
             .withMajor("Information Systems")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withResume(formPathFromFileName("george.pdf")).build();
+            .withResume(formPathFromFileName("george.pdf")).withStatus(6).build();
     public static final Person ALICE_WITHOUT_TAG = new PersonBuilder(ALICE).withTags().build();
     public static final Person BENSON_WITH_FRIENDS_TAG_REMOVED = new PersonBuilder(BENSON)
             .withTags("owesMoney").build();

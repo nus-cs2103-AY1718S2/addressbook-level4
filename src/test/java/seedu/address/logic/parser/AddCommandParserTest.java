@@ -140,7 +140,7 @@ public class AddCommandParserTest {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
-                .withMajor(VALID_MAJOR_AMY)
+                .withMajor(VALID_MAJOR_AMY).withStatus(1)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                         + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY

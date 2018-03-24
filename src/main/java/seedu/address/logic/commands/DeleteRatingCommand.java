@@ -20,6 +20,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
+import seedu.address.model.person.Status;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -99,10 +100,11 @@ public class DeleteRatingCommand extends UndoableCommand {
                 Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE);
         Resume resume = targetPerson.getResume();
         InterviewDate interviewDate = targetPerson.getInterviewDate();
+        Status status = targetPerson.getStatus();
         Set<Tag> tags = targetPerson.getTags();
 
         return new Person(name, phone, email, address,
-                expectedGraduationYear, major, defaultRating, resume, interviewDate, tags);
+                expectedGraduationYear, major, defaultRating, resume, interviewDate, status, tags);
     }
 
     @Override

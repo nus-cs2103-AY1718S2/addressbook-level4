@@ -15,6 +15,7 @@ endif::[]
 By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Setting up
+Follow the instructions below set up the project in your computer.
 
 === Prerequisites
 
@@ -92,6 +93,7 @@ When you are ready to start coding,
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
+This section describes the way the application is designed.
 
 [[Design-Architecture]]
 === Architecture
@@ -472,6 +474,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+This sections describes the different ways to do testing on the application.
 
 === Running Tests
 
@@ -521,6 +524,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
+This sections features softwares which can be used to track the progress of the application development.
 
 === Build Automation
 

@@ -104,9 +104,11 @@ public class ProgressCheckerParser {
             return new RedoCommand();
 
         case SortCommand.COMMAND_WORD:
+        case SortCommand.COMMAND_ALIAS:
             return new SortCommand();
 
         case ViewCommand.COMMAND_WORD:
+        case ViewCommand.COMMAND_ALIAS:
             return new ViewCommandParser().parse(arguments);
 
         default:

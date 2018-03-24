@@ -81,6 +81,7 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    //@@author jlks96
     /**
      * Removes all the equivalent persons from the list.
      *
@@ -94,6 +95,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personsFoundAndDeleted;
     }
+    //@@author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);

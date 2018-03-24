@@ -11,6 +11,7 @@ import com.calendarfx.view.CalendarView;
 import javafx.application.Platform;
 import seedu.address.commons.core.LogsCenter;
 
+//@@author jlks96
 /**
  * The Calendar Panel of the App.
  */

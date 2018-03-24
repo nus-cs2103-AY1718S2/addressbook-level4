@@ -140,6 +140,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@@author jlks96
     /**
      * Parses a {@code String date} into a {@code DateAdded}.
      * Leading and trailing whitespaces will be trimmed.
@@ -163,6 +164,7 @@ public class ParserUtil {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code String tag} into a {@code Tag}.

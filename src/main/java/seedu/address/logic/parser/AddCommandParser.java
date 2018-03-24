@@ -58,6 +58,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
     }
 
+    //@@author jlks96
     /**
      * Creates and returns a {@code DateAdded} with the dateAdded attribute representing the current date
      * @return current date in the following format: dd/MM/yyyy
@@ -67,6 +68,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Calendar calendar = Calendar.getInstance();
         return new DateAdded(dateFormatter.format(calendar.getTime()));
     }
+    //@@author
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given

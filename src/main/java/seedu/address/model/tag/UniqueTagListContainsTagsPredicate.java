@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.model.person.Person;
 
+//@@author jlks96
 /**
  * Tests that a {@code Person}'s {@code UniqueTagList} matches all of the input tags.
  */

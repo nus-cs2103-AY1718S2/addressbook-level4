@@ -118,10 +118,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author jlks96
         @Override
         public void deletePersons(List<Person> targets) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public void updatePerson(Person target, Person editedPerson)

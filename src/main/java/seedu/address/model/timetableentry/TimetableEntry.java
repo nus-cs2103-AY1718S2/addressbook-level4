@@ -5,40 +5,19 @@ package seedu.address.model.timetableentry;
  */
 public class TimetableEntry {
     private String calendarId;
-    private String ownerName;
-    private String entryName;
-    private String ownerEmail;
     private String id;
     private String endDate;
+    private String ownerId;
 
-    public TimetableEntry(String calendarId,
-                          String ownerName,
-                          String entryName,
-                          String ownerEmail,
-                          String id,
-                          String endDate) {
+    public TimetableEntry(String calendarId, String id, String endDate, String ownerId) {
         this.calendarId = calendarId;
-        this.ownerName = ownerName;
-        this.entryName = entryName;
-        this.ownerEmail = ownerEmail;
         this.id = id;
         this.endDate = endDate;
+        this.ownerId = ownerId;
     }
 
     public String getCalendarId() {
         return calendarId;
-    }
-
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public String getEntryName() {
-        return entryName;
-    }
-
-    public String getOwnerEmail() {
-        return ownerEmail;
     }
 
     public String getId() {
@@ -49,8 +28,7 @@ public class TimetableEntry {
         return endDate;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return this.id.equals(((TimetableEntry) obj).id);
+    public String getOwnerId() {
+        return ownerId;
     }
 }

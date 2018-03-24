@@ -210,12 +210,8 @@ public class TestAddEventCommand extends UndoableCommand {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        TimetableEntry timetableEntry = new TimetableEntry(calendarId,
-                model.getPerson(targetIndex.getZeroBased()).getName().toString(),
-                title,
-                model.getPerson(targetIndex.getZeroBased()).getEmail().toString(),
-                event.getId(),
-                endTime);
+        TimetableEntry timetableEntry = new TimetableEntry(calendarId, event.getId(), event.getEnd().toString(),
+                model.getPerson(targetIndex.getZeroBased()).getId().toString());
         try {
             model.addTimetableEntry(timetableEntry);
         } catch (DuplicateTimetableEntryException e) {

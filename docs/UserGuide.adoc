@@ -384,6 +384,12 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== User Interface optimisation
+
+User will receive alert message in red colours when typing in an illegal message
+
+Different tags will perform different colours for clarification
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +

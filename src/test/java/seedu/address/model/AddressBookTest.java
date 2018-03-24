@@ -97,6 +97,11 @@ public class AddressBookTest {
         public LinkedList<TimetableEntry> getTimetableEntriesList() {
             return null;
         }
+
+        @Override
+        public int getNextId() {
+            return 0;
+        }
     }
 
 }

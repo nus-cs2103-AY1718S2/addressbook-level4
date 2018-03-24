@@ -29,5 +29,7 @@ public interface ReadOnlyAddressBook {
      */
     LinkedList<TimetableEntry> getTimetableEntriesList();
 
+    int getNextId();
+
 
 }

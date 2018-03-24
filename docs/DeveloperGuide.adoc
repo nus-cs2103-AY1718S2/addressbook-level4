@@ -475,6 +475,12 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+=== UI optimisation
+
+* Different tags are performed in different colours
+* Adjust font size to Helvetica and Times New Roman for clearer visual effect
+* Alert words when user types in an illegal command will be in red colour
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

@@ -11,6 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,6 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueAppointmentList appointments;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,12 +42,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        appointments = new UniqueAppointmentList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons, Tags and Appointments in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -59,6 +65,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author jlks96
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        this.appointments.setAppointments(appointments);
+    }
+    //@@author
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -71,8 +83,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             setPersons(syncedPersonList);
+            setAppointments(newData.getAppointmentList());
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (DuplicateAppointmentException e) {
+            throw new AssertionError("AddressBooks should not have duplicate appointments");
         }
     }
 
@@ -161,11 +176,37 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //@@author jlks96
+    //// appointment-level operations
+
+    /**
+     * Adds an appointment to the address book.
+     *
+     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     */
+    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+        appointments.add(appointment);
+    }
+
+    /**
+     * Removes {@code appointment} from this {@code AddressBook}.
+     * @throws AppointmentNotFoundException if the {@code appointment} is not in this {@code AddressBook}.
+     */
+    public boolean removeAppointment(Appointment appointment) throws AppointmentNotFoundException {
+        if (appointments.remove(appointment)) {
+            return true;
+        } else {
+            throw new AppointmentNotFoundException();
+        }
+    }
+    //@@author
+
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
+                + appointments.asObservableList().size() + " appointments";
         // TODO: refine later
     }
 
@@ -179,17 +220,25 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author jlks96
+    @Override
+    public ObservableList<Appointment> getAppointmentList() {
+        return appointments.asObservableList();
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.appointments.equals(((AddressBook) other).appointments));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, appointments);
     }
 }

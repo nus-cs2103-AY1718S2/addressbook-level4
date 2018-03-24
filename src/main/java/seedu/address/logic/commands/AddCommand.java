@@ -198,7 +198,7 @@ public class AddCommand extends UndoableCommand {
             case 3: //add new pet patient under an existing person
                 Person p = getPersonOfNric();
                 if (p != null) {
-                    toAddPet.setOwnerNRIC(ownerNric);
+                    toAddPet.setOwnerNric(ownerNric);
                     model.addPetPatient(toAddPet);
                     return new CommandResult(String.format(message, toAddPet, p));
                 }

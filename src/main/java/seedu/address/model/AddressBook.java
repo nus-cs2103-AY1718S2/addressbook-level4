@@ -162,6 +162,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author jlks96
     /**
      * Removes {@code keys} from this {@code AddressBook}.
      * @throws PersonNotFoundException if any of the {@code keys} are not in this {@code AddressBook}.
@@ -169,6 +170,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removePersons(List<Person> keys) throws PersonNotFoundException {
         persons.removeAll(keys);
     }
+    //@@author
 
     //// tag-level operations
 

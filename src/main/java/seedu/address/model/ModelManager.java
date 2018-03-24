@@ -73,11 +73,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author jlks96
     @Override
     public synchronized void deletePersons(List<Person> targets) throws PersonNotFoundException {
         addressBook.removePersons(targets);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {

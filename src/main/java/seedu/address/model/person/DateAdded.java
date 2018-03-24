@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author jlks96
 /**
  * Represents a Person's date added to the address book.
  * Guarantees: immutable; is valid

@@ -457,6 +457,8 @@ Relevant interface and access method will also be modified to cope with the chan
 Other component can easily distinguish two types of record.
 ** Cons:
 Since the interface is now completely changed, other component would now required to change a lot of coding to coped with the change.
+{empty} +
+{empty} +
 
 === UI
 
@@ -474,6 +476,8 @@ displayed in the UI and our team came up with 2 possible implementations to do i
 ** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory information
 tags. The design of the UI will be much more intuitive too.
 ** Cons: More effort is required to create 2 seperate lists.
+{empty} +
+{empty} +
 
 While both alternatives have advantages and disadvantages, we feel that the second alternative adheres more closely with fundamental design principles. We feel that it is the responsibility of UI designers to make the
 UI as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
@@ -495,6 +499,8 @@ Our application deals with 2 main classes: Task and Event. Hence, when we store 
 * **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
 ** Pros: When we want to perform an operation on all the objects stored in a list, each object can be treated equally as they are from the same class.
 ** Cons: More effort is required to create 2 separate lists.
+{empty} +
+{empty} +
 
 While both alternatives have advantages and disadvantages, we feel that the second alternative's advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of objects, whereby each list contains objects of the same class, especially as we make the 2 classes more specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in the long run.
 

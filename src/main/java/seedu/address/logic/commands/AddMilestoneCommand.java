@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,8 +20,10 @@ import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.dashboard.Dashboard;
-import seedu.address.model.student.dashboard.Homework;
 import seedu.address.model.student.dashboard.Milestone;
+import seedu.address.model.student.dashboard.UniqueHomeworkList;
+import seedu.address.model.student.dashboard.UniqueMilestoneList;
+import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -34,7 +35,7 @@ public class AddMilestoneCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addMS";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a milestone to a Student's Dashboard."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a milestone to a student's dashboard."
             + " Parameters: "
             + PREFIX_INDEX + "STUDENT'S INDEX "
             + PREFIX_DATE + "DATE "
@@ -44,8 +45,8 @@ public class AddMilestoneCommand extends UndoableCommand {
             + PREFIX_DATE + "17/05/2018 23:59 "
             + PREFIX_DESCRIPTION + "Learn Arrays";
 
+    public static final String MESSAGE_DUPLICATE_MILESTONE = "Milestone already exists in the student's Dashboard";
     public static final String MESSAGE_SUCCESS = "Milestone added to Student's Dashboard: %1$s";
-    public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book.";
 
     private final Index index;
     private final Milestone newMilestone;
@@ -60,13 +61,14 @@ public class AddMilestoneCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() {
         requireAllNonNull(studentToEdit, editedStudent);
 
         try {
             model.updateStudent(studentToEdit, editedStudent);
         } catch (DuplicateStudentException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
+            /* DuplicateStudentException caught will mean that the milestone list is the same as before */
+            throw new AssertionError("New milestone cannot be missing");
         } catch (StudentNotFoundException e) {
             throw new AssertionError("The target student cannot be missing");
         }
@@ -83,13 +85,19 @@ public class AddMilestoneCommand extends UndoableCommand {
         }
 
         studentToEdit = lastShownList.get(index.getZeroBased());
-        editedStudent = createEditedStudent(studentToEdit, newMilestone);
+
+        try {
+            editedStudent = createEditedStudent(studentToEdit, newMilestone);
+        } catch (DuplicateMilestoneException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_MILESTONE);
+        }
     }
 
     /**
      * Creates and return a copy of {@code Student} with the new Milestone added to its Dashboard.
      */
-    private Student createEditedStudent(Student studentToEdit, Milestone newMilestone) {
+    private Student createEditedStudent(Student studentToEdit, Milestone newMilestone)
+            throws DuplicateMilestoneException {
         assert (studentToEdit != null) && (newMilestone != null);
 
         /* Get all the attributes of the student */
@@ -100,14 +108,11 @@ public class AddMilestoneCommand extends UndoableCommand {
         Set<Tag> tags = studentToEdit.getTags();
         ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
         Favourite fav = studentToEdit.getFavourite();
-        List<Milestone> milestoneList = studentToEdit.getDashboard().getMilestoneList().size() > 0
-                ? Milestone.copyMilestoneList(studentToEdit.getDashboard().getMilestoneList())
-                : new ArrayList<>();
-        List<Homework> homeworkList = studentToEdit.getDashboard().getHomeworkList().size() > 0
-                ? Homework.copyHomeworkList(studentToEdit.getDashboard().getHomeworkList())
-                : new ArrayList<>();
+        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
+        UniqueHomeworkList homeworkList = studentToEdit.getDashboard().getHomeworkList();
 
         milestoneList.add(newMilestone);
+
         Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
 
         return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);

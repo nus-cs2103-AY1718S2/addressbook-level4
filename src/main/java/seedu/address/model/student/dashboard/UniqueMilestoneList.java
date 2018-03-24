@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
@@ -43,6 +44,25 @@ public class UniqueMilestoneList implements Iterable<Milestone> {
             throw new DuplicateMilestoneException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Returns the milestone at the specific {@code index} in the list
+     *
+     * @throws IndexOutOfBoundsException if the index provided is out of range
+     */
+    public Milestone get(Index index) throws IndexOutOfBoundsException {
+        if (index.getZeroBased() < 0 || index.getZeroBased() >= internalList.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return internalList.get(index.getZeroBased());
+    }
+
+    /**
+     * Returns the size of the internal list
+     */
+    public int size() {
+        return internalList.size();
     }
 
     /**

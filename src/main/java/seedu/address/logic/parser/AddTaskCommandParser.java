@@ -18,7 +18,7 @@ import seedu.address.model.student.dashboard.Task;
 /**
  * Parses input arguments and create a new AddTaskCommand object
  */
-public class AddTaskCommandParser {
+public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddTaskCommand

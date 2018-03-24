@@ -18,7 +18,7 @@ import seedu.address.model.student.dashboard.Milestone;
 /**
  * Parses input arguments and create a new AddMilestoneCommand object
  */
-public class AddMilestoneCommandParser {
+public class AddMilestoneCommandParser implements Parser<AddMilestoneCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddMilestoneCommand

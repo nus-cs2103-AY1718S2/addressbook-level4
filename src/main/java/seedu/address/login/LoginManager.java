@@ -1,5 +1,6 @@
 package seedu.address.login;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.ComponentManager;
@@ -64,6 +65,11 @@ public class LoginManager extends ComponentManager implements Login {
             throw new UsernameTakenException();
         }
         userPassStorage.put(userpass);
+        try{
+            userPassStorage.saveUserPassMap();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         storage.setUserPassStorage(userPassStorage);
     }
 

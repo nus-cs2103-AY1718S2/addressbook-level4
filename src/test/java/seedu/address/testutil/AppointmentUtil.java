@@ -22,7 +22,7 @@ public class AppointmentUtil {
      * Returns an add appointment command string for adding the {@code appointment}.
      */
     //public static String getAddAppointmentCommandAlias(Appointment appointment) {
-        //return AddAppointmentCommand.COMMAND_ALIAS + " " + getAppointmentDetails(appointment);
+    //    return AddAppointmentCommand.COMMAND_ALIAS + " " + getAppointmentDetails(appointment);
     //}
 
     /**

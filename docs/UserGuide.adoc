@@ -230,8 +230,8 @@ Format: `import FILEPATH PASSWORD`
 
 Example:
 
-* `import data/addressBook.xml test` +
-Imports address book XML file at data folder using test as the password.
+* `import data/addressBook.xml testpassword` +
+Imports address book XML file at data folder using testpassword as the password.
 
 === Vacant study rooms finder : `vacant` (coming in v1.3)
 

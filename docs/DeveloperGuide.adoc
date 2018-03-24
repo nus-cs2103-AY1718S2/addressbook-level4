@@ -407,6 +407,24 @@ overdue correctly.
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== UI
+
+As mentioned earlier, our application deals with 2 main classes: Task and Event. These 2 classes needs to be
+displayed in the UI and our team came up with 2 possible implementations to do it:
+
+* **Alternative 1:** Have 1 panel which will display the 2 classes.
+** Pros: The coding required for this approach is much lesser.
+** Cons: The UI will be messier and less appealing.
+
+* ** Alternative 2 (current choice):** Have 2 panels which will display the 2 classes separately.
+** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory information
+tags. The design of the UI will be much more intuitive too.
+** Cons: More effort is required to create 2 seperate lists.
+
+While both alternatives have advantages and disadvantages, we feel that the second alternative adheres more closely with fundamental design principles. We feel that it is the responsibility of UI designers to make the
+UI as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
+definitely the preferred approach here.
+
 === Storage
 
 Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
@@ -1014,6 +1032,8 @@ Use case resumes at step 2.
 Use case ends.
 
 *Extensions*
+
+[none]
 * 1a. The given date is invalid
 +
 [none]
@@ -1023,6 +1043,27 @@ Use case resumes at step 1.
 
 * 2a. The list is empty.
 +
+Use case ends.
+
+=== Use case: Show help for command
+
+*MSS*
+
+1. User requests to show help for command requested
+2. CLIndar shows the help message for the requested command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The command requested is invalid
++
+[none]
+** 1a1. CLIndar shows an error message
++
+Use case resumes at step 1.
+
 Use case ends.
 
 _{More to be added}_

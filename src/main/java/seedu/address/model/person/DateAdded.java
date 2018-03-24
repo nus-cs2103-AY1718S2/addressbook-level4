@@ -11,7 +11,7 @@ public class DateAdded {
     public static final String MESSAGE_DATE_CONSTRAINTS =
             "Date input should be in the format: dd/MM/yyyy";
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the date must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String DATE_VALIDATION_REGEX = "\\d{2}/\\d{2}/\\d{4}";

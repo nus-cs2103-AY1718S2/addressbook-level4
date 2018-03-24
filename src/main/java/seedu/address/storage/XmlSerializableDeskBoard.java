@@ -10,11 +10,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.DeskBoard;
 import seedu.address.model.ReadOnlyDeskBoard;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.Event;
+import seedu.address.model.activity.Task;
 
 /**
  * An Immutable DeskBoard that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "deskboard")
 public class XmlSerializableDeskBoard {
 
     @XmlElement
@@ -36,7 +39,13 @@ public class XmlSerializableDeskBoard {
      */
     public XmlSerializableDeskBoard(ReadOnlyDeskBoard src) {
         this();
-        activities.addAll(src.getActivityList().stream().map(XmlAdaptedActivity::new).collect(Collectors.toList()));
+        for (Activity activity : src.getActivityList()) {
+            if (activity instanceof Task) {
+                activities.add(new XmlAdaptedTask((Task) activity));
+            } else if (activity instanceof Event) {
+                activities.add(new XmlAdaptedEvent((Event) activity));
+            }
+        }
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -67,7 +76,7 @@ public class XmlSerializableDeskBoard {
             return false;
         }
 
-        XmlSerializableDeskBoard otherAb = (XmlSerializableDeskBoard) other;
-        return activities.equals(otherAb.activities) && tags.equals(otherAb.tags);
+        XmlSerializableDeskBoard otherDb = (XmlSerializableDeskBoard) other;
+        return activities.equals(otherDb.activities) && tags.equals(otherDb.tags);
     }
 }

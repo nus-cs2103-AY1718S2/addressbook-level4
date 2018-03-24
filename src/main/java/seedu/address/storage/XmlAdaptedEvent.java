@@ -24,7 +24,7 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedEvent extends XmlAdaptedActivity {
 
-    private static final String ACTIVITY_TYPE = "EVENT";
+    private static final String ACTIVITY_TYPE = "Event";
 
     @XmlElement(required = true)
     private String endDateTime;
@@ -117,6 +117,11 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Event(name, startDateTime, endDateTime, location, remark, tags);
+    }
+
+    @Override
+    public String getActivityType() {
+        return ACTIVITY_TYPE;
     }
 
     @Override

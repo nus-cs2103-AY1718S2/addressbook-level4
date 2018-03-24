@@ -18,10 +18,9 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly version of the Activity.
  */
-//TODO : NEED TO CHANGE WHEN MODEL CHANGES
-public class XmlAdaptedActivity {
+public abstract class XmlAdaptedActivity {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Activity's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "%s's %s field is missing!";
 
     @XmlElement(required = true)
     protected String name;
@@ -107,6 +106,8 @@ public class XmlAdaptedActivity {
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Activity(name, dateTime, remark, tags);
     }
+
+    public abstract String getActivityType();
 
     @Override
     public boolean equals(Object other) {

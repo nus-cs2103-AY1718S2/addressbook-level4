@@ -12,7 +12,7 @@ import seedu.address.model.activity.Task;
  */
 public class XmlAdaptedTask extends XmlAdaptedActivity {
 
-    private static final String ACTIVITY_TYPE = "TASK";
+    private static final String ACTIVITY_TYPE = "Task";
 
     /**
      * Constructs an XmlAdaptedTask.
@@ -43,6 +43,11 @@ public class XmlAdaptedTask extends XmlAdaptedActivity {
      */
     public Task toModelType() throws IllegalValueException {
         return (Task) super.toModelType();
+    }
+
+    @Override
+    public String getActivityType() {
+        return ACTIVITY_TYPE;
     }
 
     @Override

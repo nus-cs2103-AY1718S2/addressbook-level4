@@ -2,7 +2,6 @@ package guitests.guihandles;
 
 import com.calendarfx.view.CalendarView;
 
-import guitests.guihandles.NodeHandle;
 import javafx.scene.Node;
 
 //@@author jlks96

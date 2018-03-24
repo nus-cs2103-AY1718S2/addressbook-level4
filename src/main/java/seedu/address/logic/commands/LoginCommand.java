@@ -33,4 +33,12 @@ public class LoginCommand extends Command {
     public CommandResult execute() throws CommandException {
         throw new CommandException("Test");
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LoginCommand // instanceof handles nulls
+                && this.username.equals(((LoginCommand) other).username) // state check
+                && this.password.equals(((LoginCommand) other).password));
+    }
 }

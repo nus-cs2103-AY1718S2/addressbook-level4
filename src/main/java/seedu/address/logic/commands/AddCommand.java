@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -56,9 +57,13 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addPerson(toAdd);
+            //Only save the display picture here
+            toAdd.getDisplayPic().saveDisplay(toAdd.getDetails());
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (IllegalValueException ive) {
+            throw new CommandException("Cannot open image file.");
         }
 
     }

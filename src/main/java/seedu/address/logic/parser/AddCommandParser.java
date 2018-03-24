@@ -54,7 +54,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             String uniqueDetails = name.toString() + phone.toString() + email.toString();
             DisplayPic displayPic = ParserUtil.parseDisplayPic(
-                    argMultimap.getValue(PREFIX_DISPLAY_PIC), name.toString(), uniqueDetails).get();
+                    argMultimap.getValue(PREFIX_DISPLAY_PIC), uniqueDetails).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Person person = new Person(name, matricNumber, phone, email, address, displayPic, tagList);

@@ -17,9 +17,11 @@ public class DisplayPic {
     public static final String DEFAULT_DISPLAY_PIC = "src/main/resources/images/displayPic/default.png";
     public static final String DEFAULT_IMAGE_LOCATION = "src/main/resources/images/displayPic/";
 
+    public final String originalPath;
     public final String value;
 
     public DisplayPic() {
+        this.originalPath = DEFAULT_DISPLAY_PIC;
         this.value = DEFAULT_DISPLAY_PIC;
     }
 
@@ -28,16 +30,16 @@ public class DisplayPic {
      *
      * @param filePath A valid string containing the path to the file.
      */
-    public DisplayPic(String name, String filePath, String personDetails) throws IllegalValueException {
+    public DisplayPic(String filePath, String personDetails) throws IllegalValueException {
         requireNonNull(filePath);
         String trimmedFilePath = filePath.trim();
+        this.originalPath = trimmedFilePath;
         checkArgument(DisplayPicStorage.isValidPath(trimmedFilePath),
                 Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
         checkArgument(DisplayPicStorage.isValidImage(trimmedFilePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-
         String fileType = FileUtil.getFileType(trimmedFilePath);
-        String uniqueFileName = NamingUtil.generateUniqueName(name.trim(), personDetails);
-        if (DisplayPicStorage.saveDisplayPic(uniqueFileName, trimmedFilePath, fileType)) {
+        String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
+        if (saveDisplay(uniqueFileName)) {
             this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
         } else {
             this.value = DEFAULT_DISPLAY_PIC;
@@ -48,7 +50,17 @@ public class DisplayPic {
         requireNonNull(filePath);
         checkArgument(DisplayPicStorage.isValidPath(filePath), Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
         checkArgument(DisplayPicStorage.isValidImage(filePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+        this.originalPath = filePath;
         this.value = filePath;
+    }
+
+    /**
+     * Saves the display picture to the specified storage location.
+     */
+    public boolean saveDisplay(String personDetails) throws IllegalValueException {
+        String fileType = FileUtil.getFileType(originalPath);
+        String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
+        return DisplayPicStorage.saveDisplayPic(uniqueFileName, originalPath, fileType);
     }
 
     @Override

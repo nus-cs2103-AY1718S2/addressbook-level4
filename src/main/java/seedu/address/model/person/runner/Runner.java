@@ -3,8 +3,9 @@ package seedu.address.model.person.runner;
 import java.util.ArrayList;
 import java.util.List;
 
-import seedu.address.model.person.customer.Customer;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.customer.Customer;
+
 
 /**
  * Represents a runner in the address book.

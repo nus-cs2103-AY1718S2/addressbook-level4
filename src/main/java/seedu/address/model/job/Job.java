@@ -13,15 +13,17 @@ public class Job {
     private final Position position;
     private final Team team;
     private final Location location;
+    private final NumberOfPositions numberOfPositions;
 
     /**
      * Every field must be present and not null.
      */
-    public Job(Position position, Team team, Location location) {
+    public Job(Position position, Team team, Location location, NumberOfPositions numberOfPositions) {
         requireAllNonNull(position, team, location);
         this.position = position;
         this.team = team;
         this.location = location;
+        this.numberOfPositions = numberOfPositions;
     }
 
 
@@ -37,6 +39,10 @@ public class Job {
         return location;
     }
 
+    public NumberOfPositions getNumberOfPositions() {
+        return numberOfPositions;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -49,12 +55,13 @@ public class Job {
         return otherJob.getPosition().equals(this.getPosition())
                 && otherJob.getTeam().equals(this.getTeam())
                 && otherJob.getLocation().equals(this.getLocation())
+                && otherJob.getNumberOfPositions().equals(this.getNumberOfPositions());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, profilePicture, tags);
+        return Objects.hash(position, team, location, numberOfPositions);
     }
 
     @Override
@@ -64,7 +71,9 @@ public class Job {
                 .append(" Team: ")
                 .append(getTeam())
                 .append(" Location: ")
-                .append(getLocation());
+                .append(getLocation())
+                .append(" Number of Positions: ")
+                .append(getNumberOfPositions());
         return builder.toString();
     }
 }

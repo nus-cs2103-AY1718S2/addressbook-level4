@@ -39,13 +39,13 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedJob.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedPerson() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     * Constructs an {@code XmlAdaptedJob} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String profilePicture,
                             List<XmlAdaptedTag> tagged) {
@@ -62,7 +62,7 @@ public class XmlAdaptedPerson {
     /**
      * Converts a given Person into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedJob
      */
     public XmlAdaptedPerson(Person source) {
         name = source.getName().fullName;

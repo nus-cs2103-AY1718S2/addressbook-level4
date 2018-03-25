@@ -25,7 +25,7 @@ attendance and participation as well.
 
 === New Developers
 
-You may wish to refer to the https://github.com/CS2103JAN2018-F09-B1/main/blob/master/docs/DeveloperGuide.adoc#setting-up[set up] portion
+You may wish to refer to the <<Setting up, setting up>> portion
 to set up the Your TA project file.
 
 Read through the rest of the guide to familiarise yourself with how Your TA components functions together.
@@ -42,6 +42,8 @@ welcome any suggestions or feedback to improve Your TA.
 == Setting up
 
 === Prerequisites
+
+The following are essential programs and libraries needed to start developing Your TA.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -64,6 +66,8 @@ This application is written in Java and Javafx. A good amount of experience with
 
 === Setting up the project in your computer
 
+Please follow the steps below to download and set up the project.
+
 . Fork this repository, and clone the fork to your computer.
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
 . Set up the correct JDK version for Gradle.
@@ -78,10 +82,16 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
+Run the following steps to ensure that you successfully set up the project.
+
 . Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
+You should see in the console that all the tests have successfully completed.
+
 === Configurations to do before writing code
+
+The following configurations should be set up before you start coding to ensure a uniform coding style.
 
 ==== Configuring the coding style
 
@@ -123,6 +133,8 @@ When you are ready to start coding,
 
 == Design
 
+This section will present to you the high-level design view of Your TA.
+
 [[Design-Architecture]]
 === Architecture
 
@@ -134,10 +146,10 @@ The *_Architecture Diagram_* given above explains the high-level design of the A
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* Initializes the components in the correct sequence at the app launch, and connects them up with each other.
+* Shutting down the components and invokes cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -188,7 +200,7 @@ The sections below give more details of each component.
 .Interactions for Login Component
 image::Login.png[width="800"]
 
-Upon setting up the app, the Login component takes in two inputs from the user: `Username` and `Password`, then stores the user's login credentials into a `.xml` file.
+Upon launching the app, the Login component takes in two inputs from the user: `Username` and `Password`, then stores the user's login credentials into a `.xml` file.
 [Optional] `.xml` file is encrypted.
 
 * The login credentials are therefore immutable (cannot be changed).
@@ -210,19 +222,19 @@ The `UI` component uses JavaFx UI framework. The layout of these UI parts are de
 The `UI` component loads the layout of each part from the `.fxml` file and then does the bindings to various variables in the address book model in the corresponding `.java` file.
 
 [NOTE]
-It may be difficult to edit the `.fxml` file directly. *Javafx* "Scene Builder" is recommended to be used to edit or creat new `.fxml` files.
+It may be difficult to edit the `.fxml` file directly. *Javafx* http://gluonhq.com/products/scene-builder/[Scene Builder] is recommended to be used to edit or create new `.fxml` files.
 
 .Layout of the UI
 image::UiDisplay.png[width="800"]
 
-As seen from the layout in figure 6, from top to bottom: +
+As seen from the layout in figure 7, from top to bottom: +
 
-* MenuBar, `File` and `Help` are dropdown menus that perform their usual functions. As seen in Figure 7 below.
+* MenuBar, `File` and `Help` are dropdown menus that perform their usual functions. As seen in Figure 8 below.
 
 .Menu bar of the UI
 image::MenuBar.png[width="800"]
 
-* Down to the left, is the tab consisting list of people in the address book. As seen in Figure 9 below.
+* To the left of the application (ass seen in Figure 9 below) is a list that consists of any `Person` entries in the address book.
 ** It implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonListPanel.java[`PersonListPanel`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonListPanel.fxml[`PersonListPanel.fxml`].
 ** The individual person card implements the link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] class whose layout is specified in link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonCard.fxml`].
 
@@ -236,7 +248,7 @@ image::PersonList.png[width="350"]
 .Todo list of the UI
 image::TodoList.png[width="350"]
 
-* To the right, is the calendar of the address book, in V2.0 task can be scheduled into this calendar. As seen in Figure 11 below.
+* To the right, is the calendar of the address book, in v2.0 tasks can be scheduled into the calendar. As seen in Figure 11 below.
 ** It implements the link:{repoURL}/src/main/java/seedu/address/ui/CalendarView.java[`CalendarView`] class whose layout is specified in link:{repoURL}/src/main/resources/view/CalendarView.fxml[`CalendarView.fxml`].
 
 .Calendar of the UI
@@ -256,16 +268,19 @@ The `UI` component,
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 * Default tags have background colours to identify them as of v1.2.
 * Calendar added as of v1.3.
-* Calendar responds to events raised by the App in V2.0.
+* Calendar responds to events raised by the App in v2.0.
 
 [[Design-Logic]]
 === Logic component
+
+The diagram below shows how the `LogicManager` functions in the application.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+The diagram below shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+
 image::LogicCommandClassDiagram.png[width="800"]
 
 *API* :
@@ -283,19 +298,22 @@ image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
+
+The diagram below shows the different components and interfaces that make up the `Model` component.
+
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`:
 
 * Stores a `UserPref` object that represents the user's preferences.
 * Stores the Address Book data.
 * Exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * Does not depend on any of the other three components.
 
-The `Person` Class,
+The `Person` Class:
 
 * Stores the information of a specific person (student) in the AddressBook
 * Information includes: Name, Matriculation Number, Phone Number, Email, Address and different tags to associate with that person.
@@ -326,7 +344,7 @@ image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.

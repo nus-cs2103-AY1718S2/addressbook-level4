@@ -135,7 +135,7 @@ image::LogicClassDiagram.png[width="800"]
 The _Sequence Diagram_ below (Fig. 3) shows the interaction between the various components when the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
+image::SDforDeleteCoin.png[width="800"]
 
 [NOTE]
 Note how the `Model` simply raises `AddressBookChangedEvent` when the data is changed, instead of asking `Storage` to save the updates to the hard disk.
@@ -1007,7 +1007,7 @@ Short for Application-Programmer Interface.
 Alternative forms of commands that are usually shorter for typing efficiency.
 
 [[coinmarketcap]] Coinmarketcap::
-A website that hosts <<cryptocurrency>> information, including cap rankings, prices, volumes and circulating supplies.
+A website that hosts <<cryptocurrency,cryptocurrency>> information, including cap rankings, prices, volumes and circulating supplies.
 
 [[coin]] Coin::
 See <<cryptocurrency, Cryptocurrency>>.
@@ -1066,8 +1066,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
-
-_{ more test cases ... }_
 
 === Deleting a coin
 

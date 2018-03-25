@@ -1,0 +1,30 @@
+[uml,file="../images/SDforDeletePersonEventHandling.png"]
+--
+
+hide footbox
+
+participant ":UI" as U
+participant ":EventsCenter" as E
+participant ":Storage" as S
+
+[-> E : post(AddressBookChangedEvent)
+activate E
+E -> S : handleAddressBookChangedEvent()
+activate S
+S -> S : Save to file
+activate S
+E <-- S
+deactivate S
+deactivate S
+E -> U : handleAddressBookChangedEvent()
+activate U
+U -> U : Update \nstatus bar
+activate U
+U x<-[#white]- U
+deactivate U
+E <-- U
+deactivate U
+[<-- E
+deactivate E
+
+--

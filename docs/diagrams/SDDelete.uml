@@ -1,0 +1,32 @@
+[uml,file="../images/SDForDeleteCoin.png"]
+--
+
+hide footbox
+
+skinparam belowForResponse true
+
+actor " " as A
+participant ":UI" as U
+participant ":Logic" as L
+participant ":Model" as M
+participant ":EventsCenter" as E
+
+A -> U : delete 1
+activate U
+U -> L : execute("delete 1")
+activate L
+L -> M : deletePerson(p)
+activate M
+M -> E : post(AddressBookChangedEvent)
+activate E
+
+M <-- E
+deactivate E
+L <-- M
+deactivate M
+U <-- L
+deactivate L
+A <-- U
+deactivate U
+
+--

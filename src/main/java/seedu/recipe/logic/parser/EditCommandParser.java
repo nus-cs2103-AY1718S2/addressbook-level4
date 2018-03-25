@@ -2,10 +2,13 @@ package seedu.recipe.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_SERVINGS;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
 
@@ -33,8 +36,9 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PREPARATION_TIME,
-                PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_URL, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer
+                .tokenize(args, PREFIX_NAME, PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_COOKING_TIME,
+                        PREFIX_PREPARATION_TIME, PREFIX_CALORIES, PREFIX_SERVINGS, PREFIX_TAG, PREFIX_URL);
 
         Index index;
 
@@ -47,12 +51,18 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditRecipeDescriptor editRecipeDescriptor = new EditRecipeDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editRecipeDescriptor::setName);
-            ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME))
-                    .ifPresent(editRecipeDescriptor::setPreparationTime);
             ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT))
                     .ifPresent(editRecipeDescriptor::setIngredient);
             ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION))
                     .ifPresent(editRecipeDescriptor::setInstruction);
+            ParserUtil.parseCookingTime(argMultimap.getValue(PREFIX_COOKING_TIME))
+                    .ifPresent(editRecipeDescriptor::setCookingTime);
+            ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME))
+                    .ifPresent(editRecipeDescriptor::setPreparationTime);
+            ParserUtil.parseCalories(argMultimap.getValue(PREFIX_CALORIES))
+                    .ifPresent(editRecipeDescriptor::setCalories);
+            ParserUtil.parseServings(argMultimap.getValue(PREFIX_SERVINGS))
+                    .ifPresent(editRecipeDescriptor::setServings);
             ParserUtil.parseUrl(argMultimap.getValue(PREFIX_URL)).ifPresent(editRecipeDescriptor::setUrl);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editRecipeDescriptor::setTags);
         } catch (IllegalValueException ive) {

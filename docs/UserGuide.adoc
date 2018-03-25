@@ -50,11 +50,11 @@ e.g. typing `help` and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME t/TAGS`, `t/TAGS n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help : *`help`*
 
 Format: *`help`*
 
-=== Adding a recipe: `add`
+=== Adding a recipe: *`add`*
 
 Adds a recipe to the recipe book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -67,12 +67,12 @@ Examples:
 * *`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`*
 * *`add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`*
 
-=== Listing all recipes : `list`
+=== Listing all recipes : *`list`*
 
 Shows a list of all recipes in the recipe book. +
 Format: *`list`*
 
-=== Editing a recipe : `edit`
+=== Editing a recipe : *`edit`*
 
 Edits an existing recipe in the recipe book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -92,7 +92,7 @@ Edits the preparationTime number and ingredient instruction of the 1st recipe to
 * *`edit 2 n/Betsy Crower t/`* +
 Edits the name of the 2nd recipe to be `_Betsy Crower_` and clears all existing tags.
 
-=== Locating recipes by name: `find`
+=== Locating recipes by name: *`find`*
 
 Finds recipes whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -102,7 +102,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. *`find Hans Bo`* will match `_Bo Hans_`
 * Only the name is searched.
 * Only full words will be matched e.g. *`find Han`* will not match `_Hans_`
-* Recipes matching at least one keyword will be returned (i.e. "or" search). e.g. *`find Hans Bo`* will return `_Hans Gruber_`, `_Bo Yang_`
+* Recipes matching at least one keyword will be returned (i.e. "OR" search). e.g. *`find Hans Bo`* will return `_Hans Gruber_`, `_Bo Yang_`
 ****
 
 Examples:
@@ -112,7 +112,7 @@ Returns `_john_` and `_John Doe_`
 * *`find Betsy Tim John`* +
 Returns any recipe having names `_Betsy_`, `_Tim_`, or `_John_`
 
-=== Locating recipes by tags: `tag`
+=== Locating recipes by tags: *`tag`*
 
 Finds recipe whose tags contain any of the given keywords.
 Format: `tag KEYWORD [MORE_KEYWORDS]`
@@ -121,7 +121,7 @@ Format: `tag KEYWORD [MORE_KEYWORDS]`
 * The search is case sensitive. e.g. *`tag friends`* will not match `_Friends_`
 * Only the tags are searched.
 * Only full words will be matched e.g. *`tag friends`* will not match `_friend_`
-* Recipes matching at least one keyword will be returned (i.e. "or" search). e.g. *`tag friends family`* will return recipes with either `_friends_` OR `_family_` as their tags.
+* Recipes matching at least one keyword will be returned (i.e. "OR" search). e.g. *`tag friends family`* will return recipes with either `_friends_` OR `_family_` as their tags.
 ****
 
 Examples:
@@ -131,7 +131,7 @@ Returns recipes with the tag `_friends_`
 * *`tag friends family`* +
 Returns any recipe with the tag `_friends_` or `_family_`
 
-=== Deleting a recipe : `delete`
+=== Deleting a recipe : *`delete`*
 
 Deletes the specified recipe from the recipe book. +
 Format: `delete INDEX`
@@ -151,7 +151,7 @@ Deletes the 2nd recipe in the recipe book.
 *`delete 1`* +
 Deletes the 1st recipe in the results of the *`find`* command.
 
-=== Selecting a recipe : `select`
+=== Selecting a recipe : *`select`*
 
 Selects the recipe identified by the index number used in the last recipe listing. +
 Format: *`select INDEX`*
@@ -171,7 +171,7 @@ Selects the 2nd recipe in the recipe book.
 *`select 1`* +
 Selects the 1st recipe in the results of the *`find`* command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands : *`history`*
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: *`history`*
@@ -182,7 +182,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : *`undo`*
 
 Restores the recipe book to the state before the previous _undoable_ command was executed. +
 Format: *`undo`*
@@ -208,7 +208,7 @@ The *`undo`* command fails as there are no undoable commands executed previously
 *`undo`* (reverses the *`clear`* command) +
 *`undo`* (reverses the *`delete 1`* command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : *`redo`*
 
 Reverses the most recent *`undo`* command. +
 Format: *`redo`*
@@ -247,7 +247,7 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Encrypting data files _[coming in v2.0]_
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]

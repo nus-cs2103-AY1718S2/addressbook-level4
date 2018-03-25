@@ -422,7 +422,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 
 === `Model` Component
-=======
+
 === Model
 
 
@@ -432,9 +432,9 @@ As we modified the application to `CLInder` we need to store information of acti
 The original application `Address Book` store information in the `Person` Class.
 
 Since we need now to store information of event and task in the memory now.
-The `Person` Class need to change to `Activity` Class.
+The `Person` Class need to modified to store the record..
 
-The `UniquePersonList` is now modified to `UniqueActivityList` Class to store a list of `Activity` instead of a list of `Person`.
+The `UniquePersonList` need to be modified to store list of `Task` and `Activity`.
 {empty} +
 {empty} +
 
@@ -459,11 +459,16 @@ Relevant interface and access method will also be modified to cope with the chan
 Other component can easily distinguish two types of record.
 ** Cons:
 Since the interface is now completely changed, other component would now required to change a lot of coding to coped with the change.
-<<<<<<< HEAD
+{empty} +
+{empty} +
 
+While either implementations has its pros and cons.
+For the purpose of having incremental modification. We choose Alternative 1.
+As such we can modified the implementation without modification to Interface, hence other component would be unaffected.
+This would allow us to have a working release every week.
 
-====== Storage
-=======
+=== Storage
+
 {empty} +
 {empty} +
 
@@ -493,7 +498,7 @@ definitely the preferred approach here.
 {empty} +
 
 === Storage
->>>>>>> 9c9d88b2c2f3bcc18f7e0a61e8479f870a5b7422
+
 
 Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
 {empty} +

@@ -1,12 +1,14 @@
 package seedu.address.commons.events.ui;
 
-import javafx.collections.FXCollections;
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 
-import java.util.ArrayList;
-
-public class VenueTableEvent extends BaseEvent{
+/**
+ * Represents a schedule list in VenueTable
+ */
+public class VenueTableEvent extends BaseEvent {
 
     private final ObservableList<ArrayList<String>> schedule;
 

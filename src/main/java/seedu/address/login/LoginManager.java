@@ -17,6 +17,7 @@ public class LoginManager extends ComponentManager implements Login {
     private static final boolean CHECK_SUCCESS = true;
     private UserPassStorage userPassStorage;
     private StorageManager storage;
+    private UserPass userpass;
 
     public LoginManager(StorageManager storage) {
         this.storage = storage;
@@ -28,9 +29,10 @@ public class LoginManager extends ComponentManager implements Login {
      */
     public boolean checkLoginDetails(UserPass userpass) throws InvalidUsernameException, InvalidPasswordException {
         logger.info("----------------[USER/PASS CHECK][" + userpass.getUsername() + "]");
-        if (!checkUsername(userpass)) {
+        this.userpass = userpass;
+        if (!checkUsername()) {
             throw new InvalidUsernameException();
-        } else if   (!checkPassword(userpass)) {
+        } else if   (!checkPassword()) {
             throw new InvalidPasswordException();
         }
         return CHECK_SUCCESS;
@@ -39,7 +41,7 @@ public class LoginManager extends ComponentManager implements Login {
     /**
      * Returns a boolean to verify username is valid
      */
-    public boolean checkUsername(UserPass userpass) {
+    public boolean checkUsername() {
         String username = userpass.getUsername();
         if (username.equals("") || username.isEmpty()) {
             return false;
@@ -50,7 +52,7 @@ public class LoginManager extends ComponentManager implements Login {
     /**
      * Returns a boolean to verify password is valid
      */
-    public boolean checkPassword(UserPass userpass) {
+    public boolean checkPassword() {
         String username = userpass.getUsername();
         String passwordInput = userpass.getPassword();
         String passwordExpected = userPassStorage.get(username);
@@ -78,6 +80,10 @@ public class LoginManager extends ComponentManager implements Login {
      */
     public void accessPermitted() {
         EventsCenter.getInstance().post(new LoginAccessGrantedEvent());
+    }
+
+    public String getUsername() {
+        return userpass.getUsername();
     }
 
 }

@@ -5,12 +5,12 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * This event is raised when we need to display notification in Windows 10 notification tray
  */
-public class ShowWindowsNotificationEvent extends BaseEvent {
+public class ShowNotificationEvent extends BaseEvent {
     private String ownerName;
     private String endTime;
     private String title;
 
-    public ShowWindowsNotificationEvent(String ownerName, String endTime, String title) {
+    public ShowNotificationEvent(String ownerName, String endTime, String title) {
         this.ownerName = ownerName;
         this.endTime = endTime;
         this.title = title;
@@ -30,6 +30,6 @@ public class ShowWindowsNotificationEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "ShowWindowsNotificationEvent: " + ownerName + " " + title + " " + endTime;
+        return "ShowNotificationEvent: " + ownerName + " " + title + " " + endTime;
     }
 }

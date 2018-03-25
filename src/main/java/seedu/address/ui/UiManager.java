@@ -4,12 +4,13 @@ import java.awt.AWTException;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
-
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -19,7 +20,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
-import seedu.address.commons.events.ui.ShowWindowsNotificationEvent;
+import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -43,11 +44,14 @@ public class UiManager extends ComponentManager implements Ui {
     private UserPrefs prefs;
     private MainWindow mainWindow;
 
+    private boolean isWindowMinimized;
+
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        isWindowMinimized = false;
     }
 
     @Override
@@ -66,6 +70,14 @@ public class UiManager extends ComponentManager implements Ui {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
+        primaryStage.iconifiedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
+                System.out.println("minimized:" + t1.booleanValue());
+                isWindowMinimized = t1;
+            }
+        });
     }
 
     @Override
@@ -125,15 +137,22 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Subscribe
-    private void showWindowsNotificationEvent(ShowWindowsNotificationEvent event) {
+    private void showWindowsNotificationEvent(ShowNotificationEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showNotificationOnWindows(event);
+        if (isWindowMinimized) {
+            showNotificationOnWindows(event);
+        }
+        showNotificationInApp(event);
+    }
+
+    private void showNotificationInApp(ShowNotificationEvent event) {
+        mainWindow.showNewNotification(event);
     }
 
     /**
      * Shows notification on Windows System Tray
      */
-    private void showNotificationOnWindows(ShowWindowsNotificationEvent event) {
+    private void showNotificationOnWindows(ShowNotificationEvent event) {
         SystemTray tray = SystemTray.getSystemTray();
         java.awt.Image image = Toolkit.getDefaultToolkit().createImage(ICON_APPLICATION);
         TrayIcon trayIcon = new TrayIcon(image, "E.T. timetable entry ended");

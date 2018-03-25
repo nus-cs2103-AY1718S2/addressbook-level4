@@ -1,22 +1,28 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -27,6 +33,13 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final int ENTER = -1;
+    private static final int EXIT = 1;
+    private static final int NOTIFICATION_CARD_WIDTH = 300;
+    private static final int NOTIFICATION_CARD_HEIGHT = 100;
+    private static final int NOTIFICATION_CARD_X_OFFSET = 15;
+    private static final int NOTIFICATION_CARD_Y_OFFSET = 15;
+    private static final int NOTIFICATION_PANEL_WIDTH = 400;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -38,6 +51,8 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    private ArrayList<ShowNotificationEvent> notifications;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -57,6 +72,12 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane test;
+
+    @FXML
+    private VBox test1;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
 
@@ -72,6 +93,8 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerators();
         registerAsAnEventHandler(this);
+
+        notifications = new ArrayList<>();
     }
 
     public Stage getPrimaryStage() {
@@ -193,5 +216,45 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    /**
+     * Show the notification panel with an animation
+     */
+    public void showNotificationPanel() {
+        animate(test1, NOTIFICATION_PANEL_WIDTH, EXIT);
+
+    }
+
+    /**
+     * Show in-app notification
+     */
+    public void showNewNotification(ShowNotificationEvent event) {
+        notifications.add(event);
+        System.out.println("Preparing in app notification");
+        Region notificationCard = (new NotificationCard(event.getTitle(), notifications.size() + "",
+                event.getOwnerName(), event.getEndTime())).getRoot();
+        notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
+        notificationCard.setTranslateY(-1 * ((notifications.size() - 1) * NOTIFICATION_CARD_HEIGHT
+                + notifications.size() * NOTIFICATION_CARD_Y_OFFSET));
+        notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
+        notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
+        test.getChildren().add(notificationCard);
+        animate(notificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, ENTER);
+    }
+
+    /**
+     * Animates any Region object according to predefined style.
+     */
+    private void animate(Region component, double width, int direction) {
+        TranslateTransition enterAnimation = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation.setByX(direction * 0.25 * width);
+        enterAnimation.play();
+        TranslateTransition enterAnimation1 = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation1.setByX(direction * 0.75 * width);
+        enterAnimation1.play();
+        TranslateTransition enterAnimation2 = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation2.setByX(direction * width);
+        enterAnimation2.play();
     }
 }

@@ -14,7 +14,7 @@ import guitests.guihandles.HelpWindowHandle;
 import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.HelpCommand;
 import seedu.organizer.logic.commands.SelectCommand;
-import seedu.organizer.ui.BrowserPanel;
+//import seedu.organizer.ui.CalendarPanel;
 import seedu.organizer.ui.StatusBarFooter;
 
 /**
@@ -43,9 +43,9 @@ public class HelpCommandSystemTest extends OrganizerSystemTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getBrowserPanel().click();
+        /*getCalendarPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
+        assertHelpWindowOpen();*/
 
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
@@ -64,7 +64,7 @@ public class HelpCommandSystemTest extends OrganizerSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-        assertNotEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        //assertNotEquals(CalendarPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
         assertListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
 
         // assert that the status bar too is updated correctly while the help window is open

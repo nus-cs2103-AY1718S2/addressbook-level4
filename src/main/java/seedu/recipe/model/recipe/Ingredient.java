@@ -9,6 +9,7 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
  */
 public class Ingredient {
 
+    public static final String NULL_INGREDIENT_REFERENCE = "-";
     public static final String MESSAGE_INGREDIENT_CONSTRAINTS = "Recipe ingredients should be a list of "
             + "ingredients, delimited by commas.";
     public static  final String INGREDIENT_VALIDATION_REGEX = "(\\w+[\\s]{0,1})+(?:,\\s*(\\w+[\\s]{0,1})+)*";
@@ -30,7 +31,7 @@ public class Ingredient {
      * Returns true if a given string is a valid recipe ingredient.
      */
     public static boolean isValidIngredient(String test) {
-        return test.matches(INGREDIENT_VALIDATION_REGEX);
+        return test.equals(NULL_INGREDIENT_REFERENCE) || test.matches(INGREDIENT_VALIDATION_REGEX);
     }
 
     @Override

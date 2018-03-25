@@ -18,7 +18,7 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 == Introduction
 
 CLIndar is a desktop application that helps university computing students to manage their tasks and events.
-CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are expected to be familiar with.
+CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
 Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides more convenience for its target audience.
 
 == Get Started

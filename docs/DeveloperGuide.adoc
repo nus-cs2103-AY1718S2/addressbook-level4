@@ -374,11 +374,9 @@ image::StorageClassDiagram.png[width="800"]
 ==== Design Considerations
 
 ===== Aspect: How alias list is maintained
-
-* **Alternative 1 (current choice):** Create an `UniqueAliasList` in the `alias` model
-
 image::ModelClassDiagram.png[width="800"]
 
+* **Alternative 1 (current choice):** Create an `UniqueAliasList` in the `alias` model
 ** Pros: Reduce coupling between `Alias` and other commands. This design follows the Open Closed Principle where a command is open to extension and closed to modification.
 ** Cons: More difficult to implement as need to design an instance of a `UniqueAliasList`.
 * **Alternative 2:** Create a HashMap of `Alias` in each command class
@@ -388,11 +386,11 @@ image::ModelClassDiagram.png[width="800"]
 ===== Aspect: How alias is stored
 
 * **Alternative 1 (current choice):** Store as `XmlAdaptedAlias` and save to `addressbook.xml`
-** Pros:
-** Cons:
+** Pros: Reduces files where data need to be stored, as all the user saved data is in one file.
+** Cons: Need to design a section in `addressbook.xml` for saving alias data with the other data like person data.
 * **Alternative 2:** Store in `UserPrefsStorage`
-** Pros:
-** Cons:
+** Pros: Easier to implement.
+** Cons: Affects Import command, to import `UserPrefsStorage` as well, than just importing `addressbook.xml`
 // end::customisedalias[]
 
 // tag::dataencryption[]

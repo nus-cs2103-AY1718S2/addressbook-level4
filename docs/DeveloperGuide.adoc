@@ -80,6 +80,8 @@ IntelliJ should look like the figure below after step 3.
 .Code Style Imports
 image::CodeStyleImports.png[width="400"]
 
+{nbsp} +
+
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure IntelliJ to check style-compliance as you write code.
 
 ==== Setting up CI
@@ -109,7 +111,7 @@ When you are ready to start coding,
 [[Design-Architecture]]
 === Architecture
 
-The *_Architecture Diagram_* given below (<<fig-ArchitectureDiagram>>) explains the high-level design of the App with 6 components.
+The architecture diagram given below (<<fig-ArchitectureDiagram>>) explains the high-level design of the App with 6 components.
 
 [[fig-ArchitectureDiagram]]
 .Architecture Diagram

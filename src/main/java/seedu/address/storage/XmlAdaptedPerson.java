@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DisplayPic;
@@ -140,13 +139,13 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     DisplayPic.class.getSimpleName()));
         }
-        if (!DisplayPicStorage.isValidPath(this.displayPic)) {
-            throw new IllegalValueException(Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+        final DisplayPic displayPic;
+
+        if (!DisplayPicStorage.isValidPath(this.displayPic) || !DisplayPicStorage.isValidImage(this.displayPic)) {
+            displayPic = new DisplayPic();
+        } else {
+            displayPic = new DisplayPic(this.displayPic);
         }
-        if (!DisplayPicStorage.isValidImage(this.displayPic)) {
-            throw new IllegalValueException(Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-        }
-        final DisplayPic displayPic = new DisplayPic(this.displayPic);
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, matricNumber, phone, email, address, displayPic, tags);

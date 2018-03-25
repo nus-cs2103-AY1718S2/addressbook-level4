@@ -20,7 +20,7 @@ public class UserPass {
     /**
      * Returns a String containing the SHA-256 encrypted form of input password String
      */
-    public String hash(String password) {
+    public static String hash(String password) {
         byte[] encodedPassword = new byte[0];
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

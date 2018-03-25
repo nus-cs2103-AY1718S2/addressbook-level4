@@ -75,7 +75,7 @@ You can add any number of tags (including 0) for a recipe.
 ====
 
 ****
-*Details*
+Details
 
 * See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
 * White spaces after a colon are automatically trimmed. For example, `add Recipe Name: Chicken rice` and `add Recipe Name:Chicken rice` are the same. However, the former is more visually pleasant.
@@ -84,7 +84,7 @@ You can add any number of tags (including 0) for a recipe.
 * You can split a command into multiple lines for ease of input.
 ****
 
-*Examples:*
+Examples:
 
 * *`add Recipe Name:Chicken Rice Ingredient:chicken, rice Cooking Time:10m #good #fast`*
 [TIP]
@@ -112,7 +112,7 @@ Edits an existing recipe in the recipe book. +
 Format: `edit INDEX [n/RECIPE_NAME] [ing/INGREDIENT] [inst/INSTRUCTION] [ct/COOKING_TIME] [pt/PREPARATION_TIME] [cal/CALORIES] [s/SERVINGS] [url/LINK] [t/TAG]`
 
 ****
-*Details*
+Details
 
 * Edits the recipe at the specified `INDEX`. The index refers to the index number shown in the last recipe listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -134,7 +134,7 @@ Finds recipes whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-*Details*
+Details
 
 * The search is case insensitive. e.g *`find chicken`* will match `_Chicken_`.
 * The order of the keywords does not matter. e.g. *`find Rice Chicken`* will match `_Chicken rice_`.
@@ -156,7 +156,7 @@ Finds recipe whose tags contain any of the given keywords.
 Format: `tag KEYWORD [MORE_KEYWORDS]`
 
 ****
-*Details*
+Details
 
 * The search is case sensitive. For example, *`tag drinks`* will not match `_Drinks_`.
 * Only the tags are searched.
@@ -177,7 +177,7 @@ Deletes the specified recipe from the recipe book. +
 Format: `delete INDEX`
 
 ****
-*Details*
+Details
 
 * Deletes the recipe at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
@@ -199,7 +199,7 @@ Selects the recipe identified by the index number used in the last recipe listin
 Format: *`select INDEX`*
 
 ****
-*Details*
+Details
 
 * Selects the recipe and loads the URL of the recipe at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.

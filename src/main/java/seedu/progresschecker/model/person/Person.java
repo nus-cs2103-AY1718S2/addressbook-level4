@@ -10,7 +10,7 @@ import seedu.progresschecker.model.tag.Tag;
 import seedu.progresschecker.model.tag.UniqueTagList;
 
 /**
- * Represents a Person in the major book.
+ * Represents a Person in the ProgressChecker.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {

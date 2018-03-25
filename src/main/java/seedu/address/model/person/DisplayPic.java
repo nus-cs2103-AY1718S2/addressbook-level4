@@ -18,7 +18,7 @@ public class DisplayPic {
     public static final String DEFAULT_IMAGE_LOCATION = "data/displayPic/";
 
     public final String originalPath;
-    public final String value;
+    private String value;
 
     public DisplayPic() {
         this.originalPath = DEFAULT_DISPLAY_PIC;
@@ -39,11 +39,7 @@ public class DisplayPic {
         checkArgument(DisplayPicStorage.isValidImage(trimmedFilePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
         String fileType = FileUtil.getFileType(trimmedFilePath);
         String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
-        if (saveDisplay(personDetails)) {
-            this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
-        } else {
-            this.value = DEFAULT_DISPLAY_PIC;
-        }
+        this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
     }
 
     public DisplayPic(String filePath) {
@@ -64,6 +60,10 @@ public class DisplayPic {
         String fileType = FileUtil.getFileType(originalPath);
         String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
         return DisplayPicStorage.saveDisplayPic(uniqueFileName, originalPath, fileType);
+    }
+
+    public void updateToDefault() {
+        this.value = DEFAULT_DISPLAY_PIC;
     }
 
     @Override

@@ -64,6 +64,7 @@ public class AddCommand extends UndoableCommand {
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (IllegalValueException ive) {
+            toAdd.getDisplayPic().updateToDefault();
             throw new CommandException(MESSAGE_IMAGE_ERROR);
         }
 

@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F09-B2/main/tree/master
 
-By: *Team F09-B2*      Since: *Jan 2018*      Licence: *MIT*
+By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 *<<ReciRecipe,ReciRecipé>>* is a desktop recipe management application for users who prefer working their keyboard instead of a mouse to manage their recipes more efficiently. It is useful for cooks who have experience with typing and want all of their recipes in one place.
@@ -49,7 +49,7 @@ Do not disable them. If you have disabled them, go to *File > Settings > Plugins
 . Locate the *build.gradle* file and select it. Click *OK*.
 . Click *Open as Project*.
 . Click *OK* to accept the default settings.
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the *BUILD SUCCESSFUL* message. +
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
@@ -67,7 +67,7 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 . Select *Editor > Code Style > Java*.
 . Click on the *Imports* tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to *999* to prevent IntelliJ from contracting the import statements.
+* For **Class count to use import with '\*'** and **Names count to use static import with '*'**: Set to *999* to prevent IntelliJ from contracting the import statements.
 * For *Import Layout*: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.

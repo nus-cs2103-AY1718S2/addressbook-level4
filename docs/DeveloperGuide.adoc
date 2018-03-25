@@ -439,7 +439,7 @@ image::TagReplaceCommand.png[width="650"]
          and it would cause the wanted tag to be removed instead of the unwanted one.
 
 // end::TagReplace[]
-=======
+
 // tag::subject[]
 === Subject streaming calculation feature (work in progress)
 ==== Current Implementation
@@ -453,8 +453,9 @@ As the students are required to take at least 6 subjects, the subjects will be s
 ===== Aspect: Implementation of `L1R5Command`
 
 *  Create a `L1R5Command` which can be invoked by inputting `L1R5` followed by the `INDEX` assigned to the student in the `Command Box`.
-This  will prompt the execution of a `L1R5` calculation function. The `L1R5Command` will extend the `Command` Interface.
+This will prompt the execution of a `L1R5` calculation function. The `L1R5Command` will extend the `Command` Interface.
 
+image::L1R5CommandSequenceDiagram.png[width="800"]
 image::L1R5CommandDiagram.png[width="800"]
 
 ===== Aspect: Implementation of calculation function `L1R5`
@@ -477,13 +478,22 @@ The `deleteTag()` function will loop through the students in the `AddressBook` a
 
 ===== Aspect: Implementation of `TagDeleteCommand`
 // end::masstagremoval[]
-* Create a `TagDeleteCommand` where the user inputs `tagdelete [TAG_NAME]` or `td [TAG_NAME]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
+A `TagDeleteCommand` is where the user inputs `tagdelete [TAG_NAME]` or `td [TAG_NAME]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
 The `deleteTag()` function will be called and loops through the students in the `AddressBook`.
 
-If the specified tag is not found tagged to any student, a `TagNotFoundException` will be thrown and a error message will be returned to the user. Else, the `Tag List` of each student will be loaded and stored in a temporary `List` variable and the specified tag will be removed from it.
+* If the specified tag is not found tagged to any student, a `TagNotFoundException` will be thrown and a error message will be returned to the user.
+* Else, the `Tag List` of each student will be loaded and stored in a temporary `List` variable and the specified tag will be removed from it.
 Then a new student object with the updated `Tag List` will be replace the original student object. Thus the `AddressBook` will eventually have the updated list of students where the specified tag have been removed.
 
+. Logic uses the AddressBookParser class to parse the command.
+. This results in a TagDeleteCommand object which is executed by the LogicManager.
+. The command execution calls the deleteTag method which then affects the Model.
+. The tag is then deleted and the result of the command execution is encapsulated as a CommandResult object which is passed back to the Ui.
+The result will be shown on the `Command Box` in the format: `Deleted Tag: [TAG_NAME]`.
+
 image::TagDeleteCommandSequenceDiagram.png[width="800"]
+
+Figure: Sequence Diagram of TagDeleteCommand if the specified tag exists.
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

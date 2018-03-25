@@ -69,9 +69,9 @@ Format: `a n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER sub/English A
 
 Examples:
 
-* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3`
+* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3 sub/Mathematics A2`
 * `add n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
-* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3`
+* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3 sub/Mathematics A2`
 * `a n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
 
 === Listing all student : `list` or `l`

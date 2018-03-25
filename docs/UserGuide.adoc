@@ -44,15 +44,15 @@ e.g. typing `help` and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in upper case are the parameters to be supplied by the user e.g. in *`add n/NAME`*, *`NAME`* is a parameter which can be used as `add n/Chicken rice`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/Chicken rice t/Rice` or as `n/Chicken rice`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/rice`, `t/rice t/chicken` etc.
+* Words in upper case are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as *`add n/Chicken rice`*.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as *`n/Chicken rice t/Rice`* or as *`n/Chicken rice`*.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`t/rice`*, *`t/rice t/chicken`* etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME t/TAGS`, `t/TAGS n/NAME` is also acceptable.
 ====
 
 === Viewing help : `help`
 
-Format: `help`
+Format: *`help`*
 
 === Adding a recipe: `add`
 
@@ -64,13 +64,13 @@ A recipe can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* *`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`*
+* *`add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`*
 
 === Listing all recipes : `list`
 
 Shows a list of all recipes in the recipe book. +
-Format: `list`
+Format: *`list`*
 
 === Editing a recipe : `edit`
 
@@ -87,10 +87,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the preparationTime number and ingredient instruction of the 1st recipe to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd recipe to be `Betsy Crower` and clears all existing tags.
+* *`edit 1 p/91234567 e/johndoe@example.com`* +
+Edits the preparationTime number and ingredient instruction of the 1st recipe to be _`91234567`_ and _`johndoe@example.com`_ respectively.
+* *`edit 2 n/Betsy Crower t/`* +
+Edits the name of the 2nd recipe to be _`Betsy Crower`_ and clears all existing tags.
 
 === Locating recipes by name: `find`
 
@@ -98,19 +98,19 @@ Finds recipes whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive. e.g *`find hans`* will match _`Hans`_
+* The order of the keywords does not matter. e.g. *`find Hans Bo`* will match _`Bo Hans`_
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Recipes matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched e.g. *`find Han`* will not match _`Hans`_
+* Recipes matching at least one keyword will be returned (i.e. "or" search). e.g. *`find Hans Bo`* will return _`Hans Gruber`_, _`Bo Yang`_
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any recipe having names `Betsy`, `Tim`, or `John`
+* *`find John`* +
+Returns _`john`_ and _`John Doe`_
+* *`find Betsy Tim John`* +
+Returns any recipe having names _`Betsy`_, _`Tim`_, or _`John`_
 
 === Locating recipes by tags: `tag`
 

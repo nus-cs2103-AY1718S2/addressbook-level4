@@ -380,7 +380,7 @@ private void handleKeyPress(KeyEvent keyEvent) {
 }
 ----
 
-Because the default use of kbd:[Enter] has been replaced by command submission, another key combination is used for line breaks. The default combination for line breaks is kbd:[Shift]+kbd:[Enter] (like in Facebook). Note that these two combinations, line breaks and command submission, are interchangeable according to how the user set ups ReciRecipé preferences.
+Because the default use of kbd:[Enter] has been replaced by command submission, another key combination is used for line breaks. The default combination for line breaks is kbd:[Shift]+kbd:[Enter] (like in Facebook). Note that these two combinations, line breaks and command submission, are interchangeable according to how the user set ups *ReciRecipé* preferences.
 
 When RecipeBook receives a keyboard combination that is assigned to line breaks (default is kbd:[Shift]+kbd:[Enter]), `CommandBox` generates a `StringBuilder` from current text inside `CommandBox`, gets the caret location. The `StringBuilder` then inserts a new line at the given caret location, returns a `String` and `CommandBox` replaces its entire body with the new `String`.
 
@@ -946,7 +946,7 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
-*Scenario:* You are a software maintainer for ReciRecipé, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular recipe, by providing a flexible `remark` field for each recipe, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
+*Scenario:* You are a software maintainer for *ReciRecipé*, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular recipe, by providing a flexible `remark` field for each recipe, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
 Edits the remark for a recipe specified in the `INDEX`. +
@@ -1374,7 +1374,7 @@ _{ more test cases ... }_
 == Glossary
 
 [[ReciRecipe]] ReciRecipé / RecipeBook::
-This name is derived from "**Reci**te" and "**Recipé**", an alternate spelling of "Recipe". ReciRecipé is what will tell you all the info you need about your recipes so you don't have to remember your recipes anymore. Also, ReciRecipé sounds fun and kinda French.
+This name is derived from "**Reci**te" and "**Recipé**", an alternate spelling of "Recipe". *ReciRecipé* is what will tell you all the info you need about your recipes so you don't have to remember your recipes anymore. Also, *ReciRecipé* sounds fun and kinda French.
 
 [[API]] API::
 Abbreviation of **Application Programming Interface**.
@@ -1394,7 +1394,7 @@ As contrast to <<GUI,GUI>>, CLI is a means of interacting with a computer progra
 [[CSS]] CSS::
 Abbreviation of **Cascading Style Sheets**.
 +
-CSS is is a style sheet language used for describing the presentation of a document written in a markup language. Definition taken from link:https://en.wikipedia.org/wiki/Cascading_Style_Sheets[wiki]. All visual effects in ReciRecipé are written in CSS.
+CSS is is a style sheet language used for describing the presentation of a document written in a markup language. Definition taken from link:https://en.wikipedia.org/wiki/Cascading_Style_Sheets[wiki]. All visual effects in *ReciRecipé* are written in CSS.
 
 [[GUI]] GUI::
 Abbreviation of **Graphical User Interface**.

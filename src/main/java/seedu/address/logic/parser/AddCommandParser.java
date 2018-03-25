@@ -64,8 +64,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             ExpectedGraduationYear expectedGraduationYear = ParserUtil.parseExpectedGraduationYear(argMultimap
                     .getValue(PREFIX_EXPECTED_GRADUATION_YEAR)).get();
             Major major = ParserUtil.parseMajor(argMultimap.getValue(PREFIX_MAJOR)).get();
-            GradePointAverage gradePointAverage = ParserUtil.parseGradePointAverage(argMultimap.
-                    getValue(PREFIX_GRADE_POINT_AVERAGE)).get();
+            GradePointAverage gradePointAverage = ParserUtil.parseGradePointAverage(argMultimap
+                    .getValue(PREFIX_GRADE_POINT_AVERAGE)).get();
 
             // Optional fields
             Optional<Resume> resumeOptional = ParserUtil.parseResume(argMultimap.getValue(PREFIX_RESUME));

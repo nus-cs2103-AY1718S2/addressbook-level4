@@ -9,6 +9,7 @@
         <address>123, Jurong West Ave 6, #08-111</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Science</major>
+        <gradePointAverage>4.84</gradePointAverage>
         <status>New</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -23,6 +24,7 @@
         <address>311, Clementi Ave 2, #02-25</address>
         <expectedGraduationYear>2021</expectedGraduationYear>
         <major>Computer Engineering</major>
+        <gradePointAverage>4.73</gradePointAverage>
         <status>1st round</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -38,6 +40,7 @@
         <address>wall street</address>
         <expectedGraduationYear>2019</expectedGraduationYear>
         <major>Computer Science</major>
+        <gradePointAverage>4.92</gradePointAverage>
         <status>New</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -51,6 +54,7 @@
         <address>10th street</address>
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Information Security</major>
+        <gradePointAverage>4.24</gradePointAverage>
         <status>New</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -64,6 +68,7 @@
         <address>michegan ave</address>
         <expectedGraduationYear>2018</expectedGraduationYear>
         <major>Business Analytics</major>
+        <gradePointAverage>4.33</gradePointAverage>
         <status>Accepted</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -77,6 +82,7 @@
         <address>little tokyo</address>
         <expectedGraduationYear>2019</expectedGraduationYear>
         <major>Computer Science</major>
+        <gradePointAverage>4.75</gradePointAverage>
         <status>New</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -90,6 +96,7 @@
         <address>4th street</address>
         <expectedGraduationYear>2022</expectedGraduationYear>
         <major>Information Systems</major>
+        <gradePointAverage>3.88</gradePointAverage>
         <status>Offered</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>

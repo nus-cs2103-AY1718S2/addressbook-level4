@@ -13,6 +13,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
+import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
@@ -116,12 +117,18 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
         addressBook.checkForStudentInAdressBook(target);
+        indicateRequiredStudentIndexChange(filteredStudents.indexOf(target));
         indicateBrowserPanelToDisplayStudent(target);
     }
 
     /** Raises an event to indicate Browser Panel display changed to display student's information */
     private void indicateBrowserPanelToDisplayStudent(Student target) {
         raise(new StudentInfoDisplayEvent(target));
+    }
+
+    /** Raises an event to indicate an update of the student index required at the moment in storage */
+    private void indicateRequiredStudentIndexChange(int studentIndex){
+        raise(new RequiredStudentIndexChangeEvent(studentIndex));
     }
 
 

@@ -26,8 +26,10 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String EXAMPLE_STUDENT_PAGE = "ExampleStudentPage.html";
     public static final String SEARCH_PAGE_URL =
             "https://www.google.com.sg/maps/place/";
+    private static final String URL_STUDENT_INDEX_FORMAT = "?studentIndex=";
 
     private static final String FXML = "BrowserPanel.fxml";
+
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -50,7 +52,8 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(SEARCH_PAGE_URL + append);
     }
 
-    private void loadStudentInfoPage(Student student) {
+    private void loadStudentInfoPage() {
+
         URL exampleStudentPage = MainApp.class.getResource(FXML_FILE_FOLDER + EXAMPLE_STUDENT_PAGE);
         loadPage(exampleStudentPage.toExternalForm());
     }
@@ -84,6 +87,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleStudentInfoDisplayEvent(StudentInfoDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadStudentInfoPage(event.getStudent());
+        loadStudentInfoPage();
     }
 }

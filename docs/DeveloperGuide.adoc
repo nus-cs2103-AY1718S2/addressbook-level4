@@ -13,42 +13,42 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F09-B2/main/tree/master
 
-By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
+By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
-<<ReciRecipe,ReciRecipé>> is a desktop recipe management application for users who prefer working their keyboard instead of a mouse to manage their recipes more efficiently. It is useful for cooks who have experience with typing and want all of their recipes in one place.
+*<<ReciRecipe,ReciRecipé>>* is a desktop recipe management application for users who prefer working their keyboard instead of a mouse to manage their recipes more efficiently. It is useful for cooks who have experience with typing and want all of their recipes in one place.
 
-The Developer Guide will give you a stroll through the design and implementation of ReciRecipé. If you want to understand _how_, and hopefully _why_, ReciRecipé works, you are at the right place.
+*Developer Guide* will give you a stroll through the design and implementation of *ReciRecipé*. If you want to understand _how_, and hopefully _why_, *ReciRecipé* works, you are at the right place.
 
 == Setting up
 
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
+. JDK 1.8.0_60 or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE
+. IntelliJ IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+Do not disable them. If you have disabled them, go to *File > Settings > Plugins* to re-enable them.
 
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click *File > Close Project* to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click *Configure > Project Defaults > Project Structure*
+.. Click *New...* and find the directory of the JDK.
+. Click *Import Project*.
+. Locate the *build.gradle* file and select it. Click *OK*.
+. Click *Open as Project*.
+. Click *OK* to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
@@ -63,12 +63,12 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to *File > Settings...* (Windows/Linux), or *IntelliJ IDEA > Preferences...* (macOS).
+. Select *Editor > Code Style > Java*.
+. Click on the *Imports* tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For **Class count to use import with '\*'** and **Names count to use static import with '*'**: Set to *999* to prevent IntelliJ from contracting the import statements.
+* For *Import Layout*: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -84,7 +84,7 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 ==== Getting started with coding
 
@@ -104,7 +104,7 @@ image::Architecture.png[width="600"]
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+The *.pptx* files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose *Save as picture*.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp`]. It is responsible for,
 
@@ -113,7 +113,7 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of four components.
@@ -164,7 +164,7 @@ image::UiClassDiagram.png[width="800"]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `RecipeListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/recipe/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching *.fxml* files that are in the *src/main/resources/view* folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/recipe/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[MainWindow.fxml].
 
 The `UI` component,
 
@@ -178,6 +178,8 @@ The `UI` component,
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
+
+{nbsp} +
 
 .Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
 image::LogicCommandClassDiagram.png[width="800"]
@@ -320,16 +322,16 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
 
-===== Aspect: Implementation of `UndoableCommand`
+===== Aspect: Implementation of `UndoableCommand`.
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
+* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
 ** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
+* **Alternative 2:** Just override `execute()`.
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+===== Aspect: How undo & redo executes.
 
 * **Alternative 1 (current choice):** Saves the entire recipe book.
 ** Pros: Easy to implement.
@@ -339,7 +341,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
-===== Aspect: Type of commands that can be undone/redone
+===== Aspect: Type of commands that can be undone/redone.
 
 * **Alternative 1 (current choice):** Only include commands that modifies the recipe book (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
@@ -350,12 +352,12 @@ image::UndoRedoActivityDiagram.png[width="650"]
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
-===== Aspect: Data structure to support the undo/redo commands
+===== Aspect: Data structure to support the undo/redo commands.
 
-* **Alternative 1 (current choice):** Use separate stack for undo and redo
+* **Alternative 1 (current choice):** Use separate stack for undo and redo.
 ** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
 ** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
+* **Alternative 2:** Use `HistoryManager` for undo/redo.
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
@@ -380,7 +382,7 @@ private void handleKeyPress(KeyEvent keyEvent) {
 }
 ----
 
-Because the default use of kbd:[Enter] has been replaced by command submission, another key combination is used for line breaks. The default combination for line breaks is kbd:[Shift]+kbd:[Enter] (like in Facebook). Note that these two combinations, line breaks and command submission, are interchangeable according to how the user set ups ReciRecipé preferences.
+Because the default use of kbd:[Enter] has been replaced by command submission, another key combination is used for line breaks. The default combination for line breaks is kbd:[Shift]+kbd:[Enter] (like in Facebook). Note that these two combinations, line breaks and command submission, are interchangeable according to how the user set ups *ReciRecipé* preferences.
 
 When RecipeBook receives a keyboard combination that is assigned to line breaks (default is kbd:[Shift]+kbd:[Enter]), `CommandBox` generates a `StringBuilder` from current text inside `CommandBox`, gets the caret location. The `StringBuilder` then inserts a new line at the given caret location, returns a `String` and `CommandBox` replaces its entire body with the new `String`.
 
@@ -408,15 +410,15 @@ private void createNewLine() {
 
 ==== Design considerations
 
-===== Aspect: Usage of a component that support multiple lines input
+===== Aspect: Usage of a component that support multiple lines input.
 
-* **Alternative 1 (current choice):** `TextArea`
+* **Alternative 1 (current choice):** `TextArea`.
 ** Pros: Easy to use, intuitive.
 ** Cons: No default handler for kbd:[Enter]. Furthermore, the <<CSS,CSS>> is particularly hard to handle due to the way `TextArea` and its body function separately.
-* **Alternative 2:** `TextField` with support for "\n"
+* **Alternative 2:** `TextField` with support for `\n`.
 ** Pros: Hardly needs any change in the codes.
 ** Cons: Unintuitive and ugly inputs. Also, a long line with hundreds of characters is unavoidable. And once the line gets too long, it is near impossible to make changes to the input.
-* **Alternative 3:** `HTMLEditor`
+* **Alternative 3:** `HTMLEditor`.
 ** Pros: Abundant formatting features.
 ** Cons: Too complex to implement, unintuitive inputs.
 // end::multiple-lines[]
@@ -451,12 +453,12 @@ As seen from above, all key combinations implemented consume the default effect 
 
 ==== Design considerations
 
-===== Aspect: Location of the shortcuts
+===== Aspect: Location of the shortcuts.
 
-* **Alternative 1 (current choice):** Store in the `KeyboardShortcutsMapping` class
+* **Alternative 1 (current choice):** Store in the `KeyboardShortcutsMapping` class.
 ** Pros: Good modularity, easier to keep track of the mappings.
 ** Cons: The shortcuts have to be imported to be used.
-* **Alternative 2:** Store in the `CommandBox` class
+* **Alternative 2:** Store in the `CommandBox` class.
 ** Pros: No needs for imports. Also it is possible to declare new mappings on the run and use it directly in the `CommandBox`.
 ** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
 // end::keyboard-shortcut[]
@@ -528,30 +530,30 @@ item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastW
 
 ==== Design considerations
 
-===== Aspect: Base class of SuggestionsPopUp
+===== Aspect: Base class of SuggestionsPopUp.
 
-* **Alternative 1 (current choice):** `ContextMenu`
+* **Alternative 1 (current choice):** `ContextMenu`.
 ** Pros: Easy to use since `ContextMenu` and `TextArea` are in the same library `javafx.scene.control`.
 ** Cons: Dependent on `TextArea` in `CommandBox` class.
 * **Alternative 2:** `JPopupMenu`
 ** Pros: NA.
 ** Cons: Need additional works to make `JPopupMenu` compatible with `TextArea`.
 
-===== Aspect: Abstraction of `SuggestionsPopUp`
+===== Aspect: Abstraction of `SuggestionsPopUp`.
 
-* **Alternative 1 (current choice):** A separate class `SuggestionsPopUp`
+* **Alternative 1 (current choice):** A separate class `SuggestionsPopUp`.
 ** Pros: More intuitive approach since `SuggestionsPopUp` is a component in `UI`.
 ** Cons: Need to take extra information from `CommandBox` class.
-* **Alternative 2:** An inner class of `CommandBox` class
+* **Alternative 2:** An inner class of `CommandBox` class.
 ** Pros: Easy to implement since it has access to all attributes and methods of `CommandBox`.
 ** Cons: Limitations in reusability.
 
-===== Aspect: Abstraction of `TextInputProcessorUtil`
+===== Aspect: Abstraction of `TextInputProcessorUtil`.
 
-* **Alternative 1 (current choice):** A separate class `TextInputProcessorUtil`
+* **Alternative 1 (current choice):** A separate class `TextInputProcessorUtil`.
 ** Pros: Common functions can be easily used by other classes if needed.
 ** Cons: NA.
-* **Alternative 2:** An inner class of `SuggestionsPopUp` class
+* **Alternative 2:** An inner class of `SuggestionsPopUp` class.
 ** Pros: Convenient to use inside the containing class.
 ** Cons: Limitations in reusability.
 // end::auto-completion[]
@@ -571,8 +573,8 @@ Adding the XML extension is to make the command more user-friendly and to mainta
 ----
 String XmlExtensionFilename = ParserUtil.parseFilename(filename);
 ----
-Because the file is being uploaded to the user's Dropbox account, their Dropbox account access token is needed and is stored in the variable _ACCESS_TOKEN_. This token is then used together
-with `String` _XmlExtensionFilename_, which was obtained from `UploadCommandParser`, in the `upload()` method as shown below:
+Because the file is being uploaded to the user's Dropbox account, their Dropbox account access token is needed and is stored in the variable `ACCESS_TOKEN`. This token is then used together
+with `String` `XmlExtensionFilename`, which was obtained from `UploadCommandParser`, in the `upload()` method as shown below:
 
 [source,java]
 ----
@@ -591,7 +593,7 @@ private CommandResult upload() throws DbxException {
     return new CommandResult(MESSAGE_SUCCESS);
 }
 ----
-The _ACCESS_TOKEN_ is currently hardcoded in, as shown below, but will be improved upon soon.
+The `ACCESS_TOKEN` is currently hardcoded in, as shown below, but will be improved upon soon.
 
 [source,java]
 ----
@@ -600,8 +602,8 @@ private static final String ACCESS_TOKEN = "example_of_legit_token_taken_from_dr
 
 ==== Design considerations
 
-===== Aspect: Handling of the access token
-* **Alternative 1 (current choice):** Save the access token within the application for future use
+===== Aspect: Handling of the access token.
+* **Alternative 1 (current choice):** Save the access token within the application for future use.
 ** Pros: Convenience. User does not have to keep logging into their Dropbox account every time they want to upload. Since our application does not support multiple users, keeping them "logged in" is acceptable.
 ** Cons: Security concerns. Since the access token is meant to be a secret and there is no security aspect to our application at all, it is possible for a someone malicious to obtain this access token.
 * **Alternative 2:** One-time usage of the access token. Delete after using.
@@ -638,12 +640,12 @@ public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws Il
 
 ==== Design considerations
 
-===== Aspect: Implementation of optional property
+===== Aspect: Implementation of optional property.
 
-* **Alternative 1 (current choice):** Add a placeholder for omitted URL
+* **Alternative 1 (current choice):** Add a placeholder for omitted URL.
 ** Pros: Simple implementation can be used as a reference by new developers for creating optional fields. Interaction with `BrowserPanel` requires more control over the status of a recipe's URL property.
 ** Cons: `Recipe` class may contain unnecessary variables.
-* **Alternative 2:** Store URL property in the same fashion as tag labels
+* **Alternative 2:** Store URL property in the same fashion as tag labels.
 ** Pros: `Recipe` class has better separation of optional and compulsory properties.
 ** Cons: Complex implementation may confuse new developers. Interaction with other components may become needlessly complex.
 // end::embedded-url[]
@@ -662,19 +664,19 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 * The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
 * The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+* Currently log messages are output through: *Console* and to a *.log* file.
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* *SEVERE* : Critical problem detected which may possibly cause the termination of the application.
+* *WARNING* : Can continue, but with caution.
+* *INFO* : Information showing the noteworthy actions by the App.
+* *FINE* : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
 
 [[Implementation-Configuration]]
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: *config.json*).
 
 == Documentation
 
@@ -685,8 +687,8 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
-Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
+See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render *.adoc* files locally to preview the end result of your edits.
+Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your *.adoc* files in real-time.
 
 === Publishing Documentation
 
@@ -698,10 +700,10 @@ We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for convert
 
 Here are the steps to convert the project documentation files to PDF format.
 
-.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
-.  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
-.  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the *docs/* directory to HTML format.
+.  Go to your generated HTML files in the *build/docs* folder, right click on them and select *Open with -> Google Chrome*.
+.  Within Chrome, click on the *Print* option in Chrome's menu.
+.  Set the destination to *Save as PDF*, then click *Save* to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
@@ -718,12 +720,12 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run all tests, right-click on the *src/test/java* folder and choose *Run 'All Tests'*.
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose *Run 'ABC'*.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
@@ -732,7 +734,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
 === Types of tests
 
@@ -753,8 +755,8 @@ e.g. `seedu.recipe.logic.LogicManagerTest`
 === Troubleshooting Testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
-* Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
-* Solution: Execute Gradle task `processResources`.
+* Reason: One of its dependencies, *UserGuide.html* in *src/main/resources/docs* is missing.
+* Solution: Execute Gradle task *processResources*.
 
 == Dev Ops
 
@@ -779,14 +781,14 @@ Here are the steps to create a new release.
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  Tag the repo with the version number. e.g. *v0.1*
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
 === Managing Dependencies
 
 A project often depends on third-party libraries. For example, Recipe Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+a. Include those libraries in the repo (this bloats the repo size). +
+b. Require developers to download those libraries manually (this creates extra work for developers).
 
 [[GetStartedProgramming]]
 [appendix]
@@ -870,7 +872,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 * Hints
 ** The tag labels are created inside link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[the `RecipeCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
+** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[*DarkTheme.css*] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
 ** You can modify the existing test methods for `RecipeCard` 's to include testing the tag's color as well.
 ** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
@@ -913,7 +915,7 @@ image::getting-started-ui-status-after.png[width="500"]
 +
 ****
 * Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
+** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[StatusBarFooter.fxml] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
 ** link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the recipe book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of recipes when the application just started.
@@ -946,7 +948,7 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
-*Scenario:* You are a software maintainer for ReciRecipé, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular recipe, by providing a flexible `remark` field for each recipe, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
+*Scenario:* You are a software maintainer for *ReciRecipé*, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular recipe, by providing a flexible `remark` field for each recipe, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
 Edits the remark for a recipe specified in the `INDEX`. +
@@ -961,7 +963,7 @@ Removes the remark for the first recipe.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
+===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing.
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
 **Main:**
@@ -974,7 +976,7 @@ Let's start by teaching the application how to parse a `remark` command. We will
 . Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
 . Add new test method to link:{repoURL}/src/test/java/seedu/recipe/logic/parser/RecipeBookParserTest.java[`RecipeBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
+===== [Step 2] Logic: Teach the app to accept 'remark' arguments.
 Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
 
 **Main:**
@@ -990,19 +992,19 @@ Let's teach the application to parse arguments that our `remark` command will ac
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/recipe/logic/parser/RecipeBookParserTest.java[`RecipeBookParserTest`] to test that the correct command is generated according to the user input.
 
-===== [Step 3] Ui: Add a placeholder for remark in `RecipeCard`
+===== [Step 3] Ui: Add a placeholder for remark in `RecipeCard`.
 Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] s to display a remark for each recipe later.
 
 **Main:**
 
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/RecipeListCard.fxml[`RecipeListCard.fxml`].
+. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/RecipeListCard.fxml[RecipeListCard.fxml].
 . Add FXML annotation in link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] to tie the variable to the actual label.
 
 **Tests:**
 
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/RecipeCardHandle.java[`RecipeCardHandle`] so that future tests can read the contents of the remark label.
 
-===== [Step 4] Model: Add `Remark` class
+===== [Step 4] Model: Add `Remark` class.
 We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
@@ -1014,16 +1016,16 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
-===== [Step 5] Model: Modify `Recipe` to support a `Remark` field
+===== [Step 5] Model: Modify `Recipe` to support a `Remark` field.
 Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 
 **Main:**
 
 . Add `getRemark()` in link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the recipe will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/recipe/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `recipeBook.xml` so that the application will load the sample data when you launch it.)
+. Modify link:{repoURL}/src/main/java/seedu/recipe/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your *recipeBook.xml* so that the application will load the sample data when you launch it.)
 
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedRecipe` class
+===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedRecipe` class.
 We now have `Remark` s for `Recipe` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/recipe/storage/XmlAdaptedRecipe.java[`XmlAdaptedRecipe`] to include a `Remark` field so that it will be saved.
 
 **Main:**
@@ -1032,9 +1034,9 @@ We now have `Remark` s for `Recipe` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `invalidAndValidRecipeRecipeBook.xml`, `typicalRecipesRecipeBook.xml`, `validRecipeBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix *invalidAndValidRecipeRecipeBook.xml*, *typicalRecipesRecipeBook.xml*, *validRecipeBook.xml* etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
-===== [Step 6b] Test: Add withRemark() for `RecipeBuilder`
+===== [Step 6b] Test: Add withRemark() for `RecipeBuilder`.
 Since `Recipe` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/recipe/testutil/RecipeBuilder.java[`RecipeBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 
 **Tests:**
@@ -1042,7 +1044,7 @@ Since `Recipe` can now have a `Remark`, we should add a helper method to link:{r
 . Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/recipe/testutil/RecipeBuilder.java[`RecipeBuilder`]. This method will create a new `Remark` for the recipe that it is currently building.
 . Try and use the method on any sample `Recipe` in link:{repoURL}/src/test/java/seedu/recipe/testutil/TypicalRecipes.java[`TypicalRecipes`].
 
-===== [Step 7] Ui: Connect `Remark` field to `RecipeCard`
+===== [Step 7] Ui: Connect `Remark` field to `RecipeCard`.
 Our remark label in link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
 **Main:**
@@ -1053,7 +1055,7 @@ Our remark label in link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java
 
 . Modify link:{repoURL}/src/test/java/seedu/recipe/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysRecipe(...)`] so that it will compare the now-functioning remark label.
 
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
+===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic.
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
 
 **Main:**
@@ -1073,40 +1075,40 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of recipes
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using <<CLI,CLI>> apps
+* has a need to manage a significant number of recipes.
+* prefer desktop apps over other types.
+* can type fast.
+* prefers typing over mouse input.
+* is reasonably comfortable using <<CLI,CLI>> apps.
 
-*Value Proposition*: manage recipes faster than a typical mouse/GUI driven app
+*Value Proposition*: manage recipes faster than a typical mouse/GUI driven app.
 
 *Feature Contribution*:
 
-`Ryan` - Media: As a user, I want to share my personal recipes with my friends so that they can try my recipes.
+*Ryan* - Media: As a user, I want to share my personal recipes with my friends so that they can try my recipes.
 
-* add url to recipe `minor`
-* add image to recipe
-* share recipe on social media `major`
+* add url to recipe. `minor`
+* add image to recipe.
+* share recipe on social media. *`major`*
 
-`Nicholas` - Organisation: As a user, I want to organise my recipe storage so that I can maintain ease of access to my recipes.
+*Nicholas* - Organisation: As a user, I want to organise my recipe storage so that I can maintain ease of access to my recipes.
 
-* create, edit, delete groups for recipes `major`
-* save files online (cloud storage)
-* search recipes by tags `minor`
+* create, edit, delete groups for recipes. *`major`*
+* save files online (cloud storage).
+* search recipes by tags. `minor`
 
-`Hoang Duong` - Efficiency: As a user, I want to efficiently manage my recipes so that I can save time.
+*Hoang Duong* - Efficiency: As a user, I want to efficiently manage my recipes so that I can save time.
 
-* find recipe by name, ingredient, cuisine `minor`
-* filter and sort recipes by cooking time/difficulty level
-* sort recipes by name
-* auto-completion, IDE style shortcuts (“manage” because you may need to edit recipes. This auto-completion helps in quickening the process) `major`
-* get a random recipe
+* find recipe by name, ingredient, cuisine. `minor`
+* filter and sort recipes by cooking time/difficulty level.
+* sort recipes by name.
+* auto-completion, IDE style shortcuts (“manage” because you may need to edit recipes. This auto-completion helps in quickening the process). *`major`*
+* get a random recipe.
 
-`Thanh Nguyen` - Data: As a user, I want to easily add recipes from the internet so that I can save time on unnecessary typing of recipes.
+*Thanh Nguyen* - Data: As a user, I want to easily add recipes from the internet so that I can save time on unnecessary typing of recipes.
 
-* add recipe in a user friendly manner (not a single command line) `minor`
-* search and import recipes from internet `major`
+* add recipe in a user friendly manner (not a single command line). `minor`
+* search and import recipes from internet. *`major`*
 
 [appendix]
 == User Stories
@@ -1176,17 +1178,17 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `RecipeBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the *RecipeBook* and the *Actor* is the *user*, unless specified otherwise).
 
 [discrete]
 === Use case: Add a video to recipe
 
 *MSS*
 
-1.  User requests to list recipes
-2.  RecipeBook shows a list of recipes
-3.  User requests to add a video URL to a specific recipe in the list
-4.  RecipeBook updates recipe to show an embedded video when recipe is selected
+1.  User requests to list recipes.
+2.  RecipeBook shows a list of recipes.
+3.  User requests to add a video URL to a specific recipe in the list.
+4.  RecipeBook updates recipe to show an embedded video when recipe is selected.
 +
 Use case ends.
 
@@ -1209,10 +1211,10 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User types `find chicken`
-2.  RecipeBook shows a list of recipes that contain chicken
-3.  User clicks on a particular recipe
-4.  RecipeBook displays full recipe and details on the main area
+1.  User types `find chicken`.
+2.  RecipeBook shows a list of recipes that contain chicken.
+3.  User clicks on a particular recipe.
+4.  RecipeBook displays full recipe and details on the main area.
 +
 Use case ends.
 
@@ -1310,7 +1312,7 @@ _{More to be added}_
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java 1.8.0_60 or higher installed.
 .  Should be able to hold up to 1000 recipes without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  A user should be able to quickly understand how to navigate the RecipeBook.
@@ -1336,8 +1338,8 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Initial launch
 
-.. Download the jar file and copy into an empty folder
-.. Double-click the jar file +
+.. Download the jar file and copy into an empty folder.
+.. Double-click the jar file. +
    Expected: Shows the GUI with a set of sample recipes. The window size may not be optimum.
 
 . Saving window preferences
@@ -1350,7 +1352,7 @@ _{ more test cases ... }_
 
 === Deleting a recipe
 
-. Deleting a recipe while all recipes are listed
+. Deleting a recipe while all recipes are listed.
 
 .. Prerequisites: List all recipes using the `list` command. Multiple recipes in the list.
 .. Test case: `delete 1` +
@@ -1364,7 +1366,7 @@ _{ more test cases ... }_
 
 === Saving data
 
-. Dealing with missing/corrupted data files
+. Dealing with missing/corrupted data files.
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
@@ -1373,33 +1375,4 @@ _{ more test cases ... }_
 [appendix]
 == Glossary
 
-[[ReciRecipe]] ReciRecipé / RecipeBook::
-This name is derived from "**Reci**te" and "**Recipé**", an alternate spelling of "Recipe". ReciRecipé is what will tell you all the info you need about your recipes so you don't have to remember your recipes anymore. Also, ReciRecipé sounds fun and kinda French.
-
-[[API]] API::
-Abbreviation of **Application Programming Interface**.
-+
-API is a set of subroutine definitions, protocols, and tools for building application software. In general terms, it is a set of clearly defined methods of communication between various software components. Definition taken from link:https://en.wikipedia.org/wiki/Application_programming_interface[wiki].
-
-[[CI]] CI::
-Abbreviation of **Continuous Integration**.
-+
-CI is the practice of merging all developer working copies to a shared mainline several times a day. Definition taken from link:https://en.wikipedia.org/wiki/Continuous_integration[wiki].
-
-[[CLI]] CLI::
-Abbreviation of **Command Line Interface**.
-+
-As contrast to <<GUI,GUI>>, CLI is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). Definition taken from link:https://en.wikipedia.org/wiki/Command-line_interface[wiki].
-
-[[CSS]] CSS::
-Abbreviation of **Cascading Style Sheets**.
-+
-CSS is is a style sheet language used for describing the presentation of a document written in a markup language. Definition taken from link:https://en.wikipedia.org/wiki/Cascading_Style_Sheets[wiki]. All visual effects in ReciRecipé are written in CSS.
-
-[[GUI]] GUI::
-Abbreviation of **Graphical User Interface**.
-+
-As contrast to <<CLI,CLI>>, GUI is a type of user interface that allows users to interact with electronic devices through graphical icons and visual indicators such as secondary notation, instead of text-based user interfaces, typed command labels or text navigation. Definition taken from link:https://en.wikipedia.org/wiki/Graphical_user_interface[wiki].
-
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+include::./Glossary.adoc[]

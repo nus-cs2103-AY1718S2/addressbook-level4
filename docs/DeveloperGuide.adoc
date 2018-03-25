@@ -22,7 +22,8 @@ CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, wh
 This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
 get started customising and contributing to the application.
 
-Below is an overview of this guide: +
+Below is an overview of this guide:
+
 * <<SettingUp, Setting Up>>
 * <<Design, Design>>
 * <<Implementation, Implementation>>
@@ -30,6 +31,7 @@ Below is an overview of this guide: +
 * <<Testing, Testing>>
 * <<DevOps, Dev Ops>>
 * <<GetStartedProgramming, Appendices>>
+
 
 [[SettingUp]]
 == Setting up

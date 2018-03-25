@@ -35,18 +35,19 @@ Below is an overview of this guide:
 
 [[SettingUp]]
 == Setting up
-Follow the instructions below to set up the project in your computer.
 
 === Prerequisites
 
-.  Install *JDK `1.8.0_60`* or later
+The following must be installed in your computer before you can begin using the application:
+
+. *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
-. Install *IntelliJ* IDE
+. *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
@@ -55,21 +56,44 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+Follow the following steps to set up the project.
+
+
+*Step 1:* Fork this repo, and clone the fork to your computer.
+
+To fork the repo, click the button circled below.
+
+image::Origin Repo.png[width="600"]
+
+Then open Git Bash. Change the current working directory to the location where you want the cloned directory to be made. And type the following:
+
+----
+git clone https://github.com/YOUR-USERNAME/main.git
+----
+
+*Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below.
+
+image::Close Project.png[width="600"]
+
+*Step 3:* Set up the correct JDK version for Gradle.
+
+*Step 3a:* Click `Configure` > `Project Defaults` > `Project Structure`.
+
+image::Configure.png[Width="400"]
+
+*Step 3b:* Click `New...` and find the directory of the JDK.
+
+
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -78,12 +102,12 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -103,11 +127,11 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Follow the steps below when you are ready to start coding.
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
@@ -118,48 +142,47 @@ This section describes the way the application is designed.
 
 [[Design-Architecture]]
 === Architecture
-The architecture diagram of the application:
+*_Figure 1_* below explains the high-level design of the App.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: initializing the components in the correct sequence and connecting them up with each other.
+* At shut down: shutting down the components and invoking cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : Used by components to communicate with other components using events (i.e. a form of _Event Driven_ design,
-written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library])
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The Command Executor of the App.
-* <<Design-Model,*`Model`*>>: Data Holder of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Data Reader and Writer to hard disk.
+* <<Design-Ui,*`UI`*>>: the UI of the App
+* <<Design-Logic,*`Logic`*>>: the command executor
+* <<Design-Model,*`Model`*>>: holds the data of the App in-memory
+* <<Design-Storage,*`Storage`*>>: reads data from, and writes data to, the hard disk
 
-Each of the four components
 
-* Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+Each of the four components:
+
+* defines its _API_ in an `interface` with the same name as the Component, and
+* exposes its functionality using a `{Component Name}Manager` class.
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .The API of the Logic Component
 image::LogicAPI.png[width="800"]
 
-[discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+*_Figure 3_* below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeletePerson.png[width="800"]
@@ -167,7 +190,7 @@ image::SDforDeletePerson.png[width="800"]
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+*_Figure 4_* below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
@@ -180,7 +203,7 @@ The sections below give more details of each component.
 [[Design-Ui]]
 === UI component
 
-The architecture diagram of the UI component:
+*_Figure 5_* below shows the architecture diagram of the UI component.
 
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
@@ -189,13 +212,13 @@ image::UiClassDiagram.png[width="800"]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
-The `UI` component,
+The `UI` component
 
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* executes user commands using the `Logic` component,
+* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change, and
+* responds to events raised from various parts of the App and updates the UI accordingly.
 
 [[Design-Logic]]
 === Logic component
@@ -222,33 +245,34 @@ image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
-
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Desk Board data.
-* use two class to store information about 'Event' and 'Task' separately
-* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `UserPref` object that represents the user's preferences,
+* stores the Desk Board data,
+* use two class to store information about 'Event' and 'Task' separately,
+* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change, and
 * does not depend on any of the other three components.
 
 
 [[Design-Storage]]
 === Storage component
 
+*_Figure 10_* below shows the structure of the Storage Component.
+
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component can save the following and read them back:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Desk Board data in xml format and read it back.
+* `UserPref` objects in json format, and
+* Desk Board data in xml format.
 
 [[Design-Commons]]
 === Common classes
@@ -445,20 +469,16 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 
 
-=== `Model` Component
-
 === Model
 
-
 The `Model` component was originally implemented to store personal contact details.
-As we modified the application to `CLInder` we need to store information of activities instead.
+As we modified the application to `CLIndar` we need to store information of activities instead.
 
-The original application `Address Book` store information in the `Person` Class.
+The original application `Address Book` store information in the `Person` class.
 
-Since we need now to store information of event and task in the memory now.
-The `Person` Class need to modified to store the record..
+Since we now need to store information of events and tasks in the memory, the `Person` class needs to modified to store the record.
 
-The `UniquePersonList` need to be modified to store list of `Task` and `Activity`.
+The `UniquePersonList` needs to be modified to store list of `Task` and `Activity`.
 {empty} +
 {empty} +
 
@@ -493,6 +513,22 @@ This would allow us to have a working release every week.
 
 === Storage
 
+Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
+{empty} +
+{empty} +
+
+==== Design Consideration
+* **Alternative 1:** Use 1 list to store objects of both classes
+** Pros: There is no need to create 2 separate lists to store the 2 different class objects.
+** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
+
+* **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
+** Pros: When we want to perform an operation on all the objects stored in a list, each object can be treated equally as they are from the same class.
+** Cons: More effort is required to create 2 separate lists.
+{empty} +
+{empty} +
+
+While both alternatives have advantages and disadvantages, we feel that the second alternative's advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of objects, whereby each list contains objects of the same class, especially as we make the 2 classes more specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in the long run.
 {empty} +
 {empty} +
 
@@ -520,27 +556,6 @@ UI as intuitive as possible to bring convenience and comfort to the user. As suc
 definitely the preferred approach here.
 {empty} +
 {empty} +
-
-=== Storage
-
-
-Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
-{empty} +
-{empty} +
-
-==== Design Consideration
-* **Alternative 1:** Use 1 list to store objects of both classes
-** Pros: There is no need to create 2 separate lists to store the 2 different class objects.
-** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
-
-* **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
-** Pros: When we want to perform an operation on all the objects stored in a list, each object can be treated equally as they are from the same class.
-** Cons: More effort is required to create 2 separate lists.
-{empty} +
-{empty} +
-
-While both alternatives have advantages and disadvantages, we feel that the second alternative's advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of objects, whereby each list contains objects of the same class, especially as we make the 2 classes more specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in the long run.
-
 
 
 == Documentation

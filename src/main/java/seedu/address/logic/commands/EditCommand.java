@@ -178,6 +178,14 @@ public class EditCommand extends UndoableCommand {
                     this.programmingLanguage, this.tags);
         }
 
+        public void setKey(UniqueKey key) {
+            this.uniqueKey = key;
+        }
+
+        public Optional<UniqueKey> getKey() {
+            return Optional.ofNullable(uniqueKey);
+        }
+
         public void setName(Name name) {
             this.name = name;
         }

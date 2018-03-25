@@ -14,7 +14,6 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
-import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
 
 /**

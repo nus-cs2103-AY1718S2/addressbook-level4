@@ -207,8 +207,7 @@ public class Student {
                 && otherStudent.getEmail().equals(this.getEmail())
                 && otherStudent.getAddress().equals(this.getAddress())
                 && otherStudent.getProgrammingLanguage().equals(this.getProgrammingLanguage())
-                && otherStudent.getDashboard().equals(this.getDashboard())
-                && otherStudent.getUniqueKey().equals(this.getUniqueKey());
+                && otherStudent.getDashboard().equals(this.getDashboard());
     }
 
     @Override

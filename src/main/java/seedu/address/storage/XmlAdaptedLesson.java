@@ -61,7 +61,8 @@ public class XmlAdaptedLesson {
      */
     public Lesson toModelType() throws IllegalValueException {
         if (this.key == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, UniqueKey.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, UniqueKey.class.getSimpleName()));
         }
         if (!UniqueKey.isValidUniqueKey(this.key)) {
             throw new IllegalValueException(UniqueKey.MESSAGE_UNIQUE_KEY_CONSTRAINTS);

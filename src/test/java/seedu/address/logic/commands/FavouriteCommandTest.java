@@ -13,13 +13,14 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.student.Student;
 import seedu.address.testutil.StudentBuilder;
 
 public class FavouriteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Schedule());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -29,7 +30,7 @@ public class FavouriteCommandTest {
 
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_SUCCESS, favouritedTargetStudent);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
         expectedModel.updateStudent(targetStudent, favouritedTargetStudent);
 
         assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);

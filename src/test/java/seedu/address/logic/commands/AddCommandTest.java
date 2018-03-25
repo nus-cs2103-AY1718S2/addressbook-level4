@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.Schedule;
 import seedu.address.model.lesson.Day;
+import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
@@ -157,7 +158,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteLesson(Student student) throws LessonNotFoundException {
+        public void deleteLesson(Lesson lesson) throws LessonNotFoundException {
             fail("This method should not be called");
         }
 
@@ -165,6 +166,11 @@ public class AddCommandTest {
         public Schedule getSchedule() {
             fail("This method should not be called");
             return null;
+        }
+
+        @Override
+        public void printSchedule() {
+            fail("This method should not be called");
         }
     }
 

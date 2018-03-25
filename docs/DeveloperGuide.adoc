@@ -276,12 +276,16 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::undoredo[]
 === Undo/Redo feature
+
+This feature allows users to undo and redo certain commands executed in the current session.
+
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands.
 
+.Inheritance Diagram for commands in `Logic` Component
 image::LogicCommandClassDiagram.png[width="800" align="center"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -321,10 +325,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.UndoRedoStack before and after executing 1 Delete Command
 image::UndoRedoStartingStackDiagram.png[width="800" align="center"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
+.UndoRedoStack before and after Executing 1 Add Command
 image::UndoRedoNewCommand1StackDiagram.png[width="800" align="center"]
 
 [NOTE]
@@ -334,6 +340,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
+.UndoRedoStack before and after executing Undo Command
 image::UndoRedoExecuteUndoStackDiagram.png[width="800" align="center"]
 
 [NOTE]
@@ -341,6 +348,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Sequence Diagram for executing Undo Command
 image::UndoRedoSequenceDiagram.png[width="800" align="center"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
@@ -350,14 +358,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.UndoRedoStack before and after executing Clear Command
 image::UndoRedoNewCommand2StackDiagram.png[width="800" align="center"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.UndoRedoStack before and after executing List Command
 image::UndoRedoNewCommand3StackDiagram.png[width="800" align="center"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Execution Path when Undoable Commands
 image::UndoRedoActivityDiagram.png[width="650" align="center"]
 
 ==== Design Considerations
@@ -426,7 +437,7 @@ A brief description of each of the attributes of an `Order` is given below: +
 * DeliveryDate: Represents the date by which the sales order must be fulfilled. +
 
 As orders are added to a particular person, there exists an association between a `Person` object and an `Order` object.
-This relationship is shown in _Figure 12_ given below.
+This relationship is shown in _Figure 20_ given below.
 
 // UML Diagram showing association between a Person and an Order
 .UML Diagram showing association between a Person and an Order
@@ -563,7 +574,7 @@ The above method deletes `orderToDelete` from the `model` of the address book an
 
 ===== Displaying Orders In GUI
 
-A single `Order` is displayed using an `OrderListCard` (refer to Figure 13 below). The list of all orders in the address book is then displayed in a list
+A single `Order` is displayed using an `OrderListCard` (refer to Figure 21 below). The list of all orders in the address book is then displayed in a list
 using the `OrderListPanel`.
 
 .OrderListCard FXML Render
@@ -668,7 +679,7 @@ The following diagram shows class diagram of `Model` Component related to `UserE
 .`Model` Component showing classes related to events management
 image::UserEventClassDiagram.png[width="800" align="center"]
 
-In the Figure 14, `ModelManager` creates an instance of `UserEvents` interface, which provides the `UserEvents` API for `ModelManager` to implement.
+In the Figure 22, `ModelManager` creates an instance of `UserEvents` interface, which provides the `UserEvents` API for `ModelManager` to implement.
 `UserEventsManager` implements methods used by users to add, edit or delete `CalendarEvent`, which contains information of an event. `CalendarEvent` is stored in the `UniqueEventList`. +
 
 `Logic` Component contains the commands required to manage user's events (e.g. `AddEventCommand`, `deleteEventCommand`).
@@ -678,7 +689,7 @@ The sequence diagram below shows how add event operation works:
 .Sequence Diagram for adding of an event into ContactSails
 image::AddEventSD.png[width="800" align="center]
 
-In Figure 15, when a user enters the command to add an event, `AddEventCommand` will call `addEvent()` in `ModelManager`.
+In Figure 23, when a user enters the command to add an event, `AddEventCommand` will call `addEvent()` in `ModelManager`.
 `ModelManager` in turn calls `addEvent()` in `UserEventsManager`, which creates a new `CalendarEvent` containing the information given by user.
 `UserEventsManager` will then add `CalendarEvent` to `UniqueEventList`. If addition of event is a success, control is eventually returned from `UserEventsManager` to `AddEventCommand`.
 

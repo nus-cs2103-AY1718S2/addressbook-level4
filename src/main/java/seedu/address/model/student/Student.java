@@ -24,11 +24,11 @@ public class Student {
     private final ProgrammingLanguage programmingLanguage;
     private final Favourite favourite;
     private final Dashboard dashboard;
-
+    private UniqueKey uniqueKey;
     private final UniqueTagList tags;
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null. For when dashboard and favourite is not initialised
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags) {
@@ -45,7 +45,7 @@ public class Student {
     }
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null. For when dashboard is not initialised
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags, Favourite fav) {
@@ -62,7 +62,7 @@ public class Student {
     }
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null. For when all attributes can be passed in as parameters
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags, Favourite fav, Dashboard dashboard) {
@@ -77,6 +77,65 @@ public class Student {
         this.favourite = fav;
         this.dashboard = dashboard;
     }
+
+    /**
+     * Constructors for Students with UniqueKey being read in ( read from file )
+     */
+    /**
+     * Every field must be present and not null. For when dashboard and favourite is not initialised
+     */
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
+                   Set<Tag> tags) {
+        requireAllNonNull(uniqueKey, name, phone, email, address, tags);
+        this.uniqueKey = uniqueKey;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = new Favourite(false); // Default value
+        this.dashboard = new Dashboard();
+    }
+
+    /**
+     * Every field must be present and not null. For when dashboard is not initialised
+     */
+    public Student(UniqueKey uniqueKey,Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
+                   Set<Tag> tags, Favourite fav) {
+        requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
+        this.uniqueKey = uniqueKey;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
+        this.dashboard = new Dashboard();
+    }
+
+    /**
+     * Every field must be present and not null. For when all attributes can be passed in as parameters
+     */
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
+                   Set<Tag> tags, Favourite fav, Dashboard dashboard) {
+        requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
+        this.uniqueKey = uniqueKey;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
+        this.dashboard = dashboard;
+    }
+
+
 
     public Name getName() {
         return name;
@@ -102,15 +161,12 @@ public class Student {
         return dashboard;
     }
 
+    public UniqueKey getUniqueKey() { return uniqueKey; }
     /**
      * Returns true if Student is in favourites, else returns false.
      */
     public boolean isFavourite() {
-        if (favourite.value.equals("true")) {
-            return true;
-        } else {
-            return false;
-        }
+        return favourite.isFavourite();
     }
 
     public ProgrammingLanguage getProgrammingLanguage() {
@@ -123,6 +179,12 @@ public class Student {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    public void setKey(UniqueKey uniqueKey) {
+        if (this.uniqueKey == null) {
+            this.uniqueKey = uniqueKey;
+        }
     }
 
     @Override
@@ -141,7 +203,8 @@ public class Student {
                 && otherStudent.getEmail().equals(this.getEmail())
                 && otherStudent.getAddress().equals(this.getAddress())
                 && otherStudent.getProgrammingLanguage().equals(this.getProgrammingLanguage())
-                && otherStudent.getDashboard().equals(this.getDashboard());
+                && otherStudent.getDashboard().equals(this.getDashboard())
+                && otherStudent.getUniqueKey().equals(this.getUniqueKey());
     }
 
     @Override

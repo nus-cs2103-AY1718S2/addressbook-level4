@@ -3,6 +3,7 @@ package seedu.address.model.student;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,7 @@ import seedu.address.model.student.exceptions.StudentNotFoundException;
 public class UniqueStudentList implements Iterable<Student> {
 
     private final ObservableList<Student> internalList = FXCollections.observableArrayList();
-
+    
     /**
      * Returns true if the list contains an equivalent student as the given argument.
      */
@@ -43,6 +44,7 @@ public class UniqueStudentList implements Iterable<Student> {
         if (contains(toAdd)) {
             throw new DuplicateStudentException();
         }
+        toAdd.setKey(generateValidUniqueKey());
         internalList.add(toAdd);
     }
 
@@ -102,6 +104,20 @@ public class UniqueStudentList implements Iterable<Student> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
+    private UniqueKey generateValidUniqueKey() {
+        UniqueKey test = UniqueKey.generateRandomKey();
+        while (!isUnique(test)){
+            test = UniqueKey.generateRandomKey();
+        }
+        return test;
+    }
+
+    private boolean isUnique(UniqueKey test) {
+        for(Student testStudent : internalList) {
+            if (test.equals(testStudent.getUniqueKey())) { return false; }
+        }
+        return true;
+    }
     @Override
     public Iterator<Student> iterator() {
         return internalList.iterator();

@@ -49,12 +49,12 @@ Do not disable them. If you have disabled them, go to *File > Settings > Plugins
 . Locate the *build.gradle* file and select it. Click *OK*
 . Click *Open as Project*
 . Click *OK* to accept the default settings
-. Open a console and run the command *`gradlew processResources`* (Mac/Linux: *`./gradlew processResources`*). It should finish with the *`BUILD SUCCESSFUL`* message. +
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the *BUILD SUCCESSFUL* message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the *`seedu.recipe.MainApp`* and try a few commands
+. Run the `seedu.recipe.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -68,7 +68,7 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 . Click on the *Imports* tab to set the order
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to *999* to prevent IntelliJ from contracting the import statements
-* For *Import Layout*: The order is *import static all other imports*, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a *<blank line>* between each *import*
+* For *Import Layout*: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -164,7 +164,7 @@ image::UiClassDiagram.png[width="800"]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `RecipeListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching *.fxml* files that are in the *src/main/resources/view* folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/recipe/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[*MainWindow.fxml*]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching *.fxml* files that are in the *src/main/resources/view* folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/recipe/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[MainWindow.fxml]
 
 The `UI` component,
 
@@ -226,7 +226,7 @@ The `Storage` component,
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the *`seedu.recipe.commons`* package.
+Classes used by multiple components are in the `seedu.recipe.commons` package.
 
 == Implementation
 
@@ -571,8 +571,8 @@ Adding the XML extension is to make the command more user-friendly and to mainta
 ----
 String XmlExtensionFilename = ParserUtil.parseFilename(filename);
 ----
-Because the file is being uploaded to the user's Dropbox account, their Dropbox account access token is needed and is stored in the variable _ACCESS_TOKEN_. This token is then used together
-with `String` _XmlExtensionFilename_, which was obtained from `UploadCommandParser`, in the `upload()` method as shown below:
+Because the file is being uploaded to the user's Dropbox account, their Dropbox account access token is needed and is stored in the variable `ACCESS_TOKEN`. This token is then used together
+with `String` `XmlExtensionFilename`, which was obtained from `UploadCommandParser`, in the `upload()` method as shown below:
 
 [source,java]
 ----
@@ -591,7 +591,7 @@ private CommandResult upload() throws DbxException {
     return new CommandResult(MESSAGE_SUCCESS);
 }
 ----
-The _ACCESS_TOKEN_ is currently hardcoded in, as shown below, but will be improved upon soon.
+The `ACCESS_TOKEN` is currently hardcoded in, as shown below, but will be improved upon soon.
 
 [source,java]
 ----
@@ -658,11 +658,11 @@ _{Explain here how the data encryption feature will be implemented}_
 
 === Logging
 
-We are using *java.util.logging* package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
 * The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
 * The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+* Currently log messages are output through: *Console* and to a *.log* file.
 
 *Logging Levels*
 
@@ -686,7 +686,7 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 === Editing Documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render *.adoc* files locally to preview the end result of your edits.
-Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
+Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your *.adoc* files in real-time.
 
 === Publishing Documentation
 
@@ -723,7 +723,7 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command *`gradlew clean allTests`* (Mac/Linux: *`./gradlew clean allTests`*)
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
@@ -732,15 +732,15 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command *`gradlew clean headless allTests`* (Mac/Linux: *`./gradlew clean headless allTests`*)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
 === Types of tests
 
 We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the *`systemtests`* package.
-.. _Unit tests_ that test the individual components. These are in *`seedu.recipe.ui`* package.
+.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.. _Unit tests_ that test the individual components. These are in `seedu.recipe.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.recipe.commons.StringUtilTest`
@@ -913,7 +913,7 @@ image::getting-started-ui-status-after.png[width="500"]
 +
 ****
 * Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[*StatusBarFooter.fxml*] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
+** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[StatusBarFooter.fxml] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
 ** link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the recipe book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/recipe/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of recipes when the application just started.
@@ -995,7 +995,7 @@ Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/recipe/ui/
 
 **Main:**
 
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/RecipeListCard.fxml[*RecipeListCard.fxml*].
+. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/RecipeListCard.fxml[RecipeListCard.fxml].
 . Add FXML annotation in link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] to tie the variable to the actual label.
 
 **Tests:**
@@ -1083,19 +1083,19 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Feature Contribution*:
 
-*`Ryan`* - Media: As a user, I want to share my personal recipes with my friends so that they can try my recipes.
+*Ryan* - Media: As a user, I want to share my personal recipes with my friends so that they can try my recipes.
 
 * add url to recipe `minor`
 * add image to recipe
 * share recipe on social media *`major`*
 
-*`Nicholas`* - Organisation: As a user, I want to organise my recipe storage so that I can maintain ease of access to my recipes.
+*Nicholas* - Organisation: As a user, I want to organise my recipe storage so that I can maintain ease of access to my recipes.
 
 * create, edit, delete groups for recipes *`major`*
 * save files online (cloud storage)
 * search recipes by tags `minor`
 
-*`Hoang Duong`* - Efficiency: As a user, I want to efficiently manage my recipes so that I can save time.
+*Hoang Duong* - Efficiency: As a user, I want to efficiently manage my recipes so that I can save time.
 
 * find recipe by name, ingredient, cuisine `minor`
 * filter and sort recipes by cooking time/difficulty level
@@ -1103,7 +1103,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * auto-completion, IDE style shortcuts (“manage” because you may need to edit recipes. This auto-completion helps in quickening the process) *`major`*
 * get a random recipe
 
-*`Thanh Nguyen`* - Data: As a user, I want to easily add recipes from the internet so that I can save time on unnecessary typing of recipes.
+*Thanh Nguyen* - Data: As a user, I want to easily add recipes from the internet so that I can save time on unnecessary typing of recipes.
 
 * add recipe in a user friendly manner (not a single command line) `minor`
 * search and import recipes from internet *`major`*
@@ -1176,7 +1176,7 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `RecipeBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the *RecipeBook* and the *Actor* is the *user*, unless specified otherwise)
 
 [discrete]
 === Use case: Add a video to recipe

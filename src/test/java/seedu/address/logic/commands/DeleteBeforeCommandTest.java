@@ -8,9 +8,9 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.testutil.TypicalDates.DATE_FIRST_JAN;
 import static seedu.address.testutil.TypicalDates.DATE_SECOND_FEB;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.BENSON;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTags.TAG_SET_FRIEND;
 import static seedu.address.testutil.TypicalTags.TAG_SET_OWES_MONEY_FRIEND;
 

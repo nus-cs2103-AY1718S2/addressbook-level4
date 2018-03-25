@@ -16,13 +16,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
-public class TypicalPersons {
+public class TypicalPersonsAndAppointments {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com").withPhone("85355255")
@@ -56,7 +58,26 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    //@@author jlks96
+    public static final Appointment ALICE_APPT = new AppointmentBuilder().withPersonName("Alice Pauline")
+            .withDate("01/01/2018").withStartTime("10:30").withEndTime("11:30")
+            .withLocation("123, Jurong West Ave 6, #08-111").build();
+    public static final Appointment BENSON_APPT = new AppointmentBuilder().withPersonName("Benson Meier")
+            .withDate("02/02/2018").withStartTime("10:30").withEndTime("11:30")
+            .withLocation("311, Clementi Ave 2, #02-25").build();
+    public static final Appointment CARL_APPT = new AppointmentBuilder().withPersonName("Carl Kurz")
+            .withDate("03/03/2018").withStartTime("10:30").withEndTime("11:30").withLocation("wall street").build();
+    public static final Appointment DANIEL_APPT = new AppointmentBuilder().withPersonName("Daniel Meier")
+            .withDate("04/04/2018").withStartTime("10:30").withEndTime("11:30").withLocation("10th street").build();
+    public static final Appointment ELLE_APPT = new AppointmentBuilder().withPersonName("Elle Meyer")
+            .withDate("05/05/2018").withStartTime("10:30").withEndTime("11:30").withLocation("michegan ave").build();
+    public static final Appointment FIONA_APPT = new AppointmentBuilder().withPersonName("Fiona Kunz")
+            .withDate("06/06/2018").withStartTime("10:30").withEndTime("11:30").withLocation("little tokyo").build();
+    public static final Appointment GEORGE_APPT = new AppointmentBuilder().withPersonName("George Best")
+            .withDate("07/07/2018").withStartTime("10:30").withEndTime("11:30").withLocation("4th street").build();
+    //@@author
+
+    private TypicalPersonsAndAppointments() {} // prevents instantiation
 
     /**
      * Returns an {@code AddressBook} with all the typical persons.
@@ -70,10 +91,24 @@ public class TypicalPersons {
                 throw new AssertionError("not possible");
             }
         }
+        for (Appointment appointment : getTypicalAppointments()) {
+            try {
+                ab.addAppointment(appointment);
+            } catch (DuplicateAppointmentException e) {
+                throw new AssertionError("not possible");
+            }
+        }
         return ab;
     }
 
     public static List<Person> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
+
+    //@@author jlks96
+    public static List<Appointment> getTypicalAppointments() {
+        return new ArrayList<>(
+                Arrays.asList(ALICE_APPT, BENSON_APPT, CARL_APPT, DANIEL_APPT, ELLE_APPT, FIONA_APPT, GEORGE_APPT));
+    }
+    //@@author
 }

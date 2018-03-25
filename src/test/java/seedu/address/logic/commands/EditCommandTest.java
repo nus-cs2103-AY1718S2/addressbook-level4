@@ -15,7 +15,7 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.getTypicalAddressBookWithAutoDateGeneration;
+import static seedu.address.testutil.TypicalPersonsAndAppointmentsWithAutoDateGeneration.getTypicalAddressBookWithAutoDateGeneration;
 
 import org.junit.Test;
 

@@ -2,8 +2,8 @@ package seedu.address.model.tag;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.AMY;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.BOB;
 import static seedu.address.testutil.TypicalTags.TAG_SET_FRIEND;
 import static seedu.address.testutil.TypicalTags.TAG_SET_HUSBAND;
 import static seedu.address.testutil.TypicalTags.TAG_SET_OWES_MONEY_FRIEND;

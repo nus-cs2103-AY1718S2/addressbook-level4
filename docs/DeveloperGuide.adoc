@@ -84,11 +84,16 @@ image::Configure.png[Width="400"]
 *Step 3b:* Click `New...` and find the directory of the JDK.
 
 
-. Click `Import Project`.
-. Locate the `build.gradle` file and select it. Click `OK`.
-. Click `Open as Project`.
-. Click `OK` to accept the default settings.
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+*Step 4:* Click `Import Project`.
+
+*Step 5:* Locate the `build.gradle` file and select it. Click `OK`.
+
+*Step 6:* Click `Open as Project`.
+
+*Step 7:* Click `OK` to accept the default settings.
+
+*Step 8:* Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+
 This will generate all resources required by the application and tests.
 
 === Verifying the setup

@@ -11,6 +11,7 @@ import java.util.Objects;
 public class ToDo {
 
     private final Content content;
+    private Status status;
 
     /**
      * Every field must be present and not null.
@@ -18,10 +19,19 @@ public class ToDo {
     public ToDo(Content content) {
         requireAllNonNull(content);
         this.content = content;
+        this.status = new Status("undone");
     }
 
     public Content getContent() {
         return content;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status newStatus) {
+        this.status = newStatus;
     }
 
     @Override
@@ -50,6 +60,5 @@ public class ToDo {
         builder.append(getContent());
         return builder.toString();
     }
-
 }
 

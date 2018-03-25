@@ -111,8 +111,6 @@ public class AddressBookTest {
         public ObservableList<Job> getJobList() {
             return jobs;
         }
-
-
     }
 
 }

@@ -33,7 +33,7 @@ public class JobCard extends UiPart<Region> {
     @FXML
     private Label team;
     @FXML
-    private Label location1;
+    private Label jobLocation;
     @FXML
     private Label numberOfPositions;
 
@@ -43,8 +43,8 @@ public class JobCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         position.setText(job.getPosition().value);
         team.setText(job.getTeam().value);
-        location1.setText(job.getLocation().value);
-        numberOfPositions.setText(job.getNumberOfPositions().value);
+        jobLocation.setText(job.getLocation().value);
+        numberOfPositions.setText("Positions: " + job.getNumberOfPositions().value);
     }
     
     @Override

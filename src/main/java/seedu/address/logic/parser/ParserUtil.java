@@ -15,6 +15,8 @@ import seedu.address.model.job.NumberOfPositions;
 import seedu.address.model.job.Position;
 import seedu.address.model.job.Team;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
+import seedu.address.model.person.CurrentPosition;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -119,6 +121,54 @@ public class ParserUtil {
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String currentPosition} into an {@code CurrentPosition}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code currentPosition} is invalid.
+     */
+    public static CurrentPosition parseCurrentPosition(String currentPosition) throws IllegalValueException {
+        requireNonNull(currentPosition);
+        String trimmedCurrentPosition = currentPosition.trim();
+        if (!CurrentPosition.isValidCurrentPosition(trimmedCurrentPosition)) {
+            throw new IllegalValueException(CurrentPosition.MESSAGE_CURRENT_POSITION_CONSTRAINTS);
+        }
+        return new CurrentPosition(trimmedCurrentPosition);
+    }
+
+    /**
+     * Parses a {@code Optional<String> company} into an {@code Optional<Company>} if {@code company} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<CurrentPosition> parseCurrentPosition(Optional<String> currentPosition) throws IllegalValueException {
+        requireNonNull(currentPosition);
+        return currentPosition.isPresent() ? Optional.of(parseCurrentPosition(currentPosition.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String company} into an {@code Company}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code company} is invalid.
+     */
+    public static Company parseCompany(String company) throws IllegalValueException {
+        requireNonNull(company);
+        String trimmedCompany = company.trim();
+        if (!Company.isValidCompany(trimmedCompany)) {
+            throw new IllegalValueException(Company.MESSAGE_COMPANY_CONSTRAINTS);
+        }
+        return new Company(trimmedCompany);
+    }
+
+    /**
+     * Parses a {@code Optional<String> company} into an {@code Optional<Company>} if {@code company} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Company> parseCompany(Optional<String> company) throws IllegalValueException {
+        requireNonNull(company);
+        return company.isPresent() ? Optional.of(parseCompany(company.get())) : Optional.empty();
     }
 
     /**

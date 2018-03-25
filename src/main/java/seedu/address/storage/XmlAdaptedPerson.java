@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
+import seedu.address.model.person.CurrentPosition;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -33,6 +35,10 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
+    private String currentPosition;
+    @XmlElement(required = true)
+    private String company;
+    @XmlElement(required = true)
     private String profilePicture;
 
     @XmlElement
@@ -48,11 +54,13 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedJob} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String profilePicture,
-                            List<XmlAdaptedTag> tagged) {
+                            String currentPosition, String company, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.currentPosition = currentPosition;
+        this.company = company;
         this.profilePicture = profilePicture;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
@@ -69,6 +77,8 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        currentPosition = source.getCurrentPosition().value;
+        company = source.getCompany().value;
         profilePicture = source.getProfilePicture().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -119,6 +129,22 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        if (this.currentPosition == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, CurrentPosition.class.getSimpleName()));
+        }
+        if (!CurrentPosition.isValidCurrentPosition(this.currentPosition)) {
+            throw new IllegalValueException(CurrentPosition.MESSAGE_CURRENT_POSITION_CONSTRAINTS);
+        }
+        final CurrentPosition currentPosition = new CurrentPosition(this.currentPosition);
+
+        if (this.company == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Company.class.getSimpleName()));
+        }
+        if (!Company.isValidCompany(this.address)) {
+            throw new IllegalValueException(Company.MESSAGE_COMPANY_CONSTRAINTS);
+        }
+        final Company company = new Company(this.company);
+
         if (this.profilePicture != null) {
             if (!ProfilePicture.isValidProfilePicture(this.profilePicture)) {
                 throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_CONSTRAINTS);
@@ -129,7 +155,7 @@ public class XmlAdaptedPerson {
         final ProfilePicture profilePicture = new ProfilePicture(this.profilePicture);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, profilePicture, tags);
+        return new Person(name, phone, email, address, currentPosition, company, profilePicture, tags);
     }
 
     @Override
@@ -147,6 +173,8 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(currentPosition, otherPerson.currentPosition)
+                && Objects.equals(company, otherPerson.company)
                 && Objects.equals(profilePicture, otherPerson.profilePicture)
                 && tagged.equals(otherPerson.tagged);
     }

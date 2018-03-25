@@ -61,6 +61,7 @@ public class ContactDetailsDisplay extends UiPart<Region> {
 
         keys.setItems(FXCollections.observableList(keysList));
         values.setItems(FXCollections.observableList(valuesList));
+        System.out.println(values);
     }
 
     /**

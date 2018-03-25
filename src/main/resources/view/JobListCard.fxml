@@ -28,8 +28,8 @@
                 <Label fx:id="position" styleClass="cell_big_label" text="\$position" />
             </HBox>
             <Label fx:id="team" styleClass="cell_small_label" text="\$team" />
-            <Label fx:id="location1" styleClass="cell_small_label" text="\$location" />
-            <Label fx:id="numberOfPositions" styleClass="cell_small_label" text="Positions: \$numberOfPositions" />
+            <Label fx:id="jobLocation" styleClass="cell_small_label" text="\$jobLocation" />
+            <Label fx:id="numberOfPositions" styleClass="cell_small_label" text="\$numberOfPositions" />
         </VBox>
         <rowConstraints>
             <RowConstraints />

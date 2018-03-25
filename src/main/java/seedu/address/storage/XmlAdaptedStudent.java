@@ -15,6 +15,7 @@ import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -24,6 +25,8 @@ public class XmlAdaptedStudent {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Student's %s field is missing!";
 
+    @XmlElement(required = true)
+    private String key;
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -48,8 +51,9 @@ public class XmlAdaptedStudent {
     /**
      * Constructs an {@code XmlAdaptedStudent} with the given student details.
      */
-    public XmlAdaptedStudent(String name, String phone, String email, String address,
+    public XmlAdaptedStudent(String uniqueKey, String name, String phone, String email, String address,
                              String programmingLanguage, List<XmlAdaptedTag> tagged) {
+        this.key = uniqueKey;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -66,6 +70,7 @@ public class XmlAdaptedStudent {
      * @param source future changes to this will not affect the created XmlAdaptedStudent
      */
     public XmlAdaptedStudent(Student source) {
+        key = source.getUniqueKey().toString();
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -88,6 +93,13 @@ public class XmlAdaptedStudent {
             studentTags.add(tag.toModelType());
         }
 
+        if (this.key == null) {
+            throw new IllegalValueException("LMAO GONE");
+        }
+        if (!UniqueKey.isValidUniqueKey(this.key)) {
+            throw new IllegalValueException("LMAO WRONG");
+        }
+        final UniqueKey uniqueKey = new UniqueKey(key);
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -130,7 +142,7 @@ public class XmlAdaptedStudent {
         final ProgrammingLanguage programmingLanguage = new ProgrammingLanguage(this.programmingLanguage);
 
         final Set<Tag> tags = new HashSet<>(studentTags);
-        return new Student(name, phone, email, address, programmingLanguage, tags);
+        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags);
     }
 
     @Override

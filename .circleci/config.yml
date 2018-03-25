@@ -1,0 +1,15 @@
+version: 2
+jobs:
+   build:
+     docker:
+       - image: takuyakanbr/bibliotek-ci:latest
+     steps:
+       - checkout
+       - run:
+           name: Repository-wide checks
+           command: './config/travis/run-checks.sh'
+       - run:
+           name: Test
+           command: 'gradle checkstyleMain checkstyleTest headless allTests coverage coveralls asciidoctor'
+       - store_test_results:
+           path: build/test-results

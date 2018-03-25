@@ -9,8 +9,8 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'checkstyle'
-    id "com.github.kt3k.coveralls" version "2.4.0"
-    id "com.github.johnrengelman.shadow" version '1.2.3'
+    id "com.github.kt3k.coveralls" version "2.8.2"
+    id "com.github.johnrengelman.shadow" version '2.0.2'
     id 'org.asciidoctor.convert' version '1.5.6'
     id 'application'
 }
@@ -38,12 +38,12 @@ jacocoTestReport {
     reports {
         xml.enabled false
         csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+        html.destination file("${buildDir}/jacocoHtml")
     }
 }
 
 dependencies {
-    String testFxVersion = '4.0.7-alpha'
+    String testFxVersion = '4.0.8-alpha'
 
     compile group: 'org.asynchttpclient', name: 'async-http-client', version: '2.4.3'
     compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
@@ -69,7 +69,7 @@ shadowJar {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '4.6'
 }
 
 task coverage(type: JacocoReport) {
@@ -152,14 +152,16 @@ test {
     }
 }
 
-task headless << {
-    println "Setting headless mode properties."
-    test {
-        systemProperty 'java.awt.robot', 'true'
-        systemProperty 'testfx.robot', 'glass'
-        systemProperty 'testfx.headless', 'true'
-        systemProperty 'prism.order', 'sw'
-        systemProperty 'prism.text', 't2k'
+task headless {
+    doLast {
+        println "Setting headless mode properties."
+        test {
+            systemProperty 'java.awt.robot', 'true'
+            systemProperty 'testfx.robot', 'glass'
+            systemProperty 'testfx.headless', 'true'
+            systemProperty 'prism.order', 'sw'
+            systemProperty 'prism.text', 't2k'
+        }
     }
 }
 
@@ -172,13 +174,13 @@ asciidoctor {
     outputDir "${buildDir}/docs"
 
     attributes linkcss: true,
-               stylesheet: 'gh-pages.css',
-               'source-highlighter': 'coderay',
-               icons: 'font',
-               experimental: true,
-               sectAnchors: true,
-               idprefix: '',  // for compatibility with GitHub preview
-               idseparator: '-'
+            stylesheet: 'gh-pages.css',
+            'source-highlighter': 'coderay',
+            icons: 'font',
+            experimental: true,
+            sectAnchors: true,
+            idprefix: '',  // for compatibility with GitHub preview
+            idseparator: '-'
 }
 
 /*
@@ -202,12 +204,21 @@ task deployOfflineDocs(type: Copy) {
     }
 }
 
-task copyDummySearchPage(type: Copy) {
-    from 'docs/DummySearchPage.html'
-    into "${buildDir}/docs/html5"
-}
-
 deployOfflineDocs.dependsOn asciidoctor
 processResources.dependsOn deployOfflineDocs
+
+task download {
+    description "Pre-downloads most dependencies"
+    doLast {
+        configurations.getAsMap().each { name, config ->
+            println "Retrieving dependencies for $name"
+            try {
+                config.files
+            } catch (e) {
+                // skip
+            }
+        }
+    }
+}
 
 defaultTasks 'clean', 'headless', 'allTests', 'coverage', 'asciidoctor'

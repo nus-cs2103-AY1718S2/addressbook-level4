@@ -4,15 +4,13 @@ import java.awt.AWTException;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
-
-import java.awt.event.WindowStateListener;
 import java.util.logging.Logger;
-
-import javax.swing.*;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -72,15 +70,12 @@ public class UiManager extends ComponentManager implements Ui {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
+        primaryStage.iconifiedProperty().addListener(new ChangeListener<Boolean>() {
 
-        JFrame frame = new JFrame();
-        frame.addWindowStateListener(new WindowStateListener() {
             @Override
-            public void windowStateChanged(java.awt.event.WindowEvent e) {
-                if (e.getNewState() == java.awt.event.WindowEvent.WINDOW_DEACTIVATED) {
-                    isWindowMinimized = true;
-                } else if (e.getNewState() == java.awt.event.WindowEvent.WINDOW_ACTIVATED)
-                    isWindowMinimized = false;
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
+                System.out.println("minimized:" + t1.booleanValue());
+                isWindowMinimized = t1;
             }
         });
     }

@@ -34,13 +34,22 @@ public class TimetableEntryTimeParserUtil {
      * @return TimetableEntryTime containing the parsed time fields.
      */
     public static TimetableEntryTime parseTime(String input) {
-        TimetableEntryTime tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX,
-                YEAR_END_INDEX)),
-                Integer.parseInt(input.substring(MONTH_BEGIN_INDEX, MONTH_END_INDEX)) + MONTH_INDEX_OFFSET,
-                Integer.parseInt(input.substring(DAY_BEGIN_INDEX, DAY_END_INDEX)),
-                Integer.parseInt(input.substring(HOUR_BEGIN_INDEX, HOUR_END_INDEX)) + TIMEZONE_HOUR_OFFSET,
-                Integer.parseInt(input.substring(MINUTE_BEGIN_INDEX, MINUTE_END_INDEX)),
-                Integer.parseInt(input.substring(SECOND_BEGIN_INDEX, SECOND_END_INDEX)));
+        TimetableEntryTime tet;
+        try {
+            tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX, YEAR_END_INDEX)),
+                    Integer.parseInt(input.substring(MONTH_BEGIN_INDEX, MONTH_END_INDEX)) + MONTH_INDEX_OFFSET,
+                    Integer.parseInt(input.substring(DAY_BEGIN_INDEX, DAY_END_INDEX)),
+                    Integer.parseInt(input.substring(HOUR_BEGIN_INDEX, HOUR_END_INDEX)) + TIMEZONE_HOUR_OFFSET,
+                    Integer.parseInt(input.substring(MINUTE_BEGIN_INDEX, MINUTE_END_INDEX)),
+                    Integer.parseInt(input.substring(SECOND_BEGIN_INDEX, SECOND_END_INDEX)));
+        } catch (NumberFormatException e) {
+            tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX - 2, YEAR_END_INDEX - 2)),
+            Integer.parseInt(input.substring(MONTH_BEGIN_INDEX - 2, MONTH_END_INDEX - 2)) + MONTH_INDEX_OFFSET,
+            Integer.parseInt(input.substring(DAY_BEGIN_INDEX - 2, DAY_END_INDEX - 2)),
+            Integer.parseInt(input.substring(HOUR_BEGIN_INDEX - 2, HOUR_END_INDEX - 2)) + TIMEZONE_HOUR_OFFSET,
+            Integer.parseInt(input.substring(MINUTE_BEGIN_INDEX - 2, MINUTE_END_INDEX - 2)),
+            Integer.parseInt(input.substring(SECOND_BEGIN_INDEX - 2, SECOND_END_INDEX - 2)));
+        }
         return tet;
     }
 }

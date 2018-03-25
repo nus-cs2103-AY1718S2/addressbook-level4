@@ -362,6 +362,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::Sorting[]
 === Sort feature
 
 ==== Current Implementation
@@ -402,6 +403,42 @@ image::SortCommandByName.png[width="650"]
 ** Pros: Reduces the time taken to sort the list for each start up of the app.
 ** Cons: If the default list is required, `SortCommand` will have to be implemented
          as an `UndoableCommand` as well.
+// end::Sorting[]
+
+// tag::TagReplace[]
+=== TagReplace feature
+
+==== Current Implementation
+The tag replace is a command that replaces the target tag with the tag that we want.
+The tags would be passed in via the argument multimap which would extract the tags with t/ prefix.
+It would then be separated into two different tags, tag to be replaced and the tag to be placed.
+Then the Addressbook would proceed to look for the persons with the unwanted tag to remove the unwanted
+tag and to add the new tag to the person.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "tag replace t/TAGNAME t/TAGNAME" is typed into the `CommandBox` by the user.
+
+image::TagReplaceCommandSequenceDiagram.png[width="650"]
+
+.  `Logic` uses the `AddressBookParser` class to parse the  command.
+.  This results in a `TagReplaceCommand` object which is executed by the `LogicManager`.
+.  The command execution calls the `replaceTag` method which then affects the `Model`.
+.  The tag is then replaced and the result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+
+Below is an example of how the list looks like before and after the command "tagreplace t/3G t/4G"
+is executed.
+
+image::TagReplaceCommand.png[width="650"]
+
+
+==== Design Considerations.
+===== Aspect: Data structure to support the tag replace command
+* ** Alternative 1: ** Reuse the set that exist in the Addressbook.
+** Pros: Need not introduce a new data structure to store the tags that are passed in.
+** Cons: A set arranges its elements in alphabetical order. This disrupts the order in which the user has entered,
+         and it would cause the wanted tag to be removed instead of the unwanted one.
+
+// end::TagReplace[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -876,7 +913,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |access student's academic and non-academic achievements |stream the students properly (e.g. Normal Academic, Normal Technical, Express)
 
-|`* * *` |teacher |edit remarks of each individual student |update the students' individual needs that occur during class
+|`* * *` |teacher |edit remarks of each individual student |update the students' individual needs that occur during class and to ease the writing of a testimonial.
 
 |`* *` |teacher |filter and group students |access information of specific students
 
@@ -887,6 +924,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |teacher |update student's attendance records |know if a student has been absent too frequently
 
 |`*` |teacher |look up on student's identity |recognize who the student is
+
+|`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
+
+|`*` |teacher |can track the student's progress in the CCA |decide whether to involve the student more
+
+|`*` |teacher |key in the levels attained by the students in the various domains in L.E.A.P.S system
+|calculate the Co-Curricular Attainment achieved by the student.
+
+|`*` |teacher |view the student's injuries history |to know the need of my students.
 
 |`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
 |=======================================================================
@@ -1039,6 +1085,7 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
 [discrete]
 === Use case: Sort students by the students' academic streaming results
 

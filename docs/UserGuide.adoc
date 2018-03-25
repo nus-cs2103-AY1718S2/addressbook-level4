@@ -49,7 +49,7 @@ e.g. typing `help` and pressing kbd:[Enter] will open the help window.
 
 * Words in upper case are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as *`add n/Chicken rice`*.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as *`n/Chicken rice t/Rice`* or as *`n/Chicken rice`*.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`t/rice`*, *`t/rice t/chicken`* etc.
+* Items with `...` after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`t/rice`*, *`t/rice t/chicken`* etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME t/TAGS`, `t/TAGS n/NAME` is also acceptable.
 
 [[Navigation]]
@@ -91,12 +91,15 @@ You can add any number of tags (including 0) for a recipe.
 You can split the command into multiple lines as shown in the figure below. In case you forgot how to add a new line, it's kbd:[Shift]+kbd:[Enter].
 
 .Add command a recipe with multiple lines
-image::AddCommandEg2.png[width="720"]
+image::AddCommandEg2.png[width="750"]
 
+{nbsp} +
 If you follow correctly, the result box will tell you so and your recipe will be added to the book (figure below).
+{nbsp} +
+{nbsp}
 
 .After adding a recipe
-image::AddCommandResultEg.png[width="900"]
+image::AddCommandResultEg.png[width="750"]
 
 === Listing all recipes : *`list`*
 
@@ -277,10 +280,13 @@ The *`redo`* command fails as there are no *`undo`* commands executed previously
 Clears all entries from the recipe book. +
 Format: *`clear`*
 
-See figures below for the expected behaviour of this command.
+See figures below for the expected behaviour of this command. +
+{nbsp}
 
 .Effect of the clear command
-image::ClearCommand.png[width]
+image::ClearCommand.png[width="750"]
+
+{nbsp} +
 
 [TIP]
 If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
@@ -303,7 +309,7 @@ There is no need to save manually.
 *Q*: Where do I find my data file? +
 *A*:
 
-image::FAQ1.png[width]
+image::FAQ1.png[width="450"]
 
 
 *Q*: I found a bug in your program, what should I do? +

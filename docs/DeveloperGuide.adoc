@@ -530,6 +530,46 @@ private void createMainView() throws IOException {
 
 // end::calendar[]
 
+// tag::subtask[]
+=== Subtask
+==== Current Implementation
+
+Subtask feature allows user to split their tasks into multiple subtasks. This feature allows user to better
+manage their task. It is implemented using `Subtask` class and `UniqueSubtaskList` class as shown by the diagram below:
+
+.Subtask UML Class Diagram
+image::SubtaskComponentDiagram.png[width="800"]
+
+`UniqueSubtaskList` is created to ensure that no task have a duplicated subtask.
+
+*Subtask management*
+
+To manage the subtasks (Add, edit, etc), the task should be copied since `Task` is immutable.
+
+==== Design Consideration
+===== Aspect: Implementation of `Subtask`
+* **Alternative 1 (current implementation):** Add a new class `Subtask`
+** Pros: Better isolation and easier modification to `Subtask` if needed.
+** Cons: Restricted the possibility of having a subtask that have subtasks.
+
+* **Alternative 2:** Use current `Task` class
+** Pros: Easier to implement and subtask will share the same properties with `Task`.
+** Cons: Possibility of having a cyclic subtask (a task that also a subtask of it self) if not handled carefully.
+
+===== Aspect: Implementation of `UniqueSubtaskList`
+* **Alternative 1 (current implementation):** Use `List` to store subtasks.
+** Pros: Easier to implement
+** Cons: Performance issue will appear when that data is large. Since any operation in `UniqueSubtaskList` except lookup
+is `O(n)`
+
+* **Alternative 2:** Use a combination of BBST and LinkedList to store subtasks.
+** Pros: Faster that the first alternative since it only took `O(log n)` to do every operation.
+** Cons: Harder to implement and more robust testing is required since it is more bug prone than the first alternative.
+
+The second alternative is planned to be implemented in the near future.
+
+// end::subtask[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

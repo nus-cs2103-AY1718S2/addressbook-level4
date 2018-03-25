@@ -27,7 +27,8 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     //default dummy page.
     private static final String SEARCH_PAGE_URL =
-            "https://calendar.google.com/calendar/embed?src=&ctz=Asia%2FSingapore";
+            "https://calendar.google.com/calendar/embed?src=ck6s71ditb731dfepeporbnfb0@group.calendar"
+                    + ".google.com&ctz=Asia%2FSingapore";
     private static final String FXML = "BrowserPanel.fxml";
     private static final String[] TAG_COLOR_STYLES = {"red", "yellow", "blue", "orange", "brown", "green"};
 

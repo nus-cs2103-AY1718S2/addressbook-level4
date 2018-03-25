@@ -17,6 +17,6 @@ public class LockCommandParser implements Parser<LockCommand> {
         String trimmedArgs = args.trim();
 
 
-        return trimmedArgs.isEmpty() ? new LockCommand() : new LockCommand(trimmedArgs);
+        return new LockCommand();
     }
 }

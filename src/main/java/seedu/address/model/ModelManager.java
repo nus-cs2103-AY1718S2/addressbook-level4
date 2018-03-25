@@ -15,6 +15,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.PasswordChangedEvent;
 import seedu.address.commons.events.model.TimetableEntryAddedEvent;
 import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
 import seedu.address.model.person.Person;
@@ -88,11 +89,26 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new TimetableEntryAddedEvent(e));
     }
 
+    private void indicatePasswordChangedEvent(String p) {
+        raise(new PasswordChangedEvent(p));
+    }
+
     @Override
     public void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException {
         addressBook.addTimetableEntry(e);
         indicateAddressBookChanged();
         indicateTimetableEntryAdded(e);
+    }
+
+    @Override
+    public void setPassword(String password) {
+        addressBook.setPassword(password);
+        indicateAddressBookChanged();
+        indicatePasswordChangedEvent(password);
+    }
+
+    public String getPassword() {
+        return addressBook.getPassword();
     }
 
     @Override

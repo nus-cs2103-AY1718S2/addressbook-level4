@@ -102,6 +102,11 @@ public class AddressBookTest {
         public int getNextId() {
             return 0;
         }
+
+        @Override
+        public String getPassword() {
+            return null;
+        }
     }
 
 }

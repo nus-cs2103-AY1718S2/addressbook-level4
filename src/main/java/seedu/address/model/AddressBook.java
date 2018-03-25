@@ -32,6 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private LinkedList<TimetableEntry> timetableEntries;
     private int nextId;
+    private String password;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -45,6 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         timetableEntries = new LinkedList<>();
         nextId = 0;
+        password = "admin";
     }
 
     public AddressBook() {}
@@ -82,6 +84,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .collect(Collectors.toList());
         setTimetableEntriesList(newData.getTimetableEntriesList());
         this.nextId = newData.getNextId();
+        this.password = newData.getPassword();
 
         try {
             setPersons(syncedPersonList);
@@ -153,6 +156,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 correctTagReferences, person.getCalendarId(), person.getId());
         toReturn.setReview(person.getReview());
         return toReturn;
+
     }
 
     /**
@@ -244,8 +248,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         return nextId;
     }
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
     public void setNextId(int nextId) {
         this.nextId = nextId;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

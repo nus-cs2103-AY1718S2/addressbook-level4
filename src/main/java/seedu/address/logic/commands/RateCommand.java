@@ -90,6 +90,7 @@ public class RateCommand extends UndoableCommand {
         person.setReview(personToEdit.getReview());
 
         return person;
+
     }
 
     @Override

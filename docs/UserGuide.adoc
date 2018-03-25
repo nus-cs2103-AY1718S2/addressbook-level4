@@ -90,7 +90,7 @@ You can add any number of tags (including 0) for a recipe.
 [TIP]
 You can split the command into multiple lines as shown in the figure below. In case you forgot how to add a new line, it's kbd:[Shift]+kbd:[Enter].
 
-.Add command a recipe with multiple lines
+.Add a recipe with multiple lines
 image::AddCommandEg2.png[width="750"]
 
 {nbsp} +

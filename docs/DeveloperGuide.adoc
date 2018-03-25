@@ -691,7 +691,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student with friends |find my friend’s timetables |find common studying time with them
 
-|`* * *` |busy student |have my own shortforms of commands |type more quickly and in my own style
+|`* * *` |busy student |have short forms of commands |type more quickly
+
+|`* * *` |busy student |have my customised short forms of commands |type even quicker and in my own style
+
+|`* * *` |busy student |be able to remove my customized short forms |reuse keys
 
 |`* * *` |user |add a new person |
 
@@ -701,11 +705,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user who is concerned about privacy |have my data encrypted |ensure that no one can access my data without my permission
 
+|`* * *` |user who is concerned about privacy |change the password used |security is not compromised
+
 |`* * *` |student who studies in school |be able to find rooms that I can study in |save time finding rooms
 
 |`* * *`|user| be able to transfer data between computers |  share my data with others and change computers seamlessly
 
+|`* * *`|user who is concerned about privacy| be able to transfer encrypted data |share my data in its encrypted form
+
 |`* * *`|user with many friends| track the birthdays of my friends | not miss a friend's birthday
+
+|`* * *`|user with many friends| see all my friend's birthday in a list | know who's birthday is upcoming
+
+|`* *` |user who is lazy |be able to leave my address book unencrypted | read it without opening the application
 
 |`* *`|power user| be able to auto complete commands| I can use the application faster
 

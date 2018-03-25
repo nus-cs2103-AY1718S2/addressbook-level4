@@ -5,16 +5,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
-import org.junit.Before;
-import org.junit.Test;
-
 
 /**
  * Contains integration tests (interaction with the Model) for {@code SetPasswordCommand}.
@@ -32,7 +31,7 @@ public class SetPasswordCommandTest {
     @Test
     public void equals() {
 
-        SetPasswordCommand firstCommand= new SetPasswordCommand("admin", "qwe");
+        SetPasswordCommand firstCommand = new SetPasswordCommand("admin", "qwe");
         SetPasswordCommand secondCommand = new SetPasswordCommand("admin", "123");
         SetPasswordCommand thirdCommand = new SetPasswordCommand("test", "12345");
 

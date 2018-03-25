@@ -107,7 +107,7 @@ public class AddCommandTest {
 
         @Override
         public void setPassword(String password) {
-            return ;
+            return;
         }
 
         @Override

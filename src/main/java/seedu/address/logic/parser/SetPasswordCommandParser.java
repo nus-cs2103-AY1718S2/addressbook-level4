@@ -3,15 +3,15 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Scanner;
+
 import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.Scanner;
 
 /**
  * Parses arguments for the SetPasswordCommand'
  */
-public class SetPasswordCommandParser implements Parser<SetPasswordCommand>{
+public class SetPasswordCommandParser implements Parser<SetPasswordCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the SetPasswordCommand

@@ -1,13 +1,11 @@
 package seedu.address.commons.events.model;
 
-
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.timetableentry.TimetableEntry;
 
 /**
  * Indicates password cahnged
  * */
-public class PasswordChangedEvent extends BaseEvent{
+public class PasswordChangedEvent extends BaseEvent {
 
     public final String password;
 

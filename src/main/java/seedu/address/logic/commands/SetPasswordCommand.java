@@ -1,12 +1,11 @@
 package seedu.address.logic.commands;
 
-
 import seedu.address.logic.LogicManager;
 
 /**
  * Set the application password
  * */
-public class SetPasswordCommand extends Command{
+public class SetPasswordCommand extends Command {
 
     public static final String COMMAND_WORD = "setPassword";
 

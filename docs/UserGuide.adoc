@@ -18,12 +18,12 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 == Introduction
 
 CLIndar is a desktop application that helps university computing students to manage their tasks and events.
-CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
-Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides much convenience for computing students.
+CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are expected to be familiar with.
+Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides more convenience for its target audience.
 
 == Get Started
 
-To start using CLIndar, follow the instructions below:
+To start using CLIndar, follow the instructions below.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -31,18 +31,21 @@ To start using CLIndar, follow the instructions below:
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+//TODO make sure that the jar file is renamed to deskboard.jar instead of addressbook.jar
+.  Download the latest `deskboard.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for CLIndar.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-*Please insert an image here*
+
+image::jasmund_ui.png[width="790"]
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`task`* `n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/Enhance major component`: Adds Software Engineering task to the board in CLIndar
-* **`event`* `n/Software Project s/01/05/2018 8:00 e/01/08/2018 8:00 l/School of Computing`: Adds Software Project event to the board
+* *`task`* `n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/Enhance major component`: Adds Software Engineering task to the desk board in CLIndar
+* *`event`* `n/Software Project s/01/05/2018 8:00 e/01/08/2018 8:00 l/School of Computing`: Adds Software Project event to the desk board
 * *`list task`* : list all uncompleted tasks
 * *`exit`* : exits the app
 
@@ -51,150 +54,128 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [[Features]]
 == Features
 
-The following are the commands of CLIndar:
+The following describes the command format in CLIndar.
 
-====
-*Command Format*
+* *Words in `UPPER_CASE` are the parameters to be supplied by the user.* +
+For example, in the following format `task n/NAME`,
+  `NAME` must be supplied by the user as the task name. The following is an example of the command to be keyed in by user:
+  `task n/Software Engineering Milestone 1`.
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `task n/NAME`, `NAME` is a parameter which can be used as `task n/Software Engineering Milestone 1`.
-* Items in square brackets are optional e.g `n/NAME [r/REMARK]` can be used as `n/Software Engineering Milestone 1 r/urgent` or as `n/Software Engineering Milestone 1`.
-* Parameters can be in any order e.g. if the command specifies `n/NAME d/DATETIME`, `d/DATETIME n/NAME` is also acceptable.
-====
+* *Items in square brackets are optional.* +
+For example,  `n/NAME [r/REMARK]` can be used as `n/Software Engineering Milestone 1 r/urgent` or as `n/Software Engineering Milestone 1`.
+
+* *Parameters can be in any order.* +
+For example, if the command specifies `n/NAME d/DATETIME`, `d/DATETIME n/NAME` is also acceptable.
 
 
 === Viewing help : `help` or `man`
+*`As of  v1.1`*
 
-Shows the help menu or help for the `COMMAND_WORD` requested.
+Shows the help menu for all of the commands or only the `COMMAND_WORD` requested.
 
-Format: `help`, `help COMMAND_WORD`, `man` or `man COMMAND_WORD`
+*Format:* `help`, `help COMMAND_WORD`, `man` or `man COMMAND_WORD`
 
-Examples:
+*Examples:*
 
+* `help`
 * `help task`
-
 * `man`
-
+* `man task`
 
 === Adding a task: `task`
+*`As of  v1.2`*
 
-Adds a task to the board +
-Format: `task n/NAME d/DATETIME [r/REMARK]`
+Adds a task to the desk board.
+
+*Format:* `task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]`
 
 
-Examples:
+*Examples:*
 
 * `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
 * `task n/Programming Methodology Assignment 2 d/16/03/2018 23:59`
 
 === Adding an event: `event`
+*`As of  v1.5`*
 
+Adds an event to the desk board. +
 
-Adds an event to the board +
-Format: `event n/NAME s/STARTTIME e/ENDTTIME [l/LOCATION] [r/REMARK]`
+*Format:* `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]`
 
-Examples:
+*Examples:*
 
 * `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 * `event n/Blockchain Talk s/16/3/2018 16:00 e/16/03/2018 18:00`
 
-=== Listing all uncompleted tasks and upcoming events: `ls`
+=== Listing uncompleted tasks and upcoming events: `ls`
+*`As of  v1.5`*
 
-Shows two lists in the board - the first list shows all uncompleted tasks, and the other list shows all upcoming events. +
-Format: `ls`
+Shows one or two lists of tasks and events in the desk board as described below.
 
+*Format:*
 
-=== Listing all uncompleted tasks: `ls task`
+* `ls task`: shows only uncompleted tasks.
+* `ls event`: shows only upcoming events.
+* `ls`: shows both uncompleted tasks upcoming events in 2 separate lists.
 
+=== Removing a task or event: `rm`
+*`As of  v1.5`*
 
-Shows a list of all uncompleted tasks in the board. +
-Format: `ls task`
+Removes a task or event from the desk board according to the following conditions.
 
-=== Listing all upcoming events: `ls event`
-
-Shows a list of all upcoming events in the board. +
-Format: `ls event`
-
-=== Removing a task: `rm task`
-
-Removes the specified task from the board. +
-Format: `rm task INDEX`
-
-
-****
-* Removes the task at the specified `INDEX`.
+* Removes the task or event at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+* The index *must be a positive integer* e.g. 1, 2, 3.
 
-Examples:
+*Format:*
+
+* `rm task INDEX`: removes a task.
+* `rm event INDEX`: removes an event.
+
+*Examples:*
 
 
 * `ls task` +
 `rm task 2` +
-Removes the 2nd task in the board.
-
-=== Removing an event: `rm event`
-
-Removes the specified event from the board. +
-Format: `rm event INDEX`
-
-****
-* Removes the event at the specified `INDEX`.
-
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-
-* `ls event` +
-`rm event 2` +
-Removes the 2nd event in the board.
+Removes the 2nd task in the desk board.
 
 === Completing a task: `complete task` or `com task`
+*`As of  v1.5`*
 
-Completes the specified task in the board. +
-Format: `complete task INDEX` or `com task INDEX`
+Completes the task at the specified `INDEX` based on the most recent listing.
 
-****
-* Completes the task at the specified `INDEX`.
+*Format:* `complete task INDEX` or `com task INDEX`
 
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
+*Examples:*
 
 * `ls task` +
 `complete task 3` +
-Completes the 3rd task in the board.
+Completes the 3rd task in the desk board.
 
 * `ls task` +
 `com task 2` +
-Completes the 2nd task in the board.
+Completes the 2nd task in the desk board.
 
 === Listing all completed tasks: `ls complete task` or `ls com task`
+*`As of  v1.5`*
 
-Shows a list of all completed tasks in the board. +
-Format: `ls complete task` or `ls com task`
+Shows a list of all completed tasks in the desk board. +
+
+*Format:* `ls complete task` or `ls com task`
 
 === Shows overdue tasks: `overdue`
+*`As of  v1.5`*
 
-Shows a list of tasks that are overdue. +
-Format: `overdue`
+Shows a list of tasks that remain uncompleted after their respective due dates.
 
-[NOTE]
-====
-Events that are overdue are automatically marked as 'complete'
-====
-
+*Format:* `overdue`
 
 === Listing entered commands : `history`
+*`As of  v1.5`*
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Lists all the commands that you have entered in reverse chronological order.
+
+*Format:* `history`
 
 [NOTE]
 ====
@@ -204,33 +185,34 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
-
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` or `u`
+
+*Format:* `undo` or `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the board's content (`task`, `rm task`).
+Undoable commands are commands that modify the desk board's content (e.g. `task`, `rm task`).
 
 ====
 
-Examples:
+*Examples:*
 
 * `rm task 1` +
 `ls task` +
-`undo` (reverses the `delete task 1` command) +
+`undo` (reverses the `rm task 1` command) +
 
 * `rm event 1` +
 `clear` +
-`u` (reverses the `clear` command)
+`u` (reverses the `clear` command) +
 `u` (reverses the `rm event 1` command)
 
-=== Redoing the previously undone command : `redo` or `r`
+=== Redoing previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo` or `r`
 
-Examples:
+*Format:* `redo` or `r`
+
+*Examples:*
 
 * `rm task 1` +
 `undo` (reverses the `rm task 1` command) +
@@ -250,13 +232,15 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` or `c`
 
-Clears all entries from the desk board. +
-Format: `clear` or `c`
+Clears all entries from the desk board.
+
+*Format:* `clear` or `c`
 
 === Exiting the program : `exit`
 
-Exits the program. +
-Format: `exit`
+Exits the program.
+
+*Format:* `exit`
 
 === Editing a person : `edit task`
 
@@ -266,7 +250,7 @@ Format: `exit`
 
 *`Coming Soon in v2.0`*
 
-=== Listing all completed events: `ls complete event` or `ls com event`
+=== Listing all past events: `ls past event`
 
 *`Coming Soon in v2.0`*
 

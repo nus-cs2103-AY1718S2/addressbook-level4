@@ -17,7 +17,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Medeina is for Veterinarians and their assistants who *prefer to use a desktop app for managing contacts and appointments*. More importantly, Medeina is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Medeina can get your contact management tasks done faster than traditional GUI apps. 
+Medeina is for Veterinarians and their assistants who *prefer to use a desktop app for managing contacts and appointments*. More importantly, Medeina is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Medeina can get your contact management tasks done faster than traditional GUI apps.
 This User Guide is made to help you get familiar with Medeina's set-up and its various features. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start

@@ -1,9 +1,11 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Parses arguments for the UnlockCommand'
@@ -17,6 +19,9 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
      */
     public UnlockCommand parse(String args) throws ParseException {
         requireNonNull(args);
+        if (args.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
+        }
         String trimmedArgs = args.trim();
 
         return new UnlockCommand(trimmedArgs);

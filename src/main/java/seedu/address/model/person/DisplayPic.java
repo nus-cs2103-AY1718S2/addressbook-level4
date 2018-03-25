@@ -39,7 +39,7 @@ public class DisplayPic {
         checkArgument(DisplayPicStorage.isValidImage(trimmedFilePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
         String fileType = FileUtil.getFileType(trimmedFilePath);
         String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
-        if (saveDisplay(uniqueFileName)) {
+        if (saveDisplay(personDetails)) {
             this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
         } else {
             this.value = DEFAULT_DISPLAY_PIC;
@@ -58,6 +58,9 @@ public class DisplayPic {
      * Saves the display picture to the specified storage location.
      */
     public boolean saveDisplay(String personDetails) throws IllegalValueException {
+        if (originalPath.equals(value)) {
+            return true;
+        }
         String fileType = FileUtil.getFileType(originalPath);
         String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
         return DisplayPicStorage.saveDisplayPic(uniqueFileName, originalPath, fileType);

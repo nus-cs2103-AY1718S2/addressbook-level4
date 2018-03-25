@@ -31,5 +31,7 @@ public interface ReadOnlyAddressBook {
 
     int getNextId();
 
+    String getPassword();
+
 
 }

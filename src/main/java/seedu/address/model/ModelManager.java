@@ -6,12 +6,16 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.PasswordChangedEvent;
 import seedu.address.commons.events.model.TimetableEntryAddedEvent;
 import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
 import seedu.address.model.person.Person;
@@ -85,11 +89,26 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new TimetableEntryAddedEvent(e));
     }
 
+    private void indicatePasswordChangedEvent(String p) {
+        raise(new PasswordChangedEvent(p));
+    }
+
     @Override
     public void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException {
         addressBook.addTimetableEntry(e);
         indicateAddressBookChanged();
         indicateTimetableEntryAdded(e);
+    }
+
+    @Override
+    public void setPassword(String password) {
+        addressBook.setPassword(password);
+        indicateAddressBookChanged();
+        indicatePasswordChangedEvent(password);
+    }
+
+    public String getPassword() {
+        return addressBook.getPassword();
     }
 
     @Override
@@ -111,6 +130,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Person getPerson(int index) throws IndexOutOfBoundsException {
         return addressBook.getPersonList().get(index);
+    }
+
+    public String getNameById(String id) {
+        return addressBook.findPersonById(Integer.parseInt(id)).getName().toString();
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -153,6 +176,15 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    @Subscribe
+    private void handleRequestToDeleteTimetableEntryEvent(RequestToDeleteTimetableEntryEvent event) {
+        try {
+            deleteTimetableEntry(event.id);
+        } catch (TimetableEntryNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

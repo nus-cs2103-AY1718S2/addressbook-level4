@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-T09-B3/main
 
-By: `Team T09-B3`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B3`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -59,16 +59,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help OR h`
-
-Format: `help OR h`
-
 === Adding a teammate: `add OR a`
 
 Adds a teammate to the ProgressChecker +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
-        `OR` +
-       `a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
+`OR` +
+`a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
 
 [TIP]
 A teammate can have any number of tags (including 0)
@@ -80,57 +76,45 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com m/Computer Engineering p/1234567 y/3 t/criminal`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com m/Information Security y/2 p/1234567 t/criminal`
 
-=== Listing all teammates : `list OR l`
+=== Answering and saving an exercise : `answer` `[coming in v2.0]`
 
-Shows a list of all teammates in the ProgressChecker. +
-Format: `list OR l`
-
-=== Sorting all teammates : `sort`
-
-Sorts all teammates in the ProgressChecker with their names in alphabetical order. +
-Format: `sort`
-
-=== Editing a teammate : `edit OR e`
-
-Edits an existing teammate in the ProgressChecker. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Answer an exercise based off the given question number. +
+Format: `answer INDEX ANSWER`
 
 ****
-* Edits the teammate at the specified `INDEX`. The index refers to the index number shown in the last teammate listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the teammate will be removed i.e adding of tags is not cumulative.
-* You can remove all the teammate's tags by typing `t/` without specifying any tags after it.
+* Answer an exercise at the specified `INDEX`.
+* The index refers to the question number.
+* The index must be of format `section number`.`question number`, 2.1.1, 3.2.5, 6.1.7
 ****
+
+[NOTE]
+====
+`ANSWER` should be in the form of listed choices if the exercise is a multiple choice question. For example, in a question with 4 four choices, one can choose choice 1 and 3 as the answer by using `answer 2.1.1 a c`.
+====
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st teammate to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd teammate to be `Betsy Crower` and clears all existing tags.
+* `answer 2.1.1 Procedural languages work at simple data structures and functions level`
 
-=== Locating teammates by name: `find OR search`
+=== Clearing all entries : `clear OR c`
 
-Finds teammates whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD {MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The search is dynamic. As the user types alphabets, the results will be shown without the need to press enter key
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Teammates matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+Clear all information inside the ProgressChecker. +
+Format: `clear OR c`
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `search Betsy Tim John` +
-Returns any teammate having names `Betsy`, `Tim`, or `John`
+* `clear`
+* `c`
+
+=== Completing a learning outcome and marking it as completed : `complete` `[coming in v2.0]`
+
+Check a learning outcome as completed based on the given task index.
+Format: `complete INDEX`
+
+Example:
+
+* `complete 2.1`
+* `complete 3.2`
 
 === Deleting a teammate : `delete or d`
 
@@ -152,6 +136,137 @@ Deletes the 2nd teammate in the ProgressChecker.
 `d 1` +
 Deletes the 1st teammate in the results of the `find` command.
 
+=== Editing a teammate : `edit OR ed`
+
+Edits an existing teammate in the ProgressChecker. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+`OR` +
+`ed INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* Edits the teammate at the specified `INDEX`. The index refers to the index number shown in the last teammate listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the teammate will be removed i.e adding of tags is not cumulative.
+* You can remove all the teammate's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st teammate to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd teammate to be `Betsy Crower` and clears all existing tags.
+
+=== Exiting the program : `exit OR e`
+
+Exits the program. +
+Format: `exit OR e`
+
+Examples:
+
+* `exit`
+* `e`
+
+=== Finding/Searching teammates by the keywords of name: `find OR search`
+
+Finds teammates whose names contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD {MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The search is dynamic. As the user types alphabets, the results will be shown without the need to press enter key
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Teammates matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find John` +
+Returns `john` and `John Doe`
+* `search Betsy Tim John` +
+Returns any teammate having names `Betsy`, `Tim`, or `John`
+
+=== Helping user with User Guide : `help OR h`
+
+Format: `help OR h`
+
+Examples:
+
+* `help`
+* `h`
+
+=== History viewing the list of entered commands : `history`
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+Example:
+
+* `history`
+
+=== Listing all teammates : `list OR l`
+
+Shows a list of all teammates in the ProgressChecker. +
+Format: `list OR l`
+
+Examples:
+
+* `list`
+* `l`
+
+=== Newly adding the default task list: `newtasklist OR nl`
+
+Adds the default task list to Google account +
+Format: `newtasklist OR nl`
+
+[TIP]
+Only the command word. No parameters at all.
+
+Examples:
+
+* `newtasklist`
+* `nl`
+
+=== Redoing the previously undone command : `redo OR r`
+
+Reverses the most recent `undo` command. +
+Format: `redo OR r`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command)
+
+* `delete 1` +
+`r` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`r` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command)
+
+=== Refreshing the content : `refresh OR rf` `[coming in v2.0]`
+
+Refreshes the program to update its content. +
+Format: `refresh`
+
+Examples:
+
+* `refresh`
+* `rf`
+
 === Selecting a teammate : `select OR s`
 
 Selects the teammate identified by the index number used in the last teammate listing. +
@@ -172,68 +287,25 @@ Selects the 2nd teammate in the ProgressChecker.
 `s 1` +
 Selects the 1st teammate in the results of the `find` command.
 
-=== Adding the default task list: `newtasklist OR nl`
+=== Sorting all teammates : `sort`
 
-Adds the default task list to Google account +
-Format: `newtasklist` +
-        `OR` +
-        `nl`
+Sorts all teammates in the ProgressChecker with their names in alphabetical order. +
+Format: `sort`
 
-[TIP]
-Only the command word. No parameters at all.
+Example：
 
-Examples:
+* `sort`
 
-* `newtasklist`
-* `nl`
+=== Toggling theme : `theme OR t` `[coming in v2.0]`
 
-=== Mark a learning outcome as completed : `complete INDEX` `[coming in v2.0]`
-
-Check a learning outcome as completed based on the given task index.
-Format: `complete INDEX`
-
-=== Answering and saving an exercise : `answer INDEX ANSWER` `[coming in v2.0]`
-
-Answer an exercise based off the given question number.
-Format: `answer INDEX ANSWER`
-
-****
-* Answer an exercise at the specified `INDEX`.
-* The index refers to the question number.
-* The index must be of format `section number`.`question number`, 2.1.1, 3.2.5, 6.1.7
-****
-
-[NOTE]
-====
-`ANSWER` should be in the form of listed choices if the exercise is a multiple choice question. For example, in a question with 4 four choices, one can choose choice 1 and 3 as the answer by using `answer 2.1.1 a c`.
-====
-
-=== Change view to a specific week : `view OR v`
-
-Change the browser view to display contents identified by the week number.
-Format: `view INDEX`
-
-****
-* View the contents such as learning outcomes and practices of the week at the specified `INDEX`.
-* The index refers to the school week number.
-* The index *must be a positive integer* in the *range of 2 to 13* `2, 3, ..., 13`
-****
+Toggle between a light and dark theme. +
+Format: `theme OR t`
 
 Examples:
 
-* `view 2`
+* `theme`
+* `t`
 
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-// tag::undoredo[]
 === Undoing previous command : `undo OR u`
 
 Restores the ProgressChecker to the state before the previous _undoable_ command was executed. +
@@ -248,7 +320,7 @@ Examples:
 
 * `delete 1` +
 `list` +
-`u` (reverses the `delete 1` command) +
+`u` (reverses the `delete 1` command)
 
 * `select 1` +
 `list` +
@@ -258,82 +330,76 @@ The `undo` command fails as there are no undoable commands executed previously.
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`u` (reverses the `delete 1` command) +
+`u` (reverses the `delete 1` command)
 
-=== Redoing the previously undone command : `redo OR r`
+=== Viewing a specific week : `view OR v`
 
-Reverses the most recent `undo` command. +
-Format: `redo OR r`
+Change the browser view to display contents identified by the week number.
+Format: `view INDEX`
+
+****
+* View the contents such as learning outcomes and practices of the week at the specified `INDEX`.
+* The index refers to the school week number.
+* The index *must be a positive integer* in the *range of 2 to 13* `2, 3, ..., 13`
+****
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`r` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`r` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Refreshing the content : `refresh OR r` `[coming in v2.0]`
-
-Refreshes the program to update its content.
-Format: `refresh OR r`
-
-=== Clearing all entries : `clear OR c`
-
-Clears all entries from the ProgressChecker. +
-Format: `clear OR c`
-
-=== Toggle theme : `theme` `[coming in v2.0]`
-
-Toggle between a light and dark theme.
-Format: `theme OR t`
-
-=== Exiting the program : `exit OR e`
-
-Exits the program. +
-Format: `exit OR e`
+* `view 2`
+* `view 3`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Progress Checker data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Progress Checker folder. +
+
+*Q*: Will the command work if I type in capital letters? +
+*A*: Yes. The commands are case-insenstive. +
+
+*Q*: Will the app keep all information the same with the time I close it when I open the app the other time? +
+*A*: All data are saved in the hard disk automatically after any command that changes the data. As long as the user doesn't change the data file, the content will be the same when user open the app next time. +
+
+*Q*: How to close the app? +
+*A*: Either click the 'x' button on the screen or type command `exit`.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
-`a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
+OR `a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com m/Computer Science y/2 t/friend t/colleague`
-* *Answer*: `answer INDEX ANSWER`
-* *Clear* : `clear OR c`
-* *Delete* : `delete INDEX OR d INDEX` +
+* *Answer* : `answer INDEX ANSWER` +
+e.g. `answer 2.1.1`
+* *Clear* : `clear` OR `c`
+* *Complete* : `complete INDEX` +
+e.g. `complete 2.1`
+* *Delete* : `delete INDEX` OR `d INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]... OR e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]...` +
+OR `ed INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD {MORE_KEYWORDS]` +
-e.g. `search James Jake` +
-`find James Jake`
-* *List* : `list`
-* *Help* : `help OR h`
-* *Select* : `select INDEX OR s INDEX` +
-e.g.`select 2`
-* *Theme*: `theme OR t`
-* *View* : `view INDEX OR v INDEX` +
-e.g. `view 5`
+* *Exit* : `exit` OR `e`
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `find James Jake`
+* *Help* : `help` OR `h`
 * *History* : `history`
-* *Undo* : `undo OR u`
-* *Redo* : `redo OR r`
+* *List* : `list` Or `l`
+* *Newtasklist* : `newtasklist` OR `nl`
+* *Redo* : `redo` OR `r`
+* *Refresh* : `refresh` OR `rf`
+* *Search* : `search KEYWORD [MORE_KEYWORDS]` +
+e.g. `search James Jake`
+* *Select* : `select INDEX` OR `s INDEX` +
+e.g.`select 2`
+* *Sort* : `sort`
+* *Theme* : `theme` OR `t`
+* *Undo* : `undo` OR `u`
+* *View* : `view INDEX` OR `v INDEX` +
+e.g. `view 5` +
+{sp}+
+
+Back to <<Introduction>>

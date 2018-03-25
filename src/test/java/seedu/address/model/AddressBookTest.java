@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
@@ -151,6 +152,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Alias> getAliasList() {
             return aliases;
+        }
+
+        @Override
+        public void resetAliasList() {
+            fail("This method should not be called.");
         }
 
         @Override

@@ -24,6 +24,9 @@ If you can type fast, ReciRecipé can get your recipe management done faster tha
 
 == Quick Start
 
+[TIP]
+You can use kbd:[Ctrl]+kbd:[F] to search in the user guide.
+
 To start using ReciRecipé, please follow the steps below carefully.
 
 .  Ensure you have Java Runtime Environment 1.8.0_60 or later installed in your Computer. You can download from http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html[here].

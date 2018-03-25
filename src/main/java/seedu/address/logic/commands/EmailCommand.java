@@ -17,6 +17,7 @@ import seedu.address.model.person.Person;
 public class EmailCommand extends Command {
 
     public static final String COMMAND_WORD = "email";
+    public static final String COMMAND_ALIAS = "em";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails all persons whose names matches any of "
             + "the specified keywords (case-insensitive) "

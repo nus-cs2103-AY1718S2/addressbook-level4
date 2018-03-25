@@ -1,4 +1,4 @@
-[[ReciRecipe]] ReciRecipé / RecipeBook::
+[[ReciRecipe]] ReciRecipé / RecipeBook / The App::
 This name is derived from "**Reci**te" and "**Recipé**", an alternate spelling of "Recipe". ReciRecipé is what will tell you all the info you need about your recipes so you don't have to remember your recipes anymore. Also, ReciRecipé sounds fun and kinda French.
 
 [[API]] API::

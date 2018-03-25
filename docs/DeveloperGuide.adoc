@@ -24,6 +24,8 @@ By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 === Prerequisites
 
+You will need these components installed on your computer:
+
 . JDK 1.8.0_60 or later
 +
 [NOTE]
@@ -34,16 +36,18 @@ This app will not work with earlier versions of Java 8.
 . IntelliJ IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ by default has Gradle and JavaFX plugins installed. +
 Do not disable them. If you have disabled them, go to *File > Settings > Plugins* to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting up the project
+
+Follow these step carefully to set up ReciRecipé on your computer.
 
 . Fork this repo, and clone the fork to your computer.
 . Open IntelliJ (if you are not in the welcome screen, click *File > Close Project* to close the existing project dialog first).
 . Set up the correct JDK version for Gradle.
-.. Click *Configure > Project Defaults > Project Structure*
+.. Click *Configure > Project Defaults > Project Structure*.
 .. Click *New...* and find the directory of the JDK.
 . Click *Import Project*.
 . Locate the *build.gradle* file and select it. Click *OK*.
@@ -54,7 +58,8 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.recipe.MainApp` and try a few commands
+. Run the `seedu.recipe.MainApp` to see if it can starts.
+. Try some simple commands to see if the app can respond.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -70,11 +75,16 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 * For **Class count to use import with '\*'** and **Names count to use static import with '*'**: Set to *999* to prevent IntelliJ from contracting the import statements.
 * For *Import Layout*: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+IntelliJ should look like the figure below after step 3.
+
+.Code Style Imports
+image::CodeStyleImports.png[width="400"]
+
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure IntelliJ to check style-compliance as you write code.
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up Travis to perform Continuous Integration (<<CI, CI>>) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
 
@@ -95,43 +105,34 @@ When you are ready to start coding,
 
 == Design
 
+[discrete]
 [[Design-Architecture]]
 === Architecture
 
+The *_Architecture Diagram_* given below explains the high-level design of the App with 6 components.
+
 .Architecture Diagram
 image::Architecture.png[width="600"]
-
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+{nbsp} +
 
 [TIP]
-The *.pptx* files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose *Save as picture*.
+The *.pptx* files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the *.pptx* file, select the objects of the diagram, and choose *Save as picture*.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp`]. It is responsible for,
+Given below is a quick overview of each component:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+. <<Design-Main,*`Main`*>>: Contains the app in overall.
+. <<Design-Commons,*`Commons`*>>: Contains classes that are used by multiple components.
+. <<Design-Ui,*`UI`*>>: Contains the UI of the app.
+. <<Design-Logic,*`Logic`*>>: Contains the commands of the app.
+. <<Design-Model,*`Model`*>>: Contains the the data of the app in-memory.
+. <<Design-Storage,*`Storage`*>>: Contains the interaction of the app with the external memory, which consists of reading from and writing to the hard disk.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+Each of the four components `UI`, `Logic`, `Model`, `Storage`
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
-
-The rest of the App consists of four components.
-
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
-
-Each of the four components
-
-* Defines its <<API,API>> in an `interface` with the same name as the Component.
+* Defines its <<API,API>> in an `interface` with the same name as the component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
 For example, the `Logic` component (see the class diagram given below) defines its <<API,API>> in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
-
-.Class Diagram of the Logic Component
-image::LogicClassDiagram.png[width="800"]
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -154,45 +155,69 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+[[Design-Main]]
+=== Main component
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp`].
+
+* At app launch: It initializes the components in the correct sequence, and connects them up with each other.
+* At shut down: It shuts down the components and invokes cleanup method where necessary.
+
+[[Design-Commons]]
+=== Commons component
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+
 [[Design-Ui]]
 === UI component
 
+The UI consists of a `MainWindow` that is made up of smaller parts, for example, `CommandBox`, `ResultDisplay`, `RecipeListPanel`, `StatusBarFooter`, `BrowserPanel`, etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class. (See <<fig-UiClassDiagram>>)
+
+[[fig-UiClassDiagram]]
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
+{nbsp} +
 
 *API* : link:{repoURL}/src/main/java/seedu/recipe/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `RecipeListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
-
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching *.fxml* files that are in the *src/main/resources/view* folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/recipe/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[MainWindow.fxml].
+The `UI` component uses JavaFX UI framework. The layout of these UI parts are defined in matching *.fxml* files that are in the *src/main/resources/view* folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/recipe/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[MainWindow.fxml].
 
 The `UI` component,
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* Responds to events raised from various parts of the app and updates the UI accordingly.
 
 [[Design-Logic]]
 === Logic component
+`Logic` contains all commands and this is how `Logic` reacts when the user submit a command:
+
+.  `Logic` uses the `RecipeBookParser` class to parse the user command.
+.  This results in a `Command` object which is executed by the `LogicManager`.
+.  The command execution can affect the `Model` (e.g. adding a recipe) and/or raise events.
+.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
+
+Refer to <<fig-LogicClassDiagram>>.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
 {nbsp} +
+For finer details concerning `XYZCommand` and `Command`, refer to <<fig-LogicCommandClassDiagram>>.
+{nbsp} +
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+[[fig-LogicCommandClassDiagram]]
+.Structure of Commands in the Logic Component.
 image::LogicCommandClassDiagram.png[width="800"]
+
+{nbsp} +
 
 *API* :
 link:{repoURL}/src/main/java/seedu/recipe/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `RecipeBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a recipe) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
-
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Refer to the Sequence Diagram for the example of interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteRecipeSdForLogic.png[width="800"]
@@ -225,10 +250,6 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Recipe Book data in xml format and read it back.
 
-[[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.recipe.commons` package.
 
 == Implementation
 

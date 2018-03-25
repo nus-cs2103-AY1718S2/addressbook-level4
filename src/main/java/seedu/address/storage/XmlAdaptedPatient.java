@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.BloodType;
@@ -171,7 +168,7 @@ public class XmlAdaptedPatient {
 
         try {
             final Record record = new Record(this.record);
-        } catch(ParseException pe) {
+        } catch (ParseException pe) {
             throw new IllegalValueException(Record.MESSAGE_RECORD_CONSTRAINTS);
         }
         final Record record = new Record(this.record);

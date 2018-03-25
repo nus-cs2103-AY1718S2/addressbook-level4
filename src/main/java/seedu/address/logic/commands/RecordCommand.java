@@ -25,7 +25,8 @@ public class RecordCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "record";
     public static final String COMMAND_ALIAS = "rec";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the medical record of a patient in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Edits the medical record of a patient in the address book. "
             + "Parameters: "
             + PREFIX_DATE + "DATE "
             + PREFIX_SYMPTOM + "SYMPTOM "

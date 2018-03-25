@@ -1,6 +1,5 @@
 package seedu.address.model.patient;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
@@ -27,7 +26,7 @@ public class Record {
     private final String illness;
     private final String treatment;
 
-    public Record(){
+    public Record() {
         this("", "", "", "");
     }
 
@@ -115,7 +114,10 @@ public class Record {
         return builder.toString();
     }
 
-    public String toCommandString(){
+    /**
+     * Returns the string that is equivalent to the command that created this class.
+     */
+    public String toCommandString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("1 ") //as the command will not be executed, we will be placing a dummy index
                 .append(PREFIX_DATE)

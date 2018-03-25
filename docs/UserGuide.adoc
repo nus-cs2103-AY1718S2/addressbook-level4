@@ -176,7 +176,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Change a group's color: `changeTagColor` `[coming in v2.0]`
+=== Change a group's color: `changeTagColor`
 
 Change a specific group color to one of the supported colors. +
 Alias: `color` +
@@ -238,6 +238,34 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
+=== Add To Do List: `AddToDo`
+
+Creates a todo list named `KEYWORD`
+Alias: `aTD` +
+Format: `aTD KEYWORD[KEYWORDS]`
+
+[NOTE]
+====
+Keyword cannot be an empty input.
+====
+// end:AttToDo[]
+
+=== List Group Members: `ListGroupMembers`
+
+List out all persons with the given keywords(group tags).
+Alias: `lgm` +
+Format: `ListGroupMembers INPUT`
+
+****
+* The search is case insensitive. e.g `cs1010` will match `CS1010`
+* Only the name is searched.
+****
+
+Examples:
+
+* `ListGroupMembers CS3230 CS1010` +
+Returns any person having group tags `CS3230`, `CS1010`
 
 === Display Calendar : `display` `[coming in v2.0]`
 

@@ -103,7 +103,7 @@ public class AddressBookParser {
             return new SortCommandParser().parse(arguments);
 
         case LockCommand.COMMAND_WORD:
-            return new LockCommandParser().parse(arguments);
+            return new LockCommand();
 
         case UnlockCommand.COMMAND_WORD:
             return new UnlockCommandParser().parse(arguments);

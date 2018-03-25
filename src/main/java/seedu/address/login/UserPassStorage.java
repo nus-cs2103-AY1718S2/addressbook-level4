@@ -1,10 +1,10 @@
 package seedu.address.login;
 
-import seedu.address.commons.exceptions.DataConversionException;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
 
 /**
  * Storage for UserPass

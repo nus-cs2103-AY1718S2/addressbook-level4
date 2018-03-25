@@ -17,6 +17,9 @@ public class UserPass {
         this.password = hash(password.trim());
     }
 
+    /**
+     * Returns a String containing the SHA-256 encrypted form of input password String
+     */
     public String hash(String password) {
         byte[] encodedPassword = new byte[0];
         try {
@@ -45,7 +48,9 @@ public class UserPass {
         StringBuffer hexString = new StringBuffer();
         for (int i = 0; i < hash.length; i++) {
             String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) hexString.append('0');
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
             hexString.append(hex);
         }
         return hexString.toString();

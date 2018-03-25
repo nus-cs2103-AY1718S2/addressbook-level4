@@ -1,13 +1,13 @@
 package seedu.address.storage;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Optional;
+
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.login.UserPass;
 import seedu.address.login.UserPassStorage;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Optional;
 
 /**
  * A class to access UserPass stored in the hard disk as a json file
@@ -15,17 +15,17 @@ import java.util.Optional;
 public class JsonUserPassStorage implements UserPassStorage {
 
     private String filePath;
-    private HashMap UserPassHashmap;
+    private HashMap userPassHashmap;
 
     public JsonUserPassStorage(String filePath) {
         this.filePath = filePath;
         try {
-            UserPassHashmap = readUserPassMap().orElseThrow(NullPointerException::new);
-        } catch (DataConversionException|IOException|NullPointerException e) {
+            userPassHashmap = readUserPassMap().orElseThrow(NullPointerException::new);
+        } catch (DataConversionException | IOException | NullPointerException e) {
             e.printStackTrace();
         }
-        if (UserPassHashmap.isEmpty()) {
-            UserPassHashmap = new HashMap<>();
+        if (userPassHashmap.isEmpty()) {
+            userPassHashmap = new HashMap<>();
         }
     }
 
@@ -50,22 +50,22 @@ public class JsonUserPassStorage implements UserPassStorage {
 
     @Override
     public void saveUserPassMap() throws IOException {
-        JsonUtil.saveJsonFile(UserPassHashmap, filePath);
+        JsonUtil.saveJsonFile(userPassHashmap, filePath);
     }
 
     @Override
     public void put(UserPass userPass) {
-        UserPassHashmap.put(userPass.getUsername(), userPass.getPassword());
+        userPassHashmap.put(userPass.getUsername(), userPass.getPassword());
     }
 
     @Override
     public boolean containsKey(String username) {
-        return UserPassHashmap.containsKey(username);
+        return userPassHashmap.containsKey(username);
     }
 
     @Override
     public String get(String username) {
-        return UserPassHashmap.get(username).toString();
+        return userPassHashmap.get(username).toString();
     }
 
 }

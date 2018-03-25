@@ -12,7 +12,7 @@ import java.util.TimeZone;
 public class Week {
 
     private static final int SUNDAY = -1;
-    private static final int NUMBER_OF_CLASSES = 36;
+    private static final int NUMBER_OF_CLASSES = 13;
 
     private ArrayList<WeekDay> weekSchedule;
     private String roomName;

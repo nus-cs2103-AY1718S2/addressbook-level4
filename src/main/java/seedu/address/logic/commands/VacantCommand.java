@@ -5,6 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.VenueTableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
@@ -38,8 +42,15 @@ public class VacantCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
+            String result = "";
             ArrayList<ArrayList<String>> allRoomsSchedule = model.getAllRoomsSchedule(building);
-            return new CommandResult(String.format(MESSAGE_SUCCESS + "\n" + allRoomsSchedule));
+            for (int i = 0; i < allRoomsSchedule.size(); i++) {
+                result += allRoomsSchedule.get(i) + "\n";
+            }
+            ObservableList<ArrayList<String>> schedule = FXCollections.observableArrayList(allRoomsSchedule);
+            EventsCenter.getInstance().post(new VenueTableEvent(schedule));
+
+            return new CommandResult(String.format(MESSAGE_SUCCESS + "\n" + result));
         } catch (BuildingNotFoundException e) {
             throw new CommandException(MESSAGE_INVALID_BUILDING);
         }

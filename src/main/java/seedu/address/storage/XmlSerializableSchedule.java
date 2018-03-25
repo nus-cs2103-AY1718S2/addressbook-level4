@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +33,7 @@ public class XmlSerializableSchedule {
      */
     public XmlSerializableSchedule(ReadOnlySchedule src) {
         this();
-        //lessons.addAll(src.getSchedule().stream().map(XmlAdaptedLesson::new).collect(Collectors.toList()));
+        lessons.addAll(src.getSchedule().stream().map(XmlAdaptedLesson::new).collect(Collectors.toList()));
     }
 
     /**

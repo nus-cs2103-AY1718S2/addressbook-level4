@@ -65,6 +65,9 @@ public class Lesson implements Comparable<Lesson> {
                 : this.getDay().compareTo(other.getDay()) == 0; //Different day
     }
 
+    public Lesson getLesson(){
+        return this;
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

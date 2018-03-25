@@ -1,10 +1,6 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -12,35 +8,23 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Phone;
-import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
-import seedu.address.model.tag.Tag;
 
 /**
- * JAXB-friendly version of the Student.
+ * JAXB-friendly version of the Lesson.
  */
 public class XmlAdaptedLesson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Student's %s field is missing!";
 
     @XmlElement(required = true)
-    private String name;
+    private String key;
     @XmlElement(required = true)
-    private String phone;
+    private String day;
     @XmlElement(required = true)
-    private String email;
+    private String startTime;
     @XmlElement(required = true)
-    private String address;
-    @XmlElement(required = true)
-    private String programmingLanguage;
-
-    @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private String endTime;
 
     /**
      * Constructs an XmlAdaptedLesson.
@@ -51,16 +35,11 @@ public class XmlAdaptedLesson {
     /**
      * Constructs an {@code XmlAdaptedLesson} with the given student details.
      */
-    public XmlAdaptedLesson(String name, String phone, String email, String address,
-                            String programmingLanguage, List<XmlAdaptedTag> tagged) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.programmingLanguage = programmingLanguage;
-        if (tagged != null) {
-            this.tagged = new ArrayList<>(tagged);
-        }
+    public XmlAdaptedLesson(String key, String day, String startTime, String endTime) {
+        this.key = key;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     /**
@@ -68,16 +47,11 @@ public class XmlAdaptedLesson {
      *
      * @param source future changes to this will not affect the created XmlAdaptedLesson
      */
-    public XmlAdaptedLesson(Student source) {
-        name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
-        programmingLanguage = source.getProgrammingLanguage().programmingLanguage;
-        tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
-        }
+    public XmlAdaptedLesson(Lesson source) {
+        key = source.getUniqueKey().uniqueKey;
+        day = source.getDay().value;
+        startTime = source.getStartTime().value;
+        endTime = source.getEndTime().value;
     }
 
     /**
@@ -86,59 +60,39 @@ public class XmlAdaptedLesson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted student
      */
     public Lesson toModelType() throws IllegalValueException {
-        final List<Tag> studentTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            studentTags.add(tag.toModelType());
+        if (this.key == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, UniqueKey.class.getSimpleName()));
         }
+        if (!UniqueKey.isValidUniqueKey(this.key)) {
+            throw new IllegalValueException(UniqueKey.MESSAGE_UNIQUE_KEY_CONSTRAINTS);
+        }
+        final UniqueKey uniqueKey = new UniqueKey(this.key);
 
-        if (this.name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        if (this.day == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Day.class.getSimpleName()));
         }
-        if (!Name.isValidName(this.name)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        if (!Day.isValidDay(this.day)) {
+            throw new IllegalValueException(Day.MESSAGE_DAY_CONSTRAINTS);
         }
-        final Name name = new Name(this.name);
+        final Day day = new Day(this.day);
 
-        if (this.phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        if (this.startTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName()));
         }
-        if (!Phone.isValidPhone(this.phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+        if (!Time.isValidTime(this.startTime)) {
+            throw new IllegalValueException(Time.MESSAGE_TIME_CONSTRAINTS);
         }
-        final Phone phone = new Phone(this.phone);
+        final Time startTime = new Time(this.startTime);
 
-        if (this.email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        if (this.endTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName()));
         }
-        if (!Email.isValidEmail(this.email)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        if (!Time.isValidTime(this.endTime)) {
+            throw new IllegalValueException(Time.MESSAGE_TIME_CONSTRAINTS);
         }
-        final Email email = new Email(this.email);
+        final Time endTime = new Time(this.endTime);
 
-        if (this.address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(this.address)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        final Address address = new Address(this.address);
-
-        if (this.programmingLanguage == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    ProgrammingLanguage.class.getSimpleName()));
-        }
-        if (!ProgrammingLanguage.isValidProgrammingLanguage(this.programmingLanguage)) {
-            throw new IllegalValueException(ProgrammingLanguage.MESSAGE_PROGRAMMING_LANGUAGE_CONSTRAINTS);
-        }
-        final ProgrammingLanguage programmingLanguage = new ProgrammingLanguage(this.programmingLanguage);
-
-        final Set<Tag> tags = new HashSet<>(studentTags);
-        Student s = new Student(name, phone, email, address, programmingLanguage, tags);
-        Day day = new Day("mon");
-
-        Time st = new Time("10:00");
-        Time et = new Time("13:00");
-        return new Lesson(UniqueKey.generateRandomKey(), day, st, et);
+        return new Lesson(uniqueKey, day, startTime, endTime);
     }
 
     @Override
@@ -152,9 +106,9 @@ public class XmlAdaptedLesson {
         }
 
         XmlAdaptedLesson otherLesson = (XmlAdaptedLesson) other;
-        return Objects.equals(name, otherLesson.name)
-                && Objects.equals(phone, otherLesson.phone)
-                && Objects.equals(email, otherLesson.email)
-                && Objects.equals(address, otherLesson.address);
+        return Objects.equals(key, otherLesson.key)
+                && Objects.equals(day, otherLesson.day)
+                && Objects.equals(startTime, otherLesson.startTime)
+                && Objects.equals(endTime, otherLesson.endTime);
     }
 }

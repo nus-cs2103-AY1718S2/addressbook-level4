@@ -24,14 +24,18 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySchedule;
+import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.ScheduleStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlScheduleStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -62,7 +66,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        ScheduleStorage scheduleStorage = new XmlScheduleStorage(userPrefs.getScheduleFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, scheduleStorage);
 
         initLogging(config);
 
@@ -88,6 +93,10 @@ public class MainApp extends Application {
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
+
+        Optional<ReadOnlySchedule> scheduleOptional;
+        ReadOnlySchedule initialScheduleData;
+
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -102,7 +111,21 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            scheduleOptional = storage.readSchedule();
+            if (!scheduleOptional.isPresent()) {
+                logger.info("Schedule data file not found. Will be starting with a empty Schedule");
+            }
+            initialScheduleData = scheduleOptional.orElseGet(SampleDataUtil::getSampleSchedule);
+        } catch (DataConversionException e) {
+            logger.warning("Schedule data file not in the correct format. Will be starting with an empty Schedule");
+            initialScheduleData = new Schedule();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty Schedule");
+            initialScheduleData = new Schedule();
+        }
+
+        return new ModelManager(initialData, userPrefs, initialScheduleData);
     }
 
     private void initLogging(Config config) {

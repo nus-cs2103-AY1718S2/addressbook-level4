@@ -1,13 +1,20 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.LessonList;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.exceptions.DuplicateStudentException;
 
 /**
  * Wraps all data at the schedule level
@@ -20,6 +27,14 @@ public class Schedule implements ReadOnlySchedule {
         lessons = new LessonList();
     }
 
+    public Schedule() {}
+    /**
+     * Creates an Schedule using the Lesson in the {@code toBeCopied}
+     */
+    public Schedule(ReadOnlySchedule toBeCopied) {
+        this();
+        resetData(toBeCopied);
+    }
     /**
      * Adds lesson to schedule
      * @param lessonToBeAdded
@@ -69,6 +84,25 @@ public class Schedule implements ReadOnlySchedule {
             student = addressBook.findStudentByKey(l.getUniqueKey());
             System.out.println(index++ + " " + student.getName() +  ": " + l.toString());
         }
+    }
+    /**
+     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     */
+    public void resetData(ReadOnlySchedule newData) {
+        requireNonNull(newData);
+        List<Lesson> newList = newData.getSchedule().stream()
+                .map(Lesson::getLesson)
+                .collect(Collectors.toList());
+
+        try {
+            setLessons(newList);
+        } catch (DuplicateLessonException e) {
+            throw new AssertionError("Schedules should not have duplicate lessons");
+        }
+    }
+
+    public void setLessons(List<Lesson> lessons) throws DuplicateLessonException {
+        this.lessons.setLessons(lessons);
     }
 
     //// util methods

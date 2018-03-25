@@ -5,6 +5,8 @@ import java.util.Set;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySchedule;
+import seedu.address.model.Schedule;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
@@ -64,6 +66,10 @@ public class SampleDataUtil {
         }
 
         return tags;
+    }
+
+    public static ReadOnlySchedule getSampleSchedule() {
+        return new Schedule();
     }
 
 }

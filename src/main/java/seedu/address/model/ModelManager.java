@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ScheduleChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
@@ -39,19 +40,19 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlySchedule schedule) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        this.schedule = new Schedule();
+        this.schedule = new Schedule(schedule);
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new Schedule());
     }
 
     @Override
@@ -105,15 +106,20 @@ public class ModelManager extends ComponentManager implements Model {
         UniqueKey studentKey = studentToAddLesson.getUniqueKey();
         Lesson newLesson = new Lesson(studentKey, day, startTime, endTime);
         schedule.addLesson(newLesson);
+        indicateScheduleChanged();
+    }
+
+    private void indicateScheduleChanged() {
+        raise(new ScheduleChangedEvent(schedule));
     }
 
     /**
-     * Todo: Override and indicateScheduleChanged()
      * @param target
      */
     @Override
     public synchronized void deleteLesson(Lesson target) throws LessonNotFoundException {
         schedule.removeLesson(target);
+        indicateScheduleChanged();
     }
 
     @Override

@@ -14,8 +14,8 @@ import seedu.address.storage.DisplayPicStorage;
  */
 public class DisplayPic {
 
-    public static final String DEFAULT_DISPLAY_PIC = "src/main/resources/images/displayPic/default.png";
-    public static final String DEFAULT_IMAGE_LOCATION = "src/main/resources/images/displayPic/";
+    public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
+    public static final String DEFAULT_IMAGE_LOCATION = "data/displayPic/";
 
     public final String originalPath;
     public final String value;

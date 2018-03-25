@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import seedu.address.MainApp;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.AppUtil;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.person.DisplayPic;
 
@@ -22,7 +23,8 @@ import seedu.address.model.person.DisplayPic;
  */
 public class DisplayPicStorage {
 
-    public static final String SAVE_LOCATION = "src/main/resources/images/displayPic/";
+    public static final String SAVE_LOCATION = "data/displayPic/";
+    public static final String INTERNAL_DEFAULT_PIC_SAVE_LOCATION = "/images/displayPic/default.png";
 
     /**
      * Returns true if a given string points to a valid file.
@@ -73,7 +75,8 @@ public class DisplayPicStorage {
      */
     public static boolean saveDisplayPic(String name, String filePath, String fileType) {
         try {
-            BufferedImage image = ImageIO.read(new File(filePath));
+            File input = new File(filePath);
+            BufferedImage image = ImageIO.read(input);
             FileUtil.copyImage(image, fileType, SAVE_LOCATION + name + '.' + fileType);
             return true;
         } catch (IOException | IllegalValueException exc) {
@@ -87,11 +90,16 @@ public class DisplayPicStorage {
      * @return An image to display
      */
     public static Image fetchDisplay(DisplayPic dp) {
-        String filePath = dp.toString();
-        checkArgument(DisplayPicStorage.isValidPath(filePath), Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
-        checkArgument(DisplayPicStorage.isValidImage(filePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-        File input = new File(dp.toString());
-        return new Image(input.toURI().toString());
+        if (dp.toString().equals(INTERNAL_DEFAULT_PIC_SAVE_LOCATION)) {
+            return AppUtil.getImage(INTERNAL_DEFAULT_PIC_SAVE_LOCATION);
+        } else {
+            String filePath = dp.toString();
+            checkArgument(DisplayPicStorage.isValidPath(filePath),
+                    Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+            checkArgument(DisplayPicStorage.isValidImage(filePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+            File input = new File(dp.toString());
+            return new Image(input.toURI().toString());
+        }
     }
 
 }

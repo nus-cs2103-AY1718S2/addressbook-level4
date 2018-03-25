@@ -112,7 +112,9 @@ public class FileUtil {
      */
     public static void copyImage(BufferedImage image, String fileType, String destPath) throws IllegalValueException {
         try {
-            ImageIO.write(image, fileType, new File(destPath));
+            File newImage = new File(destPath);
+            createIfMissing(newImage);
+            ImageIO.write(image, fileType, newImage);
         } catch (IOException ioe) {
             throw new IllegalValueException("IMAGE FILE COULD NOT BE COPIED.");
         }

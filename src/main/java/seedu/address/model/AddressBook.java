@@ -145,7 +145,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         studentTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Student(
                 student.getName(), student.getPhone(), student.getEmail(), student.getAddress(),
-                student.getProgrammingLanguage(), correctTagReferences, student.getFavourite());
+                student.getProgrammingLanguage(), correctTagReferences, student.getFavourite(), student.getDashboard());
     }
 
     /**
@@ -154,6 +154,18 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removeStudent(Student key) throws StudentNotFoundException {
         if (students.remove(key)) {
+            return true;
+        } else {
+            throw new StudentNotFoundException();
+        }
+    }
+
+    /**
+     * Checks for the existence of {@code key} in this {@code AddressBook}.
+     * @throws StudentNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean checkForStudentInAdressBook(Student key) throws StudentNotFoundException {
+        if (students.contains(key)) {
             return true;
         } else {
             throw new StudentNotFoundException();

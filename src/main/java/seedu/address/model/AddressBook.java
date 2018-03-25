@@ -71,6 +71,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        this.appointments.setAppointments(appointments);
+    }
+
     public void setPetPatients(List<PetPatient> petPatients) throws DuplicatePetPatientException {
         this.petPatients.setPetPatients(petPatients);
     }
@@ -93,6 +97,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+
+        List<Appointment> syncedAppointmentList = newData.getAppointmentList().stream()
+                .map(this::syncWithAppointmentMasterTagList)
+                .collect(Collectors.toList());
+        try {
+            setAppointments(syncedAppointmentList);
+        } catch (DuplicateAppointmentException dae) {
+            throw new AssertionError("AddressBook should not have appointments on the same slot");
         }
 
         setPetPatientTags(new HashSet<>(newData.getPetPatientTagList()));
@@ -244,7 +257,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         appointmentTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Appointment(
-                appointment.getOwner(), appointment.getPetPatient(), appointment.getRemark(),
+                appointment.getOwnerNric(), appointment.getPetPatientName(), appointment.getRemark(),
                 appointment.getDateTime(), correctTagReferences);
     }
     /**
@@ -329,6 +342,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public String toString() {
         return persons.asObservableList().size() + " persons, "
                 + tags.asObservableList().size() + " tags, "
+                + appointments.asObservableList().size() + " appointments"
                 + petPatients.asObservableList().size() + " pet patients, "
                 + petPatientTags.asObservableList().size() + " pet patient tags";
         // TODO: refine later
@@ -342,6 +356,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Appointment> getAppointmentList() {
+        return appointments.asObservableList();
     }
 
     @Override
@@ -360,6 +379,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.appointments.equals(((AddressBook) other).appointments)
                 && this.petPatients.equals(((AddressBook) other).petPatients)
                 && this.petPatientTags.equalsOrderInsensitive(((AddressBook) other).petPatientTags);
     }
@@ -367,6 +387,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags, petPatients, petPatientTags);
+        return Objects.hash(persons, tags, appointments, petPatients, petPatientTags);
     }
 }

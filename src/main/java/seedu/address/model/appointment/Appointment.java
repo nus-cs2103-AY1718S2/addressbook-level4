@@ -8,8 +8,9 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.person.Person;
-import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
+import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -18,8 +19,9 @@ import seedu.address.model.tag.UniqueTagList;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Appointment {
-    private final Person owner; //owner of the appointment
-    private final PetPatient pet;
+    private Nric ownerNric;
+    private Name ownerName = null;
+    private PetPatientName petPatientName;
     private Remark remark; //remarks
     private LocalDateTime localDateTime; //date of appointment
 
@@ -28,22 +30,56 @@ public class Appointment {
     /**
      * Every field must be present and not null.
      */
-    public Appointment(Person owner, PetPatient pet, Remark remark, LocalDateTime localDateTime, Set<Tag> type) {
-        requireAllNonNull(owner, remark, localDateTime, type);
-        this.owner = owner;
-        this.pet = pet;
+    public Appointment(Nric ownerNric, PetPatientName petPatientName, Remark remark,
+                       LocalDateTime localDateTime, Set<Tag> type) {
+        requireAllNonNull(ownerNric, petPatientName, remark, localDateTime, type);
+        this.ownerNric = ownerNric;
+        this.petPatientName = petPatientName;
         this.remark = remark;
         this.localDateTime = localDateTime;
         // protect internal tags from changes in the arg list
         this.type = new UniqueTagList(type);
     }
 
-    public Person getOwner() {
-        return owner;
+    /**
+     * ownerNric and petName can be set later using setter methods.
+     */
+    public Appointment(Remark remark, LocalDateTime localDateTime, Set<Tag> type) {
+        requireAllNonNull(remark, localDateTime, type);
+        this.remark = remark;
+        this.localDateTime = localDateTime;
+        // protect internal tags from changes in the arg list
+        this.type = new UniqueTagList(type);
     }
 
-    public PetPatient getPetPatient() {
-        return pet;
+    //Please remove this constructor if it is no longer in use
+    public Appointment(Name owner, Remark remark, LocalDateTime localDateTime, Set<Tag> type) {
+        requireAllNonNull(owner, remark, localDateTime, type);
+        this.ownerName = owner;
+        this.remark = remark;
+        this.localDateTime = localDateTime;
+        // protect internal tags from changes in the arg list
+        this.type = new UniqueTagList(type);
+    }
+
+    public Nric getOwnerNric() {
+        return ownerNric;
+    }
+
+    public void setOwnerNric(Nric ownerNric) {
+        this.ownerNric = ownerNric;
+    }
+
+    public Name getOwnerName() {
+        return ownerName;
+    }
+
+    public PetPatientName getPetPatientName() {
+        return petPatientName;
+    }
+
+    public void setPetPatientName(PetPatientName petPatientName) {
+        this.petPatientName = petPatientName;
     }
 
     public Remark getRemark() {
@@ -78,7 +114,8 @@ public class Appointment {
         }
 
         Appointment otherAppointment = (Appointment) other;
-        return otherAppointment.getOwner().equals(this.getOwner())
+        return otherAppointment.getOwnerNric().equals(this.getOwnerNric())
+                && otherAppointment.getPetPatientName().equals((this.getPetPatientName()))
                 && otherAppointment.getRemark().equals(this.getRemark())
                 && otherAppointment.getDateTime().equals(this.getDateTime());
     }
@@ -86,7 +123,7 @@ public class Appointment {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(owner, remark, localDateTime, type);
+        return Objects.hash(ownerNric, petPatientName, remark, localDateTime, type);
     }
 
     @Override
@@ -94,10 +131,10 @@ public class Appointment {
         final StringBuilder builder = new StringBuilder();
         builder.append("\t")
                 .append(getFormattedLocalDateTime())
-                .append("\tOwner: ")
-                .append(getOwner().getName().toString())
-                .append("\tPet Patient: ")
-                .append(getPetPatient().getName().toString())
+                //.append("\tOwner: ")
+                //.append(getOwnerNric().toString())
+                //.append("\tPet Patient: ")
+                //.append(getPetPatientName().toString())
                 .append("\tRemarks: ")
                 .append(getRemark())
                 .append("\tType(s): ");

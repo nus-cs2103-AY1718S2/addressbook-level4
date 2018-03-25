@@ -357,14 +357,24 @@ Format: `sortCode`
 *Q*: How do I transfer my data to another Computer? +
 *A*:
 *Method 1*
+Replaces the other computer's data completely
 ****
-.  In the folder that `UniFy.jar` is in, find the `data` folder
+.  In the folder that `StardyTogether.jar` is in, find the `data` folder
 .  Copy the `addressbook.xml` storage file inside
 .  Transfer that file to the other computer
-.  Place it in the `data` folder of `UniFy.jar`, on the other computer
+.  Place it in the `data` folder of `StardyTogether.jar`, on the other computer
 ****
 *Method 2*
-
+Merges the contacts of both computers
+****
+.  In the folder that `StardyTogether.jar` is in, find the `data` folder
+.  Copy the `addressbook.xml` storage file inside
+.  Transfer that file to the other computer
+.  Rename that file to avoid overwriting the existing `addressbook.xml`
+.  Place it in the `data` folder of `StardyTogether.jar`, on the other computer
+.  Type `import [fileName]` into the command box, where [fileName] is the new name from Step 4
+.  Press Enter
+****
 
 
 == Command Summary

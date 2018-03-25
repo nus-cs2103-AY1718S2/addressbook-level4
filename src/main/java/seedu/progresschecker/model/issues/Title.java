@@ -9,13 +9,13 @@ import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
 public class Title {
 
     public static final String MESSAGE_TITLE_CONSTRAINTS =
-            "Title of the issue should not be blank space";
+            "Title of the issue can be anything, but should not be blank space";
 
     /*
      * The first character of the title must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String TITLE_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String TITLE_VALIDATION_REGEX = "[^\\s].*";
 
     public final String fullMessage;
 

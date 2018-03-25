@@ -6,21 +6,7 @@ import static seedu.progresschecker.commons.core.Messages.MESSAGE_UNKNOWN_COMMAN
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.progresschecker.logic.commands.AddCommand;
-import seedu.progresschecker.logic.commands.ClearCommand;
-import seedu.progresschecker.logic.commands.Command;
-import seedu.progresschecker.logic.commands.DeleteCommand;
-import seedu.progresschecker.logic.commands.EditCommand;
-import seedu.progresschecker.logic.commands.ExitCommand;
-import seedu.progresschecker.logic.commands.FindCommand;
-import seedu.progresschecker.logic.commands.HelpCommand;
-import seedu.progresschecker.logic.commands.HistoryCommand;
-import seedu.progresschecker.logic.commands.ListCommand;
-import seedu.progresschecker.logic.commands.RedoCommand;
-import seedu.progresschecker.logic.commands.SelectCommand;
-import seedu.progresschecker.logic.commands.SortCommand;
-import seedu.progresschecker.logic.commands.UndoCommand;
-import seedu.progresschecker.logic.commands.ViewCommand;
+import seedu.progresschecker.logic.commands.*;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 
 /**
@@ -70,6 +56,10 @@ public class ProgressCheckerParser {
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
+
+        case CreateIssue.COMMAND_WORD:
+        case CreateIssue.COMMAND_ALIAS:
+            return new CreateIssueParser().parse(arguments);
 
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_ALIAS:

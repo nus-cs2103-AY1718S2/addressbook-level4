@@ -24,7 +24,7 @@ If you can type fast, ReciRecipé can get your recipe management done faster tha
 
 == Quick Start
 
-.  Ensure you have Java version _1.8.0_60_ or later installed in your Computer.
+.  Ensure you have Java Runtime Environment 1.8.0_60 or later installed in your Computer. You can download from http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -36,9 +36,9 @@ This app will not work with earlier versions of Java 8.
 +
 .GUI for ReciRecipe
 image::Ui.png[width="790"]
-+
+{nbsp} +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing `help` and pressing kbd:[Enter] will open the help window.
+E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 
 
 [[Features]]
@@ -47,10 +47,15 @@ e.g. typing `help` and pressing kbd:[Enter] will open the help window.
 [[CommandFormat]]
 *Command Format*
 
-* Words in upper case are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as *`add n/Chicken rice`*.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as *`n/Chicken rice t/Rice`* or as *`n/Chicken rice`*.
-* Items with `...` after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`t/rice`*, *`t/rice t/chicken`* etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME t/TAGS`, `t/TAGS n/NAME` is also acceptable.
+* Words in upper case are the parameters to be supplied by the user e.g. in `add Recipe Name:NAME`, `NAME` is a parameter which can be used as *`add Recipe Name:Chicken rice`*.
+** `INGREDIENT` is a list of ingredients, delimited by commas. E.g. `chicken,fish,rice` and `chicken, fish, rice` are valid.
+** `INSTRUCTION` can receive multiple lines as its value.
+** `TIME` fields accept a number of formats: `1h20m`, `1h20min`, `1 hour 20 minutes`, `80m`, `80min`, `80 mins`, etc. However, sticking to the most simple format `80m` is recommended.
+** `CALORIES` and `SERVINGS` are positive number. E.g. `120`, `5000`, etc.
+** `LINK` takes a valid website address as its value. E.g. `http://google.com`.
+* Items in square brackets are optional e.g `Recipe Name:NAME [#TAG]` can be used as *`Recipe Name:Chicken rice #chicken`* or as *`Recipe Name:Chicken rice`*.
+* Items with `...` after them can be used multiple times including zero times e.g. `[#TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`#rice`*, *`#rice #chicken`*, etc.
+* Parameters can be in any order. E.g. if the command specifies `Recipe Name:RECIPE_NAME Instruction:INSTRUCTION`, `Instruction:INSTRUCTION Recipe Name:RECIPE_NAME` has the same effect.
 
 [[Navigation]]
 *Navigation*
@@ -114,10 +119,11 @@ Format: `edit INDEX [n/RECIPE_NAME] [ing/INGREDIENT] [inst/INSTRUCTION] [ct/COOK
 ****
 Details
 
-* Edits the recipe at the specified `INDEX`. The index refers to the index number shown in the last recipe listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
+* See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
+* `INDEX` refers to the index number shown in the last recipe listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields *must* be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the recipe will be removed i.e adding of tags is not cumulative.
+* When editing tags, the existing tags of the recipe will be removed, i.e. adding of tags is not cumulative.
 * You can remove all the recipe's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -201,7 +207,7 @@ Format: *`select INDEX`*
 ****
 Details
 
-* Selects the recipe and loads the URL of the recipe at the specified `INDEX`.
+* If the selected recipe has a link, the in-app browser will load that link.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
 ****
@@ -222,7 +228,7 @@ Format: *`history`*
 
 [TIP]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
 ====
 
 // tag::undoredo[]

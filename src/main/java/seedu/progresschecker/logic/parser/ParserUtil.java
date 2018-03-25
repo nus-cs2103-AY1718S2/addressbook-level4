@@ -10,6 +10,9 @@ import java.util.Set;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.commons.util.StringUtil;
+import seedu.progresschecker.model.issues.Assignees;
+import seedu.progresschecker.model.issues.Milestone;
+import seedu.progresschecker.model.issues.Title;
 import seedu.progresschecker.model.person.Email;
 import seedu.progresschecker.model.person.Major;
 import seedu.progresschecker.model.person.Name;
@@ -81,6 +84,79 @@ public class ParserUtil {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+
+    public static Title parseTitle(String title) throws IllegalValueException {
+        requireNonNull(title);
+        String trimmedTitle = title.trim();
+        if (!Title.isValidTitle(trimmedTitle)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new Title(trimmedTitle);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Title> parseTitle(Optional<String> title) throws IllegalValueException {
+        requireNonNull(title);
+        return title.isPresent() ? Optional.of(parseTitle(title.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+
+    public static Assignees parseAssignees(String assignees) {
+        requireNonNull(assignees);
+        String trimmedAssignees = assignees.trim();
+        return new Assignees(trimmedAssignees);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Assignees> parseAssignees(Optional<String> assignees) throws IllegalValueException {
+        requireNonNull(assignees);
+        return assignees.isPresent() ? Optional.of(parseAssignees(assignees.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+
+    public static Milestone parseMilestone(String milestone) throws IllegalValueException {
+        requireNonNull(milestone);
+        String trimmedMilestone = milestone.trim();
+        if (!Milestone.isValidMilestone(trimmedMilestone)) {
+            throw new IllegalValueException(Milestone.MESSAGE_MILESTONE_CONSTRAINTS);
+        }
+        return new Milestone(trimmedMilestone);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Milestone> parseMilestone(Optional<String> milestone) throws IllegalValueException {
+        requireNonNull(milestone);
+        return milestone.isPresent() ? Optional.of(parseMilestone(milestone.get())) : Optional.empty();
+    }
+
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.

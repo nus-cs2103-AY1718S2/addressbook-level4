@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
@@ -25,6 +27,7 @@ public class ShowDashboardCommand extends Command {
     private final Index targetIndex;
 
     public ShowDashboardCommand(Index targetIndex) {
+        requireNonNull(targetIndex);
         this.targetIndex = targetIndex;
     }
 

@@ -80,7 +80,7 @@ public class UniqueMilestoneList implements Iterable<Milestone> {
             throw new MilestoneNotFoundException();
         }
 
-        if (!target.equals(editedMilestone) && contains(target)) {
+        if (!target.equals(editedMilestone) && contains(editedMilestone)) {
             throw new DuplicateMilestoneException();
         }
 

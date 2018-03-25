@@ -54,7 +54,7 @@ public class AddMilestoneCommand extends UndoableCommand {
     private Student editedStudent;
 
     public AddMilestoneCommand(Index index, Milestone newMilestone) {
-        assert index != null && newMilestone != null;
+        requireAllNonNull(index, newMilestone);
 
         this.newMilestone = newMilestone;
         this.index = index;
@@ -98,7 +98,7 @@ public class AddMilestoneCommand extends UndoableCommand {
      */
     private Student createEditedStudent(Student studentToEdit, Milestone newMilestone)
             throws DuplicateMilestoneException {
-        assert (studentToEdit != null) && (newMilestone != null);
+        requireAllNonNull(studentToEdit, newMilestone);
 
         /* Get all the attributes of the student */
         Name name = studentToEdit.getName();

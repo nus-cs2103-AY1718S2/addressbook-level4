@@ -28,7 +28,7 @@ public class Progress {
 
         this.totalTasks = totalTasks;
         this.numCompletedTasks = numCompletedTasks;
-        progressValueInPercent = (totalTasks == 0) ? 0 : ((numCompletedTasks / totalTasks) * 100);
+        progressValueInPercent = (totalTasks == 0) ? 0 : (int) (((double) numCompletedTasks / totalTasks) * 100);
     }
 
     /**

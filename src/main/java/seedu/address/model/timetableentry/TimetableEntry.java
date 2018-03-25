@@ -4,12 +4,14 @@ package seedu.address.model.timetableentry;
  * Represents a timetable entry added to Employees Tracker
  */
 public class TimetableEntry {
+    private String title;
     private String calendarId;
     private String id;
     private String endDate;
     private String ownerId;
 
-    public TimetableEntry(String calendarId, String id, String endDate, String ownerId) {
+    public TimetableEntry(String title, String calendarId, String id, String endDate, String ownerId) {
+        this.title = title;
         this.calendarId = calendarId;
         this.id = id;
         this.endDate = endDate;
@@ -30,5 +32,17 @@ public class TimetableEntry {
 
     public String getOwnerId() {
         return ownerId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String toDisplayString() {
+        return "Event " + getTitle() + " ended at " + getEndDateDisplay();
+    }
+
+    public String getEndDateDisplay() {
+        return getEndDate().substring(13, 23) + " " + getEndDate().substring(24, 32);
     }
 }

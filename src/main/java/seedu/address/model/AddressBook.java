@@ -190,7 +190,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeTimetableEntry(String timetableEntryId) throws TimetableEntryNotFoundException {
         boolean found = false;
         for (TimetableEntry t: timetableEntries) {
-            if (t.getId().equals(timetableEntryId)) {
+            if (t != null && t.getId() != null && t.getId().equals(timetableEntryId)) {
                 timetableEntries.remove(t);
                 found = true;
             }
@@ -252,5 +252,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     /** sort the existing persons in specific field*/
     public void sort(String field) {
         persons.sort(field);
+    }
+
+    /**
+     * Returns a person with the given id.
+     *
+     * @param id must be a valid id.
+     */
+    public Person findPersonById(int id) {
+        for (Person p: persons) {
+            if (p.getId() == id) {
+                return p;
+            }
+        }
+        return null;
     }
 }

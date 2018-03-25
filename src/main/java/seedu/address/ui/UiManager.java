@@ -1,5 +1,10 @@
 package seedu.address.ui;
 
+import java.awt.AWTException;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -14,6 +19,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.ShowWindowsNotificationEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -116,5 +122,30 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait(FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE, FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE,
                 event.exception);
+    }
+
+    @Subscribe
+    private void showWindowsNotificationEvent(ShowWindowsNotificationEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showNotificationOnWindows(event);
+    }
+
+    /**
+     * Shows notification on Windows System Tray
+     */
+    private void showNotificationOnWindows(ShowWindowsNotificationEvent event) {
+        SystemTray tray = SystemTray.getSystemTray();
+        java.awt.Image image = Toolkit.getDefaultToolkit().createImage(ICON_APPLICATION);
+        TrayIcon trayIcon = new TrayIcon(image, "E.T. timetable entry ended");
+        trayIcon.setImageAutoSize(true);
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
+        trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getTitle()
+                + " ended at " + event.getEndTime(), TrayIcon.MessageType.INFO);
+
     }
 }

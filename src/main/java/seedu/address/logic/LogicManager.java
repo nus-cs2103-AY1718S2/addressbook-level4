@@ -12,8 +12,10 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
 import seedu.address.commons.events.model.TimetableEntryAddedEvent;
 import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
+import seedu.address.commons.events.ui.ShowWindowsNotificationEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UnlockCommand;
@@ -21,7 +23,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.Person;
+import seedu.address.model.timetableentry.TimetableEntry;
 import seedu.address.model.timetableentry.TimetableEntryTime;
 import seedu.address.storage.TimetableEntryTimeParserUtil;
 
@@ -37,6 +41,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
     private HashMap<TimerTask, Boolean> timetableEntriesStatus;
+    private HashMap<TimerTask, TimetableEntry> timerTaskToTimetableEntryMap;
     private HashMap<String, TimerTask> scheduledTimerTasks;
 
     public LogicManager(Model model) {
@@ -47,6 +52,7 @@ public class LogicManager extends ComponentManager implements Logic {
         isLocked = false;
         timetableEntriesStatus = new HashMap<>();
         scheduledTimerTasks = new HashMap<>();
+        timerTaskToTimetableEntryMap = new HashMap<>();
     }
 
     @Override
@@ -126,19 +132,25 @@ public class LogicManager extends ComponentManager implements Logic {
                     System.out.println("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
+                TimetableEntry timetableEntry = timerTaskToTimetableEntryMap.get(this);
+                String title = timetableEntry.getTitle();
+                String endTime = timetableEntry.getEndDateDisplay();
+                String ownerName = ((ModelManager) model).getNameById(timetableEntry.getOwnerId());
+                raise(new ShowWindowsNotificationEvent(ownerName, endTime, title));
+                raise(new RequestToDeleteTimetableEntryEvent(timerTaskToTimetableEntryMap.get(this).getId()));
             }
         };
+        timetableEntriesStatus.put(task, true);
+        scheduledTimerTasks.put(event.timetableEntry.getId(), task);
+        timerTaskToTimetableEntryMap.put(task, event.timetableEntry);
+        System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
+                .currentTimeMillis()));
         long duration = c.getTimeInMillis() - System.currentTimeMillis();
         if (duration >= 0) {
             timer.schedule(task, duration);
         } else {
             task.run();
         }
-        timetableEntriesStatus.put(task, false);
-        scheduledTimerTasks.put(event.timetableEntry.getId(), task);
-        System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
-                .currentTimeMillis()));
-
     }
 
     @Subscribe

@@ -1,17 +1,27 @@
 package seedu.address.ui;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import org.fxmisc.easybind.EasyBind;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.animation.TranslateTransition;
+import javafx.beans.InvalidationListener;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
@@ -20,6 +30,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -30,6 +41,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -42,6 +54,8 @@ public class MainWindow extends UiPart<Stage> {
     private static final String FXML = "MainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final int ENTER = -1;
+    private final int EXIT = 1;
 
     private Stage primaryStage;
     private Logic logic;
@@ -51,6 +65,8 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    private ObservableList<ShowNotificationEvent> notfications;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -91,6 +107,7 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerators();
         registerAsAnEventHandler(this);
+
     }
 
     public Stage getPrimaryStage() {
@@ -215,14 +232,31 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     public void showNotificationPanel() {
-        TranslateTransition enterAnimation = new TranslateTransition(Duration.millis(250), test1);
-        enterAnimation.setByX(-100);
+        animate(test1, 400, EXIT);
+
+    }
+
+    public void showNewNotification(ShowNotificationEvent event) {
+        System.out.println("Preparing in app notification");
+        Region notificationCard = (new NotificationCard(event.getTitle(), "0", event.getOwnerName(), event
+                .getEndTime())).getRoot();
+        notificationCard.setTranslateX(300);
+        notificationCard.setTranslateY(-15);
+        notificationCard.setMaxHeight(100);
+        notificationCard.setMaxWidth(300);
+        test.getChildren().add(notificationCard);
+        animate(notificationCard, 315, ENTER);
+    }
+
+    private void animate(Region component, double width, int direction) {
+        TranslateTransition enterAnimation = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation.setByX(direction * 0.25 * width);
         enterAnimation.play();
-        TranslateTransition enterAnimation1 = new TranslateTransition(Duration.millis(250), test1);
-        enterAnimation1.setByX(-300);
+        TranslateTransition enterAnimation1 = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation1.setByX(direction * 0.75 * width);
         enterAnimation1.play();
-        TranslateTransition enterAnimation2 = new TranslateTransition(Duration.millis(250), test1);
-        enterAnimation2.setByX(-400);
+        TranslateTransition enterAnimation2 = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation2.setByX(direction * width);
         enterAnimation2.play();
     }
 }

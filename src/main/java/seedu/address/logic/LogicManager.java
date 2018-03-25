@@ -15,7 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
 import seedu.address.commons.events.model.TimetableEntryAddedEvent;
 import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
-import seedu.address.commons.events.ui.ShowWindowsNotificationEvent;
+import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UnlockCommand;
@@ -136,7 +136,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 String title = timetableEntry.getTitle();
                 String endTime = timetableEntry.getEndDateDisplay();
                 String ownerName = ((ModelManager) model).getNameById(timetableEntry.getOwnerId());
-                raise(new ShowWindowsNotificationEvent(ownerName, endTime, title));
+                raise(new ShowNotificationEvent(ownerName, endTime, title));
                 raise(new RequestToDeleteTimetableEntryEvent(timerTaskToTimetableEntryMap.get(this).getId()));
             }
         };

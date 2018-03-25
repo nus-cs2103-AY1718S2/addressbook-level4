@@ -24,7 +24,7 @@
         <URL value="@Extensions.css" />
       </stylesheets>
 
-      <StackPane fx:id="test" alignment="CENTER_RIGHT">
+      <StackPane fx:id="test" alignment="BOTTOM_RIGHT">
         <children>
           <VBox>
             <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">

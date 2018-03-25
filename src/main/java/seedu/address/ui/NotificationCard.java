@@ -23,8 +23,6 @@ public class NotificationCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final TimetableEntry timetableEntry;
-
     @FXML
     private Label title;
     @FXML
@@ -34,13 +32,12 @@ public class NotificationCard extends UiPart<Region> {
     @FXML
     private Label endTime;
 
-    public NotificationCard(TimetableEntry timetableEntry, int displayedIndex, String ownerName) {
+    public NotificationCard(String title, String displayedIndex, String ownerName, String endTime) {
         super(FXML);
-        this.timetableEntry = timetableEntry;
         id.setText(displayedIndex + ". ");
-        title.setText(timetableEntry.getTitle());
+        this.title.setText(title);
         this.ownerName.setText(ownerName);
-        endTime.setText(timetableEntry.getEndDateDisplay());
+        this.endTime.setText(endTime);
     }
 
     @Override
@@ -58,6 +55,8 @@ public class NotificationCard extends UiPart<Region> {
         // state check
         NotificationCard card = (NotificationCard) other;
         return id.getText().equals(card.id.getText())
-                && timetableEntry.equals(card.timetableEntry);
+                && title.equals(((NotificationCard) other).title)
+                && ownerName.equals(((NotificationCard) other).ownerName)
+                && endTime.equals(((NotificationCard) other).endTime);
     }
 }

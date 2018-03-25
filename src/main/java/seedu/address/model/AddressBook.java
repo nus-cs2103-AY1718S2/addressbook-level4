@@ -273,6 +273,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public void resetAliasList() {
+        aliases.resetHashmap();
+    }
+
+    @Override
     public Password getPassword() {
         return password;
     }

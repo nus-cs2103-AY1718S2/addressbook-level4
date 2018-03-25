@@ -91,6 +91,9 @@ public class UniqueAliasList {
         }
     }
 
+    /**
+     * Getter for Observable list
+     */
     public ObservableList<Alias> getAliasObservableList() {
         internalList = FXCollections.observableArrayList();
         convertToList();
@@ -105,5 +108,12 @@ public class UniqueAliasList {
         requireAllNonNull(aliases);
         internalList.setAll(aliases);
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Clears hashList, for clear command.
+     */
+    public void resetHashmap() {
+        hashList.clear();
     }
 }

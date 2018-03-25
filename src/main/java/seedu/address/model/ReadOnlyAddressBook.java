@@ -28,6 +28,8 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Alias> getAliasList();
 
+    void resetAliasList();
+
     /**
      * Returns the hashed password
      */

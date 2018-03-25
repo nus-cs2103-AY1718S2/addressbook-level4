@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
@@ -20,11 +21,10 @@ public class JsonUserPassStorage implements UserPassStorage {
     public JsonUserPassStorage(String filePath) {
         this.filePath = filePath;
         try {
-            userPassHashmap = readUserPassMap().orElseThrow(NullPointerException::new);
-        } catch (DataConversionException | IOException | NullPointerException e) {
+            userPassHashmap = readUserPassMap().get();
+        } catch (DataConversionException | IOException e) {
             e.printStackTrace();
-        }
-        if (userPassHashmap.isEmpty()) {
+        } catch (NullPointerException | NoSuchElementException e) {
             userPassHashmap = new HashMap<>();
         }
     }

@@ -29,7 +29,7 @@ public class LoginPaneTest extends GuiUnitTest {
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        JsonUserPassStorage userPassStorage = new JsonUserPassStorage(getTempFilePath("tempUserPass"));
+        JsonUserPassStorage userPassStorage = new JsonUserPassStorage(getTempFilePath("tempUserPass.json"));
         storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
         login = new LoginManager(storage);
         loginPane = new LoginPane(login);

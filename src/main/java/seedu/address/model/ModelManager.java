@@ -29,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Job> filteredJobs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredJobs = new FilteredList<>(this.addressBook.getJobList());
     }
 
     public ModelManager() {
@@ -85,16 +87,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag t)
-            throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
+    public void deleteTag(Tag t) throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
         addressBook.removeTag(t);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addJob(Job job) throws DuplicateJobException {
+    public synchronized void addJob(Job job) throws DuplicateJobException { 
         addressBook.addJob(job);
-//        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
         indicateAddressBookChanged();
     }
 
@@ -130,7 +131,24 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredJobs.equals(other.filteredJobs);
     }
 
+    //=========== Filtered Job List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Jobs} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
 }

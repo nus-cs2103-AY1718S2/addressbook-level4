@@ -137,7 +137,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void printSchedule(){
+    public void printSchedule() {
         schedule.print(addressBook);
     }
     //=========== Filtered Student List Accessors =============================================================

@@ -84,8 +84,8 @@ public class Student {
     /**
      * Every field must be present and not null. For when dashboard and favourite is not initialised
      */
-    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
-                   Set<Tag> tags) {
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -102,8 +102,8 @@ public class Student {
     /**
      * Every field must be present and not null. For when dashboard is not initialised
      */
-    public Student(UniqueKey uniqueKey,Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
-                   Set<Tag> tags, Favourite fav) {
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -162,7 +162,10 @@ public class Student {
         return dashboard;
     }
 
-    public UniqueKey getUniqueKey() { return uniqueKey; }
+    public UniqueKey getUniqueKey() {
+        return uniqueKey;
+    }
+
     /**
      * Returns true if Student is in favourites, else returns false.
      */
@@ -235,6 +238,10 @@ public class Student {
         return builder.toString();
     }
 
+    /**
+     * TODO Delete later
+     * @return Test String
+     */
     public String toStrings() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())

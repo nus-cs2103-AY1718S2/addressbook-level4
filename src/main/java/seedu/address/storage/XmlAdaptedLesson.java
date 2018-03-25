@@ -9,6 +9,9 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.lesson.Day;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Time;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
@@ -17,11 +20,6 @@ import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.lesson.Day;
-import seedu.address.model.lesson.Hour;
-import seedu.address.model.lesson.Lesson;
-import seedu.address.model.lesson.Min;
-import seedu.address.model.lesson.Time;
 
 /**
  * JAXB-friendly version of the Student.

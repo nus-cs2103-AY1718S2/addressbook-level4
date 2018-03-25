@@ -2,14 +2,13 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.Schedule;
 import seedu.address.model.ReadOnlySchedule;
+import seedu.address.model.Schedule;
 
 /**
  * An Immutable Schedule that is serializable to XML format

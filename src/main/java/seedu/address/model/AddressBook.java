@@ -221,7 +221,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param key
      * @return Student object matching
      */
-    public Student findStudentByKey(UniqueKey key){
+    public Student findStudentByKey(UniqueKey key) {
         Student student;
         try {
             student = students.findKey(key);
@@ -231,6 +231,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         return student;
     }
 
+    /**
+     * TODO Delete later
+     */
     public void printAll() {
         for (Student s : students) {
             System.out.println(s.toStrings());

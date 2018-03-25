@@ -119,8 +119,8 @@ public class EditCommand extends UndoableCommand {
         Favourite isFavourite = studentToEdit.getFavourite();
         Dashboard dashboard = studentToEdit.getDashboard();
 
-        return new Student(uniqueKey, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
-                updatedTags, isFavourite, dashboard);
+        return new Student(uniqueKey, updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedProgrammingLanguage, updatedTags, isFavourite, dashboard);
     }
 
     @Override

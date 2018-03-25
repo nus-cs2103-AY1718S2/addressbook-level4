@@ -35,7 +35,9 @@ public class Lesson implements Comparable<Lesson> {
         return student;
     }
 
-    public UniqueKey getUniqueKey() { return uniqueKey; }
+    public UniqueKey getUniqueKey() {
+        return uniqueKey;
+    }
 
     public Day getDay() {
         return day;

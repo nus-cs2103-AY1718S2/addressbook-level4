@@ -227,11 +227,6 @@ image::DeleteRecipeSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
-.Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
-
-*API*: link:{repoURL}/src/main/java/seedu/recipe/model/Model.java[`Model.java`]
-
 The <<Design-Model,*`Model`*>>,
 
 * stores a `_UserPref_` object that represents the user's preferences.
@@ -239,19 +234,31 @@ The <<Design-Model,*`Model`*>>,
 * exposes an unmodifiable `_ObservableList<Recipe>_` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+Refer to diagram below <<fig-ModelClassDiagram>>.
+
+[[fig-ModelClassDiagram]]
+.Structure of the Model Component
+image::ModelClassDiagram.png[width="800"]
+{nbsp} +
+
+*API*: link:{repoURL}/src/main/java/seedu/recipe/model/Model.java[`Model.java`]
+
 [[Design-Storage]]
 === Storage component
-
-.Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
-
-*API*: link:{repoURL}/src/main/java/seedu/recipe/storage/Storage.java[`Storage.java`]
 
 The <<Design-Storage,*`Storage`*>> component,
 
 * can save `_UserPref_` objects in JSON format and read it back.
 * can save the Recipe Book data in XML format and read it back.
 
+Refer to diagram below <<fig-StorageClassDiagram>>.
+
+[[fig-StorageClassDiagram]]
+.Structure of the Storage Component
+image::StorageClassDiagram.png[width="800"]
+{nbsp} +
+
+*API*: link:{repoURL}/src/main/java/seedu/recipe/storage/Storage.java[`Storage.java`]
 
 == Implementation
 
@@ -266,6 +273,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `_Command_` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+{nbsp} +
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `_Command_` class and concrete commands that can be undone, such as the `_DeleteCommand_`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the recipe book before execution. `_UndoableCommand_` contains the high-level algorithm for those extra tasks while the child classes implement the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -305,10 +313,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `_UndoableCommand_`, *`delete 5`*, to delete the 5th recipe in the recipe book. The current state of the recipe book is saved before the *`delete 5`* command executes. The *`delete 5`* command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+{nbsp} +
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute *`add n/David ...`* to add a new recipe.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+{nbsp} +
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -318,6 +328,7 @@ The user now decides that adding the recipe was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`, thus restoring the recipe book to the state before the *`add`* command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+{nbsp} +
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `_Exception_` will be thrown when popping the `undoStack`.
@@ -325,6 +336,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+{nbsp} +
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the recipe book to the state after the command is executed).
 
@@ -334,14 +346,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, *`clear`*. As before, *`clear`* will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the *`add n/David`* command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+{nbsp} +
 
 Commands that are not undoable are not added into the `undoStack`. For example, *`list`*, which inherits from `_Command_` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+{nbsp} +
 
 The following activity diagram summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="650"]
+{nbsp} +
 
 ==== Design Considerations
 

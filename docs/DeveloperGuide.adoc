@@ -14,6 +14,31 @@ endif::[]
 
 By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+Your TA is an address book application designed to amplify the capabilities of a university teaching assistant or tutor.
+It aims to provide all the essential functions needed to manage the administrative duties of handling a class as well as
+to aid the tutor to better connect with the class. It includes a calendar, scheduling capabilities, as well as the ability to mark
+attendance and participation as well.
+
+== How to contribute to Your TA?
+
+=== New Developers
+
+You may wish to refer to the https://github.com/CS2103JAN2018-F09-B1/main/blob/master/docs/DeveloperGuide.adoc#setting-up[set up] portion
+to set up the Your TA project file.
+
+Read through the rest of the guide to familiarise yourself with how Your TA components functions together.
+
+Try making some enhancements or edits to a component and make a Pull Request (PR) to our repo! We will take a look at your PR and
+give you some feedback or even merge your code if it's great.
+
+=== Experienced Developers
+
+The Developer Guide contains the design of the models that make up the program. Each section also details how each and every functionality
+is implemented and how it interacts with the different models. We would greatly appreciate your help in fine-tuning the components and also
+welcome any suggestions or feedback to improve Your TA.
+
 == Setting up
 
 === Prerequisites
@@ -53,7 +78,7 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code

@@ -41,6 +41,7 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_IMAGE_ERROR = "Cannot open image file";
 
     private final Person toAdd;
 
@@ -63,7 +64,7 @@ public class AddCommand extends UndoableCommand {
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (IllegalValueException ive) {
-            throw new CommandException("Cannot open image file.");
+            throw new CommandException(MESSAGE_IMAGE_ERROR);
         }
 
     }

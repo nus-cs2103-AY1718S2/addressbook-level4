@@ -523,7 +523,7 @@ The default LOs and todos for all weeks would be stored as a local file upon whi
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `newtasklist`.
 
-.Component interactions for `newtasklist` command (part 1)
+.Component interactions for `newtasklist` command
 image::SDforAddDefaultTaskList.png[width="800"]
 
 [NOTE]

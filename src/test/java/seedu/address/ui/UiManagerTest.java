@@ -13,7 +13,6 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.login.Login;
 import seedu.address.login.LoginManager;
-import seedu.address.login.UserPassStorage;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;

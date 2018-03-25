@@ -14,7 +14,6 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
-import seedu.address.login.UserPassStorage;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;

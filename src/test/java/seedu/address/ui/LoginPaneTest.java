@@ -10,7 +10,6 @@ import guitests.guihandles.LoginPaneHandle;
 
 import seedu.address.login.Login;
 import seedu.address.login.LoginManager;
-import seedu.address.login.UserPassStorage;
 import seedu.address.storage.JsonUserPassStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;

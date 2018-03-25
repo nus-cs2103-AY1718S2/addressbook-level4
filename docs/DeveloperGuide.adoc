@@ -439,6 +439,51 @@ image::TagReplaceCommand.png[width="650"]
          and it would cause the wanted tag to be removed instead of the unwanted one.
 
 // end::TagReplace[]
+=======
+// tag::subject[]
+=== Subject streaming calculation feature (work in progress)
+==== Current Implementation
+The subject streaming calculation features will be supported by a calculation algorithm, `L1R5`, which will be located in `Logic Manager`. It will help to analyse the subjects that are assigned to the student, and determine which combination of subjects will produce the lowest `L1R5` score.
+The subjects and their respective grades can be assigned to the students by the `AddCommand`, with a subject prefix `sub/` followed by the `Subject Name` and `Subject Grade`.
+
+As the students are required to take at least 6 subjects, the subjects will be stored in as a parameter of each individual student as a `List<Subject>`.
+
+==== Future implementation
+
+===== Aspect: Implementation of `L1R5Command`
+
+*  Create a `L1R5Command` which can be invoked by inputting `L1R5` followed by the `INDEX` assigned to the student in the `Command Box`.
+This  will prompt the execution of a `L1R5` calculation function. The `L1R5Command` will extend the `Command` Interface.
+
+image::L1R5CommandDiagram.png[width="800"]
+
+===== Aspect: Implementation of calculation function `L1R5`
+
+*  When the calculation function is called by the `L1R5Command`, the specified student will be passed into the function.
+The function will load and store the list of subjects of the student and go through the list of subjects by their names to filter out which subject is L1, which subjects are R5.
+The calculation function will then determine which subject combination will produce the lowest overall `L1R5` score and output the lowest score.
+
+// end::subject[]
+
+// tag::masstagremoval[]
+=== Mass Tag Removal feature
+==== Current Implementation
+
+The Mass Tag Removal feature is supported through the suggested Tag Removal feature for the Model Component in <<GetStartedProgramming-EachComponent>>.
+The command `TagDeleteCommand` is implemented to call the `deleteTag()` function in the `Model` interface.
+The `deleteTag()` function will loop through the students in the `AddressBook` and will remove the specified Tag from every student that has the specified Tag and the students' `Tag List` will be updated.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `TagDeleteCommand`
+// end::masstagremoval[]
+* Create a `TagDeleteCommand` where the user inputs `tagdelete [TAG_NAME]` or `td [TAG_NAME]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
+The `deleteTag()` function will be called and loops through the students in the `AddressBook`.
+
+If the specified tag is not found tagged to any student, a `TagNotFoundException` will be thrown and a error message will be returned to the user. Else, the `Tag List` of each student will be loaded and stored in a temporary `List` variable and the specified tag will be removed from it.
+Then a new student object with the updated `Tag List` will be replace the original student object. Thus the `AddressBook` will eventually have the updated list of students where the specified tag have been removed.
+
+image::TagDeleteCommandSequenceDiagram.png[width="800"]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -1124,6 +1169,19 @@ _{More to be added}_
 
 [appendix]
 == Glossary
+
+[[Grade]] Grade::
+The grading of the subjects by the level of competence the students show during the examinations.
+The level of achievement in each subject is indicated by the grade obtained, with A1 being the highest achievable grade and F9 the lowest:
+** A1/A2 (Distinction)
+** B3/B4 (Merit)
+** C5/C6 (Credit/Pass)
+** D7/E8/F9 (Below O Level Pass)
+
+[[L1R5]] L1R5::
+A grading system for Secondary School students taking "O Level Examination" at the end of their four years of studies in Secondary School.
+The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education.
+`L1` represents the First language (English) grade and `R5` represents 5 relevant subjects' grades. The score will be calculated by considering the subjects' grades.
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X

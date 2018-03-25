@@ -19,7 +19,7 @@ public class JsonUserPassStorage implements UserPassStorage {
 
     public JsonUserPassStorage(String filePath) {
         this.filePath = filePath;
-        try{
+        try {
             UserPassHashmap = readUserPassMap().orElseThrow(NullPointerException::new);
         } catch (DataConversionException|IOException|NullPointerException e) {
             e.printStackTrace();

@@ -17,9 +17,9 @@ public class UserPass {
         this.password = hash(password.trim());
     }
 
-    public String hash(String password){
+    public String hash(String password) {
         byte[] encodedPassword = new byte[0];
-        try{
+        try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             encodedPassword = digest.digest(password.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {

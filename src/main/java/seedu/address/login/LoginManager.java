@@ -65,7 +65,7 @@ public class LoginManager extends ComponentManager implements Login {
             throw new UsernameTakenException();
         }
         userPassStorage.put(userpass);
-        try{
+        try {
             userPassStorage.saveUserPassMap();
         } catch (IOException e) {
             e.printStackTrace();

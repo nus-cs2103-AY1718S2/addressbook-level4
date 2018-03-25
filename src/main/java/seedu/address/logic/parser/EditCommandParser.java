@@ -88,7 +88,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> subjectSet = subjects.size() == 1 && subjects.contains("")
                 ? Collections.emptySet() : subjects;
-        
         return Optional.of(ParserUtil.parseSubjects(subjectSet));
     }
 }

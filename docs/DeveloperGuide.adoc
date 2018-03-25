@@ -485,30 +485,41 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 
 === Birthdays feature
 ==== Current Implementation
-Birthdays Command uses the existing Events system and stacks a additional StackPane over the existing BrowserPane.
+Birthdays Command uses the existing Events system and sends an event.
 
-Calling `birthdays` command will create a event, which retrieves the current UniquePersonList from Model as an observableList to the UI
-The BirthdayList UI class then converts the list into an editable list.
-It further parses the day and month of the given Birthday and sorts the list.
-Afterwards, it brings the birthdayPlaceholder to the front, replacing the browserPlaceholder.
+image::LogicComponentBirthdaysSequenceDiagram.png[width="800"]
 
+The UI component will then receive the event and handle the data.
+
+image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: How BirthdayList parses its Data
+===== Aspect: How the BirthdayList UI component obtains and parses its data
 
-* **Alternative 1: Updating Birthday Class to have separate classes Day and Month.
-** Pros: More modularity
-** Cons: Not apparent in usage by User. Functionality remains the same but code becomes more coupled.
-* **Alternative 2: Use Natural Language Processing for parsing Birthday
-** Pros: Users can enter their birthday in any format
-** Cons: External API will be used. May introduce unforeseen bugs
+* **Alternative 1 (current choice)**: Let UI component handle the parsing of UniquePersonList obtained from Event
+** Pros: Isolated and independent within BirthdayList UI component. Less overhead.
+** Cons: Not intuitive to new developers as parsing of data is not expected in UI.
+* **Alternative 2 (current choice)**: Let Parser class handle the parsing of UniquePersonList obtained from Event
+** Pros: More modularity.
+** Cons: Not apparent in usage by User. Functionality remains the same but coupling between UI and Parser increases.
 
-===== Aspect: How BirthdayList presents its data
-* ** Alternative 1: Notification at the start of app if a birthday is occuring today
-** Pros: More intuitive for User. Provides additional functionality for user stories
+===== Aspect: How User can open Birthday List
+
+* **Alternative 1 (current choice)**: Manual command "birthdays"
+** Pros: Easy to implement seperately as a command.
+** Cons: Not very user-friendly.
+* ** Alternative 2:** Notification at the start of app if a birthday is occurring today
+** Pros: Additional useful functionality for User.
 ** Cons: Currently, StardyTogether does not have settings to switch on/off the feature if implemented. May clash with encryption.
 
+===== Aspect: How User inputs the Birthday parameter in Person class
+* ** Alternative 1 (Current choice)**: Fixed format as DDMMYY
+** Pros: Less room for errors.
+** Cons: User may not like the DDMMYY format.
+* **Alternative 2:** Use Natural Language Processing
+** Pros: Users can enter their birthday in their preferred format.
+** Cons: External API will be used. May introduce unforeseen bugs.
 
 === Logging
 

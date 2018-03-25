@@ -54,7 +54,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* Date must be in DDMMYY format
+* Birthday must be in DDMMYY format
 ====
 
 === Viewing help : `help`
@@ -155,9 +155,9 @@ Examples:
 * `module CS2010` +
 Returns all persons having CS2010 in their modules
 
-=== Viewing a collated birthday list: `birthdays` (coming in v1.3)
+=== Viewing a collated birthday list: `birthdays` (since v1.3)
 
-Displays a list that contains all the birthdays of all contacts ordered in date +
+Displays a list that contains all the birthdays of all contacts ordered by date +
 Format: `birthdays`
 
 === Viewing common time slots in timetable: `free` (coming in v2.0)

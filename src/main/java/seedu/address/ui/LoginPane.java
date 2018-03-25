@@ -2,11 +2,14 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import seedu.address.commons.core.EventsCenter;
@@ -33,7 +36,7 @@ public class LoginPane extends UiPart<Region> {
     private PasswordField passwordField;
 
     @FXML
-    private Button submitButton;
+    private Button loginButton;
 
     @FXML
     private Button createButton;
@@ -47,6 +50,7 @@ public class LoginPane extends UiPart<Region> {
     public LoginPane(Login login) {
         super(FXML);
         this.login = login;
+        usernameTextField.requestFocus();
     }
 
     @FXML
@@ -88,7 +92,24 @@ public class LoginPane extends UiPart<Region> {
                             usernameTextField.getText(),
                             passwordField.getText()));
         } catch (Exception e) {
-            loginStatus.setText("Account cannot be created. Please try a different username.");
+            loginStatus.setText("Username is taken.");
+        }
+    }
+
+    /**
+     * Handles the key press event, {@code keyEvent}.
+     */
+    @FXML
+    private void handleKeyPress (KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            keyEvent.consume();
+            if (loginButton.isFocused() || passwordField.isFocused()) {
+                loginButton.fire();
+            } else if (createButton.isFocused()) {
+                createButton.fire();
+            } else if (exitButton.isFocused()) {
+                exitButton.fire();
+            }
         }
     }
 

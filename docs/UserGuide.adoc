@@ -88,9 +88,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 Examples:
 
 * *`edit 1 p/91234567 e/johndoe@example.com`* +
-Edits the preparationTime number and ingredient instruction of the 1st recipe to be _`91234567`_ and _`johndoe@example.com`_ respectively.
+Edits the preparationTime number and ingredient instruction of the 1st recipe to be `_91234567_` and `_johndoe@example.com_` respectively.
 * *`edit 2 n/Betsy Crower t/`* +
-Edits the name of the 2nd recipe to be _`Betsy Crower`_ and clears all existing tags.
+Edits the name of the 2nd recipe to be `_Betsy Crower_` and clears all existing tags.
 
 === Locating recipes by name: `find`
 
@@ -98,19 +98,19 @@ Finds recipes whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g *`find hans`* will match _`Hans`_
-* The order of the keywords does not matter. e.g. *`find Hans Bo`* will match _`Bo Hans`_
+* The search is case insensitive. e.g *`find hans`* will match `_Hans_`
+* The order of the keywords does not matter. e.g. *`find Hans Bo`* will match `_Bo Hans_`
 * Only the name is searched.
-* Only full words will be matched e.g. *`find Han`* will not match _`Hans`_
-* Recipes matching at least one keyword will be returned (i.e. "or" search). e.g. *`find Hans Bo`* will return _`Hans Gruber`_, _`Bo Yang`_
+* Only full words will be matched e.g. *`find Han`* will not match `_Hans_`
+* Recipes matching at least one keyword will be returned (i.e. "or" search). e.g. *`find Hans Bo`* will return `_Hans Gruber_`, `_Bo Yang_`
 ****
 
 Examples:
 
 * *`find John`* +
-Returns _`john`_ and _`John Doe`_
+Returns `_john_` and `_John Doe_`
 * *`find Betsy Tim John`* +
-Returns any recipe having names _`Betsy`_, _`Tim`_, or _`John`_
+Returns any recipe having names `_Betsy_`, `_Tim_`, or `_John_`
 
 === Locating recipes by tags: `tag`
 

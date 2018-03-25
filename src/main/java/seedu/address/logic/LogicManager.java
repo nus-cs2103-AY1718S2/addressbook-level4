@@ -50,6 +50,17 @@ public class LogicManager extends ComponentManager implements Logic {
         scheduledTimerTasks = new HashMap<>();
     }
 
+    public LogicManager(Model model, boolean initialLock) {
+        this.model = model;
+        history = new CommandHistory();
+        addressBookParser = new AddressBookParser();
+        undoRedoStack = new UndoRedoStack();
+        isLocked = initialLock;
+        password = model.getPassword();
+        timetableEntriesStatus = new HashMap<>();
+        scheduledTimerTasks = new HashMap<>();
+    }
+
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");

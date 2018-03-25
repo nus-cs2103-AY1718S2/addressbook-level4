@@ -24,15 +24,10 @@ public class LockCommandTest {
     public void equals() {
 
         LockCommand firstLockCommand = new LockCommand();
-        LockCommand secondLockCommand = new LockCommand("1234");
-        LockCommand thirdLockCommand = new LockCommand("123456");
+        LockCommand secondLockCommand = new LockCommand();
 
         // same object -> returns true
         assertTrue(firstLockCommand.equals(firstLockCommand));
-
-        // same values -> returns true
-        LockCommand secondLockCommandcopy = new LockCommand("1234");
-        assertTrue(secondLockCommand.equals(secondLockCommandcopy));
 
         // different types -> returns false
         assertFalse(firstLockCommand.equals(1));
@@ -40,14 +35,12 @@ public class LockCommandTest {
         // null -> returns false
         assertFalse(firstLockCommand.equals(null));
 
-        // different value -> returns false
-        assertFalse(thirdLockCommand.equals(secondLockCommand));
     }
 
     @Test
     public void lockSuccess() {
 
-        LockCommand testLockCommand = new LockCommand("1234");
+        LockCommand testLockCommand = new LockCommand();
         testLockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = LockCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = testLockCommand.execute();

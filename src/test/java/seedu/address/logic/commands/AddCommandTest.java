@@ -106,6 +106,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void setPassword(String password) {
+            return ;
+        }
+
+        @Override
+        public String getPassword() {
+            return null;
+        }
+
+        @Override
         public void deleteTimetableEntry(String id) throws TimetableEntryNotFoundException {
 
         }

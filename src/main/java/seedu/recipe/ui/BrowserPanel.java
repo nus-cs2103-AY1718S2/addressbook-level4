@@ -45,6 +45,17 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(recipe.getUrl().toString());
     }
 
+
+    private void loadLocalRecipe(Recipe recipe) {
+        browser.getEngine().loadContent(recipe.getName().toString());
+    }
+    
+//    private void loadLocalPage(String url) {
+//        URL url2 = getClass().getResource(FXML_FILE_FOLDER
+//                + "DummySearchPage.html/?name=chicken");
+//        loadPage(url2.toExternalForm());
+//    }
+
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -67,6 +78,12 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleRecipePanelSelectionChangedEvent(RecipePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadRecipePage(event.getNewSelection().recipe);
+        Recipe recipe = event.getNewSelection().recipe;
+        System.out.println(recipe.getUrl());
+        if (recipe.getUrl().toString().equals("-")) {
+            loadLocalRecipe(recipe);
+        } else {
+            loadRecipePage(recipe);
+        }
     }
 }

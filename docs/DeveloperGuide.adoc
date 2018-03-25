@@ -229,6 +229,12 @@ The `Login` component,
 
 * allows for users to login to a specific instance of the Pigeons address book,
 such that each user (Pigeon/Delivery Driver) can have a personalised list of customers to deliver to.
+* provides an interface for managing the entire login process with usernames and passwords
+in a paired structure `UserPass` stored in a json file in the implemented class `JsonUserPassStorage`
+which implements `UserPassStorage`.
+* `UserPass` consists of two Strings, the first being the username and the second being the password.
+The password is automatically hashed by the SHA-256 algorithm upon `UserPass` creation. A static `hash` method
+is provided in the `UserPass` class if SHA-256 hashing is required for any password verification.
 
 [[Design-Commons]]
 === Common classes

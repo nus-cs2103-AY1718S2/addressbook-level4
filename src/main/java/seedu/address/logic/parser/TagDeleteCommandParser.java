@@ -20,7 +20,7 @@ public class TagDeleteCommandParser implements Parser<TagDeleteCommand> {
      */
     public TagDeleteCommand parse(String args) throws ParseException {
         try {
-            Tag tag = ParserUtil.parseTag(args);
+            Tag tag = ParserUtil.parseTag(args.trim());
             return new TagDeleteCommand(tag);
         } catch (IllegalValueException ive) {
             throw new ParseException(

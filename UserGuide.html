@@ -18,7 +18,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>Team CS2103JAN2018-W11-B3</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
+<p>By: <code>Team JACKHA (CS2103JAN2018-W11-B3)</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -29,25 +29,43 @@
 <li><a href="#quick-start">3. Quick Start</a></li>
 <li><a href="#Features">4. Features</a>
 <ul class="sectlevel2">
-<li><a href="#viewing-help-code-help-code">4.1. Viewing help : <code>help</code></a></li>
-<li><a href="#adding-a-person-code-add-code">4.2. Adding a person: <code>add</code></a></li>
-<li><a href="#listing-all-persons-code-list-code">4.3. Listing all persons : <code>list</code></a></li>
-<li><a href="#editing-a-person-code-edit-code">4.4. Editing a person : <code>edit</code></a></li>
-<li><a href="#locating-persons-by-name-code-find-code">4.5. Locating persons by name: <code>find</code></a></li>
-<li><a href="#viewing-a-person-code-view-code">4.6. Viewing a person: <code>view</code></a></li>
-<li><a href="#deleting-a-person-code-delete-code">4.7. Deleting a person : <code>delete</code></a></li>
-<li><a href="#selecting-a-person-code-select-code">4.8. Selecting a person : <code>select</code></a></li>
-<li><a href="#listing-entered-commands-code-history-code">4.9. Listing entered commands : <code>history</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code">4.10. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">4.11. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">4.12. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">4.13. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">4.14. Saving the data</a></li>
-<li><a href="#data-visualization">4.15. Data visualization</a></li>
-<li><a href="#job-posting">4.16. Job Posting</a></li>
-<li><a href="#resume-auto-scanning">4.17. Resume Auto Scanning</a></li>
-<li><a href="#linkedin-integration">4.18. LinkedIn Integration</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">4.19. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#managing-candidates-information">4.1. Managing Candidates' Information</a>
+<ul class="sectlevel3">
+<li><a href="#adding-a-person-code-add-code">4.1.1. Adding a person: <code>add</code></a></li>
+<li><a href="#editing-a-person-code-edit-code">4.1.2. Editing a person : <code>edit</code></a></li>
+<li><a href="#deleting-a-person-code-delete-code">4.1.3. Deleting a person : <code>delete</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">4.1.4. Clearing all entries : <code>clear</code></a></li>
+</ul>
+</li>
+<li><a href="#navigating-infinity-book">4.2. Navigating Infinity Book</a>
+<ul class="sectlevel3">
+<li><a href="#listing-all-persons-code-list-code">4.2.1. Listing all persons : <code>list</code></a></li>
+<li><a href="#locating-persons-by-name-code-find-code">4.2.2. Locating persons by name: <code>find</code></a></li>
+<li><a href="#viewing-a-person-code-view-code">4.2.3. Viewing a person: <code>view</code></a></li>
+<li><a href="#selecting-a-person-code-select-code">4.2.4. Selecting a person : <code>select</code></a></li>
+</ul>
+</li>
+<li><a href="#dashboard-reporting">4.3. Dashboard Reporting</a>
+<ul class="sectlevel3">
+<li><a href="#understanding-the-workflow">4.3.1. Understanding The Workflow</a></li>
+<li><a href="#managing-tag-of-a-person-refer-to-code-edit-code-command">4.3.2. Managing tag of a person: refer to <code>edit</code> command</a></li>
+<li><a href="#adding-a-new-report-code-report-new-code">4.3.3. Adding a new report : <code>report -new</code></a></li>
+<li><a href="#removing-a-report-code-report-remove-code">4.3.4. Removing a report : <code>report -remove</code></a></li>
+<li><a href="#saving-the-current-state-of-report-code-report-freeze-code">4.3.5. Saving the current state of report <code>report -freeze</code></a></li>
+<li><a href="#list-all-available-reports-coming-in-v2-0">4.3.6. List all available reports [coming in v2.0]</a></li>
+</ul>
+</li>
+<li><a href="#job-posting">4.4. Job Posting</a></li>
+<li><a href="#miscellaneous">4.5. Miscellaneous</a>
+<ul class="sectlevel3">
+<li><a href="#viewing-help-code-help-code">4.5.1. Viewing help : <code>help</code></a></li>
+<li><a href="#listing-entered-commands-code-history-code">4.5.2. Listing entered commands : <code>history</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">4.5.3. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">4.5.4. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">4.5.5. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">4.5.6. Saving the data</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#faq">5. FAQ</a></li>
@@ -207,20 +225,9 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">4.1. Viewing help : <code>help</code></a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> Opens the User Guide in a new window<br></p>
-</li>
-<li>
-<p><strong>Format:</strong> <code>help</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">4.2. Adding a person: <code>add</code></a></h3>
+<h3 id="managing-candidates-information"><a class="link" href="#managing-candidates-information">4.1. Managing Candidates' Information</a></h3>
+<div class="sect3">
+<h4 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">4.1.1. Adding a person: <code>add</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -257,21 +264,8 @@ A person can have any number of tags (including 0)
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="listing-all-persons-code-list-code"><a class="link" href="#listing-all-persons-code-list-code">4.3. Listing all persons : <code>list</code></a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> Shows a list of all persons in the address book.<br></p>
-</li>
-<li>
-<p><strong>Format:</strong> <code>list</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="editing-a-person-code-edit-code"><a class="link" href="#editing-a-person-code-edit-code">4.4. Editing a person : <code>edit</code></a></h3>
+<div class="sect3">
+<h4 id="editing-a-person-code-edit-code"><a class="link" href="#editing-a-person-code-edit-code">4.1.2. Editing a person : <code>edit</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -321,8 +315,84 @@ Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all 
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">4.1.3. Deleting a person : <code>delete</code></a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Deletes the specified person from the address book.<br></p>
+</li>
+<li>
+<p><strong>Format:</strong> <code>delete INDEX</code></p>
+</li>
+<li>
+<p><strong>Examples:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+<code>delete 2</code><br>
+Deletes the 2nd person in the address book.</p>
+</li>
+<li>
+<p><code>find Betsy</code><br>
+<code>delete 1</code><br>
+Deletes the 1st person in the results of the <code>find</code> command.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Deletes the person at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">4.1.4. Clearing all entries : <code>clear</code></a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Clears all entries from the address book.<br></p>
+</li>
+<li>
+<p><strong>Format:</strong> <code>clear</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect2">
-<h3 id="locating-persons-by-name-code-find-code"><a class="link" href="#locating-persons-by-name-code-find-code">4.5. Locating persons by name: <code>find</code></a></h3>
+<h3 id="navigating-infinity-book"><a class="link" href="#navigating-infinity-book">4.2. Navigating Infinity Book</a></h3>
+<div class="sect3">
+<h4 id="listing-all-persons-code-list-code"><a class="link" href="#listing-all-persons-code-list-code">4.2.1. Listing all persons : <code>list</code></a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Shows a list of all persons in the address book.<br></p>
+</li>
+<li>
+<p><strong>Format:</strong> <code>list</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="locating-persons-by-name-code-find-code"><a class="link" href="#locating-persons-by-name-code-find-code">4.2.2. Locating persons by name: <code>find</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -372,8 +442,8 @@ Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>J
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="viewing-a-person-code-view-code"><a class="link" href="#viewing-a-person-code-view-code">4.6. Viewing a person: <code>view</code></a></h3>
+<div class="sect3">
+<h4 id="viewing-a-person-code-view-code"><a class="link" href="#viewing-a-person-code-view-code">4.2.3. Viewing a person: <code>view</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -412,55 +482,8 @@ Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>J
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">4.7. Deleting a person : <code>delete</code></a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> Deletes the specified person from the address book.<br></p>
-</li>
-<li>
-<p><strong>Format:</strong> <code>delete INDEX</code></p>
-</li>
-<li>
-<p><strong>Examples:</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>list</code><br>
-<code>delete 2</code><br>
-Deletes the 2nd person in the address book.</p>
-</li>
-<li>
-<p><code>find Betsy</code><br>
-<code>delete 1</code><br>
-Deletes the 1st person in the results of the <code>find</code> command.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Deletes the person at the specified <code>INDEX</code>.</p>
-</li>
-<li>
-<p>The index refers to the index number shown in the most recent listing.</p>
-</li>
-<li>
-<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="selecting-a-person-code-select-code"><a class="link" href="#selecting-a-person-code-select-code">4.8. Selecting a person : <code>select</code></a></h3>
+<div class="sect3">
+<h4 id="selecting-a-person-code-select-code"><a class="link" href="#selecting-a-person-code-select-code">4.2.4. Selecting a person : <code>select</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -506,8 +529,134 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">4.9. Listing entered commands : <code>history</code></a></h3>
+<h3 id="dashboard-reporting"><a class="link" href="#dashboard-reporting">4.3. Dashboard Reporting</a></h3>
+<div class="sect3">
+<h4 id="understanding-the-workflow"><a class="link" href="#understanding-the-workflow">4.3.1. Understanding The Workflow</a></h4>
+<div class="paragraph">
+<p>As a recruiter, your work mainly involves monitoring the progress of open jobs. Imagining a working day, you have to
+keep track of the number of new candidates, interviewees, and accepted offer, which is time-consuming given there is a
+significant number of candidates. Furthermore, you may want to analyze the productivity of your recruiting team in the
+last week, month, and quarter. Keeping track of historical data becomes necessary here.<br></p>
+</div>
+<div class="paragraph">
+<p>Infinity Book proposes a workflow that helps you efficiently achieve these requirements:<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Summarize each candidate by a few keywords using <code>Tagging</code> feature. Example: <code>new</code>, <code>interviewing</code>, <code>offering</code>,
+<code>accepted</code>, &#8230;&#8203;<br></p>
+</li>
+<li>
+<p>Define a pie-chart report tailored to your specific goals. A report is defined by one <code>population</code> tag and at most
+three <code>group</code> tags. Example:</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/graph.png" alt="graph" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>You are recruiting interns, and you can use this report to keep track of the number of candidates in each stage. This
+report is defined by  tag <code>SoftwareEngineerInterns</code> as <code>population</code> tag,  and <code>screening</code>, <code>interviewing</code>, <code>accepted</code>
+as <code>group</code> tags.<br></p>
+</div>
+<div class="paragraph">
+<p>3.Save the current state of report persistently so that you can retrieve it in the future.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="managing-tag-of-a-person-refer-to-code-edit-code-command"><a class="link" href="#managing-tag-of-a-person-refer-to-code-edit-code-command">4.3.2. Managing tag of a person: refer to <code>edit</code> command</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="adding-a-new-report-code-report-new-code"><a class="link" href="#adding-a-new-report-code-report-new-code">4.3.3. Adding a new report : <code>report -new</code></a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Need to keep track certain information? Add new report using <code>report -new</code> command.<br></p>
+</li>
+<li>
+<p><strong>Format:</strong>  <code>report -new POPULATION [GROUP 1] [GROUP 2] [GROUP 3]</code><br>
+This will create a new Report with name presented in the format: <code>POPULATION_[GROUP 1]<em>[GROUP 2]</em>[GROUP 3]</code><br></p>
+</li>
+<li>
+<p><strong>Examples:</strong> <code>report -new SoftwareEngineerInterns screening interviewing accepted</code><br>
+This should create a new report named <code>SoftwareEngineerInterns_screening_interviewing_accepted</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="removing-a-report-code-report-remove-code"><a class="link" href="#removing-a-report-code-report-remove-code">4.3.4. Removing a report : <code>report -remove</code></a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> To remove a report, use <code>report -remove</code> command</p>
+</li>
+<li>
+<p><strong>Format:</strong>  <code>report -remove REPORT_NAME</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="saving-the-current-state-of-report-code-report-freeze-code"><a class="link" href="#saving-the-current-state-of-report-code-report-freeze-code">4.3.5. Saving the current state of report <code>report -freeze</code></a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> To save the current state of a report persistently, use <code>report -freeze</code> command.</p>
+</li>
+<li>
+<p><strong>Format:</strong>  <code>report -freeze POPULATION [GROUP 1] [GROUP 2] [GROUP 3]</code></p>
+</li>
+<li>
+<p><strong>Examples:</strong> <code>report -freeze SoftwareEngineerInterns_screening_interviewing_accepted</code><br>
+This will add an entry to report <code>SoftwareEngineerInterns_screening_interviewing_accepted</code> including list of emails and
+number of candidates in each group.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-all-available-reports-coming-in-v2-0"><a class="link" href="#list-all-available-reports-coming-in-v2-0">4.3.6. List all available reports [coming in v2.0]</a></h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="job-posting"><a class="link" href="#job-posting">4.4. Job Posting</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Add job requirements to find out qualified candidates.</p>
+</li>
+<li>
+<p><strong>Format:</strong> <code>addjob [SKILLS]</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="miscellaneous"><a class="link" href="#miscellaneous">4.5. Miscellaneous</a></h3>
+<div class="sect3">
+<h4 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">4.5.1. Viewing help : <code>help</code></a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Opens the User Guide in a new window<br></p>
+</li>
+<li>
+<p><strong>Format:</strong> `help`p</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">4.5.2. Listing entered commands : <code>history</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -530,8 +679,8 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">4.10. Undoing previous command : <code>undo</code></a></h3>
+<div class="sect3">
+<h4 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">4.5.3. Undoing previous command : <code>undo</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -581,8 +730,8 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">4.11. Redoing the previously undone command : <code>redo</code></a></h3>
+<div class="sect3">
+<h4 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">4.5.4. Redoing the previously undone command : <code>redo</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -619,21 +768,8 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">4.12. Clearing all entries : <code>clear</code></a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> Clears all entries from the address book.<br></p>
-</li>
-<li>
-<p><strong>Format:</strong> <code>clear</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.13. Exiting the program : <code>exit</code></a></h3>
+<div class="sect3">
+<h4 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.5.5. Exiting the program : <code>exit</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -645,76 +781,13 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">4.14. Saving the data</a></h3>
+<div class="sect3">
+<h4 id="saving-the-data"><a class="link" href="#saving-the-data">4.5.6. Saving the data</a></h4>
 <div class="paragraph">
 <p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="data-visualization"><a class="link" href="#data-visualization">4.15. Data visualization</a></h3>
-<div class="paragraph">
-<p>Make data-driven decisions with recruiting analytics</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/graph.png" alt="graph" width="500">
-</div>
-</div>
-<div class="paragraph">
-<p>Format: <code>draw [t/TAG]&#8230;&#8203;</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="job-posting"><a class="link" href="#job-posting">4.16. Job Posting</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> Add job requirements to find out qualified candidates.</p>
-</li>
-<li>
-<p><strong>Format:</strong> <code>addjob [SKILLS]</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="resume-auto-scanning"><a class="link" href="#resume-auto-scanning">4.17. Resume Auto Scanning</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> Easily filter candidates whose resume having desirable keywords.<br></p>
-</li>
-<li>
-<p><strong>Format:</strong> <code>scanresume [KEYWORD]</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="linkedin-integration"><a class="link" href="#linkedin-integration">4.18. LinkedIn Integration</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> View LinkedIn profile of the person identified by the index number used in the last person listing.<br></p>
-</li>
-<li>
-<p><strong>Format:</strong> <code>viewlinkedin [INDEX]</code></p>
-</li>
-</ul>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>Reduced clicks, and continuously updated information of candidates.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">4.19. Encrypting data files <code>[coming in v2.0]</code></a></h3>
-
 </div>
 </div>
 </div>
@@ -897,7 +970,7 @@ There is no need to save manually.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-25 16:29:48 UTC
+Last updated 2018-03-25 18:59:19 UTC
 </div>
 </div>
 </body>

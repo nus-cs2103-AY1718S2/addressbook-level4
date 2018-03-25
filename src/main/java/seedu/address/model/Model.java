@@ -38,6 +38,12 @@ public interface Model {
     /** Adds the given person */
     void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException;
 
+    /** Adds the given password */
+    void setPassword(String e);
+
+    /** Gets the password */
+    String getPassword();
+
     /** Sort existing employees by any field in alphabetical order */
     void sort(String field);
 

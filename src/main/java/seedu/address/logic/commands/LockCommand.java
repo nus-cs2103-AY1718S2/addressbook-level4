@@ -31,8 +31,10 @@ public class LockCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         LogicManager.lock();
+
         if (this.password != null) {
             LogicManager.setPassword(this.password);
+            model.setPassword(this.password);
         } else {
             LogicManager.setPassword("nopassword");
         }

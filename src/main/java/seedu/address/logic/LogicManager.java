@@ -44,7 +44,8 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
         undoRedoStack = new UndoRedoStack();
-        isLocked = false;
+        isLocked = true;
+        password = model.getPassword();
         timetableEntriesStatus = new HashMap<>();
         scheduledTimerTasks = new HashMap<>();
     }

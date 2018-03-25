@@ -118,18 +118,18 @@ Finds recipe whose tags contain any of the given keywords.
 Format: `tag KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case sensitive. e.g. `friends` will not match `Friends`
+* The search is case sensitive. e.g. *`tag friends`* will not match `_Friends_`
 * Only the tags are searched.
-* Only full words will be matched e.g. `friends` will not match `friend`
-* Recipes matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends family` will return recipes with either `friends` OR `family` as their tags.
+* Only full words will be matched e.g. *`tag friends`* will not match `_friend_`
+* Recipes matching at least one keyword will be returned (i.e. "or" search). e.g. *`tag friends family`* will return recipes with either `_friends_` OR `_family_` as their tags.
 ****
 
 Examples:
 
-* `tag friends` +
-Returns recipes with the tag `friends`
-* `tag friends family` +
-Returns any recipe with the tag `friends` or `family`
+* *`tag friends`* +
+Returns recipes with the tag `_friends_`
+* *`tag friends family`* +
+Returns any recipe with the tag `_friends_` or `_family_`
 
 === Deleting a recipe : `delete`
 
@@ -144,37 +144,37 @@ Format: `delete INDEX`
 
 Examples:
 
-* `list` +
-`delete 2` +
+* *`list`* +
+*`delete 2`* +
 Deletes the 2nd recipe in the recipe book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st recipe in the results of the `find` command.
+* *`find Betsy`* +
+*`delete 1`* +
+Deletes the 1st recipe in the results of the *`find`* command.
 
 === Selecting a recipe : `select`
 
 Selects the recipe identified by the index number used in the last recipe listing. +
-Format: `select INDEX`
+Format: *`select INDEX`*
 
 ****
 * Selects the recipe and loads the Google search page the recipe at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* "1, 2, 3, ...".
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
+* *`list`* +
+*`select 2`* +
 Selects the 2nd recipe in the recipe book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st recipe in the results of the `find` command.
+* *`find Betsy`* +
+*`select 1`* +
+Selects the 1st recipe in the results of the *`find`* command.
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: *`history`*
 
 [NOTE]
 ====
@@ -185,61 +185,61 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the recipe book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: *`undo`*
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the recipe book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the recipe book's content (*`add`*, *`delete`*, *`edit`* and *`clear`*).
 ====
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+* *`delete 1`* +
+*`list`* +
+*`undo`* (reverses the `delete 1` command) +
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+* *`select 1`* +
+*`list`* +
+*`undo`* +
+The *`undo`* command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+* *`delete 1`* +
+*`clear`* +
+*`undo`* (reverses the *`clear`* command) +
+*`undo`* (reverses the *`delete 1`* command) +
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Reverses the most recent *`undo`* command. +
+Format: *`redo`*
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* *`delete 1`* +
+*`undo`* (reverses the *`delete 1`* command) +
+*`redo`* (reapplies the *`delete 1`* command) +
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+* *`delete 1`* +
+*`redo`* +
+The *`redo`* command fails as there are no *`undo`* commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+* *`delete 1`* +
+*`clear`* +
+*`undo`* (reverses the *`clear`* command) +
+*`undo`* (reverses the *`delete 1`* command) +
+*`redo`* (reapplies the *`delete 1`* command) +
+*`redo`* (reapplies the *`clear`* command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : *`clear`*
 
 Clears all entries from the recipe book. +
-Format: `clear`
+Format: *`clear`*
 
-=== Exiting the program : `exit`
+=== Exiting the program : *`exit`*
 
 Exits the program. +
-Format: `exit`
+Format: *`exit`*
 
 === Saving the data
 
@@ -260,18 +260,18 @@ _{explain how the user can enable/disable data encryption}_
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
+e.g. *`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`*
+* *Clear* : *`clear`*
 * *Delete* : `delete INDEX` +
-e.g. `delete 3`
+e.g. *`delete 3`*
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+e.g. *`edit 2 n/James Lee e/jameslee@example.com`*
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
+e.g. *`find James Jake`*
+* *List* : *`list`*
+* *Help* : *`help`*
 * *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+e.g.*`select 2`*
+* *History* : *`history`*
+* *Undo* : *`undo`*
+* *Redo* : *`redo`*

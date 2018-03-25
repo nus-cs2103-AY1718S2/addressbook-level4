@@ -588,17 +588,17 @@ item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastW
 
 Formerly, there was no function to upload the data in the recipe book on to the cloud. All these data were only stored locally in a specific file on the user's computer.
 
-Currently, a new command `UploadCommand` has been added. `UploadCommandParser` takes in a `_String_` filename, adds an XML extension to it before parsing it to `UploadCommand` which then uploads the data within the application to Dropbox using the specified filename.
+Currently, a new command `_UploadCommand_` has been added. `_UploadCommandParser_` takes in a `_String_` filename, adds an XML extension to it before parsing it to `_UploadCommand_` which then uploads the data within the application to Dropbox using the specified filename.
 Adding the XML extension is to make the command more user-friendly and to maintain integrity of the data since the application can only read data from files in an XML format.
 
-`UploadCommandParser` parses the user-input as shown below:
+`_UploadCommandParser_` parses the user-input as shown below:
 
 [source,java]
 ----
 String XmlExtensionFilename = ParserUtil.parseFilename(filename);
 ----
 Because the file is being uploaded to the user's Dropbox account, their Dropbox account access token is needed and is stored in the variable `ACCESS_TOKEN`. This token is then used together
-with `_String_` `XmlExtensionFilename`, which was obtained from `UploadCommandParser`, in the `upload()` method as shown below:
+with `_String_` `XmlExtensionFilename`, which was obtained from `_UploadCommandParser_`, in the `upload()` method as shown below:
 
 [source,java]
 ----
@@ -640,9 +640,9 @@ private static final String ACCESS_TOKEN = "example_of_legit_token_taken_from_dr
 
 ==== Current Implementation
 
-The URL field is an optional field in the `add` command and can be omitted. In the case when a URL is embedded to a recipe, the `BrowserPanel` will load the given URL.
+The URL field is an optional field in the *`add`* command and can be omitted. In the case when a URL is embedded to a recipe, the `_BrowserPanel_` will load the given URL.
 
-As seen below, the URL is not a required parameter during the checking of prefixes in an `add` command.
+As seen below, the URL is not a required parameter during the checking of prefixes in an *`add`* command.
 
 [source,java]
 ----
@@ -667,7 +667,7 @@ public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws Il
 ===== Aspect: Implementation of optional property.
 
 * **Alternative 1 (current choice):** Add a placeholder for omitted URL.
-** Pros: Simple implementation can be used as a reference by new developers for creating optional fields. Interaction with `BrowserPanel` requires more control over the status of a recipe's URL property.
+** Pros: Simple implementation can be used as a reference by new developers for creating optional fields. Interaction with `_BrowserPanel_` requires more control over the status of a recipe's URL property.
 ** Cons: `Recipe` class may contain unnecessary variables.
 * **Alternative 2:** Store URL property in the same fashion as tag labels.
 ** Pros: `Recipe` class has better separation of optional and compulsory properties.
@@ -1046,7 +1046,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 **Main:**
 
 . Add `getRemark()` in link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the recipe will be created without a remark).
+. You may assume that the user will not be able to use the *`add`* and `edit` commands to modify the remarks field (i.e. the recipe will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/recipe/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your *recipeBook.xml* so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedRecipe` class.
@@ -1316,7 +1316,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requires to parse for a recipe from a site.
-2.  RecipeBook parses the site and put data into their corresponding field in an `add` command.
+2.  RecipeBook parses the site and put data into their corresponding field in an *`add`* command.
 3.  User fills the missing fields and submits the command.
 4.  RecipeBook adds the recipe with given data.
 +

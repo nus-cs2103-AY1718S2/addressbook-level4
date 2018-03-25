@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
+import seedu.address.storage.JsonUserPassStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
@@ -25,7 +26,7 @@ public class LoginManagerTest {
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        UserPassStorage userPassStorage = new UserPassStorage();
+        JsonUserPassStorage userPassStorage = new JsonUserPassStorage(getTempFilePath("tempUserPass"));
         storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
         login = new LoginManager(storage);
     }

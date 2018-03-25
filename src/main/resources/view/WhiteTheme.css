@@ -402,12 +402,20 @@
     -fx-padding: 10px 12px 10px 12px;
 }
 
-.pills, .pills-authors, .pills-categories, .pills-authors-small, .pills-categories-small {
+.pills, .pills-small, .pills-authors, .pills-categories, .pills-authors-small, .pills-categories-small {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
 .pills .label {
+    -fx-text-fill: white;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-font-size: 10pt;
+}
+
+.pills-small .label {
     -fx-text-fill: white;
     -fx-padding: 1 5 1 5;
     -fx-border-radius: 7;

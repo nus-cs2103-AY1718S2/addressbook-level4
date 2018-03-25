@@ -11,8 +11,11 @@ import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Gid;
 import seedu.address.model.book.Isbn;
+import seedu.address.model.book.Priority;
 import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
+import seedu.address.model.book.Rating;
+import seedu.address.model.book.Status;
 import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
@@ -26,29 +29,34 @@ public class SampleDataUtil {
             new Book(new Gid("ry3GjwEACAAJ"), new Isbn("9780525572664"),
                 Collections.singleton(new Author("Andy Weir")), new Title("Artemis"),
                 CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction")),
-                new Description("This is Artemis."), new Publisher(""), new PublicationDate("2017-11-14")),
+                new Description("This is Artemis."), Status.READ, Priority.LOW, new Rating(5),
+                new Publisher(""), new PublicationDate("2017-11-14")),
             new Book(new Gid("CIj1DAAAQBAJ"), new Isbn("9781405921909"),
                 Collections.singleton(new Author("Sylvain Neuvel")), new Title("Waking Gods"),
                 CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction")),
-                new Description("This is Waking Gods."), new Publisher("Penguin UK"),
+                new Description("This is Waking Gods."), Status.READING, Priority.HIGH, new Rating(4),
+                    new Publisher("Penguin UK"),
                 new PublicationDate("2017-04-06")),
             new Book(new Gid("3jsYCwAAQBAJ"), new Isbn("9780316217637"),
                 Collections.singleton(new Author("James S. A. Corey")), new Title("Babylon's Ashes"),
                 CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
                     new Category("Space Opera")),
-                new Description("This is Babylon's Ashes."), new Publisher("Orbit"),
+                new Description("This is Babylon's Ashes."), Status.READING, Priority.LOW, new Rating(-1),
+                    new Publisher("Orbit"),
                 new PublicationDate("2016-12-06")),
             new Book(new Gid("2SoaDAAAQBAJ"), new Isbn("9780765388896"),
                 Collections.singleton(new Author("John Scalzi")), new Title("The Collapsing Empire"),
                 CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
                     new Category("Space Opera")),
-                new Description("This is The Collapsing Empire."), new Publisher("Tor Books"),
+                new Description("This is The Collapsing Empire."), Status.UNREAD, Priority.NONE, new Rating(-1),
+                    new Publisher("Tor Books"),
                 new PublicationDate("2017-03-21")),
             new Book(new Gid("3_bJKlAOecEC"), new Isbn("9780316095839"),
                 Collections.singleton(new Author("Iain M. Banks")), new Title("Consider Phlebas"),
                 CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
                     new Category("Space Opera")),
-                new Description("This is Consider Phlebas."), new Publisher("Orbit"), new PublicationDate("2009-12-01"))
+                new Description("This is Consider Phlebas."), Status.UNREAD, Priority.NONE, new Rating(-1),
+                    new Publisher("Orbit"), new PublicationDate("2009-12-01"))
         };
     }
 

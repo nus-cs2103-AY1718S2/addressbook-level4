@@ -12,6 +12,7 @@ import seedu.address.model.book.Book;
 public class BookCard extends UiPart<Region> {
 
     private static final String FXML = "BookListCard.fxml";
+    private static final String DEFAULT_LABEL_STYLE_CLASS = "label";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -31,6 +32,12 @@ public class BookCard extends UiPart<Region> {
     private FlowPane authors;
     @FXML
     private FlowPane categories;
+    @FXML
+    private Label status;
+    @FXML
+    private Label priority;
+    @FXML
+    private Label rating;
 
     public BookCard(Book book, int displayedIndex) {
         super(FXML);
@@ -41,6 +48,12 @@ public class BookCard extends UiPart<Region> {
                 .add(new Label(author.fullName)));
         book.getCategories().forEach(category -> categories.getChildren()
                 .add(new Label(category.toString())));
+        status.setText(book.getStatus().getDisplayText());
+        status.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getStatus().getStyleClass());
+        priority.setText(book.getPriority().getDisplayText());
+        priority.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getPriority().getStyleClass());
+        rating.setText(book.getRating().getDisplayText());
+        rating.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getRating().getStyleClass());
     }
 
     @Override

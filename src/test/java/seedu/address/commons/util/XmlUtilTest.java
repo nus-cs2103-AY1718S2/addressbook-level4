@@ -15,6 +15,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.BookShelf;
+import seedu.address.model.book.Priority;
+import seedu.address.model.book.Rating;
+import seedu.address.model.book.Status;
 import seedu.address.storage.XmlAdaptedAuthor;
 import seedu.address.storage.XmlAdaptedBook;
 import seedu.address.storage.XmlAdaptedCategory;
@@ -35,11 +38,13 @@ public class XmlUtilTest {
 
     private static final String VALID_TITLE = "Artemis";
     private static final String VALID_DESCRIPTION = "This is Artemis.";
-    private static final int VALID_RATING = -1;
     private static final List<XmlAdaptedAuthor> VALID_AUTHORS =
             Collections.singletonList(new XmlAdaptedAuthor("Andy Weir"));
     private static final List<XmlAdaptedCategory> VALID_CATEGORIES =
             Collections.singletonList(new XmlAdaptedCategory("Fiction"));
+    private static final Status VALID_STATUS = Status.READ;
+    private static final Priority VALID_PRIORITY = Priority.LOW;
+    private static final int VALID_RATING = Rating.DEFAULT_RATING;
     private static final String VALID_GID = "ry3GjwEACAAJ";
     private static final String VALID_ISBN = "9780525572664";
     private static final String VALID_PUBLISHER = " ";
@@ -75,15 +80,15 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         BookShelf dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableBookShelf.class).toModelType();
-        assertEquals(4, dataFromFile.getBookList().size());
+        assertEquals(5, dataFromFile.getBookList().size());
     }
 
     @Test
     public void xmlAdaptedBookFromFile_fileWithMissingBookField_validResult() throws Exception {
         XmlAdaptedBook actualBook = XmlUtil.getDataFromFile(
                 MISSING_BOOK_FIELD_FILE, XmlAdaptedBookWithRootElement.class);
-        XmlAdaptedBook expectedBook = new XmlAdaptedBook(null, null, null,
-                VALID_DESCRIPTION, VALID_RATING, VALID_AUTHORS, VALID_CATEGORIES, null, null);
+        XmlAdaptedBook expectedBook = new XmlAdaptedBook(null, null, null, VALID_DESCRIPTION, VALID_AUTHORS,
+                VALID_CATEGORIES, VALID_STATUS, VALID_PRIORITY, VALID_RATING, null, null);
         assertEquals(expectedBook, actualBook);
     }
 
@@ -91,8 +96,9 @@ public class XmlUtilTest {
     public void xmlAdaptedBookFromFile_fileWithValidBook_validResult() throws Exception {
         XmlAdaptedBook actualBook = XmlUtil.getDataFromFile(
                 VALID_BOOK_FILE, XmlAdaptedBookWithRootElement.class);
-        XmlAdaptedBook expectedBook = new XmlAdaptedBook(VALID_GID, VALID_ISBN, VALID_TITLE,
-                VALID_DESCRIPTION, VALID_AUTHORS, VALID_CATEGORIES, VALID_PUBLISHER, VALID_PUBLICATION_DATE);
+        XmlAdaptedBook expectedBook = new XmlAdaptedBook(VALID_GID, VALID_ISBN, VALID_TITLE, VALID_DESCRIPTION,
+                VALID_AUTHORS, VALID_CATEGORIES, VALID_STATUS, VALID_PRIORITY, VALID_RATING,
+                VALID_PUBLISHER, VALID_PUBLICATION_DATE);
         assertEquals(expectedBook, actualBook);
     }
 

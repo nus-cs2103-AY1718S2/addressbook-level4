@@ -18,6 +18,14 @@
   <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" styleClass="anchor-pane">
     <VBox id="bookDetailsPane" styleClass="content-pane">
       <Label fx:id="title" styleClass="label-header" text="\$title" wrapText="true" VBox.vgrow="SOMETIMES"/>
+      <FlowPane styleClass="pills">
+        <Label fx:id="status" />
+        <Label fx:id="priority" />
+        <Label fx:id="rating" />
+        <VBox.margin>
+          <Insets top="5.0" />
+        </VBox.margin>
+      </FlowPane>
       <GridPane VBox.vgrow="SOMETIMES">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="130.0" prefWidth="130.0"/>

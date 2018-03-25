@@ -18,6 +18,8 @@ public class Book {
     private final Title title;
     private final UniqueList<Category> categories;
     private final Description description;
+    private final Status status;
+    private final Priority priority;
     private final Rating rating;
     private final Gid gid;
     private final Isbn isbn;
@@ -25,31 +27,32 @@ public class Book {
     private final Publisher publisher;
 
     /**
+     * Creates a {@code Book} with the default status, priority, and rating.
      * Every field must be present and not null.
      */
     public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
                 Description description, Publisher publisher, PublicationDate publicationDate) {
-        requireAllNonNull(gid, isbn, authors, title, categories, description, publisher, publicationDate);
-        this.gid = gid;
-        this.isbn = isbn;
-        this.authors = new UniqueList<>(authors);
-        this.title = title;
-        this.categories = new UniqueList<>(categories);
-        this.description = description;
-        this.rating = new Rating(-1);
-        this.publicationDate = publicationDate;
-        this.publisher = publisher;
+        this(gid, isbn, authors, title, categories, description, Status.DEFAULT_STATUS,
+                Priority.DEFAULT_PRIORITY, new Rating(), publisher, publicationDate);
     }
 
+    /**
+     * Creates a {@code Book}.
+     * Every field must be present and not null.
+     */
     public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
-                Description description, Rating rating, Publisher publisher, PublicationDate publicationDate) {
-        requireAllNonNull(gid, isbn, authors, title, categories, description, publisher, publicationDate);
+                Description description, Status status, Priority priority, Rating rating,
+                Publisher publisher, PublicationDate publicationDate) {
+        requireAllNonNull(gid, isbn, authors, title, categories, description,
+                status, priority, rating, publisher, publicationDate);
         this.gid = gid;
         this.isbn = isbn;
         this.authors = new UniqueList<>(authors);
         this.title = title;
         this.categories = new UniqueList<>(categories);
         this.description = description;
+        this.status = status;
+        this.priority = priority;
         this.rating = rating;
         this.publicationDate = publicationDate;
         this.publisher = publisher;
@@ -77,6 +80,14 @@ public class Book {
 
     public Description getDescription() {
         return description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     public Rating getRating() {
@@ -121,8 +132,7 @@ public class Book {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getTitle())
-                .append(" - Authors: ");
+        builder.append(getTitle()).append(" - Authors: ");
         getAuthors().forEach(author -> builder.append("[").append(author).append("]"));
         return builder.toString();
     }

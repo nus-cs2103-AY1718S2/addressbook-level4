@@ -21,6 +21,8 @@ ProgressChecker is for those who *prefer to use a desktop app for managing conta
 
 == Quick Start
 
+Getting started with ProgressChecker is as easy as downloading and launching the software in a couple of clicks! Listed below are the important steps that you will need to follow to get started:
+
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
@@ -48,6 +50,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 [[Features]]
 == Features
+
+You may find having to learn a large new number of commands rather intimidating. The section below specifies all the commands in details with examples to help you overcome that learning curve and let you make the best out of ProgressChecker.
 
 ====
 *Command Format*
@@ -355,6 +359,8 @@ There is no need to save manually.
 
 == FAQ
 
+You may encounter some questions related to other aspects of ProgressChecker other than the commands. This section list some frequently asked questions that you may find useful.
+
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Progress Checker folder. +
 
@@ -368,6 +374,8 @@ There is no need to save manually.
 *A*: Either click the 'x' button on the screen or type command `exit`.
 
 == Command Summary
+
+If you're looking for a quick reference list of commands without all the details, the section below summarises all the available commands.
 
 * *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
 OR `a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +

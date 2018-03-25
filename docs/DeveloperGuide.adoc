@@ -16,6 +16,8 @@ By: `Team T09-B3`      Since: `Feb 2018`      Licence: `MIT`
 
 == Setting up
 
+There are some things you will need to set up before getting started in contributing to ProgressChecker. Below lists the important key elements you will have to configure.
+
 === Prerequisites
 
 . *JDK `1.8.0_60`* or later
@@ -94,6 +96,9 @@ When you are ready to start coding,
 == Design
 
 [[Design-Architecture]]
+
+ProgressChecker consists of multiple components that work together via an event-driven structure. This section will break down the various components in details to help you jump straight into understanding the architecture in depth.
+
 === Architecture
 
 .Architecture Diagram
@@ -625,7 +630,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 == Documentation
 
-We use asciidoc for writing documentation.
+We use asciidoc for writing documentation. This section talks about how you can modify and publish the existing documentations.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -655,6 +660,8 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+
+ProgressChecker uses JUnit tests to check for its correctness. This section covers the type of tests and how to run them.
 
 === Running Tests
 
@@ -739,7 +746,7 @@ b. Require developers to download those libraries manually (this creates extra w
 [appendix]
 == Suggested Programming Tasks to Get Started
 
-Suggested path for new programmers:
+It might be your first time working with a large code base. If so, here is a suggested path for new programmers to kick start your first functionality:
 
 1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
 
@@ -1018,6 +1025,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
+This section covers what ProgressChecker is meant to be and what it can do for the users. Your name and feature contribution will be listed here.
+
 *Target user profile*:
 
 * is taking CS2103/CS2103T in NUS
@@ -1067,6 +1076,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == User Stories
 
+This section lists the actions that both new and long-time users can and may want to perform with ProgressChecker.
+
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
@@ -1115,6 +1126,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [appendix]
 == Use Cases
+
+This section list the sequence of events for a feature. It includes possible scenarios in which a feature is not interacted with as intended which you can defense against.
 
 (For all use cases below, the *System* is the `ProgressChecker` and the *Actor* is the `user`, unless specified otherwise)
 
@@ -1357,6 +1370,8 @@ _{ to be added }_
 [appendix]
 == Non Functional Requirements
 
+This sections list the criteria needed for the system and software.
+
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  The product may need 3-5 minutes to build up for the first time.
@@ -1386,26 +1401,9 @@ Build automation is the process of automating the creation of a software build a
 Gradle is an open-source build automation system.
 
 [appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
-
-[appendix]
 == Instructions for Manual Testing
 
-Given below are instructions to test the app manually.
+You may want to do manual testing to familiarise yourself with the software. Given below are instructions to test the app manually.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.

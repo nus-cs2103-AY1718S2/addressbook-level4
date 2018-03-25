@@ -14,18 +14,37 @@ endif::[]
 
 By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
+[[Introduction]]
+== Introduction
+CLIndar is a desktop application that helps university computing students to manage their tasks and events.
+CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
+
+This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
+get started customising and contributing to the application.
+
+Below is an overview of this guide: +
+* <<SettingUp, Setting Up>>
+* <<Design, Design>>
+* <<Implementation, Implementation>>
+* <<Documentation, Documentation>>
+* <<Testing, Testing>>
+* <<DevOps, Dev Ops>>
+* <<GetStartedProgramming, Appendices>>
+
+[[SettingUp]]
 == Setting up
-Follow the instructions below set up the project in your computer.
+Follow the instructions below to set up the project in your computer.
 
 === Prerequisites
-. *JDK `1.8.0_60`* or later
+
+.  Install *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE
+. Install *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
@@ -68,7 +87,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W13-B3/main` repo. If you plan to develop this as a separate product, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -91,12 +110,13 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
+[[Design]]
 == Design
 This section describes the way the application is designed.
 
 [[Design-Architecture]]
 === Architecture
-The architecture diagram of the whole application:
+The architecture diagram of the application:
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
@@ -106,32 +126,33 @@ The *_Architecture Diagram_* given above explains the high-level design of the A
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `EventsCenter` : Used by components to communicate with other components using events (i.e. a form of _Event Driven_ design,
+written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library])
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of four components.
 
 * <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+* <<Design-Logic,*`Logic`*>>: The Command Executor of the App.
+* <<Design-Model,*`Model`*>>: Data Holder of the App in-memory.
+* <<Design-Storage,*`Storage`*>>: Data Reader and Writer to hard disk.
 
 Each of the four components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
-.Class Diagram of the Logic Component
-image::LogicClassDiagram.png[width="800"]
+.The API of the Logic Component
+image::LogicAPI.png[width="800"]
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -187,14 +208,14 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `DeskBoardParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a activity) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Interactions Inside the Logic Component for the `rm task 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
@@ -232,6 +253,7 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
+[[Implementation]]
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
@@ -386,15 +408,15 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
-=== Overdue command
+=== Overdue
 
-The user is able to list down overdue tasks by using the overdue command. Note that overdue only lists down overdue tasks; overdue events are marked as
+The user is able to list down overdue tasks by using the `overdue` command. Note that overdue only lists down overdue tasks; overdue events are marked as
 completed automatically.
 
 We will be making use of the LocalDateTime class in Java. The class has a `now` method, which allows us to obtain the current system clock.
 
 There will be a class in the Model component, which has access to the UniqueActivityList class in that component. The class will go through the UniqueActivityList and obtain
-the DateTime of Task, and the end DateTime of Event. It will then perform a check of the DateTime with LocalDateTime.now() and if it is overdue (for tasks), it will mark the task
+the DateTime of Task, and the end DateTime of Event. It will then perform a check of the DateTime with `LocalDateTime.now()` and if it is overdue (for tasks), it will mark the task
 as overdue, while if it is overdue (for Event), it will mark it as completed.
 {empty} +
 {empty} +
@@ -406,7 +428,7 @@ as overdue, while if it is overdue (for Event), it will mark it as completed.
 ** Cons: Violates Single Responsibility Principle (SRP). The UniqueAcitivtyList class should not perform the checking.
 
 * **Alternative 2**: Using Google Maps API to obtain current time
-** Pros: LocalDateTime.now() is reliant on system clock, thus if the system clock is in error, tasks that are overdue will not be marked as
+** Pros: `LocalDateTime.now()` is reliant on system clock, thus if the system clock is in error, tasks that are overdue will not be marked as
 overdue correctly.
 ** Cons: Reliant on Google Maps API, and might be difficult for the developer to understand.
 {empty} +
@@ -600,6 +622,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+[[DevOps]]
 == Dev Ops
 This sections features softwares which can be used to track the progress of the application development.
 

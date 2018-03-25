@@ -1,0 +1,75 @@
+/* @@author guekling */
+h3 > a.link {
+    color: rgb(75,0,130);
+}
+
+h4 > a.link {
+    color: rgb(70,130,180);
+}
+
+h5 > a.link {
+    color: rgb(210,105,30);
+}
+
+.parameters code {
+    background-color: rgb(173,216,230);
+}
+
+.noteblock.exampleblock > .content {
+    background-color: rgb(231, 242, 250);
+}
+
+.noteblock-title::before {
+    content: "\f06a";
+    font-family: FontAwesome;
+    color: rgb(0,191,255);
+    font-size: 1.3em;
+    padding-right: 10px;
+}
+
+.noteblock-title {
+    font-size: 1.3em;
+    color: rgb(0,191,255);
+}
+
+.format.exampleblock > .content {
+    background-color: rgb(152,251,152);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.format-no-box code {
+    background-color: rgb(152,251,152);
+}
+
+.format code {
+    background-color: rgb(152,251,152);
+    border: 1px solid black;
+}
+
+.format-title::before {
+    content: "\f11c";
+    font-family: FontAwesome;
+    padding-right: 5px;
+}
+
+.example-no-box code {
+    background-color: rgb(255,239,213);
+}
+
+.example code {
+    background-color: rgb(255,239,213);
+    border: 1px solid black;
+}
+
+.example.exampleblock > .content {
+    background-color: rgb(255,239,213);
+}
+
+.example-title::before {
+    content: "\f044";
+    font-family: FontAwesome;
+    padding-right: 5px;
+}

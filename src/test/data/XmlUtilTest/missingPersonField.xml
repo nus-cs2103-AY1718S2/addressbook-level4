@@ -4,6 +4,6 @@
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
-     <profilePicture>C://Downloads/Hans.jpg</profilePicture>
+     <profilePicture>./src/test/data/images/hans.jpeg</profilePicture>
     <tagged>friends</tagged>
 </person>

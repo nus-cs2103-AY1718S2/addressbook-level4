@@ -21,12 +21,14 @@ import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LinkedInCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -118,6 +120,12 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_logout() throws Exception {
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD) instanceof LogoutCommand);
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD + " 3") instanceof LogoutCommand);
+    }
+
+    @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
@@ -131,6 +139,12 @@ public class AddressBookParserTest {
         assertEquals(new LinkedInCommand(INDEX_FIRST_PERSON), command);
     }
 
+    @Test
+    public void parseCommand_email() throws Exception {
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
+    }
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

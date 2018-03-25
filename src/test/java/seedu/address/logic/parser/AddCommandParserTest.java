@@ -29,7 +29,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_PICTURE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_PICTURE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -93,12 +92,12 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_optionalFieldsMissing_success() {
-        // zero tags and null profilePictures
+        // zero tags and no profilePicture
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withProfilePicture(VALID_PROFILE_PICTURE_AMY)
+                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withProfilePicture()
                 .withTags().build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                        + PROFILE_PICTURE_DESC_AMY, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY,
+                new AddCommand(expectedPerson));
     }
 
     @Test
@@ -120,10 +119,6 @@ public class AddCommandParserTest {
         // missing address prefix
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB
                 + PROFILE_PICTURE_DESC_BOB, expectedMessage);
-
-        // missing profilePicture prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + VALID_PROFILE_PICTURE_BOB, expectedMessage);
 
         // all prefixes missing
         assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB

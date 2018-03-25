@@ -2,10 +2,12 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -40,9 +42,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label profilePicture;
-    @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView imageView;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -52,7 +54,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        profilePicture.setText(person.getProfilePicture().value);
+        imageView.setImage(person.getProfilePicture().getImage());
         initTags(person);
     }
 

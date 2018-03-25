@@ -119,12 +119,12 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
-        if (this.profilePicture == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    ProfilePicture.class.getSimpleName()));
-        }
-        if (!ProfilePicture.isValidProfilePicture(this.profilePicture)) {
-            throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_CONSTRAINTS);
+        if (this.profilePicture != null) {
+            if (!ProfilePicture.isValidProfilePicture(this.profilePicture)) {
+                throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_CONSTRAINTS);
+            } else if (!ProfilePicture.hasValidProfilePicture(this.profilePicture)) {
+                throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_NOT_EXISTS);
+            }
         }
         final ProfilePicture profilePicture = new ProfilePicture(this.profilePicture);
 
@@ -147,6 +147,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(profilePicture, otherPerson.profilePicture)
                 && tagged.equals(otherPerson.tagged);
     }
 }

@@ -3,6 +3,10 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.exceptions.InvalidPasswordException;
+import seedu.address.model.exceptions.InvalidUsernameException;
+import seedu.address.model.exceptions.MultipleLoginException;
+import seedu.address.model.exceptions.UserLogoutException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -49,5 +53,20 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Logs the user into contactHeRo.
+     * @throws InvalidUsernameException if username is invalid.
+     * @throws InvalidPasswordException if the password is invalid.
+     * @throws MultipleLoginException if a user is already logged in.
+     */
+    void login(String username, String password) throws InvalidUsernameException,
+                                    InvalidPasswordException, MultipleLoginException;
+
+    /**
+     * Logs the user out of contactHeRo
+     * @throws UserLogoutException if no user is login to the system.
+     */
+    void logout() throws UserLogoutException;
 
 }

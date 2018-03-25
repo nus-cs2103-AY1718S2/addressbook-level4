@@ -7,6 +7,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -33,6 +34,7 @@ public class CommandList {
         commandList.add(ClearHistoryCommand.COMMAND_WORD);
         commandList.add(DeleteCommand.COMMAND_WORD);
         commandList.add(EditCommand.COMMAND_WORD);
+        commandList.add(EmailCommand.COMMAND_WORD);
         commandList.add(ExitCommand.COMMAND_WORD);
         commandList.add(FindCommand.COMMAND_WORD);
         commandList.add(HelpCommand.COMMAND_WORD);

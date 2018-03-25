@@ -43,7 +43,7 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_PHONE + " "
             + PREFIX_EMAIL + " "
             + PREFIX_ADDRESS + " "
-            + PREFIX_PROFILE_PICTURE + " "
+            + "[" + PREFIX_PROFILE_PICTURE + "] "
             + "[" + PREFIX_TAG + "TAG]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
@@ -54,7 +54,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_PROFILE_PICTURE + "PROFILE PICTURE PATH] "
+            + "[" + PREFIX_PROFILE_PICTURE + "PROFILE PICTURE NAME] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "

@@ -6,6 +6,6 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
-        <profilePicture isPrivate="False">C://Downloads/Hans.jpg</profilePicture>
+        <profilePicture isPrivate="False">./src/test/data/images/hans.jpeg</profilePicture>
     </persons>
 </addressbook>

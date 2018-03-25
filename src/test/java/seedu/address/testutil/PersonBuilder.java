@@ -21,7 +21,8 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_PROFILE_PICTURE = "/src/main/resources/ProfilePictures/Alice.jpg";
+    public static final String DEFAULT_PROFILE_PICTURE =
+            "./src/test/data/images/alice.jpeg";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -95,8 +96,12 @@ public class PersonBuilder {
     /**
      * Sets the {@code ProfilePicture} of the {@code Person} that we are building.
      */
-    public PersonBuilder withProfilePicture(String profilePicture) {
-        this.profilePicture = new ProfilePicture(profilePicture);
+    public PersonBuilder withProfilePicture(String... profilePicture) {
+        if (profilePicture.length == 0) {
+            this.profilePicture = new ProfilePicture();
+        } else {
+            this.profilePicture = new ProfilePicture(profilePicture[0]);
+        }
         return this;
     }
 

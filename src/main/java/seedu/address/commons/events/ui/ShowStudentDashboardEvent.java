@@ -9,10 +9,14 @@ import seedu.address.model.student.Student;
  */
 public class ShowStudentDashboardEvent extends BaseEvent {
 
-    public final Student targetStudent;
+    private final Student targetStudent;
 
     public ShowStudentDashboardEvent(Student targetStudent) {
         this.targetStudent = targetStudent;
+    }
+
+    public Student getTargetStudent() {
+        return targetStudent;
     }
 
     @Override

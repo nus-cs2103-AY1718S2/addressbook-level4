@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutX="8.0" layoutY="5.0" prefHeight="591.0" prefWidth="784.0">
+      <AnchorPane layoutX="8.0" layoutY="5.0" prefWidth="800.0">
          <children>
-            <Text layoutX="14.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
+            <Text fill="#0084ff" layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
                <font>
-                  <Font size="15.0" />
+                  <Font name="Rockwell Extra Bold" size="20.0" />
                </font>
             </Text>
-            <Text layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Milestones">
+            <Text fill="#0084ff" layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Milestones">
                <font>
-                  <Font name="System Bold Italic" size="15.0" />
+                  <Font name="Rockwell" size="20.0" />
                </font>
             </Text>
-            <ListView fx:id="milestoneList" layoutX="14.0" layoutY="104.0" prefHeight="200.0" prefWidth="746.0" />
-            <Text layoutX="14.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Homework">
+            <Label fx:id="studentName" layoutX="14.0" layoutY="27.0" text="studentName" textFill="WHITE">
                <font>
-                  <Font name="System Bold Italic" size="15.0" />
-               </font>
-            </Text>
-            <ListView fx:id="homeworkList" layoutX="13.0" layoutY="348.0" prefHeight="200.0" prefWidth="746.0" />
-            <Label fx:id="studentName" layoutX="14.0" layoutY="14.0" text="studentName">
-               <font>
-                  <Font size="20.0" />
+                  <Font name="Bookman Old Style Bold" size="20.0" />
                </font>
             </Label>
+            <VBox layoutX="14.0" layoutY="97.0" prefHeight="200.0" prefWidth="769.0">
+               <children>
+                  <ListView fx:id="milestoneListView" minHeight="-Infinity" prefHeight="300.0" prefWidth="769.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </ListView>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
+      <Text fill="#0084ff" layoutX="14.0" layoutY="458.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Homework">
+         <font>
+            <Font name="Rockwell" size="20.0" />
+         </font>
+      </Text>
    </children>
 </Pane>

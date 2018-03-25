@@ -9,9 +9,14 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserDisplayEvent;
+import seedu.address.commons.events.ui.ShowMilestonesEvent;
 import seedu.address.commons.events.ui.ShowStudentDashboardEvent;
+import seedu.address.commons.events.ui.ShowStudentNameInDashboardEvent;
 import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
 
+/**
+ * Panel that contains the browser panel and the dashboard panel
+ */
 public class InfoPanel extends UiPart<Region> {
 
     private static final String FXML = "InfoPanel.fxml";
@@ -74,5 +79,7 @@ public class InfoPanel extends UiPart<Region> {
     public void handleShowStudentDashboardEvent(ShowStudentDashboardEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showDashboardPanel();
+        raise(new ShowStudentNameInDashboardEvent(event.getTargetStudent().getName()));
+        raise(new ShowMilestonesEvent(event.getTargetStudent().getDashboard().getMilestoneList()));
     }
 }

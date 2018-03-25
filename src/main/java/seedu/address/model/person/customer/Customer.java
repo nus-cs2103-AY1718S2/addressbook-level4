@@ -1,41 +1,45 @@
-package seedu.address.model.person;
+package seedu.address.model.person.customer;
 
 import java.util.Date;
-import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Customer in the address book.
+ * Represents a customer in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Customer extends Person {
 
-    //TODO: create classes for these new fields rather than use primitives???
-    private final double moneyBorrowed; //moneyOwed is a formula that DEPENDS on these other new fields
+    private final MoneyBorrowed moneyBorrowed;
     private final Date oweStartDate;
     private final Date oweDueDate;
-    private final double standardInterest; //in percent
-    private final double lateInterest; //in percent
+    private final StandardInterest standardInterest; //in percent
+    private final LateInterest lateInterest; //in percent
     private final Runner runner;
 
     /**
-     * Customer constructor
+     * customer constructor
      */
     public Customer() {
         super();
-        this.moneyBorrowed = 0;
+        this.moneyBorrowed = new MoneyBorrowed();
         this.oweStartDate = new Date();
         this.oweDueDate = new Date();
-        this.standardInterest = 0;
-        this.lateInterest = 0;
+        this.standardInterest = new StandardInterest();
+        this.lateInterest = new LateInterest();
         this.runner = new Runner();
     }
 
     public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
-                    double moneyBorrowed, Date oweStartDate, Date oweDueDate, double standardInterest,
-                    double lateInterest, Runner runner) {
+                    MoneyBorrowed moneyBorrowed, Date oweStartDate, Date oweDueDate, StandardInterest
+                            standardInterest, LateInterest lateInterest, Runner runner) {
         super(name, phone, email, address, tags);
         this.moneyBorrowed = moneyBorrowed;
         this.standardInterest = standardInterest;
@@ -45,8 +49,12 @@ public class Customer extends Person {
         this.runner = runner;
     }
 
-    public double getMoneyBorrowed() {
+    public MoneyBorrowed getMoneyBorrowed() {
         return moneyBorrowed;
+    }
+
+    public StandardInterest getStandardInterest() {
+        return standardInterest;
     }
 
     public Date getOweStartDate() {
@@ -57,12 +65,12 @@ public class Customer extends Person {
         return oweDueDate;
     }
 
-    public double getStandardInterest() {
-        return standardInterest;
+    public LateInterest getLateInterest() {
+        return lateInterest;
     }
 
-    public double getLateInterest() {
-        return lateInterest;
+    public Runner getRunner() {
+        return runner;
     }
 
     /**
@@ -75,7 +83,7 @@ public class Customer extends Person {
         Date currentDate = new Date();
         long elapsedTime = currentDate.getTime() - oweStartDate.getTime();
         long elapsedWeeks = elapsedTime / numOfMsPerWeek;
-        return moneyBorrowed * Math.pow(1 + standardInterest / 100, (double) elapsedWeeks);
+        return moneyBorrowed.value * Math.pow(1 + standardInterest.value / 100, (double) elapsedWeeks);
     }
 
     @Override
@@ -96,8 +104,8 @@ public class Customer extends Person {
                 .append(getOweStartDate())
                 .append(" Due Date: ")
                 .append(getOweDueDate())
-                .append(" Runner: ")
-                .append(Optional.ofNullable(runner.getName()))
+                .append(" runner: ")
+                .append(runner.getName())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

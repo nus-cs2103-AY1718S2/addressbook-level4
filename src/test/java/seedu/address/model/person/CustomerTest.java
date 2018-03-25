@@ -10,6 +10,11 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import seedu.address.model.person.customer.Customer;
+import seedu.address.model.person.customer.LateInterest;
+import seedu.address.model.person.customer.MoneyBorrowed;
+import seedu.address.model.person.customer.StandardInterest;
+import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
 public class CustomerTest {
@@ -27,11 +32,11 @@ public class CustomerTest {
         GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute, second);
         Date date = calendar.getTime();
 
-        double moneyBorrowed = 10;
+        MoneyBorrowed moneyBorrowed = new MoneyBorrowed(10);
         Date oweStartDate = date;
         Date oweDueDate = new Date();
-        double standardInterest = 1;
-        double lateInterest = 0;
+        StandardInterest standardInterest = new StandardInterest(1);
+        LateInterest lateInterest = new LateInterest(0);
 
         Customer customer = createCustomer(moneyBorrowed, oweStartDate, oweDueDate, standardInterest,
                 lateInterest);
@@ -47,10 +52,10 @@ public class CustomerTest {
      * @param oweDueDate oweDueDate
      * @param standardInterest standardInterest
      * @param lateInterest lateInterest
-     * @return Customer
+     * @return customer
      */
-    private Customer createCustomer(double moneyBorrowed, Date oweStartDate, Date oweDueDate, double
-            standardInterest, double lateInterest) {
+    private Customer createCustomer(MoneyBorrowed moneyBorrowed, Date oweStartDate, Date oweDueDate, StandardInterest
+            standardInterest, LateInterest lateInterest) {
         Name name = new Name("name");
         Phone phone = new Phone("1234");
         Email email = new Email("abc@example.com");

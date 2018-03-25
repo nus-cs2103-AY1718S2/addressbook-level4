@@ -1,11 +1,13 @@
-package seedu.address.model.person;
+package seedu.address.model.person.runner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
+import seedu.address.model.person.customer.Customer;
+import seedu.address.model.person.Person;
 
 /**
- * Represents a Runner in the address book.
+ * Represents a runner in the address book.
  */
 public class Runner extends Person {
     private final List<Customer> customers;
@@ -35,7 +37,7 @@ public class Runner extends Person {
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" Customers: ")
-                .append(Optional.ofNullable(customers.toString()))
+                .append(customers.toString())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

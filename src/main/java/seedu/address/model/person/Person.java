@@ -27,10 +27,10 @@ public class Person {
      */
 
     public Person() {
-        this.name = new Name("default");
-        this.phone = new Phone("123");
-        this.email = new Email("default@example.com");
-        this.address = new Address("default address");
+        this.name = new Name("DefaultName");
+        this.phone = new Phone();
+        this.email = new Email();
+        this.address = new Address();
         this.tags = new UniqueTagList();
 
     }

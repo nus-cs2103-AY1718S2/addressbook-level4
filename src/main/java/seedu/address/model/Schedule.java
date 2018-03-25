@@ -7,6 +7,7 @@ import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.LessonList;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
+import seedu.address.model.student.Student;
 
 /**
  * Wraps all data at the schedule level
@@ -59,11 +60,14 @@ public class Schedule implements ReadOnlySchedule {
     /**
      * Prints the schedule as a list
      */
-    public void print() {
+    public void print(AddressBook addressBook) {
+        addressBook.printAll();
         int index = 1;
+        Student student;
         System.out.println(this.toString());
         for (Lesson l : lessons) {
-            System.out.println(index++ +  ": " + l.toString());
+            student = addressBook.findStudentByKey(l.getUniqueKey());
+            System.out.println(index++ + " " + student.getName() +  ": " + l.toString());
         }
     }
 

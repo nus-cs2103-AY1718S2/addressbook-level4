@@ -25,7 +25,7 @@ import seedu.address.model.student.exceptions.StudentNotFoundException;
 public class UniqueStudentList implements Iterable<Student> {
 
     private final ObservableList<Student> internalList = FXCollections.observableArrayList();
-    
+
     /**
      * Returns true if the list contains an equivalent student as the given argument.
      */
@@ -118,6 +118,19 @@ public class UniqueStudentList implements Iterable<Student> {
         }
         return true;
     }
+
+    public Student findKey(UniqueKey key) throws StudentNotFoundException{
+        boolean found = false;
+        Student foundStudent = internalList.get(0);
+        for(Student student : internalList) {
+            if (key.equals(student.getUniqueKey())) {
+                return student;
+            }
+        }
+        if (!found) throw new StudentNotFoundException();
+        return foundStudent;
+    }
+
     @Override
     public Iterator<Student> iterator() {
         return internalList.iterator();

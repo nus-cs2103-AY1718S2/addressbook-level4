@@ -20,6 +20,7 @@ import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -101,8 +102,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
             throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
         requireAllNonNull(studentToAddLesson, day, startTime, endTime);
-
-        Lesson newLesson = new Lesson(studentToAddLesson, day, startTime, endTime);
+        UniqueKey studentKey = studentToAddLesson.getUniqueKey();
+        Lesson newLesson = new Lesson(studentKey, day, startTime, endTime);
         schedule.addLesson(newLesson);
     }
 
@@ -135,7 +136,10 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new StudentInfoDisplayEvent(target));
     }
 
-
+    @Override
+    public void printSchedule(){
+        schedule.print(addressBook);
+    }
     //=========== Filtered Student List Accessors =============================================================
 
     /**

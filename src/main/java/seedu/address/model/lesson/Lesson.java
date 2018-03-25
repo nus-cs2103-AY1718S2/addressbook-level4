@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Objects;
 
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 
 /**
  * Represents a Student in the address book.
@@ -12,7 +13,8 @@ import seedu.address.model.student.Student;
  */
 public class Lesson implements Comparable<Lesson> {
 
-    private final Student student;
+    private Student student;
+    private final UniqueKey uniqueKey;
     private final Day day;
     private final Time startTime;
     private final Time endTime;
@@ -20,10 +22,10 @@ public class Lesson implements Comparable<Lesson> {
     /**
      * Every field must be present and not null.
      */
-    public Lesson(Student student, Day day, Time startTime, Time endTime) {
-        requireAllNonNull(student, day, startTime, endTime);
+    public Lesson(UniqueKey uniqueKey, Day day, Time startTime, Time endTime) {
+        requireAllNonNull(uniqueKey, day, startTime, endTime);
 
-        this.student = student;
+        this.uniqueKey = uniqueKey;
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -32,6 +34,8 @@ public class Lesson implements Comparable<Lesson> {
     public Student getStudent() {
         return student;
     }
+
+    public UniqueKey getUniqueKey() { return uniqueKey; }
 
     public Day getDay() {
         return day;
@@ -70,7 +74,7 @@ public class Lesson implements Comparable<Lesson> {
         }
 
         Lesson otherLesson = (Lesson) other;
-        return otherLesson.getStudent().equals(this.getStudent())
+        return otherLesson.getUniqueKey().equals(this.getUniqueKey())
                 && otherLesson.getDay().equals(this.getDay())
                 && otherLesson.getStartTime().equals(this.getEndTime())
                 && otherLesson.getEndTime().equals(this.getEndTime());
@@ -79,15 +83,13 @@ public class Lesson implements Comparable<Lesson> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(student, startTime, endTime);
+        return Objects.hash(uniqueKey, day, startTime, endTime);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getStudent().getName())
-                .append(" programminglanguage: ")
-                .append(getStudent().getProgrammingLanguage())
+        builder.append(getUniqueKey())
                 .append(" Day: ")
                 .append(getDay().fullDayName())
                 .append(" Time: ")

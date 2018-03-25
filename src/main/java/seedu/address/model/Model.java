@@ -63,6 +63,8 @@ public interface Model {
 
     Schedule getSchedule();
 
+    void printSchedule();
+
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 
 }

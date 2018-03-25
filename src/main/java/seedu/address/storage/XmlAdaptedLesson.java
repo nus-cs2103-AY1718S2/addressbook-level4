@@ -15,6 +15,7 @@ import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Hour;
@@ -136,9 +137,10 @@ public class XmlAdaptedLesson {
         final Set<Tag> tags = new HashSet<>(studentTags);
         Student s = new Student(name, phone, email, address, programmingLanguage, tags);
         Day day = new Day("mon");
+
         Time st = new Time("10:00");
         Time et = new Time("13:00");
-        return new Lesson(s, day, st, et);
+        return new Lesson(UniqueKey.generateRandomKey(), day, st, et);
     }
 
     @Override

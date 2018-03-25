@@ -117,12 +117,13 @@ public class Student {
         this.dashboard = new Dashboard();
     }
 
-    /**
+    /** TODO RequireNonNull for uniquekey
      * Every field must be present and not null. For when all attributes can be passed in as parameters
      */
-    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email,
+                   Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags, Favourite fav, Dashboard dashboard) {
-        requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
+        requireAllNonNull(name, phone, email, address, tags, fav);
         this.uniqueKey = uniqueKey;
         this.name = name;
         this.phone = phone;
@@ -217,6 +218,28 @@ public class Student {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" Phone: ")
+                .append(getPhone())
+                .append(" Email: ")
+                .append(getEmail())
+                .append(" Address: ")
+                .append(getAddress())
+                .append(" Programming Language: ")
+                .append(getProgrammingLanguage())
+                .append(" Tags: ");
+        getTags().forEach(builder::append);
+        builder.append(" Favourite: ")
+                .append(getFavourite())
+                .append(" Dashboard: ")
+                .append(getDashboard());
+        return builder.toString();
+    }
+
+    public String toStrings() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" UniqueKey: ")
+                .append(getUniqueKey())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")

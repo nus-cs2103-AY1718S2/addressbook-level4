@@ -16,7 +16,7 @@ public class ScheduleCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.getSchedule().print();
+        model.printSchedule();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

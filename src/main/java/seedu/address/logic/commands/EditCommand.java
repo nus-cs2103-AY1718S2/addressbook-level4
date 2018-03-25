@@ -27,6 +27,7 @@ import seedu.address.model.student.Favourite;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -107,6 +108,7 @@ public class EditCommand extends UndoableCommand {
     private static Student createEditedStudent(Student studentToEdit, EditStudentDescriptor editStudentDescriptor) {
         assert studentToEdit != null;
 
+        UniqueKey uniqueKey = studentToEdit.getUniqueKey();
         Name updatedName = editStudentDescriptor.getName().orElse(studentToEdit.getName());
         Phone updatedPhone = editStudentDescriptor.getPhone().orElse(studentToEdit.getPhone());
         Email updatedEmail = editStudentDescriptor.getEmail().orElse(studentToEdit.getEmail());
@@ -117,7 +119,7 @@ public class EditCommand extends UndoableCommand {
         Favourite isFavourite = studentToEdit.getFavourite();
         Dashboard dashboard = studentToEdit.getDashboard();
 
-        return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
+        return new Student(uniqueKey, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
                 updatedTags, isFavourite, dashboard);
     }
 
@@ -145,6 +147,7 @@ public class EditCommand extends UndoableCommand {
      * corresponding field value of the student.
      */
     public static class EditStudentDescriptor {
+        private UniqueKey uniqueKey;
         private Name name;
         private Phone phone;
         private Email email;

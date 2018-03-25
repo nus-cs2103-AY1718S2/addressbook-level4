@@ -11,11 +11,11 @@ import javafx.scene.layout.AnchorPane;
  */
 public class CalendarNode extends AnchorPane {
 
-    // Date associated with this pane
+    // Deadline associated with this pane
     private LocalDate date;
 
     /**
-     * Create a anchor pane node. Date is not assigned in the constructor.
+     * Create a anchor pane node. Deadline is not assigned in the constructor.
      * @param children children of the anchor pane
      */
     public CalendarNode(Node... children) {

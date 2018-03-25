@@ -624,25 +624,14 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 
 // tag::calendarEvents[]
-=== Calendar and events tracking feature "Coming in V1.5"
+=== Calendar and Event tracking
+
+Events refer to meetings, deadlines and order deliveries created by users in ContactSails.
+Users can create, edit and delete events, and existing events are displayed in a calendar interface within the application.
 
 ==== Current Implementation
 
-The event tracking feature is facilitated by `UserEvents`, which resides inside `Model`.
-It is supported by `UserEventsManager` residing inside `UserEvents`, which supports the adding, removing and editing of `CalendarEvent`(e.g. `addEvent`, `deleteEvent`).
-Orders of a person will also appear as `CalendarEvent` based on the `DeliveryDate` attribute of the Order.
-
-The following diagram shows class diagram of `Model` Component related to `UserEvents` and `CalendarEvent`.
-
-image::CalendarClassDiagram.png[width="800" align="center"]
-
-In the diagram, `ModelManager` creates an instance of `UserEvents` interface, which provides the `UserEvents` API for `ModelManager` to use.
-`UserEventsManager` implements methods used by users to add, edit or delete `CalendarEvent`, which contains information of an event. `CalendarEvent` is stored in the `UniqueEventList`. +
-`Logic` Components contains the commands required to manage user's events (e.g. `AddEventCommand`, `deleteEventCommand`) and to change display format of the calendar ui (e.g. `ShowCalendarCommand`).
-
-The sequence diagram below shows how add event operation works:
-
-image::AddEventSD.png[width="800" align="center"]
+`CalendarEvent` represents an event created by users.
 
 A `CalendarEvent` is implemented in the following manner:
 [source,java]
@@ -670,8 +659,30 @@ The following is a brief description of the attributes of `CalendarEvent`:
 * endTime: Represents ending time of the event in HHMM format (24-Hour format).
 * taggedPerson: Represents list of Persons in address book that are tagged to the event.
 
+Events management is facilitated by `UserEvents`, which resides inside `Model`.
+It is supported by `UserEventsManager` residing inside `UserEvents`, which supports the adding, removing and editing of `CalendarEvent`(e.g. `addEvent`, `deleteEvent`).
+Orders of a person will also appear as `CalendarEvent` based on the `DeliveryDate` attribute of the `Order`.
 
-Events added, removed or modified by users will have their intended results displayed by the `CalendarUi` residing inside `Ui` Component, which displays a calendar showing any future events.
+The following diagram shows class diagram of `Model` Component related to `UserEvents` and `CalendarEvent`.
+
+.`Model` Component showing classes related to events management
+image::UserEventClassDiagram.png[width="800" align="center"]
+
+In the Figure 14, `ModelManager` creates an instance of `UserEvents` interface, which provides the `UserEvents` API for `ModelManager` to implement.
+`UserEventsManager` implements methods used by users to add, edit or delete `CalendarEvent`, which contains information of an event. `CalendarEvent` is stored in the `UniqueEventList`. +
+
+`Logic` Component contains the commands required to manage user's events (e.g. `AddEventCommand`, `deleteEventCommand`).
+
+The sequence diagram below shows how add event operation works:
+
+.Sequence Diagram for adding of an event into ContactSails
+image::AddEventSD.png[width="800" align="center]
+
+In Figure 15, when a user enters the command to add an event, `AddEventCommand` will call `addEvent()` in `ModelManager`.
+`ModelManager` in turn calls `addEvent()` in `UserEventsManager`, which creates a new `CalendarEvent` containing the information given by user.
+`UserEventsManager` will then add `CalendarEvent` to `UniqueEventList`. If addition of event is a success, control is eventually returned from `UserEventsManager` to `AddEventCommand`.
+
+Events added, removed or modified by users will have their intended results displayed by the `CalendarUi` residing inside `Ui` Component.
 The `CalendarUi` can display dates in a week, month and year format, depending on user inputs. +
 Storing of `CalendarEvent` data is managed by `CalendarStorage` within `Storage` Component, converting `CalendarEvent` to `XmlAdaptedEvent` to store in a .xml file.
 
@@ -685,7 +696,6 @@ Storing of `CalendarEvent` data is managed by `CalendarStorage` within `Storage`
 * **Alternative 2:** Uses a third-party library such as Google Calendar API to manage.
 ** Pros: Does not require substantial maintenance of related code as less code is required to implement the feature. Some third-party libraries allows users to access some existing calendar applications, saving time required to transfer their calendar events.
 ** Cons: Some third-party libraries use REST APIs, which would require users to have Internet access to edit their Calendars. Some libraries will periodically prompt for authentication of user to continue to use their API, which can be a problematic if authentication process is changed in the future.
-
 // end::calendarEvents[]
 
 [[Implementation-Configuration]]
@@ -775,6 +785,9 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
+This section covers the build automation tools, coverage reporting tools and other tools used in ContactSails.
+It also covers the steps required to create new releases and manage dependencies.
+
 === Build Automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
@@ -801,9 +814,10 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. For example, ContactSails depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
+
+* Include those libraries in the repo. (this bloats the repo size) +
+* Require developers to download those libraries manually. (this creates extra work for developers)
 
 [[GetStartedProgramming]]
 [appendix]
@@ -811,152 +825,9 @@ b. Require developers to download those libraries manually (this creates extra w
 
 Suggested path for new programmers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
+1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time.
 
 2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.groupName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
 
 [[GetStartedProgramming-RemarkCommand]]
 === Creating a new command: `remark`
@@ -1088,7 +959,10 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*: Salespersons from small companies or home-grown businesses with customers from various social media platforms.
+This section states the intended users of ContactSails, the value ContactSails should bring to them and
+contributions of every developer in the team in regards to developing ContactSails to meet the proposed value.
+
+*Target user profile*: ContactSails is meant for salespersons from small companies or home-grown businesses with customers from various social media platforms.
 
 A typical user from our target user profile:
 
@@ -1104,61 +978,64 @@ A typical user from our target user profile:
 * prefers typing over mouse input.
 * is reasonably comfortable using CLI apps.
 
-*Value proposition*: consolidation platform for all contacts from different platforms for users to communicate with customers more easily, analyse and apply their marketing strategies more effectively and efficiently.
+*Value proposition*: ContactSails serve as the consolidation platform for all contacts from different platforms for
+ users to communicate with customers more easily, analyse and apply their marketing strategies more effectively and efficiently.
 
-*Feature Contribution*
+*Feature Contribution:*
 
-1. Aadyaa Maddi
-* Major Feature: Ability to manage customer orders.
+1. *Aadyaa Maddi*
+* *Major Feature*: Ability to manage customer orders.
 ** Orders can be added, edited, and deleted.
 ** A list of current orders can be viewed.
 ** Orders can also be marked as ongoing or fulfilled.
-* Minor Feature: Encryption of application data.
-* How the above features fit into the product scope:
-** Major Feature: For salespersons, this feature will be essential to have as they would want to keep track of what their customers are ordering and what they have ordered already.
+* *Minor Feature*: Encryption of application data.
+* *How the above features fit into the product scope:*
+** *Major Feature*: For salespersons, this feature will be essential to have as they would want to keep track of what their customers are ordering and what they have ordered already.
 If customers have any issues regarding their orders, salespersons will be able to view all the relevant information in a single place.
-** Minor Feature: Since ContactSails has a lot of personal details of customers, the owner of the address book would want to encrypt the application data file to prevent outside access to sensitive information.
+** *Minor Feature*: Since ContactSails has a lot of personal details of customers, the owner of the address book would want to encrypt the application data file to prevent outside access to sensitive information.
 
-2. Alicia Ho Sor Sian
-* Major Feature: Ability to manage events which are displayed in a calendar.
+2. *Alicia Ho Sor Sian*
+* *Major Feature*: Ability to manage events which are displayed in a calendar.
 ** Allows users to add, edit or delete events, which can represent meetings or deadlines including order deliveries.
 ** Once set, the event will be displayed in ContactSails' calendar, which shows all incoming events for the current month and after.
 ** Orders set by users will automatically appear in the calendar without the user having to create an event for it.
-* Minor Feature: Classifying tags into two categories, groups and preferences
+* *Minor Feature*: Classifying tags into two categories, groups and preferences.
 ** Create 2 distinct categories of tags representing groups that a contact belongs to and preferences that a contact has.
 ** Each category is displayed at a separate location in the Ui.
-* How the above features fit into the product scope:
-** Major Feature: The calendar can remind salespersons any impending meetings or deadlines especially order deliveries to save time in planning their next course of action carefully.
+* *How the above features fit into the product scope:*
+** *Major Feature*: The calendar can remind salespersons any impending meetings or deadlines especially order deliveries to save time in planning their next course of action carefully.
 It provides a quicker way to manage events compared to using other calendar applications that mainly relies on GUI input.
-** Minor Feature: Groups can be used to indicate which social media platform does the salesperson use to communicate with a particular contact, while preferences indicates the products and services a contact usually purchases.
+** *Minor Feature*: Groups can be used to indicate which social media platform does the salesperson use to communicate with a particular contact, while preferences indicates the products and services a contact usually purchases.
 Using separate labels for groups and preferences placed at separate locations in the Ui display gives a more organised display of a contact's information, allowing salespersons to derive important information of their contacts quickly.
 
-3. Ang Jing Zhe
-* Major Feature: Add a person panel to the user interface.
-** It allows users to see their contacts in a nicer way.
-** It is implemented by adding a people's panel code.
-** Alternative considerations is to vary the amount of information put up at the panel.
-* Minor Feature: Adding colours to tags
-** Putting colours to tag so that it looks more user friendly.
-** It is implemented by adding colours to java fx.
-* How the above features fit into the product scope:
-** Major Feature: Users can see the contact more clearly.
-** Minor Feature: Colours are more eye-catching.
+3. *Ang Jing Zhe*
+* *Major Feature*: Addition of person panel to the user interface.
+** It allows users to see their contacts' information in a neater and more detailed manner.
+** An alternative consideration is to vary the amount of information put up at the panel.
+* *Minor Feature*: Adding colours to tags.
+** Putting colours to tags so that it looks more user friendly.
+* *How the above features fit into the product scope:*
+** *Major Feature*: Users can see their contacts' information more clearly and neatly.
+** *Minor Feature*: Colours are more eye-catching and help users to identify different tags.
 
-4. Kevin Yeong Yu Heng
-* Major Feature: Ability to import and export contacts from and to other formats.
+4. *Kevin Yeong Yu Heng*
+* *Major Feature*: Ability to import and export contacts from and to other formats.
 ** Allows user to export contacts to a local contact files and import contacts from local contact files.
-** The exported file can integrate in the users workflow which might include external manipulation of the data such as printing a hardcopy of the contact list or using it in an external spreadsheet software.
-* Minor Feature: Ability to generate and display a list of relevant fields of multiple contacts.
+** The exported file can integrate in the users' workflow which might include external manipulation of the data such as printing a hardcopy of the contact list or using it in an external spreadsheet software.
+* *Minor Feature*: Ability to generate and display a list of relevant fields of multiple contacts.
 ** Ability to only show certain fields associated to contacts selected by filters.
 ** Displays the information in a list rather and excludes other information which is not needed by the user.
-* How the above features fit into the product scope:
-** Major Feature: The export and import facility enables users to help salespersons to use the data from ContactSails solely as an addressbook, but gives them the option to more easily integrate it to their current application processes which might allow them to be more efficient in their work.
-** Minor Feature: The more targeted listing feature allows users fit more relevant data into their screen which helps them to focus on the data they need while minimising other non essential information.
+* *How the above features fit into the product scope:*
+** *Major Feature*: The export and import facility enables users to use the data from ContactSails solely as an addressbook, but gives them the option to more easily integrate it to their current application processes which might allow them to be more efficient in their work.
+** *Minor Feature*: The more targeted listing feature allows users fit more relevant data into their screen which helps them to focus on the data they need while minimising other non essential information.
 
 
 [appendix]
 == User Stories
+
+The following table shows all user stories collected thus far.
+Priority indicates importance of implementing the user story.
+Release indicates the version of ContactSails that has already implemented the user story.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -1177,7 +1054,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |lazy user |use short-forms for commands |execute commands more quickly |1.0
 
-|`* * *` |task-oriented user |implement meetings or deadlines for contacts |keep track of tasks to do for the contacts |2.0
+|`* * *` |task-oriented user |implement meetings or deadlines for contacts |keep track of tasks to do for the contacts |1.5
 
 |`* * *` |organized user |delete multiple contacts at a time |remove the contacts I no longer need quickly |2.0
 
@@ -1207,7 +1084,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident |1.0
 
-|`* *` |user who prefers visual imagery |use a calendar to know if there are any tasks or deadlines |clearer view on how to prioritise my work |2.0
+|`* *` |user who prefers visual imagery |use a calendar to know if there are any tasks or deadlines |clearer view on how to prioritise my work |1.5
 
 |`* *` |user |access and change my preferred Email Service provider within the ContactSails |look at my emails and my contacts at the same time |2.0
 
@@ -1215,21 +1092,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user who is fast at typing |copy a contact's email to the clipboard without using a mouse |save time in emailing a contact |2.0
 
-|`* *` |lazy user |add contact details in any order |don't need to remember the order to enter the details |2.0
+|`* *` |lazy user |add contact details in any order |don't need to remember the order to enter the details |1.5
 
 |`* *` |lazy user |auto-completion of commands |execute commands quickly |1.1
 
 |`* *` |user |add notes to a contact |have a clearer description about the contact |2.0
 
-|`* *` |user |group contacts using tags |categorize my customers as needed |2.0
+|`* *` |user |group contacts using tags |categorize my customers as needed |1.5
 
-|`* *` |user |change the theme and font of the application |personalize my AddressBook |2.0
+|`* *` |user |change the theme and font of the application |personalize my AddressBook |1.5
 
 |`* *` |salesperson |see contact statistics |more informed about my customer demographic |2.0
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily |1.0
-
-|`*` |user |sort the list of contacts in alphabetical order |easily find contacts whose names I could not remember |1.0
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily |2.0
 
 |`*` |user |export contacts in different formats |share contacts to other software |2.0
 
@@ -1242,17 +1117,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+The below use cases indicate how ContactSails and its users should interact in each use case.
+
+(For all use cases below, the *System* is the `ContactSails` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
 
 *MSS*
 
-1.  User requests to list persons
-2.  ContactSails shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  ContactSails deletes the person
+1.  User requests to list persons.
+2.  ContactSails shows a list of persons.
+3.  User requests to delete a specific person in the list.
+4.  ContactSails deletes the person.
 +
 Use case ends.
 
@@ -1276,18 +1153,26 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.	User requests to add specific person
-2.	ContactSails adds the person
+1.	User requests to add specific person.
+2.	ContactSails adds the person.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User enters invalid format for the Add feature
+* 1a. User enters invalid format for the Add feature.
 +
 [none]
-** 1a1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
++
+Use case ends.
+
+[none]
+* 1b. User enters exact details of person existing in ContactSails.
++
+[none]
+** 1b1. ContactSails shows an error message.
 +
 Use case ends.
 
@@ -1296,18 +1181,18 @@ Use case ends.
 
 *MSS*
 
-1.  User requests for current customers
-2.  ContactSails finds and displays a list of the list of customers whose orders are currently being fulfilled by user
+1.  User requests for current customers.
+2.  ContactSails finds and displays a list of the list of customers whose orders are currently being fulfilled by user.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty as there are no current orders
+* 2a. The list is empty as there are no current orders.
 +
 [none]
-** 2a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message.
 +
 Use case ends.
 
@@ -1316,28 +1201,28 @@ Use case ends.
 
 *MSS*
 
-1.  User selects contact to edit from the current list of contacts
-2.  ContactSails shows the selected contact
-3.  User requests to edit a certain field of the contact
-4.  ContactSails updates the contact details and shows contact details after the changes made
+1.  User selects contact to edit from the current list of contacts.
+2.  ContactSails shows the selected contact.
+3.  User requests to edit a certain field of the contact.
+4.  ContactSails updates the contact details and shows contact details after the changes made.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User selects invalid contact
+* 1a. User selects invalid contact.
 +
 [none]
-** 1a1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 2a. User selects invalid field to edit
+* 2a. User selects invalid field to edit.
 +
 [none]
-** 2a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1346,10 +1231,10 @@ Use case resumes at step 2.
 
 *MSS*
 
-1. User requests to list persons
-2. ContactSails shows a list of persons
-3. User requests to add notes to specific person in the list
-4. ContactSails adds notes to the specified person
+1. User requests to list persons.
+2. ContactSails shows a list of persons.
+3. User requests to add notes to specific person in the list.
+4. ContactSails adds notes to the specified person.
 +
 Use case ends.
 
@@ -1361,10 +1246,10 @@ Use case ends.
 Use case ends.
 
 [none]
-* 3a. The given index is invalid
+* 3a. The given index is invalid.
 +
 [none]
-** 3a1. ContactSails shows an error message
+** 3a1. ContactSails shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1373,55 +1258,53 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User selects contact to add a task for
-2.  ContactSails prompts user to enter the task details
-3.  User enters task description and task deadline
-4.  ContactSails adds task to specified contact and shows a success message.
+1.  User selects contact to add a task for and enters task description and deadline.
+2.  ContactSails adds task to specified contact and shows a success message.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User selects invalid contact
+* 1a. User selects invalid contact.
 +
 [none]
-** 1a1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 3a. User enters invalid task details
+* 1b. User enters invalid task details.
 +
 [none]
-** 3a1. ContactSails shows en error message
+** 1b1. ContactSails shows en error message.
 +
-Use case resumes at step 2.
+Use case ends.
 
 [discrete]
 === Use case: Find persons by name
 
 *MSS*
 
-1.	User requests to find persons with specific names
-2.	ContactSails shows list of persons with specified names
+1.	User requests to find persons with specific names.
+2.	ContactSails shows list of persons with specified names.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User does not specify any name
+* 1a. User does not specify any name.
 +
 [none]
-** 1a1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 1b. ContactSails does not have any names specified by user
+* 1b. ContactSails does not have any names specified by user.
 +
-** 1b1. ContactSails shows empty list
+** 1b1. ContactSails shows empty list.
 +
 Use case ends.
 
@@ -1430,26 +1313,26 @@ Use case ends.
 
 *MSS*
 
-1.	User requests to find persons with specific groups
-2.	ContactSails shows list of persons with specified groups
+1.	User requests to find persons with specific groups.
+2.	ContactSails shows list of persons with specified groups.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User does not specify any group
+* 1a. User does not specify any group.
 +
 [none]
-** 1a1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 1b. ContactSails does not have any groups specified by user
+* 1b. ContactSails does not have any groups specified by user.
 +
 [none]
-** 1b1. ContactSails shows empty list
+** 1b1. ContactSails shows empty list.
 +
 Use case ends.
 
@@ -1458,26 +1341,26 @@ Use case ends.
 
 *MSS*
 
-1.	User requests to find persons with specific preferences
-2.	ContactSails shows list of persons with specified preferences
+1.	User requests to find persons with specific preferences.
+2.	ContactSails shows list of persons with specified preferences.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User does not specify any preference
+* 1a. User does not specify any preference.
 +
 [none]
-** 1a1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 1b. ContactSails does not have any preference specified by user
+* 1b. ContactSails does not have any preference specified by user.
 +
 [none]
-** 1b1. ContactSails shows empty list
+** 1b1. ContactSails shows empty list.
 +
 Use case ends.
 
@@ -1486,26 +1369,26 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to remove a group and enters group they want to remove
-2.  ContactSails removes the specific group from all contacts who have this group assigned to them
+1.  User requests to remove a group and enters group they want to remove.
+2.  ContactSails removes the specific group from all contacts who have this group assigned to them.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. There are no group
+* 2a. There are no groups.
 +
 [none]
-** 2a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 2a. User enters invalid group
+* 2a. User enters invalid group.
 +
 [none]
-** 2a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message.
 +
 Use case resumes at step 1.
 
@@ -1514,26 +1397,26 @@ Use case resumes at step 1.
 
 *MSS*
 
-1.  User requests to remove a preference enters the preference they want to remove
-4.  ContactSails removes the specific preference from all contacts who have this group assigned to them
+1.  User requests to remove a preference enters the preference they want to remove.
+2.  ContactSails removes the specific preference from all contacts who have this group assigned to them.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. There are no preference
+* 2a. There are no preferences.
 +
 [none]
-** 2a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 2a. User enters invalid preference
+* 2a. User enters invalid preference.
 +
 [none]
-** 2a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message.
 +
 Use case resumes at step 1.
 
@@ -1542,26 +1425,26 @@ Use case resumes at step 1.
 
 *MSS*
 
-1.	User requests to add order to a specific person
-2.	ContactSails adds the order
+1.	User requests to add order to a specific person.
+2.	ContactSails adds the order.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User enters invalid format for the AddOrder command
+* 1a. User enters invalid format for the AddOrder command.
 +
 [none]
-** 1a1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 1a. User adds a duplicate order
+* 1a. User adds a duplicate order.
 +
 [none]
-** 1a1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
 +
 Use case ends.
 
@@ -1570,10 +1453,10 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to list orders
-2.  ContactSails shows a list of orders
-3.  User requests to delete a specific order in the list
-4.  ContactSails deletes the order from the application
+1.  User requests to list orders.
+2.  ContactSails shows a list of orders.
+3.  User requests to delete a specific order in the list.
+4.  ContactSails deletes the order from the application.
 +
 Use case ends.
 
@@ -1597,51 +1480,51 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User selects contacts to export from the current list of contacts
-2.  ContactSails stores the selection and processes the contacts to export
-3.  User requests to create a file containing the selected contacts
-4.  ContactSails creates the file and prompts for save location of file
-5.  User specifies location of file to be saved
-6.  ContactSails saves the file and shows a success message
+1.  User selects contacts to export from the current list of contacts.
+2.  ContactSails stores the selection and processes the contacts to export.
+3.  User requests to create a file containing the selected contacts.
+4.  ContactSails creates the file and prompts for save location of file.
+5.  User specifies location of file to be saved.
+6.  ContactSails saves the file and shows a success message.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User does not select any contact
+* 1a. User does not select any contact.
 +
 [none]
-** 1a1. ContactSails shows an error message
-+
-Use case ends.
-
-[none]
-* 1b. User makes an invalid selection
-+
-[none]
-** 1b1. ContactSails shows an error message
+** 1a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 4a. ContactSails is unable to create the file with selected contacts
+* 1b. User makes an invalid selection.
 +
 [none]
-** 4a1. ContactSails shows an error message
+** 1b1. ContactSails shows an error message.
++
+Use case ends.
+
+[none]
+* 4a. ContactSails is unable to create the file with selected contacts.
++
+[none]
+** 4a1. ContactSails shows an error message.
 +
 Use case resumes at step 1.
 
 [none]
-* 6a. ContactSails is unable to save the file in the specified location
+* 6a. ContactSails is unable to save the file in the specified location.
 +
 [none]
-** 6a1. ContactSails shows an error message
+** 6a1. ContactSails shows an error message.
 +
 Use case resumes at step 5.
 
 [none]
-* *a. User cancels the operation at any time
+* *a. User cancels the operation at any time.
 +
 [none]
 ** *a1. ContactSails shows an error message.
@@ -1653,42 +1536,44 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to create a backup file containing all the data stored in the application
-2.  ContactSails creates the file and adds all the application data
-3.  User specifies location of file to be saved
-4.  ContactSails saves the file in the location specified and shows a success message
+1.  User requests to create a backup file containing all the data stored in the application.
+2.  ContactSails prompts user to indicate save location.
+3.  User specifies location of file to be saved.
+4.  ContactSails saves the file in the location specified and shows a success message.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. ContactSails is unable to create the file
+* 2a. ContactSails is unable to create the file.
 +
 [none]
-** 2a1. ContactSails shows an error message
+** 2a1. ContactSails shows an error message.
 +
 Use case ends.
 
 [none]
-* 4a. ContactSails is unable to save the file in the specified location
+* 4a. ContactSails is unable to save the file in the specified location.
 +
 [none]
-** 4a1. ContactSails shows an error message
+** 4a1. ContactSails shows an error message.
 +
 Use case resumes at step 3.
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+The requirements indicate the constraints that ContactSails have to be developed with.
+
+.  ContactSails should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  ContactSails should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  ContactSails should be usable even for users without experience in using command line applications.
-.  As ContactSails is modified from an open-source software, users should be able to download it for free.
+.  Users should be able to download ContactSails for free as ContactSails is modified from an open-source software.
 .  ContactSails should continue to run the original, intended functions, even when problems occur during execution.
-.  In case ContactSails has crashed, changes made to it during those sessions should not be lost.
-.  Size of ContactSails should not exceed 100 MB even with many contacts stored in it (maximum number of contacts allowed is 1000)
+.  In sessions when ContactSails has crashed, changes made to it during those sessions should not be lost.
+.  Size of ContactSails should not exceed 1GB even with many contacts stored in it (maximum number of contacts allowed is 1000)
 .  ContactSails should take up to 2 seconds to execute any command except for commands that are reliant on internet connectivity.
 .  ContactSails can still work even if there is limited internet connectivity when executed commands open websites.
 .  Users can use ContactSails without requiring an installer.
@@ -1703,43 +1588,45 @@ Use case resumes at step 3.
 Windows, Linux, Unix, OS-X
 
 [[contacts]] Contacts::
-People whose details are present in my address book
+People whose details are present in ContactSails.
 
 [[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
 
 [[groups]] Group::
-A label attached to a person's contact information for the purpose of grouping persons
+A label attached to a person's contact information for the purpose of grouping persons.
 
 [[preferences]] Preference::
-A label attached to a person's contact information for the purpose of providing more specific details of person's interests
+A label attached to a person's contact information for the purpose of providing more specific details of person's interests.
 
 [[tasks]] Tasks::
-A deadline, reminder, or a general note that can be added to keep track of things needed to be done
+A deadline, reminder, or a general note that can be added to keep track of things needed to be done.
 
 [[mss]] MSS::
-Represents the most straightforward interaction between System and User where nothing goes wrong, in a use case
+Represents the most straightforward interaction between System and User where nothing goes wrong, in a use case.
 
 [[extenstions]] Extensions::
-Represents interactions between System and User where something might have gone wrong
+Represents interactions between System and User where something might have gone wrong.
 
 [[profile-photo]] Profile Photo::
-A photograph attached to a certain contact to represent the person
+A photograph attached to a certain contact to represent the person.
 
 [[backup-file]] Backup File::
-An XML data file that stores all data in the application in a local copy on my computer
+An XML data file that stores all data in the application in a local copy on my computer.
 
 [[java-fx]] Java FX::
-A software platform that contains a set of packages for graphics that enables developers to develop rich cross-platform applications
+A software platform that contains a set of packages for graphics that enables developers to develop rich cross-platform applications.
 
 [[travis]] Travis::
-A hosted, distributed continuous integration service used to build and test software projects hosted at GitHub on a Linux virtual machine
+A hosted, distributed continuous integration service used to build and test software projects hosted at GitHub on a Linux virtual machine.
 
 [[appveyor]] AppVeyor::
-A hosted, distributed continuous integration service used to build and test software projects hosted at GitHub on a Windows virtual machine
+A hosted, distributed continuous integration service used to build and test software projects hosted at GitHub on a Windows virtual machine.
 
 [appendix]
 == Product Survey
+
+The following indicates the structure that product surveys should have.
 
 *Product Name*
 
@@ -1765,13 +1652,13 @@ These instructions only provide a starting point for testers to work on; testers
 
 === Launch and Shutdown
 
-. Initial launch
+. *Initial launch*
 
-.. Download the jar file and copy into an empty folder
-.. Double-click the jar file +
+.. Download the jar file and copy into an empty folder.
+.. Double-click the jar file. +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-. Saving window preferences
+. *Saving window preferences*
 
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
@@ -1781,9 +1668,11 @@ _{ more test cases ... }_
 
 === Deleting a person
 
-. Deleting a person while all persons are listed
+. *Deleting a person while all persons are listed*
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites:
+** List all persons using the `list` command.
+** There should be multiple persons in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
@@ -1795,7 +1684,7 @@ _{ more test cases ... }_
 
 === Saving data
 
-. Dealing with missing/corrupted data files
+. *Dealing with missing/corrupted data files*
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 

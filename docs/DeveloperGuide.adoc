@@ -10,76 +10,113 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W13-B1/main/tree/master
 
 By: `Team W13-B1`      Since: `Mar 2018`      Licence: `MIT`
 
+== Introduction
+
+ContactSails is a desktop application targeted at salespersons who want to manage their customer contacts, sales orders,
+and calendar events in an efficient manner. +
+
+This guide provides the necessary technical information for those
+who might want to join our team as a software developer or a tester,
+or for those who want to develop an entirely different product by using ContactSails as a base. +
+
+The following points illustrate what information this guide provides:
+
+1. Details about the software architecture and how each component of the application is designed. +
+2. Implementation details of some noteworthy features in the application. +
+3. Details about software testing, documentation, and dev ops.
+
 == Setting up
+
+This section will guide you in setting up the developer environment on your computer for coding and testing purposes.
 
 === Prerequisites
 
+Ensure that you have the following prerequisites for successfully setting up the developer environment:
+
 . *JDK `1.8.0_60`* or later
 +
-[NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+
+The Java JDK is a software development kit that includes a runtime environment and tools for developing, debugging, and
+monitoring Java applications.
+You can download it http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here].
 +
 
-. *IntelliJ* IDE
+[NOTE]
+This app will not work with earlier versions of Java 8, so ensure that you have installed the right version of Java 8.
 +
+
+. *IntelliJ* IDEA
++
+
+IntelliJ IDEA is a Java integrated development environment for developing computer software.
+You can download the (free) community edition https://www.jetbrains.com/idea/download/[here].
++
+
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting up the project on your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+Follow these steps to set up the project on your computer:
+
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle:
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+Follow these steps to verify that the project has been setup correctly:
+
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
 
+This section provides information on the additional configurations that you need to setup before you can start writing code.
+
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. +
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+To use the correct coding style, follow these steps:
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order:
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
+
+Optionally, you can follow the https://github.com/CS2103JAN2018-W13-B1/main/blob/master/docs/UsingCheckstyle.adoc[UsingCheckstyle.adoc] document to configure Intellij to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W13-B1/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W13-B1/main` repo), you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up Travis to perform Continuous Integration (CI) for your fork. See https://github.com/CS2103JAN2018-W13-B1/main/blob/master/docs/UsingTravis.adoc[UsingTravis.adoc] to learn how to set it up.
 
-After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
+After setting up Travis, you can optionally set up coverage reporting for your team fork see https://github.com/CS2103JAN2018-W13-B1/main/blob/master/docs/UsingCoveralls.adoc[UsingCoveralls.adoc].
 
 [NOTE]
 Coverage reporting could be useful for a team repository that hosts the final version but it is not that useful for your personal fork.
 
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+Optionally, you can set up AppVeyor as a second CI see https://github.com/CS2103JAN2018-W13-B1/main/blob/master/docs/UsingAppVeyor.adoc[UsingAppVeyor.adoc].
 
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
@@ -93,43 +130,50 @@ When you are ready to start coding,
 
 == Design
 
+The following section provides information about the software architecture of ContactSails and how each of its components are designed.
+
 [[Design-Architecture]]
 === Architecture
 
-.Architecture Diagram
-image::Architecture.png[width="600"]
+The *_Architecture Diagram_* given below (Figure 1) explains the high-level design of the App.
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+.Architecture Diagram
+image::Architecture.png[width="600" align="center"]
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+Given below is a quick overview of each component.
+
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`].
+It does the following:
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components.
+Two of those classes, `EventsCenter` and `LogsCenter`, play important roles at the architecture level.
+Given below is a description of what each of those classes do:
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+1. <<Design-Ui,*`UI`*>>: The UI of the App.
+2. <<Design-Logic,*`Logic`*>>: The command executor.
+3. <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
+4. <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the four components does the following:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see Figure 2 below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
-image::LogicClassDiagram.png[width="800"]
+image::LogicClassDiagram.png[width="800" align="center"]
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -137,7 +181,7 @@ image::LogicClassDiagram.png[width="800"]
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
+image::SDforDeletePerson.png[width="800" align="center"]
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -145,7 +189,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
+image::SDforDeletePersonEventHandling.png[width="800" align="center"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -156,7 +200,7 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagram.png[width="800" align="center"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -175,10 +219,10 @@ The `UI` component,
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
-image::LogicClassDiagram.png[width="800"]
+image::LogicClassDiagram.png[width="800" align="center"]
 
 .Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
-image::LogicCommandClassDiagram.png[width="800"]
+image::LogicCommandClassDiagram.png[width="800" align="center"]
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -191,13 +235,13 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
-image::DeletePersonSdForLogic.png[width="800"]
+image::DeletePersonSdForLogic.png[width="800" align="center"]
 
 [[Design-Model]]
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram.png[width="800" align="center"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -212,7 +256,7 @@ The `Model`,
 === Storage component
 
 .Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
+image::StorageClassDiagram.png[width="800" align="center"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -238,7 +282,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
-image::LogicCommandClassDiagram.png[width="800"]
+image::LogicCommandClassDiagram.png[width="800" align="center"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -277,11 +321,11 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
-image::UndoRedoStartingStackDiagram.png[width="800"]
+image::UndoRedoStartingStackDiagram.png[width="800" align="center"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
-image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+image::UndoRedoNewCommand1StackDiagram.png[width="800" align="center"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -290,14 +334,14 @@ The user now decides that adding the person was a mistake, and decides to undo t
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
-image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+image::UndoRedoExecuteUndoStackDiagram.png[width="800" align="center"]
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
 The following sequence diagram shows how the undo operation works:
 
-image::UndoRedoSequenceDiagram.png[width="800"]
+image::UndoRedoSequenceDiagram.png[width="800" align="center"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -306,15 +350,15 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
-image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+image::UndoRedoNewCommand2StackDiagram.png[width="800" align="center"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
-image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+image::UndoRedoNewCommand3StackDiagram.png[width="800" align="center"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
-image::UndoRedoActivityDiagram.png[width="650"]
+image::UndoRedoActivityDiagram.png[width="650" align="center"]
 
 ==== Design Considerations
 
@@ -373,22 +417,6 @@ An `Order` is represented in the application as shown in _Figure 11_ given below
 .UML Diagram for Order
 image::OrderUMLDiagram.png[width="500" align="center"]
 
-An `Order` is implemented in the following manner:
-[source,java]
-----
-public class Order {
-
-    private final OrderInformation orderInformation;
-    private final OrderStatus orderStatus;
-    private final Price price;
-    private final Quantity quantity;
-    private final DeliveryDate deliveryDate;
-
-    // ... Order attribute getters and setters ...
-
-}
-----
-
 A brief description of each of the attributes of an `Order` is given below: +
 
 * OrderInformation: Represents information about the order item. +
@@ -431,19 +459,6 @@ These commands are described in more detail below. +
 ===== Adding Orders
 
 The `AddOrderCommand` adds an order to the person specified by their `index` in the last shown listing of persons.
-The code snippet below shows the constructor of this class:
-[source,java]
-----
-public AddOrderCommand extends UndoableCommand {
-    public AddOrderCommand(Index index, Order orderToAdd) {
-        requireNonNull(index);
-        requireNonNull(orderToAdd);
-
-        this.index = index;
-        this.orderToAdd = orderToAdd;
-    }
-}
-----
 
 The following snippet shows how the `executeUndoableCommand()` method updates the `model` of the address book
 application by adding `orderToAdd` to the list of orders of the `person` specified. Note that `orderToAdd` will
@@ -475,21 +490,6 @@ The `EditOrderCommand` edits the `targetOrder` with the provided information whi
 in the last shown listing of orders. The order will be updated with the information stored in `editOrderDescriptor`
 object.
 
-The code snippet below shows the constructor of the class:
-
-[source,java]
-----
-public class EditOrderCommand extends UndoableCommand {
-    public EditCommand(Index index, EditOrderDescriptor editOrderDescriptor) {
-        requireNonNull(index);
-        requireNonNull(editOrderDescriptor);
-
-        this.index = index;
-        this.editOrderDescriptor = new EditOrderDescriptor(editOrderDescriptor);
-    }
-}
-----
-
 A new class called `EditOrderDescriptor` is defined to create the `editOrderDescriptor` object that stores the new values
 of the fields that need to be edited. Each non-empty field value will replace the corresponding field value of the `order`.
 
@@ -515,43 +515,8 @@ public static class EditOrderDescriptor {
 The `EditOrderDescriptor` uses Optionals to return `Optional.empty()` if any of the field values are null.
 If `Optional.empty()` is returned for any field, that particular field does not need to be edited.
 
-The code snippet below shows the methods in `EditOrderDescriptor` that implement this functionality for the
-`OrderInformation` field of the `order` to be edited:
-
-[source,java]
-----
-public static class EditOrderDescriptor {
-    public void setOrderInformation(OrderInformation orderInformation) {
-        this.orderInformation = orderInformation;
-    }
-
-    public Optional<OrderInformation> getOrderInformation() {
-        return Optional.ofNullable(name);
-    }
-}
-----
-
-The code snippet below shows the `createEditedOrder()` method that constructs the edited order:
-
-[source,java]
-----
-public class EditOrderCommand extends UndoableCommand {
-    private static Order createEditedOrder(Person orderToEdit, EditOrderDescriptor editOrderDescriptor) {
-        assert orderToEdit != null;
-
-        OrderInformation updatedOrderInformation = editOrderDescriptor.getOrderInformation().orElse(orderToEdit.getOrderInformation());
-
-        // ... OrderStatus, Price, and Quantity ...
-
-        DeliveryDate updatedDeliveryDate = editOrderDescriptor.getDeliveryDate().orElse(orderToEdit.getDeliveryDate());
-
-        return new Order(updatedOrderInformation, updatedOrderStatus, updatedPrice, updatedQuantity, updatedDeliveryDate);
-    }
-}
-----
-
-Finally, the `executeUndoableCommand()` method calls the `createEditedOrder()` for getting the edited order and update
-`model` of the application.
+The `createEditedOrder()` method constructs the edited order. Finally, the `executeUndoableCommand()` method calls the `createEditedOrder()` method
+for getting the edited order and updates the `model` of the application.
 
 [source,java]
 ----
@@ -669,7 +634,7 @@ Orders of a person will also appear as `CalendarEvent` based on the `DeliveryDat
 
 The following diagram shows class diagram of `Model` Component related to `UserEvents` and `CalendarEvent`.
 
-image::CalendarClassDiagram.png[width="800"]
+image::CalendarClassDiagram.png[width="800" align="center"]
 
 In the diagram, `ModelManager` creates an instance of `UserEvents` interface, which provides the `UserEvents` API for `ModelManager` to use.
 `UserEventsManager` implements methods used by users to add, edit or delete `CalendarEvent`, which contains information of an event. `CalendarEvent` is stored in the `UniqueEventList`. +
@@ -677,7 +642,7 @@ In the diagram, `ModelManager` creates an instance of `UserEvents` interface, wh
 
 The sequence diagram below shows how add event operation works:
 
-image::AddEventSD.png[width="800"]
+image::AddEventSD.png[width="800" align="center"]
 
 A `CalendarEvent` is implemented in the following manner:
 [source,java]
@@ -756,7 +721,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 .Saving documentation as PDF files in Chrome
-image::chrome_save_as_pdf.png[width="300"]
+image::chrome_save_as_pdf.png[width="300" align="center"]
 
 [[Testing]]
 == Testing

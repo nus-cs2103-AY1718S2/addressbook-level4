@@ -13,8 +13,8 @@ import seedu.address.model.tag.exceptions.PreferenceNotFoundException;
  */
 public class DeletePreferenceCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "deletepref";
-    public static final String COMMAND_ALIAS = "dp";
+    public static final String COMMAND_WORD = "prefdelete";
+    public static final String COMMAND_ALIAS = "pd";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the specified preference from all persons in address book.\n"

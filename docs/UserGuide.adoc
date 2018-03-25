@@ -147,11 +147,11 @@ Returns `john` and `John Doe`
 `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by groups: `findgroup` `since v1.2`
+=== Locating persons by groups: `groupfind` `since v1.2`
 
 Finds persons whose groups matches any of the given keywords. +
-Format: `findgroup KEYWORD [MORE_KEYWORDS]` +
-Alias: `fg KEYWORD [MORE_KEYWORDS]`
+Format: `groupfind KEYWORD [MORE_KEYWORDS]` +
+Alias: `gf KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `Friends` will match `friends`
@@ -162,19 +162,19 @@ Alias: `fg KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `findgroup friends` OR +
-`fg friends` +
+* `groupfind friends` OR +
+`gf friends` +
 Returns `John Doe`
 
-* `findgroup neighbours friends colleagues` OR +
-`fg neighbours friends colleagues` +
+* `groupfind neighbours friends colleagues` OR +
+`gf neighbours friends colleagues` +
 Returns any person having groups `neighbours`, `friends`, or `colleagues`
 
-=== Locating persons by preferences: `findpref` `since v1.2`
+=== Locating persons by preferences: `preffind` `since v1.2`
 
 Finds persons whose preferences matches any of the given keywords. +
-Format: `findpref KEYWORD [MORE_KEYWORDS]` +
-Alias: `fp KEYWORD [MORE_KEYWORDS]`
+Format: `preffind KEYWORD [MORE_KEYWORDS]` +
+Alias: `pf KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `Computers` will match `computers`
@@ -185,12 +185,12 @@ Alias: `fp KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `findpref computers` OR +
-`fp computers` +
+* `preffind computers` OR +
+`pf computers` +
 Returns `John Doe`
 
-* `findpref computers shoes necklaces` OR +
-`fp computers shoes necklaces` +
+* `preffind computers shoes necklaces` OR +
+`pf computers shoes necklaces` +
 Returns any person having preferences `computers`, `shoes`, or `necklaces`
 
 === Deleting a person : `delete`
@@ -215,11 +215,11 @@ Deletes the 2nd person in the address book.
 `delete 1`  OR `d 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Deleting a group : `deletegroup` `Since V1.2`
+=== Deleting a group : `groupdelete` `Since V1.2`
 
 Deletes the specified group from the address book. +
-Format: `deletegroup GROUP_NAME` +
-Alias: `dg GROUP_NAME`
+Format: `groupdelete GROUP_NAME` +
+Alias: `gd GROUP_NAME`
 
 ****
 * Deletes the group specified by `GROUP_NAME`.
@@ -229,15 +229,15 @@ Alias: `dg GROUP_NAME`
 
 Examples:
 
-* `deletegroup friends` OR+
-`dg friends`+
-All persons in ContactSails with the group [friends] will have the group removed.
+* `groupdelete friends` OR+
+`gd friends`+
+All persons in ContactSails with the group `friends` will have the group removed.
 
-=== Deleting a preference : `deletepref` `Since V1.2`
+=== Deleting a preference : `prefdelete` `Since V1.2`
 
 Deletes the specified preference from the address book. +
-Format: `deletepref PREFERENCE_NAME` +
-Alias: `dp PREFERENCE_NAME`
+Format: `prefdelete PREFERENCE_NAME` +
+Alias: `pd PREFERENCE_NAME`
 
 ****
 * Deletes the preference specified by `PREFERENCE_NAME`.
@@ -247,8 +247,8 @@ Alias: `dp PREFERENCE_NAME`
 
 Examples:
 
-* `deletepref computers` OR+
-`dp computers`+
+* `prefdelete computers` OR+
+`pd computers`+
 All persons in ContactSails with the preference [computers] will have the preference removed.
 
 === Selecting a person : `select`
@@ -423,17 +423,17 @@ Shows Calendar in Month-View
 `cal week` +
 Shows Calendar in Week-View
 
-=== Listing all events : `listevent` `Coming in V1.5`
+=== Listing all events : `eventlist` `Coming in V1.5`
 
 Shows a list of all events in the address book. +
-Format: `listevents` +
-Alias: `le`
+Format: `eventlist` +
+Alias: `el`
 
-=== Adding events to Event list : `addevent` `Coming in V1.5`
+=== Adding events to Event list : `eventadd` `Coming in V1.5`
 
 Adds an event to the Event list. +
-Format: `addevent t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
-Alias: `ae t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+Format: `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+Alias: `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
 
 ****
 * If input does not contain START_DATE but contains START_TIME, it is assumed that event starts and ends on END_DATE.
@@ -445,19 +445,19 @@ Alias: `ae t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/IN
 
 Examples:
 
-* `addevent t/meet with boss` OR +
-`ae t/meet with boss ed/05-05-2020 st/1000 et/1200` +
+* `eventadd t/meet with boss` OR +
+`ea t/meet with boss ed/05-05-2020 st/1000 et/1200` +
 Creates an event with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
 Event appears on specified date in the Calendar.
 
-* `addevent t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800` OR +
-`ae t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800` +
+* `eventadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800` OR +
+`ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800` +
 Event starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
 
-=== editing events in Event list : `editevent` `Coming in V1.5`
+=== editing events in Event list : `eventedit` `Coming in V1.5`
 
 Edits an existing event in the Event List. +
-Format: `editevent e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+Format: `eventedit e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
 Alias: `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
 
 ****
@@ -470,21 +470,21 @@ Alias: `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME]
 
 Examples:
 
-* `editevent e/1 t/meet with bosses et/1400` OR +
+* `eventedit e/1 t/meet with bosses et/1400` OR +
 `ee e/1 t/meet with bosses et/1400` +
 Edits title and end time of 1st event in Event list to "meet with bosses" and 1400 respectively. +
 Changes reflect on the Calendar.
 
-* `editevent e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800 i/` OR +
+* `eventedit e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800 i/` OR +
 `ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800 i/` +
 Edits starting date and time, ending date and time of the 3rd event in Event list. +
 Removes all persons tagged to the event.
 
-=== Deleting events in Event list : `deleteevent` `Coming in V1.5`
+=== Deleting events in Event list : `eventdelete` `Coming in V1.5`
 
 Deletes an existing event in Event list. +
-Format: `deleteevent EVENT_INDEX` +
-Alias: `de EVENT_INDEX` +
+Format: `eventdelete EVENT_INDEX` +
+Alias: `ed EVENT_INDEX` +
 
 ****
 * Deletes event at specified EVENT_INDEX of Event list.
@@ -494,16 +494,16 @@ Alias: `de EVENT_INDEX` +
 
 Examples:
 
-* `deleteevent 1` OR +
-`de 1` +
+* `eventdelete 1` OR +
+`ed 1` +
 Deletes the event at index 1 of most recent event listing. +
 Event is removed from the Calendar.
 
-=== Clearing all entries in Event List : `clearevent` `Coming in V1.5`
+=== Clearing all entries in Event List : `eventclear` `Coming in V1.5`
 
 Clears all event list entries from the address book. +
-Format: `clearevent` +
-Alias: `ce`
+Format: `eventclear` +
+Alias: `ec`
 
 === Clearing all entries : `clear`
 
@@ -531,30 +531,30 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
-* *Add Event [Coming in V1.5]* : `addevent t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
-e.g. `addevent t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
+* *Add Event [Coming in V1.5]* : `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+e.g. `eventadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
 * *Calendar [Coming in V1.5]* : `calendar [VIEW_FORMAT]` +
 e.g. `calendar year`
 * *Clear* : `clear`
-* *Clear Event list [Coming in V1.5]* : `clearevent`
+* *Clear Event list [Coming in V1.5]* : `eventclear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Delete Event [Coming in V1.5]* : `deleteevent INDEX` +
-e.g. `deleteevent 2`
-* *Delete Group* : `deletegroup GROUP_NAME` +
-e.g. `deletegroup friends`
-* *Delete Preference*: `deletepref PREFERENCE_NAME` +
-e.g. `deletepref computers`
+* *Delete Event [Coming in V1.5]* : `eventdelete INDEX` +
+e.g. `eventdelete 2`
+* *Delete Group* : `groupdelete GROUP_NAME` +
+e.g. `groupdelete friends`
+* *Delete Preference*: `prefdelete PREFERENCE_NAME` +
+e.g. `prefdelete computers`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Edit Event [Coming in V1.5]* : `editevent e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
-e.g. `editevent e/2 t/meeting with Jason ed/20-20-2020 i/2`
+* *Edit Event [Coming in V1.5]* : `eventedit e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+e.g. `eventedit e/2 t/meeting with Jason ed/20-20-2020 i/2`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *Findgroup* : findgroup KEYWORD [MORE_KEYWORDS]` +
-e.g. `findgroup friends`
-* *Findpref* : findpref KEYWORD [MORE_KEYWORDS]` +
-e.g. `findpref computers`
+* *Findgroup* : groupfind KEYWORD [MORE_KEYWORDS]` +
+e.g. `groupfind friends`
+* *Findpref* : preffind KEYWORD [MORE_KEYWORDS]` +
+e.g. `preffind computers`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -574,30 +574,30 @@ e.g. `orderdelete 5`
 
 * *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
-* *Add Event [Coming in V1.5]* : `ae t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
-e.g. `ae t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
+* *Add Event [Coming in V1.5]* : `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+e.g. `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
 * *Calendar [Coming in V1.5]* : `cal [VIEW_FORMAT]` +
 e.g. `cal year`
 * *Clear* : `c`
-* *Clear Event list [Coming in V1.5]* : `ce`
+* *Clear Event list [Coming in V1.5]* : `ec`
 * *Delete* : `d INDEX` +
 e.g. `d 3`
-* *Delete Event [Coming in V1.5]* : `de INDEX` +
-e.g. `de 2`
-* *Delete Group* : `dg GROUP_NAME` +
-e.g. `dg friends`
-* *Delete Preference*: `dp PREFERENCE_NAME` +
-e.g. `dp computers`
+* *Delete Event [Coming in V1.5]* : `ed INDEX` +
+e.g. `ed 2`
+* *Delete Group* : `gd GROUP_NAME` +
+e.g. `gd friends`
+* *Delete Preference*: `pd PREFERENCE_NAME` +
+e.g. `pd computers`
 * *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `e 2 n/James Lee e/jameslee@example.com`
 * *Edit Event [Coming in V1.5]* : `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
 e.g. `ee e/2 t/meeting with Jason ed/20-20-2020 i/2`
 * *Find* : `f KEYWORD [MORE_KEYWORDS]` +
 e.g. `f James Jake`
-* *Findgroup* : fg KEYWORD [MORE_KEYWORDS]` +
-e.g. `fg friends`
-* *Findpref* : fp KEYWORD [MORE_KEYWORDS]` +
-e.g. `fp computers`
+* *Findgroup* : gf KEYWORD [MORE_KEYWORDS]` +
+e.g. `gf friends`
+* *Findpref* : pf KEYWORD [MORE_KEYWORDS]` +
+e.g. `pf computers`
 * *List* : `l`
 * *Help* : `?`
 * *Select* : `s INDEX` +
@@ -617,5 +617,4 @@ e.g. `od 5`
 
 * Encrypting data files
 * Reminders
-* Viewing schedule in integrated calendar
 * Sending promotions to target groups

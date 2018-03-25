@@ -13,8 +13,8 @@ import seedu.address.model.tag.exceptions.GroupNotFoundException;
  */
 public class DeleteGroupCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "deletegroup";
-    public static final String COMMAND_ALIAS = "dg";
+    public static final String COMMAND_WORD = "groupdelete";
+    public static final String COMMAND_ALIAS = "gd";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the specified group from all persons in address book.\n"

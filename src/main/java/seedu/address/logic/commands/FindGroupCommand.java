@@ -8,8 +8,8 @@ import seedu.address.model.person.GroupsContainKeywordsPredicate;
  */
 public class FindGroupCommand extends Command {
 
-    public static final String COMMAND_WORD = "findgroup";
-    public static final String COMMAND_ALIAS = "fg";
+    public static final String COMMAND_WORD = "groupfind";
+    public static final String COMMAND_ALIAS = "gf";
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
             + "KEYWORD "
             + "[MORE KEYWORDS]";

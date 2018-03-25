@@ -310,7 +310,7 @@ There is no need to save manually.
 *A*:
 
 image::FAQ1.png[width="450"]
-
+{nbsp}
 
 *Q*: I found a bug in your program, what should I do? +
 *A*: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue in our repo].

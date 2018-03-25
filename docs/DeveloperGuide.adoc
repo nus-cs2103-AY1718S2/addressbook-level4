@@ -16,9 +16,9 @@ endif::[]
 By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
-*<<ReciRecipe,ReciRecipé>>* is a desktop recipe management application for users who prefer working their keyboard instead of a mouse to manage their recipes more efficiently. It is useful for cooks who have experience with typing and want all of their recipes in one place.
+*<<ReciRecipe,ReciRecipé>>* is a desktop recipe storage application for users who prefer using the keyboard instead of a mouse for efficient management. It is useful for tech-savvy cooks that want all their recipes stored in one place.
 
-*Developer Guide* will give you a stroll through the design and implementation of *ReciRecipé*. If you want to understand _how_, and hopefully _why_, *ReciRecipé* works, you are at the right place.
+This *Developer Guide* will take you through the design and implementation of *ReciRecipé*. If you want to understand _how_, and hopefully _why_, *ReciRecipé* works, you are at the right place!
 
 == Setting up
 
@@ -109,8 +109,9 @@ When you are ready to start coding,
 [[Design-Architecture]]
 === Architecture
 
-The *_Architecture Diagram_* given below explains the high-level design of the App with 6 components.
+The *_Architecture Diagram_* given below (<<fig-ArchitectureDiagram>>) explains the high-level design of the App with 6 components.
 
+[[fig-ArchitectureDiagram]]
 .Architecture Diagram
 image::Architecture.png[width="600"]
 {nbsp} +
@@ -137,7 +138,7 @@ For example, the `Logic` component (see the class diagram given below) defines i
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact in the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeleteRecipe.png[width="800"]
@@ -159,8 +160,8 @@ The sections below give more details of each component.
 === Main component
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp`].
 
-* At app launch: It initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: It shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
+* At shut down: Shuts down the components and invokes cleanup method where necessary.
 
 [[Design-Commons]]
 === Commons component

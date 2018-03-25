@@ -11,6 +11,7 @@ import guitests.guihandles.LoginPaneHandle;
 import seedu.address.login.Login;
 import seedu.address.login.LoginManager;
 import seedu.address.login.UserPassStorage;
+import seedu.address.storage.JsonUserPassStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
@@ -29,7 +30,7 @@ public class LoginPaneTest extends GuiUnitTest {
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        UserPassStorage userPassStorage = new UserPassStorage();
+        JsonUserPassStorage userPassStorage = new JsonUserPassStorage(getTempFilePath("tempUserPass"));
         storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
         login = new LoginManager(storage);
         loginPane = new LoginPane(login);

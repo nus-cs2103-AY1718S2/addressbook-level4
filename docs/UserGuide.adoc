@@ -241,7 +241,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Add To Do List: `AddToDo`
 
-Creates a todo list named `KEYWORD`
+Creates a todo list named `KEYWORD` +
 Alias: `aTD` +
 Format: `aTD KEYWORD[KEYWORDS]`
 
@@ -253,7 +253,7 @@ Keyword cannot be an empty input.
 
 === List Group Members: `ListGroupMembers`
 
-List out all persons with the given keywords(group tags).
+List out all persons with the given keywords(group tags). +
 Alias: `lgm` +
 Format: `ListGroupMembers INPUT`
 

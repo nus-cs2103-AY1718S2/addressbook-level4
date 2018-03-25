@@ -14,7 +14,6 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.ui.BrowserDisplayEvent;
-import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Student;
 

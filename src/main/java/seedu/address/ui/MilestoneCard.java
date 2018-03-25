@@ -11,7 +11,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.dashboard.Task;
-import seedu.address.model.student.dashboard.UniqueTaskList;
 
 /**
  * An UI component that displays information of a {@code Milestone}.
@@ -51,9 +50,12 @@ public class MilestoneCard extends UiPart<Region> {
         loadTaskList(milestone.getTaskList().asObservableList());
     }
 
+    /**
+     * Loads the list of tasks in to the milestone card
+     */
     private void loadTaskList(ObservableList<Task> taskList) {
-        ObservableList<TaskCard> mappedList = EasyBind.map(taskList,
-                (task) -> new TaskCard(task, taskList.indexOf(task)+1));
+        ObservableList<TaskCard> mappedList = EasyBind.map(
+                taskList, (task) -> new TaskCard(task, taskList.indexOf(task) + 1));
         taskListView.setItems(mappedList);
         taskListView.setCellFactory(listView -> new TaskListViewCell());
     }

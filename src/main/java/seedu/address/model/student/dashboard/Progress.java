@@ -10,8 +10,8 @@ import java.util.Objects;
  */
 public class Progress {
 
-    public static final String MESSAGE_PROGRESS_CONSTRAINTS
-            = "totalTasks must always be more than or equals to numCompletedTask";
+    public static final String MESSAGE_PROGRESS_CONSTRAINTS =
+            "totalTasks must always be more than or equals to numCompletedTask";
 
     private final int totalTasks;
     private final int numCompletedTasks;

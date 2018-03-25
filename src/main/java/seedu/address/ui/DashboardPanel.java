@@ -42,6 +42,9 @@ public class DashboardPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loads the default dashboard at start up
+     */
     private void loadDefaultDashboard() {
         studentName.setText("John Doe");
         ObservableList<MilestoneCard> milestoneCardList = FXCollections.observableArrayList();
@@ -51,10 +54,12 @@ public class DashboardPanel extends UiPart<Region> {
         milestoneListView.setCellFactory(listView -> new MilestoneListViewCell());
     }
 
+    /**
+     * Loads the list of milestones into the dashboard
+     */
     private void loadMilestoneList(ObservableList<Milestone> milestoneList) {
         ObservableList<MilestoneCard> mappedList = EasyBind.map(
-                milestoneList,
-                (milestone) -> new MilestoneCard(milestone, milestoneList.indexOf(milestone) + 1));
+                milestoneList, (milestone) -> new MilestoneCard(milestone, milestoneList.indexOf(milestone) + 1));
         milestoneListView.setItems(mappedList);
     }
 

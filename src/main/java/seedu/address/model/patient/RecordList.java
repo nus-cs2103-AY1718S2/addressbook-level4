@@ -44,8 +44,11 @@ public class RecordList {
 
     public RecordList(String string) throws ParseException { //placeholder code
         this.recordList = new ArrayList<Record>();
-        recordList.add(new Record());
-        this.numRecord = 1;
+        String lines[] = string.split("\\r?\\n");
+        for(int i = 0; i < lines.length; i++){
+            recordList.add(new Record(lines[i]));
+        }
+        this.numRecord = lines.length;
     }
 
     public int getNumberOfRecords() {
@@ -101,11 +104,12 @@ public class RecordList {
      */
     public String toCommandString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("1 "); //as the command will not be executed, we will be placing a dummy patient index
         for(int i = 0; i < numRecord; i++){
-            builder.append(PREFIX_INDEX)
-                    .append(recordList.get(i).toCommandStringRecordList())
-                    .append("\n");
+            builder.append("1 ") //as the command will not be executed, we will be placing a dummy patient index
+            .append(PREFIX_INDEX)
+            .append(i + " ")
+            .append(recordList.get(i).toCommandStringRecordList())
+            .append("\n");
         }
         return builder.toString();
     }

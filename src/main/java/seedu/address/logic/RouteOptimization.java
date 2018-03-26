@@ -61,8 +61,6 @@ public class RouteOptimization {
             String add1 = filtered.get(i);
             for (int j = 1; j < filtered.size(); j++) {
                 String add2 = filtered.get(j);
-                test.add(distance.getDistance(add1, add2));
-                route.add(labelRoutes(add1, add2));
                 allDistances.put(labelRoutes(add1, add2), distance.getDistance(add1, add2));
             }
         }

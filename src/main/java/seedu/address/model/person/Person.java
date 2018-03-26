@@ -36,12 +36,9 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
-<<<<<<< HEAD
         this.currentPosition = currentPosition;
         this.company = company;
-
-=======
->>>>>>> master
+        
         if (profilePicture == null) {
             this.profilePicture = new ProfilePicture();
         } else {

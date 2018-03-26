@@ -134,4 +134,23 @@ public class Record {
         return builder.toString();
     }
 
+    /**
+     * Returns a string that is used to generate a RecordList that has this Record.
+     */
+    public String toCommandStringRecordList() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(PREFIX_DATE)
+                .append(getDate())
+                .append(" ")
+                .append(PREFIX_SYMPTOM)
+                .append(getSymptom())
+                .append(" ")
+                .append(PREFIX_ILLNESS)
+                .append(getIllness())
+                .append(" ")
+                .append(PREFIX_TREATMENT)
+                .append(getTreatment());
+        return builder.toString();
+    }
+
 }

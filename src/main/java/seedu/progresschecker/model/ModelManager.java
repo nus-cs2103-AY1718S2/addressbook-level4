@@ -3,6 +3,9 @@ package seedu.progresschecker.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -102,6 +105,17 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void uploadPhoto(Path path) throws IOException {
+        try {
+            progressChecker.uploadPhoto(path);
+        } catch (FileNotFoundException FNF) {
+            throw new FileNotFoundException();
+        }
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateProgressCheckerChanged();
     }
 
     @Override

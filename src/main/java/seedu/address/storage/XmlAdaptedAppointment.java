@@ -26,8 +26,8 @@ public class XmlAdaptedAppointment {
     /**
      * Constructs a {@code XmlAdaptedAppointment} with the given {@code patientName} and {@code dateTime}.
      */
-    public XmlAdaptedAppointment(String patientName, String dateTime) {
-        this.patientName = patientName;
+    public XmlAdaptedAppointment(String dateTime) {
+        this.patientName = "";
         this.dateTime = dateTime;
     }
 
@@ -42,7 +42,7 @@ public class XmlAdaptedAppointment {
     }
 
     public Appointment toModelType() throws IllegalValueException {
-        return new Appointment(patientName, dateTime);
+        return new Appointment(dateTime);
     }
 
     @Override

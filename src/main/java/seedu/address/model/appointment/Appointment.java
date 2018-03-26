@@ -8,9 +8,8 @@ public class Appointment {
 
     private DateTime appointmentDateTime;
     private String patientName;
-
-    public Appointment(String patientName, String appointmentDateTime) {
-        this.patientName = patientName;
+    public Appointment(String appointmentDateTime) {
+        this.patientName = "";
         this.appointmentDateTime = new DateTime(appointmentDateTime);
     }
 

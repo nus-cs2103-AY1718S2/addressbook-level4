@@ -50,7 +50,7 @@ public class RecordCommand extends UndoableCommand {
     private Patient editedPatient;
 
     /**
-     * Creates an AddCommand to add the specified {@code Patient}
+     * Creates a RecordCommand to edit the records of the specified {@code Patient}
      */
     public RecordCommand(Index index, Record record) {
         requireNonNull(index);

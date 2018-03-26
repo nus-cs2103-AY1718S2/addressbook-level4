@@ -410,6 +410,7 @@ Add a medical appointment with patient name, date, time.
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
 Examples:
+
 * `addappt Betsy 19/3/2018 1000` +
 Add a medical appointment for Betsy on 19/3/2018 at 10am.
 
@@ -422,6 +423,7 @@ Delete a medical appointment of the patient.
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 
 Examples:
+
 * `delappt Betsy 2` +
 Delete a medical appointment of Betsy with index number 2.
 
@@ -434,6 +436,7 @@ Shows a list of medical appointments of the patient.
 Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
 
 Examples:
+
 * `viewappt Betsy` +
 List of medical appointments made by Betsy.
 
@@ -446,6 +449,7 @@ Shows a list of medical appointments of a particular date.
 Format: `viewappt DATE` or `va DATE`
 
 Examples:
+
 * `viewappt 19/3/2018` +
 List of medical appointments on 19/3/2018.
 
@@ -484,7 +488,11 @@ e.g. `find` or `f James Jake`
 e.g.`select` or `s 2`
 * *Remark* : `remark` or `rk INDEX r/[REMARK]` +
 e.g.`remark` or `rk 1 r/Likes to drink coffee.`
-* *View Appointment* : `viewappt` or `va`
+* *Add patient into visiting queue* : `addq` or `aq`
+* *Remove patient from visiting queue* : `removeq` or `rq`
+* *View appointments* : `viewappt` or `va`
+* *Add new appointment* : `addappt` or `aa`
+* *Delete appointment* : `delappt` or `da`
 * *History* : `history` or `hi`
 * *Undo* : `undo` or `u` or `z`
 * *Redo* : `redo` or `r` or `y`

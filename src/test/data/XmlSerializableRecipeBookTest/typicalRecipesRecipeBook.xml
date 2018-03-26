@@ -4,55 +4,81 @@
 <recipebook>
     <recipes>
         <name>Alice Pauline</name>
+        <ingredient>demolishment,bigwig,archer,negative,appearance,afternoon</ingredient>
+        <instruction>Fill a tea kettle or 2 quart saucepan with water and bring to a boil. Remove excess fat from chilled chicken and place in colander over a large bowl. Spread out with a fork. Pour hot water over meat through colander.
+Place chicken in plastic container with tight fitting lid.
+Add onions, chili powder, oregano, garlic powder, cumin, and paprika to chicken.
+Refrigerate chicken overnight in plastic container with tight fitting lid.
+To make tacos, place chicken mixture in a pan and heat slowly or heat in microwave for 2–3 minutes, stirring after 1½ minutes to heat evenly. Combine finely shredded lettuce and cabbage. Mix cheeses together. Place ¼ cup heated chicken mixture in a tortilla and top with cheese and vegetables.
+Add salsa as desired.</instruction>
+        <cookingTime>50m</cookingTime>
         <preparationTime>85355255</preparationTime>
-        <ingredient>alice@example.com</ingredient>
-        <instruction>123, Jurong West Ave 6, #08-111</instruction>
+        <calories>5000</calories>
+        <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/baked-potato</url>
         <tagged>family</tagged>
     </recipes>
     <recipes>
         <name>Benson Meier</name>
-        <preparationTime>98765432</preparationTime>
-        <ingredient>johnd@example.com</ingredient>
+        <ingredient>guest, barnyard, genuine, salt</ingredient>
         <instruction>311, Clementi Ave 2, #02-25</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>98765432</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/burger</url>
         <tagged>owesMoney</tagged>
         <tagged>family</tagged>
     </recipes>
     <recipes>
         <name>Carl Kurz</name>
-        <preparationTime>95352563</preparationTime>
-        <ingredient>heinz@example.com</ingredient>
+        <ingredient>gadget</ingredient>
         <instruction>wall street</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>95352563</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/casserole</url>
         <tagged>owesMoney</tagged>
     </recipes>
     <recipes>
         <name>Daniel Meier</name>
-        <preparationTime>87652533</preparationTime>
-        <ingredient>cornelia@example.com</ingredient>
+        <ingredient>ebony, cold, affliction</ingredient>
         <instruction>10th street</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>87652533</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/curry</url>
     </recipes>
     <recipes>
         <name>Elle Meyer</name>
-        <preparationTime>9482224</preparationTime>
-        <ingredient>werner@example.com</ingredient>
+        <ingredient>frantic,aimless</ingredient>
         <instruction>michegan ave</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>9482224</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/fish-pie</url>
     </recipes>
     <recipes>
         <name>Fiona Kunz</name>
-        <preparationTime>9482427</preparationTime>
-        <ingredient>lydia@example.com</ingredient>
+        <ingredient>bluntness,falls</ingredient>
         <instruction>little tokyo</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>9482427</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/chicken-salad</url>
     </recipes>
     <recipes>
         <name>George Best</name>
-        <preparationTime>9482442</preparationTime>
-        <ingredient>anna@example.com</ingredient>
+        <ingredient>confidence, abandon, brass, model, greed, minipill</ingredient>
         <instruction>4th street</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>9482442</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/crumble</url>
     </recipes>
     <tags>friends</tags>

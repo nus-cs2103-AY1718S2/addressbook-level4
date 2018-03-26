@@ -1,3 +1,4 @@
+//@@Author kokonguyen191
 package seedu.recipe.model.recipe;
 
 import static org.junit.Assert.assertFalse;
@@ -22,20 +23,28 @@ public class PreparationTimeTest {
 
     @Test
     public void isValidPreparationTime() {
-        // null preparationTime number
+        // null PreparationTime
         Assert.assertThrows(NullPointerException.class, () -> PreparationTime.isValidPreparationTime(null));
 
-        // invalid preparationTime numbers
+        // invalid PreparationTime
         assertFalse(PreparationTime.isValidPreparationTime("")); // empty string
         assertFalse(PreparationTime.isValidPreparationTime(" ")); // spaces only
-        assertFalse(PreparationTime.isValidPreparationTime("91")); // less than 3 numbers
+        assertFalse(PreparationTime.isValidPreparationTime("NaN")); // not a number
         assertFalse(PreparationTime.isValidPreparationTime("preparationTime")); // non-numeric
-        assertFalse(PreparationTime.isValidPreparationTime("9011p041")); // alphabets within digits
-        assertFalse(PreparationTime.isValidPreparationTime("9312 1534")); // spaces within digits
+        assertFalse(PreparationTime.isValidPreparationTime("9011p041")); // unknown character p
+        assertFalse(PreparationTime.isValidPreparationTime("1h  1534m")); // more spaces than needed
 
-        // valid preparationTime numbers
-        assertTrue(PreparationTime.isValidPreparationTime("911")); // exactly 3 numbers
-        assertTrue(PreparationTime.isValidPreparationTime("93121534"));
-        assertTrue(PreparationTime.isValidPreparationTime("124293842033123")); // long preparationTime numbers
+        // valid PreparationTime
+        assertTrue(PreparationTime.isValidPreparationTime("1h20m"));
+        assertTrue(PreparationTime.isValidPreparationTime("1 hour 20 min"));
+        assertTrue(PreparationTime.isValidPreparationTime("1 hour 20 mins"));
+        assertTrue(PreparationTime.isValidPreparationTime("1 hour 20 minutes"));
+        assertTrue(PreparationTime.isValidPreparationTime("80"));
+        assertTrue(PreparationTime.isValidPreparationTime("80m"));
+        assertTrue(PreparationTime.isValidPreparationTime("80min"));
+        assertTrue(PreparationTime.isValidPreparationTime("80 mins"));
+        assertTrue(PreparationTime.isValidPreparationTime("2h20m"));
+        assertTrue(PreparationTime.isValidPreparationTime("2 hours 20 mins"));
+        assertTrue(PreparationTime.isValidPreparationTime("2 hours 20 minutes"));
     }
 }

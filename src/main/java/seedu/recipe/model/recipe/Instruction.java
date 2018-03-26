@@ -9,6 +9,7 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
  */
 public class Instruction {
 
+    public static final String NULL_INSTRUCTION_REFERENCE = "-";
     public static final String MESSAGE_INSTRUCTION_CONSTRAINTS =
             "Recipe instructions can take any values, new lines included and it should not be blank";
 
@@ -35,7 +36,7 @@ public class Instruction {
      * Returns true if a given string is a valid recipe instruction.
      */
     public static boolean isValidInstuction(String test) {
-        return test.matches(INSTRUCTION_VALIDATION_REGEX);
+        return test.equals(NULL_INSTRUCTION_REFERENCE) || test.matches(INSTRUCTION_VALIDATION_REGEX);
     }
 
     @Override

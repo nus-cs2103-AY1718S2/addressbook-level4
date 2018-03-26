@@ -1,5 +1,9 @@
 package seedu.recipe.testutil;
 
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_CALORIES_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_CALORIES_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_COOKING_TIME_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_COOKING_TIME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_AMY;
@@ -8,6 +12,8 @@ import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_PREPARATION_TIME_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_SERVINGS_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_SERVINGS_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_URL_AMY;
@@ -26,47 +32,123 @@ import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
  */
 public class TypicalRecipes {
 
-    public static final Recipe ALICE = new RecipeBuilder().withName("Alice Pauline")
-            .withInstruction("123, Jurong West Ave 6, #08-111").withIngredient("alice@example.com")
+    public static final Recipe ALICE = new RecipeBuilder()
+            .withName("Alice Pauline")
+            .withIngredient("demolishment,bigwig,archer,negative,appearance,afternoon")
+            .withInstruction("Fill a tea kettle or 2 quart saucepan with water and bring to a boil."
+                    + " Remove excess fat from chilled chicken and place in colander over a large bowl."
+                    + " Spread out with a fork. Pour hot water over meat through colander.\n"
+                    + "Place chicken in plastic container with tight fitting lid.\n"
+                    + "Add onions, chili powder, oregano, garlic powder, cumin, and paprika to chicken.\n"
+                    + "Refrigerate chicken overnight in plastic container with tight fitting lid.\n"
+                    + "To make tacos, place chicken mixture in a pan and heat slowly or heat in microwave"
+                    + " for 2–3 minutes, stirring after 1½ minutes to heat evenly. Combine finely shredded"
+                    + " lettuce and cabbage. Mix cheeses together. Place ¼ cup heated chicken mixture in a "
+                    + "tortilla and top with cheese and vegetables.\n"
+                    + "Add salsa as desired.")
+            .withCookingTime("50m")
             .withPreparationTime("85355255")
+            .withCalories("5000")
+            .withServings("4")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/baked-potato")
             .withTags("family").build();
-    public static final Recipe BENSON = new RecipeBuilder().withName("Benson Meier")
+    public static final Recipe BENSON = new RecipeBuilder()
+            .withName("Benson Meier")
+            .withIngredient("guest, barnyard, genuine, salt")
             .withInstruction("311, Clementi Ave 2, #02-25")
-            .withIngredient("johnd@example.com").withPreparationTime("98765432")
+            .withCookingTime("50m")
+            .withPreparationTime("98765432")
+            .withCalories("5000")
+            .withServings("4")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/burger")
             .withTags("owesMoney", "family").build();
-    public static final Recipe CARL = new RecipeBuilder().withName("Carl Kurz").withPreparationTime("95352563")
-            .withIngredient("heinz@example.com").withInstruction("wall street")
-            .withUrl("https://www.bbcgoodfood.com/recipes/collection/casserole").withTags("owesMoney").build();
-    public static final Recipe DANIEL = new RecipeBuilder().withName("Daniel Meier").withPreparationTime("87652533")
-            .withIngredient("cornelia@example.com").withInstruction("10th street")
+    public static final Recipe CARL = new RecipeBuilder()
+            .withName("Carl Kurz")
+            .withIngredient("gadget")
+            .withInstruction("wall street")
+            .withCookingTime("50m")
+            .withPreparationTime("95352563")
+            .withCalories("5000")
+            .withServings("4")
+            .withUrl("https://www.bbcgoodfood.com/recipes/collection/casserole")
+            .withTags("owesMoney").build();
+    public static final Recipe DANIEL = new RecipeBuilder()
+            .withName("Daniel Meier")
+            .withIngredient("ebony, cold, affliction")
+            .withInstruction("10th street")
+            .withCookingTime("50m")
+            .withPreparationTime("87652533")
+            .withCalories("5000")
+            .withServings("4")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/curry").build();
-    public static final Recipe ELLE = new RecipeBuilder().withName("Elle Meyer").withPreparationTime("9482224")
-            .withIngredient("werner@example.com").withInstruction("michegan ave")
+    public static final Recipe ELLE = new RecipeBuilder()
+            .withName("Elle Meyer")
+            .withIngredient("frantic,aimless")
+            .withInstruction("michegan ave")
+            .withCookingTime("50m")
+            .withPreparationTime("9482224")
+            .withCalories("5000")
+            .withServings("4")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/fish-pie").build();
-    public static final Recipe FIONA = new RecipeBuilder().withName("Fiona Kunz").withPreparationTime("9482427")
-            .withIngredient("lydia@example.com").withInstruction("little tokyo")
+    public static final Recipe FIONA = new RecipeBuilder()
+            .withName("Fiona Kunz")
+            .withIngredient("bluntness,falls")
+            .withInstruction("little tokyo")
+            .withCookingTime("50m")
+            .withPreparationTime("9482427")
+            .withCalories("5000")
+            .withServings("4")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/chicken-salad").build();
-    public static final Recipe GEORGE = new RecipeBuilder().withName("George Best").withPreparationTime("9482442")
-            .withIngredient("anna@example.com").withInstruction("4th street")
+    public static final Recipe GEORGE = new RecipeBuilder()
+            .withName("George Best")
+            .withIngredient("confidence, abandon, brass, model, greed, minipill")
+            .withInstruction("4th street")
+            .withCookingTime("50m")
+            .withPreparationTime("9482442")
+            .withCalories("5000")
+            .withServings("4")
             .withUrl("https://www.bbcgoodfood.com/recipes/collection/crumble").build();
 
     // Manually added
-    public static final Recipe HOON = new RecipeBuilder().withName("Hoon Meier").withPreparationTime("8482424")
-            .withIngredient("stefan@example.com").withInstruction("little india")
+    public static final Recipe HOON = new RecipeBuilder()
+            .withName("Hoon Meier")
+            .withIngredient("test, ingredients")
+            .withInstruction("little india")
+            .withCookingTime("5555")
+            .withPreparationTime("420m")
+            .withCalories("15000")
+            .withServings("2")
             .withUrl("https://www.google.com").build();
-    public static final Recipe IDA = new RecipeBuilder().withName("Ida Mueller").withPreparationTime("8482131")
-            .withIngredient("hans@example.com").withInstruction("chicago ave")
+    public static final Recipe IDA = new RecipeBuilder()
+            .withName("Ida Mueller")
+            .withIngredient("just,example")
+            .withInstruction("chicago ave")
+            .withCookingTime("5555")
+            .withPreparationTime("420m")
+            .withCalories("15000")
+            .withServings("2")
             .withUrl("https://www.google.com").build();
 
     // Manually added - Recipe's details found in {@code CommandTestUtil}
-    public static final Recipe AMY = new RecipeBuilder().withName(VALID_NAME_AMY).withPreparationTime(
-            VALID_PREPARATION_TIME_AMY).withIngredient(VALID_INGREDIENT_AMY).withInstruction(VALID_INSTRUCTION_AMY)
-            .withUrl(VALID_URL_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final Recipe BOB = new RecipeBuilder().withName(VALID_NAME_BOB)
-            .withPreparationTime(VALID_PREPARATION_TIME_BOB).withIngredient(VALID_INGREDIENT_BOB)
-            .withInstruction(VALID_INSTRUCTION_BOB).withUrl(VALID_URL_BOB)
+    public static final Recipe AMY = new RecipeBuilder()
+            .withName(VALID_NAME_AMY)
+            .withIngredient(VALID_INGREDIENT_AMY)
+            .withInstruction(VALID_INSTRUCTION_AMY)
+            .withCookingTime(VALID_COOKING_TIME_AMY)
+            .withPreparationTime(VALID_PREPARATION_TIME_AMY)
+            .withCalories(VALID_CALORIES_AMY)
+            .withServings(VALID_SERVINGS_AMY)
+            .withUrl(VALID_URL_AMY)
+            .withTags(VALID_TAG_FRIEND).build();
+    public static final Recipe BOB = new RecipeBuilder()
+            .withName(VALID_NAME_BOB)
+            .withIngredient(VALID_INGREDIENT_BOB)
+            .withInstruction(VALID_INSTRUCTION_BOB)
+            .withCookingTime(VALID_COOKING_TIME_BOB)
+            .withPreparationTime(VALID_PREPARATION_TIME_BOB)
+            .withCalories(VALID_CALORIES_BOB)
+            .withServings(VALID_SERVINGS_BOB)
+            .withUrl(VALID_URL_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

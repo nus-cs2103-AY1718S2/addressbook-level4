@@ -35,10 +35,10 @@ Not sure how to install Java? Visit the oracle website link below for more infor
 
 .  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for contactHeRo.
-.  Double-click the file to start the app. The user interface should appear in a few seconds as shown below.
-+
+.  Double-click the file to start the app. The user interface should appear in a few seconds as shown below (Refer to figure 1).
+
+.contactHeRo on launch
 image::Ui.png[width="790"]
-+
 
 Now you can start using contactHeRo.
 
@@ -57,22 +57,15 @@ Thank you for choosing us as your contact management solution!
 
 [[Features]]
 == Features
-As contactHeRo is a *Command Line Interface(CLI) application*, you need to type in commands in order to use contactHeRo features.
+contactHeRo is a *Command Line Interface(CLI) application*. Hence you need to type in the commands in order to use its features.
 
-Below is the interface of contactHeRo for you to type your command. +
+Below is the interface(refer to figure 2) that contactHeRo provides for you to type your command. +
 
-image::command.png[width="790"]
-Whenever you type in a command. It will show you the right format of the command. +
+.Command Box in contactHeRo
+image::commandBox.png[width="790"]
 
-====
-
-The command = name of command + parameters
-
-====
-To understand how to fill in the parameter, let's us show you the command format for the parameters.
-====
-
-*Command Format*
+*Command Format* +
+Here is the format for the commands that will enable you to make most of contactHeRo.
 
 * Words in `UPPER_CASE` are the parameters you suppose to fill in.
 
@@ -92,19 +85,26 @@ To understand how to fill in the parameter, let's us show you the command format
 * Parameters can be in any order.
 
  If the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
 
-Now as you have understood the command format, let's explore the features:
+[NOTE]
+In case you make a mistake while typing the command, contactHeRo will show you the right format of the command. +
+
+Now that you have understood the command format, let's explore the features.
 
 === Viewing help : `help`
 
 You can get help using the following format. +
 Format: `help`
 
+This will open the help window (refer to figure 3).
+
+.Help Window in contactHeRo
+image::helpWindow.png[width="790"]
+
 === Adding a person : `add`
 
 You can add a person to contactHero using the following format. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pp/PROFILE_PICTURE [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS cp/CURRENT_POSITION cc/COMPANY [pp/PROFILE_PICTURE] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -114,8 +114,8 @@ Profile Picture indicates the profile picture's file path
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pp//home/trafalgarandre/Desktop/John.jpg`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pp//home/trafalgarandre/Desktop/John.jpg t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 cp/Software Engineer cc/Google pp//home/trafalgarandre/Desktop/John.jpg`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 cp/Student cc/NUS pp//home/trafalgarandre/Desktop/John.jpg t/criminal`
 
 === Listing all persons : `list`
 
@@ -125,7 +125,7 @@ Format: `list`
 === Editing a person : `edit`
 
 You can edit an existing person in contactHero using this format. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pp/PROFILE_PICTURE][t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [cp/CURRENT_POSITION] [cc/COMPANY] [pp/PROFILE_PICTURE][t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. Remember that the index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -312,6 +312,16 @@ Examples:
 
 * Typing `h` and pressing `TAB` gives: +
      `help`
+     
+=== Adding a job opening
+
+You can add a job opening to contactHero using the following format. +
+Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS`
+
+Examples:
+
+* `addjob p/Software Engineer t/Cloud Services l/Singapore n/2`
+* `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1`
 
 === Saving the data
 
@@ -319,16 +329,29 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 // tag::dataencryption[]
 
+=== Editing a job opening `[coming in v1.4]`
+
+You will soon be able to edit a job opening in contactHeRo.
+
+=== Deleting a job opening `[coming in v1.4]`
+
+You will soon be able to delete a job opening in contactHeRo.
+
+=== Matching a job opening to a person `[coming in v1.4]`
+
+You will soon be able to match job openings to people in contactHeRo.
+
 === Arranging meetings with Gmail calendar `[coming in v1.5]`
 
-You can arrange meeting on Gmail calender using contactHero.
-
-=== Setting reminders `[coming in v1.5]`
-
-You can set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
+You will soon be able to arrange meeting on Gmail calender using contactHero.
 
 === Emailing a person `[coming in v1.5]`
+
 You can send email to any person you have saved in contactHeRo, without having to leave the app!
+
+=== Add reminders `[coming in v2.0]`
+
+You will soon be able to set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
@@ -346,7 +369,7 @@ The login system shall provide security to your data stored in contactHeRo.
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 *Q*: How do I report bugs to the developers? +
-*A*: Please send an email to contactHeRo@gmail.com if you find bug. Thank you.
+*A*: Please send an email to contactHeRo@gmail.com if you find a bug. Thank you.
 
 To ask more questions, please send your email to contactHeRo@gmail.com. +
 We are willing to help you. +
@@ -374,3 +397,5 @@ e.g.`select 2`
 * *<<redoing-the-previously-undone-command-code-redo-code, Redo>>* : `redo`
 * *<<viewing-the-linkedin-search-of-a-person-code-linkedin-code, LinkedIn>>*: `linkedIn INDEX` +
 e.g. `linkedIn 2`
+* *<<adding-a-job-opening, Add job opening>>* : `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS` +
+e.g. `addjob p/Software Engineer t/Cloud Services l/Singapore n/2`

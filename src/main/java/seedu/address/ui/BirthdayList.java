@@ -52,22 +52,11 @@ public class BirthdayList extends UiPart<Region> {
         list.sort(new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
-                String o1Birthday = o1.getBirthday().toString();
-                String o2Birthday = o2.getBirthday().toString();
 
-                List<String> o1Strings = new ArrayList<String>();
-                List<String> o2Strings = new ArrayList<String>();
-                int index = 0;
-                while (index < o1Birthday.length() && index < o1Birthday.length()) {
-                    o1Strings.add(o1Birthday.substring(index, Math.min(index + 2, o1Birthday.length())));
-                    o2Strings.add(o2Birthday.substring(index, Math.min(index + 2, o2Birthday.length())));
-                    index += 2;
-                }
-
-                int o1Days = Integer.parseInt(o1Strings.get(0));
-                int o1Month = Integer.parseInt(o1Strings.get(1));
-                int o2Days = Integer.parseInt(o2Strings.get(0));
-                int o2Month = Integer.parseInt(o2Strings.get(1));
+                int o1Days = o1.getBirthday().getDay();
+                int o1Month = o1.getBirthday().getMonth();
+                int o2Days = o2.getBirthday().getDay();
+                int o2Month = o2.getBirthday().getMonth();
 
                 if (o1Month != o2Month) {
                     return o1Month - o2Month;

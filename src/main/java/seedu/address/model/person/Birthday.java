@@ -1,5 +1,8 @@
 package seedu.address.model.person;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -15,22 +18,40 @@ public class Birthday {
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{6,6}";
     public final String value;
 
+    private int day;
+    private int month;
+
     /**
      * Constructs a {@code Birthday}.
+     *  @param birthday A valid birthday number.
      *
-     * @param birthday A valid birthday number.
      */
     public Birthday(String birthday) {
         requireNonNull(birthday);
         checkArgument(isValidBirthday(birthday), MESSAGE_BIRTHDAY_CONSTRAINTS);
         this.value = birthday;
+        this.day = parseDay(birthday);
+        this.month = parseMonth(birthday);
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        int testDay = 0;
+        int testMonth = 0;
+
+        // Initial check for DDMMYY format
+        if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
+            testDay = parseDay(test);
+            testMonth = parseMonth(test);
+        }
+        else {
+            return false;
+        }
+
+        // Secondary check for valid day and month
+        return (testDay <= 31) && (testDay != 0) && (testMonth <= 12) && (testMonth != 0);
     }
 
     @Override
@@ -50,5 +71,48 @@ public class Birthday {
         return value.hashCode();
     }
 
+    /**
+     * Static method to parse Day from Birthday string
+     * isValidBirthday() should be called before this method
+     * @param birthday assumed to be of format DDMMYY
+     * @return integer Day
+     */
+    private static int parseDay(String birthday){
+        List<String> strings = new ArrayList<String>();
+
+        int index = 0;
+        while (index < birthday.length() && index < birthday.length()) {
+            strings.add(birthday.substring(index, Math.min(index + 2, birthday.length())));
+            index += 2;
+        }
+
+        return Integer.parseInt(strings.get(0));
+    }
+
+    /**
+     * Static method to parse Month from Birthday string
+     * isValidBirthday() should be called before this method
+     * @param birthday assumed to be of format DDMMYY
+     * @return integer Month
+     */
+    private static int parseMonth(String birthday){
+        List<String> strings = new ArrayList<String>();
+
+        int index = 0;
+        while (index < birthday.length() && index < birthday.length()) {
+            strings.add(birthday.substring(index, Math.min(index + 2, birthday.length())));
+            index += 2;
+        }
+
+        return Integer.parseInt(strings.get(1));
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
 }
 

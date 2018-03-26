@@ -150,6 +150,7 @@ public class ParserUtil {
     public static Birthday parseBirthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
         String trimmedBirthday = birthday.trim();
+
         if (!Birthday.isValidBirthday(trimmedBirthday)) {
             throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
         }

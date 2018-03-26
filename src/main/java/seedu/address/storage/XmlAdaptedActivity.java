@@ -1,19 +1,13 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.DateTime;
-import seedu.address.model.activity.Name;
-import seedu.address.model.activity.Remark;
-import seedu.address.model.activity.Task;
 import seedu.address.model.tag.Tag;
 
 /**

@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.activity.*;
+import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Remark;
+import seedu.address.model.activity.Task;
 import seedu.address.model.tag.Tag;
 
 //@@author karenfrilya97

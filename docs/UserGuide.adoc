@@ -230,6 +230,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Predict: `predict`
+Predict the potential spending of the of a new customer.
+
+Examples:
+
+* `Initially` +
+two customers one with `actualSpending` > 0 while the other with
+`actualSpending` == 0.
+
+* `After` +
+The customer with `actualSpending` == 0 now has `expectedSpending` shown.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +

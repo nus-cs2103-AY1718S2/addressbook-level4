@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
 import seedu.address.model.student.Address;
@@ -23,13 +24,12 @@ import seedu.address.model.student.Student;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String EXAMPLE_STUDENT_PAGE = "ExampleStudentPage.html";
+    public static final String STUDENT_MISC_INFO_PAGE = "StudentMiscInfo.html";
     public static final String SEARCH_PAGE_URL =
             "https://www.google.com.sg/maps/place/";
-    private static final String URL_STUDENT_INDEX_FORMAT = "?studentIndex=";
+
 
     private static final String FXML = "BrowserPanel.fxml";
-
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -54,7 +54,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     private void loadStudentInfoPage() {
 
-        URL exampleStudentPage = MainApp.class.getResource(FXML_FILE_FOLDER + EXAMPLE_STUDENT_PAGE);
+        URL exampleStudentPage = MainApp.class.getResource(FXML_FILE_FOLDER + STUDENT_MISC_INFO_PAGE);
         loadPage(exampleStudentPage.toExternalForm());
     }
 
@@ -63,12 +63,14 @@ public class BrowserPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
+    public void reloadPage() { Platform.runLater(() -> browser.getEngine().reload()); }
     /**
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        // -1 would mean no student's information is shown and the default page is in view
     }
 
     /**
@@ -84,9 +86,17 @@ public class BrowserPanel extends UiPart<Region> {
         loadStudentPage(event.getNewSelection().student);
     }
 
+
+
     @Subscribe
     private void handleStudentInfoDisplayEvent(StudentInfoDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadStudentInfoPage();
+    }
+
+    @Subscribe
+    private void handleStudentInfoChangedEvent(StudentInfoChangedEvent event){
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        reloadPage();
     }
 }

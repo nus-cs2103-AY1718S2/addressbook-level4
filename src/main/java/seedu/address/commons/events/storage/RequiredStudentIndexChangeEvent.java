@@ -2,6 +2,9 @@ package seedu.address.commons.events.storage;
 
 import seedu.address.commons.events.BaseEvent;
 
+/**
+ * Indicates a change in the index of the student whose full info is to be displayed
+ */
 public class RequiredStudentIndexChangeEvent extends BaseEvent {
 
     private final int newIndex;

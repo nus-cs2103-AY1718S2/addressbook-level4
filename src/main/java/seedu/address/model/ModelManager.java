@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
 import seedu.address.model.lesson.Day;
@@ -89,6 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updateStudent(target, editedStudent);
         indicateAddressBookChanged();
+        indicateStudentInfoChanged();
     }
 
 
@@ -124,6 +126,11 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate Browser Panel display changed to display student's information */
     private void indicateBrowserPanelToDisplayStudent(Student target) {
         raise(new StudentInfoDisplayEvent(target));
+    }
+
+    /** Raises an event to indicate a student's information has changed*/
+    private void indicateStudentInfoChanged() {
+        raise(new StudentInfoChangedEvent());
     }
 
     /** Raises an event to indicate an update of the student index required at the moment in storage */

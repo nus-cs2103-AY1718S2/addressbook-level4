@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.student.Student;
 
 /**
- *
+ *Indicates that a particular student's full info is to be displayed
  */
 
 public class StudentInfoDisplayEvent extends BaseEvent {

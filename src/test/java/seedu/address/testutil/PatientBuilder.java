@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.BloodType;
 import seedu.address.model.patient.DateOfBirth;
@@ -12,6 +13,7 @@ import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.Record;
+import seedu.address.model.patient.RecordList;
 import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -33,6 +35,7 @@ public class PatientBuilder {
     public static final String DEFAULT_SYMPTOM = "";
     public static final String DEFAULT_ILLNESS = "";
     public static final String DEFAULT_TREATMENT = "";
+    public static final String DEFAULT_RECORDLIST = "1 in/0 d/ s/ i/ t/\n";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -43,10 +46,10 @@ public class PatientBuilder {
     private DateOfBirth dob;
     private BloodType bloodType;
     private Remark remark;
-    private Record record;
+    private RecordList recordList;
     private Set<Tag> tags;
 
-    public PatientBuilder() {
+    public PatientBuilder() throws ParseException{
         name = new Name(DEFAULT_NAME);
         nric = new Nric(DEFAULT_NRIC);
         phone = new Phone(DEFAULT_PHONE);
@@ -55,7 +58,7 @@ public class PatientBuilder {
         dob = new DateOfBirth(DEFAULT_DOB);
         bloodType = new BloodType(DEFAULT_BLOODTYPE);
         remark = new Remark(DEFAULT_REMARK);
-        record = new Record(DEFAULT_DATE, DEFAULT_SYMPTOM, DEFAULT_ILLNESS, DEFAULT_TREATMENT);
+        recordList = new RecordList(DEFAULT_RECORDLIST);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -71,7 +74,7 @@ public class PatientBuilder {
         dob = patientToCopy.getDob();
         bloodType = patientToCopy.getBloodType();
         remark = patientToCopy.getRemark();
-        record = patientToCopy.getRecord();
+        recordList = patientToCopy.getRecordList();
         tags = new HashSet<>(patientToCopy.getTags());
     }
 
@@ -150,13 +153,13 @@ public class PatientBuilder {
     /**
      * Sets the {@code Record} of the {@code Patient} that we are building.
      */
-    public PatientBuilder withRecord(String date, String symptom, String illness, String treatment) {
-        this.record = new Record(date, symptom, illness, treatment);
+    public PatientBuilder withRecordList(String commandString) throws ParseException {
+        this.recordList = new RecordList(commandString);
         return this;
     }
 
     public Patient build() {
-        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, record, tags);
+        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, recordList, tags);
     }
 
 }

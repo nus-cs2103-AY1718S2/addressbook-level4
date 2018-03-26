@@ -6,19 +6,19 @@ import seedu.address.model.timetableentry.TimetableEntryTime;
  * Parses timetable endtime to separated fields of time.
  */
 public class TimetableEntryTimeParserUtil {
-    private static final int YEAR_BEGIN_INDEX = 0 + 13;
-    private static final int MONTH_BEGIN_INDEX = 5 + 13;
-    private static final int DAY_BEGIN_INDEX = 8 + 13;
-    private static final int HOUR_BEGIN_INDEX = 11 + 13;
-    private static final int MINUTE_BEGIN_INDEX = 14 + 13;
-    private static final int SECOND_BEGIN_INDEX = 17 + 13;
+    private static final int YEAR_BEGIN_INDEX = 0;
+    private static final int MONTH_BEGIN_INDEX = 5;
+    private static final int DAY_BEGIN_INDEX = 8;
+    private static final int HOUR_BEGIN_INDEX = 11;
+    private static final int MINUTE_BEGIN_INDEX = 14;
+    private static final int SECOND_BEGIN_INDEX = 17;
 
-    private static final int YEAR_END_INDEX = 4 + 13;
-    private static final int MONTH_END_INDEX = 7 + 13;
-    private static final int DAY_END_INDEX = 10 + 13;
-    private static final int HOUR_END_INDEX = 13 + 13;
-    private static final int MINUTE_END_INDEX = 16 + 13;
-    private static final int SECOND_END_INDEX = 19 + 13;
+    private static final int YEAR_END_INDEX = 4;
+    private static final int MONTH_END_INDEX = 7;
+    private static final int DAY_END_INDEX = 10;
+    private static final int HOUR_END_INDEX = 13;
+    private static final int MINUTE_END_INDEX = 16;
+    private static final int SECOND_END_INDEX = 19;
 
     //the menu of Month in Calendar is zero based
     private static final int MONTH_INDEX_OFFSET = -1;
@@ -34,22 +34,32 @@ public class TimetableEntryTimeParserUtil {
      * @return TimetableEntryTime containing the parsed time fields.
      */
     public static TimetableEntryTime parseTime(String input) {
-        TimetableEntryTime tet;
-        try {
-            tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX, YEAR_END_INDEX)),
-                    Integer.parseInt(input.substring(MONTH_BEGIN_INDEX, MONTH_END_INDEX)) + MONTH_INDEX_OFFSET,
-                    Integer.parseInt(input.substring(DAY_BEGIN_INDEX, DAY_END_INDEX)),
-                    Integer.parseInt(input.substring(HOUR_BEGIN_INDEX, HOUR_END_INDEX)) + TIMEZONE_HOUR_OFFSET,
-                    Integer.parseInt(input.substring(MINUTE_BEGIN_INDEX, MINUTE_END_INDEX)),
-                    Integer.parseInt(input.substring(SECOND_BEGIN_INDEX, SECOND_END_INDEX)));
-        } catch (NumberFormatException e) {
-            tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX - 2, YEAR_END_INDEX - 2)),
-            Integer.parseInt(input.substring(MONTH_BEGIN_INDEX - 2, MONTH_END_INDEX - 2)) + MONTH_INDEX_OFFSET,
-            Integer.parseInt(input.substring(DAY_BEGIN_INDEX - 2, DAY_END_INDEX - 2)),
-            Integer.parseInt(input.substring(HOUR_BEGIN_INDEX - 2, HOUR_END_INDEX - 2)) + TIMEZONE_HOUR_OFFSET,
-            Integer.parseInt(input.substring(MINUTE_BEGIN_INDEX - 2, MINUTE_END_INDEX - 2)),
-            Integer.parseInt(input.substring(SECOND_BEGIN_INDEX - 2, SECOND_END_INDEX - 2)));
-        }
+        int firstIntegerOffset = findFirstIntegerOffset(input);
+        TimetableEntryTime tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
+                        + firstIntegerOffset,
+                    YEAR_END_INDEX + firstIntegerOffset)),
+                    Integer.parseInt(input.substring(MONTH_BEGIN_INDEX + firstIntegerOffset, MONTH_END_INDEX
+                            + firstIntegerOffset)) + MONTH_INDEX_OFFSET,
+                    Integer.parseInt(input.substring(DAY_BEGIN_INDEX + firstIntegerOffset,
+                            DAY_END_INDEX + firstIntegerOffset)),
+                    Integer.parseInt(input.substring(HOUR_BEGIN_INDEX + firstIntegerOffset,
+                            HOUR_END_INDEX + firstIntegerOffset)) + TIMEZONE_HOUR_OFFSET,
+                    Integer.parseInt(input.substring(MINUTE_BEGIN_INDEX + firstIntegerOffset,
+                            MINUTE_END_INDEX + firstIntegerOffset)),
+                    Integer.parseInt(input.substring(SECOND_BEGIN_INDEX + firstIntegerOffset,
+                            SECOND_END_INDEX + firstIntegerOffset)));
         return tet;
+    }
+
+    /**
+     * Finds the position of the first integer character
+     */
+    private static int findFirstIntegerOffset(String input) {
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) - '0' >= 0 && input.charAt(i) - '0' <= 9) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

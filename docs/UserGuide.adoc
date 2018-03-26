@@ -442,27 +442,7 @@ There is no need to save manually.
 
 === Exporting the data `[coming in v1.4]`
 
-Export entries from last person listing of the address book. +
-Format: `export PATH`
-
-Examples:
-
-* `list` +
-`export ./all` +
-Export all entries in the address book into `./all.ser`
-* `find n/Alex` +
-`export ./alex` +
-Export entries in the list of Alex(s) into `./alex.ser`
-
 === Importing the data `[coming in v1.4]`
-
-Import from an external filesystem. +
-Format: `import PATH`
-
-Examples:
-
-`import ./all` +
-Import entries of the address book from `./all.ser`
 
 === Receiving notification on timetable entry deadline
 

@@ -123,8 +123,15 @@ public class CreateNewCalendar {
 
         // Insert the new calendar
         String calendarId = "primary";
-        Calendar createdCalendar = service.calendars().insert(calendar).execute();
-        calendarId = createdCalendar.getId();
+
+        try {
+            Calendar createdCalendar = service.calendars().insert(calendar).execute();
+            calendarId = createdCalendar.getId();
+            System.out.println(calendarId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         return calendarId;
     }

@@ -26,6 +26,8 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedTimetableEntry> timetableEntries;
     @XmlElement
     private Integer nextId;
+    @XmlElement
+    private String password;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -36,6 +38,7 @@ public class XmlSerializableAddressBook {
         tags = new ArrayList<>();
         timetableEntries = new ArrayList<>();
         nextId = 0;
+        password = "admin";
     }
 
     /**
@@ -51,6 +54,7 @@ public class XmlSerializableAddressBook {
                     t.getOwnerId()));
         }
         nextId = src.getNextId();
+        password = src.getPassword();
     }
 
     /**
@@ -71,6 +75,7 @@ public class XmlSerializableAddressBook {
             addressBook.addTimetableEntry(t.toModelType());
         }
         addressBook.setNextId(nextId);
+        addressBook.setPassword(password);
         return addressBook;
     }
 

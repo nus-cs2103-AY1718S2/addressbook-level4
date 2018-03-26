@@ -1,4 +1,4 @@
-= E.T. (Employee Tracker) - User Guide
+= E.T. (Employees Tracker) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -18,7 +18,9 @@ By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-Employee Tracker (ET) is for managers who *prefer to use a desktop app for managing his/her subordinates*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Employees Tracker (E.T.) is a *Human Resource Manager* application for managers who *prefer to use a desktop app for managing his/her subordinates*. More importantly, E.T. is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, E.T. can get your employees management tasks done faster than traditional GUI apps.
+
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -28,22 +30,30 @@ Employee Tracker (ET) is for managers who *prefer to use a desktop app for manag
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `et-employeestracker.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in _Figure 1_.
 +
+.Graphical User Interface (GUI)
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+****
+Some example commands you can try:
 
-.  Refer to <<Features>> for details of each command.
+* `list` +
+lists all employees.
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+adds an employee named `John Doe` to the Employees Tracker.
+* `delete 3` +
+deletes the 3rd contact shown in the current list.
+* `exit` +
+exits the app.
+
+Refer to <<Features>> for details of each command.
+****
 
 [[Features]]
 == Features
@@ -56,6 +66,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
+
+=== Login process : `unlock` `[Since v1.3]`
+
+* The Employees Tracker is initially locked when first time open the application, and unlock process is requiered at the beginning.
+Refer to <<Unlocking the EmployeeTracker: `unlock` `[Since v1.2]`>> for details of `unlock` command.
+* The initial default password is 'admin', and it can be changed with `setPassword` command,
+refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> for details of `setPassword` command.
 
 === Viewing help : `help`
 
@@ -142,66 +159,75 @@ Gives the 1st person in the last persons listing a 5-stars rating.
 `rate 2 2` +
 Gives the 2nd person in the list of Alex(s) a 2-star rating.
 
-=== Locating persons by name: `find` `[Since v1.2]`
+=== Reviewing an employee : `review` `[Since v1.2]`
 
-=== Review an employee : `review`
-
-Updates the review of an existing person in the address book. +
-Format: `review INDEX u/REVIEWER REVIEW`
+Assigns a review to an existing employee in the address book. +
+Format: `review INDEX`
 
 ****
-* Rates the person at the specified `INDEX`. The index refers to the index number shown in the last persons listing. The index *must be a positive integer* 1, 2, 3, ...
-* Both INDEX and REVIEW must be provided.
-* Existing revie will be updated to the input REVIEW.
-* REVIEW can contain any character with no length limitation
-* REVIEW will be tied to a REVIEWER
+* Rate the employee at the specified `INDEX`. +
+The index refers to the index number shown in the last persons listing. +
+The index *must be a positive integer*, i.e. 1, 2, 3, ...
+* A pop-up dialog box will appear after user executes the command. +
+The dialog box will prompt the user to enter the review.
+* The review can contain any character without length limitation.
+* A review will be tied to a single reviewer. [Implemented in V1.4]
 ****
 
 [NOTE]
 ====
-* A person will have a null review by default upon added. This implies that the person is yet to be reviewed.
+* A employees will have a null review by default upon added. This implies that the employee is yet to be reviewed.
 * Null review is shown as `-`.
 ====
 
 Examples:
 
 * `list` +
-`review 1 u/John Good Worker` +
-Gives the 1st person in the last persons listing a review "Good Worker".
+`review 1` +
+Gives the 1st employee in the last persons listing a review. +
+The review will be based on the input in the pop-up dialog box.
 * `find n/Alex` +
-`rate 2 u/John Lazy` +
-Gives the 2nd person in the list of Alex(s) a review "Lazy".
+`rate 2` +
+Gives the 2nd employee in the list of Alex(s) a review. +
+The review will be based on the input in the pop-up dialog box.
 
-=== Locating persons by name: `find`
+=== Locating employees: `find`
 
-Finds persons whose names or tags contain any of the given keywords. +
-Format: `find (n/NAME_KEYWORDS | t/TAG_KEYWORDS)  [n/MORE_KEYWORDS] [t/MORE_KEYWORDS]`
+Finds employees whose name, tags, rating, or all of those contain any of the given keyphrases. +
+Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...`
 
 ****
 * The search is case insensitive. +
-e.g. `n/hans` will match `Hans`
-* The order of the keywords does not matter. +
+e.g. `n/hANs` will match `Hans`
+* The order of the keyphrase does not matter. +
 e.g. `n/Hans Bo` will match `Bo Hans`
-* Both name and tag are searched (i.e. `AND` or intersection). +
-e.g. `n/Hans Bo t/Friends`
-will match `Hans` with tag `Friends` but not `Bo` with tag `Friends` or `Hans` with tag `Enemy`
-* Only full words will be matched e.g. +
-`n/Han` will not match `Hans`
+* The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order. +
+e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
+* The search only matches full word +
+e.g. `n/Han` will not match `Hans`
+* Searching by multiple criteria will yield the result of employees that match all the criterias. +
+e.g. +
+** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Friends` but not `Hans Bo` with tag `Enemy` or `John Doe` with tag `Friends` +
+** `n/Hans Bo n/John Doe t/Sales t/Marketing` will match only `Hans Bo | Sales` or `Hans Bo | Marketing` or `John Doe | Sales` or `John Doe | Marketing`
 ****
 
 Examples:
 
 * `find n/John` +
-Returns any person having names `John`. +
+Returns all employees having name `John`. +
 e.g. `john` and `John Doe`
 * `find n/Betsy Tim John` +
-Returns any person having names `Betsy Tim John`
+Returns all employees with name that contains `Betsy Tim John` without any sequential order. +
+e.g. `Caroline John Tim Betsy` and `Betsy Tim John`
 * `find n/Betsy n/Tim n/John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `find n/John t/Friends Colleagues` +
-Returns any person having both names `John` and both tags `Friends` and `Colleagues`
+Returns all employees with name that contains either `Betsy`, `Tim`, or `John` +
+e.g. `Betsy`, `Tim`, `John`, `Betsy Toe`, `John Cook`, and `Tim John`
+* `find n/John t/Friends Colleagues r/3` +
+Returns all employees with name `John`, both tags `Friends` and `Colleagues`, and rating of 3 +
+e.g. `John | Friends, Colleagues | 3`
 * `find n/John t/Friends t/Colleagues` +
-Returns any person having both names `John` and either tags `Friends` or `Colleagues`
+Returns all employees having both names `John` and either tags `Friends` or `Colleagues` +
+e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`, and `John Dare | Friends, Colleagues, OweMoneys`
 
 === Deleting a person : `delete`
 
@@ -306,38 +332,48 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Locking the EmployeeTracker temporary: `lock` `[Since v1.2]`
 
 Lock the employee temporary+
-Format: `lock [PASSWORD]`
+Format: `lock`
 
 ****
-* Lock the EmployeeTracker with the specified PASSWORD.
-* If PASSWORD is not provided, then no password for this lock.
-* The PASSWORD is a String that can contain any character.
+* Lock the EmployeeTracker.
 ****
 
 Examples:
 
-* `lock 123` +
-Lock the address book with password: 123
 * `lock` +
-Lock the address book without password
+Lock the address book.
 
 === Unlocking the EmployeeTracker: `unlock` `[Since v1.2]`
 
 Unlock the EmployeeTracker +
-Format: `unlock [PASSWORD]`
+Format: `unlock PASSWORD`
 
 ****
-* Unlock the EmployeeTracker with the PASSWORD if last lock command provided a password.
-* If no password needed, just enter unlock.
+* Unlock the EmployeeTracker with the PASSWORD which match the application's unlock password.
+* PASSWORD is requiered.
 * The PASSWORD is a String that can contain any character.
 ****
 
 Examples:
 
 * `unlock 123` +
-Unlock the address book with password: 123 (the last lock command provided)
-* `unlock` +
-Unlock the address book, which is locked without password.
+Unlock the address book with password: 123 (which is also the application's unlock password)
+
+=== Setting the application unlock password: `setPassword` `[Since v1.3]`
+
+Set Employees Tracker's password +
+Format: `setPassword OLD_PASSWORD NEW_PASSWORD`
+
+****
+* Set Employees Tracker's password from OLD_PASSWORD to NEW_PASSWORD.
+* OLD_PASSWORD and NEW_PASSWORD are requiered, and OLD_PASSWORD should match current application unlock password.
+* OLD_PASSWORD and NEW_PASSWORD are of String type that can contain any character.
+****
+
+Examples:
+
+* `setPassword 123 qwe` +
+Set Employees Tracker's password from '123' (current application password) to 'qwe'.
 
 === Sorting the employees by any existing field: `sort` `[Since v1.2]`
 
@@ -395,8 +431,6 @@ Different tags will perform different colours for clarification
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Searching employees by rating `[coming in v2.0]`
-
 === editing a timetable entry `[coming in v2.0]`
 
 === deleting a timetable entry `[coming in v2.0]`
@@ -418,27 +452,7 @@ There is no need to save manually.
 
 === Exporting the data `[coming in v1.4]`
 
-Export entries from last person listing of the address book. +
-Format: `export PATH`
-
-Examples:
-
-* `list` +
-`export ./all` +
-Export all entries in the address book into `./all.ser`
-* `find n/Alex` +
-`export ./alex` +
-Export entries in the list of Alex(s) into `./alex.ser`
-
 === Importing the data `[coming in v1.4]`
-
-Import from an external filesystem. +
-Format: `import PATH`
-
-Examples:
-
-`import ./all` +
-Import entries of the address book from `./all.ser`
 
 === Receiving notification on timetable entry deadline
 
@@ -476,8 +490,10 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+* *Review* : `review INDEX` +
+e.g. `review 2`
+* *Find* : `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE) [n/NAME_KEYPHRASE]…​ [t/TAG_KEYPHRASE]…​ [r/RATING_KEYPHRASE]…` +
+e.g. `find n/James n/Jake Black t/Sales t/Marketing Senior r/3`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

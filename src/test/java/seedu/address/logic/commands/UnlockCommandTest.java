@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -45,11 +46,12 @@ public class UnlockCommandTest {
 
     @Test
     public void unlockSuccess() {
-
-        LockCommand testLockCommand = new LockCommand("1234");
+        model.setPassword("admin");
+        LogicManager logicManager = new LogicManager(model);
+        LockCommand testLockCommand = new LockCommand();
         testLockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         testLockCommand.execute();
-        UnlockCommand testUnlockCommand = new UnlockCommand("1234");
+        UnlockCommand testUnlockCommand = new UnlockCommand("admin");
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = UnlockCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = testUnlockCommand.execute();
@@ -59,11 +61,12 @@ public class UnlockCommandTest {
 
     @Test
     public void unlockFail() {
-
-        LockCommand testLockCommand = new LockCommand("123");
+        model.setPassword("qwer");
+        LogicManager logicManager = new LogicManager(model);
+        LockCommand testLockCommand = new LockCommand();
         testLockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         testLockCommand.execute();
-        UnlockCommand testUnlockCommand = new UnlockCommand("1234");
+        UnlockCommand testUnlockCommand = new UnlockCommand("admin");
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = UnlockCommand.MESSAGE_INCORRECT_PASSWORD;
         CommandResult commandResult = testUnlockCommand.execute();

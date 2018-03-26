@@ -13,6 +13,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BirthdayNotificationEvent;
@@ -27,24 +29,17 @@ public class BirthdayNotification extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private final StringProperty displayed = new SimpleStringProperty("");
-
     private final LocalDate currentDate;
     private final int currentDay;
     private final int currentMonth;
 
-    @FXML
-    private TextArea birthdayNotification;
-
-    public BirthdayNotification(ObservableList<Person> list) {
+    public BirthdayNotification() {
         super(FXML);
+        registerAsAnEventHandler(this);
 
         currentDate = LocalDate.now();
         currentDay = currentDate.getDayOfMonth();
         currentMonth = currentDate.getMonthValue();
-
-        birthdayNotification.textProperty().bind(displayed);
-        Platform.runLater(() -> displayed.setValue(parseBirthdaysFromObservableList(list)));
     }
 
     /**
@@ -55,7 +50,6 @@ public class BirthdayNotification extends UiPart<Region> {
     private String parseBirthdaysFromObservableList(ObservableList<Person> observablelist) {
         StringBuilder string = new StringBuilder();
         List<Person> listOfPersonWithBirthdayToday = new ArrayList<Person>();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         if (observablelist == null) {
             return " ";
@@ -70,7 +64,6 @@ public class BirthdayNotification extends UiPart<Region> {
                 listOfPersonWithBirthdayToday.add(person);
         }
 
-        string.append("It's their birthdays today (" + dtf.format(currentDate) + ")\n");
         for (Person person: listOfPersonWithBirthdayToday) {
             string.append(person.getBirthday().toString());
             string.append(" ");
@@ -81,11 +74,16 @@ public class BirthdayNotification extends UiPart<Region> {
         return string.toString();
     }
 
-    /**
-     * Frees resources allocated to the TextArea.
-     */
-    public void freeResources() {
-        birthdayNotification = null;
-    }
+    @Subscribe
+    private void handleBirthdayNotificationEvent(BirthdayNotificationEvent event) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.setTitle("Birthdays today");
+        alert.setHeaderText("It's their birthdays today (" + dtf.format(currentDate) + ")\n");
+        alert.setContentText(parseBirthdaysFromObservableList(event.getBirthdayList()));
+        alert.showAndWait();
+    }
 }

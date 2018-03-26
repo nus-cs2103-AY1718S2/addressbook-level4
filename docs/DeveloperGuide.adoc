@@ -16,7 +16,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 Welcome to Medeina! Medeina is a application designed to help veterinarians and their assistants to manage contacts and appointments. Medeina is a command-line based application, all actions can be done using only keyboard.
-This developer guide aims to help new developers to get started with Medeina, and also serves as a reference for even experienced Medeina contributors. 
+This developer guide aims to help new developers to get started with Medeina, and also serves as a reference for even experienced Medeina contributors.
 
 == Setting up
 

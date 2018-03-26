@@ -35,8 +35,8 @@ public class TimetableEntryTimeParserUtil {
      */
     public static TimetableEntryTime parseTime(String input) {
         int firstIntegerOffset = findFirstIntegerOffset(input);
-        TimetableEntryTime tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX +
-                        firstIntegerOffset,
+        TimetableEntryTime tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
+                        + firstIntegerOffset,
                     YEAR_END_INDEX + firstIntegerOffset)),
                     Integer.parseInt(input.substring(MONTH_BEGIN_INDEX + firstIntegerOffset, MONTH_END_INDEX
                             + firstIntegerOffset)) + MONTH_INDEX_OFFSET,
@@ -55,7 +55,7 @@ public class TimetableEntryTimeParserUtil {
      * Finds the position of the first integer character
      */
     private static int findFirstIntegerOffset(String input) {
-        for (int i= 0; i< input.length(); i++) {
+        for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) - '0' >= 0 && input.charAt(i) - '0' <= 9) {
                 return i;
             }

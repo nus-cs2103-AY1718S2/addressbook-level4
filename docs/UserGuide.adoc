@@ -45,9 +45,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Try out the commands below to get a feel of the app:
 
 * *`login bob password456`*: logs you into the IMDB as Bob. Note that some commands will not work unless you are logged in.
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the IMDB.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all patients
+* **`add`**`n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dob/11/11/1991 b/B+` : adds a patient named `John Doe` to the IMDB.
+* **`delete`**`3` : deletes the 3rd patient shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.

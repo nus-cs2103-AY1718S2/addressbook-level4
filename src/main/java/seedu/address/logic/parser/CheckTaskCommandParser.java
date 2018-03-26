@@ -2,51 +2,45 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK_INDEX;
 
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.logic.commands.CheckTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.student.dashboard.Task;
 
 /**
- * Parses input arguments and create a new AddTaskCommand object
+ * Parses input arguments and create a new CheckTaskCommand object
  */
-public class AddTaskCommandParser implements Parser<AddTaskCommand> {
+public class CheckTaskCommandParser implements Parser<CheckTaskCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddTaskCommand
-     * and returns an AddTaskCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the CheckTaskCommand
+     * and returns a CheckTaskCommand object for execution.
      * @throws NullPointerException if args is null
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddTaskCommand parse(String args) throws ParseException {
+    public CheckTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
         ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args,
-                PREFIX_INDEX, PREFIX_MILESTONE_INDEX, PREFIX_NAME, PREFIX_DESCRIPTION);
+                PREFIX_INDEX, PREFIX_MILESTONE_INDEX, PREFIX_TASK_INDEX);
 
-        if (!arePrefixesPresent(argMultiMap,
-                PREFIX_INDEX, PREFIX_MILESTONE_INDEX, PREFIX_NAME, PREFIX_DESCRIPTION)
+        if (!arePrefixesPresent(argMultiMap, PREFIX_INDEX, PREFIX_MILESTONE_INDEX, PREFIX_TASK_INDEX)
                 || !argMultiMap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckTaskCommand.MESSAGE_USAGE));
         }
 
         try {
             Index studentIndex = ParserUtil.parseIndex(argMultiMap.getValue(PREFIX_INDEX).get());
             Index milestoneIndex = ParserUtil.parseIndex(argMultiMap.getValue(PREFIX_MILESTONE_INDEX).get());
-            String name = argMultiMap.getValue(PREFIX_NAME).get();
-            String description = argMultiMap.getValue(PREFIX_DESCRIPTION).get();
+            Index taskIndex = ParserUtil.parseIndex(argMultiMap.getValue(PREFIX_TASK_INDEX).get());
 
-            Task task = new Task(name, description);
-
-            return new AddTaskCommand(studentIndex, milestoneIndex, task);
+            return new CheckTaskCommand(studentIndex, milestoneIndex, taskIndex);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

@@ -1,5 +1,6 @@
 package seedu.address.model.student.dashboard;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDateTime;
@@ -40,13 +41,8 @@ public class Date {
 
     private final LocalDateTime value;
 
-    public Date(LocalDateTime value) {
-        this.value = LocalDateTime.of(value.getYear(), value.getMonth(), value.getDayOfMonth(),
-                value.getHour(), value.getMinute());
-    }
-
     public Date(String date) {
-        assert date != null;
+        requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_DATE_CONSTRAINTS);
 
         Matcher matcher = dateFormatPattern.matcher(date.trim());
@@ -62,8 +58,11 @@ public class Date {
 
     /**
      * Returns if a given string is a valid date
+     * @throws NullPointerException if input is null
      */
     public static boolean isValidDate(String input) {
+        requireNonNull(input);
+
         Matcher matcher = dateFormatPattern.matcher(input.trim());
         if (!matcher.matches()) {
             return false;

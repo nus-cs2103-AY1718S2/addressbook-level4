@@ -34,13 +34,13 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private InfoPanel infoPanel;
     private StudentListPanel studentListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane infoPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -116,8 +116,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        infoPanel = new InfoPanel();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
 
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
         studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
@@ -186,7 +186,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        infoPanel.freeResources();
     }
 
     @Subscribe

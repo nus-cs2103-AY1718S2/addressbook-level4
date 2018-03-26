@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
@@ -17,15 +18,16 @@ import seedu.address.model.student.dashboard.Milestone;
 /**
  * Parses input arguments and create a new AddMilestoneCommand object
  */
-public class AddMilestoneCommandParser {
+public class AddMilestoneCommandParser implements Parser<AddMilestoneCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddMilestoneCommand
      * and returns an AddMilestoneCommand object for execution.
+     * @throws NullPointerException if args is null
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddMilestoneCommand parse(String args) throws ParseException {
-        assert args != null;
+        requireNonNull(args);
 
         ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_DATE, PREFIX_DESCRIPTION);
 

@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class needModified {
+    /**
+     * Fake person class for easy testing algo purpose, need to import proper Person class
+     */
     static class FakePerson {
         String name;
         String address;
@@ -26,6 +29,9 @@ public class needModified {
         }
     }
 
+    /**
+     * Node to save sorted list and store minimum distance travel from the first node of the list to all the other node
+     */
     static class Node {
         List<FakePerson> personsList;
         double distance = 0;
@@ -46,18 +52,28 @@ public class needModified {
         }
     }
 
+    /**
+     * In my recursive method, I need to build a persons list that has been removed a specific person
+     *
+     */
     private static List<FakePerson> wantedList(List<FakePerson> personsList, int indexToRemove) {
         List<FakePerson> temp = new ArrayList<FakePerson>(personsList);
         temp.remove(indexToRemove);
         return temp;
     }
 
+    /**
+     * Recursion method
+     *
+     */
     private static Node minPath(List<FakePerson> filteredList) throws InterruptedException, ApiException, IOException {
         List<FakePerson> list = new ArrayList<FakePerson>();
         List<FakePerson> holder = new ArrayList<FakePerson>();
         Node node = new Node();
 
-        //base
+        /*
+          Base case for recursion
+         */
         if (filteredList.size() == 0) return null;
         if (filteredList.size() == 1) {
             list.add(filteredList.get(0));

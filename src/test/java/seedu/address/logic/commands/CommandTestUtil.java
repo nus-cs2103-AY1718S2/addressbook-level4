@@ -49,6 +49,8 @@ public class CommandTestUtil {
     public static final String VALID_BLOODTYPE_BOB = "A";
     public static final String VALID_REMARK_AMY = "Monthly blood test";
     public static final String VALID_REMARK_BOB = "Weekly checkup";
+    public static final String VALID_RECORD_AMY = "1 d/1st March 2018 s/Headache, runny nose i/Flu t/Zyrtec";
+    public static final String VALID_RECORD_BOB = "1 d/22/03/16 s/High temperature i/Fever t/Panadol";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String UNUSED_TAG = "UNUSED";

@@ -5,8 +5,14 @@ import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_ASSIGNEES;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MILESTONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TITLE;
 
-import seedu.progresschecker.commons.core.EventsCenter;
-import seedu.progresschecker.commons.events.ui.ExitAppRequestEvent;
+import java.io.IOException;
+
+import org.kohsuke.github.GHIssue;
+import org.kohsuke.github.GHIssueBuilder;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
+
+import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.issues.Issue;
 
 /**
@@ -42,8 +48,18 @@ public class CreateIssue extends Command {
         toBeCreated = issue;
     }
     @Override
-    public CommandResult execute() {
-        EventsCenter.getInstance().post(new ExitAppRequestEvent());
+    public CommandResult execute() throws CommandException {
+
+        try {
+            GitHub github = GitHub.connect();
+            GHRepository repository = github.getRepository("AdityaA1998/samplerepo-pr-practice");
+            GHIssueBuilder issueBuilder = repository.createIssue("Ayushi");
+            issueBuilder.body("Test ISSUE");
+            issueBuilder.label("shag");
+            GHIssue issue = issueBuilder.create();
+        } catch (IOException e) {
+            throw new CommandException("Impossible de cr�er le ticket gitHub");
+        }
         return new CommandResult(COMMAND_FORMAT);
     }
 

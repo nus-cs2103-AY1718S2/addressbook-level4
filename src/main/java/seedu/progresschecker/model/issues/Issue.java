@@ -13,15 +13,17 @@ public class Issue {
     private final Title title;
     private final Assignees assignees;
     private final Milestone milestone;
+    private final Body body;
 
     /**
      * Every field must be present and not null.
      */
-    public Issue(Title title, Assignees assignees, Milestone milestone) {
-        requireAllNonNull(title, assignees, milestone);
+    public Issue(Title title, Assignees assignees, Milestone milestone, Body body) {
+        requireAllNonNull(title, assignees, milestone, body);
         this.title = title;
         this.assignees = assignees;
         this.milestone = milestone;
+        this.body = body;
     }
 
     public Title getTitle() {
@@ -36,6 +38,8 @@ public class Issue {
         return milestone;
     }
 
+    public Body getBody() { return body; }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -49,13 +53,14 @@ public class Issue {
         seedu.progresschecker.model.issues.Issue otherIssue = (seedu.progresschecker.model.issues.Issue) other;
         return otherIssue.getTitle().equals(this.getTitle())
                 && otherIssue.getAssignees().equals(this.getAssignees())
-                && otherIssue.getMilestone().equals(this.getMilestone());
+                && otherIssue.getMilestone().equals(this.getMilestone())
+                && otherIssue.getBody().equals(this.getBody());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, assignees, milestone);
+        return Objects.hash(title, assignees, milestone, body);
     }
 
     @Override
@@ -65,7 +70,9 @@ public class Issue {
                 .append(" Assignees: ")
                 .append(getAssignees())
                 .append(" Milestone: ")
-                .append(getMilestone());
+                .append(getMilestone())
+                .append(" Body: ")
+                .append(getBody());
         return builder.toString();
     }
 

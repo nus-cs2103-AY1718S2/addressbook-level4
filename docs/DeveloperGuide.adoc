@@ -12,13 +12,19 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team T09-B1`      Since: `Mar 2018`      Licence: `MIT`
+By: `CS2103JAN2018-T09-B1`      Since: `Mar 2018`      Licence: `MIT`
 
+== Introduction
+Welcome to _EduBuddy_! This application is based on a Command Line Interface(CLI),
+and is designed for secondary school teachers to manage student profiles in
+a simple and efficient manner.
 
-
-
+This developer guide will help to provide you with a detailed walk-through of _EduBuddy_,
+from the application set up procedure, to the explanation of the features and
+troubleshooting methods.
 
 == Setting up
+This section helps to guide you through the necessary steps to launch our application.
 
 === Prerequisites
 
@@ -96,6 +102,8 @@ When you are ready to start coding,
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
+This section illustrates the overall design of our application and provides
+the details of its individual components.
 
 [[Design-Architecture]]
 === Architecture
@@ -362,6 +370,84 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::Sorting[]
+=== Sort feature
+
+==== Current Implementation
+
+The sorting feature allows the user to sort the list of students according to certain
+parameters like name and tag. After the sorting process has completed, the user will be
+presented with a read only view of the sorted list on the `UI`, and the state of the
+list will not be modified.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "sort name" is typed into the `CommandBox` by the user.
+
+image::SortCommandSequenceDiagram.png[width="650"]
+
+. `Logic` uses `AddressBookParser` class to parse the user command,
+. A `SortCommand` object is created which is then executed by the `LogicManager`.
+. The command executes and calls the `sortPersonList(parameter)` method, which then affects
+  the `Model`.
+. After the sorting process has been completed, the result is encapsulated as a
+  `CommandResult` object, which is then passed back to the `Ui` as a message shown
+  to the user.
+
+Below is an example of how the list looks like before and after the command "sort name"
+is executed.
+
+image::SortCommandByName.png[width="650"]
+
+==== Design Considerations
+
+===== Aspect: How the list appears after sorting is done and the app is restarted
+* ** Alternative 1 (current choice): ** List remains in its initial state after each
+                                        restart of the app
+** Pros: Some users might prefer the default list that was created by themselves e.g. the need
+         to track which student was added last.
+** Cons: It will be a hassle to sort the list every time the app starts up if there
+         are not many changes to the list.
+* ** Alternative 2: ** List is in the sorted form after the app is restarted every time
+** Pros: Reduces the time taken to sort the list for each start up of the app.
+** Cons: If the default list is required, `SortCommand` will have to be implemented
+         as an `UndoableCommand` as well.
+// end::Sorting[]
+
+// tag::TagReplace[]
+=== TagReplace feature
+
+==== Current Implementation
+The tag replace is a command that replaces the target tag with the tag that we want.
+The tags would be passed in via the argument multimap which would extract the tags with t/ prefix.
+It would then be separated into two different tags, tag to be replaced and the tag to be placed.
+Then the Addressbook would proceed to look for the persons with the unwanted tag to remove the unwanted
+tag and to add the new tag to the person.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "tag replace t/TAGNAME t/TAGNAME" is typed into the `CommandBox` by the user.
+
+image::TagReplaceCommandSequenceDiagram.png[width="650"]
+
+.  `Logic` uses the `AddressBookParser` class to parse the  command.
+.  This results in a `TagReplaceCommand` object which is executed by the `LogicManager`.
+.  The command execution calls the `replaceTag` method which then affects the `Model`.
+.  The tag is then replaced and the result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+
+Below is an example of how the list looks like before and after the command "tagreplace t/3G t/4G"
+is executed.
+
+image::TagReplaceCommand.png[width="650"]
+
+
+==== Design Considerations.
+===== Aspect: Data structure to support the tag replace command
+* ** Alternative 1: ** Reuse the set that exist in the Addressbook.
+** Pros: Need not introduce a new data structure to store the tags that are passed in.
+** Cons: A set arranges its elements in alphabetical order. This disrupts the order in which the user has entered,
+         and it would cause the wanted tag to be removed instead of the unwanted one.
+
+// end::TagReplace[]
+
 // tag::subject[]
 === Subject streaming calculation feature (work in progress)
 ==== Current Implementation
@@ -375,8 +461,9 @@ As the students are required to take at least 6 subjects, the subjects will be s
 ===== Aspect: Implementation of `L1R5Command`
 
 *  Create a `L1R5Command` which can be invoked by inputting `L1R5` followed by the `INDEX` assigned to the student in the `Command Box`.
-This  will prompt the execution of a `L1R5` calculation function. The `L1R5Command` will extend the `Command` Interface.
+This will prompt the execution of a `L1R5` calculation function. The `L1R5Command` will extend the `Command` Interface.
 
+image::L1R5CommandSequenceDiagram.png[width="800"]
 image::L1R5CommandDiagram.png[width="800"]
 
 ===== Aspect: Implementation of calculation function `L1R5`
@@ -399,13 +486,22 @@ The `deleteTag()` function will loop through the students in the `AddressBook` a
 
 ===== Aspect: Implementation of `TagDeleteCommand`
 // end::masstagremoval[]
-* Create a `TagDeleteCommand` where the user inputs `tagdelete [TAG_NAME]` or `td [TAG_NAME]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
+A `TagDeleteCommand` is where the user inputs `tagdelete [TAG_NAME]` or `td [TAG_NAME]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
 The `deleteTag()` function will be called and loops through the students in the `AddressBook`.
 
-If the specified tag is not found tagged to any student, a `TagNotFoundException` will be thrown and a error message will be returned to the user. Else, the `Tag List` of each student will be loaded and stored in a temporary `List` variable and the specified tag will be removed from it.
+* If the specified tag is not found tagged to any student, a `TagNotFoundException` will be thrown and a error message will be returned to the user.
+* Else, the `Tag List` of each student will be loaded and stored in a temporary `List` variable and the specified tag will be removed from it.
 Then a new student object with the updated `Tag List` will be replace the original student object. Thus the `AddressBook` will eventually have the updated list of students where the specified tag have been removed.
 
+. Logic uses the AddressBookParser class to parse the command.
+. This results in a TagDeleteCommand object which is executed by the LogicManager.
+. The command execution calls the deleteTag method which then affects the Model.
+. The tag is then deleted and the result of the command execution is encapsulated as a CommandResult object which is passed back to the Ui.
+The result will be shown on the `Command Box` in the format: `Deleted Tag: [TAG_NAME]`.
+
 image::TagDeleteCommandSequenceDiagram.png[width="800"]
+
+Figure: Sequence Diagram of TagDeleteCommand if the specified tag exists.
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -494,6 +590,8 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+This section explains the various testing methods available in our application
+and also provides some troubleshooting techniques.
 
 === Running Tests
 
@@ -860,9 +958,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Target user profile*:
 
 * is a secondary school teacher
-* needs to know more about students they teach
+* needs to know more about the students that they have taught
 * has a need to track results
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of students
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
@@ -878,17 +976,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 |Name | Major |Minor
 |Johnny  |Display Panel: Add display panel functionalities to UI window | Data Integration: Integrate data input from user into display window
 
-|Xin Hui |Academic Section: Helps teachers to view and manage students' academic information | Subject Class Database: Create subject class and integrate input into command. Add L1R5 calculation support into subject inputs.
+|Xin Hui |Academic Section: Help teachers to view and manage students' academic information | Subject Class Database: Create subject class and integrate input into command. Add L1R5 calculation support into subject inputs.
 
 |Kun Hong |Administrative Information: Add student administrative information into EduBuddy | Tag Support: Enhance tag functionalities in EduBuddy
 
-|Keng Seng |Calendar Feature: Add calendar widget to support many administrative tasks(consultation, attendance) | Advanced Sorting Functionalities: Add advanced sorting functionalities into EduBuddy
+
+
+|Keng Seng |Calendar: Add calendar features which supports different administrative tasks | Sorting feature: Add sorting functionalities based on various parameters
 
 |=======================================================================
-
-
-
-
 
 [appendix]
 == User Stories
@@ -908,6 +1004,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |access student's academic and non-academic achievements |stream the students properly (e.g. Normal Academic, Normal Technical, Express)
 
+
 |`* * *` |teacher |access student profiles easily  | have first hand information on all my students without going through a lot of documentation
 
 |`* * *` |teacher |edit remarks of each individual student |update the students' individual needs that occur during class
@@ -923,12 +1020,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |teacher |look up on student's identity |recognize who the student is
 
 |`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
+
+|`*` |teacher |can track the student's progress in the CCA |decide whether to involve the student more
+
+|`*` |teacher |key in the levels attained by the students in the various domains in L.E.A.P.S system
+|calculate the Co-Curricular Attainment achieved by the student.
+
+|`*` |teacher |view the student's injuries history |to know the need of my students.
+
+|`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
 |=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `EduBuddy` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -1073,6 +1179,7 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
 [discrete]
 === Use case: Sort students by the students' academic streaming results
 

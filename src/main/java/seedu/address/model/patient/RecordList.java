@@ -93,6 +93,7 @@ public class RecordList {
         final StringBuilder builder = new StringBuilder();
         for(int i = 0; i < numRecord; i++){
             builder.append("Index: ")
+                    .append((i+1) + " ")
                     .append(recordList.get(i).toString())
                     .append("\n");
         }
@@ -107,11 +108,24 @@ public class RecordList {
         for(int i = 0; i < numRecord; i++){
             builder.append("1 ") //as the command will not be executed, we will be placing a dummy patient index
             .append(PREFIX_INDEX)
-            .append(i + " ")
+            .append((i+1) + " ")
             .append(recordList.get(i).toCommandStringRecordList())
             .append("\n");
         }
         return builder.toString();
     }
 
+    public void edit(int recordIndex, Record record) {
+        if(this.numRecord > recordIndex){
+            this.set(recordIndex, record);
+        }
+        else{ //will always add new record as long as index > numRecords
+            this.recordList.add(record);
+            this.numRecord += 1;
+        }
+    }
+
+    public void set(int recordIndex, Record record) {
+        recordList.set(recordIndex, record);
+    }
 }

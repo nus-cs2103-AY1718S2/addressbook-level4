@@ -480,6 +480,29 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Prediction Function
+
+A command by the keyword of "predict" is added. It takes no argument.
+
+* `Function` : Customers in the list may or may not have
+"actual spending" entered. Because at the point in time,
+the customer has not purchased any policy at all.
+Hence it would be convenient to have a way to predict the
+likely amount of purchase they would make so that the
+insurance agent can prioritize those customers with higher
+likelihood to spend more.
+
+* `Implementation` : Each customer's data would be extracted as a row.
+The column represents. Each Targeted fields such as income, age and so on.
+The model used here is linear regression. That means we assume the purchase made
+by the customer is a linear combination of all the targeted fields.
+This model is not perfect. However for the first version of this
+function, we will just use this model. These data would form a matrix.
+Imaging a form of Ax=b where A is a matrix and x is a vector of weights
+and b is the expected outcome. The name of the game is to find the
+weights that minimises the loss of the objective function A.
+The numerical solver used here is Stochastic Gradient Descent.
+
 == Documentation
 
 We use asciidoc for writing documentation.

@@ -31,6 +31,7 @@ import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.patient.Record;
+import seedu.address.model.patient.RecordList;
 import seedu.address.model.patient.Remark;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -122,7 +123,7 @@ public class EditCommand extends UndoableCommand {
         DateOfBirth updatedDob = editPersonDescriptor.getDob().orElse(patientToEdit.getDob());
         BloodType updatedBloodType = editPersonDescriptor.getBloodType().orElse(patientToEdit.getBloodType());
         Remark updatedRemark = patientToEdit.getRemark(); //edit command cannot change remarks
-        Record updatedRecord = patientToEdit.getRecord(); //edit command cannot change record
+        RecordList updatedRecord = patientToEdit.getRecordList(); //edit command cannot change record
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(patientToEdit.getTags());
 
         return new Patient(updatedName, updatedNric, updatedPhone, updatedEmail, updatedAddress,

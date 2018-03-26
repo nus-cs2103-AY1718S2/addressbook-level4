@@ -89,7 +89,7 @@ public class RemarkCommand extends UndoableCommand {
 
         return new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),
                 patientToEdit.getEmail(), patientToEdit.getAddress(), patientToEdit.getDob(),
-                patientToEdit.getBloodType(), updatedRemark, patientToEdit.getRecord(), patientToEdit.getTags());
+                patientToEdit.getBloodType(), updatedRemark, patientToEdit.getRecordList(), patientToEdit.getTags());
     }
 
     /**

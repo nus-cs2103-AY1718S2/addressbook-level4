@@ -26,37 +26,45 @@ import seedu.address.model.student.exceptions.DuplicateStudentException;
  */
 public class TypicalStudents {
 
-    public static final Student ALICE = new StudentBuilder().withName("Alice Pauline")
+    public static final Student ALICE = new StudentBuilder().withKey("c5daab").withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
             .withTags("friends").withProgrammingLanguage("Java").build();
-    public static final Student BENSON = new StudentBuilder().withName("Benson Meier")
+    public static final Student BENSON = new StudentBuilder().withKey("558a24").withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends").withProgrammingLanguage("Java").build();
-    public static final Student CARL = new StudentBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").withProgrammingLanguage("Java").build();
-    public static final Student DANIEL = new StudentBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withProgrammingLanguage("Java").build();
-    public static final Student ELLE = new StudentBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").withProgrammingLanguage("Java").build();
-    public static final Student FIONA = new StudentBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withProgrammingLanguage("Java").build();
-    public static final Student GEORGE = new StudentBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withProgrammingLanguage("Java").build();
+    public static final Student CARL = new StudentBuilder().withKey("8e90ba").withName("Carl Kurz")
+            .withPhone("95352563").withEmail("heinz@example.com").withAddress("wall street")
+            .withProgrammingLanguage("Java").build();
+    public static final Student DANIEL = new StudentBuilder().withKey("dd5605").withName("Daniel Meier")
+            .withPhone("87652533").withEmail("cornelia@example.com")
+            .withAddress("10th street").withProgrammingLanguage("Java").build();
+    public static final Student ELLE = new StudentBuilder().withKey("abbcfd").withName("Elle Meyer")
+            .withPhone("9482224").withEmail("werner@example.com").withAddress("michegan ave")
+            .withProgrammingLanguage("Java").build();
+    public static final Student FIONA = new StudentBuilder().withKey("9d2b20").withName("Fiona Kunz")
+            .withPhone("9482427").withEmail("lydia@example.com").withAddress("little tokyo")
+            .withProgrammingLanguage("Java").build();
+    public static final Student GEORGE = new StudentBuilder().withKey("4e0965").withName("George Best")
+            .withPhone("9482442").withEmail("anna@example.com").withAddress("4th street")
+            .withProgrammingLanguage("Java").build();
 
     // Manually added
-    public static final Student HOON = new StudentBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").withProgrammingLanguage("Java").build();
-    public static final Student IDA = new StudentBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").withProgrammingLanguage("Java").build();
+    public static final Student HOON = new StudentBuilder().withKey("bbcd69").withName("Hoon Meier")
+            .withPhone("8482424").withEmail("stefan@example.com")
+            .withAddress("little india").withProgrammingLanguage("Java").build();
+    public static final Student IDA = new StudentBuilder().withKey("5dc953").withName("Ida Mueller")
+            .withPhone("8482131").withEmail("hans@example.com")
+            .withAddress("chicago ave").withProgrammingLanguage("Java").build();
 
     // Manually added - Student's details found in {@code CommandTestUtil}
-    public static final Student AMY = new StudentBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+    public static final Student AMY = new StudentBuilder().withKey("f20af3").withName(VALID_NAME_AMY)
+            .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withProgrammingLanguage((VALID_PROGRAMMING_LANGUAGE_AMY)).withTags(VALID_TAG_FRIEND).build();
-    public static final Student BOB = new StudentBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+    public static final Student BOB = new StudentBuilder().withKey("c81b30").withName(VALID_NAME_BOB)
+            .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .withProgrammingLanguage(VALID_PROGRAMMING_LANGUAGE_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches name MEIER

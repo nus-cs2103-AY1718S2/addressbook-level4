@@ -35,6 +35,7 @@ public class XmlUtilTest {
 
     private static final String INVALID_PHONE = "9482asf424";
 
+    private static final String VALID_KEY = "ab1cd2";
     private static final String VALID_NAME = "Hans Muster";
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
@@ -80,7 +81,7 @@ public class XmlUtilTest {
     public void xmlAdaptedStudentFromFile_fileWithMissingStudentField_validResult() throws Exception {
         XmlAdaptedStudent actualStudent = XmlUtil.getDataFromFile(
                 MISSING_STUDENT_FIELD_FILE, XmlAdaptedStudentWithRootElement.class);
-        XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(
+        XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(VALID_KEY,
                 null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS);
         assertEquals(expectedStudent, actualStudent);
     }
@@ -89,7 +90,7 @@ public class XmlUtilTest {
     public void xmlAdaptedStudentFromFile_fileWithInvalidStudentField_validResult() throws Exception {
         XmlAdaptedStudent actualStudent = XmlUtil.getDataFromFile(
                 INVALID_STUDENT_FIELD_FILE, XmlAdaptedStudentWithRootElement.class);
-        XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(
+        XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(VALID_KEY,
                 VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS);
         assertEquals(expectedStudent, actualStudent);
     }
@@ -98,7 +99,7 @@ public class XmlUtilTest {
     public void xmlAdaptedStudentFromFile_fileWithValidStudent_validResult() throws Exception {
         XmlAdaptedStudent actualStudent = XmlUtil.getDataFromFile(
                 VALID_STUDENT_FILE, XmlAdaptedStudentWithRootElement.class);
-        XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(
+        XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(VALID_KEY,
                 VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS);
         assertEquals(expectedStudent, actualStudent);
     }

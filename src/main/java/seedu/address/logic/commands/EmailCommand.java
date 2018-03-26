@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.GmailUtil;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.email.Template;
 
 //@@author ng95junwei
 
@@ -38,12 +39,11 @@ public class EmailCommand extends Command {
         model.updateFilteredPersonList(predicate);
         ObservableList<Person> emailList = model.getFilteredPersonList();
         for (Person p : emailList) {
-            System.out.println(p.getEmail());
             try {
                 GmailUtil handler = new GmailUtil();
                 Gmail service = handler.getService();
                 handler.send(service, p.getEmail().toString(), "",
-                        service.users().getProfile("me").getUserId(), "Hello", "Hello");
+                        service.users().getProfile("me").getUserId(), new Template());
             } catch (Exception e) {
                 System.out.println(e);
                 System.out.println("Some IOException occurred");

@@ -23,7 +23,7 @@ public class Patient {
     private final DateOfBirth dob;
     private final BloodType bloodType;
     private final Remark remark;
-    private final Record record;
+    private final RecordList recordList;
 
     private final UniqueTagList tags;
 
@@ -31,7 +31,7 @@ public class Patient {
      * Every field must be present and not null.
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address,
-                   DateOfBirth dob, BloodType bloodType, Remark remark, Record record, Set<Tag> tags) {
+                   DateOfBirth dob, BloodType bloodType, Remark remark, RecordList recordList, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.nric = nric;
@@ -41,7 +41,7 @@ public class Patient {
         this.dob = dob;
         this.bloodType = bloodType;
         this.remark = remark;
-        this.record = record;
+        this.recordList = recordList;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -78,8 +78,8 @@ public class Patient {
         return remark;
     }
 
-    public Record getRecord() {
-        return record;
+    public RecordList getRecordList() {
+        return recordList;
     }
 
     /**
@@ -109,13 +109,13 @@ public class Patient {
                 && otherPatient.getDob().equals(this.getDob())
                 && otherPatient.getBloodType().equals(this.getBloodType())
                 && otherPatient.getRemark().equals(this.getRemark())
-                && otherPatient.getRecord().equals(this.getRecord());
+                && otherPatient.getRecordList().equals(this.getRecordList());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, phone, email, address, dob, bloodType, remark, record, tags);
+        return Objects.hash(name, nric, phone, email, address, dob, bloodType, remark, recordList, tags);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class Patient {
                 .append(" Remark: ")
                 .append(getRemark())
                 .append(" Record: ")
-                .append(getRecord())
+                .append(getRecordList())
                 .append(" Conditions: ");
         getTags().forEach(builder::append);
         return builder.toString();

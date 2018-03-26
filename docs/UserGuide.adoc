@@ -17,7 +17,11 @@ By: `Team W11-B4`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-Stardy Together (ST) is mainly for NUS Students who *prefer to use a desktop app for managing contacts*. More importantly, ST is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ST can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+* Stardy Together (ST) is for *NUS Students* who prefer to use a *desktop app* for managing NUS friends' contacts.
+* More importantly, ST is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+* If you can type fast, ST can get your contact management tasks done faster than traditional GUI apps.
+* This guide provides a list of features that are available on ST and their usage.
+* Interested? Jump to the next section, <<Quick Start>>, to get started. Enjoy!
 
 == Quick Start
 
@@ -27,7 +31,7 @@ Stardy Together (ST) is mainly for NUS Students who *prefer to use a desktop app
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `StardyTogether.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -42,7 +46,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+.  Refer to the next section, <<Features>>, for details of each command, or refer to <<Command Summary>> for the summary of all the commands.
 
 [[Features]]
 == Features
@@ -173,7 +177,6 @@ Format: `free p/[PERSON1] p/[PERSON2]`
 ****
 * Only full names will be matched e.g. `Han` will not match `Han Tan`
 * Overlap of the two persons' timetables will be displayed.
-* Auto-fill for person's name
 ****
 
 Examples:
@@ -399,5 +402,5 @@ e.g.`select 2`
 * *Unalias* `unalias [CURRENT_ALIAS]` +
 e.g. `unalias hist`
 * *Undo* : `undo`
-* *Vacant* : `vacant BUILDING +
-e.g.`vacant COM1`
+* *Vacant* : `vacant BUILDING` +
+e.g. `vacant COM1`

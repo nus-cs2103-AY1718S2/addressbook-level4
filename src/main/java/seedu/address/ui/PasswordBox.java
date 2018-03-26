@@ -71,7 +71,7 @@ public class PasswordBox extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleCommandInputChanged() {
+    private void handlePasswordInputChanged() {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         String input = commandTextField.getText();

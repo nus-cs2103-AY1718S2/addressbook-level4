@@ -1,10 +1,13 @@
 package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_PREPARATION_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_SERVINGS;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
 
@@ -14,11 +17,14 @@ import java.util.stream.Stream;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.logic.commands.AddCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
+import seedu.recipe.model.recipe.Calories;
+import seedu.recipe.model.recipe.CookingTime;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Servings;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
 
@@ -33,25 +39,34 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PREPARATION_TIME,
-                        PREFIX_INGREDIENT, PREFIX_URL, PREFIX_INSTRUCTION, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer
+                .tokenize(args, PREFIX_NAME, PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_COOKING_TIME,
+                        PREFIX_PREPARATION_TIME, PREFIX_CALORIES, PREFIX_SERVINGS, PREFIX_TAG, PREFIX_URL);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_PREPARATION_TIME,
-                PREFIX_INGREDIENT) || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Ingredient ingredient = ParserUtil.parseIngredientOnInitialAdd(argMultimap.getValue(PREFIX_INGREDIENT))
+                    .get();
+            Instruction instruction =
+                    ParserUtil.parseInstructionOnInitialAdd(argMultimap.getValue(PREFIX_INSTRUCTION)).get();
+            CookingTime cookingTime =
+                    ParserUtil.parseCookingTimeOnInitialAdd(argMultimap.getValue(PREFIX_COOKING_TIME)).get();
             PreparationTime preparationTime =
-                    ParserUtil.parsePreparationTime(argMultimap.getValue(PREFIX_PREPARATION_TIME)).get();
-            Ingredient ingredient = ParserUtil.parseIngredient(argMultimap.getValue(PREFIX_INGREDIENT)).get();
-            Instruction instruction = ParserUtil.parseInstruction(argMultimap.getValue(PREFIX_INSTRUCTION)).get();
+                    ParserUtil.parsePreparationTimeOnInitialAdd(argMultimap.getValue(PREFIX_PREPARATION_TIME)).get();
+            Calories calories =
+                    ParserUtil.parseCaloriesOnInitialAdd(argMultimap.getValue(PREFIX_CALORIES)).get();
+            Servings servings =
+                    ParserUtil.parseServingsOnInitialAdd(argMultimap.getValue(PREFIX_SERVINGS)).get();
             Url url = ParserUtil.parseUrlOnInitialAdd(argMultimap.getValue(PREFIX_URL)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Recipe recipe = new Recipe(name, preparationTime, ingredient, instruction, url, tagList);
+            Recipe recipe = new Recipe(name, ingredient, instruction, cookingTime, preparationTime, calories, servings,
+                    url, tagList);
 
             return new AddCommand(recipe);
         } catch (IllegalValueException ive) {

@@ -16,7 +16,7 @@ By: `Team W11-B4`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 StardyTogether is a command line application which provides students a way to manage their contacts.
-It is customised for students in the National University of Singapore (NUS) which allows them to find vacant rooms within NUS and also to track their timetable.
+It is customized for students in the National University of Singapore (NUS) which allows them to find vacant rooms within NUS and also to track their timetable.
 This documentation provides information that will not only help you get started as a StardyTogether contributor, but that you'll find useful to refer to even if you are already an experienced contributor.
 
 == Setting up
@@ -363,8 +363,8 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::customisedalias[]
-=== Customised Alias feature
+// tag::customizedalias[]
+=== Customized Alias feature
 ==== Current Implementation
 
 image::LogicComponentAliasSequenceDiagram.png[width="800"]
@@ -391,7 +391,7 @@ image::ModelClassDiagram.png[width="800"]
 * **Alternative 2:** Store in `UserPrefsStorage`
 ** Pros: Easier to implement.
 ** Cons: Affects Import command, to import `UserPrefsStorage` as well, than just importing `addressbook.xml`
-// end::customisedalias[]
+// end::customizedalias[]
 
 // tag::dataencryption[]
 ===  Data Encryption
@@ -673,7 +673,7 @@ b. Require developers to download those libraries manually (this creates extra w
 |Name |Minor Enhancement |Major Enhancement
 |Lee Yong Ler | Adding of `TimeTable` class and into the `Person` class. This allows user to enter their time table into the address book, making it easy for them to know their time table.|Data encryption system to allow the `addressbook.xml` to be encrypted when not in use. A `password` command will also be added for user to key in their own password. This ensure that the privacy of users are respected and information in the address book is confidential. NUS students would be able to store sensitive information like time table without fear of them leaking.
 |Loh Cai Jun | Import AddressBook feature allows user to transfer data to other users, transfer to different computers, and restore backup of AddressBook easily. | Vacant study rooms finder feature helps user to find vacant study rooms nearby. User will input time, faculty, and building. Next, our app will returns all rooms in the building and showing their status, e.g. COM1-B103: vacant until 2330.
-|Ong Jing Yin | Designing UI for finding vacant venues feature. UI will display a table of timings for the requested location, with information about whether the venue is vacant or not |Customised alias to allow users to set their own short cuts or intuitive naming for existing commands, to cater to their own preference.
+|Ong Jing Yin | Designing UI for finding vacant venues feature. UI will display a table of timings for the requested location, with information about whether the venue is vacant or not |Customized alias to allow users to set their own short cuts or intuitive naming for existing commands, to cater to their own preference.
 |Wayne Neo| Designing UI for Timetable. UI will display the timetable of each person and also the union of timetables to find common timeslots| Adding of Birthday class into the `Person` class. With an additional command, it allows users to generate a list of birthdays to celebrate with their friends.
 |=======================================================================
 
@@ -693,7 +693,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |busy student |have short forms of commands |type more quickly
 
-|`* * *` |busy student |have my customised short forms of commands |type even quicker and in my own style
+|`* * *` |busy student |have my customized short forms of commands |type even quicker and in my own style
 
 |`* * *` |busy student |be able to remove my customized short forms |reuse keys
 

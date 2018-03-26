@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddOrderCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
@@ -40,6 +41,7 @@ public final class CommandSyntaxListUtil {
     private static void setCommandSyntaxList() {
         commandSyntaxList.add(AddCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(AddOrderCommand.COMMAND_SYNTAX);
+        commandSyntaxList.add(ChangeThemeCommand.COMMAND_WORD);
         commandSyntaxList.add(ClearCommand.COMMAND_WORD);
         commandSyntaxList.add(DeleteCommand.COMMAND_WORD);
         commandSyntaxList.add(DeleteGroupCommand.COMMAND_WORD);

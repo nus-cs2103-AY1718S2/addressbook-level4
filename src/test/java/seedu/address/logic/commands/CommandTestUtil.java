@@ -98,7 +98,6 @@ public class CommandTestUtil {
     public static final String INVALID_PREFERENCE_DESC =
             " " + PREFIX_PREFERENCE + "computers*"; // '*' not allowed in preferences
 
-
     public static final String INVALID_ORDER_INFORMATION_DESC = " "
             + PREFIX_ORDER_INFORMATION + "&Books"; // '&' not allowed in order information
     public static final String INVALID_PRICE_DESC = " " + PREFIX_PRICE + "jdw11"; // 'jdw' not allowed in prices
@@ -108,6 +107,8 @@ public class CommandTestUtil {
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
+
+    public static final String INVALID_THEME = "day791";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

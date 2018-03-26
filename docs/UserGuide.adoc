@@ -310,7 +310,7 @@ Alias: `oe`
 Examples:
 
 * `orderedit 1 q/10` OR +
-`or 1 q/10`
+`or 1 q/10` +
 Edits the quantity field of the 1st order to be 10.
 
 === Deleting an order : `orderdelete` `since v1.2`
@@ -328,7 +328,7 @@ Alias: `od`
 Examples:
 
 * `orderdelete 3` OR +
-`od 3`
+`od 3` +
 Deletes the 3rd order of the order list in the address book.
 
 === Listing entered commands : `history`
@@ -341,6 +341,22 @@ Alias: `h`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+=== Changing the theme : `theme` `since v1.3`
+
+Changes the theme of the application. +
+Format: `theme THEME_TYPE` +
+Alias: `t`
+
+****
+* Currently, you can choose between 'dark' and 'light' themes only.
+****
+
+Examples:
+
+* `theme light` OR +
+`t light` +
+Changes the theme of the application to the light theme.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -566,6 +582,7 @@ e.g. `orderedit 1 pr/15.00 d/05-03-2018`
 * *OrderDelete* : `orderdelete INDEX` +
 e.g. `orderdelete 5`
 * *History* : `history`
+* *Theme* : `theme THEME_TYPE`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Exit* : `exit`
@@ -609,6 +626,7 @@ e.g. `oe 1 pr/15.00 d/05-03-2018`
 * *OrderDelete* : `od INDEX` +
 e.g. `od 5`
 * *History* : `h`
+* *Theme* : `t THEME_TYPE`
 * *Undo* : `u`
 * *Redo* : `r`
 * *Exit* : `q`

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.model.theme.Theme.LIGHT_THEME_KEYWORD;
 import static seedu.address.testutil.TypicalGroups.FRIENDS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPreferences.COMPUTERS;
@@ -19,6 +20,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddOrderCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
@@ -82,6 +84,20 @@ public class AddressBookParserTest {
         AddOrderCommand command = (AddOrderCommand) parser.parseCommand(AddOrderCommand.COMMAND_ALIAS
                 + " " + INDEX_FIRST_PERSON.getOneBased() + " " + OrderUtil.getOrderDetails(order));
         assertEquals(new AddOrderCommand(INDEX_FIRST_PERSON, order), command);
+    }
+
+    @Test
+    public void parseCommand_changeTheme() throws Exception {
+        ChangeThemeCommand command = (ChangeThemeCommand) parser.parseCommand(
+                ChangeThemeCommand.COMMAND_WORD + " " + LIGHT_THEME_KEYWORD);
+        assertEquals(new ChangeThemeCommand(LIGHT_THEME_KEYWORD), command);
+    }
+
+    @Test
+    public void parseCommand_changeTheseAliad() throws Exception {
+        ChangeThemeCommand command = (ChangeThemeCommand) parser.parseCommand(
+                ChangeThemeCommand.COMMAND_ALIAS + " " + LIGHT_THEME_KEYWORD);
+        assertEquals(new ChangeThemeCommand(LIGHT_THEME_KEYWORD), command);
     }
 
     @Test

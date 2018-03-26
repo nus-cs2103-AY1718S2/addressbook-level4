@@ -3,18 +3,20 @@ package seedu.address.model;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.theme.Theme;
 
 /**
  * Represents User's preferences.
  */
 public class UserPrefs {
+    private static final String DEFAULT_THEME = "dark";
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(500, 500, 0, 0, DEFAULT_THEME);
     }
 
     public GuiSettings getGuiSettings() {
@@ -26,7 +28,11 @@ public class UserPrefs {
     }
 
     public void setGuiSettings(double width, double height, int x, int y) {
-        guiSettings = new GuiSettings(width, height, x, y);
+        guiSettings = new GuiSettings(width, height, x, y, Theme.getCurrentTheme());
+    }
+
+    public void setGuiSettings(double width, double height, int x, int y, String theme) {
+        guiSettings = new GuiSettings(width, height, x, y, theme);
     }
 
     public String getAddressBookFilePath() {

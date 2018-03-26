@@ -94,7 +94,6 @@ public class PasswordBox extends UiPart<Region> {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
         }
-        System.out.println(commandTextField.getText());
     }
 
     /**

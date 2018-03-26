@@ -32,9 +32,9 @@ public class XmlRequiredIndexStorage {
     public static void updateData(int newIndex, String filePath) throws IOException {
         File file = new File(filePath);
         RequiredStudentIndex ris = new RequiredStudentIndex(newIndex);
-        try{
-            XmlUtil.saveDataToFile(file,ris );
-        } catch (JAXBException e){
+        try {
+            XmlUtil.saveDataToFile(file, ris);
+        } catch (JAXBException e) {
             throw new AssertionError("Unexpected exception " + e.getMessage());
         }
 

@@ -980,6 +980,7 @@ optimal schedule for them.
 * Allows the user to view the application's error from within the application itself.
 * This is useful as it allows an advanced user to send the application developer a log of the events that occurred before an exception was encountered.
 * This feature is unobtrustive as the information contained within the log is essentially meaningless to everyone except for the developer. Additionally, the command is relatively hard to invoke accidentally, and thus has a low chance of being discovered. Additionally, this command only shows read-only information and thus cannot cause any harm to the system.
+* This feature is useful so that if the user encounters an issue and wishes to help provide more information, they can relatively easily retrieve this information without much effort provided they are instructed on how to do so. It is unlikely that a user will encounter this feature by accident. 
 
 **Chan Jin Jia**
 
@@ -1170,7 +1171,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to view calendar events.
-2.  AddressBook retrieves calendar events and updates the main window to show the events.
+2.  AddressBook shows the user the relevant calendar events.
 +
 Use case ends.
 
@@ -1190,7 +1191,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to view calendar events.
-2.  AddressBook retrieves calendar events and updates the main window to show the events.
+2.  AddressBook shows the user a list of their relevant calendar events.
 3.  User selects calendar event to edit.
 4.  AddressBook returns calendar event info as editable string.
 5.  User edits information and confirms action.
@@ -1240,8 +1241,8 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User presses ‘View’ menu option and requests to see error log.
-2.  AddressBook retrieves error log and displays it in a new window.
+1.  User requests to see error log.
+2.  AddressBook retrieves error log and displays it to the user.
 
 *Extensions*
 

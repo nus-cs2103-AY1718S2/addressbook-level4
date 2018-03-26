@@ -41,7 +41,7 @@ public class SortAddresses {
         }
 
         cleanSortedMap = cleanSorted(sortedMap);
-        return sortedMap;
+        return cleanSortedMap;
     }
 
     /**

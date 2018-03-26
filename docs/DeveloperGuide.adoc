@@ -912,15 +912,15 @@ Use case resumes from step 4
 Use case resumes from step 4
 
 [discrete]
-=== Use case: Retrieve patient schedule
+=== Use case: Retrieve patient's appointments
 
 Preconditions: User is logged in
 
 *MSS*
 
-1.  User requests to search for schedule
-2.  IMDB requests user to input NRIC of the patient
-3.  IMDB displays schedule of patient
+1.  User requests to search for appointments
+2.  IMDB requests user to input name of the patient
+3.  IMDB displays list of appointments of the patient
 +
 Use case ends
 
@@ -931,8 +931,8 @@ Use case ends
 +
 [none]
 ** 2a1. IMDB shows an error message
-** 2a2. IMDB requests user to input NRIC
-** 2a3. User inputs NRIC
+** 2a2. IMDB requests user to input patient's name
+** 2a3. User inputs patient's name
 ** Steps 2a1-2a3 are repeated until the inputs are valid
 +
 Use case resumes from step 3
@@ -941,8 +941,8 @@ Use case resumes from step 3
 +
 [none]
 ** 2b1. IMDB shows an error message
-** 2b2. IMDB requests user to input NRIC
-** 2b3. User inputs NRIC
+** 2b2. IMDB requests user to input patient's name
+** 2b3. User inputs patient's name
 ** Steps 2b1-2b3 are repeated until the inputs are valid
 +
 Use case resumes from step 3

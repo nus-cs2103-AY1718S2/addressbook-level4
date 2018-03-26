@@ -65,7 +65,7 @@ public class AppointmentBuilder {
     }
 
     /**
-     * Parses the {@code appointmentTags} into a {@code Set<Tag>} 
+     * Parses the {@code appointmentTags} into a {@code Set<Tag>}
      * and set it to the {@code Appointment} that we are building.
      */
     public AppointmentBuilder withAppointmentTags(String ... appointmentTags) {

@@ -42,14 +42,15 @@ public class LogicManagerTest {
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
+        assertCommandSuccess(listCommand,
+                String.format(ListCommand.MESSAGE_SUCCESS, model.getDisplayBookList().size()), model);
         assertHistoryCorrect(listCommand);
     }
 
     @Test
     public void getFilteredBookList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        logic.getFilteredBookList().remove(0);
+        logic.getDisplayBookList().remove(0);
     }
 
     /**

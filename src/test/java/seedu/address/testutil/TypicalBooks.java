@@ -44,12 +44,10 @@ public class TypicalBooks {
      */
     public static BookShelf getTypicalBookShelf() {
         BookShelf bookShelf = new BookShelf();
-        for (Book book : getTypicalBooks()) {
-            try {
-                bookShelf.addBook(book);
-            } catch (DuplicateBookException e) {
-                throw new AssertionError("not possible");
-            }
+        try {
+            bookShelf.setBooks(getTypicalBooks());
+        } catch (DuplicateBookException e) {
+            throw new AssertionError("Unexpected DuplicateBookException.");
         }
         return bookShelf;
     }

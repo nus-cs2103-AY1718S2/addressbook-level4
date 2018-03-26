@@ -48,7 +48,7 @@ public class UniqueBookCircularList extends UniqueList<Book> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniqueBookCircularList // instanceof handles nulls
-                && this.internalList.equals(((UniqueBookCircularList) other).internalList))
-                && this.size == ((UniqueBookCircularList) other).size;
+                && this.internalList.equals(((UniqueBookCircularList) other).internalList)
+                && this.size == ((UniqueBookCircularList) other).size);
     }
 }

@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,6 +20,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.Isbn;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 
 public class BookShelfTest {
@@ -118,6 +120,11 @@ public class BookShelfTest {
 
         BookShelfStub(Collection<Book> books) {
             this.books.setAll(books);
+        }
+
+        @Override
+        public Optional<Book> getBookByIsbn(Isbn isbn) {
+            return Optional.empty();
         }
 
         @Override

@@ -4,9 +4,11 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.Isbn;
 import seedu.address.model.book.UniqueBookList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
@@ -51,6 +53,16 @@ public class BookShelf implements ReadOnlyBookShelf {
     }
 
     //// book-level operations
+
+    @Override
+    public Optional<Book> getBookByIsbn(Isbn isbn) {
+        for (Book book : books) {
+            if (book.getIsbn().equals(isbn)) {
+                return Optional.of(book);
+            }
+        }
+        return Optional.empty();
+    }
 
     /**
      * Adds a book to the book shelf.

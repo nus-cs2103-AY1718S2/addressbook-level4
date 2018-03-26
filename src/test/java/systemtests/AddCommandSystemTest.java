@@ -17,14 +17,11 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
-import seedu.address.model.book.exceptions.DuplicateBookException;
 
 public class AddCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void add() throws Exception {
-        executeCommand("clear");
-
         executeCommand(SearchCommand.COMMAND_WORD + " hello");
         new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
 
@@ -148,7 +145,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
      * 3. Result display box displays the search successful message.<br>
      * 4. {@code Model}, {@code Storage} and {@code BookListPanel} equal to the corresponding components in
      * the current model added with {@code toAdd}.<br>
-     * 5. Selected book list card and search results card remain unchanged.<br>
+     * 5. Selected search results and recent books card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -163,17 +160,11 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
 
-        try {
-            expectedModel.addBook(toAdd);
-        } catch (DuplicateBookException dpe) {
-            throw new IllegalArgumentException("toAdd already exists in the model.");
-        }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
         assertBookInBookShelf(toAdd);
-        expectedModel.resetData(getModel().getBookShelf());
+        expectedModel.addBook(getModel().getBookShelf().getBookByIsbn(toAdd.getIsbn()).get());
 
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedBookListCardUnchanged();
         assertSelectedSearchResultsCardUnchanged();
         assertSelectedRecentBooksCardUnchanged();
         assertCommandBoxShowsDefaultStyle();

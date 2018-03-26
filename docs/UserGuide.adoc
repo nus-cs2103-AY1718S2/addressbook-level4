@@ -157,27 +157,47 @@ Other examples:
 `add 1` +
 Adds the 1st book in the search results.
 
-=== Listing your book shelf : `list`
+=== Listing, filtering, and sorting your books : `list`
 
 If you want to view a portion of the books in your book shelf, use the `list` command. +
-Format: `list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [p/PRIORITY] [s/STATUS]`
+Format: `list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [s/STATUS] [p/PRIORITY] [r/RATING] [by/SORT_BY]`
 
 ****
-* Lists all books in your book shelf that satisfies all the constraints on `TITLE`, `AUTHOR`, `CATEGORY`, `PRIORITY` and `STATUS`.
-* If no parameters are provided, all books will be listed.
+* Lists all books in your book shelf that satisfies all the constraints on `TITLE`, `AUTHOR`, `CATEGORY`, `STATUS`, `PRIORITY` and `RATING`, and sort them according to `SORT_BY`.
+* All parameters are case-insensitive.
+* `STATUS` must be one of the following (items in parenthesis are aliases): `read` (`r`), `unread` (`u`), or `reading` (`rd`).
+* `PRIORITY` must be one of the following (items in parenthesis are aliases): `none` (`n`), `low` (`l`), `medium` (`m`), or `high` (`h`).
+* `RATING` must be a valid rating from 0 to 5, or -1, to select unrated books.
+* `SORT_BY` must be one of the following:
+
+[options="header",]
+|==================================================================
+|To sort by ... |Sort Mode |Aliases
+|Title (ascending) |`titleA` |`tA`, `title`, `t`
+|Title (descending) |`titleD` |`tD`
+|Status (order by `READ`, `UNREAD`, `READING`) |`statusA` |`sA`, `status`, `s`
+|Status (reverse order) |`statusD` |`sD`
+|Priority (order by `NONE`, `LOW`, `MEDIUM`, `HIGH`) |`priorityA` |`pA`, `priority`, `p`
+|Priority (reverse order) |`priorityD` |`pD`
+|Rating (ascending) |`ratingA` |`rA`, `rating`, `r`
+|Rating (descending) |`ratingD` |`rD`
+|==================================================================
+
+* If no `SORT_BY` is provided, the default sorting order will be used, which sorts by status (ordered by `READING`, `UNREAD`, `READ`). Within books of the same status, they will be sorted by priority (ordered by `HIGH`, `MEDIUM`, `LOW`, `NONE`). Finally, within books of the same priority, they will be sorted in alphabetical order according to their titles.
+* If no constraints are provided, all books will be listed.
 ****
 
-If you want to view all books in your book shelf, enter `list`
+If you want to view all books in your book shelf, you can simply enter `list`.
 
 image::ListCommand.png[width="700"]
 
-Bibliotek shows `Listed all books` to indicate that your `list` is successful.
+Bibliotek shows `Listed xx books.` to indicate that the command was successful.
 The left panel will show all the books in your book shelf.
 
 Other examples:
 
-* `list a/Andy Weir` +
-Lists books in your book shelf where `Andy Weir` matches one of the authors.
+* `list a/Andy Weir by/title` +
+Lists books in your book shelf that contains `Andy Weir` in one of the authors' name, and sort them in alphabetical order according to their titles.
 * `list t/Babylon's Ashes c/Science Fiction` +
 Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes` in the title.
 

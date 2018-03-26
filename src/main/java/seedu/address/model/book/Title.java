@@ -6,7 +6,7 @@ import static java.util.Objects.requireNonNull;
  * Represents a book's title.
  * Guarantees: immutable.
  */
-public class Title {
+public class Title implements Comparable<Title> {
 
     public final String title;
 
@@ -20,6 +20,11 @@ public class Title {
         this.title = title;
     }
 
+
+    @Override
+    public int compareTo(Title other) {
+        return title.compareTo(other.title);
+    }
 
     @Override
     public String toString() {

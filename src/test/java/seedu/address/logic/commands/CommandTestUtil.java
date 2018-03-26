@@ -82,7 +82,7 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         BookShelf expectedBookShelf = new BookShelf(actualModel.getBookShelf());
-        List<Book> expectedFilteredList = new ArrayList<>(actualModel.getFilteredBookList());
+        List<Book> expectedFilteredList = new ArrayList<>(actualModel.getDisplayBookList());
 
         try {
             command.execute();
@@ -90,7 +90,7 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedBookShelf, actualModel.getBookShelf());
-            assertEquals(expectedFilteredList, actualModel.getFilteredBookList());
+            assertEquals(expectedFilteredList, actualModel.getDisplayBookList());
         }
     }
 
@@ -99,19 +99,19 @@ public class CommandTestUtil {
      * {@code model}'s book shelf.
      */
     public static void showBookAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredBookList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getDisplayBookList().size());
 
-        Book book = model.getFilteredBookList().get(targetIndex.getZeroBased());
-        model.updateFilteredBookList(thisBook -> thisBook.equals(book));
+        Book book = model.getDisplayBookList().get(targetIndex.getZeroBased());
+        model.updateBookListFilter(thisBook -> thisBook.equals(book));
 
-        assertEquals(1, model.getFilteredBookList().size());
+        assertEquals(1, model.getDisplayBookList().size());
     }
 
     /**
      * Deletes the first book in {@code model}'s filtered list from {@code model}'s book shelf.
      */
     public static void deleteFirstBook(Model model) {
-        Book firstBook = model.getFilteredBookList().get(0);
+        Book firstBook = model.getDisplayBookList().get(0);
         try {
             model.deleteBook(firstBook);
         } catch (BookNotFoundException pnfe) {

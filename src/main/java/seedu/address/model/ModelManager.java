@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -10,6 +11,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
@@ -27,7 +29,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private ActiveListType activeListType;
     private final BookShelf bookShelf;
-    private final FilteredList<Book> filteredBooks;
+    private final FilteredList<Book> filteredBookList;
+    private final SortedList<Book> sortedBookList;
+    private final ObservableList<Book> displayBookList;
     private final BookShelf searchResults;
     private final UniqueBookCircularList recentBooks;
 
@@ -44,7 +48,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.activeListType = ActiveListType.BOOK_SHELF;
         this.bookShelf = new BookShelf(bookShelf);
-        this.filteredBooks = new FilteredList<>(this.bookShelf.getBookList());
+        this.filteredBookList = new FilteredList<>(this.bookShelf.getBookList(), PREDICATE_SHOW_ALL_BOOKS);
+        this.sortedBookList = new SortedList<>(this.filteredBookList, DEFAULT_BOOK_COMPARATOR);
+        this.displayBookList = sortedBookList;
         this.searchResults = new BookShelf();
 
         this.recentBooks = new UniqueBookCircularList();
@@ -97,7 +103,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addBook(Book book) throws DuplicateBookException {
         bookShelf.addBook(book);
-        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        updateBookListFilter(PREDICATE_SHOW_ALL_BOOKS);
+        updateBookListSorter(DEFAULT_BOOK_COMPARATOR);
         indicateBookShelfChanged();
     }
 
@@ -109,21 +116,37 @@ public class ModelManager extends ComponentManager implements Model {
         indicateBookShelfChanged();
     }
 
-    //=========== Filtered Book List Accessors =============================================================
+    //=========== Display Book List Accessors ==============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Book} backed by the internal list of
-     * {@code bookShelf}
+     * {@code bookShelf}.
      */
     @Override
-    public ObservableList<Book> getFilteredBookList() {
-        return FXCollections.unmodifiableObservableList(filteredBooks);
+    public ObservableList<Book> getDisplayBookList() {
+        return FXCollections.unmodifiableObservableList(displayBookList);
     }
 
     @Override
-    public void updateFilteredBookList(Predicate<Book> predicate) {
+    public Predicate<? super Book> getBookListFilter() {
+        return filteredBookList.getPredicate();
+    }
+
+    @Override
+    public Comparator<? super Book> getBookListSorter() {
+        return sortedBookList.getComparator();
+    }
+
+    @Override
+    public void updateBookListFilter(Predicate<? super Book> predicate) {
         requireNonNull(predicate);
-        filteredBooks.setPredicate(predicate);
+        filteredBookList.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateBookListSorter(Comparator<? super Book> comparator) {
+        requireNonNull(comparator);
+        sortedBookList.setComparator(comparator);
     }
 
     //=========== Search Results ===========================================================================
@@ -179,7 +202,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return bookShelf.equals(other.bookShelf)
-                && filteredBooks.equals(other.filteredBooks)
+                && displayBookList.equals(other.displayBookList)
                 && searchResults.equals(other.searchResults)
                 && recentBooks.equals(other.recentBooks);
     }

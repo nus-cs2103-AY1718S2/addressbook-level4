@@ -45,7 +45,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        Book bookToDelete = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
+        Book bookToDelete = model.getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_BOOK_SUCCESS, bookToDelete);
@@ -71,14 +71,14 @@ public class DeleteCommandTest {
     public void execute_invalidBook_throwsAssertionError() throws Exception {
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
         deleteCommand.preprocessUndoableCommand();
-        model.deleteBook(TypicalBooks.ARTEMIS);
+        model.deleteBook(TypicalBooks.BABYLON_ASHES);
         thrown.expect(AssertionError.class);
         deleteCommand.executeUndoableCommand();
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getDisplayBookList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
@@ -88,7 +88,7 @@ public class DeleteCommandTest {
     public void execute_validIndexFilteredList_success() throws Exception {
         showBookAtIndex(model, INDEX_FIRST_BOOK);
 
-        Book bookToDelete = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
+        Book bookToDelete = model.getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_BOOK_SUCCESS, bookToDelete);
@@ -117,7 +117,7 @@ public class DeleteCommandTest {
     public void executeUndo_validIndexUnfilteredList_success() throws Exception {
         UndoStack undoStack = new UndoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
-        Book bookToDelete = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
+        Book bookToDelete = model.getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
         Model expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
 
@@ -133,7 +133,7 @@ public class DeleteCommandTest {
     public void executeUndo_invalidIndexUnfilteredList_failure() {
         UndoStack undoStack = new UndoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getDisplayBookList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
         // execution failed -> deleteCommand not pushed into undoStack
@@ -154,7 +154,7 @@ public class DeleteCommandTest {
         Model expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
 
         showBookAtIndex(model, INDEX_SECOND_BOOK);
-        Book bookToDelete = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
+        Book bookToDelete = model.getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased());
         // delete -> deletes second book in unfiltered book list / first book in filtered book list
         deleteCommand.execute();
         undoStack.push(deleteCommand);
@@ -163,7 +163,7 @@ public class DeleteCommandTest {
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         expectedModel.deleteBook(bookToDelete);
-        assertNotEquals(bookToDelete, model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased()));
+        assertNotEquals(bookToDelete, model.getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased()));
     }
 
     @Test
@@ -205,8 +205,8 @@ public class DeleteCommandTest {
      * Updates {@code model}'s filtered list to show no book.
      */
     private void showNoBook(Model model) {
-        model.updateFilteredBookList(p -> false);
+        model.updateBookListFilter(p -> false);
 
-        assertTrue(model.getFilteredBookList().isEmpty());
+        assertTrue(model.getDisplayBookList().isEmpty());
     }
 }

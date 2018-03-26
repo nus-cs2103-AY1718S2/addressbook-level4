@@ -148,7 +148,7 @@ public abstract class BibliotekSystemTest {
      */
     protected void showAllBooks() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertEquals(getModel().getBookShelf().getBookList().size(), getModel().getFilteredBookList().size());
+        assertEquals(getModel().getBookShelf().getBookList().size(), getModel().getDisplayBookList().size());
     }
 
     /**
@@ -215,7 +215,7 @@ public abstract class BibliotekSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getBookShelf(), testApp.readStorageBookShelf());
-        assertListMatching(getBookListPanel(), expectedModel.getFilteredBookList());
+        assertListMatching(getBookListPanel(), expectedModel.getDisplayBookList());
         assertListMatching(getSearchResultsPanel(), expectedModel.getSearchResultsList());
         assertListMatching(getRecentBooksPanel(), expectedModel.getRecentBooksList());
     }
@@ -235,12 +235,17 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
-     * Asserts that the previously selected book list card is now deselected and the book details panel
-     * remains displaying the details of the previously selected book.
+     * Asserts that the book details panel remains displaying the details of the previously selected book.
      * @see BookDetailsPanelHandle#isIsbnChanged()
      */
-    protected void assertSelectedBookListCardDeselected() {
+    protected void assertBookDetailsPanelUnchanged() {
         assertFalse(getBookDetailsPanel().isIsbnChanged());
+    }
+
+    /**
+     * Asserts that the previously selected book list card is now deselected.
+     */
+    protected void assertSelectedBookListCardDeselected() {
         assertFalse(getBookListPanel().isAnyCardSelected());
     }
 
@@ -250,9 +255,16 @@ public abstract class BibliotekSystemTest {
      * @see BookListPanelHandle#isSelectedBookCardChanged()
      */
     protected void assertSelectedBookListCardChanged(Index expectedSelectedCardIndex) {
-        Book selectedBook = getModel().getFilteredBookList().get(expectedSelectedCardIndex.getZeroBased());
+        Book selectedBook = getModel().getDisplayBookList().get(expectedSelectedCardIndex.getZeroBased());
         assertDetailsPanelDisplaysBook(selectedBook, getBookDetailsPanel());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getBookListPanel().getSelectedCardIndex());
+    }
+
+    /**
+     * Asserts that the previously selected search results card is now deselected.
+     */
+    protected void assertSelectedSearchResultsCardDeselected() {
+        assertFalse(getSearchResultsPanel().isAnyCardSelected());
     }
 
     /**
@@ -264,6 +276,13 @@ public abstract class BibliotekSystemTest {
         Book selectedBook = getModel().getSearchResultsList().get(expectedSelectedCardIndex.getZeroBased());
         assertDetailsPanelDisplaysBook(selectedBook, getBookDetailsPanel());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getSearchResultsPanel().getSelectedCardIndex());
+    }
+
+    /**
+     * Asserts that the previously selected recent books card is now deselected.
+     */
+    protected void assertSelectedRecentBooksCardDeselected() {
+        assertFalse(getRecentBooksPanel().isAnyCardSelected());
     }
 
     /**
@@ -352,7 +371,7 @@ public abstract class BibliotekSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getBookListPanel(), getModel().getFilteredBookList());
+            assertListMatching(getBookListPanel(), getModel().getDisplayBookList());
             assertFalse(getBookDetailsPanel().isVisible());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());

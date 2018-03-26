@@ -56,10 +56,10 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
         selectBook(selectedIndex);
-        expectedModel.addRecentBook(expectedModel.getFilteredBookList().get(selectedIndex.getZeroBased()));
+        expectedModel.addRecentBook(expectedModel.getDisplayBookList().get(selectedIndex.getZeroBased()));
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedBook = removeBook(expectedModel, selectedIndex);
-        expectedModel.addRecentBook(expectedModel.getFilteredBookList().get(expectedIndex.getZeroBased()));
+        expectedModel.addRecentBook(expectedModel.getDisplayBookList().get(expectedIndex.getZeroBased()));
         expectedResultMessage = String.format(MESSAGE_DELETE_BOOK_SUCCESS, deletedBook);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
@@ -90,7 +90,7 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
     }
 
     /**
-     * Removes the {@code Book} at the specified {@code index} in {@code model}'s book shelf.
+     * Removes the {@code Book} at the specified {@code index} in {@code model}'s display book list.
      * @return the removed book.
      */
     private Book removeBook(Model model, Index index) {

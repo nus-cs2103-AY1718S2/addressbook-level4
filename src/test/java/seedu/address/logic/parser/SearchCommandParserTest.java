@@ -55,7 +55,7 @@ public class SearchCommandParserTest {
     }
 
     @Test
-    public void parse_oneFieldsSpecified_success() {
+    public void parse_oneFieldSpecified_success() {
         String userInput = DEFAULT_SEARCH_TERM;
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withSearchTerm(DEFAULT_SEARCH_TERM).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);

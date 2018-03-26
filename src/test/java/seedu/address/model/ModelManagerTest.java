@@ -20,7 +20,7 @@ public class ModelManagerTest {
     public void getFilteredBookList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
-        modelManager.getFilteredBookList().remove(0);
+        modelManager.getDisplayBookList().remove(0);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(modelManagerCopy));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        modelManager.updateBookListFilter(PREDICATE_SHOW_ALL_BOOKS);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();

@@ -37,24 +37,24 @@ public class TestUtil {
     }
 
     /**
-     * Returns the middle index of the book in the {@code model}'s book list.
+     * Returns the middle index of the book in the {@code model}'s display book list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getBookShelf().getBookList().size() / 2);
+        return Index.fromOneBased(model.getDisplayBookList().size() / 2);
     }
 
     /**
-     * Returns the last index of the book in the {@code model}'s book list.
+     * Returns the last index of the book in the {@code model}'s display book list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getBookShelf().getBookList().size());
+        return Index.fromOneBased(model.getDisplayBookList().size());
     }
 
     /**
-     * Returns the book in the {@code model}'s book list at {@code index}.
+     * Returns the book in the {@code model}'s display book list at {@code index}.
      */
     public static Book getBook(Model model, Index index) {
-        return model.getBookShelf().getBookList().get(index.getZeroBased());
+        return model.getDisplayBookList().get(index.getZeroBased());
     }
 
     /**

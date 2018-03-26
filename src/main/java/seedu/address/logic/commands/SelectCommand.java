@@ -37,7 +37,7 @@ public class SelectCommand extends Command {
         switch (model.getActiveListType()) {
         case BOOK_SHELF:
         {
-            List<Book> filteredBookList = model.getFilteredBookList();
+            List<Book> filteredBookList = model.getDisplayBookList();
 
             if (targetIndex.getZeroBased() >= filteredBookList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);

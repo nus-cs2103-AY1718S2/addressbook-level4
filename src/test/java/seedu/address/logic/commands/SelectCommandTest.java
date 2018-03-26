@@ -47,7 +47,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredBookList_success() {
-        Index lastBookIndex = Index.fromOneBased(model.getFilteredBookList().size());
+        Index lastBookIndex = Index.fromOneBased(model.getDisplayBookList().size());
 
         assertExecutionSuccess(INDEX_FIRST_BOOK);
         assertExecutionSuccess(INDEX_THIRD_BOOK);
@@ -56,7 +56,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredBookList_failure() {
-        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
+        Index outOfBoundsIndex = Index.fromOneBased(model.getDisplayBookList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }

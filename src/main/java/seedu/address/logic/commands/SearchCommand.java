@@ -25,7 +25,7 @@ public class SearchCommand extends Command {
             + "[" + PREFIX_TITLE + "TITLE] "
             + "[" + PREFIX_AUTHOR + "AUTHOR] "
             + "[" + PREFIX_CATEGORY + "CATEGORY]\n"
-            + "Example: " + COMMAND_WORD
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + " Artemis "
             + PREFIX_AUTHOR + "Andy Weir";
 

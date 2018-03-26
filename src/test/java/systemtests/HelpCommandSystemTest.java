@@ -63,8 +63,8 @@ public class HelpCommandSystemTest extends BibliotekSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-        assertDetailsPanelDisplaysBook(getModel().getFilteredBookList().get(0), getBookDetailsPanel());
-        assertListMatching(getBookListPanel(), getModel().getFilteredBookList());
+        assertDetailsPanelDisplaysBook(getModel().getDisplayBookList().get(0), getBookDetailsPanel());
+        assertListMatching(getBookListPanel(), getModel().getDisplayBookList());
 
         // assert that the status bar too is updated correctly while the help window is open
         // note: the select command tested above does not update the status bar

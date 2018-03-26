@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Represents a book's rating.
  * Guarantees: immutable.
  */
-public class Rating {
+public class Rating implements Comparable<Rating> {
 
     public static final String MESSAGE_RATING_CONSTRAINTS = "Rating must be between -1 and 5 (both inclusive).";
     public static final int UNRATED_RATING = -1;
@@ -63,6 +63,11 @@ public class Rating {
             return STYLE_CLASS_UNRATED;
         }
         return STYLE_CLASS_RATED;
+    }
+
+    @Override
+    public int compareTo(Rating other) {
+        return Integer.compare(rating, other.rating);
     }
 
     @Override

@@ -38,7 +38,7 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() {
         requireAllNonNull(model, previousBookShelf);
         model.resetData(previousBookShelf);
-        model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        model.updateBookListFilter(PREDICATE_SHOW_ALL_BOOKS);
     }
 
     @Override

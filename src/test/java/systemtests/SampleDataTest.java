@@ -45,7 +45,7 @@ public class SampleDataTest extends BibliotekSystemTest {
 
     @Test
     public void bookShelf_dataFileDoesNotExist_loadSampleData() {
-        Book[] expectedList = SampleDataUtil.getSampleBooks();
+        Book[] expectedList = SampleDataUtil.getSampleBooksDefaultOrdering();
         assertListMatching(getBookListPanel(), expectedList);
     }
 }

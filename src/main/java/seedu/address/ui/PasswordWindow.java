@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -18,7 +16,6 @@ public class PasswordWindow extends UiPart<Stage> {
     private static final String PASSWORDBOX_TITLE = "Key In Password";
     private static final String FXML = "PasswordWindow.fxml";
 
-    private final Logger logger = LogsCenter.getLogger("PasswordWindow");
     private final Storage storage;
     private final Model model;
 

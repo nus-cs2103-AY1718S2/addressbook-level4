@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.model.person.Email;
+import seedu.progresschecker.model.person.GithubUsername;
 import seedu.progresschecker.model.person.Major;
 import seedu.progresschecker.model.person.Name;
 import seedu.progresschecker.model.person.Person;
@@ -31,6 +32,8 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
+    private String username;
+    @XmlElement(required = true)
     private String major;
     @XmlElement(required = true)
     private String year;
@@ -48,10 +51,12 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(
-            String name, String phone, String email, String major, String year, List<XmlAdaptedTag> tagged) {
+            String name, String phone, String email, String username, String major, String year,
+            List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.username = username;
         this.major = major;
         this.year = year;
         if (tagged != null) {
@@ -68,6 +73,7 @@ public class XmlAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
+        username = source.getUsername().username;
         major = source.getMajor().value;
         year = source.getYear().value;
         tagged = new ArrayList<>();
@@ -94,6 +100,15 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
         final Name name = new Name(this.name);
+
+        if (this.username == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    GithubUsername.class.getSimpleName()));
+        }
+        if (!Name.isValidName(this.username)) {
+            throw new IllegalValueException(GithubUsername.MESSAGE_USERNAME_CONSTRAINTS);
+        }
+        final GithubUsername username = new GithubUsername(this.username);
 
         if (this.phone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
@@ -128,7 +143,7 @@ public class XmlAdaptedPerson {
         final Year year = new Year(this.year);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, major, year, tags);
+        return new Person(name, phone, email, username, major, year, tags);
     }
 
     @Override
@@ -145,6 +160,7 @@ public class XmlAdaptedPerson {
         return Objects.equals(name, otherPerson.name)
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
+                && Objects.equals(username, otherPerson.username)
                 && Objects.equals(major, otherPerson.major)
                 && Objects.equals(year, otherPerson.year)
                 && tagged.equals(otherPerson.tagged);

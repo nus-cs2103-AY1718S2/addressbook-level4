@@ -4,7 +4,7 @@
         <id>1</id>
         <firstName>John</firstName>
         <lastName>Doe</lastName>
-        <githubUsername></githubUsername>
+        <username></username>
         <major></major>
         <year></year>
     </persons>

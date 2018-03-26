@@ -56,7 +56,7 @@
                      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: " GridPane.rowIndex="1" />
                   <Label fx:id="email" styleClass="cell_small_label" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="GitHub: " GridPane.rowIndex="2" />
-                     <Label fx:id="email1" styleClass="cell_small_label" text="\$github" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     <Label fx:id="username" styleClass="cell_small_label" text="\$username" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   </children>
                </GridPane>
           </VBox>

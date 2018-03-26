@@ -6,6 +6,7 @@ import java.util.Set;
 import seedu.progresschecker.model.ProgressChecker;
 import seedu.progresschecker.model.ReadOnlyProgressChecker;
 import seedu.progresschecker.model.person.Email;
+import seedu.progresschecker.model.person.GithubUsername;
 import seedu.progresschecker.model.person.Major;
 import seedu.progresschecker.model.person.Name;
 import seedu.progresschecker.model.person.Person;
@@ -21,22 +22,22 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@gmail.com"),
-                new Major("Computer Science"), new Year("2"),
+                new GithubUsername("AlexGithub"), new Major("Computer Science"), new Year("2"),
                 getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@gmail.com"),
-                new Major("Computer Engineering"), new Year("2"),
+                new GithubUsername("BerniceGithub"), new Major("Computer Engineering"), new Year("2"),
                 getTagSet("colleagues", "friends")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@gmail.com"),
-                new Major("Information Security"), new Year("2"),
+                new GithubUsername("CharlotteGithub"), new Major("Information Security"), new Year("2"),
                 getTagSet("neighbours")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@gmail.com"),
-                new Major("Computer Engineering"), new Year("2"),
+                new GithubUsername("DavidGithub"), new Major("Computer Engineering"), new Year("2"),
                 getTagSet("family")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@gmail.com"),
-                new Major("Computer Science"), new Year("2"),
+                new GithubUsername("IrfanGithub"), new Major("Computer Science"), new Year("2"),
                 getTagSet("classmates")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@gmail.com"),
-                new Major("Computer Science"), new Year("2"),
+                new GithubUsername("RoyGithub"), new Major("Computer Science"), new Year("2"),
                 getTagSet("colleagues"))
         };
     }

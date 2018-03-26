@@ -6,6 +6,7 @@ import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_YEAR;
 import static seedu.progresschecker.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -21,6 +22,7 @@ import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.util.CollectionUtil;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.person.Email;
+import seedu.progresschecker.model.person.GithubUsername;
 import seedu.progresschecker.model.person.Major;
 import seedu.progresschecker.model.person.Name;
 import seedu.progresschecker.model.person.Person;
@@ -41,6 +43,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_USERNAME + "USERNAME] "
             + "[" + PREFIX_MAJOR + "MAJOR] "
             + "[" + PREFIX_YEAR + "YEAR] "
             + "[" + PREFIX_TAG + "TAG]...";
@@ -52,6 +55,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_USERNAME + "USERNAME] "
             + "[" + PREFIX_MAJOR + "MAJOR] "
             + "[" + PREFIX_YEAR + "YEAR] "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -116,11 +120,13 @@ public class EditCommand extends UndoableCommand {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        GithubUsername updatedUsername = editPersonDescriptor.getUsername().orElse(personToEdit.getUsername());
         Major updatedMajor = editPersonDescriptor.getMajor().orElse(personToEdit.getMajor());
         Year updatedYear = editPersonDescriptor.getYear().orElse(personToEdit.getYear());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedMajor, updatedYear, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedUsername, updatedMajor,
+                updatedYear, updatedTags);
     }
 
     @Override
@@ -150,6 +156,7 @@ public class EditCommand extends UndoableCommand {
         private Name name;
         private Phone phone;
         private Email email;
+        private GithubUsername username;
         private Major major;
         private Year year;
         private Set<Tag> tags;
@@ -164,6 +171,7 @@ public class EditCommand extends UndoableCommand {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
+            setUsername(toCopy.username);
             setMajor(toCopy.major);
             setYear(toCopy.year);
             setTags(toCopy.tags);
@@ -173,7 +181,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.major, this.year, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.username,
+                    this.major, this.year, this.tags);
         }
 
         public void setName(Name name) {
@@ -198,6 +207,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
+        }
+
+        public void setUsername(GithubUsername username) {
+            this.username = username;
+        }
+
+        public Optional<GithubUsername> getUsername() {
+            return Optional.ofNullable(username);
         }
 
         public void setMajor(Major major) {
@@ -251,6 +268,7 @@ public class EditCommand extends UndoableCommand {
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
+                    && getUsername().equals(e.getUsername())
                     && getMajor().equals(e.getMajor())
                     && getYear().equals(e.getYear())
                     && getTags().equals(e.getTags());

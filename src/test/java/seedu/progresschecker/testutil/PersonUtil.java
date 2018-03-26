@@ -5,6 +5,7 @@ import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_YEAR;
 
 import seedu.progresschecker.logic.commands.AddCommand;
@@ -30,6 +31,7 @@ public class PersonUtil {
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
+        sb.append(PREFIX_USERNAME + person.getUsername().username + " ");
         sb.append(PREFIX_MAJOR + person.getMajor().value + " ");
         sb.append(PREFIX_YEAR + person.getYear().value + " ");
         person.getTags().stream().forEach(

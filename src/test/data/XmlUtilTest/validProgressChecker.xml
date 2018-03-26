@@ -4,6 +4,7 @@
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
+        <username isPrivate="false">HansGithub</username>
         <major isPrivate="false">Computer Science</major>
         <year isPrivate="false">2</year>
     </persons>
@@ -11,6 +12,7 @@
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
+        <username isPrivate="false">RuthGithub</username>
         <major isPrivate="false">Computer Science</major>
         <year isPrivate="false">2</year>
     </persons>
@@ -18,6 +20,7 @@
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
+        <username isPrivate="false">HeinzGithub</username>
         <major isPrivate="false">Computer Science</major>
         <year isPrivate="false">2</year>
     </persons>
@@ -25,6 +28,7 @@
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
+        <username isPrivate="false">CorneliaGithub</username>
         <major isPrivate="false">Computer Science</major>
         <year isPrivate="false">2</year>
     </persons>
@@ -32,6 +36,7 @@
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
+        <username isPrivate="false">WernerGithub</username>
         <major isPrivate="false">Computer Engineering</major>
         <year isPrivate="false">2</year>
     </persons>
@@ -39,6 +44,7 @@
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
+        <username isPrivate="false">LydiaGithub</username>
         <major isPrivate="false">Information Security</major>
         <year isPrivate="false">2</year>
     </persons>
@@ -46,6 +52,7 @@
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
+        <username isPrivate="false">AnnaGithub</username>
         <major isPrivate="false">Computer Engineering</major>
         <year isPrivate="false">2</year>
     </persons>
@@ -53,6 +60,7 @@
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
+        <username isPrivate="false">StefanGithub</username>
         <major isPrivate="false">Computer Science</major>
         <year isPrivate="false">2</year>
     </persons>
@@ -60,6 +68,7 @@
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
+        <username isPrivate="false">MartinGithub</username>
         <major isPrivate="false">Computer Science</major>
         <year isPrivate="false">2</year>
     </persons>

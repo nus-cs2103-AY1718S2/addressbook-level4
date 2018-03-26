@@ -7,6 +7,7 @@ import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_YEAR;
 
 import java.util.Collection;
@@ -34,7 +35,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_USERNAME,
                         PREFIX_MAJOR, PREFIX_YEAR, PREFIX_TAG);
 
         Index index;
@@ -50,6 +51,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
+            ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME))
+                    .ifPresent(editPersonDescriptor::setUsername);
             ParserUtil.parseMajor(argMultimap.getValue(PREFIX_MAJOR)).ifPresent(editPersonDescriptor::setMajor);
             ParserUtil.parseYear(argMultimap.getValue(PREFIX_YEAR)).ifPresent(editPersonDescriptor::setYear);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);

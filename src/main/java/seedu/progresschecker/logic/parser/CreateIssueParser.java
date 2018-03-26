@@ -2,15 +2,20 @@ package seedu.progresschecker.logic.parser;
 
 import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_ASSIGNEES;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_BODY;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MILESTONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TITLE;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.logic.commands.CreateIssue;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 import seedu.progresschecker.model.issues.Assignees;
+import seedu.progresschecker.model.issues.Body;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.issues.Milestone;
 import seedu.progresschecker.model.issues.Title;
@@ -29,19 +34,22 @@ public class CreateIssueParser implements Parser<CreateIssue> {
     public CreateIssue parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_ASSIGNEES,
-                        PREFIX_MILESTONE);
+                        PREFIX_MILESTONE, PREFIX_BODY);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_ASSIGNEES, PREFIX_MILESTONE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_ASSIGNEES, PREFIX_MILESTONE, PREFIX_BODY)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateIssue.MESSAGE_USAGE));
         }
 
         try {
             Title title = ParserUtil.parseTitle(argMultimap.getValue(PREFIX_TITLE)).get();
-            Assignees assignee = ParserUtil.parseAssignees(argMultimap.getValue(PREFIX_ASSIGNEES)).get();
+            Set<Assignees> assigneeSet = ParserUtil.parseAssignees(argMultimap.getAllValues(PREFIX_ASSIGNEES));
             Milestone milestone = ParserUtil.parseMilestone(argMultimap.getValue(PREFIX_MILESTONE)).get();
+            Body body = ParserUtil.parseBody(argMultimap.getValue(PREFIX_BODY).get());
 
-            Issue issue = new Issue(title, assignee, milestone);
+            List<Assignees> assigneesList = new ArrayList<>(assigneeSet);
+
+            Issue issue = new Issue(title, assigneesList, milestone, body);
 
             return new CreateIssue(issue);
         } catch (IllegalValueException ive) {

@@ -11,6 +11,7 @@ import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.commons.util.StringUtil;
 import seedu.progresschecker.model.issues.Assignees;
+import seedu.progresschecker.model.issues.Body;
 import seedu.progresschecker.model.issues.Milestone;
 import seedu.progresschecker.model.issues.Title;
 import seedu.progresschecker.model.person.Email;
@@ -124,12 +125,15 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
-    public static Optional<Assignees> parseAssignees(Optional<String> assignees) throws IllegalValueException {
+    public static Set<Assignees> parseAssignees(Collection<String> assignees) throws IllegalValueException {
         requireNonNull(assignees);
-        return assignees.isPresent() ? Optional.of(parseAssignees(assignees.get())) : Optional.empty();
+        final Set<Assignees> assigneesSet = new HashSet<>();
+        for (String assigneeName : assignees) {
+            assigneesSet.add(parseAssignees(assigneeName));
+        }
+        return assigneesSet;
     }
 
     /**
@@ -155,6 +159,28 @@ public class ParserUtil {
     public static Optional<Milestone> parseMilestone(Optional<String> milestone) throws IllegalValueException {
         requireNonNull(milestone);
         return milestone.isPresent() ? Optional.of(parseMilestone(milestone.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+
+    public static Body parseBody(String body) throws IllegalValueException {
+        requireNonNull(body);
+        String trimmedBody = body.trim();
+        return new Body(trimmedBody);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Body> parseBody(Optional<String> body) throws IllegalValueException {
+        requireNonNull(body);
+        return body.isPresent() ? Optional.of(parseBody(body.get())) : Optional.empty();
     }
 
 

@@ -9,7 +9,7 @@ public class UserPassTest {
     public void createUserPass() {
         UserPass testProfile = new UserPass("user", "pass");
         Assert.assertEquals(testProfile.getUsername(), "user");
-        Assert.assertEquals(testProfile.getPassword(), "pass");
+        Assert.assertEquals(testProfile.getPassword(), UserPass.hash("pass"));
     }
 
 }

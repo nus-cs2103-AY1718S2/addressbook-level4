@@ -31,6 +31,11 @@ This app will not work with earlier versions of Java 8.
 .  Run the MainApp scripts and await for the GUI to open
 .  A login screen should appear. Create a profile with desired username and password if using for the first time.
 If profile has previously already been created, or after creation of profile, click login.
++
+[NOTE]
+You can use `Tab` to switch to the next field/button and `Enter` to submit/create/exit. `Enter` will not work on the
+username field but only on the password field and buttons.
++
 The application should open into the following screen:
 +
 image::Ui.png[width="790"]
@@ -239,6 +244,26 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Finding distance : `distance`
+
+Finds the distance from the headquarter to the person address. +
+Format: `distance`
+
+****
+* Selects the person and loads the distance from the headquarter to the person address `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`distance 2` +
+Return the distance from the headquarter to the 2nd person in the address book.
+* `find Betsy` +
+`distance 1` +
+Return the distance from the headquarter to the 1st person in the address book.
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -248,6 +273,12 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+[NOTE]
+====
+All data are saved to files unique to the user  logged in. +
+You will not see data from that of another user profile.
+====
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`

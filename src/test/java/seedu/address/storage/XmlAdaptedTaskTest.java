@@ -29,41 +29,41 @@ public class XmlAdaptedTaskTest {
 
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
-        XmlAdaptedTask activity =
+        XmlAdaptedTask task =
                 new XmlAdaptedTask(INVALID_NAME, VALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
         String expectedMessage = Name.MESSAGE_NAME_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        XmlAdaptedTask activity = new XmlAdaptedTask(null, VALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
+        XmlAdaptedTask task = new XmlAdaptedTask(null, VALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, task.getActivityType(), "name");
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 
     @Test
     public void toModelType_invalidDateTime_throwsIllegalValueException() {
-        XmlAdaptedTask activity =
+        XmlAdaptedTask task =
                 new XmlAdaptedTask(VALID_NAME, INVALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
         String expectedMessage = DateTime.MESSAGE_DATETIME_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 
     @Test
     public void toModelType_nullDateTime_throwsIllegalValueException() {
-        XmlAdaptedTask activity = new XmlAdaptedTask(VALID_NAME, null, VALID_REMARK, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, DateTime.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
+        XmlAdaptedTask task = new XmlAdaptedTask(VALID_NAME, null, VALID_REMARK, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, task.getActivityType(), "due date/time");
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
-        XmlAdaptedTask activity =
+        XmlAdaptedTask task =
                 new XmlAdaptedTask(VALID_NAME, VALID_DATE_TIME, VALID_REMARK, invalidTags);
-        Assert.assertThrows(IllegalValueException.class, activity::toModelType);
+        Assert.assertThrows(IllegalValueException.class, task::toModelType);
     }
 
 }

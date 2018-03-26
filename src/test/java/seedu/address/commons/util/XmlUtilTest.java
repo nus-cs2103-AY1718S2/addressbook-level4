@@ -142,6 +142,6 @@ public class XmlUtilTest {
      * to {@code XmlAdaptedTask}
      * objects.
      */
-    @XmlRootElement(name = "activity")
+    @XmlRootElement(name = "task")
     private static class XmlAdaptedTaskWithRootElement extends XmlAdaptedTask {}
 }

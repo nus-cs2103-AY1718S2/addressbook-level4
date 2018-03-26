@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
-    <!-- Valid Activity -->
-    <activities>
+<deskboard>
+    <!-- Valid Task -->
+    <tasks>
         <name>Hans Muster</name>
-        <dateTime isPrivate="false">9482424</dateTime>
-        <remark isPrivate="false">4th street</remark>
-    </activities>
-    <!-- Activity with invalid dateTime field -->
-    <activities>
+        <dateTime>9482424</dateTime>
+        <remark>4th street</remark>
+    </tasks>
+    <!-- Task with invalid dateTime field -->
+    <tasks>
         <name>Hans Muster</name>
-        <dateTime isPrivate="false">948asdf2424</dateTime>
-        <remark isPrivate="false">4th street</remark>
-    </activities>
-</addressbook>
+        <dateTime>948asdf2424</dateTime>
+        <remark>4th street</remark>
+    </tasks>
+</deskboard>

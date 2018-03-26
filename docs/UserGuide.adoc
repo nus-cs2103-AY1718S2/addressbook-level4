@@ -61,7 +61,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * The Employees Tracker is initially locked when first time open the application, and unlock process is requiered at the beginning.
 Refer to <<Unlocking the EmployeeTracker: `unlock` `[Since v1.2]`>> for details of `unlock` command.
-* The initial default password is 'admin', and it can be changed with `setPassword`command,
+* The initial default password is 'admin', and it can be changed with `setPassword` command,
 refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> for details of `setPassword` command.
 
 === Viewing help : `help`

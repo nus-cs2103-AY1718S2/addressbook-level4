@@ -272,6 +272,14 @@ The distance property gives the distance in kilometers from the origin to destin
 
 The optimized route will the be fed into a mapping function to display the route and get the directions for the driver.
 
+==== Sorting addresses
+Once the distances have been found for all combinations of addresses on that filtered day they get stored in a Map with key: "address1_address2" and
+value: Double distance (in km). This hashmap gets sorted in order of distances and any irrelevant or duplicate calculations are removed.
+This sorted Hashmap now contains the key with the orign and destination address as well as the distance between the two.
+
+Coming soon - If the first key is A_B then the second key must be B_X where X is the address closest to B (not including A). Based on this logic a list of addresses
+will be created as the optimum delivery route.
+
 // tag::login[]
 === Login feature
 ==== Current Implementation

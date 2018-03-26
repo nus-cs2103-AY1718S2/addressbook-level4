@@ -149,19 +149,19 @@ Gives the 1st person in the last persons listing a 5-stars rating.
 `rate 2 2` +
 Gives the 2nd person in the list of Alex(s) a 2-star rating.
 
-=== Locating persons by name: `find` `[Since v1.2]`
+=== Review an employee : `review` `[Since v1.2]`
 
-=== Review an employee : `review`
-
-Updates the review of an existing person in the address book. +
-Format: `review INDEX u/REVIEWER REVIEW`
+Update the review of an existing employee in the address book. +
+Format: `review INDEX`
 
 ****
-* Rates the person at the specified `INDEX`. The index refers to the index number shown in the last persons listing. The index *must be a positive integer* 1, 2, 3, ...
-* Both INDEX and REVIEW must be provided.
-* Existing revie will be updated to the input REVIEW.
-* REVIEW can contain any character with no length limitation
-* REVIEW will be tied to a REVIEWER
+* Rate the person at the specified `INDEX`. +
+The index refers to the index number shown in the last persons listing. +
+The index *must be a positive integer*, i.e. 1, 2, 3, ...
+* A pop-up dialog box will appear after user executes the command. +
+The dialog box will prompt the user to enter the review.
+* The review can contain any character without length limitation.
+* A review will be tied to a single reviewer. [Implemented in V1.4]
 ****
 
 [NOTE]
@@ -173,42 +173,51 @@ Format: `review INDEX u/REVIEWER REVIEW`
 Examples:
 
 * `list` +
-`review 1 u/John Good Worker` +
-Gives the 1st person in the last persons listing a review "Good Worker".
+`review 1` +
+Gives the 1st employee in the last persons listing a review. +
+The review will be based on the input in the pop-up dialog box.
 * `find n/Alex` +
-`rate 2 u/John Lazy` +
-Gives the 2nd person in the list of Alex(s) a review "Lazy".
+`rate 2` +
+Gives the 2nd employee in the list of Alex(s) a review. +
+The review will be based on the input in the pop-up dialog box.
 
-=== Locating persons by name: `find`
+=== Locating persons: `find`
 
-Finds persons whose names or tags contain any of the given keywords. +
-Format: `find (n/NAME_KEYWORDS | t/TAG_KEYWORDS)  [n/MORE_KEYWORDS] [t/MORE_KEYWORDS]`
+Finds persons whose name, tags, rating, or all of those contain any of the given keyphrases. +
+Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/MORE_NAME_KEYPHRASE]... [t/MORE_TAG_KEYPHRASE]... [r/MORE_RATING_KEYPHRASE]...`
 
 ****
 * The search is case insensitive. +
-e.g. `n/hans` will match `Hans`
-* The order of the keywords does not matter. +
+e.g. `n/hANs` will match `Hans`
+* The order of the keyphrase does not matter. +
 e.g. `n/Hans Bo` will match `Bo Hans`
-* Both name and tag are searched (i.e. `AND` or intersection). +
-e.g. `n/Hans Bo t/Friends`
-will match `Hans` with tag `Friends` but not `Bo` with tag `Friends` or `Hans` with tag `Enemy`
-* Only full words will be matched e.g. +
-`n/Han` will not match `Hans`
+* The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order. +
+e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
+* The search only matches full word +
+e.g. `n/Han` will not match `Hans`
+* Searching by multiple criteria will yield the result of person that match all the criterias. +
+e.g. +
+** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Friends` but not `Hans Bo` with tag `Enemy` or `John Doe` with tag `Friends` +
+** `n/Hans Bo n/John Doe t/Sales t/Marketing` will match only `Hans Bo | Sales` or `Hans Bo | Marketing` or `John Doe | Sales` or `John Doe | Marketing`
 ****
 
 Examples:
 
 * `find n/John` +
-Returns any person having names `John`. +
+Returns all persons having name `John`. +
 e.g. `john` and `John Doe`
 * `find n/Betsy Tim John` +
-Returns any person having names `Betsy Tim John`
+Returns all persons with name that contains `Betsy Tim John` without any sequential order. +
+e.g. `Caroline John Tim Betsy` and `Betsy Tim John`
 * `find n/Betsy n/Tim n/John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns all persons with name that contains either `Betsy`, `Tim`, or `John` +
+e.g. `Betsy`, `Tim`, `John`, `Betsy Toe`, `John Cook`, and `Tim John`
 * `find n/John t/Friends Colleagues` +
-Returns any person having both names `John` and both tags `Friends` and `Colleagues`
+Returns all persons with both name `John` and both tags `Friends` and `Colleagues` +
+e.g. `John | Friends, Colleagues`
 * `find n/John t/Friends t/Colleagues` +
-Returns any person having both names `John` and either tags `Friends` or `Colleagues`
+Returns any person having both names `John` and either tags `Friends` or `Colleagues` +
+e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`, and `John Dare | Friends, Colleagues, OweMoneys`
 
 === Deleting a person : `delete`
 
@@ -411,8 +420,6 @@ Different tags will perform different colours for clarification
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-=== Searching employees by rating `[coming in v2.0]`
 
 === editing a timetable entry `[coming in v2.0]`
 

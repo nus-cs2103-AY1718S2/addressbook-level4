@@ -41,5 +41,5 @@ public class AppointmentCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && appointment.equals(card.appointment);
     }
-    
+
 }

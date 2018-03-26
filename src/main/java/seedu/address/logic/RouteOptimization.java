@@ -15,15 +15,15 @@ import seedu.address.model.person.Person;
  */
 public class RouteOptimization {
 
-    // when filter the data and run the map or route function we can call this class to get the optimized route that can
-    // then be passed into the mapping in UI
-
-
-    //Get Addresses
-    public Map<String, String> getAddresses(Model model) {
+    /**
+     *
+     * @param model
+     * @return
+     */
+    public List<String> getAddresses(Model model) {
         List<Person> lastShownList = model.getFilteredPersonList();
         List<String> filteredAddresses = new ArrayList<>();
-        Map<String, String> filtered = new HashMap<>();
+        List<String> filtered = new ArrayList<>();
         int stringCutIndex;
         String addressWithoutUnit;
 
@@ -39,7 +39,7 @@ public class RouteOptimization {
                 addressWithoutUnit = addressValue;
             }
 
-            filtered.put(name, addressWithoutUnit);
+            filtered.add(addressWithoutUnit);
         }
 
         //filtered address is this list of address that we need to optimize
@@ -48,23 +48,25 @@ public class RouteOptimization {
 
     }
 
-    public Map<String, Double> getAllDistances(Map<String, String> filtered) {
+    /**
+     *
+     * @param filtered
+     * @return
+     */
+    public Map<String, Double> getAllDistances(List<String> filtered) {
         Map<String, Double> allDistances = new HashMap<>();
         GetDistance distance = new GetDistance();
+        List<Double> test = new ArrayList<>();
+        List<String> route = new ArrayList<>();
 
-        for (Map.Entry<String, String> entry1 : filtered.entrySet()) {
-            String key1 = entry1.getKey();
-            int hash1 = System.identityHashCode(key1);
-            String value1 = entry1.getValue();
-            // need the next value not the same value
-            for (Map.Entry<String, String> entry2 : filtered.entrySet()) {
 
-                String key2 = entry2.getKey();
-                if (hash1 > System.identityHashCode(key2)) {
-                    continue;
-                }
-                String value2 = entry2.getValue();
-                allDistances.put(labelRoutes(value1, value2, filtered), distance.getDistance(value1, value2));
+        for (int i = 0; i < filtered.size(); i++) {
+            String add1 = filtered.get(i);
+            for (int j = 1; j < filtered.size(); j++) {
+                String add2 = filtered.get(j);
+                test.add(distance.getDistance(add1, add2));
+                route.add(labelRoutes(add1, add2));
+                allDistances.put(labelRoutes(add1, add2), distance.getDistance(add1, add2));
             }
         }
         return allDistances;
@@ -72,26 +74,28 @@ public class RouteOptimization {
 
     /**
      *
-     * @param origin - starting point
-     * @param destination - ending point
-     * @param filtered - map of person and their address
+     * @param allDistances
      * @return
      */
+    public Map<String, Double> sortDistances(Map<String, Double> allDistances) {
+        SortAddresses sorting = new SortAddresses();
+        Map<String, Double> sortedDistances = new HashMap<>();
+        sortedDistances = sorting.sortByComparator(allDistances);
+        sorting.printMap(sortedDistances);
+        return sortedDistances;
+    }
 
-    public String labelRoutes(String origin, String destination, Map<String, String> filtered) {
-        String originKey = "";
-        String destinationKey = "";
+    /**
+     *
+     * @param origin - starting point
+     * @param destination - ending point
+     * @return
+     */
+    public String labelRoutes(String origin, String destination) {
+
         String routeKey;
-        //only works if unique key val pair
-        for (Map.Entry<String, String> entry : filtered.entrySet()) {
-            if (origin.equals(entry.getValue())) {
-                originKey = entry.getKey();
-            }
-            if (destination.equals(entry.getValue())) {
-                destinationKey = entry.getKey();
-            }
-        }
-        routeKey = originKey + "_" + destinationKey;
+        routeKey = origin + "_" + destination;
+
         return routeKey;
     }
 }

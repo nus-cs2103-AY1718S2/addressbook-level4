@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import seedu.address.logic.parser.FilterRange;
 
 /**
- * A Predicate testing whether  a person has his/her expected graduation year in the keywords range
+ * A Predicate testing whether a person has his/her expected graduation year in the keywords range
  */
 public class ExpectedGraduationYearInKeywordsRangePredicate implements Predicate<Person> {
     private final String low;

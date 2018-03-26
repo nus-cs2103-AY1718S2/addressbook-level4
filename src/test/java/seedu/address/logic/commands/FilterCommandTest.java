@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.FIONA;
@@ -63,24 +64,52 @@ public class FilterCommandTest {
     @Test
     public void execute_noPersonsGraduationYear_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FilterCommand command = prepareCommand("2017");
+        FilterCommand command = prepareCommandForExpectedGraduationYearPredicate("2017");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_moderateGraduationYear_somePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
-        FilterCommand command = prepareCommand("2019-2020");
+        FilterCommand command = prepareCommandForExpectedGraduationYearPredicate("2019-2020");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, CARL, DANIEL,  FIONA));
     }
 
+    @Test
+    public void execute_noRating_noPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        FilterCommand command = prepareCommandForRatingPredicate("1.0");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_moderateRating_somePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        FilterCommand command = prepareCommandForRatingPredicate("2.0-5.0");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON));
+    }
+
     /**
-     * Parses {@code userInput} into a {@code FindCommand}.
+     * Parses {@code userInput} used for expected graduation year into a {@code FindCommand}.
      */
-    private FilterCommand prepareCommand(String userInput) {
+    private FilterCommand prepareCommandForExpectedGraduationYearPredicate(String userInput) {
         try {
             FilterCommand command =
                     new FilterCommand(FilterUtil.parseExpectedGraduationYear(userInput));
+            command.setData(model, new CommandHistory(), new UndoRedoStack());
+            return command;
+        } catch (IllegalValueException ive) {
+            throw new AssertionError("This should not be reachable.");
+        }
+    }
+
+    /**
+     * Parses {@code userInput} for rating into a {@code FindCommand}.
+     */
+    private FilterCommand prepareCommandForRatingPredicate(String userInput) {
+        try {
+            FilterCommand command =
+                    new FilterCommand(FilterUtil.parseRating(userInput));
             command.setData(model, new CommandHistory(), new UndoRedoStack());
             return command;
         } catch (IllegalValueException ive) {

@@ -60,7 +60,6 @@ public class XmlDeskBoardStorageTest {
          */
     }
 
-    // TODO: 3/26/2018 make equivalent tests for Event
     @Test
     public void readDeskBoard_invalidActivityDeskBoard_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
@@ -73,7 +72,9 @@ public class XmlDeskBoardStorageTest {
         readDeskBoard("invalidAndValidActivityDeskBoard.xml");
     }
 
-    // @Test
+    /**
+     * Test
+     */
     public void readAndSaveDeskBoard_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempDeskBoard.xml";
         DeskBoard original = getTypicalDeskBoard();
@@ -98,7 +99,7 @@ public class XmlDeskBoardStorageTest {
         assertEquals(original, new DeskBoard(readBack));
     }
 
-        @Test
+    @Test
     public void saveDeskBoard_nullDeskBoard_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         saveDeskBoard(null, "SomeFile.xml");

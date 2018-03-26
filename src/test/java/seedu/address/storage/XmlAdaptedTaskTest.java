@@ -32,7 +32,9 @@ public class XmlAdaptedTaskTest {
             .collect(Collectors.toList());
 
     // TODO: 3/26/2018 fix bug
-    // @Test
+    /**
+     * Test
+     */
     public void toModelType_validTaskDetails_returnsTask() throws Exception {
         XmlAdaptedTask task = new XmlAdaptedTask(ASSIGNMENT2_TASK);
         assertEquals(ASSIGNMENT2_TASK, task.toModelType());

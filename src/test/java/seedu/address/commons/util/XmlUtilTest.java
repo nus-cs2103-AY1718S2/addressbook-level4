@@ -16,13 +16,16 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.DeskBoard;
 import seedu.address.storage.XmlAdaptedEvent;
-import seedu.address.storage.XmlAdaptedTask;
 import seedu.address.storage.XmlAdaptedTag;
+import seedu.address.storage.XmlAdaptedTask;
 import seedu.address.storage.XmlSerializableDeskBoard;
 import seedu.address.testutil.DeskBoardBuilder;
 import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TestUtil;
 
+/**
+ * Tests {@code XmlUtil} read and save methods
+ */
 public class XmlUtilTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlUtilTest/");

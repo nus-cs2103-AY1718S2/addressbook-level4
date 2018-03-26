@@ -24,7 +24,9 @@ public class XmlSerializableDeskBoardTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    // @Test
+    /**
+     * Test
+     */
     public void toModelType_typicalActivitiesFile_success() throws Exception {
         XmlSerializableDeskBoard dataFromFile = XmlUtil.getDataFromFile(TYPICAL_ACTIVITIES_FILE,
                 XmlSerializableDeskBoard.class);

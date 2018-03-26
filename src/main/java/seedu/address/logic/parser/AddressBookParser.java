@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddToDoCommand;
 import seedu.address.logic.commands.ChangeTagColorCommand;
+import seedu.address.logic.commands.CheckToDoCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -20,6 +21,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnCheckToDoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -62,6 +64,12 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+        case CheckToDoCommand.COMMAND_WORD:
+            return new CheckToDoCommandParser().parse(arguments);
+
+        case UnCheckToDoCommand.COMMAND_WORD:
+            return new UnCheckToDoCommandParser().parse(arguments);
+
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
@@ -103,7 +111,6 @@ public class AddressBookParser {
         case ChangeTagColorCommand.COMMAND_WORD:
         case ChangeTagColorCommand.COMMAND_ALIAS:
             return new ChangeTagColorCommandParser().parse(arguments);
-
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

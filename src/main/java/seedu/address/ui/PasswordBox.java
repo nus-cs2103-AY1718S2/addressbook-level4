@@ -35,7 +35,7 @@ public class PasswordBox extends UiPart<Region> {
     private final Model model;
 
     @FXML
-    private PasswordField commandTextField;
+    private PasswordField passwordTextField;
 
     public PasswordBox(Storage storage, Model model) {
         super(FXML);
@@ -44,7 +44,7 @@ public class PasswordBox extends UiPart<Region> {
         this.model = model;
 
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        passwordTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
     }
 
     /**
@@ -63,8 +63,8 @@ public class PasswordBox extends UiPart<Region> {
      * positions the caret to the end of the {@code text}.
      */
     private void replaceText(String text) {
-        commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        passwordTextField.setText(text);
+        passwordTextField.positionCaret(passwordTextField.getText().length());
     }
 
     /**
@@ -74,9 +74,9 @@ public class PasswordBox extends UiPart<Region> {
     private void handlePasswordInputChanged() {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
-        String input = commandTextField.getText();
+        String input = passwordTextField.getText();
         try {
-            commandTextField.setText("");
+            passwordTextField.setText("");
             addressBookOptional = storage.readAddressBook(new Password(input));
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
@@ -100,14 +100,14 @@ public class PasswordBox extends UiPart<Region> {
      * Sets the command box style to use the default style.
      */
     private void setStyleToDefault() {
-        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        passwordTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
     /**
      * Sets the command box style to indicate a failed command.
      */
     private void setStyleToIndicateCommandFailure() {
-        ObservableList<String> styleClass = commandTextField.getStyleClass();
+        ObservableList<String> styleClass = passwordTextField.getStyleClass();
 
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;

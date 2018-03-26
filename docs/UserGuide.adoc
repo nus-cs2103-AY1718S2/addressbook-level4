@@ -24,6 +24,8 @@ Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
+=== Setting up
+
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
@@ -55,8 +57,44 @@ exits the app.
 Refer to <<Features>> for details of each command.
 ****
 
-[[Features]]
 == Features
+
+=== The User Interface
+==== Knowing the components
+
+_Figure 2_ shows the 6 major components of the user interface of Employees Tracker:
+
+. Command Box:where you type in commands
+. Result Display Box: where Employees Tracker shows text result to you
+. Employees List Panel: where the list of all employees is shown
+. Employee's Profile Panel: where the details of the selected employee is shown
+. Notification cards: where Employees Tracker reminds you about ended events
+. Notification panel: where hidden notification cards are stored
+
+.User Interface
+image::UiLabelled.jpg[width="790"]
+
+==== Reading the result display box
+
+The result display box shows 3 types of information:
+
+* Error messages, if the command you entered does not exists or does not match the pre-defined format.
+* Hints about the format and usage of the command, if you entered a command in the wrong format.
+* Statuses of the Employee Tracker, if your command is processed successfully.
+
+[NOTE]
+If the result display box shows text in red, it means that you have entered an non-existing command or a command that does not follow its pre-defined format.
+
+Different tags will perform different colours for clarification
+
+=== Data storage
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+
+[[Commands]]
+== Commands
 
 ====
 *Command Format*
@@ -67,18 +105,34 @@ Refer to <<Features>> for details of each command.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Login process : `unlock` `[Since v1.3]`
+=== Logging in : `unlock`
+Unlocks the Employee Tracker. +
+Format: `unlock PASSWORD`
 
-* The Employees Tracker is initially locked when first time open the application, and unlock process is requiered at the beginning.
-Refer to <<Unlocking the EmployeeTracker: `unlock` `[Since v1.2]`>> for details of `unlock` command.
-* The initial default password is 'admin', and it can be changed with `setPassword` command,
-refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> for details of `setPassword` command.
+[NOTE]
+====
+* The Employees Tracker is locked when Employee Tracker is opened.
+* The initial default password is 'admin', refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> if you want to change your password.
+====
+
+****
+* Unlock the EmployeeTracker with the PASSWORD which match the application's unlock password.
+* PASSWORD is requiered.
+* The PASSWORD is a string that can contain any character.
+* The default PASSWORD is `admin`.
+****
+
+Examples:
+
+* `unlock 123` +
+Unlock the address book with password: 123 (which is also the application's unlock password)
 
 === Viewing help : `help`
 
+Shows the user guide. +
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding an employee: `add`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -107,7 +161,7 @@ Format: `list`
 Rating will be shown as `-` if the person is yet to be rated.
 ====
 
-image::Ui.png[width="790"]
+image::employeesList.png[width="790"]
 _Figure 3.3: List of persons_
 
 
@@ -131,7 +185,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Rating a person : `rate` `[Since v1.2]`
+=== Rating a person : `rate`
 
 Updates the rating of an existing person in the address book. +
 Format: `rate INDEX RATING`
@@ -159,7 +213,7 @@ Gives the 1st person in the last persons listing a 5-stars rating.
 `rate 2 2` +
 Gives the 2nd person in the list of Alex(s) a 2-star rating.
 
-=== Reviewing an employee : `review` `[Since v1.2]`
+=== Reviewing an employee : `review`
 
 Assigns a review to an existing employee in the address book. +
 Format: `review INDEX`
@@ -191,22 +245,17 @@ The review will be based on the input in the pop-up dialog box.
 Gives the 2nd employee in the list of Alex(s) a review. +
 The review will be based on the input in the pop-up dialog box.
 
-=== Locating employees: `find`
+=== Searching for employees: `find`
 
 Finds employees whose name, tags, rating, or all of those contain any of the given keyphrases. +
 Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...`
 
 ****
-* The search is case insensitive. +
-e.g. `n/hANs` will match `Hans`
-* The order of the keyphrase does not matter. +
-e.g. `n/Hans Bo` will match `Bo Hans`
-* The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order. +
-e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
-* The search only matches full word +
-e.g. `n/Han` will not match `Hans`
-* Searching by multiple criteria will yield the result of employees that match all the criterias. +
-e.g. +
+* The search is case insensitive, e.g. `n/hANs` will match `Hans`
+* The order of the keyphrase does not matter, e.g. `n/Hans Bo` will match `Bo Hans`
+* The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order, e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
+* The search only matches full wor, e.g. `n/Han` will not match `Hans`
+* Searching by multiple criteria will yield the result of employees that match all the criterias, e.g. +
 ** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Friends` but not `Hans Bo` with tag `Enemy` or `John Doe` with tag `Friends` +
 ** `n/Hans Bo n/John Doe t/Sales t/Marketing` will match only `Hans Bo | Sales` or `Hans Bo | Marketing` or `John Doe | Sales` or `John Doe | Marketing`
 ****
@@ -329,13 +378,14 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Locking the EmployeeTracker temporary: `lock` `[Since v1.2]`
+=== Locking the EmployeeTracker temporary: `lock`
 
-Lock the employee temporary+
+Locks the Employee Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
 Format: `lock`
 
 ****
-* Lock the EmployeeTracker.
+* The `Employees List Panel` and `Employee's Profile Panel` will be emptied when Employees Tracker is locked.
+* Employee Tracker will not respond to any command other than `unlock` when it is locked.
 ****
 
 Examples:
@@ -343,31 +393,16 @@ Examples:
 * `lock` +
 Lock the address book.
 
-=== Unlocking the EmployeeTracker: `unlock` `[Since v1.2]`
+=== Setting the application unlock password: `setPassword`
 
-Unlock the EmployeeTracker +
-Format: `unlock PASSWORD`
-
-****
-* Unlock the EmployeeTracker with the PASSWORD which match the application's unlock password.
-* PASSWORD is requiered.
-* The PASSWORD is a String that can contain any character.
-****
-
-Examples:
-
-* `unlock 123` +
-Unlock the address book with password: 123 (which is also the application's unlock password)
-
-=== Setting the application unlock password: `setPassword` `[Since v1.3]`
-
-Set Employees Tracker's password +
+Sets Employees Tracker's password. +
 Format: `setPassword OLD_PASSWORD NEW_PASSWORD`
 
 ****
 * Set Employees Tracker's password from OLD_PASSWORD to NEW_PASSWORD.
 * OLD_PASSWORD and NEW_PASSWORD are requiered, and OLD_PASSWORD should match current application unlock password.
 * OLD_PASSWORD and NEW_PASSWORD are of String type that can contain any character.
+* The default OLD_PASSWORD is `admin`.
 ****
 
 Examples:
@@ -375,15 +410,16 @@ Examples:
 * `setPassword 123 qwe` +
 Set Employees Tracker's password from '123' (current application password) to 'qwe'.
 
-=== Sorting the employees by any existing field: `sort` `[Since v1.2]`
+=== Sorting the employees by any existing field: `sort`
 
-Sort existing employees by any field +
+Sorts existing employees by any field +
 Format: `sort FIELD`
 
 ****
-* Sort the employees by any existing field in alphabetical order, note that rate field will be sorted in descending order
-* The field entered must be one of the following: name, phone, email, address, rate, tag
-* Sorting is case-insensitive
+* Sort the employees by any existing field in alphabetical order, note that rate field will be sorted in descending order.
+* The field entered must be one of the following: `name`, `phone`, `email`, `address`, `rate`, `tag`.
+* Sorting is case-insensitive.
+* The sorted results is stored permanently. If you want to revert to the previous ordering, please refer to <<Undoing previous command : `undo`>>
 ****
 
 Examples:
@@ -393,7 +429,7 @@ Sort the employees by name in alphabetical order (case-insensitive).
 * `lock rate` +
 Sort the employees by rating in descending order.
 
-=== Adding an event on one employee's timetable: `addEvent` `[Since v1.2]`
+=== Adding an event on one employee's timetable: `addEvent`
 
 Add an event to the employee identified by the index number used in the last person listing. +
 Format: `addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION`
@@ -420,24 +456,51 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== User Interface optimisation
+=== Hiding a notification : `hide 1`
 
-User will receive alert message in red colours when typing in an illegal message
+Hides the notification card identified by the index number used in notification cards. +
+Format: `hide INDEX`
 
-Different tags will perform different colours for clarification
+[NOTE]
+The hidden notification card will be stored in the notification panel.
 
-=== Saving the data
+=== Dismissing a notification : `dismiss`
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+Dismisses thea notification identified by the index number used in notification cards. +
+Format: `dismiss INDEX`
 
-=== editing a timetable entry `[coming in v2.0]`
+=== Toggling the notification panel : `noti`
 
-=== deleting a timetable entry `[coming in v2.0]`
+Shows the notification panel if it is hidden; hides the notification panel if it is shown. +
+Format: `noti`
 
-=== Logging in `[coming in v2.0]`
+=== Reminding an employee through email : `email`
 
-=== Adding timetable entry in mass to many employees' timetable at once `[coming in v2.0]`
+Opens up the email app of the computer to send a reminder email about the notification identified by the index number used in notification cards. +
+Format: `email INDEX`
+
+[NOTE]
+=====
+* You will be brought straight to the email composing interface of your email app.
+* The recipient of the email will be set to the email address of the employee who was assigned the event.
+=====
+
+=== Reminding an employee through WhatsApp : `whatsapp`
+
+Opens up the WhatsApp webpage to send a reminder message about the notification identified by the index number used in notification cards. +
+Format: `whatsapp INDEX`
+
+[NOTE]
+=====
+* You will be brought straight to the WhatsApp webpage that sends message to the phone number of the employee who was assigned the event.
+* You may be required to scan a QR code from your phone to login to WhatsApp webpage.
+=====
+
+=== editing a event `[coming in v2.0]`
+
+=== deleting a event `[coming in v2.0]`
+
+=== Adding an event in mass to many employees' timetable at once `[coming in v2.0]`
 
 === Having my own timetable `[coming in v2.0]`
 
@@ -449,32 +512,6 @@ There is no need to save manually.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
-
-=== Exporting the data `[coming in v1.4]`
-
-=== Importing the data `[coming in v1.4]`
-
-=== Receiving notification on timetable entry deadline
-
-==== Receiving notification in app
-
-In EmployeeTracker, a notification card will pop up when a timetable entry expires.
-
-==== Receiving information via Windows
-
-In Windows 10 OS computers,even if you minimize the app, you will still receive notifications on timetable entry expiry through Windows notification sender.
-
-==== Receiving a list of notifications in a sub-window
-
-Suppose you close or minimize the EmployeeTracker, and you missed some notifications on timetable entries expiry.
-
-In such case, you will be greeted by a sub-window showing a list of notifications that you have missed.
-
-You can do perform some simple commands in the sub-window:
-
-* dismissing one of notification
-* reminding a person about timetable entry expiry through email
-* reminding all persons involved in the list of notifications that they have timetable entry(s) expired
 
 == FAQ
 

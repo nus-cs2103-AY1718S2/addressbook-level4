@@ -111,7 +111,7 @@ public class AddressBookParser {
             return new PasswordCommandParser().parse(arguments);
 
         case BirthdaysCommand.COMMAND_WORD:
-            return new BirthdaysCommand();
+            return new BirthdaysCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

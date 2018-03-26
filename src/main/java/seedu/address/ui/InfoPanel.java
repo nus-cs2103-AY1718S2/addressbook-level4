@@ -32,11 +32,7 @@ public class InfoPanel extends UiPart<Region> {
     public InfoPanel() {
         super(FXML);
 
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        birthdayList = new BirthdayList(null);
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        fillInnerParts();
 
         browserPlaceholder.toFront();
         registerAsAnEventHandler(this);
@@ -44,6 +40,14 @@ public class InfoPanel extends UiPart<Region> {
 
     public void freeResources() {
         browserPanel.freeResources();
+    }
+
+    void fillInnerParts(){
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        birthdayList = new BirthdayList(null);
+        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
     }
 
     @Subscribe

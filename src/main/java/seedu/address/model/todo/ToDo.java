@@ -66,7 +66,9 @@ public class ToDo {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getContent());
+        builder.append(getContent())
+                .append(" Status: ")
+                .append(getContent());
         return builder.toString();
     }
 }

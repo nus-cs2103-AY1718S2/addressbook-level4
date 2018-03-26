@@ -7,8 +7,9 @@ import com.calendarfx.view.CalendarView;
 
 import com.google.common.eventbus.Subscribe;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RefreshCalendarEvent;
 
 /**
  * The Calendar Panel of the App.
@@ -22,7 +23,7 @@ public class CalendarPanel {
         calendarPage = new CalendarView();
         calendarPage.getCalendarSources().setAll(calendar);
         configurCalendarPage();
-        //registerAsAnEventHandler(this);
+        EventsCenter.getInstance().registerHandler(this);
     }
 
     /**
@@ -46,8 +47,8 @@ public class CalendarPanel {
 
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    private void handleRefreshClendarEvent(RefreshCalendarEvent event) {
+        calendarPage.refreshData();
     }
 
     public CalendarView getCalendarPage() {

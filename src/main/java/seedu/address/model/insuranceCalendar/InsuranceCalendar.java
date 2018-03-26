@@ -26,6 +26,27 @@ public class InsuranceCalendar {
         calendarSource.getCalendars().add(calendar);
         appointmentEntries = new ArrayList<>();
     }
+    /**
+     * Clear all appointments to the calendar.
+     *
+     */
+    public void clearAppointments () {
+        appointmentEntries.clear();
+        calendar.clear();
+    }
+
+    /**
+     * copy all appointments to the calendar given a new calendar.
+     *
+     */
+    public void copyAppointments (InsuranceCalendar copyingCalendar) {
+
+        for (AppointmentEntry entry: copyingCalendar.getAppointmentEntries()) {
+            AppointmentEntry addedEntry = new AppointmentEntry(entry);
+            calendar.addEntry(addedEntry.getAppointmentEntry());
+            appointmentEntries.add(addedEntry);
+        }
+    }
 
     /**
      * Adds an appointment to the calendar.
@@ -36,8 +57,10 @@ public class InsuranceCalendar {
         if (contains(entry)) {
             throw new DuplicateAppointmentException();
         }
-        calendar.addEntry(entry.getAppointmentEntry());
+
+        calendar.addEntry(new AppointmentEntry(entry).getAppointmentEntry());
         appointmentEntries.add(entry);
+
     }
 
     /**

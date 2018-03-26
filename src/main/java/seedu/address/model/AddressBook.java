@@ -32,7 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private InsuranceCalendar calendar;
+    private final InsuranceCalendar calendar;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -69,7 +69,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void setCalendar(InsuranceCalendar calendar) {
-        this.calendar = calendar;
+        this.calendar.clearAppointments();
+        this.calendar.copyAppointments(calendar);
     }
 
     /**

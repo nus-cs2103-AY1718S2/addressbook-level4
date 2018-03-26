@@ -29,6 +29,13 @@ public class AppointmentEntry {
         givenTitle = title;
     }
 
+    public AppointmentEntry(AppointmentEntry clonedEntry) {
+        requireAllNonNull(clonedEntry);
+        appointmentEntry = new Entry(clonedEntry.getGivenTitle(), clonedEntry.getInterval());
+        interval = clonedEntry.getInterval();
+        givenTitle = clonedEntry.getGivenTitle();
+    }
+
     public LocalDate getStartDate() {
         return interval.getStartDate();
     }
@@ -43,6 +50,10 @@ public class AppointmentEntry {
 
     public String getGivenTitle() {
         return givenTitle;
+    }
+
+    public Interval getInterval() {
+        return interval;
     }
 
     @Override

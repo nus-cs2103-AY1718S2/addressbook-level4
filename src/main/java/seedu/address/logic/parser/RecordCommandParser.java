@@ -39,7 +39,7 @@ public class RecordCommandParser implements Parser<RecordCommand> {
         }
 
         try {
-            recordIndex = ParserUtil.parseIndex((argMultimap.getValue(PREFIX_DATE)).get());
+            recordIndex = ParserUtil.parseIndex((argMultimap.getValue(PREFIX_INDEX)).get());
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
@@ -56,7 +56,7 @@ public class RecordCommandParser implements Parser<RecordCommand> {
         String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
         String treatment = (argMultimap.getValue(PREFIX_TREATMENT)).get();
 
-        Record record = new Record(date, illness, symptom, treatment);
+        Record record = new Record(date, symptom, illness, treatment);
 
         return new RecordCommand(patientIndex, recordIndex.getZeroBased(), record);
     }

@@ -14,19 +14,20 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-Medeina is a desktop application developed for veterinarians and their assistants to manage contacts, pet patient list and appointments seamlessly.
 
-It is a specialized application that provides dual functionality of an address book and a task manager, to assist veterinarians and their assistants in their day-to-day practices.
- 
+Medeina is a desktop application developed for **veterinarians and their assistants** to manage contacts, pet patient list and appointments seamlessly.
+
+It is a specialized application that provides **dual functionality** of an address book and a task manager, to assist veterinarians and their assistants in their day-to-day practices.
+
 Medeina is written in the Java programming language and conforms to the Object-Oriented Programming (OOP) style. This is to ensure that future upgrades can be integrated easily.
 
 == Key Features
 
-Customized appointment tracking for veterinarians and their assistants:: Medeina offers a clean and organized user interface to track your appointments easily. You can expect an overview of upcoming appointments, to detailed information on pet patient involved and point of contact for an appointment.
+Customized appointment tracking:: Medeina offers a clean and organized user interface to track your appointments easily. You can expect an overview of upcoming appointments, to detailed information on pet patient involved and point of contact for an appointment.
 
 Easily manage dependencies amongst contacts, pet patient list and appointments:: You no longer need to worry about mistyping a pet's name and/or owner's information when making a new appointment. Medeina will check for you.
 
-Simple and intuitive commands for users:: Medeina keeps to simple and intuitive commands to make things easy for you. Be it adding an appointment, new contact or new patient, you just need to remember one command: `add`. For users familiar with CLI or Windows command prompt, rejoice! You will find much familiarity in Medeina's list of commands.
+Simple and intuitive user commands:: Medeina keeps to simple and intuitive commands to make things easy for you. Be it adding an appointment, new contact or new patient, you just need to remember one command: `add`. For users familiar with Command Line Interface (CLI) or Windows command prompt, rejoice! You will find much familiarity in Medeina's list of commands.
 
 Convenient tagging:: Use tags to easily distinguish different types of contacts, pet patients and appointments at a glance.
 

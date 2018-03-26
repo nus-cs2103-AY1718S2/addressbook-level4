@@ -374,11 +374,9 @@ image::StorageClassDiagram.png[width="800"]
 ==== Design Considerations
 
 ===== Aspect: How alias list is maintained
-
-* **Alternative 1 (current choice):** Create an `UniqueAliasList` in the `alias` model
-
 image::ModelClassDiagram.png[width="800"]
 
+* **Alternative 1 (current choice):** Create an `UniqueAliasList` in the `alias` model
 ** Pros: Reduce coupling between `Alias` and other commands. This design follows the Open Closed Principle where a command is open to extension and closed to modification.
 ** Cons: More difficult to implement as need to design an instance of a `UniqueAliasList`.
 * **Alternative 2:** Create a HashMap of `Alias` in each command class
@@ -388,11 +386,11 @@ image::ModelClassDiagram.png[width="800"]
 ===== Aspect: How alias is stored
 
 * **Alternative 1 (current choice):** Store as `XmlAdaptedAlias` and save to `addressbook.xml`
-** Pros:
-** Cons:
+** Pros: Reduces files where data need to be stored, as all the user saved data is in one file.
+** Cons: Need to design a section in `addressbook.xml` for saving alias data with the other data like person data.
 * **Alternative 2:** Store in `UserPrefsStorage`
-** Pros:
-** Cons:
+** Pros: Easier to implement.
+** Cons: Affects Import command, to import `UserPrefsStorage` as well, than just importing `addressbook.xml`
 // end::customisedalias[]
 
 // tag::dataencryption[]
@@ -485,30 +483,41 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 
 === Birthdays feature
 ==== Current Implementation
-Birthdays Command uses the existing Events system and stacks a additional StackPane over the existing BrowserPane.
+Birthdays Command uses the existing Events system and sends an event.
 
-Calling `birthdays` command will create a event, which retrieves the current UniquePersonList from Model as an observableList to the UI
-The BirthdayList UI class then converts the list into an editable list.
-It further parses the day and month of the given Birthday and sorts the list.
-Afterwards, it brings the birthdayPlaceholder to the front, replacing the browserPlaceholder.
+image::LogicComponentBirthdaysSequenceDiagram.png[width="800"]
 
+The UI component will then receive the event and handle the data.
+
+image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: How BirthdayList parses its Data
+===== Aspect: How the BirthdayList UI component obtains and parses its data
 
-* **Alternative 1: Updating Birthday Class to have separate classes Day and Month.
-** Pros: More modularity
-** Cons: Not apparent in usage by User. Functionality remains the same but code becomes more coupled.
-* **Alternative 2: Use Natural Language Processing for parsing Birthday
-** Pros: Users can enter their birthday in any format
-** Cons: External API will be used. May introduce unforeseen bugs
+* **Alternative 1 (current choice)**: Let UI component handle the parsing of UniquePersonList obtained from Event
+** Pros: Isolated and independent within BirthdayList UI component. Less overhead.
+** Cons: Not intuitive to new developers as parsing of data is not expected in UI.
+* **Alternative 2 (current choice)**: Let Parser class handle the parsing of UniquePersonList obtained from Event
+** Pros: More modularity.
+** Cons: Not apparent in usage by User. Functionality remains the same but coupling between UI and Parser increases.
 
-===== Aspect: How BirthdayList presents its data
-* ** Alternative 1: Notification at the start of app if a birthday is occuring today
-** Pros: More intuitive for User. Provides additional functionality for user stories
+===== Aspect: How User can open Birthday List
+
+* **Alternative 1 (current choice)**: Manual command "birthdays"
+** Pros: Easy to implement seperately as a command.
+** Cons: Not very user-friendly.
+* ** Alternative 2:** Notification at the start of app if a birthday is occurring today
+** Pros: Additional useful functionality for User.
 ** Cons: Currently, StardyTogether does not have settings to switch on/off the feature if implemented. May clash with encryption.
 
+===== Aspect: How User inputs the Birthday parameter in Person class
+* ** Alternative 1 (Current choice)**: Fixed format as DDMMYY
+** Pros: Less room for errors.
+** Cons: User may not like the DDMMYY format.
+* **Alternative 2:** Use Natural Language Processing
+** Pros: Users can enter their birthday in their preferred format.
+** Cons: External API will be used. May introduce unforeseen bugs.
 
 === Logging
 
@@ -682,7 +691,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student with friends |find my friend’s timetables |find common studying time with them
 
-|`* * *` |busy student |have my own shortforms of commands |type more quickly and in my own style
+|`* * *` |busy student |have short forms of commands |type more quickly
+
+|`* * *` |busy student |have my customised short forms of commands |type even quicker and in my own style
+
+|`* * *` |busy student |be able to remove my customized short forms |reuse keys
 
 |`* * *` |user |add a new person |
 
@@ -692,11 +705,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user who is concerned about privacy |have my data encrypted |ensure that no one can access my data without my permission
 
+|`* * *` |user who is concerned about privacy |change the password used |security is not compromised
+
 |`* * *` |student who studies in school |be able to find rooms that I can study in |save time finding rooms
 
 |`* * *`|user| be able to transfer data between computers |  share my data with others and change computers seamlessly
 
+|`* * *`|user who is concerned about privacy| be able to transfer encrypted data |share my data in its encrypted form
+
 |`* * *`|user with many friends| track the birthdays of my friends | not miss a friend's birthday
+
+|`* * *`|user with many friends| see all my friend's birthday in a list | know who's birthday is upcoming
+
+|`* *` |user who is lazy |be able to leave my address book unencrypted | read it without opening the application
 
 |`* *`|power user| be able to auto complete commands| I can use the application faster
 

@@ -153,15 +153,15 @@ Medeina will deletes the 2nd contact in Medeina's address book.
 
 * Type in `find -o Betsy` +
 `d 1` +
-Medeina will delete the 1st c in the results of the `find` command.
+Medeina will delete the 1st contact in the results of the `find` command.
 
 === Selecting a contact : `select` or `s`
 
-To select the person identified by the index number used in the last person listing. +
+To select the contact identified by the index number used in the last person listing. +
 The command format should be: `select INDEX` or `s INDEX`
 
 ****
-* The command selects the person and lists the appointments that she / he has made with the vet at the specified `INDEX`.
+* The command selects the contact and lists the appointments that she / he has made with the vet at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 ****
 
@@ -174,11 +174,11 @@ Examples:
 
 * Type in `list` +
 `select 2` +
-Medeina will select the 2nd person in Medeina's address book.
+Medeina will select the 2nd contact in Medeina's address book.
 
 * Type in `find Betsy` +
 `s 1` +
-Medeina will select the 1st person in the results of the `find` command.
+Medeina will select the 1st contact in the results of the `find` command.
 
 === Listing entered commands : `history` or `his`
 

@@ -14,6 +14,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Record;
+import seedu.address.model.patient.RecordList;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
@@ -83,19 +84,22 @@ public class RecordCommand extends UndoableCommand {
         }
 
         patientToEdit = lastShownList.get(patientIndex.getZeroBased());
-        editedPatient = createEditedPerson(patientToEdit, record);
+        editedPatient = createEditedPerson(patientToEdit, recordIndex, record);
     }
 
     /**
      * Creates and returns a {@code Patient} with the details of {@code patientToEdit}
      * edited with {@code record}.
      */
-    private static Patient createEditedPerson(Patient patientToEdit, Record record) {
+    private static Patient createEditedPerson(Patient patientToEdit, int recordIndex, Record record) {
         assert patientToEdit != null;
+
+        RecordList recordlist = patientToEdit.getRecordList();
+        recordlist.edit(recordIndex, record);
 
         return new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),
                 patientToEdit.getEmail(), patientToEdit.getAddress(), patientToEdit.getDob(),
-                patientToEdit.getBloodType(), patientToEdit.getRemark(), record, patientToEdit.getTags());
+                patientToEdit.getBloodType(), patientToEdit.getRemark(), recordlist, patientToEdit.getTags());
     }
 
     @Override

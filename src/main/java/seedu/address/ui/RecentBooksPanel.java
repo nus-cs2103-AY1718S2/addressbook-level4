@@ -50,7 +50,7 @@ public class RecentBooksPanel extends UiPart<Region> {
     private void setEventHandlerForSelectionChangeEvent() {
         recentBooksListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
+                    if (newValue != null && this.getRoot().isVisible()) {
                         logger.fine("Selection in recent books panel changed to : '" + newValue + "'");
                         raise(new RecentBooksSelectionChangedEvent(newValue));
                     }

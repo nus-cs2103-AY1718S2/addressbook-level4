@@ -50,7 +50,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     private void setEventHandlerForSelectionChangeEvent() {
         searchResultsListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
+                    if (newValue != null && this.getRoot().isVisible()) {
                         logger.fine("Selection in search results panel changed to : '" + newValue + "'");
                         raise(new SearchResultsSelectionChangedEvent(newValue));
                     }

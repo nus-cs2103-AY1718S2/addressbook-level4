@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTED_GRADUA
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTED_GRADUATION_YEAR_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPERIENCE_SCORE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPERIENCE_SCORE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_JOB_APPLIED_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MAJOR_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MAJOR_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -42,6 +43,7 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255").withExpectedGraduationYear("2020")
             .withMajor("Computer Science")
+            .withJobApplied("Software Engineer")
             .withRating("2.7", "3.9",
                     "2.5", "2.5")
             .withResume(formPathFromFileName("alice.pdf"))
@@ -50,6 +52,7 @@ public class TypicalPersons {
             .withAddress("311, Clementi Ave 2, #02-25").withResume(formPathFromFileName(null))
             .withEmail("johnd@example.com").withPhone("98765432").withExpectedGraduationYear("2021")
             .withMajor("Computer Engineering")
+            .withJobApplied("Software Engineer")
             .withRating("4", "4.5",
                     "3", "3.5")
             .withStatus(2).withTags("owesMoney", "friends").build();
@@ -57,12 +60,14 @@ public class TypicalPersons {
             .withEmail("heinz@example.com").withAddress("wall street")
             .withExpectedGraduationYear("2019")
             .withMajor("Computer Science")
+            .withJobApplied("Front-end Developer")
             .withRating("-1", "-1",
                     "-1", "-1").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withExpectedGraduationYear("2020")
             .withMajor("Information Security")
+            .withJobApplied("Web Security Researcher")
             .withRating("-1", "-1",
                     "-1", "-1")
             .withResume(formPathFromFileName("daniel.pdf")).build();
@@ -70,18 +75,21 @@ public class TypicalPersons {
             .withEmail("werner@example.com").withAddress("michegan ave")
             .withExpectedGraduationYear("2018")
             .withMajor("Business Analytics")
+            .withJobApplied("Big Data Analyst")
             .withRating("-1", "-1",
                     "-1", "-1").withStatus(7).build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
             .withExpectedGraduationYear("2019")
             .withMajor("Computer Science")
+            .withJobApplied("Software Engineer")
             .withRating("-1", "-1",
                     "-1", "-1").withStatus(1).build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
             .withExpectedGraduationYear("2022")
             .withMajor("Information Systems")
+            .withJobApplied("Software Engineer")
             .withRating("-1", "-1",
                     "-1", "-1")
             .withResume(formPathFromFileName("george.pdf")).withStatus(6).build();
@@ -119,6 +127,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withResume(VALID_RESUME_BOB)
             .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_BOB)
             .withMajor(VALID_MAJOR_BOB)
+            .withJobApplied(VALID_JOB_APPLIED_BOB)
             .withRating(VALID_TECHNICAL_SKILLS_SCORE_BOB, VALID_COMMUNICATION_SKILLS_SCORE_BOB,
                     VALID_PROBLEM_SOLVING_SKILLS_SCORE_BOB, VALID_EXPERIENCE_SCORE_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();

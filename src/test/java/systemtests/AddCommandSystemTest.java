@@ -11,11 +11,14 @@ import static seedu.address.logic.commands.CommandTestUtil.EXPECTED_GRADUATION_Y
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EXPECTED_GRADUATION_YEAR_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_JOB_APPLIED_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MAJOR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_RESUME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.JOB_APPLIED_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.JOB_APPLIED_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.MAJOR_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.MAJOR_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
@@ -31,6 +34,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTED_GRADUATION_YEAR_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTED_GRADUATION_YEAR_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_JOB_APPLIED_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MAJOR_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MAJOR_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -60,6 +64,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -84,7 +89,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         Person toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + EXPECTED_GRADUATION_YEAR_DESC_AMY + " "
-                + MAJOR_DESC_AMY + " " + RESUME_DESC_AMY + TAG_DESC_FRIEND + " ";
+                + MAJOR_DESC_AMY + " " + JOB_APPLIED_DESC_AMY + " " + RESUME_DESC_AMY + " " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -101,57 +106,63 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with all fields same as another person in the address book except name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
-                .withMajor(VALID_MAJOR_AMY)
+                .withMajor(VALID_MAJOR_AMY).withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY
+                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
-                .withMajor(VALID_MAJOR_AMY)
+                .withMajor(VALID_MAJOR_AMY).withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY
+                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
-                .withMajor(VALID_MAJOR_AMY)
+                .withMajor(VALID_MAJOR_AMY).withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY
+                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_BOB).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
-                .withMajor(VALID_MAJOR_AMY)
+                .withMajor(VALID_MAJOR_AMY).withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY
+                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book
         except expected graduation year -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_BOB)
-                .withMajor(VALID_MAJOR_AMY)
+                .withMajor(VALID_MAJOR_AMY).withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY
+                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book
         except major -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
-                .withMajor(VALID_MAJOR_BOB)
+                .withMajor(VALID_MAJOR_BOB).withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_BOB + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_BOB + JOB_APPLIED_DESC_AMY
+                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -161,7 +172,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with resume, command with parameters in random order -> added */
         toAdd = AMY;
         command = AddCommand.COMMAND_WORD + RESUME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY
-                + TAG_DESC_FRIEND + EMAIL_DESC_AMY + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + TAG_DESC_FRIEND + EMAIL_DESC_AMY + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
+                + JOB_APPLIED_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person, missing resume -> added */
@@ -171,7 +183,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB;
+                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB + JOB_APPLIED_DESC_BOB
+                + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person, missing tags -> added */
@@ -208,32 +221,37 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing phone -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing email -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing address -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing expected graduation year -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + MAJOR_DESC_AMY;
+                + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing major -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + JOB_APPLIED_DESC_AMY;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing job applied -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -242,47 +260,52 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid name -> rejected */
         command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid email -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: invalid expected graduation year -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + INVALID_EXPECTED_GRADUATION_YEAR_DESC + MAJOR_DESC_AMY;
+                + INVALID_EXPECTED_GRADUATION_YEAR_DESC + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, ExpectedGraduationYear.MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS);
 
         /* Case: invalid major -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + INVALID_MAJOR_DESC;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + INVALID_MAJOR_DESC + JOB_APPLIED_DESC_AMY;
         assertCommandFailure(command, Major.MESSAGE_MAJOR_CONSTRAINTS);
+
+        /* Case: invalid job applied -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + INVALID_JOB_APPLIED_DESC;
+        assertCommandFailure(command, JobApplied.MESSAGE_JOB_APPLIED_CONSTRAINTS);
 
         /* Case: invalid resume -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + INVALID_RESUME_DESC;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY +  INVALID_RESUME_DESC;
         assertCommandFailure(command, Resume.MESSAGE_RESUME_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + INVALID_TAG_DESC;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: blank resume -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + " " + PREFIX_RESUME;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + JOB_APPLIED_DESC_AMY + " " + PREFIX_RESUME;
         assertCommandFailure(command, Resume.MESSAGE_RESUME_CONSTRAINTS);
     }
 

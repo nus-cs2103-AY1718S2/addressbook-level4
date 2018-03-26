@@ -79,7 +79,8 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         currentPosition = source.getCurrentPosition().value;
         company = source.getCompany().value;
-        profilePicture = source.getProfilePicture().value;
+        profilePicture = source.getProfilePicture().filePath;
+        
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -153,7 +154,6 @@ public class XmlAdaptedPerson {
             }
         }
         final ProfilePicture profilePicture = new ProfilePicture(this.profilePicture);
-
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, currentPosition, company, profilePicture, tags);
     }

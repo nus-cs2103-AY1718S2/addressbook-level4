@@ -36,9 +36,12 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
+<<<<<<< HEAD
         this.currentPosition = currentPosition;
         this.company = company;
 
+=======
+>>>>>>> master
         if (profilePicture == null) {
             this.profilePicture = new ProfilePicture();
         } else {
@@ -117,8 +120,6 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Profile Picture: ")
-                .append(getProfilePicture())
                 .append(" Current Position: ")
                 .append(getCurrentPosition())
                 .append(" Company: ")

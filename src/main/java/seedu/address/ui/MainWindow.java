@@ -30,6 +30,7 @@ import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
+import seedu.address.commons.events.ui.ShowReviewDialogEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.theme.Theme;
@@ -302,5 +303,12 @@ public class MainWindow extends UiPart<Stage> {
         TranslateTransition enterAnimation2 = new TranslateTransition(Duration.millis(250), component);
         enterAnimation2.setByX(direction * width);
         enterAnimation2.play();
+    }
+
+    @Subscribe
+    private void showDialogPane(ShowReviewDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReviewDialog reviewDialog = new ReviewDialog();
+        reviewDialog.show();
     }
 }

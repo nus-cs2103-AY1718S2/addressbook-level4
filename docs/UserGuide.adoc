@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B4`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -347,16 +347,6 @@ Encrypts `addressbook.xml` with "test" as the key.
 
 // end::dataencryption[]
 
-=== Sorting all persons by module code: `sortCode` (coming in v2.0)
-
-Sorts all persons in the addressbook by module code in the order of A to Z. +
-Format: `sortCode`
-
-****
-* Displays full name of persons, arranged in the order of the modules they are taking.
-* There may by multiple entries for each person.
-****
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -388,7 +378,7 @@ Merges the contacts of both computers
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/010195 t/friend t/colleague`
 * *Alias* `alias [COMMAND] [ALIAS]` +
 e.g. `alias history hist`
-* *Birthday List: `birthdays`
+* *Birthday List*: `birthdays`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

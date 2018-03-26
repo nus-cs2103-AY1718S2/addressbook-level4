@@ -22,16 +22,18 @@ public class ToDo {
         this.status = new Status("undone");
     }
 
+    public ToDo(Content content, Status status) {
+        requireAllNonNull(content);
+        this.content = content;
+        this.status = status;
+    }
+
     public Content getContent() {
         return content;
     }
 
     public Status getStatus() {
         return status;
-    }
-
-    public void setStatus(Status newStatus) {
-        this.status = newStatus;
     }
 
     @Override

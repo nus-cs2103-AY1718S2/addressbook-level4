@@ -24,6 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.UniqueToDoList;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
+import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -129,6 +130,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
+    }
+
+    /**
+     * Replaces the given ToDo {@code target} in the list with {@code editedToDo}.
+     *
+     * @throws DuplicateToDoException if updating the ToDo's details causes the ToDo to be equivalent to
+     *                                  another existing ToDo in the list.
+     * @throws ToDoNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireNonNull(editedToDo);
+
+        todos.setToDo(target, editedToDo);
     }
 
     /**

@@ -14,11 +14,30 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop application developed for Veterinarians and their assistants. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java application intended for veterinarians and their assistants to manage pet patients and appointments.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code that allows future upgrades to be integrated easily (if necessary).
-* What's different from a typical task manager / address book:
-** It is customized for veterinarians and their assistants' needs
+Medeina is a desktop application developed for veterinarians and their assistants to manage contacts, pet patient list and appointments. +
+It comes with a GUI, but most of the user interactions happen using a CLI (Command Line Interface).
+
+Medeina is *written in Java OOP fashion*. It provides a *reasonably well-written* code that allows future upgrades to be integrated easily (if necessary).
+
+== Key Features
+
+* Customized appointment tracking for veterinarians and their assistants
+Medeina offers a clean and organized user interface to track your appointments easily. You can expect an overview of upcoming appointments, to detailed information on pet patient involved and point of contact for an appointment.
+
+* Easily manage dependencies amongst contacts, pet patient list and appointments
+No need to worry about mistyping a pet's name and/or owner's information when making a new appointment. Medeina will check for you. +
+
+* Convenient tagging
+Use tags to easily distinguish different types of contacts, pet patients and appointments at a glance.
+
+* Simple and intuitive commands for users
+Ever worried about having to remember many commands to use an app? Fret not, Medeina keeps to simple and intuitive commands to make things easy for you. +
+Be it adding an appointment, new contact or new patient, you just need to remember one command: `add`. +
+
+For users familiar with the Command Line Interface (CLI) and Windows command prompt, rejoice! You will find much familiarity in Medeina's list of commands. 
+
+* Runs on all mainstream OS
+Hassle-free. Get Medeina now and use it today.
 
 == Site Map
 

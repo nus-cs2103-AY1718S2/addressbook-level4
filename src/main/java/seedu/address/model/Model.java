@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -13,6 +14,12 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** {@code Predicate} that filter all person with student tag */
+    Predicate<Person> PREDICATE_SHOW_ALL_STUDENTS = person -> person.getTags().contains(new Tag("student"));
+
+    /** {@code Predicate} that filter all person with student tag */
+    Predicate<Person> PREDICATE_SHOW_ALL_TUTORS = person -> person.getTags().contains(new Tag("tutor"));
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -45,4 +52,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Delete a tag from the addressbook
+     * @param tag
+     * @throws PersonNotFoundException
+     */
+    void deleteTag (Tag tag)throws PersonNotFoundException;
 }

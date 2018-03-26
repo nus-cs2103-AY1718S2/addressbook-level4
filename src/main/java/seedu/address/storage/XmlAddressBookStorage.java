@@ -23,8 +23,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     private String filePath;
 
+    private String backupFilePath;
+
     public XmlAddressBookStorage(String filePath) {
         this.filePath = filePath;
+        this.backupFilePath = filePath + ".backup";
     }
 
     public String getAddressBookFilePath() {
@@ -77,6 +80,15 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+    }
+
+    /**
+     * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
+     * @param addressBook cannot be null
+     */
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, backupFilePath);
     }
 
 }

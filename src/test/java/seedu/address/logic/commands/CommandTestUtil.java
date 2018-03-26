@@ -5,8 +5,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LEVEL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -37,8 +42,30 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TAG_HUSBAND = "Husband";
+    public static final String VALID_TAG_FRIEND = "Friend";
+    public static final String VALID_TAG_UNUSED = "Unused";
+    public static final String SUBJECT_ENGLISH = "english";
+    public static final String SUBJECT_CHINESE = "chinese";
+    public static final String SUBJECT_CHEMISTRY = "chemistry";
+    public static final String SUBJECT_PHYSICS = "physics";
+    public static final String VALID_SUBJECT_AMY = "math";
+    public static final String VALID_SUBJECT_BOB = "english";
+    public static final String VALID_LEVEL_AMY = "lower Sec";
+    public static final String VALID_LEVEL_BOB = "upper Sec";
+    public static final String VALID_STATUS_BOB = "not matched";
+    public static final String VALID_PRICE_BOB = "113";
+    public static final String VALID_ROLE_BOB = "tutor";
+    public static final String LEVEL_LOWER_SEC = "lower Sec";
+    public static final String LEVEL_UPPER_SEC = "upper Sec";
+    public static final String LEVEL_LOWER_PRI = "lower Pri";
+    public static final String LEVEL_UPPER_PRI = "upper Pri";
+    public static final String ROLE_TUTOR = "tutor";
+    public static final String ROLE_STUDENT = "student";
+    public static final String PRICE_AMY = "98";
+    public static final String PRICE_BOB = "113";
+    public static final String STATUS_UNMATCHED = "not Matched";
+    public static final String STATUS_MATCHED = "matched";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -51,14 +78,66 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
+
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_PRICE_DESC = " " + PREFIX_PRICE + "-1"; //negative number
+    public static final String INVALID_SUBJECT_DESC = " " + PREFIX_SUBJECT + "fake news"; //not a listed subject
+    public static final String INVALID_LEVEL_DESC = " " + PREFIX_LEVEL + "kindergarden"; //not a listed level
+    public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "teacher"; // 'teacher' not allowed in tags
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_STATUS_DESC = " " + PREFIX_STATUS + "veryverymatched"; //not a listed status
+
+    public static final String SUBJECT_DESC_ENGLISH = " " + PREFIX_SUBJECT + "english";
+    public static final String SUBJECT_DESC_CHINESE = " " + PREFIX_SUBJECT + "chinese";
+    public static final String LEVEL_DESC_LOWER_SEC = " " + PREFIX_LEVEL + "lower Sec";
+    public static final String LEVEL_DESC_UPPER_SEC = " " + PREFIX_LEVEL + "upper Sec";
+    public static final String SUBJECT_DESC_AMY = " " + PREFIX_SUBJECT + "math";
+    public static final String SUBJECT_DESC_BOB = " " + PREFIX_SUBJECT + "english";
+    public static final String LEVEL_DESC_AMY = " " + PREFIX_LEVEL + "lower Sec";
+    public static final String LEVEL_DESC_BOB = " " + PREFIX_LEVEL + "upper Sec";
+    public static final String PRICE_DESC_AMY = " " + PREFIX_PRICE + "98";
+    public static final String PRICE_DESC_BOB = " " + PREFIX_PRICE + "113";
+    public static final String ROLE_DESC_AMY = " " + PREFIX_ROLE + "student";
+    public static final String ROLE_DESC_BOB = " " + PREFIX_ROLE + "tutor";
+    public static final String ROLE_DESC_STUDENT = " " + PREFIX_ROLE + "student";
+    public static final String ROLE_DESC_TUTOR = " " + PREFIX_ROLE + "tutor";
+    public static final String STATUS_DESC_UNMATCHED = " " + PREFIX_STATUS + "not matched";
+    public static final String STATUS_DESC_MATCHED = " " + PREFIX_STATUS + "matched";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
+
+    public static final String CASE_INSENSITIVE_NAME_BOB = " " + PREFIX_NAME + "bOb cHoO";
+    public static final String CASE_INSENSITIVE_EMAIL_BOB = " " + PREFIX_EMAIL + "bOb@eXaMpLe.CoM";
+    public static final String CASE_INSENSITIVE_ADDRESS_BOB  = " " + PREFIX_ADDRESS + "bLOck 123, BoBBy StReEt 3";
+    public static final String CASE_INSENSITIVE_SUBJECT_BOB = " " + PREFIX_SUBJECT + "ChiNESe";
+    public static final String CASE_INSENSITIVE_LEVEL_BOB = " " + PREFIX_LEVEL + "uPPeR seC";
+    public static final String CASE_INSENSITIVE_STATUS_BOB = " " + PREFIX_STATUS + "nOt MAtCHEd";
+    public static final String CASE_INSENSITIVE_ROLE_BOB = " " + PREFIX_ROLE + "TutOR";
+
+    public static final String SUBJECT_SHORTCUT_CHINESE = " " + PREFIX_SUBJECT + "chi";
+    public static final String SUBJECT_SHORTCUT_PHYSICS = " " + PREFIX_SUBJECT + "phy";
+    public static final String SUBJECT_SHORTCUT_CHEMISTRY = " " + PREFIX_SUBJECT + "chem";
+    public static final String SUBJECT_SHORTCUT_ENGLISH = " " + PREFIX_SUBJECT + "eng";
+    public static final String LEVEL_SHORTCUT_UPPER_SEC = " " + PREFIX_LEVEL + "us";
+    public static final String LEVEL_SHORTCUT_LOWER_SEC = " " + PREFIX_LEVEL + "ls";
+    public static final String LEVEL_SHORTCUT_UPPER_PRI = " " + PREFIX_LEVEL + "up";
+    public static final String LEVEL_SHORTCUT_LOWER_PRI = " " + PREFIX_LEVEL + "lp";
+    public static final String STATUS_SHORTCUT_UNMATCHED = " " + PREFIX_STATUS + "nm";
+    public static final String STATUS_SHORTCUT_MATCHED = " " + PREFIX_STATUS + "m";
+    public static final String ROLE_SHORTCUT_TUTOR = " " + PREFIX_ROLE + "t";
+    public static final String ROLE_SHORTCUT_STUDENT = " " + PREFIX_ROLE + "s";
+
+
+    public static final String CASE_INSENSITIVE_SUBJECT_SHORTCUT_ENGLISH = " " + PREFIX_SUBJECT + "eNg";
+    public static final String CASE_INSENSITIVE_LEVEL_SHORTCUT_UPPER_SEC = " " + PREFIX_LEVEL + "Us";
+    public static final String CASE_INSENSITIVE_STATUS_SHORTCUT_UNMATCHED = " " + PREFIX_STATUS + "nM";
+    public static final String   CASE_INSENSITIVE_ROLE_SHORTCUT_TUTOR = " " + PREFIX_ROLE + "T";
+
+
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

@@ -38,4 +38,23 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("93121534"));
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
     }
+
+    @Test
+    public void checkPhoneEquality() {
+        //test phone against non-phone type
+        assertFalse(new Phone("91009222").equals(null));
+        assertFalse(new Phone("91009222").equals(new Address("91009222")));
+        //test correctly returns equal if phone string is the same
+        assertTrue(new Phone("91009222").equals(new Phone("91009222")));
+    }
+
+    @Test
+    public void checkPhoneHashCode() {
+        Phone phone = new Phone("911");
+        assertTrue(phone.hashCode() == phone.value.hashCode());
+        phone = new Phone("93121534");
+        assertTrue(phone.hashCode() == phone.value.hashCode());
+        phone = new Phone("124293842033123");
+        assertTrue(phone.hashCode() == phone.value.hashCode());
+    }
 }

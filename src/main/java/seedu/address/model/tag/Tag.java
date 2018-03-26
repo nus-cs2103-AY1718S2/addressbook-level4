@@ -9,17 +9,39 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Tag {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should contain only "
+            + "alphanumeric characters and spaces";
+
+    public static final String TAG_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    /**
+     * This represents all the tag types.
+     */
+    public enum AllTagTypes { SUBJECT, STATUS, LEVEL, PRICE, ROLE, DEFAULT }
 
     public final String tagName;
+    public final AllTagTypes tagType;
+
+    /**
+     * Constructs a {@code Tag}.
+     * tagType will be initialised with the AllTagTypes.DEFAULT value.
+     *
+     * @param tagName A valid tag name.
+     */
+    public Tag(String tagName) {
+        requireNonNull(tagName);
+        checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
+        this.tagName = tagName;
+        this.tagType = AllTagTypes.DEFAULT;
+    }
 
     /**
      * Constructs a {@code Tag}.
      *
      * @param tagName A valid tag name.
+     * @param tagType A valid tag type.
      */
-    public Tag(String tagName) {
+    public Tag(String tagName, AllTagTypes tagType) {
+        this.tagType = tagType;
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
         this.tagName = tagName;
@@ -30,6 +52,19 @@ public class Tag {
      */
     public static boolean isValidTagName(String test) {
         return test.matches(TAG_VALIDATION_REGEX);
+    }
+
+    /**
+     * returns true if given string is a valid tag type.
+     * @param test A string to test.
+     */
+    public static boolean isValidTagType(String test) {
+        for (AllTagTypes tType : AllTagTypes.values()) {
+            if (tType.toString().equals(test)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

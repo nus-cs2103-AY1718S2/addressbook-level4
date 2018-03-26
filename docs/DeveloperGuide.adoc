@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= STUtor - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W11-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -384,6 +384,225 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Automatic creation of tags from person attributes
+
+==== Creation of the `Tag`
+We have made it such that the attributes `Price`, `Subject`, `Level` and `Status` of a person each have a tag with the value added to the person.
+This is done when user performs `add` or `edit` command.
+
+In the AddCommandParser, after successfully parsing the `Price`, `Subject`, `Level`, `Status` input, the code has been modified such that a new `Tag` containing the correct value and attribute is automatically created after.
+For the EditCommand, the `createEditedPerson` command will remove the previous attribute tags in the `Person` list of tags, then recreate the attribute tags using the new `Person` class attribute values.
+
+The idea for this is implemented this way:
+[source,java]
+----
+private static Person createEditedPerson(...) {
+	/* code to update the attributes here */
+    Set<Tag> attributeTags = new HashSet<>(updatedTags);
+	attributeTags.remove(new Tag(personToEdit.getPrice().toString()));
+	/* similar code to remove the other attribute tags... */
+	attributeTags.add(new Tag(updatedPrice.toString(), Tag.AllTagTypes.PRICE));
+	/* similar code to add the new attribute tags... */
+	return new Person(...)
+}
+----
+[NOTE]
+Since the `Price`, `Subject`, `Level` and `Status` attributes have been parsed and checked to conform to expected values, there is no need to reparse the values when creating them as a `Tag`. +
+The acceptable inputs for a `Tag` must necessarily allow all the acceptable inputs for `Price`, `Subject`, `Level` and `Status` to prevent errors.
+
+==== `Tag` class attributes
+The `Tag` class can support the ability to classify which attribute the tag was created from. This is done by adding an enum `AllTagsType` to the `Tag` class.
+A tag can be created without being from an attribute, with just a tag name. In this case, creating a `Tag` with no provided `AllTagsType` will initialise the `tagType` to `DEFAULT`.
+
+This is the current `Tag` class in UML notation.
+
+image::TagClassDiagram.png[width="600"]
+
+This new attribute is used to implement the capability to standardize all tags created as a `Price` attribute to have the same color, all tags created as a `Subject` attribute to have the same color, and so on.
+This has been implemented as a new overloaded `getTagColorStyleFor` method, which takes in a Tag instead of a String.
+
+The method idea is implemented this way:
+[source,java]
+----
+private String getTagColorStyleFor(Tag tag) {
+        switch (tag.tagType) {
+        case SUBJECT:
+		//return color
+        case LEVEL:
+		//return color
+        case STATUS:
+		//return color
+        case PRICE:
+		//return color
+        default:
+		//return color
+        }
+    }
+----
+[NOTE]
+As shown from this code snippet, any tag that is not set to one of the 4 attributes will fall through to the default type, where they will have the same color. This is currently done as such to prevent accidental collisions of color with the 4 attribute tags.
+
+==== Storage Implementation
+The method for storing tags has also been changed slightly. While previously just the `tagName` needed to be stored. Now both the `tagName` and `tagType` must be stored.
+This has been accomplished by having XML store the single field in the form "TAGNAME,TAGTYPE".
+The respective tagName and tagType can be obtained by splitting the read string representing the tag data from the file around the "," separator. Since tags can only be alphanumeric, this provides a safe character to split around.
+
+==== Design Considerations
+
+===== Aspect: Method of saving tag information in the saved XML file
+
+* **Alternative 1 (current choice):** Keep the `XmlAdaptedTag` stored in a single XML field.
+** Pros: There is no need to change the format of the XML file.
+** Cons: Need to ensure that the `tagName` and `tagType` can be clearly split when saved to the XML file, and retrieved back.
+* **Alternative 2:** Change the format of `XmlAdaptedTag`
+** Pros: Easier for advanced users to edit without causing an error, easy to retrieve values from file.
+** Cons: Risks causing issues with how `Tag` is saved as part of `XmlAdaptedPerson` and by itself as `XmlAdaptedTag`
+
+=== Case-insensitive input
+
+==== Current Implementation
+We made input of fields case-insensitive to reduce hassles for the user.
+
+After parsing and validation, the field entered is converted to <<proper-case, proper case>> internally,
+so tags generated from the field information will be standardized and more readable for the user.
+
+The exceptions are `price` and `phone` as they consist only numbers and require no conversion.
+`email` is converted to all lower-case to follow the convention.
+
+==== Model Implementation
+We utilise the `ProperCaseConverter` object to convert all parsed and valid input into proper case.
+The sequence diagram below shows how this is achieved in the constructor of `Role` class.
+
+image::SDforCaseInsensitiveInput.png[width="800"]
+
+The other classes utilise the `ProperCaseConverter` object in a similar way.
+
+=== Shortcuts for the user in filling fields
+
+==== Current Implementation
+Due to the nature of the application, the user will input certain information repetitively.
+For example, `role` can only be one of `student` or `tutor`.
+
+Thus, we have created shortcuts to help improving efficiency in filling the fields.
+We currently support shortcuts for `subject`, `level`, `status`, and `role`.
+
+[width="59%",cols="<30%,<35%,<35%",options="header",]
+|=======================================================================
+|Applicable field |Shortcut |Equivalence in full
+|subject | `sub/chem`| `sub/chemistry`
+|subject | `sub/phy`| `sub/physics`
+|subject | `sub/chi`| `sub/chinese`
+|subject | `sub/eng`| `sub/english`
+|level | `lvl/us`| `lvl/upper sec`
+|level | `lvl/ls`| `lvl/lower sec`
+|level | `lvl/up`| `lvl/upper pri`
+|level | `lvl/lp`| `lvl/lower pri`
+|status | `stat/nm`| `stat/not matched`
+|status | `stat/m`| `stat/matched`
+|role | `r/t`| `r/tutor`
+|role | `r/s`| `r/student`
+|=======================================================================
+
+==== Model Implementation
+The shortcut is first validated, then the field information is converted to its full form.
+Below is the function that performs conversion in the Role class. Other classes follow similar implementation.
+[source,java]
+----
+ public String convertToFullRole(String original) {
+      String cur = original.toLowerCase();
+       if (cur == null) {
+           return "";
+        } else if (cur.equals("s")) {
+            cur = "student";
+        } else if (cur.equals("t")) {
+            cur = "tutor";
+        }
+       return cur;
+ }
+----
+[NOTE]
+The user can input shortcuts in case-insensitive fashion.
+For instance, the user may input `add n/jOHN dOE p/98765432 e/johND@eXaMpLe.com a/NUS #04-02 $/50 sub/PHy lvl/uP stat/nM t/T`
+, the stored entry will be `John Doe Phone: 98765432 Email: johnd@example.com Address: NUS #04-02 Tags: [Tutor][Upper Pri][50][Physics][Not Matched]`
+
+=== Filter feature
+
+==== Current Implementation
+We have added the `filter` command which inherit from `Command`. The user can `filter` according to the attributes `Subject`, `Level` and `Status` of a person.
+
+The following sequence diagram shows how the filter command works:
+
+image::FilterCommandSequenceDiagram.png[width="800"]
+
+[NOTE]
+The user must input arguments in case sensitive and full fashion.
+For instance, the entry `filter maTH` will not work.
+
+=== UI Modifications
+
+==== Browser Panel
+The browser panel is modified to show the selected person’s details instead of opening up a URL.
+This allows better visualization of a person’s details as each person now has up 9 attributes: `Name`, `Phone`,
+`Address`, `Email`, `Role`, `Status`, `Subject`, `Level`, `Price` to be displayed.
+Below shows the modifications made:
+
+**Before**
+
+image::OldBrowserPanel.png[width="500"]
+
+**After**
+
+image::NewBrowserPanel.png[width="500"]
+
+===== Current Implementation
+The UI is modified using SceneBuilder and the layout is specified in link:{repoURL}/blob/master/src/main/resources/view/BrowserPanel.fxml[`BrowserPanel.fxml`].
+link:{repoURL}/blob/master/src/main/java/seedu/address/ui/BrowserPanel.java[`BrowserPanel.java`] subscribes to `handlePersonPanelSelectionChangedEvent`, where this allows the browser panel to
+be updated whenever the user selects on a specific person.
+
+We choose to place the person's name at the top of the browser panel for easy identification of a person while
+other details are organized in a table format for easy reference. Rows of the table are also alternately colored
+to increase readability.
+
+[NOTE]
+In the case if the person attribute is null (except `Name` cannot be null), it will be displayed as " - "
+
+===== Design Considerations
+
+====== Aspect: Layout of Browser Panel
+
+* **Alternative 1 (current choice):** Use table to display person details with a column specifying the type of attribute
+and the other specifying the actual content.
+** Pros: Easy to read and refer to.
+** Cons: May not look visually appealing.
+* **Alternative 2:** Centralized display of person details without usage of tables and reference to the type of attribute.
+** Pros: Visually appealing.
+** Cons: Locating an attribute may not be easy due to lack of labelling.
+
+==== Person Card
+Person card is improved to show the list of person’s details more concisely and clearly.
+Below shows the improvements made:
+
+**Before**
+
+image::OldPersonCard.png[width="300"]
+
+**After**
+
+image::NewPersonCard.png[width="300"]
+
+===== Removal of Unncessary Information
+Besides `Name`, all other details are removed from the person card. We choose to remove it as these details can
+be easily viewed by selecting on the person card since the browser panel now shows the full details of a person.
+
+As such, we decided to only leave the neccessary details that the user will frequently refer
+to in the person card. This helps to reduce cluttering on the side panel and allows the user to be able to view a
+longer list of people at one time.
+
+===== Coloring of Tags
+To allow easy identification of the category that a tag belongs to, different colors are used for different attributes
+of a person. A standardized color is used for each attribute and its color is stored in `Tag` such that the color
+will be retained when the user reopens the application.
 
 == Documentation
 
@@ -782,13 +1001,35 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+* Tutor coordinator
+* has a need to manage and schedule a significant number of tutors and students
+* prefer desktop applications over other types
 * can type fast
 * prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using CLI applications
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: efficient pairing of students and tutors based on criteria such as subject, budget, location, availability
+
+*Feature Contributions*:
+
+[width="59%",cols="<30%,<35%,<35%",options="header",]
+|=======================================================================
+|Name |Minor Enhancement |Major Enhancement
+|Danny NG Ming Xuan |Create new command to filter the person list with respect to the various tags in
+Person card. This will enable the user to view people with tags he/she is interested in.|Create `viewStats` command.
+This allows the user to view information such as number of students/tutors/matched and more in the form of graph.
+|NG Xin Ler |Change browser panel to view Person's details and remove all attributes except name and tags in
+Person card. This helps to improve the readability of Person details and reduce cluttering on the side panel.|
+Create `unmatch` command. This allows the user to unmatch a pair of Tutor and Student in the event where the pair is
+wrongly matched or either the Tutor or Student wants to change a matching.
+|WANG Zi |Create shortcut for the user in filling subject, level, status and role. For instance, `sub/eng` and
+`sub/english` both result in adding the subject English. After that, accommodate case-insensitive input, and
+standardize display to follow <<proper-case, proper case>>.
+|Create `match` command. This allows the user to match a pair of Tutor and Student from a list of potential matches.
+|YAN Hong Yao Alvin | Automatically generate tags for some attribute fields. This makes them easy to view by the user |
+Allow all non-name fields to be optional. This makes input easier for the user as the add command is extremely long otherwise.
+|=======================================================================
+
 
 [appendix]
 == User Stories
@@ -800,23 +1041,68 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new tutor/student |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a tutor/student |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a tutor/student by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |edit the <<criteria, criteria>> of a tutor/student |change criteria without re-adding the entry
+
+|`* * *` |user |list all tutors or students separately |view a cleaner list without mixing tutors and students
+
+|`* * *` |user |set a tutor/student’s <<status, status>> |know who is available
+
+|`* * *` |user |mark a tutor/student as <<matched, matched>> with some other tutor/student for a certain subject |identify tutor/student status
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |protect the app with a password |ensure confidentiality of the contacts
 
-_{More to be added}_
+|`* *` |user |tag a person with role, subject, level, and status |identify details of each tutor/student easily
+
+|`* *` |user |sort matching list by budget |find the best match at the lowest price
+
+|`* *` |user |rate a tutor according to student’s feedback |identify tutors’ capability for future references
+
+|`* *` |user |store a list of all tutor/student that have been matched |I can have a cleaner list consisting of only unmatched tutor/student and also able to refer to past records if required
+
+|`* *` |user |find all pairs of tutor/students that are <<matching-in-progress, matching in progress>> |easily set a pair to matched or unmatched depending if they have agreed upon the tutoring
+
+|`* *` |user |indicate the special request by tutor/student (e.g. prefer female tutor)|consider these factors when performing match
+
+|`* *` |user |change theme of the app |personalise the app to user’s preference
+
+|`* *` |forgetful user | view password hint |recall my password
+
+|`* *` |user with poor eyesight |change the font and font size |easily read the output text
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |add upload tutors’ qualifications via pdf file |add in data easily without typing them down individually
+
+|`*` |user |view the location markers of tutor/student on a map |see the geographical concentration of tutors/students
+
+|`*` |user |automatically send email to the matched pair of tutor and student |inform both parties efficiently
+
+|`*` |user |select a particular criteria and get tutors/students fulfilling that criteria | easily find a suitable tutor/student if one criteria takes priority
+
+|`*` |user |allow a tutor/student to have multiple subject to teach/learn |have more possibilities when matching tutors and students
+
+|`*` |user |sort the matching list by distance |pair tutor/student who lives nearer to each other
+
+|`*` |user |sync database to google |work on multiple devices without losing data
+
+|`*` |user |view statistics on tutor/student numbers and statuses |have a clearer picture of the status of tutor/student
+
+|`*` |user |auto-match tutor and student based on available time slots |save time in matching schedules
+
+|=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `STUtor` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -824,9 +1110,9 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  STUtor shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  STUtor deletes the person
 +
 Use case ends.
 
@@ -840,11 +1126,110 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. STUtor shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Edit the criteria of a certain tutor/student
+
+*MSS*
+
+1.  User requests to edit a criteria of a certain tutor/student
+2.  STUtor updates the criteria
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given tutor/student is invalid.
++
+[none]
+** 1a1. STUtor shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Input a certain criteria of a student/tutor and get back a list of tutor/student fulfilling that criteria
+
+*MSS*
+
+1.  User requests a certain criteria of student/tutor (e.g. budget: below 200)
+2.  STUtor shows a list of tutor/student fulfilling that criteria
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given criteria is invalid
++
+[none]
+** 1a1. STUtor shows an error message.
++
+Use case resumes at step 1.
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Match tutor and student
+
+*MSS*
+
+1.  User requests to show a list of all tutors/students
+2.  STUtor returns a list of all tutors/students
+3.  User selects a tutor/student for matching
+4.  STUtor returns a list of students/tutors that fulfils the criteria of tutor/student selected
+5.  User creates a match with the most suitable criteria
+6.  STUtor creates the match and updates the status of the matched tutor and student to ‘Matching-in-progress’
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. STUtor shows an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 4a. The list is empty (no tutor/student fulfills the criteria)
++
+Use case ends.
+
+[discrete]
+=== Use case: Confirm a match
+
+*MSS*
+
+1.  User requests for a list of pending matches
+2.  STUtor shows a list of ‘Matching-in-progress’ entries
+3.  User select a particular entry
+4.  STUtor updates the status of the tutor and student
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. STUtor shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -852,6 +1237,8 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be fast in responding to request (within 2 seconds)
+
 
 _{More to be added}_
 
@@ -863,6 +1250,28 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[proper-case]] Proper case::
+Proper case is any text that is written with each of the first letters of every word being capitalized.
+For example, "This Is An Example Of Proper Case."
+
+[[criteria]] Criteria::
+Subject and grade level
+
+[[match]] Match::
+A tutor and a student are paired for a subject
+
+[[matched]] Matched::
+Tutor and student have confirmed the match and are ready to start lessons
+
+[[matching-in-progress]] Matching in progress::
+Waiting for tutor and student to confirm the match
+
+[[status]] Status::
+Includes unmatch, matching-in-progress, matched
+
+[[unmatch]] Unmatch::
+A tutor/student does not have any match
 
 [appendix]
 == Product Survey

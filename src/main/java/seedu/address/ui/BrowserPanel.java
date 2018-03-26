@@ -1,72 +1,130 @@
 package seedu.address.ui;
 
-import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebView;
-import seedu.address.MainApp;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * The Browser Panel of the App.
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
-
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private WebView browser;
+    private GridPane grid;
+    @FXML
+    private Label name;
+    @FXML
+    private Label id;
+    @FXML
+    private Label phone;
+    @FXML
+    private Label address;
+    @FXML
+    private Label email;
+    @FXML
+    private Label role;
+    @FXML
+    private Label status;
+    @FXML
+    private Label subject;
+    @FXML
+    private Label level;
+    @FXML
+    private Label price;
 
     public BrowserPanel() {
         super(FXML);
 
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
+        name.setText("");
+        grid.setVisible(false);
 
-        loadDefaultPage();
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Loads a {@code person}'s details into the browser panel.
      */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
-    }
+    private void loadPersonDetails(Person person) {
+        grid.setVisible(true);
 
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        browser = null;
+        name.setText(person.getName().fullName);
+        phone.setText(person.getPhone().value);
+        address.setText(person.getAddress().value);
+        email.setText(person.getEmail().value);
+        status.setText(person.getStatus().value);
+        subject.setText(person.getSubject().value);
+        level.setText(person.getLevel().value);
+        price.setText("$" + person.getPrice().value + " / hr");
+        if (person.getTags().contains(new Tag("Student"))
+                || person.getTags().contains(new Tag("student"))) {
+            role.setText("Student");
+        } else if (person.getTags().contains(new Tag("Tutor"))
+                || person.getTags().contains(new Tag("tutor"))) {
+            role.setText("Tutor");
+        }
+        /*if (person.getPhone().value == null) {
+            phone.setText(" - ");
+        } else {
+            phone.setText(person.getPhone().value);
+        }
+        if (person.getAddress().value == null) {
+            address.setText(" - ");
+        } else {
+            address.setText(person.getAddress().value);
+        }
+        if (person.getEmail().value == null) {
+            email.setText(" - ");
+        } else {
+            email.setText(person.getEmail().value);
+        }
+        if (person.getStatus().value == null) {
+            status.setText(" - ");
+        } else {
+            status.setText(person.getStatus().value);
+        }
+        if (person.getSubject().value == null) {
+            subject.setText(" - ");
+        } else {
+            subject.setText(person.getSubject().value);
+        }
+        if (person.getLevel().value == null) {
+            level.setText(" - ");
+        } else {
+            level.setText(person.getLevel().value);
+        }
+        if (person.getPrice().value == null) {
+            price.setText(" - ");
+        } else {
+            price.setText("$" + person.getPrice().value + " / hr");
+        }
+        if (person.getTags().contains(new Tag("Student"))
+            || person.getTags().contains(new Tag("student"))) {
+            role.setText("Student");
+        } else if (person.getTags().contains(new Tag("Tutor"))
+                   || person.getTags().contains(new Tag("tutor"))) {
+            role.setText("Tutor");
+        } else {
+            role.setText(" - ");
+        }*/
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadPersonDetails(event.getNewSelection().person);
     }
 }

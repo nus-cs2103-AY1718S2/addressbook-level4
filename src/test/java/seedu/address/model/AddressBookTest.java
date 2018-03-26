@@ -1,7 +1,11 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -17,7 +21,11 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
+
 
 public class AddressBookTest {
 
@@ -25,6 +33,9 @@ public class AddressBookTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBook addressBook = new AddressBook();
+    private final AddressBook addressBookWithAmyandBob =
+            new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+
 
     @Test
     public void constructor() {
@@ -66,6 +77,35 @@ public class AddressBookTest {
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
+    }
+
+    @Test
+    /**
+     * @@author yamgent
+     * Reused from https://github.com/se-edu/
+     * addressbook-level4/pull/790/commits/48ba8e95de5d7eae883504d40e6795c857dae3c2
+     */
+    public void removeTag_nonExistingTag_addressBookUnchanged() throws PersonNotFoundException {
+        addressBookWithAmyandBob.removeTag(new Tag(VALID_TAG_UNUSED));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(AMY).withPerson(BOB).build();
+        assertEquals(expectedAddressBook, addressBookWithAmyandBob);
+    }
+
+    @Test
+    /**
+     * @@author yamgent
+     * Reused from https://github.com/se-edu/
+     * addressbook-level4/pull/790/
+     * commits/48ba8e95de5d7eae883504d40e6795c857dae3c2
+     */
+    public void removeTag_tagUsedByMultiplePersons_tagRemoved() throws PersonNotFoundException {
+        addressBookWithAmyandBob.removeTag(new Tag(VALID_TAG_FRIEND));
+        Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
+        Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags().build();
+
+        AddressBook expectedAddressBook = new AddressBookBuilder()
+                .withPerson(amyWithoutFriendTag).withPerson(bobWithoutFriendTag).build();
+        assertEquals(expectedAddressBook, addressBookWithAmyandBob);
     }
 
     /**

@@ -28,7 +28,8 @@ public class Name {
     public Name(String name) {
         requireNonNull(name);
         checkArgument(isValidName(name), MESSAGE_NAME_CONSTRAINTS);
-        this.fullName = name;
+        ProperCaseConverter pc = new ProperCaseConverter();
+        this.fullName = pc.convertToProperCase(name);
     }
 
     /**
@@ -50,6 +51,7 @@ public class Name {
                 || (other instanceof Name // instanceof handles nulls
                 && this.fullName.equals(((Name) other).fullName)); // state check
     }
+
 
     @Override
     public int hashCode() {

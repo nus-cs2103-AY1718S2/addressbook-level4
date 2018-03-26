@@ -1,30 +1,40 @@
 package seedu.address.ui;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
-import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
-
-import java.net.URL;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.ui.testutil.GuiTestAssert.assertBrowserDisplaysPerson;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
-import seedu.address.MainApp;
+
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.person.Person;
 
 public class BrowserPanelTest extends GuiUnitTest {
-    private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private PersonPanelSelectionChangedEvent selectionChangedEventStubStudent;
+    private PersonPanelSelectionChangedEvent selectionChangedEventStubTutor;
+    //private PersonPanelSelectionChangedEvent selectionChangedEventStubPersonOnlyNameSpecified;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
+    //private Person personOnlyNameSpecified;
+
     @Before
     public void setUp() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        /*personOnlyNameSpecified  = new PersonBuilder().withName("Hilda Lim")
+                .withAddress(null).withEmail(null).withPhone(null)
+                .withPrice(null).withSubject(null).withStatus(null).withLevel(null)
+                .withTags(new String[0]).build();*/
+
+        selectionChangedEventStubStudent = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        selectionChangedEventStubTutor = new PersonPanelSelectionChangedEvent(new PersonCard(BENSON, 0));
+        //selectionChangedEventStubPersonOnlyNameSpecified =
+        //        new PersonPanelSelectionChangedEvent(new PersonCard(personOnlyNameSpecified, 0));
+
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -33,16 +43,29 @@ public class BrowserPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void display() throws Exception {
-        // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+    public void display() {
+        // student
+        Person student = ALICE;
+        postNow(selectionChangedEventStubStudent);
+        assertBrowserDisplay(student);
 
-        // associated web page of a person
-        postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
+        // tutor
+        Person tutor = BENSON;
+        postNow(selectionChangedEventStubTutor);
+        assertBrowserDisplay(tutor);
 
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        // person with only name specified
+        //postNow(selectionChangedEventStubTutor);
+        //assertBrowserDisplay(personOnlyNameSpecified);
+    }
+
+    /**
+     * Asserts that {@code browserPanel} displays the details of {@code expectedPerson} correctly.
+     */
+    private void assertBrowserDisplay(Person expectedPerson) {
+        guiRobot.pauseForHuman();
+
+        // verify person details are displayed correctly
+        assertBrowserDisplaysPerson(expectedPerson, browserPanelHandle);
     }
 }

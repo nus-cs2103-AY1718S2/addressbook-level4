@@ -154,4 +154,117 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(keycode);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
+
+    @Test
+    public void handleKeyPress_addCommandPressTab_autofill() {
+        String expectedOutput = "add n/ p/ e/ a/ $/ sub/ lvl/ stat/ r/";
+
+        // checks for add command word
+        commandBoxHandle.setInput("add");
+        guiRobot.push(KeyCode.TAB);
+        String actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+
+        // checks for add command word alias
+        commandBoxHandle.setInput("a");
+        guiRobot.push(KeyCode.TAB);
+        actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+
+        // checks if tab works correctly
+        /*expectedOutput = "add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 $/50"
+                + " sub/Math lvl/Lower Sec stat/Not Matched r/Student";
+        actualOutput = enterPersonDetails();
+        assertEquals(expectedOutput, actualOutput);*/
+    }
+
+    @Test
+    public void handleKeyPress_addCommandPressDelete_removePreviousPrefix() {
+        String expectedOutput = "add p/ e/ a/ $/ sub/ lvl/ stat/ r/";
+
+        // checks for add command word
+        commandBoxHandle.setInput("add");
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.DELETE);
+
+        String actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void handleKeyPress_selectCommandPressTab_autofill() {
+        String expectedOutput = "select 1";
+
+        // checks for select command word
+        commandBoxHandle.setInput("select");
+        guiRobot.push(KeyCode.TAB);
+        String actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+
+        // checks for select command word alias
+        commandBoxHandle.setInput("s");
+        guiRobot.push(KeyCode.TAB);
+        actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void handleKeyPress_deleteCommandPressTab_autofill() {
+        String expectedOutput = "delete 1";
+
+        // checks for delete command word
+        commandBoxHandle.setInput("delete");
+        guiRobot.push(KeyCode.TAB);
+        String actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+
+        // checks for delete command word alias
+        commandBoxHandle.setInput("d");
+        guiRobot.push(KeyCode.TAB);
+        actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void handleKeyPress_editCommandPressTab_autofill() {
+        String expectedOutput = "edit 1 n/ p/ e/ a/ $/ sub/ lvl/ stat/ r/";
+
+        // checks for edit command word
+        commandBoxHandle.setInput("edit");
+        guiRobot.push(KeyCode.TAB);
+        String actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+
+        // checks for edit command word alias
+        commandBoxHandle.setInput("e");
+        guiRobot.push(KeyCode.TAB);
+        actualOutput = commandBoxHandle.getInput();
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    /**
+     * Enters Person details using GUI robot
+     * @return String entered by GUI robot
+     */
+    private String enterPersonDetails() {
+        commandBoxHandle.setInput("John Doe");
+        guiRobot.push(KeyCode.TAB);
+        commandBoxHandle.setInput("98765432");
+        guiRobot.push(KeyCode.TAB);
+        commandBoxHandle.setInput("johnd@example.com");
+        guiRobot.push(KeyCode.TAB);
+        commandBoxHandle.setInput("311, Clementi Ave 2, #02-25");
+        guiRobot.push(KeyCode.TAB);
+        commandBoxHandle.setInput("50");
+        guiRobot.push(KeyCode.TAB);
+        commandBoxHandle.setInput("Math");
+        guiRobot.push(KeyCode.TAB);
+        commandBoxHandle.setInput("Lower Sec");
+        guiRobot.push(KeyCode.TAB);
+        commandBoxHandle.setInput("Not Matched");
+        guiRobot.push(KeyCode.TAB);
+        commandBoxHandle.setInput("Student");
+
+        return commandBoxHandle.getInput();
+    }
 }

@@ -37,7 +37,8 @@ public class Email {
     public Email(String email) {
         requireNonNull(email);
         checkArgument(isValidEmail(email), MESSAGE_EMAIL_CONSTRAINTS);
-        this.value = email;
+        ProperCaseConverter pc = new ProperCaseConverter();
+        this.value = pc.convertToProperCase(email);
     }
 
     /**

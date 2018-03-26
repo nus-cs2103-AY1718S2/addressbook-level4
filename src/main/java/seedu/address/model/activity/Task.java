@@ -92,4 +92,11 @@ public class Task extends Activity {
         return builder.toString();
     }
 
+    @Override
+    public Activity copy(Set<Tag> tags) {
+        if (tags == null) {
+            return new Task(getName(), getDueDateTime(), getRemark(), getTags());
+        }
+        return new Task(getName(), getDueDateTime(), getRemark(), tags);
+    }
 }

@@ -13,6 +13,7 @@ import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
 import seedu.address.model.activity.Name;
 import seedu.address.model.activity.Remark;
+import seedu.address.model.activity.Task;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -104,7 +105,8 @@ public abstract class XmlAdaptedActivity {
         final Remark remark = new Remark(this.remark);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Activity(name, dateTime, remark, tags);
+        //Changed Here.
+        return new Task(name, dateTime, remark, tags);
     }
 
     public abstract String getActivityType();

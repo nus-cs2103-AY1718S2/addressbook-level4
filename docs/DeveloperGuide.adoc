@@ -14,9 +14,31 @@ endif::[]
 
 By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
+[[Introduction]]
+== Introduction
+CLIndar is a desktop application that helps university computing students to manage their tasks and events.
+CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
+
+This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
+get started customising and contributing to the application.
+
+Below is an overview of this guide:
+
+* <<SettingUp, Setting Up>>
+* <<Design, Design>>
+* <<Implementation, Implementation>>
+* <<Documentation, Documentation>>
+* <<Testing, Testing>>
+* <<DevOps, Dev Ops>>
+* <<GetStartedProgramming, Appendices>>
+
+
+[[SettingUp]]
 == Setting up
 
 === Prerequisites
+
+The following must be installed in your computer before you can begin using the application:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -34,21 +56,49 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+Follow the following steps to set up the project.
+
+
+*Step 1:* Fork this repo, and clone the fork to your computer.
+
+To fork the repo, click the button circled below.
+
+image::Origin Repo.png[width="600"]
+
+Then open Git Bash. Change the current working directory to the location where you want the cloned directory to be made. And type the following:
+
+----
+git clone https://github.com/YOUR-USERNAME/main.git
+----
+
+*Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below.
+
+image::Close Project.png[width="600"]
+
+*Step 3:* Set up the correct JDK version for Gradle.
+
+*Step 3a:* Click `Configure` > `Project Defaults` > `Project Structure`.
+
+image::Configure.png[Width="400"]
+
+*Step 3b:* Click `New...` and find the directory of the JDK.
+
+
+*Step 4:* Click `Import Project`.
+
+*Step 5:* Locate the `build.gradle` file and select it. Click `OK`.
+
+*Step 6:* Click `Open as Project`.
+
+*Step 7:* Click `OK` to accept the default settings.
+
+*Step 8:* Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -57,18 +107,18 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W13-B3/main` repo. If you plan to develop this as a separate product, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -82,59 +132,62 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Follow the steps below when you are ready to start coding.
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
+[[Design]]
 == Design
+This section describes the way the application is designed.
 
 [[Design-Architecture]]
 === Architecture
+*_Figure 1_* below explains the high-level design of the App.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: initializing the components in the correct sequence and connecting them up with each other.
+* At shut down: shutting down the components and invoking cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+* <<Design-Ui,*`UI`*>>: the UI of the App
+* <<Design-Logic,*`Logic`*>>: the command executor
+* <<Design-Model,*`Model`*>>: holds the data of the App in-memory
+* <<Design-Storage,*`Storage`*>>: reads data from, and writes data to, the hard disk
 
-Each of the four components
 
-* Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+Each of the four components:
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+* defines its _API_ in an `interface` with the same name as the Component, and
+* exposes its functionality using a `{Component Name}Manager` class.
 
-.Class Diagram of the Logic Component
-image::LogicClassDiagram.png[width="800"]
+For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
-[discrete]
+.The API of the Logic Component
+image::LogicAPI.png[width="800"]
+
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+*_Figure 3_* below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeletePerson.png[width="800"]
@@ -142,7 +195,7 @@ image::SDforDeletePerson.png[width="800"]
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+*_Figure 4_* below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
@@ -155,6 +208,8 @@ The sections below give more details of each component.
 [[Design-Ui]]
 === UI component
 
+*_Figure 5_* below shows the architecture diagram of the UI component.
+
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
@@ -162,13 +217,13 @@ image::UiClassDiagram.png[width="800"]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
-The `UI` component,
+The `UI` component
 
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* executes user commands using the `Logic` component,
+* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change, and
+* responds to events raised from various parts of the App and updates the UI accordingly.
 
 [[Design-Logic]]
 === Logic component
@@ -183,49 +238,53 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `DeskBoardParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a activity) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Interactions Inside the Logic Component for the `rm task 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
-
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Desk Board data.
-* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `UserPref` object that represents the user's preferences,
+* stores the Desk Board data,
+* use two class to store information about 'Event' and 'Task' separately,
+* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change, and
 * does not depend on any of the other three components.
+
 
 [[Design-Storage]]
 === Storage component
+
+*_Figure 10_* below shows the structure of the Storage Component.
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component can save the following and read them back:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Desk Board data in xml format and read it back.
+* `UserPref` objects in json format, and
+* Desk Board data in xml format.
 
 [[Design-Commons]]
 === Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
+[[Implementation]]
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
@@ -380,16 +439,18 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
-=== Overdue command
+=== Overdue
 
-The user is able to list down overdue tasks by using the overdue command. Note that overdue only lists down overdue tasks; overdue events are marked as
+The user is able to list down overdue tasks by using the `overdue` command. Note that overdue only lists down overdue tasks; overdue events are marked as
 completed automatically.
 
 We will be making use of the LocalDateTime class in Java. The class has a `now` method, which allows us to obtain the current system clock.
 
 There will be a class in the Model component, which has access to the UniqueActivityList class in that component. The class will go through the UniqueActivityList and obtain
-the DateTime of Task, and the end DateTime of Event. It will then perform a check of the DateTime with LocalDateTime.now() and if it is overdue (for tasks), it will mark the task
+the DateTime of Task, and the end DateTime of Event. It will then perform a check of the DateTime with `LocalDateTime.now()` and if it is overdue (for tasks), it will mark the task
 as overdue, while if it is overdue (for Event), it will mark it as completed.
+{empty} +
+{empty} +
 
 ==== Design Considerations
 
@@ -398,19 +459,70 @@ as overdue, while if it is overdue (for Event), it will mark it as completed.
 ** Cons: Violates Single Responsibility Principle (SRP). The UniqueAcitivtyList class should not perform the checking.
 
 * **Alternative 2**: Using Google Maps API to obtain current time
-** Pros: LocalDateTime.now() is reliant on system clock, thus if the system clock is in error, tasks that are overdue will not be marked as
+** Pros: `LocalDateTime.now()` is reliant on system clock, thus if the system clock is in error, tasks that are overdue will not be marked as
 overdue correctly.
 ** Cons: Reliant on Google Maps API, and might be difficult for the developer to understand.
+{empty} +
+{empty} +
 
 [[Implementation-Configuration]]
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+{empty} +
+{empty} +
+
+
+
+=== Model
+
+The `Model` component was originally implemented to store personal contact details.
+As we modified the application to `CLIndar` we need to store information of activities instead.
+
+The original application `Address Book` store information in the `Person` class.
+
+Since we now need to store information of events and tasks in the memory, the `Person` class needs to modified to store the record.
+
+The `UniquePersonList` needs to be modified to store list of `Task` and `Activity`.
+{empty} +
+{empty} +
+
+==== Design Consideration
+
+* ** Alternative 1 (Current Choice):**
+Use the `Activity` Class as a place holder for events and tasks to be stored.
+Hence we created two new Class `Task` and `Event` to store the information.
+Both classes were iherited  from the `Activity` Class.
+** Pros:
+No need to make major change to the current interface (except some renaming).
+** Cons:
+It would be a hassle to retrieve information about information stored in other class
+Since `Task` and `Event` contains extra information and hence have extra excess method.
+Need to cast the object to retrieve the information.
+
+* **Alternative 2 :**
+Replace the `Person` Class with two different class completely: `Task` and `Event`.
+Instead of only `UniquePersonList` Class, we create two different class `UniqueTaskList` and `UniqueEventList`.
+Relevant interface and access method will also be modified to cope with the change.
+** Pros:
+Other component can easily distinguish two types of record.
+** Cons:
+Since the interface is now completely changed, other component would now required to change a lot of coding to coped with the change.
+{empty} +
+{empty} +
+
+While either implementations has its pros and cons.
+For the purpose of having incremental modification. We choose Alternative 1.
+As such we can modified the implementation without modification to Interface, hence other component would be unaffected.
+This would allow us to have a working release every week.
 
 === Storage
 
 Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
+{empty} +
+{empty} +
 
+==== Design Consideration
 * **Alternative 1:** Use 1 list to store objects of both classes
 ** Pros: There is no need to create 2 separate lists to store the 2 different class objects.
 ** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
@@ -418,8 +530,37 @@ Our application deals with 2 main classes: Task and Event. Hence, when we store 
 * **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
 ** Pros: When we want to perform an operation on all the objects stored in a list, each object can be treated equally as they are from the same class.
 ** Cons: More effort is required to create 2 separate lists.
+{empty} +
+{empty} +
 
 While both alternatives have advantages and disadvantages, we feel that the second alternative's advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of objects, whereby each list contains objects of the same class, especially as we make the 2 classes more specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in the long run.
+{empty} +
+{empty} +
+
+=== UI
+
+Our application deals with 2 main classes: Task and Event. These 2 classes needs to be
+displayed in the UI and our team came up with 2 possible implementations to do it:
+{empty} +
+{empty} +
+
+==== Design Consideration
+* **Alternative 1:** Have 1 panel which will display the 2 classes.
+** Pros: The coding required for this approach is much lesser.
+** Cons: The UI will be messier and less appealing.
+
+* ** Alternative 2 (current choice):** Have 2 panels which will display the 2 classes separately.
+** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory information
+tags. The design of the UI will be much more intuitive too.
+** Cons: More effort is required to create 2 seperate lists.
+{empty} +
+{empty} +
+
+While both alternatives have advantages and disadvantages, we feel that the second alternative adheres more closely with fundamental design principles. We feel that it is the responsibility of UI designers to make the
+UI as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
+definitely the preferred approach here.
+{empty} +
+{empty} +
 
 
 == Documentation
@@ -454,6 +595,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+This sections describes the different ways to do testing on the application.
 
 === Running Tests
 
@@ -502,7 +644,9 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+[[DevOps]]
 == Dev Ops
+This sections features softwares which can be used to track the progress of the application development.
 
 === Build Automation
 
@@ -914,11 +1058,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |procrastinating student |add estimated time needed to complete a task |estimate when to start on a task to complete it on time
 
-<<<<<<< HEAD
 |`* *` |procrastinating student |view contact details of activity in-charge for a deadline extension |have enough time to complete my assignments despite my tight schedule
 =======
 |`* *` |procrastinating student |view contact details of person in-charge for a deadline extension |have enough time to complete my task despite my tight schedule
->>>>>>> bcc4a6f9a77ed80f400940d3605ee3a8f559251b
+
 
 |`* *` |busy student |view free time slots before a deadline |know how much time I have when I'm actually free to finish my tasks
 
@@ -1014,6 +1157,8 @@ Use case resumes at step 2.
 Use case ends.
 
 *Extensions*
+
+[none]
 * 1a. The given date is invalid
 +
 [none]
@@ -1023,6 +1168,27 @@ Use case resumes at step 1.
 
 * 2a. The list is empty.
 +
+Use case ends.
+
+=== Use case: Show help for command
+
+*MSS*
+
+1. User requests to show help for command requested
+2. CLIndar shows the help message for the requested command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The command requested is invalid
++
+[none]
+** 1a1. CLIndar shows an error message
++
+Use case resumes at step 1.
+
 Use case ends.
 
 _{More to be added}_

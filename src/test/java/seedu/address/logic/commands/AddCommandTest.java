@@ -144,13 +144,30 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateToDo(ToDo target, ToDo editedToDo)
+                throws DuplicateToDoException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
+        public ObservableList<ToDo> getFilteredToDoList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredToDoList(Predicate<ToDo> predicate) {
             fail("This method should not be called.");
         }
     }

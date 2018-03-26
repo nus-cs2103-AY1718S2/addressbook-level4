@@ -184,7 +184,7 @@ The review will be based on the input in the pop-up dialog box.
 === Locating employees: `find`
 
 Finds employees whose name, tags, rating, or all of those contain any of the given keyphrases. +
-Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/MORE_NAME_KEYPHRASE]... [t/MORE_TAG_KEYPHRASE]... [r/MORE_RATING_KEYPHRASE]...`
+Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...`
 
 ****
 * The search is case insensitive. +
@@ -212,9 +212,9 @@ e.g. `Caroline John Tim Betsy` and `Betsy Tim John`
 * `find n/Betsy n/Tim n/John` +
 Returns all employees with name that contains either `Betsy`, `Tim`, or `John` +
 e.g. `Betsy`, `Tim`, `John`, `Betsy Toe`, `John Cook`, and `Tim John`
-* `find n/John t/Friends Colleagues` +
-Returns all employees with both name `John` and both tags `Friends` and `Colleagues` +
-e.g. `John | Friends, Colleagues`
+* `find n/John t/Friends Colleagues r/3` +
+Returns all employees with name `John`, both tags `Friends` and `Colleagues`, and rating of 3 +
+e.g. `John | Friends, Colleagues | 3`
 * `find n/John t/Friends t/Colleagues` +
 Returns all employees having both names `John` and either tags `Friends` or `Colleagues` +
 e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`, and `John Dare | Friends, Colleagues, OweMoneys`
@@ -480,8 +480,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+* *Find* : `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE) [n/NAME_KEYPHRASE]…​ [t/TAG_KEYPHRASE]…​ [r/RATING_KEYPHRASE]…` +
+e.g. `find n/James n/Jake Black t/Sales t/Marketing Senior r/3`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

@@ -199,6 +199,9 @@ image::DeleteStudentSdForLogic.png[width="800"]
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
+.Structure of the Dashboard Class. This diagram shows finer details about the Dashboard Class.
+image::ModelComponentDashboardClassDiagram.png[width="800]
+
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
@@ -369,7 +372,7 @@ _{Explain here how the data encryption feature will be implemented}_
 === Favourites feature
 ==== Current Implementation
 
-To facilitate the favourite/unfavourite feature, a `Favourite` attribute is added to the `Student` class:
+To facilitate the favourite/unfavourite feature, an association with a new `Favourite` class is added to the `Student` class:
 
 image::StudentClassDiagram.png[width="800"]
 
@@ -558,6 +561,21 @@ If you have a future implementation that requires the addition of a new attribut
 ** Con: Much harder to implement and gets overly complicated
 
 // end::schedule[]
+
+// tag::dashboard[]
+=== Dashboard feature
+==== Current Implementation
+
+To have a dashboard for each student, an association with a new `Dashboard` class is added to the `Student` class. We have also created new classes associated with the `Dashboard` class to facilitate the different capabilities of the dashboard.
+The following diagram shows the structure of the classes that facilitate the dashboard feature:
+
+image::ModelComponentDashboardClassDiagram.png[width="800"]
+
+`Dashboard` and `Milestone` are exposed to `ObservableList<Milestone>` and `ObservableList<Task>` respectively that can be 'observed'.
+This means that the UI can be bound to both of the lists so that the UI automatically updates when the data in both lists change.
+
+A new `Dashboard` object is created every time a new `Student` is being created. The `Dashboard` object will contain an empty milestone list until the user adds new milestones to the dashboard.
+This enforces 1-to-1 association between `Student` and `Dashboard`, as well as between `Dashboard` and `UniqueMilestoneList`.
 
 === Logging
 

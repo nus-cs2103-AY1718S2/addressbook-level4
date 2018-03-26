@@ -3,7 +3,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-EducateBook was developed by the https://github.com/nus-cs2103-AY1718S2/[W09-B3] team. +
+Codeducator was developed by the https://github.com/nus-cs2103-AY1718S2/[W09-B3] team. +
 
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 

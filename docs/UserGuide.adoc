@@ -116,7 +116,7 @@ Edit an existing contact:: `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAI
 
 Edit an existing pet patient:: `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
 
-Edit an existing appointing:: `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [nr/OWNER_NRIC] [n/PET_PATIENT_NAME] [t/TAG]...`
+Edit an existing appointment:: `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [nr/OWNER_NRIC] [n/PET_PATIENT_NAME] [t/TAG]...`
 
 ****
 * The command edits the contact / pet patient at the specified `INDEX`. The index refers to the index number shown in the latest contact / pet patient listing. The index *must be a positive integer* 1, 2, 3, ...

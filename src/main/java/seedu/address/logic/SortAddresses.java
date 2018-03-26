@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- *
+ * Sorts a hashmap of addresses and distances based on the distances
  */
 public class SortAddresses {
 
@@ -35,10 +35,12 @@ public class SortAddresses {
 
         // Maintaining insertion order with the help of LinkedList
         Map<String, Double> sortedMap = new LinkedHashMap<String, Double>();
+        Map<String, Double> cleanSortedMap = new LinkedHashMap<String, Double>();
         for (Entry<String, Double> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
+        cleanSortedMap = cleanSorted(sortedMap);
         return sortedMap;
     }
 
@@ -48,7 +50,28 @@ public class SortAddresses {
      */
     public void printMap(Map<String, Double> map) {
         for (Entry<String, Double> entry : map.entrySet()) {
-            System.out.println("Key : " + entry.getKey() + " Value : "+ entry.getValue());
+            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
         }
+    }
+
+    /**
+     *
+     */
+    public Map<String, Double> cleanSorted(Map<String, Double> sortedMap) {
+        for (Entry<String, Double> entry : sortedMap.entrySet()) {
+            String pairAddresses = entry.getKey();
+            String[] addresses = pairAddresses.split("_");
+            if (addresses[0] == addresses[1]) {
+                sortedMap.remove(entry.getKey());
+            }
+        }
+        for (Entry<String, Double> entry : sortedMap.entrySet()) {
+            /*TODO: WANT TO PUT SOME LOGIC HERE SO THAT THE DISTANCES ARE RANKED IN ORDER OF SHORTEST DISTANCE BUT ALSO
+             * THE ADDRESSES MAKE SENSE SO IF SHORTEST IS A - B THE NEXT SHOULD BE THE SHORTEST DISTANCE FROM B - X
+             * WHERE X IS UNKNOWN
+             */
+
+        }
+        return sortedMap;
     }
 }

@@ -20,10 +20,10 @@ public class RouteOptimization {
      * @param model
      * @return
      */
-    public List<String> getAddresses(Model model) {
+    public Map<String, Double> getAddresses(Model model) {
         List<Person> lastShownList = model.getFilteredPersonList();
-        List<String> filteredAddresses = new ArrayList<>();
         List<String> filtered = new ArrayList<>();
+        Map<String, Double> sortedDistances = new HashMap<>();
         int stringCutIndex;
         String addressWithoutUnit;
 
@@ -41,11 +41,8 @@ public class RouteOptimization {
 
             filtered.add(addressWithoutUnit);
         }
-
-        //filtered address is this list of address that we need to optimize
-        getAllDistances(filtered);
-        return filtered;
-
+        sortedDistances = getAllDistances(filtered);
+        return sortedDistances;
     }
 
     /**
@@ -55,10 +52,10 @@ public class RouteOptimization {
      */
     public Map<String, Double> getAllDistances(List<String> filtered) {
         Map<String, Double> allDistances = new HashMap<>();
+        Map<String, Double> sortedDistances = new HashMap<>();
         GetDistance distance = new GetDistance();
         List<Double> test = new ArrayList<>();
         List<String> route = new ArrayList<>();
-
 
         for (int i = 0; i < filtered.size(); i++) {
             String add1 = filtered.get(i);
@@ -69,7 +66,8 @@ public class RouteOptimization {
                 allDistances.put(labelRoutes(add1, add2), distance.getDistance(add1, add2));
             }
         }
-        return allDistances;
+        sortedDistances = sortDistances(allDistances);
+        return sortedDistances;
     }
 
     /**

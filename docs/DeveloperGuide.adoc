@@ -439,6 +439,8 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 === Import Contacts from CSV file
 
 ==== Current Implementation
+The Import Contacts mechanism allows users to import contacts from a .csv file. The file should contain the headers _Name_, _Email_, _Phone_, and _Address_ with a separate contact in each row. This functionality is implemented in with classes `ImportContactsCommand` and `ImportContactsCommandParser`. Functionality is tested in `ImportContactsCommandTest`, which is in the `seedu.address/logic/parser` (not `commands` folder). The core functionality of the mechanism is in the `executeUndoableCommand` function of the `ImportContactsCommand` class. The mechanism borrows code from _https://github.com/callicoder/java-read-write-csv-file_ for reading the CSV file
+
 
 ==== Design Consideration
 

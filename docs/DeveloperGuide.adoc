@@ -435,6 +435,24 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 ** Cons: Ease of implementation
 // end::deletebefore[]
 
+
+=== Import Contacts from CSV file
+
+==== Current Implementation
+
+==== Design Consideration
+
+===== Aspect: Implementation of `ImportContactsCommand`
+* **Alternative 1 (current choice):** Something A
+
+* **Alternative 2:** Something B
+
+===== Aspect: Implementation of `ImportContactsCommandParser`
+* **Alternative 1 (current choice):** Something A
+
+* **Alternative 2:** Something B
+
+
 == Documentation
 
 We use asciidoc for writing documentation.

@@ -7,14 +7,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Dialog;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BirthdayNotificationEvent;
@@ -32,6 +26,7 @@ public class BirthdayNotification extends UiPart<Region> {
     private final LocalDate currentDate;
     private final int currentDay;
     private final int currentMonth;
+    private final int currentYear;
 
     public BirthdayNotification() {
         super(FXML);
@@ -40,6 +35,7 @@ public class BirthdayNotification extends UiPart<Region> {
         currentDate = LocalDate.now();
         currentDay = currentDate.getDayOfMonth();
         currentMonth = currentDate.getMonthValue();
+        currentYear = currentDate.getYear();
     }
 
     /**
@@ -65,9 +61,17 @@ public class BirthdayNotification extends UiPart<Region> {
         }
 
         for (Person person: listOfPersonWithBirthdayToday) {
-            string.append(person.getBirthday().toString());
-            string.append(" ");
+            int age;
+            age = currentYear - person.getBirthday().getYear();
             string.append(person.getName().toString());
+            string.append(" (");
+            string.append(age);
+            if (age != 1) {
+                string.append(" years old)");
+            }
+            else if (age > 0){
+                string.append(" years old)");
+            }
             string.append("\n");
         }
 

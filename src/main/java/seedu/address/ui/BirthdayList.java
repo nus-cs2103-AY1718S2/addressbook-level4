@@ -67,7 +67,11 @@ public class BirthdayList extends UiPart<Region> {
         });
 
         for (Person person: list) {
-            string.append(person.getBirthday().toString());
+            string.append(person.getBirthday().getDay());
+            string.append("/");
+            string.append(person.getBirthday().getMonth());
+            string.append("/");
+            string.append(person.getBirthday().getYear());
             string.append(" ");
             string.append(person.getName().toString());
             string.append("\n");

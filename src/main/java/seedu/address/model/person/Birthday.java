@@ -15,11 +15,12 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday date can only contain numbers, and should follow the DDMMYY format";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{6,6}";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{8,8}";
     public final String value;
 
     private int day;
     private int month;
+    private int year;
 
     /**
      * Constructs a {@code Birthday}.
@@ -32,6 +33,7 @@ public class Birthday {
         this.value = birthday;
         this.day = parseDay(birthday);
         this.month = parseMonth(birthday);
+        this.year = parseYear(birthday);
     }
 
     /**
@@ -41,7 +43,7 @@ public class Birthday {
         int testDay = 0;
         int testMonth = 0;
 
-        // Initial check for DDMMYY format
+        // Initial check for DDMMYYYY format
         if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
             testDay = parseDay(test);
             testMonth = parseMonth(test);
@@ -74,19 +76,11 @@ public class Birthday {
     /**
      * Static method to parse Day from Birthday string
      * isValidBirthday() should be called before this method
-     * @param birthday assumed to be of format DDMMYY
+     * @param birthday assumed to be of format DDMMYYYY
      * @return integer Day
      */
     private static int parseDay(String birthday){
-        List<String> strings = new ArrayList<String>();
-
-        int index = 0;
-        while (index < birthday.length() && index < birthday.length()) {
-            strings.add(birthday.substring(index, Math.min(index + 2, birthday.length())));
-            index += 2;
-        }
-
-        return Integer.parseInt(strings.get(0));
+        return Integer.parseInt(birthday.substring(0,2));
     }
 
     /**
@@ -96,15 +90,17 @@ public class Birthday {
      * @return integer Month
      */
     private static int parseMonth(String birthday){
-        List<String> strings = new ArrayList<String>();
+        return Integer.parseInt(birthday.substring(2,4));
+    }
 
-        int index = 0;
-        while (index < birthday.length() && index < birthday.length()) {
-            strings.add(birthday.substring(index, Math.min(index + 2, birthday.length())));
-            index += 2;
-        }
-
-        return Integer.parseInt(strings.get(1));
+    /**
+     * Static method to parse Year from Birthday string
+     * isValidBirthday() should be called before this method
+     * @param birthday assumed to be of format DDMMYY
+     * @return integer Year
+     */
+    private static int parseYear(String birthday){
+        return Integer.parseInt(birthday.substring(4,8));
     }
 
     public int getDay() {
@@ -114,5 +110,7 @@ public class Birthday {
     public int getMonth() {
         return month;
     }
+
+    public int getYear() { return year; }
 }
 

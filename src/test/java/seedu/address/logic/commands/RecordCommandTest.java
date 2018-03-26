@@ -46,8 +46,10 @@ public class RecordCommandTest {
     @Test
     public void execute_addRecordUnfilteredList_success() throws Exception {
         Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRecord("date", "symptom", "illness", "treatment").build();
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, new Record("date", "symptom", "illness", "treatment"));
+        Patient editedPatient = new PatientBuilder(toEdit).withRecord("date",
+                "symptom", "illness", "treatment").build();
+        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON,
+                new Record("date", "symptom", "illness", "treatment"));
 
         String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
 
@@ -76,7 +78,8 @@ public class RecordCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Patient patientInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(patientInFilteredList).withRecord("test", "test", "test", "test").build();
+        Patient editedPatient = new PatientBuilder(patientInFilteredList).withRecord("test",
+                "test", "test", "test").build();
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, new Record("test", "test", "test", "test"));
 
         String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);

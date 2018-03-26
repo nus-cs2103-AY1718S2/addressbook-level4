@@ -14,6 +14,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -193,6 +194,32 @@ public class ParserUtil {
     public static Optional<Major> parseMajor(Optional<String> major) throws IllegalValueException {
         requireNonNull(major);
         return major.isPresent() ? Optional.of(parseMajor(major.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String gradePointAverage} into an {@code gradePointAverage}.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if given {@code gradePointAverage} is invalid.
+     */
+    public static GradePointAverage parseGradePointAverage(String gradePointAverage)
+            throws IllegalValueException {
+        requireNonNull(gradePointAverage);
+        String trimmedGradePointAverage = gradePointAverage.trim();
+        if (!GradePointAverage.isValidGradePointAverage(trimmedGradePointAverage)) {
+            throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+        }
+        return new GradePointAverage(trimmedGradePointAverage);
+    }
+    /**
+     * Parses a {@code Optional<String> gradePointAverage}
+     * into an {@code Optional<GradePointAverage>} if {@code gradePointAverage} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GradePointAverage> parseGradePointAverage(Optional<String> gradePointAverage)
+            throws IllegalValueException {
+        requireNonNull(gradePointAverage);
+        return gradePointAverage.isPresent() ? Optional.of(parseGradePointAverage(
+                gradePointAverage.get())) : Optional.empty();
     }
 
     /**

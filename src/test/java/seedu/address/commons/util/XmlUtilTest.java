@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.DeskBoard;
-import seedu.address.storage.XmlAdaptedActivity;
+import seedu.address.storage.XmlAdaptedTask;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableDeskBoard;
 import seedu.address.testutil.DeskBoardBuilder;
@@ -28,9 +28,9 @@ public class XmlUtilTest {
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
     private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validAddressBook.xml");
-    private static final File MISSING_ACTIVITY_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingActivityField.xml");
-    private static final File INVALID_ACTIVITY_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidActivityField.xml");
-    private static final File VALID_ACTIVITY_FILE = new File(TEST_DATA_FOLDER + "validActivity.xml");
+    private static final File MISSING_ACTIVITY_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingTaskField.xml");
+    private static final File INVALID_ACTIVITY_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidTaskField.xml");
+    private static final File VALID_ACTIVITY_FILE = new File(TEST_DATA_FOLDER + "validTask.xml");
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
 
     private static final String INVALID_DATE_TIME = "9482asf424";
@@ -68,9 +68,7 @@ public class XmlUtilTest {
     }
 
     //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         DeskBoard dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableDeskBoard.class).toModelType();
         assertEquals(9, dataFromFile.getActivityList().size());
@@ -78,30 +76,30 @@ public class XmlUtilTest {
     }
 
     @Test
-    public void xmlAdaptedActivityFromFile_fileWithMissingActivityField_validResult() throws Exception {
-        XmlAdaptedActivity actualActivity = XmlUtil.getDataFromFile(
-                MISSING_ACTIVITY_FIELD_FILE, XmlAdaptedActivityWithRootElement.class);
-        XmlAdaptedActivity expectedActivity = new XmlAdaptedActivity(
+    public void xmlAdaptedTaskFromFile_fileWithMissingTaskField_validResult() throws Exception {
+        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
+                MISSING_ACTIVITY_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
+        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 null, VALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
-        assertEquals(expectedActivity, actualActivity);
+        assertEquals(expectedTask, actualTask);
     }
 
     @Test
-    public void xmlAdaptedActivityFromFile_fileWithInvalidActivityField_validResult() throws Exception {
-        XmlAdaptedActivity actualActivity = XmlUtil.getDataFromFile(
-                INVALID_ACTIVITY_FIELD_FILE, XmlAdaptedActivityWithRootElement.class);
-        XmlAdaptedActivity expectedActivity = new XmlAdaptedActivity(
+    public void xmlAdaptedTaskFromFile_fileWithInvalidTaskField_validResult() throws Exception {
+        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
+                INVALID_ACTIVITY_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
+        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 VALID_NAME, INVALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
-        assertEquals(expectedActivity, actualActivity);
+        assertEquals(expectedTask, actualTask);
     }
 
     @Test
-    public void xmlAdaptedActivityFromFile_fileWithValidActivity_validResult() throws Exception {
-        XmlAdaptedActivity actualActivity = XmlUtil.getDataFromFile(
-                VALID_ACTIVITY_FILE, XmlAdaptedActivityWithRootElement.class);
-        XmlAdaptedActivity expectedActivity = new XmlAdaptedActivity(
+    public void xmlAdaptedTaskFromFile_fileWithValidTask_validResult() throws Exception {
+        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
+                VALID_ACTIVITY_FILE, XmlAdaptedTaskWithRootElement.class);
+        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 VALID_NAME, VALID_DATE_TIME, VALID_REMARK, VALID_TAGS);
-        assertEquals(expectedActivity, actualActivity);
+        assertEquals(expectedTask, actualTask);
     }
 
     @Test
@@ -141,9 +139,9 @@ public class XmlUtilTest {
 
     /**
      * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data
-     * to {@code XmlAdaptedActivity}
+     * to {@code XmlAdaptedTask}
      * objects.
      */
     @XmlRootElement(name = "activity")
-    private static class XmlAdaptedActivityWithRootElement extends XmlAdaptedActivity {}
+    private static class XmlAdaptedTaskWithRootElement extends XmlAdaptedTask {}
 }

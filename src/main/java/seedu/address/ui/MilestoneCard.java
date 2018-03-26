@@ -43,7 +43,7 @@ public class MilestoneCard extends UiPart<Region> {
         super(FXML);
         this.milestone = milestone;
 
-        index.setText(displayedIndex + ".");
+        index.setText(Integer.toString(displayedIndex));
         description.setText(milestone.getDescription());
         dueDate.setText(milestone.getDueDate().toString());
         progress.setText(milestone.getProgress().toString());

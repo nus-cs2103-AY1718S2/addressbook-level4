@@ -9,13 +9,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox fx:id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="cardPane" prefWidth="650.0" style="-fx-background-color: #827f7d; -fx-border-color: black;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="35.0">
          <children>
-            <Circle fill="#ff8400" radius="8.0" stroke="WHITE" strokeType="INSIDE" />
-            <Label fx:id="index" text="idx">
+            <Circle radius="8.0" stroke="WHITE" strokeType="INSIDE" />
+            <Label fx:id="index" text="idx" textFill="WHITE">
                <font>
                   <Font size="10.0" />
                </font>
@@ -24,7 +23,7 @@
       </StackPane>
       <HBox prefHeight="20.0" prefWidth="600.0">
          <children>
-            <Text fill="#ff8400" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -32,9 +31,9 @@
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="name" text="name">
+            <Label fx:id="name" style="-fx-font-family: Segoe UI; -fx-font-size: 14;" text="name">
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="10.0" top="7.0" />
                </HBox.margin>
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -44,7 +43,7 @@
       </HBox>
       <HBox prefHeight="20.0" prefWidth="600.0">
          <children>
-            <Text fill="#ff8400" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -52,9 +51,9 @@
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="description" text="desc">
+            <Label fx:id="description" style="-fx-font-family: Segoe UI; -fx-font-size: 14;" text="desc">
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="10.0" top="7.0" />
                </HBox.margin>
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -62,9 +61,9 @@
             </Label>
          </children>
       </HBox>
-      <HBox prefHeight="20.0" prefWidth="600.0">
+      <HBox prefHeight="20.0" prefWidth="650.0">
          <children>
-            <Text fill="#ff8400" strokeType="OUTSIDE" strokeWidth="0.0" text="Completed">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Completed:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -72,9 +71,9 @@
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="isCompleted" text="isCompleted">
+            <Label fx:id="isCompleted" style="-fx-font-family: Segoe UI; -fx-font-size: 14;" text="isCompleted">
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="10.0" top="7.0" />
                </HBox.margin>
                <font>
                   <Font name="System Bold" size="15.0" />

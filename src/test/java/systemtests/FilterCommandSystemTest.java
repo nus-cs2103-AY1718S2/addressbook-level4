@@ -5,7 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
@@ -24,6 +26,7 @@ import seedu.address.model.Model;
 public class FilterCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void filter() {
+        //Expected Graduation Year filtering
         /* Case: filters multiple persons in address book, command with leading spaces and trailing spaces
          * -> 3 persons found
          */
@@ -69,6 +72,68 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //Rating filtering
+        /* Case: filters multiple persons in address book, command with leading spaces and trailing spaces
+         * -> 2 persons found
+         */
+        showAllPersons();
+        command = "   " + FilterCommand.COMMAND_WORD + " "
+                + PREFIX_RATING + "   3.75" + "   ";
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON); // their graduation year is before or equal 2019
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous filter command where person list is displaying the persons satisfying the filter
+         * -> 2 persons found
+         */
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_RATING + "3.75";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: filter person twice -> 5 persons found and 2 persons found*/
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_RATING + "2-5";
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_RATING + "3-5";
+        ModelHelper.setFilteredList(expectedModel, BENSON);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: filter no person in address book, 2017 -> 0 persons found */
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_RATING + "1.0";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: filter multiple persons in address book, 2 keywords -> 3 persons found */
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_RATING + "1.0" + " "
+                + PREFIX_RATING + "3.75";
+        ModelHelper.setFilteredList(expectedModel, BENSON); //only last keyword effective
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        //Mixed filtering - will update more after the larger test sample is generated
+        showAllPersons();
+        command = "   " + FilterCommand.COMMAND_WORD + " " + PREFIX_RATING + " 1-5" + " "
+                + PREFIX_EXPECTED_GRADUATION_YEAR + "2021";
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON); // their graduation year is before or equal 2019
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        // general cases
+        //setup a filter
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2018" + " "
+                + PREFIX_EXPECTED_GRADUATION_YEAR + KEYWORD_MATCHING_2019;
+        ModelHelper.setFilteredList(expectedModel, CARL, FIONA); //only last keyword effective
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
 
         /* Case: undo previous filter command -> rejected */
         command = UndoCommand.COMMAND_WORD;

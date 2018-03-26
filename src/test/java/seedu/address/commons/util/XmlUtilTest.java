@@ -41,6 +41,7 @@ public class XmlUtilTest {
     private static final String VALID_ADDRESS = "4th street";
     private static final String VALID_EXPECTED_GRADUATION_YEAR = "2020";
     private static final String VALID_MAJOR = "Computer Science";
+    private static final String VALID_GRADE_POINT_AVERAGE = "4.77";
     private static final String VALID_JOB_APPLIED = "Software Engineer";
     private static final String VALID_TECHNICAL_SKILLS_SCORE = "4";
     private static final String VALID_COMMUNICATION_SKILLS_SCORE = "3.5";
@@ -92,7 +93,8 @@ public class XmlUtilTest {
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
-                VALID_MAJOR, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
+                VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
+                VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
                 VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
@@ -104,7 +106,8 @@ public class XmlUtilTest {
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
-                VALID_MAJOR, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
+                VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
+                VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
                 VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
@@ -116,7 +119,8 @@ public class XmlUtilTest {
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
                 VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR,
-                VALID_MAJOR, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
+                VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
+                VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
                 VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);

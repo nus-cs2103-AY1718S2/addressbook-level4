@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMUNICATION_SKILLS_S
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -48,6 +49,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_EXPECTED_GRADUATION_YEAR_AMY = "2018";
     public static final String VALID_EXPECTED_GRADUATION_YEAR_BOB = "2020";
+    public static final String VALID_GRADE_POINT_AVERAGE_AMY = "4.75";
+    public static final String VALID_GRADE_POINT_AVERAGE_BOB = "4.93";
     public static final String VALID_MAJOR_AMY = "Computer Science";
     public static final String VALID_MAJOR_BOB = "Information Security";
     public static final String VALID_JOB_APPLIED_AMY = "Software Engineer";
@@ -78,6 +81,10 @@ public class CommandTestUtil {
             + VALID_EXPECTED_GRADUATION_YEAR_AMY;
     public static final String EXPECTED_GRADUATION_YEAR_DESC_BOB = " " + PREFIX_EXPECTED_GRADUATION_YEAR
             + VALID_EXPECTED_GRADUATION_YEAR_BOB;
+    public static final String GRADE_POINT_AVERAGE_DESC_AMY = " " + PREFIX_GRADE_POINT_AVERAGE
+            + VALID_GRADE_POINT_AVERAGE_AMY;
+    public static final String GRADE_POINT_AVERAGE_DESC_BOB = " " + PREFIX_GRADE_POINT_AVERAGE
+            + VALID_GRADE_POINT_AVERAGE_BOB;
     public static final String MAJOR_DESC_AMY = " " + PREFIX_MAJOR + VALID_MAJOR_AMY;
     public static final String MAJOR_DESC_BOB = " " + PREFIX_MAJOR + VALID_MAJOR_BOB;
     public static final String JOB_APPLIED_DESC_AMY = " " + PREFIX_JOB_APPLIED + VALID_JOB_APPLIED_AMY;
@@ -93,6 +100,8 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_EXPECTED_GRADUATION_YEAR_DESC = " " + PREFIX_EXPECTED_GRADUATION_YEAR
             + "2o20";
+    public static final String INVALID_GRADE_POINT_AVERAGE_DESC = " " + PREFIX_GRADE_POINT_AVERAGE
+            + "5.1"; // not in range
     public static final String INVALID_MAJOR_DESC = " " + PREFIX_MAJOR + "&Computer"; // '&' not allowed in major
     public static final String INVALID_JOB_APPLIED_DESC =
             " " + PREFIX_JOB_APPLIED + " "; // empty string not allowed in job applied

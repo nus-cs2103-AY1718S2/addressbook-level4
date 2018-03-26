@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
@@ -46,6 +47,8 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String major;
     @XmlElement(required = true)
+    private String gradePointAverage;
+    @XmlElement(required = true)
     private String jobApplied;
     @XmlElement(required = true)
     private String status;
@@ -77,7 +80,7 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
-                            String major, String jobApplied, String technicalSkillsScore,
+                            String major, String gradePointAverage, String jobApplied, String technicalSkillsScore,
                             String communicationSkillsScore, String problemSolvingSkillsScore, String experienceScore,
                             String resume, String interviewDate, String status, List<XmlAdaptedTag> tagged) {
         this.name = name;
@@ -86,6 +89,7 @@ public class XmlAdaptedPerson {
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
         this.major = major;
+        this.gradePointAverage = gradePointAverage;
         this.jobApplied = jobApplied;
         this.technicalSkillsScore = technicalSkillsScore;
         this.communicationSkillsScore = communicationSkillsScore;
@@ -111,6 +115,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         expectedGraduationYear = source.getExpectedGraduationYear().value;
         major = source.getMajor().value;
+        gradePointAverage = source.getGradePointAverage().value;
         jobApplied = source.getJobApplied().value;
         technicalSkillsScore = Double.toString(source.getRating().technicalSkillsScore);
         communicationSkillsScore = Double.toString(source.getRating().communicationSkillsScore);
@@ -186,6 +191,15 @@ public class XmlAdaptedPerson {
         }
         final Major major = new Major(this.major);
 
+        if (this.gradePointAverage == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    GradePointAverage.class.getSimpleName()));
+        }
+        if (!GradePointAverage.isValidGradePointAverage(this.gradePointAverage)) {
+            throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+        }
+        final GradePointAverage gradePointAverage = new GradePointAverage(this.gradePointAverage);
+
         if (this.jobApplied == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     JobApplied.class.getSimpleName()));
@@ -232,7 +246,7 @@ public class XmlAdaptedPerson {
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, expectedGraduationYear,
-                major, jobApplied, rating, resume, interviewDate, status, tags);
+                major, gradePointAverage, jobApplied, rating, resume, interviewDate, status, tags);
     }
 
     @Override
@@ -252,6 +266,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(address, otherPerson.address)
                 && Objects.equals(expectedGraduationYear, otherPerson.expectedGraduationYear)
                 && Objects.equals(major, otherPerson.major)
+                && Objects.equals(gradePointAverage, otherPerson.gradePointAverage)
                 && Objects.equals(jobApplied, otherPerson.jobApplied)
                 && Objects.equals(interviewDate, otherPerson.interviewDate)
                 && Objects.equals(status, otherPerson.status)

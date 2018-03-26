@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
@@ -97,6 +98,7 @@ public class DeleteRatingCommand extends UndoableCommand {
         Address address = targetPerson.getAddress();
         ExpectedGraduationYear expectedGraduationYear = targetPerson.getExpectedGraduationYear();
         Major major = targetPerson.getMajor();
+        GradePointAverage gradePointAverage = targetPerson.getGradePointAverage();
         JobApplied jobApplied = targetPerson.getJobApplied();
         Rating defaultRating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,
                 Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE);
@@ -106,7 +108,8 @@ public class DeleteRatingCommand extends UndoableCommand {
         Set<Tag> tags = targetPerson.getTags();
 
         return new Person(name, phone, email, address,
-                expectedGraduationYear, major, jobApplied, defaultRating, resume, interviewDate, status, tags);
+                expectedGraduationYear, major, gradePointAverage, jobApplied,
+                defaultRating, resume, interviewDate, status, tags);
     }
 
     @Override

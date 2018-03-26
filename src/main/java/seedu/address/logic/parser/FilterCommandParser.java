@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -22,9 +23,9 @@ public class FilterCommandParser implements Parser<FilterCommand> {
      */
     public FilterCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_EXPECTED_GRADUATION_YEAR); //PREFIX_TAG temporarily removed
+                ArgumentTokenizer.tokenize(args, PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_RATING);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_EXPECTED_GRADUATION_YEAR)
+        if (!isValidFilterCommandInput(argMultimap, PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_RATING)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
@@ -32,7 +33,10 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         try {
             Predicate<Person> expectedGraduationYearPredicate = FilterUtil.parseExpectedGraduationYear(argMultimap
                     .getValue(PREFIX_EXPECTED_GRADUATION_YEAR));
-            return new FilterCommand(expectedGraduationYearPredicate);
+            Predicate<Person> ratingPredicate = FilterUtil.parseRating(argMultimap.getValue(PREFIX_RATING));
+            // combine all predicates together using and
+            Predicate<Person> combinedPredicate = combinePredicate(expectedGraduationYearPredicate, ratingPredicate);
+            return new FilterCommand(combinedPredicate);
         } catch (ParseException pe) {
             throw pe;
         } catch (IllegalValueException ive) {
@@ -40,7 +44,41 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         }
     }
 
+    /**
+     * checks whether the user input is of the correct format in the sense that it contains at least 1 prefix
+     * @param argumentMultimap Parsed user input
+     * @param prefixes Supported prefixes
+     * @return whether the input is valid
+     */
+    private boolean isValidFilterCommandInput(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        boolean hasAnyPrefixes = false;
+        for (Prefix p: prefixes) {
+            if (arePrefixesPresent(argumentMultimap, p)) {
+                hasAnyPrefixes = true;
+                break;
+            }
+        }
+        return hasAnyPrefixes;
+    }
 
+    /**
+     * combines all the predicate into one predicate AND-connected
+     * @param predicates all the predicates to be combined
+     * @return a single predicate
+     */
+    private Predicate<Person> combinePredicate(Predicate<Person>... predicates) {
+        Predicate<Person> combinedPredicate = null;
+        for (Predicate<Person> p: predicates) {
+            if (p != null) {
+                if (combinedPredicate == null) {
+                    combinedPredicate = p;
+                } else {
+                    combinedPredicate = combinedPredicate.and(p);
+                }
+            }
+        }
+        return combinedPredicate;
+    }
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given

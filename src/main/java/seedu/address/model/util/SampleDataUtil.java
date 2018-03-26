@@ -10,6 +10,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
@@ -33,6 +34,7 @@ public class SampleDataUtil {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"), new ExpectedGraduationYear("2018"),
                 new Major("Computer Science"),
+                new GradePointAverage("4.84"),
                 new JobApplied("Software Engineer"),
                 new Rating(4.3, 4.8,
                             4.0, 4.1),
@@ -40,7 +42,8 @@ public class SampleDataUtil {
                 new Status(), getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new ExpectedGraduationYear("2019"),
-                new Major("Business Analytics"),
+                new Major("Computer Science"),
+                new GradePointAverage("4.73"),
                 new JobApplied("Data Analyst"),
                 new Rating(-1, -1,
                         -1, -1),
@@ -48,7 +51,7 @@ public class SampleDataUtil {
                 getTagSet("colleagues", "friends")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new ExpectedGraduationYear("2020"),
-                new Major("Computer Science"),
+                new Major("Computer Science"), new GradePointAverage("4.92"),
                 new JobApplied("Software Tester"),
                 new Rating(4.5, 3,
                         4.5, 2.5),
@@ -57,6 +60,7 @@ public class SampleDataUtil {
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new ExpectedGraduationYear("2020"),
                 new Major("Computer Science"),
+                new GradePointAverage("4.24"),
                 new JobApplied("Network Administrator"),
                 new Rating(-1, -1,
                         -1, -1),
@@ -64,15 +68,14 @@ public class SampleDataUtil {
                 getTagSet("family")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"), new ExpectedGraduationYear("2021"),
-                new Major("Computer Science"),
+                new Major("Computer Science"), new GradePointAverage("4.33"),
                 new JobApplied("Database Administrator"),
                 new Rating(3, 5, 3.5, 3),
                 new Resume(null), new InterviewDate(), new Status(4),
                 getTagSet("classmates")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"), new ExpectedGraduationYear("2019"),
-                new Major("Computer Science"),
-                new JobApplied("Web Developer"),
+                new Major("Computer Science"), new GradePointAverage("4.75"), new JobApplied("Web Developer"),
                 new Rating(-1, -1,
                         -1, -1),
                 new Resume(null), new InterviewDate(), new Status(2),

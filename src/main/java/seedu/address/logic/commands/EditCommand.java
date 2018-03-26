@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -26,6 +27,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
@@ -57,6 +59,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_EXPECTED_GRADUATION_YEAR + "EXPECTED GRADUATION YEAR] "
             + "[" + PREFIX_MAJOR + "MAJOR] "
+            + "[" + PREFIX_GRADE_POINT_AVERAGE + "GRADE POINT AVERAGE] "
             + "[" + PREFIX_JOB_APPLIED + "JOB APPLIED] "
             + "[" + PREFIX_RESUME + "RESUME] "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -125,6 +128,8 @@ public class EditCommand extends UndoableCommand {
         ExpectedGraduationYear updatedExpectedGraduationYear = editPersonDescriptor.getExpectedGraduationYear()
                 .orElse(personToEdit.getExpectedGraduationYear());
         Major updatedMajor = editPersonDescriptor.getMajor().orElse(personToEdit.getMajor());
+        GradePointAverage updatedGradePointAverage = editPersonDescriptor.getGradePointAverage()
+                .orElse(personToEdit.getGradePointAverage());
         JobApplied updatedJobApplied = editPersonDescriptor.getJobApplied().orElse(personToEdit.getJobApplied());
 
         // Doesn't allow editing of rating
@@ -141,7 +146,8 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedExpectedGraduationYear,
-                updatedMajor, updatedJobApplied, rating, updatedResume, interviewDate, status, updatedTags);
+                updatedMajor, updatedGradePointAverage, updatedJobApplied, rating, updatedResume,
+                interviewDate, status, updatedTags);
     }
 
     @Override
@@ -174,6 +180,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private ExpectedGraduationYear expectedGraduationYear;
         private Major major;
+        private GradePointAverage gradePointAverage;
         private JobApplied jobApplied;
         private Resume resume;
         private Set<Tag> tags;
@@ -191,6 +198,7 @@ public class EditCommand extends UndoableCommand {
             setAddress(toCopy.address);
             setExpectedGraduationYear(toCopy.expectedGraduationYear);
             setMajor(toCopy.major);
+            setGradePointAverage(toCopy.gradePointAverage);
             setJobApplied(toCopy.jobApplied);
             setResume(toCopy.resume);
             setTags(toCopy.tags);
@@ -201,7 +209,8 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
-                    this.expectedGraduationYear, this.major, this.jobApplied, this.resume, this.tags);
+                    this.expectedGraduationYear, this.major, this.gradePointAverage, this.jobApplied,
+                    this.resume, this.tags);
         }
 
         public void setName(Name name) {
@@ -250,6 +259,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Major> getMajor() {
             return Optional.ofNullable(major);
+        }
+
+        public void setGradePointAverage(GradePointAverage gradePointAverage) {
+            this.gradePointAverage = gradePointAverage;
+        }
+
+        public Optional<GradePointAverage> getGradePointAverage() {
+            return Optional.ofNullable(gradePointAverage);
         }
 
         public void setJobApplied(JobApplied jobApplied) { this.jobApplied = jobApplied; }
@@ -301,6 +318,7 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getExpectedGraduationYear().equals(e.getExpectedGraduationYear())
                     && getMajor().equals(e.getMajor())
+                    && getGradePointAverage().equals(e.getGradePointAverage())
                     && getResume().equals(e.getResume())
                     && getTags().equals(e.getTags());
         }

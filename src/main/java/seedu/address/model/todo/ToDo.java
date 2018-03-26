@@ -68,7 +68,7 @@ public class ToDo {
         final StringBuilder builder = new StringBuilder();
         builder.append(getContent())
                 .append(" Status: ")
-                .append(getContent());
+                .append(getStatus());
         return builder.toString();
     }
 }

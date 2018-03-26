@@ -20,6 +20,8 @@ public class ToDoCard extends UiPart<Region> {
     @FXML
     private Label content;
     @FXML
+    private Label status;
+    @FXML
     private Label id;
 
     public ToDoCard(ToDo todo, int displayedIndex) {
@@ -27,6 +29,7 @@ public class ToDoCard extends UiPart<Region> {
         this.todo = todo;
         id.setText(displayedIndex + ". ");
         content.setText(todo.getContent().value);
+        status.setText(todo.getStatus().value);
     }
 
 

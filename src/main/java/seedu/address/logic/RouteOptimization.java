@@ -56,7 +56,9 @@ public class RouteOptimization {
             String key1 = entry1.getKey();
             int hash1 = System.identityHashCode(key1);
             String value1 = entry1.getValue();
+            // need the next value not the same value
             for (Map.Entry<String, String> entry2 : filtered.entrySet()) {
+
                 String key2 = entry2.getKey();
                 if (hash1 > System.identityHashCode(key2)) {
                     continue;

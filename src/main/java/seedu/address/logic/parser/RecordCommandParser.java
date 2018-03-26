@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 
@@ -26,12 +27,19 @@ public class RecordCommandParser implements Parser<RecordCommand> {
      */
     public RecordCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT);
+                ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_DATE, PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT);
 
-        Index index;
+        Index patientIndex;
+        Index recordIndex;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            patientIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            recordIndex = ParserUtil.parseIndex((argMultimap.getValue(PREFIX_DATE)).get());
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
@@ -50,7 +58,7 @@ public class RecordCommandParser implements Parser<RecordCommand> {
 
         Record record = new Record(date, illness, symptom, treatment);
 
-        return new RecordCommand(index, record);
+        return new RecordCommand(patientIndex, recordIndex.getZeroBased(), record);
     }
 
     /**

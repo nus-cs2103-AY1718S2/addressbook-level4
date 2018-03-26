@@ -43,7 +43,8 @@ public class RecordCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_RECORD_SUCCESS = "Medical record updated: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already exists in the address book.";
 
-    private final Index index;
+    private final Index patientIndex;
+    private final int recordIndex;
     private final Record record;
 
     private Patient patientToEdit;
@@ -52,10 +53,11 @@ public class RecordCommand extends UndoableCommand {
     /**
      * Creates a RecordCommand to edit the records of the specified {@code Patient}
      */
-    public RecordCommand(Index index, Record record) {
-        requireNonNull(index);
+    public RecordCommand(Index patientIndex, int recordIndex, Record record) {
+        requireNonNull(patientIndex);
         requireNonNull(record);
-        this.index = index;
+        this.patientIndex = patientIndex;
+        this.recordIndex = recordIndex;
         this.record = record;
     }
 
@@ -76,11 +78,11 @@ public class RecordCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         List<Patient> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
+        if (patientIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        patientToEdit = lastShownList.get(index.getZeroBased());
+        patientToEdit = lastShownList.get(patientIndex.getZeroBased());
         editedPatient = createEditedPerson(patientToEdit, record);
     }
 
@@ -111,12 +113,15 @@ public class RecordCommand extends UndoableCommand {
         // state check
         RecordCommand e = (RecordCommand) other;
 
-        return getIndex().equals(e.getIndex())
+        return getPatientIndex().equals(e.getPatientIndex())
                 && getRecord().equals(e.getRecord());
     }
 
-    public Index getIndex() {
-        return index;
+    public Index getPatientIndex() {
+        return patientIndex;
+    }
+    public int getRecordIndex() {
+        return recordIndex;
     }
     public Record getRecord() {
         return record;

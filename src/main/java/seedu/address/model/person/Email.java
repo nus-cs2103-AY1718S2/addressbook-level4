@@ -29,6 +29,10 @@ public class Email {
 
     public final String value;
 
+    public Email() {
+        value = "";
+    }
+
     /**
      * Constructs an {@code Email}.
      *

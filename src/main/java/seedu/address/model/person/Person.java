@@ -25,6 +25,16 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
+
+    public Person() {
+        this.name = new Name("DefaultName");
+        this.phone = new Phone();
+        this.email = new Email();
+        this.address = new Address();
+        this.tags = new UniqueTagList();
+
+    }
+
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;

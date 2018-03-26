@@ -66,7 +66,10 @@ public class XmlAdaptedPetPatientTest {
                 VALID_OWNER,
                 VALID_TAGS
         );
-        String expectedMessage = String.format(MISSING_NAME_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName());
+        String expectedMessage = String.format(
+                MISSING_NAME_FIELD_MESSAGE_FORMAT,
+                PetPatientName.class.getSimpleName()
+        );
         Assert.assertThrows(IllegalValueException.class, expectedMessage, petPatient::toModelType);
     }
 
@@ -81,7 +84,10 @@ public class XmlAdaptedPetPatientTest {
                 VALID_OWNER,
                 VALID_TAGS
         );
-        String expectedMessage = String.format(MISSING_SPECIES_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName());
+        String expectedMessage = String.format(
+                MISSING_SPECIES_FIELD_MESSAGE_FORMAT,
+                PetPatientName.class.getSimpleName()
+        );
         Assert.assertThrows(IllegalValueException.class, expectedMessage, petPatient::toModelType);
     }
 
@@ -96,7 +102,10 @@ public class XmlAdaptedPetPatientTest {
                 VALID_OWNER,
                 VALID_TAGS
         );
-        String expectedMessage = String.format(MISSING_BREED_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName());
+        String expectedMessage = String.format(
+                MISSING_BREED_FIELD_MESSAGE_FORMAT,
+                PetPatientName.class.getSimpleName()
+        );
         Assert.assertThrows(IllegalValueException.class, expectedMessage, petPatient::toModelType);
     }
 
@@ -111,7 +120,10 @@ public class XmlAdaptedPetPatientTest {
                 VALID_OWNER,
                 VALID_TAGS
         );
-        String expectedMessage = String.format(MISSING_COLOUR_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName());
+        String expectedMessage = String.format(
+                MISSING_COLOUR_FIELD_MESSAGE_FORMAT,
+                PetPatientName.class.getSimpleName()
+        );
         Assert.assertThrows(IllegalValueException.class, expectedMessage, petPatient::toModelType);
     }
 
@@ -126,7 +138,10 @@ public class XmlAdaptedPetPatientTest {
                 VALID_OWNER,
                 VALID_TAGS
         );
-        String expectedMessage = String.format(MISSING_BLOODTYPE_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName());
+        String expectedMessage = String.format(
+                MISSING_BLOODTYPE_FIELD_MESSAGE_FORMAT,
+                PetPatientName.class.getSimpleName()
+        );
         Assert.assertThrows(IllegalValueException.class, expectedMessage, petPatient::toModelType);
     }
 
@@ -141,7 +156,10 @@ public class XmlAdaptedPetPatientTest {
                 null,
                 VALID_TAGS
         );
-        String expectedMessage = String.format(MISSING_OWNER_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName());
+        String expectedMessage = String.format(
+                MISSING_OWNER_FIELD_MESSAGE_FORMAT,
+                PetPatientName.class.getSimpleName()
+        );
         Assert.assertThrows(IllegalValueException.class, expectedMessage, petPatient::toModelType);
     }
 

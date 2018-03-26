@@ -488,7 +488,11 @@ e.g. `find` or `f James Jake`
 e.g.`select` or `s 2`
 * *Remark* : `remark` or `rk INDEX r/[REMARK]` +
 e.g.`remark` or `rk 1 r/Likes to drink coffee.`
-* *View Appointment* : `viewappt` or `va`
+* *Add patient into visiting queue* : `addq` or `aq`
+* *Remove patient from visiting queue* : `removeq` or `rq`
+* *View appointments* : `viewappt` or `va`
+* *Add new appointment* : `addappt` or `aa`
+* *Delete appointment* : `delappt` or `da`
 * *History* : `history` or `hi`
 * *Undo* : `undo` or `u` or `z`
 * *Redo* : `redo` or `r` or `y`

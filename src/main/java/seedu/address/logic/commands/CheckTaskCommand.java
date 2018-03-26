@@ -79,7 +79,7 @@ public class CheckTaskCommand extends UndoableCommand {
             try {
                 model.updateStudent(targetStudent, editedStudent);
             } catch (DuplicateStudentException e) {
-            /* DuplicateStudentException caught will mean that the task list is the same as before */
+                /* DuplicateStudentException caught will mean that the task list is the same as before */
                 throw new AssertionError("New task cannot be missing");
             } catch (StudentNotFoundException e) {
                 throw new AssertionError("The target student cannot be missing");

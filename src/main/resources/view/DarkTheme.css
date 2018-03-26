@@ -407,7 +407,7 @@
     -fx-font-size: 10pt;
 }
 
-.pills-small {
+.pills-small .label {
     -fx-text-fill: white;
     -fx-padding: 1 5 1 5;
     -fx-border-radius: 7;

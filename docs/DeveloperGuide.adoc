@@ -94,14 +94,15 @@ When you are ready to start coding,
 
 [[Design-Architecture]]
 === Architecture
+The *_Architecture Diagram_* (Figure 1 below) explains the high-level design of the App.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
-
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+
+Given below is a quick overview of each component.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
@@ -113,7 +114,7 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of five components.
 
 * <<Design-Ui,*`UI`*>>: The UI of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
@@ -121,12 +122,12 @@ The rest of the App consists of four components.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 * <<Design-Network,*`Network`*>>: Makes web API calls to online services.
 
-Each of the four components
+Each of the five components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (Figure 2 below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
@@ -134,7 +135,7 @@ image::LogicClassDiagram.png[width="800"]
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ (Figure 3 below) shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeleteBook.png[width="800"]
@@ -142,7 +143,7 @@ image::SDforDeleteBook.png[width="800"]
 [NOTE]
 Note how the `Model` simply raises a `BookShelfChangedEvent` when the Book Shelf data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+Figure 4 below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeleteBookEventHandling.png[width="800"]
@@ -160,7 +161,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `BookListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `BookListPanel`, `StatusBarFooter`, `BookDetailsPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -188,7 +189,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a book) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Figure 8 below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteBookSdForLogic.png[width="800"]
@@ -206,7 +207,7 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Book Shelf data.
 * exposes an unmodifiable `ObservableList<Book>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other four components.
+* does not depend on any of the other components.
 
 [[Design-Storage]]
 === Storage component
@@ -219,7 +220,8 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the `BookShelf` data in xml format and read it back.
+* can save the recently selected books data in xml format and read it back.
 
 [[Design-Network]]
 === Network component
@@ -348,16 +350,16 @@ image::SearchCommandResultSequenceDiagram.png[width="650"]
 // end:search[]
 
 // tag::undoredo[]
-=== Undo/Redo feature
+=== Undo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo mechanism is facilitated by an `UndoStack`, which resides inside `LogicManager`. It supports undoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the book shelf before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undo-able_ way, such as saving the state of the book shelf before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -390,48 +392,39 @@ public class DeleteCommand extends UndoableCommand {
 }
 ----
 
-Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
+Suppose that the user has just launched the application. The `UndoStack` will be empty at the beginning.
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th book in the book shelf. The current state of the book shelf is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
-image::UndoRedoStartingStackDiagram.png[width="800"]
+image::UndoRedoStartingStackDiagram.png[width="700"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add t/Artemis ...` to add a new book.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add 1` to add a new book.
 
-image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+image::UndoRedoNewCommand1StackDiagram.png[width="700"]
 
 [NOTE]
-If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
+If a command fails its execution, it will not be pushed to the `UndoStack` at all.
 
 The user now decides that adding the book was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the book shelf to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack`. We will restore the book shelf to the state before the `add` command executed.
 
-image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+image::UndoRedoExecuteUndoStackDiagram.png[width="700"]
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
 The following sequence diagram shows how the undo operation works:
 
-image::UndoRedoSequenceDiagram.png[width="800"]
-
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the book shelf to the state after the command is executed).
-
-[NOTE]
-If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
-
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add t/Artemis` command (this is the behavior that most modern desktop applications follow).
-
-image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+image::UndoRedoSequenceDiagram.png[width="700"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
-image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+image::UndoRedoNewCommand2StackDiagram.png[width="700"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram summarize what happens inside the `UndoStack` when a user executes a new command:
 
-image::UndoRedoActivityDiagram.png[width="650"]
+image::UndoRedoActivityDiagram.png[width="550"]
 
 ==== Design Considerations
 
@@ -444,35 +437,25 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+===== Aspect: How undo executes
 
 * **Alternative 1 (current choice):** Saves the entire book shelf.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
+* **Alternative 2:** Individual command knows how to undo by itself.
 ** Pros: Will use less memory (e.g. for `delete`, just save the book being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
-===== Aspect: Type of commands that can be undone/redone
+===== Aspect: Type of commands that can be undone
 
 * **Alternative 1 (current choice):** Only include commands that modifies the book fetch (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).
+** Cons: User might think that undo also applies when the view is modified (for example `search`), only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
 ** Cons: User have no way of skipping such commands if he or she just want to reset the state of the book  shelf and not the view.
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
-
-
-===== Aspect: Data structure to support the undo/redo commands
-
-* **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
+**Additional Info:** See the discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 // end::undoredo[]
 
 === View recently selected books: `recent` command
@@ -482,11 +465,11 @@ image::UndoRedoActivityDiagram.png[width="650"]
 When `recent` command is entered, eventually `SwitchToRecentBooksRequestEvent` is posted to the
 `EventCenter`. The interaction between components is shown in the diagram below.
 
-image::SequenceDiagramRecentCommandLogic.png[width="800"]
+image::SequenceDiagramRecentCommandLogic.png[width="650"]
 
 `SwitchToRecentBooksRequestEvent` is handled by `LogicManager` and `MainWindow`.
 
-image::SequenceDiagramRecentCommandEvent.png[width="800"]
+image::SequenceDiagramRecentCommandEvent.png[width="650"]
 
 `LogicManager` sets the `ActiveListType` to `RECENT_BOOKS`. The commands that users can perform on this list may differ from others, for example users
 cannot delete books from this list. +
@@ -503,30 +486,30 @@ and adds the book into the list.
 The user performs `select 1` to view information on the 1st book in the book shelf. The
 selected book is added onto the `UniqueBookCircularList`.
 
-image::RecentCommandListOne.png[width="800"]
+image::RecentCommandListOne.png[width="650"]
 
 NOTE: If select fails to execute (eg. given index is invalid), the list will remain unchanged.
 
 The user then selects another book with `select 2`. The book is added to the front of the `UniqueBookCircularList`.
 
-image::RecentCommandListTwo.png[width="800"]
+image::RecentCommandListTwo.png[width="650"]
 
 NOTE: Selecting a book directly from the UI (without using `select` command) will also update the list according.
 
 Now if the user performs `select 1` again, the book `One`, which already exists in the list, will be removed
 from the list and added again so that it is in the first index of the list (most recently selected).
 
-image::RecentCommandListThree.png[width="800"]
+image::RecentCommandListThree.png[width="650"]
 
 The user continues to select books, and the same operations will apply.
 
-image::RecentCommandListFour.png[width="800"]
+image::RecentCommandListFour.png[width="650"]
 
 The `UniqueBookCircularList` is now full (`size = 3`). When user performs `select 4`, since the book
 `Four` is not in the list, the book at the last index is removed to make space for book `Four`.
 This is because the book at the last index is the least recent selection.
 
-image::RecentCommandListFive.png[width="800"]
+image::RecentCommandListFive.png[width="650"]
 
 NOTE: `UniqueBookCircularList::equals` is order sensitive since the order determines the recency.
 
@@ -1088,17 +1071,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |view hints when typing commands |recall the syntax of the command
 
+|`* *` |user |get command auto-completion suggestions |reduce the amount of typing needed
+
+|`* *` |user |change the theme of the App |choose a theme I prefer
+
 |`* *` |user |add and open eBook files |easily open and read my eBooks
 
-|`* *` |user |obtain recommendations |get exposure to more books
+|`*` |user |obtain recommendations |get exposure to more books
 
 |`*` |user |add book reviews |share with others my thoughts
 
 |`*` |user |open eBooks in the App |easily read my eBooks
 
 |`*` |user |import list of books from online services |easily populate my collection of books
-
-|`*` |user |change the theme of the App |choose a theme I prefer
 
 |`*` |user |change the font size of the App |make the text easier on my eyes
 

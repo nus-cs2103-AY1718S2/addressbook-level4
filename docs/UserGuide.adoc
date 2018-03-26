@@ -94,7 +94,22 @@ Format: `search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
 
 WARNING: You can only perform `search` with Internet connection.
 
-Examples:
+If you want to find any books with `Harry Potter` as keyword, you enter `search Harry Potter`.
+
+image::SearchCommandSearching.png[width="700"]
+
+Bibliotek shows `Searching for matching books...` to indicate that your `search` is being processed.
+This may take some time since an external service is being called to fetch your search results.
+
+image::SearchCommandFound.png[width="700"]
+
+When your search results are ready, Bibliotek shows `Found xx matching books.` and displays your
+search results in the left panel.
+
+NOTE: If Bibliotek shows `Failed to retrieve information from online.`, it means your search request has timed out.
+You should try again after some time.
+
+Other examples:
 
 * `search Artemis a/Andy Weir` +
 Returns a list of books related to `Artemis`, where `Andy Weir` matches one of the authors.
@@ -115,7 +130,28 @@ Format: `add INDEX`
 WARNING: You cannot perform `add` when the list shown is your book shelf. +
 You also need Internet connection.
 
-Examples:
+Suppose you have the following search results.
+
+image::SearchCommandFound.png[width="700"]
+
+If you want to add `Harry Potter and the Classical World` to your book shelf, you enter
+`add 2`.
+
+image::AddCommandAdding.png[width="700"]
+
+Bibliotek shows `Adding the book into your book shelf` to indicate that your `add` is being processed.
+This may take some time since an external service is being called to fetch more detailed information about
+the book before adding it to your book shelf.
+
+image::AddCommandAdded.png[width="700"]
+
+Once the necessary information is fetched and the book is added, Bibliotek shows
+`New book added: TITLE - Authors: AUTHORS`. You can verify that the book have been added by entering `list`
+and scrolling to the last entry in your book shelf.
+
+image::AddCommandAddedConfirmation.png[width="700"]
+
+Other examples:
 
 * `search t/Babylon's Ashes c/Science Fiction` +
 `add 1` +
@@ -131,10 +167,15 @@ Format: `list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [p/PRIORITY] [s/STATUS]`
 * If no parameters are provided, all books will be listed.
 ****
 
-Examples:
+If you want to view all books in your book shelf, enter `list`
 
-* `list` +
-Lists all books in your book shelf.
+image::ListCommand.png[width="700"]
+
+Bibliotek shows `Listed all books` to indicate that your `list` is successful.
+The left panel will show all the books in your book shelf.
+
+Other examples:
+
 * `list a/Andy Weir` +
 Lists books in your book shelf where `Andy Weir` matches one of the authors.
 * `list t/Babylon's Ashes c/Science Fiction` +
@@ -151,7 +192,27 @@ Format: `select INDEX`
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-Examples:
+Suppose you have the following search results.
+
+image::SearchCommandFound.png[width="700"]
+
+If you are interested in `The Ivory Tower and Harry Potter` and wish to view more information,
+you enter `select 3`.
+
+image::SelectCommand.png[width="700"]
+
+Bibliotek shows `Selected Book: 3` to indicate that your `select` is successful. The left panel
+is auto-scrolled to the selected book and the right panel shows detailed information of the book.
+
+Alternatively, instead of entering `select 3`, you can directly select `The Ivory Tower and Harry Potter`
+by clicking on it in the left panel.
+
+image::SelectCommandUI.png[width="700"]
+
+Bibliotek shows the detailed information of the book in the right panel. Note that no confirmation message
+will be shown in this case.
+
+Other examples:
 
 * `list` +
 `select 2` +
@@ -163,7 +224,7 @@ Selects the 1st book among books with `HIGH` priority in your book shelf.
 `select 1` +
 Selects the 1st book in the search results.
 
-=== Editing a book : `edit` `[coming in v1.2]`
+=== Editing a book : `edit` `[coming in v1.3]`
 
 After reading a book, you may want to give the book a rating or set the book as read. Or, you may want
 to change the priority of books to remind yourself what you should read next. These can be done using `edit`. +
@@ -200,15 +261,22 @@ WARNING: You can only perform `delete` if the list shown is from your book shelf
 TIP: You don't have to delete books after reading them. Simply mark them as read.
 They may serve as useful reference in the future.
 
-Examples:
+Suppose you have the following books in your book shelf.
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
+image::ListCommand.png[width="700"]
+
+If you no longer want to read `Artemis` and wish to remove it from your book shelf, enter `delete 1`.
+
+image::DeleteCommand.png[width="700"]
+
+Bibliotek shows `Deleted Book: TITLE - Authors: AUTHORS` to indicate that your `delete` is successful.
+The book no longer exist in the left panel.
+
+Other examples:
+
+* `list t/Harry Potter` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
+Deletes the 1st book in the results of the `list` command.
 
 === Viewing book reviews: `reviews` `[coming in v1.3]`
 
@@ -246,6 +314,23 @@ Format: `recent`
 ====
 You can select books in the `recent` list, but this will not count as a newest selection.
 ====
+
+Suppose you recently selected `The Ivory Tower and Harry Potter` in your search results.
+
+image::SelectCommand.png[width="700"]
+
+You did not add the book into your book shelf. After performing various other selections,
+you regret not adding `The Ivory Tower and Harry Potter` into your book shelf. Instead of
+performing the search again, you can enter `recent` to view recently selected books.
+
+image::RecentCommand.png[width="700"]
+
+Bibliotek shows `Listed all recently selected books` to indicate that your `recent` command
+is successful. You can scroll down the left panel to locate `The Ivory Tower and Harry Potter`
+(index 4 in this case). You can enter `add 4` to add the book into your book shelf.
+
+NOTE: If you don't see the intended book in the list, then too many book selections have been performed after
+that book.
 
 === Finding a book in the library: `library` `[coming in v1.4]`
 
@@ -332,11 +417,20 @@ Format: `undo`
 Undoable commands: those commands that modify the book shelf's content (`add`, `delete`, `edit` and `clear`).
 ====
 
-Examples:
+Suppose you just deleted a book `Artemis`.
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+image::DeleteCommand.png[width="700"]
+
+If you regret your deletion and wish to undo it, enter `undo`.
+
+image::UndoCommand.png[width="700"]
+
+Bibliotek shows `Undo success!` to indicate that your `undo` is successful. `Artemis` is back in your
+book shelf as seen in the left panel.
+
+NOTE: Your entire book shelf is shown in the left panel after performing `undo`.
+
+Other examples:
 
 * `select 1` +
 `list` +
@@ -353,6 +447,15 @@ The `undo` command fails as there are no undoable commands executed previously.
 Don't need the data in your book shelf anymore? Remove them using `clear`. +
 Format: `clear`
 
+WARNING: You can only perform `clear` if the list shown is from your book shelf.
+
+If you want to delete all books, enter `clear`.
+
+image::ClearCommand.png[width="700"]
+
+Bibliotek shows `Book shelf has been cleared!` to indicate that your `clear` is successful.
+The left and right panels are now empty.
+
 === Changing application theme `[since v1.2]`
 
 If you don't like the default theme used by Bibliotek, you can change it using `theme`. +
@@ -361,7 +464,22 @@ Format: `theme THEME_NAME`
 ****
 * `THEME_NAME` must specify a valid theme, and is case-insensitive.
 * The current available themes are: `white`, `light`, and `dark`.
+* The default theme is `white`
 ****
+
+You can change the application to the white theme using `theme white`.
+
+image::ThemeWhite.png[width="700"]
+
+Bibliotek shows `Application theme changed to: white` to indicate that your theme change is successful.
+
+The same goes for `theme light`:
+
+image::ThemeLight.png[width="700"]
+
+And `theme dark`:
+
+image::ThemeDark.png[width="700"]
 
 === Changing settings: `settings` `[coming in v1.4]`
 

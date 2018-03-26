@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
@@ -21,8 +22,12 @@ public class DetailsPanel extends UiPart<Region> {
 
     private ContactDetailsDisplay contactDetailsDisplay;
     private BrowserPanel browserPanel;
+    private CalendarView calendarView;
 
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
+
+    @FXML
+    private Tab calendar;
 
     @FXML
     private Tab profile;
@@ -54,6 +59,14 @@ public class DetailsPanel extends UiPart<Region> {
     public void addBrowserPanel() {
         browserPanel = new BrowserPanel();
         linkedIn.setContent(browserPanel.getRoot());
+    }
+
+    /**
+     * Adds the CalendarView to the DetailsPanel
+     */
+    public void addCalendarView() {
+        CalendarView calendarView = new CalendarView();
+        calendar.setContent(calendarView.getDayPage());
     }
 
     /**

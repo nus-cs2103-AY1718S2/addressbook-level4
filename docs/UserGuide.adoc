@@ -230,10 +230,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Uploading all recipes : `upload`
+=== Uploading all recipes : *`upload`*
 
 Uploads the xml file containing data of all recipes to Dropbox, giving it the specified filename.
-Format: `upload FILENAME`
+Format: *`upload FILENAME`*
 
 ****
 * FILENAME must not start with / or \ or have consecutie slashes.

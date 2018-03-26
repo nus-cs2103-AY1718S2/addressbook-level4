@@ -13,18 +13,32 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F14-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F14-B2`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-Medeina is for Veterinarians and their assistants who *prefer to use a desktop app for managing contacts and appointments*. More importantly, Medeina is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Medeina can get your contact management tasks done faster than traditional GUI apps.
-This User Guide is made to help you get familiar with Medeina's set-up and its various features. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Are you a veterinarian or a veterinary assistant in need of help to manage growing number of contacts, never-ending list of pet patients and floods of appointments? Are you having nightmares over the sheer amount of data to catalogue? Are you struggling to find the right pet patient's details and owner's contact amongst a plethora of paper records for each of your appointment?
+
+Medeina is finally here to solve your problems.
+
+=== What is Medeina
+
+Medeina is a specialized desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. It serves as both an address book and a task manager.
+
+If you are comfortable working with a Command Line Interface (CLI), then Medeina is perfect for you. Nevertheless, Medeina keeps to simple and intuitive commands that even those who are unfamiliar with CLI can pick it up easily. Medeina also comes with a clean and organized Graphical User Interface (GUI) to present information in the most optimal way for your perusal.
+
+Medeina, your all-in-one solution to curb the data nightmare.
+
+=== Using this Guide
+
+This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina.
+
 
 == Quick Start
 
 To successsfully install and run Medeina, you need to:
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure that you have Java version `1.8.0_60` or later installed on your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +

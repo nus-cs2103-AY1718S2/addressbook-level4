@@ -61,7 +61,7 @@ public class SortAddresses {
         for (Entry<String, Double> entry : sortedMap.entrySet()) {
             String pairAddresses = entry.getKey();
             String[] addresses = pairAddresses.split("_");
-            if (addresses[0] == addresses[1]) {
+            if (addresses[0].equals(addresses[1])) {
                 sortedMap.remove(entry.getKey());
             }
         }

@@ -19,6 +19,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.model.person.Email;
+import seedu.progresschecker.model.person.GithubUsername;
 import seedu.progresschecker.model.person.Major;
 import seedu.progresschecker.model.person.Name;
 import seedu.progresschecker.model.person.Phone;
@@ -30,12 +31,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_MAJOR = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_USERNAME = "R@chelGithub";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_MAJOR = "Computer Science";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_USERNAME = "RachelGithub";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -129,6 +132,40 @@ public class ParserUtilTest {
         assertEquals(expectedPhone, ParserUtil.parsePhone(phoneWithWhitespace));
         assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(phoneWithWhitespace)));
     }
+
+    @Test
+    public void parseUsername_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseUsername((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseUsername((Optional<String>) null));
+    }
+
+    @Test
+    public void parseUsername_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseUsername(INVALID_USERNAME));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseUsername(
+                Optional.of(INVALID_USERNAME)));
+    }
+
+    @Test
+    public void parseUsername_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseUsername(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseUsername_validValueWithoutWhitespace_returnsUsername() throws Exception {
+        GithubUsername expectedUsername = new GithubUsername(VALID_USERNAME);
+        assertEquals(expectedUsername, ParserUtil.parseUsername(VALID_USERNAME));
+        assertEquals(Optional.of(expectedUsername), ParserUtil.parseUsername(Optional.of(VALID_USERNAME)));
+    }
+
+    @Test
+    public void parseUsername_validValueWithWhitespace_returnsTrimmedUsername() throws Exception {
+        String usernameWithWhitespace = WHITESPACE + VALID_USERNAME + WHITESPACE;
+        GithubUsername expectedUsername = new GithubUsername(VALID_USERNAME);
+        assertEquals(expectedUsername, ParserUtil.parseUsername(usernameWithWhitespace));
+        assertEquals(Optional.of(expectedUsername), ParserUtil.parseUsername(Optional.of(usernameWithWhitespace)));
+    }
+
 
     @Test
     public void parseMajor_null_throwsNullPointerException() {

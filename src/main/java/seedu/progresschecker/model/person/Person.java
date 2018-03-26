@@ -10,7 +10,7 @@ import seedu.progresschecker.model.tag.Tag;
 import seedu.progresschecker.model.tag.UniqueTagList;
 
 /**
- * Represents a Person in the ProgressChecker.
+ * Represents a Person in ProgressChecker.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
@@ -18,6 +18,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final GithubUsername username;
     private final Major major;
     private final Year year;
 
@@ -26,11 +27,13 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Major major, Year year, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, major, year, tags);
+    public Person(Name name, Phone phone, Email email, GithubUsername username, Major major, Year year,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, username, major, year, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.username = username;
         this.major = major;
         this.year = year;
         // protect internal tags from changes in the arg list
@@ -49,6 +52,10 @@ public class Person {
         return email;
     }
 
+    public GithubUsername getUsername() {
+        return username;
+    }
+
     public Major getMajor() {
         return major;
     }
@@ -56,6 +63,7 @@ public class Person {
     public Year getYear() {
         return year;
     }
+
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -79,6 +87,7 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
+                && otherPerson.getUsername().equals(this.getUsername())
                 && otherPerson.getMajor().equals(this.getMajor())
                 && otherPerson.getYear().equals(this.getYear());
     }
@@ -86,7 +95,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, major, year, tags);
+        return Objects.hash(name, phone, email, username, major, year, tags);
     }
 
     @Override
@@ -97,6 +106,8 @@ public class Person {
                 .append(getPhone())
                 .append(" Email: ")
                 .append(getEmail())
+                .append(" Github Username: ")
+                .append(getUsername())
                 .append(" Major: ")
                 .append(getMajor())
                 .append(" Year of Study: ")

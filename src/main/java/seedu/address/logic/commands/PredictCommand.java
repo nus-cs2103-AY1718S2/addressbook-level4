@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.GradientDescent;
+import seedu.address.logic.GradientDescent;
 
 /**
  * predicts the amount of money a customer would spend on insurance

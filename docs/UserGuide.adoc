@@ -33,9 +33,6 @@ Medeina, your all-in-one solution to curb the data nightmare.
 
 This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina.
 
-[.text-right]
-To the top: <<Medeina - User Guide>>
-
 
 == Quick Start
 
@@ -71,7 +68,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 *Command format used in Medeina :*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add **-o** n/NAME`, `NAME` is a parameter which can be used as `add **-o** n/John Doe`.
-* Characters in **bold** are options to be specified by the user to execute variants of a command e.g. in `add **-p** n/NAME`, **-p** denotes to add a pet patient. 
+* Characters in **bold** are options to be specified by the user to execute variants of a command e.g. in `add **-p** n/NAME`, **-p** denotes to add a pet patient.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -84,7 +81,7 @@ If you are feeling lost, enter `help` or `h` in Medeina's command box, or press 
 
 === Adding a contact, pet patient or appointment : `add` or `a`
 
-You can use the `add` or `a` to do the following : 
+You can use the `add` or `a` to do the following :
 
 To add a new contact:: `add **-o** n/CONTACT_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...`
 
@@ -115,7 +112,7 @@ Medeina will show a list of all stored contacts if you enter `list` or `ls` in t
 
 Use the following command format to:
 
-Edit an existing contact:: `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...` 
+Edit an existing contact:: `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
 
 Edit an existing pet patient:: `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
 
@@ -333,10 +330,10 @@ and their assistants to access Medeina simultaneously in different rooms.
 
 The following is a summary of all commands available in Medeina:
 
-* *Add* `add` or `a` with options **-o**, **-p** and **-a** 
+* *Add* `add` or `a` with options **-o**, **-p** and **-a**
 * *Clear* : `clear` or `cls`
 * *Delete* : `delete INDEX` or `d INDEX`
-* *Edit* : `edit INDEX [PREFIX/ INFO]` or `e INDEX [PREFIX/ INFO]` with options **-o**, **-p** and **-a** 
+* *Edit* : `edit INDEX [PREFIX/ INFO]` or `e INDEX [PREFIX/ INFO]` with options **-o**, **-p** and **-a**
 * *Exit* : `exit` or `q`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 * *List* : `list` or `ls`

@@ -17,9 +17,12 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.*;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 
@@ -187,12 +190,21 @@ public final class ImportContactsCommand extends UndoableCommand {
 
                 UniquePersonList upl = new UniquePersonList(); //need to change this later to get current model
 
+                try {
+                    requireNonNull(model);
+                } catch (Exception e) {
+                    throw new CommandException("Model is null in ImportContactsCommand -> executeUndoableCommand");
+                }
 
                 try {
-                    upl.add(personToAdd);
+                        //upl.add(personToAdd);
+
+                        model.addPerson(personToAdd);
+                        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+
 
  //                   AddCommand addMe = new AddCommand(personToAdd); //not the most efficient...
- //                   addMe.executeUndoableCommand();
+                    //                   addMe.executeUndoableCommand();
 
 //                requireNonNull(model);
 //                try {

@@ -412,14 +412,12 @@ Command line and graphical integration with Google Calendar from within SLAP. Th
 ===== Aspect: GUI
 The GUI portion of this feature will be a WebView of the Google Calendar web application. The user will have the option to either open their calendar as a new floating window by pressing the `F8` function key or by clicking `View > Open Calendar` or as a scene within the main SLAP GUI by invoking the `calendar` command. In either case, the WebView will be instantiated as a new JavaFX scene and take advantage of Java's build in WebView/WebEngine. This will allow the user to interact with the familiar Google Calendar web interface without any loss of functionality.
 
-TODO: INSERT FINALIZED DIAGRAM HERE
-
 ===== Aspect: CLI
 The CLI portion of this feature will rely on Google's Calendar API that uses the OAuth 2.0 protocol to allow an application (such as SLAP) to directly read/write to a user's calendar, provided that they have given them access to the calendar. Once a user has authorized the application to read/write to their calendar, they will gain access to the the following commands: `event-add`, `event-delete`, and `event-edit`. The Oauth authentication process will be entirely handled by Google with the only requirement being that the user must log in to their calendar using the GUI interface.
 
 A check will eventually be added to ensure that the user has already logged in before attempting to execute any of the afformentioned commands.
 
-TODO: INSERT FINALIZED DIAGRAM HERE
+image::OauthModelDiagram.png[width="800"]
 
 ==== Design Considerations
 ===== Aspect: GUI

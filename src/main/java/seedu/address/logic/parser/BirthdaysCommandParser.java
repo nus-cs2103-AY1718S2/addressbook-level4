@@ -23,7 +23,7 @@ public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
         String[] trimmedArgs = args.split("\\s+");
 
         if (trimmedArgs.length == 1) {   // Only birthdays alone is called
-            if (trimmedArgs[0].equalsIgnoreCase("today")){  // Check if valid
+            if (trimmedArgs[0].equalsIgnoreCase(BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER)){  // Check if valid
                 return new BirthdaysCommand(true);
             }
             else if (trimmedArgs[0].equalsIgnoreCase(""))

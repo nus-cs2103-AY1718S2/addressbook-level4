@@ -15,8 +15,12 @@ public class BirthdaysCommand extends Command {
 
     public static final String COMMAND_WORD = "birthdays";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list containing all persons' birthdays.\n"
-            + "Example: " + COMMAND_WORD;
+    public static final String ADDITIONAL_COMMAND_PARAMETER = "today";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list containing all persons' birthdays."
+            + "Optional Parameters: "
+            + ADDITIONAL_COMMAND_PARAMETER
+            + "Example: " + COMMAND_WORD + ", " + COMMAND_WORD + " " + ADDITIONAL_COMMAND_PARAMETER;
 
     public static final String SHOWING_BIRTHDAY_MESSAGE = "Displaying birthday list";
 

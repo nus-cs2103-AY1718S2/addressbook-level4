@@ -35,8 +35,8 @@ public class Status {
      * Returns true if a given string is a valid to-do status.
      */
     public static boolean isValidStatus(String test) {
-        if (test.matches(STATUS_VALIDATION_REGEX) &&
-                (test.equals("done") || test.equals("undone"))) {
+        if (test.matches(STATUS_VALIDATION_REGEX) && (
+                test.equals("done") || test.equals("undone"))) {
             return true;
         } else {
             return false;

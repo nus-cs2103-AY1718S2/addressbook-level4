@@ -13,10 +13,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TimeTableLink;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.todo.exceptions.DuplicateToDoException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.todo.Content;
 import seedu.address.model.todo.ToDo;
+import seedu.address.model.todo.exceptions.DuplicateToDoException;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
@@ -47,10 +47,10 @@ public class SampleDataUtil {
 
     public static ToDo[] getSampleToDos() {
         return new ToDo[] {
-                new ToDo(new Content("ToDo A")),
-                new ToDo(new Content("ToDo B")),
-                new ToDo(new Content("ToDo C")),
-                new ToDo(new Content("ToDo D"))
+            new ToDo(new Content("ToDo A")),
+            new ToDo(new Content("ToDo B")),
+            new ToDo(new Content("ToDo C")),
+            new ToDo(new Content("ToDo D"))
         };
     }
 

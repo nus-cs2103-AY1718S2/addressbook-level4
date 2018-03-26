@@ -20,6 +20,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.student.Student;
 
@@ -29,7 +30,8 @@ import seedu.address.model.student.Student;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(
+            getTypicalAddressBook(), new UserPrefs(), new Schedule());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -38,7 +40,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_STUDENT_SUCCESS, studentToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
         expectedModel.deleteStudent(studentToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -61,7 +63,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_STUDENT_SUCCESS, studentToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
         expectedModel.deleteStudent(studentToDelete);
         showNoStudent(expectedModel);
 
@@ -88,7 +90,7 @@ public class DeleteCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_STUDENT);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
 
         // delete -> first student deleted
         deleteCommand.execute();
@@ -131,7 +133,7 @@ public class DeleteCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_STUDENT);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
 
         showStudentAtIndex(model, INDEX_SECOND_STUDENT);
         Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());

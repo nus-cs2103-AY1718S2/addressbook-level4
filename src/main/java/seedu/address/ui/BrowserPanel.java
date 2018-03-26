@@ -13,7 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
-import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.BrowserDisplayEvent;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Student;
 
@@ -76,9 +76,9 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleStudentPanelSelectionChangedEvent(StudentPanelSelectionChangedEvent event) {
+    private void handleBrowserDisplayEvent(BrowserDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadStudentPage(event.getNewSelection().student);
+        loadStudentPage(event.getStudentSelection().student);
     }
 
     @Subscribe

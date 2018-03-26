@@ -10,9 +10,11 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLessonCommand;
 import seedu.address.logic.commands.AddMilestoneCommand;
 import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.logic.commands.CheckTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteLessonCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavouriteCommand;
@@ -25,6 +27,7 @@ import seedu.address.logic.commands.MoreInfoCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShowDashboardCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -78,6 +81,9 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
+        case DeleteLessonCommand.COMMAND_WORD:
+            return new DeleteLessonCommandParser().parse(arguments);
+
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -116,6 +122,12 @@ public class AddressBookParser {
 
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);
+
+        case ShowDashboardCommand.COMMAND_WORD:
+            return new ShowDashboardCommandParser().parse(arguments);
+
+        case CheckTaskCommand.COMMAND_WORD:
+            return new CheckTaskCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

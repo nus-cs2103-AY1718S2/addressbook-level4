@@ -12,6 +12,7 @@ import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,12 +35,21 @@ public class EditStudentDescriptorBuilder {
      */
     public EditStudentDescriptorBuilder(Student student) {
         descriptor = new EditCommand.EditStudentDescriptor();
+        descriptor.setKey(student.getUniqueKey());
         descriptor.setName(student.getName());
         descriptor.setPhone(student.getPhone());
         descriptor.setEmail(student.getEmail());
         descriptor.setAddress(student.getAddress());
         descriptor.setProgrammingLanguage(student.getProgrammingLanguage());
         descriptor.setTags(student.getTags());
+    }
+
+    /**
+     * Sets the {@code Name} of the {@code EditStudentDescriptor} that we are building.
+     */
+    public EditStudentDescriptorBuilder withKey(String key) {
+        descriptor.setKey(new UniqueKey(key));
+        return this;
     }
 
     /**

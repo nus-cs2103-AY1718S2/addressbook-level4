@@ -28,6 +28,9 @@ public class Favourite {
         return test.equals("true") || test.equals("false");
     }
 
+    public boolean isFavourite() {
+        return this.value.equals("true");
+    }
     @Override
     public String toString() {
         return value;

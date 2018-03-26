@@ -1,62 +1,42 @@
 package seedu.address.model.student.dashboard;
 
-import java.util.ArrayList;
-import java.util.List;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Represents a milestone in a Student's dashboard
- * Guarantees: details are present and not null, immutable.
  */
 public class Milestone {
 
     private final Date dueDate;
-    private final List<Task> taskList;
+    private final UniqueTaskList taskList;
     private final Progress progress;
     private final String description;
 
     public Milestone(Date dueDate, String description) {
+        requireAllNonNull(dueDate, description);
+
         this.dueDate = dueDate;
         this.description = description;
         progress = new Progress();
-        taskList = new ArrayList<>();
+        taskList = new UniqueTaskList();
     }
 
-    public Milestone(Date dueDate, List<Task> taskList, Progress progress, String description) {
+    public Milestone(Date dueDate, UniqueTaskList taskList, Progress progress, String description) {
+        requireAllNonNull(dueDate, taskList, progress, description);
+
         this.dueDate = dueDate;
         this.taskList = taskList;
         this.progress = progress;
         this.description = description;
     }
 
-    /**
-     * Creates and return a deep copy of the {@code toCopy} Milestone
-     */
-    public static Milestone copyMilestone(Milestone toCopy) {
-        Date copyDueDate = new Date(toCopy.getDueDate().getValue());
-        List<Task> copyTaskList = toCopy.getTaskList().stream()
-                .map(task -> new Task(task.getName(), task.getDescription(), task.isCompleted()))
-                .collect(Collectors.toList());
-        Progress copyProgress = new Progress(toCopy.getProgress().getTotalTasks(),
-                toCopy.getProgress().getNumCompletedTasks());
-        String copyDescription = new String(toCopy.getDescription());
-
-        return new Milestone(copyDueDate, copyTaskList, copyProgress, copyDescription);
-    }
-
-    /**
-     * Creates and returns a deep copy of the list of Milestone.
-     */
-    public static List<Milestone> copyMilestoneList(List<Milestone> listToCopy) {
-        return listToCopy.stream().map(Milestone::copyMilestone).collect(Collectors.toList());
-    }
-
     public Date getDueDate() {
         return dueDate;
     }
 
-    public List<Task> getTaskList() {
+    public UniqueTaskList getTaskList() {
         return taskList;
     }
 

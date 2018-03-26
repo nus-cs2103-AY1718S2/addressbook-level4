@@ -127,37 +127,44 @@ Medeina will return `john` and `John Doe`
 * Type in `find Betsy Tim John` +
 Medeina will return any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete` or `d`
+=== Deleting a contact, pet patient or appointment : `delete` or `d`
 
-To delete the specified person from Medeina's address book. +
-The command format should be: `delete INDEX` or `d INDEX`
+Use the following command format to:
+
+Delete an existing contact:: `delete **-o** INDEX`
+Delete an existing pet patient:: `delete **-p** INDEX`
+Delete an existing appointment:: `delete **-a** INDEX`
 
 ****
-* The command deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* The command deletes the contact, pet patient or appointment at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, provided by the `list` command.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
 
-* Type in `list` +
+* Type in `list -o` +
 `delete 2` +
-Medeina will deletes the 2nd person in Medeina's address book.
+Medeina will deletes the 2nd contact in Medeina's address book.
 
-* Type in `find Betsy` +
+* Type in `find -o Betsy` +
 `d 1` +
-Medeina will delete the 1st person in the results of the `find` command.
+Medeina will delete the 1st c in the results of the `find` command.
 
-=== Selecting a person : `select` or `s`
+=== Selecting a contact : `select` or `s`
 
 To select the person identified by the index number used in the last person listing. +
 The command format should be: `select INDEX` or `s INDEX`
 
 ****
-* The command selects the person and loads the Google search page the person at the specified `INDEX`.
+* The command selects the person and lists the appointments that she / he has made with the vet at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
 ****
+
+[IMPORTANT]
+====
+The index *must be a positive integer* `1, 2, 3, ...`
+====
 
 Examples:
 
@@ -233,7 +240,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 To clear all entries from Medeina's address book. +
 The command format should be: `clear` or `cls`
-
+[WARNING]
+====
+This command **cannot** be undone. Please be certain that you have backed up your data (which is located in the `data` folder) before executing this command!
+====
 === Changing theme : `theme` or `t`
 
 To change Medeina's current theme to another pre-loaded theme. +

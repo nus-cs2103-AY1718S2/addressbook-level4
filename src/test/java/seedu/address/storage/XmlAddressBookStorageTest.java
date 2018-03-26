@@ -160,8 +160,12 @@ public class XmlAddressBookStorageTest {
         original.updatePassword(new Password("test"));
         original.updatePassword(SecurityUtil.hashPassword("new"));
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
-
         xmlAddressBookStorage.saveAddressBook(original, filePath);
+
+        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath, new Password(
+                                        SecurityUtil.hashPassword("new"),
+                                        SecurityUtil.hashPassword(TEST_PASSWORD))).get();
+        assertEquals(original, new AddressBook(readBack));
     }
 
     @Test

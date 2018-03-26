@@ -35,7 +35,7 @@ Responsibilities: Model
 '''
 
 === Wayne Neo Wei Zhe
-image::AzuraAiR.jpg[width="150", align="left"]
+image::azureair.jpg[width="150", align="left"]
 {empty}[http://github.com/AzuraAiR[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +

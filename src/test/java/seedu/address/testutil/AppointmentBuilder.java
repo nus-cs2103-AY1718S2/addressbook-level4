@@ -8,8 +8,6 @@ import java.util.Set;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
 import seedu.address.model.person.Nric;
-import seedu.address.model.person.Person;
-import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -67,7 +65,8 @@ public class AppointmentBuilder {
     }
 
     /**
-     * Parses the {@code appointmentTags} into a {@code Set<Tag>} and set it to the {@code Appointment} that we are building.
+     * Parses the {@code appointmentTags} into a {@code Set<Tag>} 
+     * and set it to the {@code Appointment} that we are building.
      */
     public AppointmentBuilder withAppointmentTags(String ... appointmentTags) {
         this.appointmentTags = SampleDataUtil.getTagSet(appointmentTags);

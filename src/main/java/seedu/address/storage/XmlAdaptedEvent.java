@@ -72,7 +72,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
 
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    "name"));
+                    getActivityType(), "name"));
         }
         if (!Name.isValidName(this.name)) {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);

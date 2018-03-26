@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.XmlAdaptedTask.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT2;
 
@@ -12,20 +13,30 @@ import org.junit.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.activity.DateTime;
 import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Task;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedTaskTest {
+
+    private static final Task ASSIGNMENT2_TASK = (Task) ASSIGNMENT2;
 
     private static final String INVALID_NAME = "Rachel's Bday";
     private static final String INVALID_DATE_TIME = "23 April 2018";
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_NAME = ASSIGNMENT2.getName().toString();
-    private static final String VALID_DATE_TIME = ASSIGNMENT2.getDateTime().toString();
-    private static final String VALID_REMARK = ASSIGNMENT2.getRemark().toString();
-    private static final List<XmlAdaptedTag> VALID_TAGS = ASSIGNMENT2.getTags().stream()
+    private static final String VALID_NAME = ASSIGNMENT2_TASK.getName().toString();
+    private static final String VALID_DATE_TIME = ASSIGNMENT2_TASK.getDueDateTime().toString();
+    private static final String VALID_REMARK = ASSIGNMENT2_TASK.getRemark().toString();
+    private static final List<XmlAdaptedTag> VALID_TAGS = ASSIGNMENT2_TASK.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
+
+    // TODO: 3/26/2018 fix bug
+    // @Test
+    public void toModelType_validTaskDetails_returnsTask() throws Exception {
+        XmlAdaptedTask task = new XmlAdaptedTask(ASSIGNMENT2_TASK);
+        assertEquals(ASSIGNMENT2_TASK, task.toModelType());
+    }
 
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {

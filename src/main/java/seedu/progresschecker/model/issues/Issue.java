@@ -2,6 +2,7 @@ package seedu.progresschecker.model.issues;
 
 import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,17 +12,17 @@ import java.util.Objects;
 public class Issue {
 
     private final Title title;
-    private final Assignees assignees;
+    private final List<Assignees> assigneesList;
     private final Milestone milestone;
     private final Body body;
 
     /**
      * Every field must be present and not null.
      */
-    public Issue(Title title, Assignees assignees, Milestone milestone, Body body) {
-        requireAllNonNull(title, assignees, milestone, body);
+    public Issue(Title title, List<Assignees> assigneesList, Milestone milestone, Body body) {
+        requireAllNonNull(title, assigneesList, milestone, body);
         this.title = title;
-        this.assignees = assignees;
+        this.assigneesList = assigneesList;
         this.milestone = milestone;
         this.body = body;
     }
@@ -30,8 +31,8 @@ public class Issue {
         return title;
     }
 
-    public Assignees getAssignees() {
-        return assignees;
+    public List<Assignees> getAssignees() {
+        return assigneesList;
     }
 
     public Milestone getMilestone() {
@@ -60,7 +61,7 @@ public class Issue {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, assignees, milestone, body);
+        return Objects.hash(title, assigneesList, milestone, body);
     }
 
     @Override

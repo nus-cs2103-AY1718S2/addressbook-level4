@@ -18,7 +18,7 @@ By: `Team W09-B2`      Since: `Mar 2018`      Licence: `MIT`
 == Introduction
 
 Welcome to *contactHero*! contacitHeRo is the *perfect contact management solution for recruiters* across companies who need a *quick and efficient way* to manage the contact details and profiles of their potential recruits. It is a *Command Line Interface(CLI) application* with intuitive usage and effective features. You can `add`, `delete` and `edit` your contacts and `find` them by names or tags that you can assign.
-You can `add, edit and delete `job openings` as well as `match` these job openings to potenital employees.
+You can `add, edit and delete job openings` as well as `match` these job openings to potenital employees.
 Other than that, you can also `view the linkedIn profiles` of your potential employees, `send emails` and `arrange meetings`.
 
 == Quick Start

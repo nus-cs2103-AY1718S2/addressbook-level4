@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -239,8 +240,13 @@ public class MainWindow extends UiPart<Stage> {
                 + notifications.size() * NOTIFICATION_CARD_Y_OFFSET));
         notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
         notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
-        test.getChildren().add(notificationCard);
-        animate(notificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, ENTER);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                test.getChildren().add(notificationCard);
+                animate(notificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, ENTER);
+            }
+        });
     }
 
     /**

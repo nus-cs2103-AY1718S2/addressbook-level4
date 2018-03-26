@@ -112,7 +112,7 @@ public class DistanceCommandTest {
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(headQuarterAddress, address);
 
-            assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_PERSON_SUCCESS, distance),
+            assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance),
                     commandResult.feedbackToUser);
         } catch (Exception ce) {
             System.out.println(ce.getMessage());

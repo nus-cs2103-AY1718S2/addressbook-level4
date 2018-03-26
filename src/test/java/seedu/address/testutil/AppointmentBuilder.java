@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.DateTime;
 
 /**
  * A utility class to help with building Appointment objects.
@@ -20,7 +21,7 @@ public class AppointmentBuilder {
      */
     public AppointmentBuilder(Appointment appointmentToCopy) {
         patientName = appointmentToCopy.getPatientName();
-        dateTime = appointmentToCopy.getAppointmentDateTime();
+        dateTime = appointmentToCopy.getAppointmentDateTimeString();
     }
 
     /**

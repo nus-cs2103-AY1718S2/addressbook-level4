@@ -6,19 +6,23 @@ package seedu.address.model.appointment;
  */
 public class Appointment {
 
-    public static final int APPOINTMENT_DURATION = 30;
-    private String appointmentDateTime;
+    private DateTime appointmentDateTime;
     private String patientName;
+
     public Appointment(String patientName, String appointmentDateTime) {
         this.patientName = patientName;
-        this.appointmentDateTime = appointmentDateTime;
+        this.appointmentDateTime = new DateTime(appointmentDateTime);
     }
 
     public String getPatientName() {
         return this.patientName;
     }
 
-    public String getAppointmentDateTime() {
+    public DateTime getAppointmentDateTime() {
         return this.appointmentDateTime;
+    }
+
+    public String getAppointmentDateTimeString() {
+        return this.appointmentDateTime.toString();
     }
 }

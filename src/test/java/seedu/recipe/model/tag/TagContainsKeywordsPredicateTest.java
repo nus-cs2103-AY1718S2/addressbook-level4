@@ -46,11 +46,11 @@ public class TagContainsKeywordsPredicateTest {
         assertTrue(predicate.test(new RecipeBuilder().build()));
 
         // Multiple keywords
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "family"));
-        assertTrue(predicate.test(new RecipeBuilder().withTags("friends", "family").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "food"));
+        assertTrue(predicate.test(new RecipeBuilder().withTags("friends", "food").build()));
 
         // Only one matching keyword
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "family"));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "food"));
         assertTrue(predicate.test(new RecipeBuilder().build()));
     }
 
@@ -61,14 +61,14 @@ public class TagContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new RecipeBuilder().build()));
 
         // Non-matching keyword
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("family"));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("food"));
         assertFalse(predicate.test(new RecipeBuilder().build()));
 
         // Keywords match phone, email, name and address, but does not match tag
         predicate = new TagContainsKeywordsPredicate(Arrays.asList
-                            ("Alice", "12345", "alice@email.com", "Main", "Street"));
-        assertFalse(predicate.test(new RecipeBuilder().withName("Alice").withPreparationTime("12345")
-                .withIngredient("alice@email.com").withInstruction("Main Street").build()));
+                            ("Food", "12345", "fish", "egg", "Main", "Street"));
+        assertFalse(predicate.test(new RecipeBuilder().withName("Food").withPreparationTime("12345")
+                .withIngredient("fish, egg").withInstruction("Main Street").build()));
     }
 }
 //@@author

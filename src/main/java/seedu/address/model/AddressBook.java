@@ -278,7 +278,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Adds a pet patient to the address book.
      * Also checks the new pet patient's tags and updates {@link #petPatientTags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #petPatientTags}.
+     * and updates the Tag objects in the pet patient to point to those in {@link #petPatientTags}.
      *
      * @throws DuplicatePetPatientException if an equivalent person already exists.
      */

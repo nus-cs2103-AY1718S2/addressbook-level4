@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Nric;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
@@ -28,9 +29,15 @@ public class XmlAdaptedPetPatient {
     private String colour;
     @XmlElement(required = true)
     private String bloodType;
+    @XmlElement(required = true)
+    private String ownerNric;
 
     @XmlElement
+    private String dateOfBirth;
+    @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private String medicalHistory;
 
     /**
      * Constructs an XmlAdaptedPetPatient.
@@ -42,12 +49,13 @@ public class XmlAdaptedPetPatient {
      * Constructs an {@code XmlAdaptedPetPatient} with the given pet patient details.
      */
     public XmlAdaptedPetPatient(String name, String species, String breed, String colour,
-                            String bloodType, List<XmlAdaptedTag> tagged) {
+                            String bloodType, String ownerNric, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.species = species;
         this.breed = breed;
         this.colour = colour;
         this.bloodType = bloodType;
+        this.ownerNric = ownerNric;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -64,6 +72,7 @@ public class XmlAdaptedPetPatient {
         breed = source.getBreed();
         colour = source.getColour();
         bloodType = source.getBloodType();
+        ownerNric = source.getOwner().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -106,8 +115,17 @@ public class XmlAdaptedPetPatient {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT));
         }
 
+        if (this.ownerNric == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName()));
+        }
+        if (!Nric.isValidNric(this.ownerNric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
+        }
+        final Nric ownerNric = new Nric(this.ownerNric);
+
         final Set<Tag> tags = new HashSet<>(petPatientTags);
-        return new PetPatient(name, species, breed, colour, bloodType, tags);
+        return new PetPatient(name, species, breed, colour, bloodType, ownerNric, tags);
     }
 
     @Override
@@ -126,6 +144,7 @@ public class XmlAdaptedPetPatient {
                 && Objects.equals(breed, otherPetPatient.breed)
                 && Objects.equals(colour, otherPetPatient.colour)
                 && Objects.equals(bloodType, otherPetPatient.bloodType)
+                && Objects.equals(ownerNric, otherPetPatient.ownerNric)
                 && tagged.equals(otherPetPatient.tagged);
     }
 }

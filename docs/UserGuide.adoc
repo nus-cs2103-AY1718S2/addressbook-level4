@@ -119,13 +119,13 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 cp/Software Engineer cc/Google pp//home/john/Desktop/John.jpg` +
 
 On running the above command, you should see the following success message: +
- 
+
  New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
 
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 cp/Student cc/NUS t/Developer`
 
 On running the above command, you should see the following success message: +
- 
+
  New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Tags: Developer
 
 === Listing all persons : `list`
@@ -152,7 +152,7 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 
 On running the above command, you should see the following success message: +
- 
+
  Edited Person: John Doe Phone: 91234567 Email: johndoe@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
 
 * `edit 2 n/Betsy Crower t/` +
@@ -259,11 +259,11 @@ Loads the LinkedIn search of the 2nd person in the contactHeRo.
 `select 1` +
 Loads the LinkedIn search of 1st person in the results of the `find` command.
 
-On running the above command and after you have logged in, you should a similar result as the following (refer to figure 5): 
+On running the above command and after you have logged in, you should a similar result as the following (refer to figure 5):
 
 .LinkedIn Command Execution
 image::linkedInCommand.png[width="790"]
-     
+
 === Adding a job opening
 
 You can add a job opening to contactHero using the following format. +
@@ -274,13 +274,13 @@ Examples:
 * `addjob p/Software Engineer t/Cloud Services l/Singapore n/1`
 
 On running the above command, you should see the following success message: +
- 
+
  New job opening added: Software Engineer Team: Cloud Services Location: Singapore Number of Positions: 1
 
 * `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1`
 
 On running the above command, you should see the following success message: +
- 
+
  New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1
 
 === Listing entered commands : `history`

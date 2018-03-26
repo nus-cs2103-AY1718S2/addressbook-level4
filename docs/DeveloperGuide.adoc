@@ -866,7 +866,6 @@ Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.jav
 **Main:**
 
 . Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
 **Tests:**
 
 . Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
@@ -917,9 +916,7 @@ manage which include contact details and profiles of potential employees. It is 
 
  * How do these features fit into the product scope?
  ** Major Feature: A recruiter needs the list of the job openings in the company so he knows what are the current job openings and what skillsets to look for in people. This way, the user can better search for potential employees.
- ** Minor Feature: Viewing the contact details in a separate focused panel makes them easier to 
- read for the user as the Person card can now just contain limited information like the person's name, current position and company, also allowing more number of contacts to be displayed at a time since amount of information is reduced.
- Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently,
+ ** Minor Feature: Viewing the contact details in a separate focused panel makes them easier to read for the user as the Person card can now just contain limited information like the person's name, current position and company, also allowing more number of contacts to be displayed at a time since amount of information is reduced. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
 
 2. Do Andre Khoi Nguyen
  * Major Feature: Calendar

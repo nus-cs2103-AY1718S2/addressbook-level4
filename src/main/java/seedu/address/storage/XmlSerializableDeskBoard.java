@@ -21,7 +21,9 @@ import seedu.address.model.activity.Task;
 public class XmlSerializableDeskBoard {
 
     @XmlElement
-    private List<XmlAdaptedActivity> activities;
+    private List<XmlAdaptedActivity> tasks;
+    @XmlElement
+    private List<XmlAdaptedActivity> events;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -30,7 +32,8 @@ public class XmlSerializableDeskBoard {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableDeskBoard() {
-        activities = new ArrayList<>();
+        tasks = new ArrayList<>();
+        events = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
@@ -41,9 +44,9 @@ public class XmlSerializableDeskBoard {
         this();
         for (Activity activity : src.getActivityList()) {
             if (activity instanceof Task) {
-                activities.add(new XmlAdaptedTask((Task) activity));
+                tasks.add(new XmlAdaptedTask((Task) activity));
             } else if (activity instanceof Event) {
-                activities.add(new XmlAdaptedEvent((Event) activity));
+                events.add(new XmlAdaptedEvent((Event) activity));
             }
         }
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
@@ -60,8 +63,11 @@ public class XmlSerializableDeskBoard {
         for (XmlAdaptedTag t : tags) {
             deskBoard.addTag(t.toModelType());
         }
-        for (XmlAdaptedActivity a : activities) {
+        for (XmlAdaptedActivity a : tasks) {
             deskBoard.addActivity(a.toModelType());
+        }
+        for (XmlAdaptedActivity e : events) {
+            deskBoard.addActivity(e.toModelType());
         }
         return deskBoard;
     }
@@ -77,6 +83,6 @@ public class XmlSerializableDeskBoard {
         }
 
         XmlSerializableDeskBoard otherDb = (XmlSerializableDeskBoard) other;
-        return activities.equals(otherDb.activities) && tags.equals(otherDb.tags);
+        return tasks.equals(otherDb.tasks) && events.equals(otherDb.events) && tags.equals(otherDb.tags);
     }
 }

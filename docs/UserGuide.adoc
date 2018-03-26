@@ -138,8 +138,12 @@ Delete an existing appointment:: `delete **-a** INDEX`
 ****
 * The command deletes the contact, pet patient or appointment at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing, provided by the `list` command.
-* The index *must be a positive integer* 1, 2, 3, ...
 ****
+
+[IMPORTANT]
+====
+The index *must be a positive integer* `1, 2, 3, ...`
+====
 
 Examples:
 
@@ -250,7 +254,7 @@ To change Medeina's current theme to another pre-loaded theme. +
 The command format should be: `theme THEME_NAME` or `t THEME_NAME`
 
 ****
-* THEME_NAME is case insensitive. e.g `DARK` will match `dark`
+* `THEME_NAME` is case insensitive. e.g `DARK` will match `dark`
 * Available themes: `dark` and `light`
 ****
 

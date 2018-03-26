@@ -71,43 +71,7 @@ public abstract class XmlAdaptedActivity {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted activity
      */
-    public Activity toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
-        }
-
-        if (this.name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Name.class.getSimpleName()));
-        }
-        if (!Name.isValidName(this.name)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
-        }
-        final Name name = new Name(this.name);
-
-        if (this.dateTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    DateTime.class.getSimpleName()));
-        }
-        if (!DateTime.isValidDateAndTime(this.dateTime)) {
-            throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
-        }
-        final DateTime dateTime = new DateTime(this.dateTime);
-
-        if (this.remark == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Remark.class.getSimpleName()));
-        }
-        if (!Remark.isValidRemark(this.remark)) {
-            throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
-        }
-        final Remark remark = new Remark(this.remark);
-
-        final Set<Tag> tags = new HashSet<>(personTags);
-        //Changed Here.
-        return new Task(name, dateTime, remark, tags);
-    }
+    public abstract Activity toModelType() throws IllegalValueException;
 
     public abstract String getActivityType();
 

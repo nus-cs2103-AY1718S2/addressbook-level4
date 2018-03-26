@@ -72,7 +72,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
 
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Name.class.getSimpleName()));
+                    "name"));
         }
         if (!Name.isValidName(this.name)) {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
@@ -81,7 +81,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
 
         if (this.dateTime == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    DateTime.class.getSimpleName()));
+                    getActivityType(), "start date/time"));
         }
         if (!DateTime.isValidDateAndTime(this.dateTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
@@ -90,26 +90,18 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
 
         if (this.endDateTime == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    DateTime.class.getSimpleName()));
+                    getActivityType(), "end date/time"));
         }
         if (!DateTime.isValidDateAndTime(this.endDateTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
         final DateTime endDateTime = new DateTime(this.endDateTime);
 
-        if (this.location == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Location.class.getSimpleName()));
-        }
         if (!Location.isValidLocation(this.location)) {
             throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
         }
         final Location location = new Location(this.location);
 
-        if (this.remark == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Remark.class.getSimpleName()));
-        }
         if (!Remark.isValidRemark(this.remark)) {
             throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
         }

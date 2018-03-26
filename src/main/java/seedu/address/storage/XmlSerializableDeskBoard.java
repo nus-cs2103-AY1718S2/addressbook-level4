@@ -21,9 +21,9 @@ import seedu.address.model.activity.Task;
 public class XmlSerializableDeskBoard {
 
     @XmlElement
-    private List<XmlAdaptedActivity> tasks;
+    private List<XmlAdaptedTask> tasks;
     @XmlElement
-    private List<XmlAdaptedActivity> events;
+    private List<XmlAdaptedEvent> events;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -64,10 +64,10 @@ public class XmlSerializableDeskBoard {
             deskBoard.addTag(t.toModelType());
         }
         for (XmlAdaptedActivity a : tasks) {
-            deskBoard.addActivity(a.toModelType());
+            deskBoard.addActivity(((XmlAdaptedTask) a).toModelType());
         }
         for (XmlAdaptedActivity e : events) {
-            deskBoard.addActivity(e.toModelType());
+            deskBoard.addActivity(((XmlAdaptedEvent) e).toModelType());
         }
         return deskBoard;
     }

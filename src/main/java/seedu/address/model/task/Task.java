@@ -2,10 +2,11 @@ package seedu.address.model.task;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Objects;
-
-import seedu.address.model.person.Address;
 
 /**
  * Represents a Person in the address book.
@@ -41,11 +42,21 @@ public class Task {
         return priority;
     }
 
+    /**
+     * Simple formula to calculate the priority of a task.
+     * @param deadline
+     * @param priority
+     * @return
+     */
     private Priority calculatePriority(Deadline deadline, int priority) {
-        String value = "0";
+        String value = "";
+        Date dateNow = new Date();
+        LocalDate now = dateNow.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        long daysBetween = ChronoUnit.DAYS.between(now, deadline.value);
 
+        long calPriority = ((1 / daysBetween) * 80) + priority;
 
-
+        value = Long.toString(calPriority);
         return new Priority(value);
     }
 

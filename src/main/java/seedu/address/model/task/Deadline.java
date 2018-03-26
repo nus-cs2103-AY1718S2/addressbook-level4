@@ -1,48 +1,46 @@
 package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 /**
- * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * Represents a Task's deadline in the address book.
+ * Guarantees: immutable;
  */
 public class Deadline {
 
 
-    public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
-    public final String value;
+    public static final String MESSAGE_DEADLINE_CONSTRAINTS =
+            "Deadline should be a valid date in the format dd/mm/yyyy.";
+    public final LocalDate value;
 
     /**
      * Constructs a {@code Phone}.
      *
-     * @param phone A valid phone number.
+     * @param deadline A valid deadline.
      */
-    public Phone(String phone) {
-        requireNonNull(phone);
-        checkArgument(isValidPhone(phone), MESSAGE_PHONE_CONSTRAINTS);
-        this.value = phone;
-    }
-
-    /**
-     * Returns true if a given string is a valid person phone number.
-     */
-    public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+    public Deadline(String deadline) {
+        requireNonNull(deadline);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate deadlineDate = LocalDate.parse(deadline, formatter);
+            this.value = deadlineDate;
+        } catch (Exception e) {
+            throw new IllegalArgumentException(MESSAGE_DEADLINE_CONSTRAINTS);
+        }
     }
 
     @Override
     public String toString() {
-        return value;
+        return value.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Phone // instanceof handles nulls
-                && this.value.equals(((Phone) other).value)); // state check
+                || (other instanceof Deadline // instanceof handles nulls
+                && this.value.equals(((Deadline) other).value)); // state check
     }
 
     @Override

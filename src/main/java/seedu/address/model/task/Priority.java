@@ -12,7 +12,7 @@ public class Priority {
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
             "Priority value input can only contain numbers from 1 - 100.";
-    public static final String PRIORITY_VALIDATION_REGEX = "[1-100]";
+    public static final String PRIORITY_VALIDATION_REGEX = "\\d";
     public final String value;
 
     /**
@@ -30,7 +30,8 @@ public class Priority {
      * Returns true if a given string is a valid person phone number.
      */
     public static boolean isValidPriority(String test) {
-        return test.matches(PRIORITY_VALIDATION_REGEX);
+        int size = Integer.getInteger(test);
+        return test.matches(PRIORITY_VALIDATION_REGEX) && 0 <= size && size <= 100;
     }
 
     @Override

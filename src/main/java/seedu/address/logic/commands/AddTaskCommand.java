@@ -20,7 +20,7 @@ public class AddTaskCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_TASK_DESC + "TASK "
             + PREFIX_DEADLINE + "DEADLINE "
-            + PREFIX_PRIORITY + "PRIORITY LEVEL(from 1 - 5, 1 being lowest priority, 5 being highest priority) \n"
+            + PREFIX_PRIORITY + "PRIORITY LEVEL(from 1 - 20, 1 being lowest priority, 20 being highest priority) \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TASK_DESC + "Dance till I drop "
             + PREFIX_DEADLINE + "20/03/2018 "

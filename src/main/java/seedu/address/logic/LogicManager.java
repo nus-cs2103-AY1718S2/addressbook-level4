@@ -10,7 +10,9 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.network.ApiBookDetailsResultEvent;
 import seedu.address.commons.events.network.ApiSearchResultEvent;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
 import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
 import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
@@ -144,5 +146,17 @@ public class LogicManager extends ComponentManager implements Logic {
     private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         model.setActiveListType(ActiveListType.RECENT_BOOKS);
+    }
+
+    @Subscribe
+    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        model.addRecentBook(event.getNewSelection().book);
+    }
+
+    @Subscribe
+    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        model.addRecentBook(event.getNewSelection().book);
     }
 }

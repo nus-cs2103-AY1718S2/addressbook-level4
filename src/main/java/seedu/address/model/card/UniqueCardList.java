@@ -95,10 +95,10 @@ public class UniqueCardList implements Iterable<Card> {
     }
 
     /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     * Returns the backing list as an {@code ObservableList}.
      */
     public ObservableList<Card> asObservableList() {
-        return FXCollections.unmodifiableObservableList(internalList);
+        return internalList;
     }
 
     @Override

@@ -11,7 +11,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -20,7 +19,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.card.Card;
-import seedu.address.model.card.UuidPredicate;
 import seedu.address.model.tag.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
@@ -149,20 +147,6 @@ public class CommandTestUtil {
         model.updateFilteredTagList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredTagList().size());
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show only the card at the given {@code targetIndex} in the
-     * {@code model}'s address book.
-     */
-    public static void showCardAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredCardList().size());
-
-        Card card = model.getFilteredCardList().get(targetIndex.getZeroBased());
-        final UUID uuid = card.getId();
-        model.updateFilteredCardList(new UuidPredicate(uuid));
-
-        assertEquals(1, model.getFilteredCardList().size());
     }
 
     /**

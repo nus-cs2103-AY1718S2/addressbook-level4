@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CARDS;
-
 /**
  * Lists all cards in the card book.
  */
@@ -13,7 +11,7 @@ public class ListCardCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredCardList(PREDICATE_SHOW_ALL_CARDS);
+        model.showAllCards();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

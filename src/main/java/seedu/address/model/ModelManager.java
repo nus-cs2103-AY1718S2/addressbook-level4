@@ -6,12 +6,15 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.TagListPanelSelectionChangedEvent;
 import seedu.address.model.card.Card;
 import seedu.address.model.card.exceptions.CardNotFoundException;
 import seedu.address.model.card.exceptions.DuplicateCardException;
@@ -28,7 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Tag> filteredTags;
-    private final FilteredList<Card> filteredCards;
+    private final ObservableList<Card> filteredCards;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,7 +44,10 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredTags = new FilteredList<>(this.addressBook.getTagList());
-        filteredCards = new FilteredList<>(this.addressBook.getCardList());
+
+        // To prevent direct referencing, which would cause setAll() to affect addressBook's list
+        filteredCards = FXCollections.observableArrayList();
+        filteredCards.setAll(this.addressBook.getCardList());
     }
 
     public ModelManager() {
@@ -104,12 +110,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateFilteredCardList(Predicate<Card> predicate) {
-        requireNonNull(predicate);
-        filteredCards.setPredicate(predicate);
-    }
-
-    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
@@ -130,14 +130,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addCard(Card card) throws DuplicateCardException {
         addressBook.addCard(card);
-        updateFilteredCardList(PREDICATE_SHOW_ALL_CARDS);
+        showAllCards();
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void deleteCard(Card card) throws CardNotFoundException {
         addressBook.deleteCard(card);
-        updateFilteredCardList(PREDICATE_SHOW_ALL_CARDS);
+        showAllCards();
         indicateAddressBookChanged();
     }
 
@@ -150,9 +150,28 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author yong-jie
+    @Override
+    public void showAllCards() {
+        filteredCards.setAll(this.addressBook.getCardList());
+    }
+
+    @Override
+    public void filterCardsByTag(Tag tag) {
+        filteredCards.setAll(addressBook
+                .getCardTag()
+                .getCards(tag, addressBook.getCardList()));
+    }
+
+    //@@author
     @Override
     public ObservableList<Card> getFilteredCardList() {
         return FXCollections.unmodifiableObservableList(filteredCards);
     }
 
+    //@@author yong-jie
+    @Subscribe
+    private void handleTagListPanelSelectionEvent(TagListPanelSelectionChangedEvent event) {
+        filterCardsByTag(event.getNewSelection().tag);
+    }
 }

@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.LoginManager;
+import javafx.stage.Stage;
+import seedu.address.logic.login.LoginManager;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.login.LoginWindow;
 
 /**
  * Allows user to login to the system
@@ -35,6 +37,9 @@ public class LoginCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         if (LoginManager.authenticate(username, password)) {
+            LoginWindow loginWindow = new LoginWindow();
+            Stage stage = new Stage();
+            loginWindow.start(stage);
             return new CommandResult(MESSAGE_LOGIN_SUCCESS + username);
         } else {
             throw new CommandException(MESSAGE_LOGIN_FAIL);

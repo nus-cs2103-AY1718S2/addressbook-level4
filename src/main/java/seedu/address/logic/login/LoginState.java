@@ -1,4 +1,4 @@
-package seedu.address.logic;
+package seedu.address.logic.login;
 
 /**
  * Stores login state

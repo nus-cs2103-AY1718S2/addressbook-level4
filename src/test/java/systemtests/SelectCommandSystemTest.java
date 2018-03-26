@@ -12,7 +12,7 @@ import static seedu.address.testutil.TypicalPatients.getTypicalPersons;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.LoginManager;
+import seedu.address.logic.login.LoginManager;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;

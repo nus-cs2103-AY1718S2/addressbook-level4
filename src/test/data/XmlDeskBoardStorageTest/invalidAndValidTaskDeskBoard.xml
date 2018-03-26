@@ -3,13 +3,13 @@
     <!-- Valid Task -->
     <tasks>
         <name>Hans Muster</name>
-        <dateTime>9482424</dateTime>
+        <dateTime>28/03/2018 13:00</dateTime>
         <remark>4th street</remark>
     </tasks>
     <!-- Task with invalid dateTime field -->
     <tasks>
         <name>Hans Muster</name>
-        <dateTime>948asdf2424</dateTime>
+        <dateTime>28 Mar 2018 1pm</dateTime>
         <remark>4th street</remark>
     </tasks>
 </deskboard>

@@ -18,7 +18,6 @@ import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 
 //@@author karenfrilya97
-
 /**
  * JAXB-friendly version of the Event.
  */

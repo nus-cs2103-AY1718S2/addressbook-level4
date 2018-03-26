@@ -27,11 +27,11 @@ public class XmlUtilTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlUtilTest/");
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
-    private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validAddressBook.xml");
+    private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validDeskBoard.xml");
     private static final File MISSING_ACTIVITY_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingTaskField.xml");
     private static final File INVALID_ACTIVITY_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidTaskField.xml");
     private static final File VALID_ACTIVITY_FILE = new File(TEST_DATA_FOLDER + "validTask.xml");
-    private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
+    private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempDeskBoard.xml"));
 
     private static final String INVALID_DATE_TIME = "9482asf424";
 

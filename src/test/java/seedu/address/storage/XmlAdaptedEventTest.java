@@ -17,6 +17,7 @@ import seedu.address.model.activity.Location;
 import seedu.address.model.activity.Name;
 import seedu.address.testutil.Assert;
 
+//@@author karenfrilya97
 public class XmlAdaptedEventTest {
 
     private static final Event CIP_EVENT = (Event) CIP;

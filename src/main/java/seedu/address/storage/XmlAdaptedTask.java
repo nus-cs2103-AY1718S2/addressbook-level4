@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-//@@author karenfrilya97
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.activity.*;
 import seedu.address.model.tag.Tag;
 
+//@@author karenfrilya97
 /**
  * JAXB-friendly version of the Task.
  */

@@ -2,9 +2,11 @@ package seedu.progresschecker.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.person.Person;
 
 /**
@@ -44,8 +46,10 @@ public class PersonCard extends UiPart<Region> {
     private Label username;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView profile;
 
-    public PersonCard(Person person, int displayedIndex) {
+    public PersonCard(Person person, int displayedIndex) throws CommandException {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
@@ -60,6 +64,7 @@ public class PersonCard extends UiPart<Region> {
             label.getStyleClass().add(getTagColor(tag.tagName));
             tags.getChildren().add(label);
         });
+        profile.setImage(person.getImage());
     }
 
     /**

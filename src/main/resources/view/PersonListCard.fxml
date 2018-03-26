@@ -60,18 +60,19 @@
                   </children>
                </GridPane>
           </VBox>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/profile_photo.jpg" />
+               </image>
+               <HBox.margin>
+                  <Insets top="25.0" />
+               </HBox.margin>
+            </ImageView>
          </children>
       </HBox>
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-   <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-      <HBox.margin>
-         <Insets right="80.0" top="15.0" />
-      </HBox.margin>
-      <image>
-         <Image url="@../images/profile_photo.jpg" />
-      </image>
-   </ImageView>
+   
 </HBox>

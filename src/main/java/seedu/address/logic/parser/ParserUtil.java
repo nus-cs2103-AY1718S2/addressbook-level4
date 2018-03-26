@@ -14,6 +14,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -193,6 +194,31 @@ public class ParserUtil {
     public static Optional<Major> parseMajor(Optional<String> major) throws IllegalValueException {
         requireNonNull(major);
         return major.isPresent() ? Optional.of(parseMajor(major.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String jobApplied} into a {@code JobApplied}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code jobApplied} is invalid.
+     */
+    public static JobApplied parseJobApplied(String jobApplied) throws IllegalValueException {
+        requireNonNull(jobApplied);
+        String trimmedJobApplied = jobApplied.trim();
+        if (!JobApplied.isValidJobApplied(trimmedJobApplied)) {
+            throw new IllegalValueException(JobApplied.MESSAGE_JOB_APPLIED_CONSTRAINTS);
+        }
+        return new JobApplied(trimmedJobApplied);
+    }
+
+    /**
+     * Parses a {@code Optional<String> jobApplied} into an {@code Optional<JobApplied>}
+     * if {@code jobApplied} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<JobApplied> parseJobApplied(Optional<String> jobApplied) throws IllegalValueException {
+        requireNonNull(jobApplied);
+        return jobApplied.isPresent() ? Optional.of(parseJobApplied(jobApplied.get())) : Optional.empty();
     }
 
     /**

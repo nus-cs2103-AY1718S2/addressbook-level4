@@ -2,8 +2,12 @@ package seedu.address.ui;
 
 import java.time.LocalDate;
 
-import javafx.scene.Node;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
+import seedu.address.model.task.Task;
 
 
 /**
@@ -11,17 +15,15 @@ import javafx.scene.layout.AnchorPane;
  */
 public class CalendarNode extends AnchorPane {
 
-    // Deadline associated with this pane
+
     private LocalDate date;
 
     /**
-     * Create a anchor pane node. Deadline is not assigned in the constructor.
-     * @param children children of the anchor pane
+     * Create a calendar node.
      */
-    public CalendarNode(Node... children) {
-        super(children);
-        // Add action handler for mouse clicked
-        this.setOnMouseClicked(e -> System.out.println("This pane's date is: " + this.getDate()));
+    public CalendarNode() {
+        super(FXML);
+
     }
 
     public LocalDate getDate() {
@@ -31,5 +33,13 @@ public class CalendarNode extends AnchorPane {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-}
 
+    public AnchorPane getAP() {
+        return ap;
+    }
+
+    public void setTaskList(ObservableList<Task> list) {
+        taskList = list;
+        task.setText(String.valueOf(taskList.size()) + "Tasks. ");
+    }
+}

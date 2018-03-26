@@ -1,60 +1,56 @@
 package seedu.address.model.task;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's name in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Represents a short description of a todo task
  */
 public class TaskDescription {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
+    public static final String MESSAGE_DESCRIPTION_CONSTRAINTS =
+            "Task description can take any values, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the description must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String DESCRIPTION_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String fullName;
+    public final String value;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs an {@code TaskDescription}.
      *
-     * @param name A valid name.
+     * @param description A valid address.
      */
-    public Name(String name) {
-        requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_NAME_CONSTRAINTS);
-        this.fullName = name;
+    public TaskDescription(String description) {
+        assert description != null : MESSAGE_DESCRIPTION_CONSTRAINTS;
+        checkArgument(isValidDescription(description));
+        this.value = description;
     }
 
     /**
-     * Returns true if a given string is a valid person name.
+     * Returns true if a given string is a valid person email.
      */
-    public static boolean isValidName(String test) {
-        return test.matches(NAME_VALIDATION_REGEX);
+    public static boolean isValidDescription(String test) {
+        return test.matches(DESCRIPTION_VALIDATION_REGEX);
     }
-
 
     @Override
     public String toString() {
-        return fullName;
+        return value;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Name // instanceof handles nulls
-                && this.fullName.equals(((Name) other).fullName)); // state check
+                || (other instanceof TaskDescription // instanceof handles nulls
+                && this.value.equals(((TaskDescription) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return value.hashCode();
     }
 
 }
-

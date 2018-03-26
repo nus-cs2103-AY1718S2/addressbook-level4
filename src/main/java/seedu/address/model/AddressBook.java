@@ -17,6 +17,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.UniqueTaskList;
 
 /**
  * Wraps all data at the address-book level
@@ -24,6 +26,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
+    private final UniqueTaskList tasks;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
 
@@ -35,6 +38,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
+        tasks = new UniqueTaskList();
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
@@ -112,6 +116,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
+    }
+
+    /**
+     * Adds a task to the address book.
+     *
+     */
+    public void addTask(Task t) {
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the task list.
+        tasks.add(t);
     }
 
     /**

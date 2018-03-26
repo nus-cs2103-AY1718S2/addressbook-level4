@@ -2,10 +2,6 @@ package seedu.address.model.task;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -18,16 +14,19 @@ public class Task {
     private final Deadline deadline;
     private final Priority priority;
 
+    private final long actualPriority;
+
     /**
      * Every field must be present and not null.
      */
-    public Task(TaskDescription taskDesc, Deadline deadline, int priority) {
+    public Task(TaskDescription taskDesc, Deadline deadline, Priority priority) {
         requireAllNonNull(taskDesc, deadline, priority);
         this.taskDesc = taskDesc;
         this.deadline = deadline;
+        this.priority = priority;
 
         //calculates priority based on deadline and priority input of user
-        this.priority = calculatePriority(deadline, priority);
+        this.actualPriority = calculatePriority(deadline.daysBetween, priority.value);
     }
 
     public TaskDescription getTaskDesc() {
@@ -42,22 +41,32 @@ public class Task {
         return priority;
     }
 
+    public long getActualPriority() {
+        return actualPriority;
+    }
+
     /**
      * Simple formula to calculate the priority of a task.
-     * @param deadline
+     * @param daysBetween
      * @param priority
      * @return
      */
-    private Priority calculatePriority(Deadline deadline, int priority) {
-        String value = "";
-        Date dateNow = new Date();
-        LocalDate now = dateNow.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        long daysBetween = ChronoUnit.DAYS.between(now, deadline.value);
+    private long calculatePriority(long daysBetween, int priority) {
+        long calPriority = ((1 / daysBetween) * 50) + priority;
 
-        long calPriority = ((1 / daysBetween) * 80) + priority;
+        return calPriority;
+    }
 
-        value = Long.toString(calPriority);
-        return new Priority(value);
+    public int getDeadlineDay() {
+        return Integer.getInteger(deadline.day);
+    }
+
+    public int getDeadlineYear() {
+        return Integer.getInteger(deadline.year);
+    }
+
+    public int getDeadlineMonth() {
+        return Integer.getInteger(deadline.month);
     }
 
     @Override
@@ -73,7 +82,8 @@ public class Task {
         seedu.address.model.task.Task otherPerson = (seedu.address.model.task.Task) other;
         return otherPerson.getTaskDesc().equals(this.getTaskDesc())
                 && otherPerson.getDeadline().equals(this.getDeadline())
-                && otherPerson.getPriority().equals(this.getPriority());
+                && otherPerson.getPriority().equals(this.getPriority())
+                && (otherPerson.getActualPriority() == (this.getActualPriority()));
     }
 
     @Override
@@ -85,7 +95,7 @@ public class Task {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(" Task Description: ")
+        builder.append(" Task TaskDescription: ")
                 .append(getTaskDesc())
                 .append(" Deadline: ")
                 .append(getDeadline())

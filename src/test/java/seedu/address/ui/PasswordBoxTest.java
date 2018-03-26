@@ -25,10 +25,6 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 
 
 public class PasswordBoxTest extends GuiUnitTest {
-    private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
-            + "non-headless mode as FxRobot#clickOn(Node, MouseButton...) clicks on the wrong location. We suspect "
-            + "that this is a bug with TestFX library that we are using. If this test fails, you have to run your "
-            + "tests on headless mode. See UsingGradle.adoc on how to do so.";
     private static final String CORRECT_PASSWORD = "test";
     private static final String WRONG_PASSWORD = "wrong";
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/PasswordBoxTest/");

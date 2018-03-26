@@ -11,14 +11,14 @@ import seedu.address.model.Model;
 import seedu.address.storage.Storage;
 
 /**
- * The Main Window. Provides the basic application layout containing
- * a menu bar and space where other JavaFX elements can be placed.
+ * The Password Window. Provides the basic application layout containing
+ * space where other JavaFX elements can be placed.
  */
 public class PasswordWindow extends UiPart<Stage> {
     private static final String PASSWORDBOX_TITLE = "Key In Password";
     private static final String FXML = "PasswordWindow.fxml";
 
-    private final Logger logger = LogsCenter.getLogger("MainWindow");
+    private final Logger logger = LogsCenter.getLogger("PasswordWindow");
     private final Storage storage;
     private final Model model;
 

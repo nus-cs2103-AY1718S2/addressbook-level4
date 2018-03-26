@@ -22,7 +22,7 @@ import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.Storage;
 
 /**
- * The UI component that is responsible for receiving user command inputs.
+ * The UI component that is responsible for receiving user password inputs.
  */
 public class PasswordBox extends UiPart<Region> {
 
@@ -58,14 +58,6 @@ public class PasswordBox extends UiPart<Region> {
         }
     }
 
-    /**
-     * Sets {@code CommandBox}'s text field with {@code text} and
-     * positions the caret to the end of the {@code text}.
-     */
-    private void replaceText(String text) {
-        passwordTextField.setText(text);
-        passwordTextField.positionCaret(passwordTextField.getText().length());
-    }
 
     /**
      * Handles the Enter button pressed event.
@@ -78,9 +70,6 @@ public class PasswordBox extends UiPart<Region> {
         try {
             passwordTextField.setText("");
             addressBookOptional = storage.readAddressBook(new Password(input));
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
-            }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
             model.resetData(initialData);
             raise(new PasswordCorrectEvent());
@@ -97,14 +86,14 @@ public class PasswordBox extends UiPart<Region> {
     }
 
     /**
-     * Sets the command box style to use the default style.
+     * Sets the password box style to use the default style.
      */
     private void setStyleToDefault() {
         passwordTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
     /**
-     * Sets the command box style to indicate a failed command.
+     * Sets the password box style to indicate a wrong password.
      */
     private void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = passwordTextField.getStyleClass();

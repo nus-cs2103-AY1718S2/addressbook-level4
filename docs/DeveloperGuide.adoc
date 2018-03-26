@@ -37,8 +37,10 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
+... Click `Configure` > `Project Defaults` > `Project Structure`
+image:setup2.png[width="600"] +
+_step 3.i_
+... Click `New...` and find the directory of the JDK
 . Click `Import Project`
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`

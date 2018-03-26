@@ -55,10 +55,8 @@ public class StorageManagerTest {
     }
 
     //TODO: TEST
-    /**
-     * Test
-     */
-    public void addressBookReadSave() throws Exception {
+    //Test
+    public void deskBoardReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link XmlDeskBoardStorage} class.
@@ -71,12 +69,12 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void getAddressBookFilePath() {
+    public void getDeskBoardFilePath() {
         assertNotNull(storageManager.getDeskBoardFilePath());
     }
 
     @Test
-    public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
+    public void handleDeskBoardChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlDeskBoardStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));

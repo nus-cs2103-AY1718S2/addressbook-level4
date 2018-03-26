@@ -60,16 +60,17 @@ public class XmlDeskBoardStorageTest {
          */
     }
 
+    // TODO: 3/26/2018 make equivalent tests for Event
     @Test
     public void readDeskBoard_invalidActivityDeskBoard_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readDeskBoard("invalidTaskDeskBoard.xml");
+        readDeskBoard("invalidActivityDeskBoard.xml");
     }
 
     @Test
     public void readDeskBoard_invalidAndValidActivityDeskBoard_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readDeskBoard("invalidAndValidTaskDeskBoard.xml");
+        readDeskBoard("invalidAndValidActivityDeskBoard.xml");
     }
 
     // @Test

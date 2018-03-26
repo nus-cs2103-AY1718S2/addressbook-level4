@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
@@ -22,7 +21,7 @@ public class DetailsPanel extends UiPart<Region> {
 
     private ContactDetailsDisplay contactDetailsDisplay;
     private BrowserPanel browserPanel;
-    private CalendarView calendarView;
+    private CalendarPanel calendarPanel;
 
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
 
@@ -64,9 +63,9 @@ public class DetailsPanel extends UiPart<Region> {
     /**
      * Adds the CalendarView to the DetailsPanel
      */
-    public void addCalendarView() {
-        CalendarView calendarView = new CalendarView();
-        calendar.setContent(calendarView.getDayPage());
+    public void addCalendarPanel() {
+        CalendarPanel calendarPanel = new CalendarPanel();
+        calendar.setContent(calendarPanel.getRoot());
     }
 
     /**

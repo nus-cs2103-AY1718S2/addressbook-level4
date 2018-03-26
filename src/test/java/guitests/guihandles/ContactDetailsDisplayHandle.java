@@ -2,6 +2,7 @@ package guitests.guihandles;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 /**
  * A handle to the {@code ContactDetailsDisplay} in the GUI.
@@ -9,38 +10,36 @@ import javafx.scene.control.Label;
 public class ContactDetailsDisplayHandle extends NodeHandle<Node> {
 
     private static final String NAME_FIELD_ID = "#name";
-    private static final String ADDRESS_FIELD_ID = "#address";
-    private static final String PHONE_FIELD_ID = "#phone";
-    private static final String EMAIL_FIELD_ID = "#email";
+    private static final String LIST_ID = "#values";
     //TODO: include Tags
 
     private final Label nameLabel;
-    private final Label addressLabel;
-    private final Label phoneLabel;
-    private final Label emailLabel;
+    private final ListView<Label> valuesList;
 
     public ContactDetailsDisplayHandle(Node contactDetailsDisplayNode) {
         super(contactDetailsDisplayNode);
 
         this.nameLabel = getChildNode(NAME_FIELD_ID);
-        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
-        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
-        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
+        this.valuesList = getChildNode(LIST_ID);
     }
 
     public String getName() {
         return nameLabel.getText();
     }
 
-    public String getAddress() {
-        return addressLabel.getText();
+    public String getFullName() {
+        return valuesList.getItems().get(0).getText();
     }
 
     public String getPhone() {
-        return phoneLabel.getText();
+        return valuesList.getItems().get(1).getText();
     }
 
     public String getEmail() {
-        return emailLabel.getText();
+        return valuesList.getItems().get(2).getText();
+    }
+
+    public String getAddress() {
+        return valuesList.getItems().get(3).getText();
     }
 }

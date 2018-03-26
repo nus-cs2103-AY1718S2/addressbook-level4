@@ -9,7 +9,7 @@ public class RequiredStudentIndexChangeEvent extends BaseEvent {
 
     private final int newIndex;
 
-    public RequiredStudentIndexChangeEvent(int newIndex){
+    public RequiredStudentIndexChangeEvent(int newIndex) {
         this.newIndex = newIndex;
     }
 

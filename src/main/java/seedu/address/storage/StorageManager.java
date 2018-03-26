@@ -96,6 +96,11 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    /**
+     *  Saves the required index of the {@code Student}
+     * @param newIndex
+     * @throws IOException
+     */
     public void saveRequiredIndex(int newIndex) throws IOException {
         String requiredIndexFilePath = xmlRequiredIndexStorage.getFilePath();
         logger.fine("Attempting to write to data file: " + requiredIndexFilePath);
@@ -107,9 +112,9 @@ public class StorageManager extends ComponentManager implements Storage {
      * @param event
      */
     @Subscribe
-    public void handleRequiredStudentIndexChangedEvent(RequiredStudentIndexChangeEvent event){
+    public void handleRequiredStudentIndexChangedEvent(RequiredStudentIndexChangeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-        try{
+        try {
             saveRequiredIndex(event.getNewIndex());
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));

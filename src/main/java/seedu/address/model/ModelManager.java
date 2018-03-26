@@ -134,7 +134,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate an update of the student index required at the moment in storage */
-    private void indicateRequiredStudentIndexChange(int studentIndex){
+    private void indicateRequiredStudentIndexChange(int studentIndex) {
         raise(new RequiredStudentIndexChangeEvent(studentIndex));
     }
 

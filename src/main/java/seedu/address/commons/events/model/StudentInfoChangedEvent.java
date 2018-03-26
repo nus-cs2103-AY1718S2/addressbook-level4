@@ -8,5 +8,5 @@ import seedu.address.commons.events.BaseEvent;
 public class StudentInfoChangedEvent extends BaseEvent {
 
     @Override
-    public String toString(){ return this.getClass().getSimpleName(); }
+    public String toString() { return this.getClass().getSimpleName(); }
 }

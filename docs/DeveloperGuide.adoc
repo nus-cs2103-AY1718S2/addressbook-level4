@@ -862,7 +862,30 @@ Major Enhancement :
 ** Implements a group of scheduling functions to manage the user's appointments. This includes:
 *** Implementing a calendar reflecting the scheduled appointments
 *** Implementing `Appointment` objects and their storage
-*** Implementing `add appointment` command to support the creation of new appointments by the user.
+*** Implementing `addappointment` command to support the creation of new appointments
+*** Implementing `removeappointment` command to support the removal of appointments
+
+*Ng Jun Wei*
+
+Minor Enhancement :
+
+** Upgrades the existing `find` command to support finding persons whose details contain
+any of the given keywords or part thereof
+
+Major Enhancement :
+
+** Implements an emailing functionality that allows user to email persons in the address book using
+existing templates
+
+*Lucas Gaylord*
+
+Minor Enhancement :
+
+** Upgrades the command box to show hints dynamically
+
+Major Enhancement :
+
+** Implements a batch importing and exporting contacts function from and to CSV format files.
 
 [appendix]
 == User Stories

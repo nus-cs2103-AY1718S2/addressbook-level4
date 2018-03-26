@@ -18,59 +18,59 @@ import seedu.address.model.util.SampleDataUtil;
  * A utility class to help with building Appointment Objects.
  */
 public class AppointmentBuilder {
-    public static final Person DEFAULT_PERSON = TypicalPersons.ALICE;
-    public static final PetPatient DEFAULT_PET_PATIENT = TypicalPetPatients.JOKER;
+    public static final String DEFAULT_OWNER_NRIC = "S1012341B";
+    public static final String DEFAULT_PET_PATIENT_NAME = "Joker";
     public static final String DEFAULT_REMARK = "Requires home visit";
     public static final String DEFAULT_DATE = "2018-12-31 12:30";
-    public static final String DEFAULT_TYPE = "surgery";
+    public static final String DEFAULT_APPOINTMENT_TAG = "surgery";
 
-    private Nric owner;
-    private PetPatientName petPatient;
+    private Nric ownerNric;
+    private PetPatientName petPatientName;
     private Remark remark;
     private LocalDateTime localDateTime;
-    private Set<Tag> type;
+    private Set<Tag> appointmentTags;
 
     public AppointmentBuilder() {
-        owner = DEFAULT_PERSON.getNric();
-        petPatient = DEFAULT_PET_PATIENT.getName();
+        ownerNric = new Nric(DEFAULT_OWNER_NRIC);
+        petPatientName = new PetPatientName(DEFAULT_PET_PATIENT_NAME);
         remark = new Remark(DEFAULT_REMARK);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         localDateTime = LocalDateTime.parse(DEFAULT_DATE, formatter);
-        type = SampleDataUtil.getTagSet(DEFAULT_TYPE);
+        appointmentTags = SampleDataUtil.getTagSet(DEFAULT_APPOINTMENT_TAG);
     }
 
     /**
      * Initializes the AppointmentBuilder with the data of {@code appointmentToCopy}.
      */
     public AppointmentBuilder(Appointment appointmentToCopy) {
-        owner = appointmentToCopy.getOwnerNric();
-        petPatient = appointmentToCopy.getPetPatientName();
+        ownerNric = appointmentToCopy.getOwnerNric();
+        petPatientName = appointmentToCopy.getPetPatientName();
         remark = appointmentToCopy.getRemark();
         localDateTime = appointmentToCopy.getDateTime();
-        type = new HashSet<>(appointmentToCopy.getType());
+        appointmentTags = new HashSet<>(appointmentToCopy.getAppointmentTags());
     }
 
     /**
-     * Sets the {@code Person} of the {@code Appointment} that we are building.
+     * Sets the {@code Nric} of the person of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withOwner(Nric owner) {
-        this.owner = owner;
+    public AppointmentBuilder withOwnerNric(String ownerNric) {
+        this.ownerNric = new Nric(ownerNric);
         return this;
     }
 
     /**
-     * Sets the {@code PetPatient} of the {@code Appointment} that we are building.
+     * Sets the {@code PetPatientName} of the pet of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withPetPatient(PetPatientName petPatient) {
-        this.petPatient = petPatient;
+    public AppointmentBuilder withPetPatientName(String petPatientName) {
+        this.petPatientName = new PetPatientName(petPatientName);
         return this;
     }
 
     /**
-     * Parses the {@code type} into a {@code Set<Tag>} and set it to the {@code Appointment} that we are building.
+     * Parses the {@code appointmentTags} into a {@code Set<Tag>} and set it to the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withTags(String ... type) {
-        this.type = SampleDataUtil.getTagSet(type);
+    public AppointmentBuilder withAppointmentTags(String ... appointmentTags) {
+        this.appointmentTags = SampleDataUtil.getTagSet(appointmentTags);
         return this;
     }
 
@@ -93,6 +93,6 @@ public class AppointmentBuilder {
     }
 
     public Appointment build() {
-        return new Appointment(owner, petPatient, remark, localDateTime, type);
+        return new Appointment(ownerNric, petPatientName, remark, localDateTime, appointmentTags);
     }
 }

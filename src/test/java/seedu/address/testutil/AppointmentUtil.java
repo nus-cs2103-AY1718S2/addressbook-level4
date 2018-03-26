@@ -1,7 +1,8 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -12,28 +13,15 @@ import seedu.address.model.appointment.Appointment;
  */
 public class AppointmentUtil {
     /**
-     * Returns an add appointment command string for adding the {@code appointment}.
-     */
-    //public static String getAddAppointmentCommand(Appointment appointment) {
-    //    return AddAppointmentCommand.COMMAND_WORD + " " + getAppointmentDetails(appointment);
-    //}
-
-    /**
-     * Returns an add appointment command string for adding the {@code appointment}.
-     */
-    //public static String getAddAppointmentCommandAlias(Appointment appointment) {
-    //    return AddAppointmentCommand.COMMAND_ALIAS + " " + getAppointmentDetails(appointment);
-    //}
-
-    /**
      * Returns the part of command string for the given {@code appointment}'s details.
      */
     public static String getAppointmentDetails(Appointment appointment) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_OWNER + appointment.getOwnerNric().toString() + " ");
+        sb.append(PREFIX_NRIC + appointment.getOwnerNric().toString() + " ");
+        sb.append(PREFIX_NAME + appointment.getPetPatientName().toString() + " ");
         sb.append(PREFIX_REMARK + appointment.getRemark().value + " ");
         sb.append(PREFIX_DATE + appointment.getFormattedLocalDateTime() + " ");
-        appointment.getType().stream().forEach(
+        appointment.getAppointmentTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();

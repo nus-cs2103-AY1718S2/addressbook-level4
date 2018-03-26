@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;

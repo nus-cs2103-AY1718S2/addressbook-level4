@@ -154,6 +154,21 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
+    public void saveAddressBook_changedPassword_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        AddressBook original = getTypicalAddressBook();
+        original.updatePassword(new Password("test"));
+        original.updatePassword(SecurityUtil.hashPassword("new"));
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.saveAddressBook(original, filePath);
+
+        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath, new Password(
+                                        SecurityUtil.hashPassword("new"),
+                                        SecurityUtil.hashPassword(TEST_PASSWORD))).get();
+        assertEquals(original, new AddressBook(readBack));
+    }
+
+    @Test
     public void importAddressBook_invalidFileFormat_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
         String filePath = TEST_DATA_FOLDER + "invalidFileFormatAddressBook.xml";

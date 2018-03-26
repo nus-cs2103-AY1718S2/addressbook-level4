@@ -28,10 +28,19 @@ public class DistanceCommand extends Command {
     private Index targetIndex_origin = null;
     private Index targetIndex_destination;
 
+    /**
+     * constructor for DistanceCommand calculating distance from HQ to a person
+     * @param targetIndex
+     */
     public DistanceCommand(Index targetIndex) {
         this.targetIndex_destination = targetIndex;
     }
 
+    /**
+     * constructor for DistanceCommand calculating distance from a person to another person
+     * @param targetIndex_origin
+     * @param targetIndex_destination
+     */
     public DistanceCommand(Index targetIndex_origin, Index targetIndex_destination) {
         this.targetIndex_origin = targetIndex_origin;
         this.targetIndex_destination = targetIndex_destination;

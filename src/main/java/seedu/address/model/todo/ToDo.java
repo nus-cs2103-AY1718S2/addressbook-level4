@@ -15,6 +15,8 @@ public class ToDo {
 
     /**
      * Every field must be present and not null.
+     * Constructs an {@code ToDo} with the given details.
+     * Status is "undone" by default
      */
     public ToDo(Content content) {
         requireAllNonNull(content);
@@ -22,8 +24,13 @@ public class ToDo {
         this.status = new Status("undone");
     }
 
+    /**
+     * Every field must be present and not null.
+     * Constructs an {@code ToDo} with the given details.
+     */
     public ToDo(Content content, Status status) {
         requireAllNonNull(content);
+        requireAllNonNull(status);
         this.content = content;
         this.status = status;
     }

@@ -11,6 +11,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.student.Student;
 import seedu.address.testutil.StudentBuilder;
@@ -24,14 +25,15 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(
+                getTypicalAddressBook(), new UserPrefs(), new Schedule());
     }
 
     @Test
     public void execute_newStudent_success() throws Exception {
         Student validStudent = new StudentBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
         expectedModel.addStudent(validStudent);
 
         assertCommandSuccess(prepareCommand(validStudent, model), model,

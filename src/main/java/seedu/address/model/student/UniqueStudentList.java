@@ -43,6 +43,7 @@ public class UniqueStudentList implements Iterable<Student> {
         if (contains(toAdd)) {
             throw new DuplicateStudentException();
         }
+        toAdd.setKey(generateValidUniqueKey());
         internalList.add(toAdd);
     }
 
@@ -100,6 +101,51 @@ public class UniqueStudentList implements Iterable<Student> {
      */
     public ObservableList<Student> asObservableList() {
         return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Finds a unique key not in the {@code internalList}
+     * @return A Unique length 6 hexadecimal string
+     */
+    private UniqueKey generateValidUniqueKey() {
+        UniqueKey test = UniqueKey.generateRandomKey();
+        while (!isUnique(test)) {
+            test = UniqueKey.generateRandomKey();
+        }
+        return test;
+    }
+
+    /**
+     * Tests if the input key is unique in the list
+     * @return true if unique, false if not unique
+     */
+    private boolean isUnique(UniqueKey test) {
+        for (Student testStudent : internalList) {
+            if (test.equals(testStudent.getUniqueKey())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Finds a student identified by UniqueKey
+     * TODO Do properly
+     * @return Student
+     * @throws StudentNotFoundException
+     */
+    public Student findKey(UniqueKey key) throws StudentNotFoundException {
+        boolean found = false;
+        Student foundStudent = internalList.get(0);
+        for (Student student : internalList) {
+            if (key.equals(student.getUniqueKey())) {
+                return student;
+            }
+        }
+        if (!found) {
+            throw new StudentNotFoundException();
+        }
+        return foundStudent;
     }
 
     @Override

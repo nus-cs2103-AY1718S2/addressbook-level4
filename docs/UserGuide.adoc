@@ -1,4 +1,4 @@
-= EducateBook - User Guide
+= Codeducator - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -17,7 +17,7 @@ By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-EducateBook (EB) is for teachers/ tutors who *prefer to use a desktop app for managing the contacts of students/parents*. More importantly, EB is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EB can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Codeducator is a desktop address book application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -108,43 +108,7 @@ Edits the phone number and email address of the 1st student to be `91234567` and
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
-=== Adding a student to favourites : `fav`
 
-Adds an existing student in the address book to your favourites. +
-Format: `fav INDEX`
-
-****
-* Add the student at the specified `INDEX` to your favourites.
-* The index refers to the index number in the most recent listing.
-****
-
-Examples:
-
-* `list` +
-`fav 2` +
-Adds the 2nd student in the address book to favourites.
-* `find Betsey` +
-`fav 1` +
-Adds the 1st student in the results of the `find` command to favourites
-
-=== Remove a student from favourites : `unfav`
-
-Removes an existing student in the address book from your favourites. +
-Format: `unfav INDEX`
-
-****
-* Removes the student at specified `INDEX` from your favourites.
-* The index referes to the index number in the most recent listing.
-****
-
-Examples:
-
-* `list` +
-`unfav 2` +
-Removes the 2nd student in the address book from favourites.
-* `find Betsey` +
-`unfav 1` +
-Removes the 1st student in the results of the `find` command from favourites
 
 === Locating students by name: `find`
 
@@ -187,6 +151,137 @@ Returns `John Doe`
 * `findTag friends owesMoney` +
 Returns any student having tags `friends`, `owesMoney`, i.e. `John Doe` and `Betsy`
 
+=== Adding a student to favourites : `fav`
+
+Adds an existing student in the address book to your favourites. +
+Format: `fav INDEX`
+
+****
+* Add the student at the specified `INDEX` to your favourites.
+* The index refers to the index number in the most recent listing.
+****
+
+Examples:
+
+* `list` +
+`fav 2` +
+Adds the 2nd student in the address book to favourites.
+* `find Betsey` +
+`fav 1` +
+Adds the 1st student in the results of the `find` command to favourites
+
+=== Remove a student from favourites : `unfav`
+
+Removes an existing student in the address book from your favourites. +
+Format: `unfav INDEX`
+
+****
+* Removes the student at specified `INDEX` from your favourites.
+* The index referes to the index number in the most recent listing.
+****
+
+Examples:
+
+* `list` +
+`unfav 2` +
+Removes the 2nd student in the address book from favourites.
+* `find Betsey` +
+`unfav 1` +
+Removes the 1st student in the results of the `find` command from favourites
+
+=== Show the dashboard of a student: `showDB`
+
+Shows the dashboard of an existing student in the address book. +
+Format: `showDB INDEX`
+
+****
+* Shows the dashboard of the student at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`showDB 2` +
+Shows the dashboard of the 2nd student in the address book.
+* `list -f` +
+`showDB 1` +
+Shows the dashboard of the 1st student the favourites list.
+
+=== Add a milestone to a student's dashboard: `addMS`
+
+Adds a milestone to the dashboard of an existing student in the address book. +
+Format: `addMS i/STUDENT_INDEX d/DUE_DATE o/DESCRIPTION`
+
+****
+* Adds a milestone to a dashboard of a student at the specified `STUDENT_INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The due date must be in this format: *DD/MM/YYYY HH:MM* where HH:MM is in 24-hour time notation
+****
+
+[TIP]
+A milestone signifies a *major step in the learning progress* of your student. Hence, you may want to create the milestones carefully such that completing every milestone signifies the completion of your tutoring objective with your student.
+
+Examples:
+
+* `list` +
+`addMS i/1 d/18/08/2018 23:59 o/Learn Arrays` +
+Adds a milestone to the dashboard of the 1st student in the address book. The milestone is due on 18/08/2018 23:59 and the objective is "Learn Arrays".
+* `find Betsey` +
+`addMS i/2 d/03/04/2019 10:30 o/Learn Recursion` +
+Adds a milestone to the dashboard of the 2nd person in the results of the `find` command. The milestone is due on 03/04/2019 10:30 and the objective is "Learn Recursion".
+
+=== Add a task to a milestone: `addTask`
+
+Adds a task to an existing milestone in a dashboard. +
+Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME o/DESCRIPTION`
+
+****
+* Adds a task to a milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* Both indexes refers to the index number shown in the most recent listing.
+* Both indexes *must be a positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+A task signifies a *piece of work to be done to meet the milestone's objective*. Hence, a milestone's objective should be met when all its tasks are completed.
+
+Examples:
+
+* `list` +
+`addTask i/1 m/3 n/Learn Array Syntax o/Student to refer to the textbook` +
+Adds a task to the 3rd milestone in the dashboard of the 1st student in the address book. The name of the task is "Learn Array Syntax" and the description is "Student to refer to the textbook".
+* `find Betsey` +
+`addTask i/2 m/1 n/Practice Recursion Exercises o/Refer to problem set` +
+Adds a task to the 1st milestone in the dashboard of the 2nd student in the results of the `find` command. The name of the task is "Practice Recursion Exercises" and the description is "Refer to problem set".
+
+=== Mark a task as completed: `checkTask`
+
+Marks a task in an existing milestone as completed. +
+Format: `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
+
+****
+* Marks a task at the specified `TASK_INDEX` as completed
+* The task is in a milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* All indexes refers to the index number shown in the most recent listing.
+* All indexes *must be a positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+Marking a task as completed updates the progress of the milestone.
+
+Examples:
+
+* `list` +
+`checkTask i/1 m/2 tk/3` +
+Marks the 3rd task in the 2nd milestone as completed. The milestone is in the dashboard of the 1st student in the address book.
+* `find Betsey` +
+`checkTask i/2 m/3 tk/4` +
+Marks the 4th task in the 3rd milestone as completed. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
+
 === Deleting a student : `delete`
 
 Deletes the specified student from the address book. +
@@ -226,6 +321,29 @@ Selects the 2nd student in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st student in the results of the `find` command.
+
+=== Viewing your schedule : `schedule`
+
+Shows your weekly schedule as a list of lessons. +
+Format: `schedule`
+
+=== Adding a lesson to your schedule: `addLesson`
+
+Adds a lesson to your schedule for a student identified by the index number in the last student listing. +
+Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]`
+
+****
+* Adds a lesson for the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
+* The day for the input is the first three letters (non-case sensitive) of the name of day, i.e. `mon` for Monday, `fri` for Friday.
+* The time input must be in the format `HH:MM`, seperated by a colon '`:`'
+* The time input must be a valid time within the range of `00:00` to `23:59`
+* Input lesson cannot clash with existing lessons already in the schedule.
+****
+
+Examples:
+
+* `addLesson 1 d/mon st/10:00 et/10:30` +
+Adds a lesson for the 1st student. Lesson time will be on `mon` and starting time will be `10:00` and ending time will be `10:30`.
 
 === Listing entered commands : `history`
 
@@ -307,6 +425,14 @@ There is no need to save manually.
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
+
+// tag::studentmoredetails
+=== Full information page for each student : `moreInfo` `[coming in v2.0]`
+
+_{Explain command to obtain full information page for each student}
+// end::studentmoredetails
+
+=== Track student's homework in the dashboard `[coming in v2.0]`
 
 == FAQ
 

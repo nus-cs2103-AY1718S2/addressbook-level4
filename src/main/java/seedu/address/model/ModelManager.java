@@ -12,7 +12,16 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ScheduleChangedEvent;
+import seedu.address.commons.events.model.StudentInfoDisplayEvent;
+import seedu.address.model.lesson.Day;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Time;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -25,23 +34,25 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final Schedule schedule;
     private final FilteredList<Student> filteredStudents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlySchedule schedule) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.schedule = new Schedule(schedule);
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new Schedule());
     }
 
     @Override
@@ -82,11 +93,59 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
     @Override
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
     }
 
+    @Override
+    public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
+            throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
+        requireAllNonNull(studentToAddLesson, day, startTime, endTime);
+        UniqueKey studentKey = studentToAddLesson.getUniqueKey();
+        Lesson newLesson = new Lesson(studentKey, day, startTime, endTime);
+        schedule.addLesson(newLesson);
+        indicateScheduleChanged();
+    }
+
+    private void indicateScheduleChanged() {
+        raise(new ScheduleChangedEvent(schedule));
+    }
+
+    /**
+     * @param target
+     */
+    @Override
+    public synchronized void deleteLesson(Lesson target) throws LessonNotFoundException {
+        schedule.removeLesson(target);
+        indicateScheduleChanged();
+    }
+
+    @Override
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    /**
+     * Displays Student details on a browser panel in the UI
+     * @param target
+     * @throws StudentNotFoundException
+     */
+    public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
+        addressBook.checkForStudentInAdressBook(target);
+        indicateBrowserPanelToDisplayStudent(target);
+    }
+
+    /** Raises an event to indicate Browser Panel display changed to display student's information */
+    private void indicateBrowserPanelToDisplayStudent(Student target) {
+        raise(new StudentInfoDisplayEvent(target));
+    }
+
+    @Override
+    public void printSchedule() {
+        schedule.print(addressBook);
+    }
     //=========== Filtered Student List Accessors =============================================================
 
     /**

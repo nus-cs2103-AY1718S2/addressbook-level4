@@ -23,9 +23,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
+import seedu.address.model.student.Favourite;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
+import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -45,7 +48,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_PROGRAMMING_LANGUAGE + "SUBJECT] "
+            + "[" + PREFIX_PROGRAMMING_LANGUAGE + "PROGRAMMING LANGUAGE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -105,6 +108,7 @@ public class EditCommand extends UndoableCommand {
     private static Student createEditedStudent(Student studentToEdit, EditStudentDescriptor editStudentDescriptor) {
         assert studentToEdit != null;
 
+        UniqueKey uniqueKey = studentToEdit.getUniqueKey();
         Name updatedName = editStudentDescriptor.getName().orElse(studentToEdit.getName());
         Phone updatedPhone = editStudentDescriptor.getPhone().orElse(studentToEdit.getPhone());
         Email updatedEmail = editStudentDescriptor.getEmail().orElse(studentToEdit.getEmail());
@@ -112,9 +116,11 @@ public class EditCommand extends UndoableCommand {
         ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage()
                 .orElse(studentToEdit.getProgrammingLanguage());
         Set<Tag> updatedTags = editStudentDescriptor.getTags().orElse(studentToEdit.getTags());
+        Favourite isFavourite = studentToEdit.getFavourite();
+        Dashboard dashboard = studentToEdit.getDashboard();
 
-        return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
-                updatedTags);
+        return new Student(uniqueKey, updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedProgrammingLanguage, updatedTags, isFavourite, dashboard);
     }
 
     @Override
@@ -141,6 +147,7 @@ public class EditCommand extends UndoableCommand {
      * corresponding field value of the student.
      */
     public static class EditStudentDescriptor {
+        private UniqueKey uniqueKey;
         private Name name;
         private Phone phone;
         private Email email;
@@ -169,6 +176,14 @@ public class EditCommand extends UndoableCommand {
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
                     this.programmingLanguage, this.tags);
+        }
+
+        public void setKey(UniqueKey key) {
+            this.uniqueKey = key;
+        }
+
+        public Optional<UniqueKey> getKey() {
+            return Optional.ofNullable(uniqueKey);
         }
 
         public void setName(Name name) {

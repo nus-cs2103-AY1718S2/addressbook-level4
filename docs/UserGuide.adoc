@@ -58,7 +58,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* Birthday must be in DDMMYY format
 ====
 
 === Viewing help : `help`
@@ -172,7 +171,20 @@ Format: `nopassword`
 === Viewing a collated birthday list: `birthdays` (since v1.3)
 
 Displays a list that contains all the birthdays of all contacts ordered by date +
-Format: `birthdays`
+Or display a notification of the birthdays today +
+Format: `birthdays [ADDITIONAL_PARAMETER]`
+
+****
+* There is an optional field of [ADDITIONAL_PARAMETER]
+* You can input `todays` in that field to show a notification of the birthdays today instead
+****
+
+Examples:
+
+* `birthdays` +
+Displays a list of all birthdays
+* `birthdays today` +
+Displays a window with the birthdays today
 
 === Viewing common time slots in timetable: `free` (coming in v2.0)
 

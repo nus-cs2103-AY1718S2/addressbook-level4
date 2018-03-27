@@ -178,6 +178,15 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    /**
+     * Executes the undo operation
+     */
+    @FXML
+    private void handleUndo() {
+        // pass control to CommandBox, @TODO to be implemented
+        // raise(new UndoRequestEvent());
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -190,10 +199,7 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    @FXML
-    private void handleUndo() {
-        // pass control to CommandBox, @TODO to be implemented
-    }
+
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;

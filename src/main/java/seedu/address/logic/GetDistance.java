@@ -35,8 +35,16 @@ public class GetDistance {
             e.printStackTrace();
         }
         String distance = matrix.rows[0].elements[0].distance.toString();
-        distanceWithoutUnit = distance.substring(0, distance.length() - 3);
-        return Double.parseDouble(distanceWithoutUnit);
+        int space = distance.indexOf(" ");
+        String units = distance.substring(space + 1, distance.length());
+        double metres;
+        distanceWithoutUnit = distance.substring(0, space);
+        if (units.equals("m")) {
+            metres = Double.parseDouble(distanceWithoutUnit) / 1000.0;
+            return metres;
+        } else {
+            return Double.parseDouble(distanceWithoutUnit);
+        }
     }
 
 }

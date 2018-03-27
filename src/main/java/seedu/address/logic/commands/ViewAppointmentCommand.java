@@ -55,7 +55,7 @@ public class ViewAppointmentCommand extends Command {
             ObservableList<Appointment> pastAppointmentList = patientFound.getPastAppointmentList();
 
             ObservableList<Appointment> upcomingAppointmentList = patientFound.getUpcomingAppointmentList();
-            
+
             //event handler
             //command result
 

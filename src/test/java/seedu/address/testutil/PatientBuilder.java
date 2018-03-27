@@ -12,7 +12,6 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
-import seedu.address.model.patient.Record;
 import seedu.address.model.patient.RecordList;
 import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
@@ -49,7 +48,7 @@ public class PatientBuilder {
     private RecordList recordList;
     private Set<Tag> tags;
 
-    public PatientBuilder() throws ParseException{
+    public PatientBuilder() throws ParseException {
         name = new Name(DEFAULT_NAME);
         nric = new Nric(DEFAULT_NRIC);
         phone = new Phone(DEFAULT_PHONE);

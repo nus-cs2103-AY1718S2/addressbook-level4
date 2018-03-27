@@ -31,7 +31,6 @@ public class ReviewDialog {
         // Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            logger.info(result.get());
             EventsCenter.getInstance().post(new ReviewInputEvent(result.get()));
 
             //System.out.println("Your name: " + result.get());

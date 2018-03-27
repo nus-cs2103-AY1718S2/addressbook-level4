@@ -49,7 +49,6 @@ public class SortCommandTest {
         SortCommand testSortCommand = new SortCommand("rate");
         testSortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = SortCommand.MESSAGE_SORT_EMPLOYEE_SUCCESS;
-
         try {
             CommandResult commandResult = testSortCommand.execute();
         } catch (CommandException ce) {

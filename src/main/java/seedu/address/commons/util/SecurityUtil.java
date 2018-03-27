@@ -60,6 +60,9 @@ public class SecurityUtil {
      */
     public static void encrypt(File file, byte[] password)throws IOException, WrongPasswordException {
         try {
+            if (password == null) {
+                return;
+            }
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretAesKey);
@@ -92,6 +95,9 @@ public class SecurityUtil {
      */
     public static void decrypt(File file, byte[] password) throws IOException, WrongPasswordException {
         try {
+            if (password == null) {
+                return;
+            }
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretAesKey);

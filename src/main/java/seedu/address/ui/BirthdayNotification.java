@@ -1,18 +1,15 @@
 package seedu.address.ui;
 
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-import javafx.collections.ObservableList;
+
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BirthdayNotificationEvent;
-import seedu.address.model.person.Person;
 
 /**
  * A ui for the notification dialog that is displayed at the start of the application and
@@ -36,9 +33,10 @@ public class BirthdayNotification extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
-        alert.setTitle("Birthdays today");
+        alert.setTitle("Birthdays Today");
         alert.setHeaderText("It's their birthdays today (" + dtf.format(event.getCurrentDate()) + ")\n");
         alert.setContentText(event.getBirthdayList());
+        alert.getDialogPane().setId("birthdayDialogPane");
         alert.showAndWait();
     }
 }

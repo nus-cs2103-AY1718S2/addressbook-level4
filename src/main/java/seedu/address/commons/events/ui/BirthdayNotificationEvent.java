@@ -1,10 +1,8 @@
 package seedu.address.commons.events.ui;
 
-import javafx.collections.ObservableList;
-import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.person.Person;
-
 import java.time.LocalDate;
+
+import seedu.address.commons.events.BaseEvent;
 
 /**
  * Represents a selection change in the Person List Panel
@@ -28,5 +26,8 @@ public class BirthdayNotificationEvent extends BaseEvent {
         return birthdayList;
     }
 
-    public LocalDate getCurrentDate() { return currentDate; }
+    public LocalDate getCurrentDate() {
+        return currentDate;
+    }
+
 }

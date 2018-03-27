@@ -42,7 +42,10 @@ public class InfoPanel extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
-    void fillInnerParts(){
+    /**
+     * Helper method to fill UI placeholders
+     */
+    void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
@@ -55,7 +58,7 @@ public class InfoPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         browserPanel.loadPersonPage(event.getNewSelection().person);
 
-        birthdayPlaceholder.getChildren().removeAll();
+        //birthdayPlaceholder.getChildren().removeAll();
         browserPlaceholder.toFront();
     }
 
@@ -63,10 +66,10 @@ public class InfoPanel extends UiPart<Region> {
     private void handleBirthdayListEvent(BirthdayListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        birthdayPlaceholder.getChildren().removeAll();
-        birthdayList = new BirthdayList();
+        //birthdayPlaceholder.getChildren().removeAll();
+        //birthdayList = new BirthdayList();
         birthdayList.loadList(event.getBirthdayList());
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        //birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         birthdayPlaceholder.toFront();
     }
 }

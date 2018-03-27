@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import guitests.guihandles.BirthdayListHandle;
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
@@ -28,6 +29,7 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -119,6 +121,10 @@ public abstract class AddressBookSystemTest {
 
     public ResultDisplayHandle getResultDisplay() {
         return mainWindowHandle.getResultDisplay();
+    }
+
+    public BirthdayListHandle getBirthdayList() {
+        return mainWindowHandle.getBirthdayList();
     }
 
     /**

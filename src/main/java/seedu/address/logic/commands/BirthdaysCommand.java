@@ -2,23 +2,21 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.BirthdayListEvent;
 import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 import seedu.address.model.person.Person;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Format full help instructions for every command for display.
  */
 public class BirthdaysCommand extends Command {
-
-    private boolean isToday;
 
     public static final String COMMAND_WORD = "birthdays";
 
@@ -33,7 +31,9 @@ public class BirthdaysCommand extends Command {
 
     public static final String SHOWING_BIRTHDAY_NOTIFICATION = "Displaying today's birthdays";
 
-    public BirthdaysCommand(boolean todays){
+    private boolean isToday;
+
+    public BirthdaysCommand(boolean todays) {
         requireNonNull(todays);
         this.isToday = todays;
     }
@@ -46,11 +46,9 @@ public class BirthdaysCommand extends Command {
             LocalDate currentDate = LocalDate.now();
 
             EventsCenter.getInstance().post(new BirthdayNotificationEvent(parseBirthdaysForNotification(
-                    model.getAddressBook().getPersonList(),currentDate), currentDate));
+                    model.getAddressBook().getPersonList(), currentDate), currentDate));
             return new CommandResult(SHOWING_BIRTHDAY_NOTIFICATION);
-        }
-        else {
-            ;
+        } else {
             EventsCenter.getInstance().post(new BirthdayListEvent(parseBirthdaysForList(
                     model.getAddressBook().getPersonList())));
         }
@@ -121,16 +119,16 @@ public class BirthdaysCommand extends Command {
 
         if (observablelist == null) {
             return " ";
-        }
-        else if (observablelist.size() <= 0){
+        } else if (observablelist.size() <= 0) {
             string.append("StardyTogether has no contacts :(\n");
             return string.toString();
         }
 
         for (Person person: observablelist) {
             if (person.getBirthday().getDay() == currentDay
-                    && person.getBirthday().getMonth() == currentMonth)
+                    && person.getBirthday().getMonth() == currentMonth) {
                 listOfPersonWithBirthdayToday.add(person);
+            }
         }
 
         for (Person person: listOfPersonWithBirthdayToday) {
@@ -141,8 +139,7 @@ public class BirthdaysCommand extends Command {
             string.append(age);
             if (age != 1) {
                 string.append(" years old)");
-            }
-            else if (age > 0){
+            } else if (age > 0) {
                 string.append(" years old)");
             }
             string.append("\n");

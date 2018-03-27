@@ -23,13 +23,12 @@ public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
         String[] trimmedArgs = args.split("\\s+");
 
         if (trimmedArgs.length == 1) {   // Only birthdays alone is called
-            if (trimmedArgs[0].equalsIgnoreCase(BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER)){  // Check if valid
+            if (trimmedArgs[0].equalsIgnoreCase(BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER)) {  // Check if valid
                 return new BirthdaysCommand(true);
-            }
-            else if (trimmedArgs[0].equalsIgnoreCase(""))
+            } else if (trimmedArgs[0].equalsIgnoreCase("")) {
                 return new BirthdaysCommand(false);
-        }
-        else {
+            }
+        } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
         }

@@ -41,12 +41,12 @@ public class BirthdayTest {
     }
 
     @Test
-    public void getValidDayMonth(){
-        Birthday BIRTHDAY_STUB = new Birthday("01121995");
+    public void getValidDayMonth() {
+        Birthday birthdayStub = new Birthday("01121995");
 
-        assertTrue(BIRTHDAY_STUB.getDay() == 1); // check Day
-        assertFalse(BIRTHDAY_STUB.getMonth() == 12); // check Month
-        assertFalse(BIRTHDAY_STUB.getYear() == 1995); // check Year
+        assertTrue(birthdayStub.getDay() == 1); // check Day
+        assertTrue(birthdayStub.getMonth() == 12); // check Month
+        assertTrue(birthdayStub.getYear() == 1995); // check Year
     }
 }
 

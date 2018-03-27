@@ -1,8 +1,5 @@
 package seedu.address.model.person;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -47,8 +44,7 @@ public class Birthday {
         if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
             testDay = parseDay(test);
             testMonth = parseMonth(test);
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -79,8 +75,8 @@ public class Birthday {
      * @param birthday assumed to be of format DDMMYYYY
      * @return integer Day
      */
-    private static int parseDay(String birthday){
-        return Integer.parseInt(birthday.substring(0,2));
+    private static int parseDay(String birthday) {
+        return Integer.parseInt(birthday.substring(0, 2));
     }
 
     /**
@@ -89,8 +85,8 @@ public class Birthday {
      * @param birthday assumed to be of format DDMMYY
      * @return integer Month
      */
-    private static int parseMonth(String birthday){
-        return Integer.parseInt(birthday.substring(2,4));
+    private static int parseMonth(String birthday) {
+        return Integer.parseInt(birthday.substring(2, 4));
     }
 
     /**
@@ -99,8 +95,8 @@ public class Birthday {
      * @param birthday assumed to be of format DDMMYY
      * @return integer Year
      */
-    private static int parseYear(String birthday){
-        return Integer.parseInt(birthday.substring(4,8));
+    private static int parseYear(String birthday) {
+        return Integer.parseInt(birthday.substring(4, 8));
     }
 
     public int getDay() {
@@ -111,6 +107,8 @@ public class Birthday {
         return month;
     }
 
-    public int getYear() { return year; }
+    public int getYear() {
+        return year;
+    }
 }
 

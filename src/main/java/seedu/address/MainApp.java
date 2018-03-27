@@ -254,11 +254,16 @@ public class MainApp extends Application {
         launch(args);
     }
 
-    private void autoOpenBirthdayNotification(){
+    /**
+     * Helper method to open birthday notification
+     * Called after UI is called
+     */
+    private void autoOpenBirthdayNotification() {
         LocalDate currentDate = LocalDate.now();
 
-        if (model != null)
-            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand.
-                    parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate),currentDate));
+        if (model != null) {
+            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
+                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
+        }
     }
 }

@@ -220,18 +220,22 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_email() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        List<String> keywords = Arrays.asList("foo", "test");
+        String[] nameKeywordArray = new String[]{ "foo" };
         EmailCommand command = (EmailCommand) parser.parseCommand(
                 EmailCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)),
+                "test"), command);
     }
 
     @Test
     public void parseCommand_emailAlias() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        List<String> keywords = Arrays.asList("foo", "test");
+        String[] nameKeywordArray = new String[]{ "foo" };
         EmailCommand command = (EmailCommand) parser.parseCommand(
                 EmailCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)),
+                "test"), command);
     }
 
     @Test

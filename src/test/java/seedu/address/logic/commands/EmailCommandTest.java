@@ -34,14 +34,14 @@ public class EmailCommandTest {
         NameContainsKeywordsPredicate secondPredicate =
                 new NameContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        EmailCommand emailFirstCommand = new EmailCommand(firstPredicate);
-        EmailCommand emailSecondCommand = new EmailCommand(secondPredicate);
+        EmailCommand emailFirstCommand = new EmailCommand(firstPredicate, "test");
+        EmailCommand emailSecondCommand = new EmailCommand(secondPredicate, "test");
 
         // same object -> returns true
         assertTrue(emailFirstCommand.equals(emailFirstCommand));
 
         // same values -> returns true
-        EmailCommand emailFirstCommandCopy = new EmailCommand(firstPredicate);
+        EmailCommand emailFirstCommandCopy = new EmailCommand(firstPredicate, "test");
         assertTrue(emailFirstCommand.equals(emailFirstCommandCopy));
 
         // different types -> returns false
@@ -66,7 +66,8 @@ public class EmailCommandTest {
      */
     private EmailCommand prepareCommand(String userInput) {
         EmailCommand command =
-                new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))),
+                        "test");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

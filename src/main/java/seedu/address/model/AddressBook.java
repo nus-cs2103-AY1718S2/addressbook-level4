@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,9 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.email.Template;
+import seedu.address.model.email.UniqueTemplateList;
+import seedu.address.model.email.exceptions.DuplicateTemplateException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -31,6 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueAppointmentList appointments;
+    private final UniqueTemplateList templates;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -43,6 +48,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         appointments = new UniqueAppointmentList();
+        templates = new UniqueTemplateList();
     }
 
     public AddressBook() {}
@@ -71,6 +77,34 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author ng95junwei
+
+    /**
+     * TBD replace with DB seed.
+     * @return a List of template to initialize AddressBook with
+     */
+    private static List<Template> generateTemplates() {
+        List<Template> list = new ArrayList<>();
+        Template template1 = new Template("coldEmail", "Meet up over Coffee",
+                "Hey, I am from Addsurance and would like you ask if you are interested in planning your"
+                        + " finances with us. Would you care to meet over coffee in the next week or so?");
+        Template template2 = new Template("followUpEmail", "Follow up from last week",
+                "Hey, we met last week and I was still hoping if you would like to leave your "
+                        + "finances with us at Addsurance. Would you care to meet over coffee in the next week or so"
+                        + " to discuss further?");
+        list.add(template1);
+        list.add(template2);
+        return list;
+    }
+
+    public void setTemplates() throws DuplicateTemplateException {
+        this.templates.setTemplates(generateTemplates());
+    }
+
+    public synchronized UniqueTemplateList getAllTemplates() {
+        return this.templates;
+    }
+    //@@author
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -84,10 +118,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(syncedPersonList);
             setAppointments(newData.getAppointmentList());
+            setTemplates();
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         } catch (DuplicateAppointmentException e) {
             throw new AssertionError("AddressBooks should not have duplicate appointments");
+        } catch (DuplicateTemplateException e) {
+            throw new AssertionError("AddressBooks should not have duplicate templates");
         }
     }
 

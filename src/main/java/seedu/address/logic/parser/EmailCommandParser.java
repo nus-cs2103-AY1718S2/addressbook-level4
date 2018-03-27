@@ -20,14 +20,17 @@ public class EmailCommandParser implements Parser<EmailCommand> {
      */
     public EmailCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        if (trimmedArgs.isEmpty() || trimmedArgs.split("\\s+").length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        String nameKeyword = trimmedArgs.split("\\s+")[0];
+        String[] nameKeywordArray = new String[]{ nameKeyword };
 
-        return new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        String searchTemplate = trimmedArgs.split("\\s+")[1];
+
+        return new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)), searchTemplate);
     }
 
 }

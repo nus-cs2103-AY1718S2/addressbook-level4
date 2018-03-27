@@ -5,6 +5,7 @@ import com.google.api.services.gmail.Gmail;
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.util.GmailUtil;
+import seedu.address.model.email.Template;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
@@ -22,13 +23,16 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails all persons whose names matches any of "
             + "the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Parameters: NAME TEMPLATE\n"
+            + "Example: " + COMMAND_WORD + " alice coldemail";
 
     private final NameContainsKeywordsPredicate predicate;
+    private final String search;
 
-    public EmailCommand(NameContainsKeywordsPredicate predicate) {
+    public EmailCommand(NameContainsKeywordsPredicate predicate, String search) {
+
         this.predicate = predicate;
+        this.search = search;
     }
 
     @Override
@@ -38,15 +42,16 @@ public class EmailCommand extends Command {
         model.updateFilteredPersonList(predicate);
         ObservableList<Person> emailList = model.getFilteredPersonList();
         for (Person p : emailList) {
-            System.out.println(p.getEmail());
             try {
+                Template template = model.selectTemplate(this.search);
                 GmailUtil handler = new GmailUtil();
                 Gmail service = handler.getService();
                 handler.send(service, p.getEmail().toString(), "",
-                        service.users().getProfile("me").getUserId(), "Hello", "Hello");
+                        service.users().getProfile("me").getUserId(), template.getTitle(),
+                        template.getMessage());
             } catch (Exception e) {
                 System.out.println(e);
-                System.out.println("Some IOException occurred");
+                System.out.println("Some Exception occurred");
             }
         }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));

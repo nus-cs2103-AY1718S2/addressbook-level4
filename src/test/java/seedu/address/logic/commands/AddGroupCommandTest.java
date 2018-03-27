@@ -30,70 +30,70 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
-import seedu.address.testutil.ToDoBuilder;
+import seedu.address.testutil.GroupBuilder;
 
-public class AddToDoCommandTest {
+public class AddGroupCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullToDo_throwsNullPointerException() {
+    public void constructor_nullGroup_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddToDoCommand(null);
+        new AddGroupCommand(null);
     }
 
     @Test
-    public void execute_todoAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingToDoAdded modelStub = new ModelStubAcceptingToDoAdded();
-        ToDo validToDo = new ToDoBuilder().build();
+    public void execute_groupAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingGroupAdded modelStub = new ModelStubAcceptingGroupAdded();
+        Group validGroup = new GroupBuilder().build();
 
-        CommandResult commandResult = getAddToDoCommandForToDo(validToDo, modelStub).execute();
+        CommandResult commandResult = getAddGroupCommandForGroup(validGroup, modelStub).execute();
 
-        assertEquals(String.format(AddToDoCommand.MESSAGE_SUCCESS, validToDo), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validToDo), modelStub.todosAdded);
+        assertEquals(String.format(AddGroupCommand.MESSAGE_SUCCESS, validGroup), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validGroup), modelStub.groupsAdded);
     }
 
     @Test
-    public void execute_duplicateToDo_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateToDoException();
-        ToDo validToDo = new ToDoBuilder().build();
+    public void execute_duplicateGroup_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateGroupException();
+        Group validGroup = new GroupBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddToDoCommand.MESSAGE_DUPLICATE_TODO);
+        thrown.expectMessage(AddGroupCommand.MESSAGE_DUPLICATE_GROUP);
 
-        getAddToDoCommandForToDo(validToDo, modelStub).execute();
+        getAddGroupCommandForGroup(validGroup, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        ToDo todoA = new ToDoBuilder().withContent("ToDo A").build();
-        ToDo todoB = new ToDoBuilder().withContent("ToDo B").build();
-        AddToDoCommand addToDoACommand = new AddToDoCommand(todoA);
-        AddToDoCommand addToDoBCommand = new AddToDoCommand(todoB);
+        Group groupA = new GroupBuilder().withInformation("Group A").build();
+        Group groupB = new GroupBuilder().withInformation("Group B").build();
+        AddGroupCommand addGroupACommand = new AddGroupCommand(groupA);
+        AddGroupCommand addGroupBCommand = new AddGroupCommand(groupB);
 
         // same object -> returns true
-        assertTrue(addToDoACommand.equals(addToDoACommand));
+        assertTrue(addGroupACommand.equals(addGroupACommand));
 
         // same values -> returns true
-        AddToDoCommand addToDoACommandCopy = new AddToDoCommand(todoA);
-        assertTrue(addToDoACommand.equals(addToDoACommandCopy));
+        AddGroupCommand addGroupACommandCopy = new AddGroupCommand(groupA);
+        assertTrue(addGroupACommand.equals(addGroupACommandCopy));
 
         // different types -> returns false
-        assertFalse(addToDoACommand.equals(1));
+        assertFalse(addGroupACommand.equals(1));
 
         // null -> returns false
-        assertFalse(addToDoACommand.equals(null));
+        assertFalse(addGroupACommand.equals(null));
 
-        // different to-do -> returns false
-        assertFalse(addToDoACommand.equals(addToDoBCommand));
+        // different group -> returns false
+        assertFalse(addGroupACommand.equals(addGroupBCommand));
     }
 
     /**
-     * Generates a new AddToDoCommand with the details of the given to-do.
+     * Generates a new AddGroupCommand with the details of the given group.
      */
-    private AddToDoCommand getAddToDoCommandForToDo(ToDo todo, Model model) {
-        AddToDoCommand command = new AddToDoCommand(todo);
+    private AddGroupCommand getAddGroupCommandForGroup(Group group, Model model) {
+        AddGroupCommand command = new AddGroupCommand(group);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -108,7 +108,7 @@ public class AddToDoCommandTest {
         }
 
         @Override
-        public void addToDo(ToDo todo) throws DuplicateToDoException {
+        public void addToDo(ToDo todos) throws DuplicateToDoException {
             fail("This method should not be called.");
         }
 
@@ -173,19 +173,19 @@ public class AddToDoCommandTest {
             fail("This method should not be called.");
         }
 
-        @Override
         public void updateFilteredToDoList(Predicate<ToDo> predicate) {
             fail("This method should not be called.");
         }
+
     }
 
     /**
-     * A Model stub that always throw a DuplicateToDoException when trying to add a to-do.
+     * A Model stub that always throw a DuplicateGroupException when trying to add a group.
      */
-    private class ModelStubThrowingDuplicateToDoException extends ModelStub {
+    private class ModelStubThrowingDuplicateGroupException extends ModelStub {
         @Override
-        public void addToDo(ToDo todo) throws DuplicateToDoException {
-            throw new DuplicateToDoException();
+        public void addGroup(Group group) throws DuplicateGroupException {
+            throw new DuplicateGroupException();
         }
 
         @Override
@@ -195,15 +195,15 @@ public class AddToDoCommandTest {
     }
 
     /**
-     * A Model stub that always accept the to-do being added.
+     * A Model stub that always accept the group being added.
      */
-    private class ModelStubAcceptingToDoAdded extends ModelStub {
-        final ArrayList<ToDo> todosAdded = new ArrayList<>();
+    private class ModelStubAcceptingGroupAdded extends ModelStub {
+        final ArrayList<Group> groupsAdded = new ArrayList<>();
 
         @Override
-        public void addToDo(ToDo todo) throws DuplicateToDoException {
-            requireNonNull(todo);
-            todosAdded.add(todo);
+        public void addGroup(Group group) throws DuplicateGroupException {
+            requireNonNull(group);
+            groupsAdded.add(group);
         }
 
         @Override

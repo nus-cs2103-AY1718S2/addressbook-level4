@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddGroupCommand;
 import seedu.address.logic.commands.AddToDoCommand;
 import seedu.address.logic.commands.ChangeTagColorCommand;
 import seedu.address.logic.commands.CheckToDoCommand;
@@ -19,6 +20,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListGroupMembersCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnCheckToDoCommand;
@@ -56,6 +58,10 @@ public class AddressBookParser {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        case AddGroupCommand.COMMAND_WORD:
+        case AddGroupCommand.COMMAND_ALIAS:
+            return new AddGroupCommandParser().parse(arguments);
+
         case AddToDoCommand.COMMAND_WORD:
         case AddToDoCommand.COMMAND_ALIAS:
             return new AddToDoCommandParser().parse(arguments);
@@ -89,6 +95,10 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
+
+        case ListGroupMembersCommand.COMMAND_WORD:
+        case ListGroupMembersCommand.COMMAND_ALIAS:
+            return new ListGroupMembersCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:

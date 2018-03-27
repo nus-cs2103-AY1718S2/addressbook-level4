@@ -412,13 +412,6 @@ image::AddToDoSequenceDiagram.png[width="800"]
 
 // end::addToDo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -464,23 +457,21 @@ When a the schedule of a `Person` is needed, the `Model` component will pass the
 ** Cons: Reliant on good internet connection
 
 //tag::ListGroupMembers[]
-=== ListGroupMembers Feature
+=== List Group Members Feature
 ==== Current Implementation
 Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 tag.
 
-Then it stores the list in `UniqueGroupList` , which is under `Model` component.
-
-When user types in command line `ListGroupMembers` , Fastis will use the keyword provided to search for the group tag
-and list out all members under the same tag.
+When user types in command line `ListGroupMembers` or `lgm` , Fastis will use the keyword provided to search for the
+group tag and list out all members under the same group tag.
 
 ==== Design Considerations
-* **Alternative 1 (current choice):** Add a new abstract method `ListGroupMembersCommand(`
+* **Alternative 1 (current choice):** Use a command to list out the group members.
+** Pros: Easy to change the methods called by command.
+** Cons: Unable to link to group class.
+* **Alternative 2:** Add a new abstract method `ListGroupMembersCommand(`
 ** Pros: Edit `ListGroupMembersCommand()` easily to suit our needs
 ** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
-** Cons: Classes that inherit from `ListGroupMembersCommand()` must remember to call `super.execute()`
 
 //tag::Calendar[]
 === Calendar Feature
@@ -532,6 +523,14 @@ The weekly component of the `Calendar` is dependent on the `NUSMods` component f
 * **Alternative 2:** One `Event` interface with 2 classes implementing it accordingly.
 ** Pros: The codes are modularized and safe from buggy behaviours.
 ** Cons: There is likely a lot of code to write.
+
+
+// tag::dataencryption[]
+=== [Proposed] Data Encryption
+
+_{Explain here how the data encryption feature will be implemented}_
+
+// end::dataencryption[]
 
 == Documentation
 
@@ -1016,11 +1015,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Student working with new teammates |Add their contact information |I can contact them if the need arises
 
-<<<<<<< HEAD
 |`* * *` |user |add info of the members involved in events|So that I know who I would need to talk to
-=======
+
 |`* * *` |Student first time using the application |See the usage instructions |Learn how to use the application
->>>>>>> 6c564543ac3097e2fb705a8d500e13cc286d127b
 
 |`* *` |Student that does not leave applications open |See an overview of the week’s meetup right away when the application opens |Do not have to type in any commands when I first open the application
 
@@ -1050,7 +1047,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |Student who do not how to reach the destination of the meet-up |Have the venue of the meet-up shown on google map |I can know the direction to the meetup
 
-<<<<<<< HEAD
 |`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the, map while driving
 
 |`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related

@@ -9,11 +9,13 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 public class Schedule {
     private String classNo;
+
     private String lessonType;
     private String weekText;
     private String dayText;
     private String startTime;
     private String endTime;
+    private String venue;
 
     Schedule() {
         this.classNo = "";
@@ -22,15 +24,46 @@ public class Schedule {
         this.dayText = "";
         this.startTime = "";
         this.endTime = "";
+        this.venue = "";
     }
 
-    Schedule(String classNo, String lessonType, String weekText, String dayText, String startTime, String endTime) {
+    Schedule(String classNo, String lessonType, String weekText, String dayText, String startTime, String endTime,
+             String venue) {
         this.classNo = classNo;
         this.lessonType = lessonType;
         this.weekText = weekText;
         this.dayText = dayText;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.venue = venue;
+    }
+
+    public String getClassNo() {
+        return classNo;
+    }
+
+    public String getLessonType() {
+        return lessonType;
+    }
+
+    public String getWeekText() {
+        return weekText;
+    }
+
+    public String getDayText() {
+        return dayText;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public String getVenue() {
+        return venue;
     }
 
     @Override

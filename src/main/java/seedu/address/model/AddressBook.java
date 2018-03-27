@@ -2,18 +2,18 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -35,8 +35,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueToDoList todos;
+    private final UniqueGroupList groups;
 
-    /*
+    /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
@@ -47,6 +48,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         todos = new UniqueToDoList();
+        groups = new UniqueGroupList();
     }
 
     public AddressBook() {
@@ -74,6 +76,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.todos.setToDos(todos);
     }
 
+    public void setGroups(List<Group> groups) throws DuplicateGroupException {
+        this.groups.setGroups(groups);
+    }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -84,14 +89,18 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
         List<ToDo> syncedToDoList = newData.getToDoList();
+        List<Group> syncedGroupList = newData.getGroupList();
 
         try {
             setPersons(syncedPersonList);
             setToDos(syncedToDoList);
+            setGroups(syncedGroupList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         } catch (DuplicateToDoException e) {
             throw new AssertionError("AddressBooks should not have duplicate todos");
+        } catch (DuplicateGroupException e) {
+            throw new AssertionError("AddressBooks Should not have duplicate groups");
         }
     }
 
@@ -183,6 +192,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// to-do-level operations
+
     /**
      * Adds a to-do to the address book.
      *
@@ -196,6 +206,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    ////Group operation
+    public void addGroup(Group group) throws DuplicateGroupException {
+        groups.add(group);
     }
 
     //// util methods
@@ -219,6 +234,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ToDo> getToDoList() {
         return todos.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return groups.asObservableList();
     }
 
     @Override
@@ -322,40 +342,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("Modifying a person's tags only should not result in a duplicate. "
                     + "See Person#equals(Object).");
-        }
-    }
-
-    /**
-     * Add all the user-specified colors from saved file to the tags in the address book
-     */
-    public void addColorsToTag() {
-        HashMap<String, String> tagColors = readTagColorFile();
-        HashSet<Tag> coloredTags = new HashSet<Tag>();
-        for (Tag tag : tags) {
-            if (tagColors.containsKey(tag.name)) {
-                coloredTags.add(new Tag(tag.name, tagColors.get(tag.name)));
-            } else {
-                coloredTags.add(new Tag(tag.name));
-            }
-        }
-        tags.setTags(coloredTags);
-    }
-
-    /**
-     * Read the saved file to map the tags to the color that the user specified
-     */
-    private HashMap<String, String> readTagColorFile() {
-        String tagColorsFilePath = Tag.TAG_COLOR_FILE_PATH;
-        HashMap<String, String> tagColors = new HashMap<String, String>();
-        try {
-            Scanner scan = new Scanner(new File(tagColorsFilePath));
-            while (scan.hasNextLine()) {
-                String[] t = scan.nextLine().split(":");
-                tagColors.put(t[0], t[1]);
-            }
-            return tagColors;
-        } catch (FileNotFoundException fnfe) {
-            throw new AssertionError("Tag color file not found. Using default settings.");
         }
     }
 }

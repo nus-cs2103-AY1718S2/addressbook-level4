@@ -89,10 +89,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Parses a {@code String title} into a {@code Title}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code name} is invalid.
+     * @throws IllegalValueException if the given {@code title} is invalid.
      */
 
     public static Title parseTitle(String title) throws IllegalValueException {
@@ -105,7 +105,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * Parses a {@code Optional<String> title} into an {@code Optional<Name>} if {@code title} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Title> parseTitle(Optional<String> title) throws IllegalValueException {
@@ -114,10 +114,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Parses a {@code String assignees} into a {@code Assignees}.
      * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code name} is invalid.
      */
 
     public static Assignees parseAssignees(String assignees) {
@@ -127,7 +125,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses {@code Collection<String> assignees} into a {@code Set<Assignees>}.
      */
     public static Set<Assignees> parseAssignees(Collection<String> assignees) throws IllegalValueException {
         requireNonNull(assignees);
@@ -139,10 +137,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Parses a {@code String labels} into a {@code Labels}.
      * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code name} is invalid.
      */
 
     public static Labels parseLabels(String labels) {
@@ -152,7 +148,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses {@code Collection<String> labe;s} into a {@code Set<Labels>}.
      */
     public static Set<Labels> parseLabels(Collection<String> labels) throws IllegalValueException {
         requireNonNull(labels);
@@ -165,10 +161,10 @@ public class ParserUtil {
 
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Parses a {@code String milestone} into a {@code Milestone}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code name} is invalid.
+     * @throws IllegalValueException if the given {@code milestone} is invalid.
      */
 
     public static Milestone parseMilestone(String milestone) throws IllegalValueException {
@@ -181,7 +177,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * Parses a {@code Optional<String> milestone} into an {@code Optional<Milestone>} if {@code milestone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Milestone> parseMilestone(Optional<String> milestone) throws IllegalValueException {
@@ -190,20 +186,18 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Parses a {@code String body} into a {@code Body}.
      * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code name} is invalid.
      */
 
-    public static Body parseBody(String body) throws IllegalValueException {
+    public static Body parseBody(String body) {
         requireNonNull(body);
         String trimmedBody = body.trim();
         return new Body(trimmedBody);
     }
 
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * Parses a {@code Optional<String> bodu} into an {@code Optional<Body>} if {@code body} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Body> parseBody(Optional<String> body) throws IllegalValueException {

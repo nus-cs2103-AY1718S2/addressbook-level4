@@ -13,7 +13,6 @@ import guitests.guihandles.PasswordBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.events.ui.PasswordCorrectEvent;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.commons.util.SecurityUtil;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.Password;

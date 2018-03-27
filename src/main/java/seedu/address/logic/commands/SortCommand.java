@@ -49,7 +49,7 @@ public class SortCommand extends UndoableCommand {
 
     @Override
     public boolean equals(Object o) {
-        return o == this 
+        return o == this
                 || (o instanceof SortCommand
                 && this.getField().equals(((SortCommand) o).getField())); // state check
     }

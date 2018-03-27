@@ -14,7 +14,7 @@ public class TypicalPetPatients {
             .withColour("Brown and White")
             .withBloodType("O")
             .withOwnerNric(TypicalPersons.BOB.getNric().toString())
-            .withTags("Injured").build();
+            .withTags(new String[]{}).build();
 
     public static final PetPatient JEWEL = new PetPatientBuilder()
             .withName("Jewel")
@@ -23,7 +23,7 @@ public class TypicalPetPatients {
             .withColour("Calico")
             .withBloodType("AB")
             .withOwnerNric(TypicalPersons.ALICE.getNric().toString())
-            .withTags(new String[]{}).build();
+            .withTags("Depression", "Test").build();
 
     private TypicalPetPatients() {}
 }

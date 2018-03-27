@@ -106,7 +106,7 @@ public class UniqueActivityList implements Iterable<Activity> {
         for (final Activity activity : activities) {
             replacement.add(activity);
             //@@author jasmoon
-            if(activity.getActivityType().equals("TASK")) {
+            if (activity.getActivityType().equals("TASK")) {
                 replacement.taskList.add((Task) activity);
             } else {
                 replacement.eventList.add((Event) activity);

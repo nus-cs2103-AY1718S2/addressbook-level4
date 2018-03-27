@@ -10,8 +10,8 @@ import java.util.HashMap;
  */
 public class WeekDay {
 
-    private static final int START_TIME = 600;
-    private static final int END_TIME = 2330;
+    private static final int START_TIME = 800;
+    private static final int END_TIME = 2000;
 
     private HashMap<String, String> weekDaySchedule;
 
@@ -66,7 +66,7 @@ public class WeekDay {
      * Increments the time in 24 hour format by 30 minutes
      */
     private int incrementHalfHour(int time) {
-        int timeAfterHalfHour = time + 30;
+        int timeAfterHalfHour = time + 60;
         if (timeAfterHalfHour % 100 == 60) {
             timeAfterHalfHour = timeAfterHalfHour - 60 + 100;
         }

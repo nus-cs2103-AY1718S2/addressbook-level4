@@ -77,7 +77,9 @@ public class Room {
      */
     public ArrayList<String> getWeekDaySchedule() {
         initializeWeek();
-        return week.getWeekDaySchedule();
+        ArrayList<String> schedules = week.getWeekDaySchedule();
+        schedules.add(0, roomName);
+        return schedules;
     }
 
     public void initializeWeek() {

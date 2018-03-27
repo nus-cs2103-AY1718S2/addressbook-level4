@@ -40,14 +40,14 @@ public class ViewAppointmentCommand extends Command {
     @Override
     public CommandResult execute() {
         ObservableList<Appointment> appointmentList = model.getImdb().getAppointmentList();
-        logger.info("--get appointment list---");
+
         printOutAppointmentInLog(appointmentList);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
     private static void printOutAppointmentInLog(ObservableList<Appointment> appointments) {
         appointments.forEach(appointment -> {
-            logger.info(appointment.getPatientName() + ", " + appointment.getAppointmentDateTime() + "\n");
+            
         });
     }
 }

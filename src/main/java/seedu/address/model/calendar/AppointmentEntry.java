@@ -15,8 +15,8 @@ import com.calendarfx.model.Interval;
 public class AppointmentEntry {
 
     public static final String MESSAGE_DATE_TIME_CONSTRAINTS =
-            "Date and Time should be in the format of dd/MM/yyyy HH:mm:ss";
-    public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm:ss";
+            "Date and Time should be in the format of dd/MM/yyyy HH:mm";
+    public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm";
 
     private final Entry appointmentEntry;
     private Interval interval;

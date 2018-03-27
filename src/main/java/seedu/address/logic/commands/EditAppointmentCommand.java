@@ -25,8 +25,8 @@ public class EditAppointmentCommand extends UndoableCommand {
             + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_SEARCH_TEXT + "Meet Peter "
             + PREFIX_NAME + "Meet John "
-            + PREFIX_START_INTERVAL + "14/08/2018 06:12:00 "
-            + PREFIX_END_INTERVAL + "14/08/2018 07:12:00 ";
+            + PREFIX_START_INTERVAL + "14/08/2018 06:12 "
+            + PREFIX_END_INTERVAL + "14/08/2018 07:12 ";
 
     public static final String MESSAGE_SUCCESS = "Appointment Edited: %1$s";
     public static final String MESSAGE_FAIL_EDIT_APPOINTMENT = "appointment do not exit or duplicate new title";

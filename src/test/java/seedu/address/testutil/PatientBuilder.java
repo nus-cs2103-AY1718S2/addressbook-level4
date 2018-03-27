@@ -35,7 +35,7 @@ public class PatientBuilder {
     public static final String DEFAULT_SYMPTOM = "";
     public static final String DEFAULT_ILLNESS = "";
     public static final String DEFAULT_TREATMENT = "";
-    public static final String DEFAULT_RECORDLIST = "1 in/0 d/ s/ i/ t/\n";
+    public static final String DEFAULT_RECORDLIST = "1 in/1 d/ s/ i/ t/\n";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;

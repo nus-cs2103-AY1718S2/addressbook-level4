@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
+import static seedu.address.testutil.TypicalGroups.GROUP_A;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -22,6 +23,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.todo.ToDo;
@@ -41,6 +43,7 @@ public class AddressBookTest {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
         assertEquals(Collections.emptyList(), addressBook.getToDoList());
+        assertEquals(Collections.emptyList(), addressBook.getGroupList());
     }
 
     @Test
@@ -62,7 +65,8 @@ public class AddressBookTest {
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<ToDo> newToDos = Arrays.asList(TODO_A);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos);
+        List<Group> newGroups = Arrays.asList(GROUP_A);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos ,newGroups);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -74,7 +78,21 @@ public class AddressBookTest {
         List<Person> newPersons = Arrays.asList(ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<ToDo> newToDos = Arrays.asList(TODO_A, TODO_A);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos);
+        List<Group> newGroups = Arrays.asList(GROUP_A);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos ,newGroups);
+
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
+
+    @Test
+    public void resetData_withDuplicateGroups_throwsAssertionError() {
+        // Repeat GROUP_A twice
+        List<Person> newPersons = Arrays.asList(ALICE);
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<ToDo> newToDos = Arrays.asList(TODO_A);
+        List<Group> newGroups = Arrays.asList(GROUP_A, GROUP_A);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos ,newGroups);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -126,11 +144,13 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ToDo> todos = FXCollections.observableArrayList();
+        private final ObservableList<Group> groups = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<ToDo> todos) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<ToDo> todos, Collection<Group> groups) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.todos.setAll(todos);
+            this.groups.setAll(groups);
         }
 
         @Override
@@ -146,6 +166,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<ToDo> getToDoList() {
             return todos;
+        }
+
+        @Override
+        public ObservableList<Group> getGroupList() {
+            return groups;
         }
     }
 

@@ -21,79 +21,79 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.group.Group;
-import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.GroupBuilder;
 
-public class AddCommandTest {
+public class AddGroupCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullGroup_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddGroupCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_groupAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingGroupAdded modelStub = new ModelStubAcceptingGroupAdded();
+        Group validGroup = new GroupBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddGroupCommandForGroup(validGroup, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddGroupCommand.MESSAGE_SUCCESS, validGroup), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validGroup), modelStub.groupsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateGroup_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateGroupException();
+        Group validGroup = new GroupBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddGroupCommand.MESSAGE_DUPLICATE_GROUP);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddGroupCommandForGroup(validGroup, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        Group groupA = new GroupBuilder().withInformation("Group A").build();
+        Group groupB = new GroupBuilder().withInformation("Group B").build();
+        AddGroupCommand addGroupACommand = new AddGroupCommand(groupA);
+        AddGroupCommand addGroupBCommand = new AddGroupCommand(groupB);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addGroupACommand.equals(addGroupACommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddGroupCommand addGroupACommandCopy = new AddGroupCommand(groupA);
+        assertTrue(addGroupACommand.equals(addGroupACommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addGroupACommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addGroupACommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different group -> returns false
+        assertFalse(addGroupACommand.equals(addGroupBCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddGroupCommand with the details of the given group.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddGroupCommand getAddGroupCommandForGroup(Group group, Model model) {
+        AddGroupCommand command = new AddGroupCommand(group);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -108,7 +108,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addToDo(ToDo todo) throws DuplicateToDoException {
+        public void addToDo(ToDo todos) throws DuplicateToDoException {
             fail("This method should not be called.");
         }
 
@@ -116,6 +116,7 @@ public class AddCommandTest {
         public void addGroup(Group group) throws DuplicateGroupException {
             fail("This method should not be called.");
         }
+
         @Override
         public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException {
             fail("This method should not be called.");
@@ -162,12 +163,12 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicateGroupException when trying to add a group.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateGroupException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addGroup(Group group) throws DuplicateGroupException {
+            throw new DuplicateGroupException();
         }
 
         @Override
@@ -177,15 +178,15 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the group being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingGroupAdded extends ModelStub {
+        final ArrayList<Group> groupsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addGroup(Group group) throws DuplicateGroupException {
+            requireNonNull(group);
+            groupsAdded.add(group);
         }
 
         @Override
@@ -193,5 +194,4 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
-
 }

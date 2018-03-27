@@ -11,7 +11,7 @@ import seedu.address.model.Password;
  */
 public class XmlAdaptedPassword {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Password field is missing!";
 
     @XmlElement(required = true)
     private byte[] currPassword;
@@ -39,15 +39,6 @@ public class XmlAdaptedPassword {
      */
     public Password toModelType() {
         return new Password(currPassword, prevPassword);
-    }
-
-    /**
-     * Updates the password given a new password
-     * @param password is the password to be changed to
-     */
-    public void updatePassword(Password password) {
-        this.currPassword = password.getPassword();
-        this.prevPassword = password.getPrevPassword();
     }
 
     @Override

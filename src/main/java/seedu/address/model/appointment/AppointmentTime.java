@@ -55,7 +55,7 @@ public class AppointmentTime {
 
     @Override
     public String toString() {
-        return time.format(DateTimeFormatter.ofPattern("d MMM uuuu VV"));
+        return time.format(DateTimeFormatter.ofPattern("d MMM uuuu HH:mm VV"));
     }
 
     @Override

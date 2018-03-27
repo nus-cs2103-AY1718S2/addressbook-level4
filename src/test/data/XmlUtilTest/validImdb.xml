@@ -9,7 +9,7 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
     <patients>
         <name>Ruth Mueller</name>
@@ -20,7 +20,7 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
     <patients>
         <name>Heinz Kurz</name>
@@ -31,7 +31,7 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
     <patients>
         <name>Cornelia Meier</name>
@@ -42,7 +42,7 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
     <patients>
         <name>Werner Meyer</name>
@@ -53,7 +53,7 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
     <patients>
         <name>Lydia Kunz</name>
@@ -64,7 +64,7 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
     <patients>
         <name>Anna Best</name>
@@ -75,7 +75,7 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
     <patients>
         <name>Stefan Meier</name>
@@ -86,7 +86,7 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
     <patients>
         <name>Martin Mueller</name>
@@ -97,6 +97,6 @@
         <dob isPrivate="false">10/10/1990</dob>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
-        <record isPrivate="false">1 d/ s/ i/ t/</record>
+        <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
     </patients>
 </imdb>

@@ -56,6 +56,24 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem undoMenuItem;
 
     @FXML
+    private MenuItem redoMenuItem;
+
+    @FXML
+    private MenuItem populateAddMenuItem;
+
+    @FXML
+    private MenuItem populateEditMenuItem;
+
+    @FXML
+    private MenuItem populateDeleteMenuItem;
+
+    @FXML
+    private MenuItem populateLocateMenuItem;
+
+    @FXML
+    private MenuItem populateFindMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -89,6 +107,12 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("Alt + Q"));
         setAccelerator(undoMenuItem, KeyCombination.valueOf("Ctrl + Z"));
+        setAccelerator(redoMenuItem, KeyCombination.valueOf("Ctrl + Y"));
+        setAccelerator(populateAddMenuItem, KeyCombination.valueOf("Alt + A"));
+        setAccelerator(populateEditMenuItem, KeyCombination.valueOf("Alt + E"));
+        setAccelerator(populateDeleteMenuItem, KeyCombination.valueOf("Alt + D"));
+        setAccelerator(populateLocateMenuItem, KeyCombination.valueOf("Alt + L"));
+        setAccelerator(populateFindMenuItem, KeyCombination.valueOf("Ctrl + F"));
     }
 
     /**
@@ -183,8 +207,55 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleUndo() {
-        // pass control to CommandBox, @TODO to be implemented
         // raise(new UndoRequestEvent());
+    }
+
+    /**
+     * Executes the redo operation
+     */
+    @FXML
+    private void handleRedo() {
+        // raise(new RedoRequestEvent());
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code AddCommand} prefixes.
+     */
+    @FXML
+    private void handleAdd() {
+        raise(new PopulateRequestEvent("add"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code EditCommand} prefixes.
+     */
+    @FXML
+    private void handleEdit() {
+        raise(new PopulateRequestEvent("edit"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code DeleteCommand} prefixes.
+     */
+    @FXML
+    private void handleDelete() {
+        raise(new PopulateRequestEvent("delete"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code LocateCommand} prefixes.
+     */
+    @FXML
+    private void handleLocate() {
+        raise(new PopulateRequestEvent("locate"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code FindCommand} prefixes.
+     */
+    @FXML
+    private void handleFind() {
+        raise(new PopulateRequestEvent("find"));
     }
 
     void show() {

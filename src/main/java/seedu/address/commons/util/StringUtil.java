@@ -61,10 +61,7 @@ public class StringUtil {
         String preppedSubstring = substring.trim();
         checkArgument(!preppedSubstring.isEmpty(), "Substring parameter cannot be empty");
 
-        if (StringUtils.containsIgnoreCase(sentence, substring)) {
-            return true;
-        }
-        return false;
+        return StringUtils.containsIgnoreCase(sentence, substring);
     }
 
     /**
@@ -85,10 +82,7 @@ public class StringUtil {
         String preppedPrefix = prefix.trim();
         checkArgument(!preppedPrefix.isEmpty(), "Prefix parameter cannot be empty");
 
-        if (StringUtils.startsWithIgnoreCase(sentence, prefix)) {
-            return true;
-        }
-        return false;
+        return StringUtils.startsWithIgnoreCase(sentence, prefix);
     }
 
     /**
@@ -109,10 +103,7 @@ public class StringUtil {
         String preppedSuffix = suffix.trim();
         checkArgument(!preppedSuffix.isEmpty(), "Suffix parameter cannot be empty");
 
-        if (StringUtils.endsWithIgnoreCase(sentence, suffix)) {
-            return true;
-        }
-        return false;
+        return StringUtils.endsWithIgnoreCase(sentence, suffix);
     }
 
     /**

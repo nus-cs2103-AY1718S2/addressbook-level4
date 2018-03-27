@@ -79,7 +79,7 @@ public class AliasCommandTest {
             for (int j = 0; j < commands.size(); j++) {
                 thrown.expect(CommandException.class);
                 Alias invalidAlias = new Alias(commands.get(i), commands.get(j));
-                CommandResult commandResult = getAliasCommand(invalidAlias, modelStub).execute();
+                getAliasCommand(invalidAlias, modelStub).execute();
             }
         }
     }
@@ -92,7 +92,7 @@ public class AliasCommandTest {
 
         thrown.expect(CommandException.class);
 
-        CommandResult commandResult = getAliasCommand(invalidAlias, modelStub).execute();
+        getAliasCommand(invalidAlias, modelStub).execute();
     }
 
 
@@ -115,7 +115,7 @@ public class AliasCommandTest {
         assertFalse(editAliasCommand.equals(1));
 
         // null -> returns false
-        assertFalse(editAliasCommand.equals(null));
+        assertFalse(editAliasCommand == null);
 
         // different person -> returns false
         assertFalse(editAliasCommand.equals(exitAliasCommand));

@@ -113,6 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedToDo);
 
         addressBook.updateToDo(target, editedToDo);
+        indicateAddressBookChanged();
     }
 
     @Override

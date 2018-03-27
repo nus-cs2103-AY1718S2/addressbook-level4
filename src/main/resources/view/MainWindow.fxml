@@ -44,7 +44,7 @@
                         <items>
                             <VBox fx:id="personList" prefWidth="100.0" styleClass="VBox" VBox.vgrow="ALWAYS">
                                 <children>
-                                    <StackPane id="taskListPanelPlaceholder" fx:id="activityListPanelPlaceholder"
+                                    <StackPane id="taskListPanelPlaceholder" fx:id="taskListPanelPlaceholder"
                                                prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                         <VBox.margin>
                                             <Insets bottom="8.0" left="30.0" right="30.0" top="10.0"/>

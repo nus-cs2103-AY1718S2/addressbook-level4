@@ -13,11 +13,11 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W14-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W14-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+HR+ is for those who *prefer to use a desktop app for managing contacts*. More importantly, HR+ is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, HR+ can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,8 +27,8 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `HR.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for HR+.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -115,11 +115,12 @@ Schedule the interview of the 1st person to be next Friday at 3pm.
 * `interview 2 Mar 14 2pm` +
 Schedule the interview of the 2nd person to be 14 March at 2pm.
 
-=== Locating persons by field: `find`
+=== Locating persons by exact keyword search: `find` [Since v1.2]
 
 Finds persons whose fields contain any of the given keywords. +
-Format:
+
 Option 1: `find KEYWORD [MORE_KEYWORDS]`
+
 Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 
 ****
@@ -128,6 +129,9 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 * All fields are searched if no prefix is supplied.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* If the first keyword is not a prefix, this command would assume a global search for **all** fields.
+* A global search does an **OR** search between keywords
+* A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes.
 ****
 
 Examples:
@@ -139,7 +143,50 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `find p/999 555` +
 Returns any person having phone number `999` or `555`
 * `find p/999 e/test@example.com`
-Returns any person having phone number `999` and email `test@example.com`
+Returns any person having phone number `999` **AND** email `test@example.com`
+* `find John Mary e/johndoe@example.com`
+Returns any person with any of their fields matching the keyword `John`, `Mary` **OR** `e/johndoe@example.com`. Prefix is ignored in this case because the command did not start with a valid prefix.
+* `find alex lidavid@example.com 87438807`
+Returns any person with any of their fields matching the keyword `alex`, `lidavid@example.com` **OR** `87438807`.
+* `find n/alex bernice e/alexyeoh@example.com p/87438807` - Returns any person whose `name` contains keyword `alex` **OR** `bernice` **AND** `email` contains keyword `alexyeoh@example.com` **AND** `phone` contains keyword `87438807`
+
+=== Locating persons by wildcard search: `find` [Since v1.3]
+
+Finds persons whose fields contain any of the given keywords. +
+
+Option 1: `find KEYWORD [MORE_KEYWORDS]`
+
+Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* All fields are searched if no prefix is supplied.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Wildcard `*example*` searches for field that **contains** keyword `example`
+* Wildcard `*example` searches for field that **ends** with keyword `example`
+* Wildcard `example*` searches for ffield that **starts** with keyword `example`
+* If the first keyword is not a prefix, this command would assume a global search for **all** fields.
+* A global search does an **OR** search between keywords
+* A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes.
+****
+
+* `find alex &ast;yu&ast; ir&ast; &ast;li` - displays a list of people with **any** of their fields that matches the following:
+   1. Exact keyword `alex`
+   2. Contains keyword `yu`
+   3. Start with keyword `ir`
+   4. End with keyword `li`
+
+* `find ir&ast; &ast;li n/&ast;example&ast;` - displays a list of people with **any** of their fields that matches the following:
+   1. Start with keyword `ir`
+   2. End with keyword `li`
+   3. Start with keyword `n/*example` (Prefix is ignored in this case similar to <<Locating persons by exact keyword search: `find` [Since v1.2]>>
+
+* `find n/alex &ast;bern&ast; e/&ast;example.com p/&ast;8&ast; m/Computer&ast;` - displays a list of people matching:
+   1. Name field containing exact keyword `alex` **OR** name field that contains keyword `bern` **AND**
+   2. Email field that ends with keyword `example.com` **AND**
+   3. Phone field that contains keyword `8` **AND**
+   4. Major field that starts with keyword `Computer`
 
 === Filter persons by expected graduation year: `filter`
 
@@ -304,11 +351,17 @@ Format: `exit`
 Data in HR+ are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Locating persons by wildcard search: `find` `[coming in v1.4]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Searches all fields that has a fuzzy match with user input.
+
+=== Provide a list of search results in text `[coming in v1.4]`
+
+Text summary of the search results after user executes the `find` command.
+
+=== Highlights search results in user interface `[coming in v2.0]`
+
+Highlights search results after user executes the `find` command.
 
 === Customising rating criteria `[coming in v2.0]`
 Specifies the criteria that candidates will be rated against.

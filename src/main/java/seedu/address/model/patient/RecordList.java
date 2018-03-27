@@ -37,7 +37,7 @@ public class RecordList {
 
     public RecordList(String string) throws ParseException { //placeholder code
         this.recordList = new ArrayList<Record>();
-        String lines[] = string.split("\\r?\\n");
+        String[] lines = string.split("\\r?\\n");
         for (int i = 0; i < lines.length; i++) {
             recordList.add(new Record(lines[i]));
         }
@@ -100,14 +100,17 @@ public class RecordList {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < numRecord; i++) {
             builder.append("1 ") //as the command will not be executed, we will be placing a dummy patient index
-            .append(PREFIX_INDEX)
-            .append((i + 1) + " ")
-            .append(recordList.get(i).toCommandStringRecordList())
-            .append("\n");
+                    .append(PREFIX_INDEX)
+                    .append((i + 1) + " ")
+                    .append(recordList.get(i).toCommandStringRecordList())
+                    .append("\n");
         }
         return builder.toString();
     }
 
+    /**
+     * Edits the list of records based on the arguments provided.
+     */
     public void edit(int recordIndex, Record record) {
         if (this.numRecord > recordIndex) {
             this.set(recordIndex, record);

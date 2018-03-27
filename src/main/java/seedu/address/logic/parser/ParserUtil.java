@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -14,7 +15,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.insuranceCalendar.AppointmentEntry;
+import seedu.address.logic.commands.LookDateCommand;
+import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
@@ -75,6 +77,40 @@ public class ParserUtil {
 
 
     /**
+     * Parses a {@code String input} into a {@code LocalDateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    static LocalDateTime parseDateTime(String input) throws  IllegalValueException {
+        requireNonNull(input);
+        String trimmedInput = input.trim();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
+
+        try {
+
+            LocalDateTime dateTime = LocalDateTime.parse(trimmedInput, formatter);
+            return dateTime;
+
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_TIME_CONSTRAINTS);
+        }
+
+
+
+    }
+
+    /**
+     * Parses a {@code Optional<String> input} into an {@code Optional<LocalDateTime>} if {@code input} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalDateTime> parseDateTime(Optional<String> input) throws IllegalValueException {
+        requireNonNull(input);
+        return input.isPresent() ? Optional.of(parseDateTime(input.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String input} into a {@code LocalDate}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -84,15 +120,15 @@ public class ParserUtil {
         requireNonNull(input);
         String trimmedInput = input.trim();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LookDateCommand.DATE_VALIDATION);
 
         try {
 
-            LocalDate localDate = LocalDate.parse(trimmedInput, formatter);
-            return localDate;
+            LocalDate date = LocalDate.parse(trimmedInput, formatter);
+            return date;
 
         } catch (DateTimeParseException e) {
-            throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_CONSTRAINTS);
+            throw new IllegalValueException(LookDateCommand.MESSAGE_DATE_CONSTRAINTS);
         }
 
 

@@ -7,8 +7,10 @@ import com.calendarfx.view.CalendarView;
 
 import com.google.common.eventbus.Subscribe;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.CalendarFocusEvent;
+import seedu.address.commons.events.ui.CalendarUnfocusEvent;
 
 /**
  * The Calendar Panel of the App.
@@ -22,7 +24,7 @@ public class CalendarPanel {
         calendarPage = new CalendarView();
         calendarPage.getCalendarSources().setAll(calendar);
         configurCalendarPage();
-        //registerAsAnEventHandler(this);
+        EventsCenter.getInstance().registerHandler(this);
     }
 
     /**
@@ -43,11 +45,14 @@ public class CalendarPanel {
 
     }
 
-
+    @Subscribe
+    private void handleCalendarFocusEvent(CalendarFocusEvent event) {
+        calendarPage.showDate(event.dateToLook);
+    }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    private void handleCalendarUnFocusEvent(CalendarUnfocusEvent event) {
+        calendarPage.showMonthPage();
     }
 
     public CalendarView getCalendarPage() {

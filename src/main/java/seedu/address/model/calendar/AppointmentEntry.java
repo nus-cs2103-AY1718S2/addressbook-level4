@@ -1,8 +1,8 @@
-package seedu.address.model.insuranceCalendar;
+package seedu.address.model.calendar;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
@@ -14,13 +14,13 @@ import com.calendarfx.model.Interval;
 
 public class AppointmentEntry {
 
-    public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Dates should be in the format of dd/MM/yyyy";
-    public static final String DATE_VALIDATION = "d/MM/yyyy";
+    public static final String MESSAGE_DATE_TIME_CONSTRAINTS =
+            "Date and Time should be in the format of dd/MM/yyyy HH:mm";
+    public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm";
 
     private final Entry appointmentEntry;
-    private final Interval interval;
-    private final String givenTitle;
+    private Interval interval;
+    private String givenTitle;
 
     public AppointmentEntry(String title, Interval timeSlot) {
         requireAllNonNull(title, timeSlot);
@@ -29,12 +29,19 @@ public class AppointmentEntry {
         givenTitle = title;
     }
 
-    public LocalDate getStartDate() {
-        return interval.getStartDate();
+    public AppointmentEntry(AppointmentEntry clonedEntry) {
+        requireAllNonNull(clonedEntry);
+        appointmentEntry = new Entry(clonedEntry.getGivenTitle(), clonedEntry.getInterval());
+        interval = clonedEntry.getInterval();
+        givenTitle = clonedEntry.getGivenTitle();
     }
 
-    public LocalDate getEndDate() {
-        return interval.getEndDate();
+    public LocalDateTime getStartDateTime() {
+        return interval.getStartDateTime();
+    }
+
+    public LocalDateTime getEndDateTime() {
+        return interval.getEndDateTime();
     }
 
     public Entry getAppointmentEntry() {
@@ -43,6 +50,10 @@ public class AppointmentEntry {
 
     public String getGivenTitle() {
         return givenTitle;
+    }
+
+    public Interval getInterval() {
+        return interval;
     }
 
     @Override
@@ -68,8 +79,6 @@ public class AppointmentEntry {
         }
 
         AppointmentEntry otherAppointment = (AppointmentEntry) other;
-        return otherAppointment.givenTitle.equals(this.getGivenTitle())
-                && otherAppointment.getStartDate().equals(this.getStartDate())
-                && otherAppointment.getEndDate().equals(this.getEndDate());
+        return otherAppointment.givenTitle.equals(this.getGivenTitle());
     }
 }

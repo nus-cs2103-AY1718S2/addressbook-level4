@@ -22,7 +22,7 @@ public class UnCheckToDoCommandSystemTest extends AddressBookSystemTest {
     public void unCheckToDo() throws Exception {
         Model model = getModel();
 
-        /* ----------------- Performing uncheck operation while an unfiltered list is being shown --------------------- */
+        /* ----------------- Performing uncheck operation while an unfiltered list is being shown --------------------*/
 
         /* Case: uncheck the first to-do in the address book, command with leading space and trailing space and multiple
         spaces between each field
@@ -47,7 +47,7 @@ public class UnCheckToDoCommandSystemTest extends AddressBookSystemTest {
                 getModel().getFilteredToDoList().get(INDEX_FIRST_TODO.getZeroBased()), unCheckedToDo);
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* --------------------------------- Performing invalid UnCheckToDo operation --------------------------------- */
+        /* --------------------------------- Performing invalid UnCheckToDo operation --------------------------------*/
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(UnCheckToDoCommand.COMMAND_WORD + " 0",
@@ -100,7 +100,8 @@ public class UnCheckToDoCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandSuccess(command, expectedModel,
-                String.format(UnCheckToDoCommand.MESSAGE_UNCHECK_TODO_SUCCESS, unCheckedToDo), expectedSelectedCardIndex);
+                String.format(
+                        UnCheckToDoCommand.MESSAGE_UNCHECK_TODO_SUCCESS, unCheckedToDo), expectedSelectedCardIndex);
     }
 
     /**

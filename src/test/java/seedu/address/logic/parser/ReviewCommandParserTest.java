@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.ReviewCommand;
 
 public class ReviewCommandParserTest {

@@ -443,6 +443,28 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 ** Cons: Ease of implementation
 // end::deletebefore[]
 
+
+=== Import Contacts from CSV file
+
+==== Current Implementation
+The Import Contacts mechanism allows users to import contacts from a .csv file. The file should contain the headers _Name_, _Email_, _Phone_, and _Address_ with a separate contact in each row. This functionality is implemented in with classes `ImportContactsCommand` and `ImportContactsCommandParser`. Functionality is tested in `ImportContactsCommandTest`, which is in the `seedu.address/logic/parser` (not `commands` folder). The core functionality of the mechanism is in the `executeUndoableCommand` function of the `ImportContactsCommand` class. The mechanism borrows code from _https://github.com/callicoder/java-read-write-csv-file_ for reading the CSV file
+
+image::ImportContactDiagram.png[width="900"]
+
+
+==== Design Consideration
+
+===== Aspect: Implementation of `ImportContactsCommand`
+* **Alternative 1 (current choice):** `ImportContactsCommand`   extends `UndoableCommand` class and calls `model.addPerson`.
+
+* **Alternative 2:** Instead of extending `UndoableCommand` it would be possible to extend `AddCommand` class, and overwrite it to add a while loop to loop over the contacts imported frmo CSV and add them to the model
+
+===== Aspect: Implementation of `ImportContactsCommandParser`
+* **Alternative 1 (current choice):** Parses the argument and creates a new `ImportContactsCommand` passing it a file path if there is any
+
+* **Alternative 2:** Because we know there can only be 1 valid argument, we could check for validity and correctness in the `ImportContactsCommand` class and not impliment a parser
+
+
 == Documentation
 
 We use asciidoc for writing documentation.

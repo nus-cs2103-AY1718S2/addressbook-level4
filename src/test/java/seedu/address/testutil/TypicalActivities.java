@@ -38,12 +38,12 @@ public class TypicalActivities {
             .withEndDateTime("01/04/2018 21:00")
             .withLocation("Campus")
             .withRemark("nil").build();
-    public static final Activity CIP1 = new EventBuilder().withName("CIP")
+    public static final Activity CIP = new EventBuilder().withName("CIP")
             .withStartDateTime("02/04/2018 08:00")
             .withEndDateTime("02/04/2018 12:00")
             .withLocation("michegan ave")
             .withTags("CIP").build();
-    public static final Activity EXAM1 = new EventBuilder().withName("CS2101Exam")
+    public static final Activity EXAM = new EventBuilder().withName("CS2101Exam")
             .withStartDateTime("28/04/2018 09:00")
             .withEndDateTime("28/04/2018 11:00")
             .withLocation("MPSH")
@@ -91,6 +91,6 @@ public class TypicalActivities {
     }
 
     public static List<Activity> getTypicalActivitiess() {
-        return new ArrayList<>(Arrays.asList(ASSIGNMENT1, ASSIGNMENT2, QUIZ, CCA, CIP1, EXAM1, IFG));
+        return new ArrayList<>(Arrays.asList(ASSIGNMENT1, ASSIGNMENT2, QUIZ, CCA, CIP, EXAM, IFG));
     }
 }

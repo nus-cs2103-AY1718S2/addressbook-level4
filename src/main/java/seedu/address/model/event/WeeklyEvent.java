@@ -8,6 +8,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.module.Module;
 import seedu.address.model.module.Schedule;
 
+/**
+ * Events, such as lectures, tutorial slots, to appear in timetable
+ */
 public class WeeklyEvent extends Event {
     private String day;
     private String[] details;

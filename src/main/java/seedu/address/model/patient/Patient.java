@@ -98,6 +98,10 @@ public class Patient {
         return appointments.getPastAppointmentObservableList();
     }
 
+    public ObservableList<Appointment> getUpcomingAppointmentList() {
+        return appointments.getUpcomingAppointmentObservableList();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

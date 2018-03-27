@@ -42,4 +42,15 @@ public class SortCommand extends UndoableCommand {
         }
         return new CommandResult(MESSAGE_SORT_EMPLOYEE_SUCCESS);
     }
+
+    public String getField() {
+        return sortField;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o == this // short circuit if same object
+                || (o instanceof SortCommand // instanceof handles nulls
+                && this.getField().equals(((SortCommand) o).getField())); // state check
+    }
 }

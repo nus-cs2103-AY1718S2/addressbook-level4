@@ -25,6 +25,9 @@ import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.DuplicateEventException;
+import seedu.address.model.event.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -32,70 +35,70 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
-import seedu.address.testutil.ToDoBuilder;
+import seedu.address.testutil.EventBuilder;
 
-public class AddToDoCommandTest {
+public class AddEventCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullToDo_throwsNullPointerException() {
+    public void constructor_nullEvent_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddToDoCommand(null);
+        new AddEventCommand(null);
     }
 
     @Test
-    public void execute_todoAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingToDoAdded modelStub = new ModelStubAcceptingToDoAdded();
-        ToDo validToDo = new ToDoBuilder().build();
+    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
+        Event validEvent = new EventBuilder().build();
 
-        CommandResult commandResult = getAddToDoCommandForToDo(validToDo, modelStub).execute();
+        CommandResult commandResult = getAddEventCommandForEvent(validEvent, modelStub).execute();
 
-        assertEquals(String.format(AddToDoCommand.MESSAGE_SUCCESS, validToDo), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validToDo), modelStub.todosAdded);
+        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
     }
 
     @Test
-    public void execute_duplicateToDo_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateToDoException();
-        ToDo validToDo = new ToDoBuilder().build();
+    public void execute_duplicateEvent_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
+        Event validEvent = new EventBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddToDoCommand.MESSAGE_DUPLICATE_TODO);
+        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 
-        getAddToDoCommandForToDo(validToDo, modelStub).execute();
+        getAddEventCommandForEvent(validEvent, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        ToDo todoA = new ToDoBuilder().withContent("ToDo A").build();
-        ToDo todoB = new ToDoBuilder().withContent("ToDo B").build();
-        AddToDoCommand addToDoACommand = new AddToDoCommand(todoA);
-        AddToDoCommand addToDoBCommand = new AddToDoCommand(todoB);
+        Event f1Race = new EventBuilder().build();
+        Event iLight = new Event("iLight", "Marina Bay", "01/04/2018", "1930", "2359");
+        AddEventCommand addF1Command = new AddEventCommand(f1Race);
+        AddEventCommand addILightCommand = new AddEventCommand(iLight);
 
         // same object -> returns true
-        assertTrue(addToDoACommand.equals(addToDoACommand));
+        assertTrue(addF1Command.equals(addF1Command));
 
         // same values -> returns true
-        AddToDoCommand addToDoACommandCopy = new AddToDoCommand(todoA);
-        assertTrue(addToDoACommand.equals(addToDoACommandCopy));
+        AddEventCommand addF1CommandCopy = new AddEventCommand(f1Race);
+        assertTrue(addF1Command.equals(addF1CommandCopy));
 
         // different types -> returns false
-        assertFalse(addToDoACommand.equals(1));
+        assertFalse(addF1Command.equals(1));
 
         // null -> returns false
-        assertFalse(addToDoACommand.equals(null));
+        assertFalse(addF1Command.equals(null));
 
-        // different to-do -> returns false
-        assertFalse(addToDoACommand.equals(addToDoBCommand));
+        // different event -> returns false
+        assertFalse(addF1Command.equals(addILightCommand));
     }
 
     /**
-     * Generates a new AddToDoCommand with the details of the given to-do.
+     * Generates a new AddEventCommand with the details of the given event.
      */
-    private AddToDoCommand getAddToDoCommandForToDo(ToDo todo, Model model) {
-        AddToDoCommand command = new AddToDoCommand(todo);
+    private AddEventCommand getAddEventCommandForEvent(Event event, Model model) {
+        AddEventCommand command = new AddEventCommand(event);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -123,7 +126,6 @@ public class AddToDoCommandTest {
         public void addGroup(Group group) throws DuplicateGroupException {
             fail("This method should not be called.");
         }
-
         @Override
         public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException {
             fail("This method should not be called.");
@@ -170,12 +172,12 @@ public class AddToDoCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicateToDoException when trying to add a to-do.
+     * A Model stub that always throw a DuplicateEventException when trying to add a event.
      */
-    private class ModelStubThrowingDuplicateToDoException extends ModelStub {
+    private class ModelStubThrowingDuplicateEventException extends ModelStub {
         @Override
-        public void addToDo(ToDo todo) throws DuplicateToDoException {
-            throw new DuplicateToDoException();
+        public void addEvent(Event event) throws DuplicateEventException {
+            throw new DuplicateEventException();
         }
 
         @Override
@@ -185,15 +187,15 @@ public class AddToDoCommandTest {
     }
 
     /**
-     * A Model stub that always accept the to-do being added.
+     * A Model stub that always accept the event being added.
      */
-    private class ModelStubAcceptingToDoAdded extends ModelStub {
-        final ArrayList<ToDo> todosAdded = new ArrayList<>();
+    private class ModelStubAcceptingEventAdded extends ModelStub {
+        final ArrayList<Event> eventsAdded = new ArrayList<>();
 
         @Override
-        public void addToDo(ToDo todo) throws DuplicateToDoException {
-            requireNonNull(todo);
-            todosAdded.add(todo);
+        public void addEvent(Event event) throws DuplicateEventException {
+            requireNonNull(event);
+            eventsAdded.add(event);
         }
 
         @Override
@@ -201,4 +203,5 @@ public class AddToDoCommandTest {
             return new AddressBook();
         }
     }
+
 }

@@ -50,9 +50,11 @@ public class UniqueActivityList implements Iterable<Activity> {
         }
         internalList.add(toAdd);
         //@@jasmoon
-        if(toAdd.getActivityType().equals("TASK"))
+        if (toAdd.getActivityType().equals("TASK")) {
             taskList.add((Task) toAdd);
-        else eventList.add((Event) toAdd);
+        } else {
+            eventList.add((Event) toAdd);
+        }
     }
 
     /**
@@ -66,7 +68,9 @@ public class UniqueActivityList implements Iterable<Activity> {
             throws DuplicateActivityException, ActivityNotFoundException {
         requireNonNull(editedActivity);
 
-        int index = internalList.indexOf(target), taskIndex, eventIndex;
+        int index = internalList.indexOf(target);
+        int taskIndex;
+        int eventIndex;
 
         if (index == -1) {
             throw new ActivityNotFoundException();
@@ -79,7 +83,7 @@ public class UniqueActivityList implements Iterable<Activity> {
         internalList.set(index, editedActivity);
         //@@author jasmoon
 
-        if(editedActivity.getActivityType().equals("TASK")) {
+        if (editedActivity.getActivityType().equals("TASK")) {
             taskIndex = taskList.indexOf(target);
             taskList.set(taskIndex, (Task) editedActivity);
         } else {
@@ -102,9 +106,11 @@ public class UniqueActivityList implements Iterable<Activity> {
         for (final Activity activity : activities) {
             replacement.add(activity);
             //@@author jasmoon
-            if(activity.getActivityType().equals("TASK"))
+            if(activity.getActivityType().equals("TASK")) {
                 replacement.taskList.add((Task) activity);
-            else replacement.eventList.add((Event) activity);
+            } else {
+                replacement.eventList.add((Event) activity);
+            }
         }
         setActivity(replacement);
     }
@@ -121,9 +127,11 @@ public class UniqueActivityList implements Iterable<Activity> {
             throw new ActivityNotFoundException();
             //@@author jasmoon
         } else  {
-            if(toRemove.getActivityType().equals("TASK"))
+            if (toRemove.getActivityType().equals("TASK")) {
                 taskList.remove(toRemove);
-            else    eventList.remove(toRemove);
+            } else {
+                eventList.remove(toRemove);
+            }
         }
         return activityFoundAndDeleted;
     }
@@ -146,7 +154,7 @@ public class UniqueActivityList implements Iterable<Activity> {
     /**
      * @return eventList as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Event> EventListAsObservable() {
+    public ObservableList<Event> eventListAsObservable() {
         return FXCollections.unmodifiableObservableList(eventList);
     }
 

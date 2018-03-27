@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
 import javafx.stage.Stage;
-import seedu.address.logic.login.LoginManager;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.login.LoginWindow;
 
 /**
@@ -19,38 +17,23 @@ public class LoginCommand extends Command {
     public static final String MESSAGE_NOT_LOGGED_IN = "Not logged in!\n%1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Allows user to login to the system "
             + "given the correct username and password.\n"
-            + "Parameters: USERNAME PASSWORD\n"
-            + "Example: " + COMMAND_WORD + " alice password123";
+            + "Example: " + COMMAND_WORD;
 
     public static final String TEST_USERNAME = "alice";
     public static final String TEST_PASSWORD = "password123";
     public static final String FAKE_PASSWORD = "fake_password";
 
-    private final String username;
-    private final String password;
-
-    public LoginCommand(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
         LoginWindow loginWindow = new LoginWindow();
         Stage stage = new Stage();
         loginWindow.start(stage);
-        if (LoginManager.authenticate()) {
-            return new CommandResult(MESSAGE_LOGIN_SUCCESS + username);
-        } else {
-            throw new CommandException(MESSAGE_LOGIN_FAIL);
-        }
+        return new CommandResult("");
     }
 
     @Override
     public boolean equals (Object other) {
         return other == this // short circuit if same object
-                || (other instanceof LoginCommand // instanceof handles nulls
-                && username.equals(((LoginCommand) other).username)
-                && password.equals(((LoginCommand) other).password));
+                || (other instanceof LoginCommand);// instanceof handles nulls
     }
 }

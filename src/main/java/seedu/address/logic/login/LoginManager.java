@@ -68,8 +68,4 @@ public final class LoginManager {
 
         return false;
     }
-
-    public static boolean authenticate() {
-        while ()
-    }
 }

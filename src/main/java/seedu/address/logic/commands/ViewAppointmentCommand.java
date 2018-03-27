@@ -57,4 +57,11 @@ public class ViewAppointmentCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ViewAppointmentCommand
+                && predicate.equals(((ViewAppointmentCommand) other).predicate));
+    }
 }

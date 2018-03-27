@@ -26,10 +26,10 @@ public interface Logic {
 
     //@@author jasmoon
     /** Returns an unmodifiable view of the filtered list of tasks */
-    public ObservableList<Task> getFilteredTaskList();
+    public ObservableList<Activity> getFilteredTaskList();
 
     /** Returns an unmodifiable view of the filtered list of events*/
-    public ObservableList<Event> getFilteredEventList();
+    public ObservableList<Activity> getFilteredEventList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

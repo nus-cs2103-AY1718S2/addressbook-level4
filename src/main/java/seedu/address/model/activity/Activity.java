@@ -15,7 +15,6 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public abstract class Activity {
 
-    private static final String ACTIVITY_TYPE = "BASE TYPE";
 
     private final Name name;
     private final DateTime dateTime;

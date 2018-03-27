@@ -2,7 +2,9 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 
+import seedu.address.logic.commands.CompleteCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.TaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
@@ -26,6 +28,8 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         availableCommands.add("edit");
         availableCommands.add("find");
         availableCommands.add("select");
+        availableCommands.add(TaskCommand.COMMAND_WORD);
+        availableCommands.add(CompleteCommand.COMMAND_WORD);
     }
 
     /**

@@ -169,14 +169,6 @@ public class DeskBoard implements ReadOnlyDeskBoard {
         return activities.internalListAsObservable();
     }
 
-    //@@author jasmoon
-    public ObservableList<Task> getTaskList()   {
-        return activities.taskListAsObservable();
-    }
-
-    public ObservableList<Event> getEventList() {
-        return activities.eventListAsObservable();
-    }
 
     @Override
     public ObservableList<Tag> getTagList() {

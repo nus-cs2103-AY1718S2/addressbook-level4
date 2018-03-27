@@ -134,13 +134,13 @@ public class TaskCommandTest {
 
         //@@author jasmoon
         @Override
-        public ObservableList<Task> getFilteredTaskList()    {
+        public ObservableList<Activity> getFilteredTaskList()    {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public ObservableList<Event> getFilteredEventList() {
+        public ObservableList<Activity> getFilteredEventList() {
             fail("This method should not be called.");
             return null;
         }

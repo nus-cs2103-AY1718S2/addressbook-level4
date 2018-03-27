@@ -6,6 +6,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Helper functions for handling strings.
  */
@@ -37,6 +39,78 @@ public class StringUtil {
             if (wordInSentence.equalsIgnoreCase(preppedWord)) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the {@code sentence} contains the {@code substring}.
+     *   Ignores case and matches the substring.
+     *   <br>examples:<pre>
+     *       containsSubstringIgnoreCase("Tes ting", "e ting") == true
+     *       containsSubstringIgnoreCase("TES ting", "e tin") == true
+     *       containsSubstringIgnoreCase("TeS Ting", "ef") == false //not a substring
+     *       </pre>
+     * @param sentence cannot be null
+     * @param substring cannot be null, cannot be empty
+     */
+    public static boolean containsSubstringIgnoreCase(String sentence, String substring) {
+        requireNonNull(sentence);
+        requireNonNull(substring);
+
+        String preppedSubstring = substring.trim();
+        checkArgument(!preppedSubstring.isEmpty(), "Substring parameter cannot be empty");
+
+        if (StringUtils.containsIgnoreCase(sentence, substring)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the {@code sentence} contains the {@code prefix}.
+     *   Ignores case and matches the prefix.
+     *   <br>examples:<pre>
+     *       containsPrefixIgnoreCase("Tes ting", "tes") == true
+     *       containsPrefixIgnoreCase("TES ting", "TeS") == true
+     *       containsPrefixIgnoreCase("TeS Ting", "ti") == false
+     *       </pre>
+     * @param sentence cannot be null
+     * @param prefix cannot be null, cannot be empty
+     */
+    public static boolean containsPrefixIgnoreCase(String sentence, String prefix) {
+        requireNonNull(sentence);
+        requireNonNull(prefix);
+
+        String preppedPrefix = prefix.trim();
+        checkArgument(!preppedPrefix.isEmpty(), "Prefix parameter cannot be empty");
+
+        if (StringUtils.startsWithIgnoreCase(sentence, prefix)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the {@code sentence} contains the {@code suffix}.
+     *   Ignores case and matches the suffix.
+     *   <br>examples:<pre>
+     *       containsSuffixIgnoreCase("Tes ting", "ing") == true
+     *       containsSuffixIgnoreCase("TES ting", "NG") == true
+     *       containsSuffixIgnoreCase("TeS Ting", "es") == false
+     *       </pre>
+     * @param sentence cannot be null
+     * @param suffix cannot be null, cannot be empty
+     */
+    public static boolean containsSuffixIgnoreCase(String sentence, String suffix) {
+        requireNonNull(sentence);
+        requireNonNull(suffix);
+
+        String preppedSuffix = suffix.trim();
+        checkArgument(!preppedSuffix.isEmpty(), "Suffix parameter cannot be empty");
+
+        if (StringUtils.endsWithIgnoreCase(sentence, suffix)) {
+            return true;
         }
         return false;
     }

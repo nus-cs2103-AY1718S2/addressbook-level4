@@ -47,9 +47,6 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private MenuItem helpMenuItem;
-
-    @FXML
     private MenuItem exitMenuItem;
 
     @FXML
@@ -72,6 +69,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private MenuItem populateFindMenuItem;
+
+    @FXML
+    private MenuItem helpMenuItem;
 
     @FXML
     private StackPane personListPanelPlaceholder;

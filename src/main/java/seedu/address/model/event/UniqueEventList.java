@@ -70,7 +70,7 @@ public class UniqueEventList implements Iterable<Event> {
      *
      * @throws EventNotFoundException if no such event could be found in the list.
      */
-    public boolean remove(Event toRemove) throws EventNotFoundException {
+    public boolean removeEvent(Event toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
         final boolean eventFoundAndDeleted = internalList.remove(toRemove);
         if (!eventFoundAndDeleted) {

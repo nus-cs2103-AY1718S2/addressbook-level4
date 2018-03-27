@@ -29,6 +29,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.todo.ToDo;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -59,6 +60,10 @@ public class AddressBookTest {
         AddressBook newData = getTypicalAddressBook();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
+
+        AddressBook newData2 = (AddressBook) SampleDataUtil.getSampleAddressBook();
+        addressBook.resetData(newData2);
+        assertEquals(newData2, addressBook);
     }
 
     @Test

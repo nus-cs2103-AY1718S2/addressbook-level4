@@ -64,17 +64,32 @@ public class XmlAdaptedEvent {
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Name"));
         }
+        if (!Event.isValidName(this.name)) {
+            throw new IllegalValueException(Event.MESSAGE_NAME_CONSTRAINTS);
+        }
         if (this.venue == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Venue"));
+        }
+        if (!Event.isValidName(this.venue)) {
+            throw new IllegalValueException(Event.MESSAGE_VENUE_CONSTRAINTS);
         }
         if (this.date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Date"));
         }
+        if (!Event.isValidDate(this.date)) {
+            throw new IllegalValueException(Event.MESSAGE_DATE_CONSTRAINTS);
+        }
         if (this.startTime == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "StartTime"));
         }
+        if (!Event.isValidTime(this.startTime)) {
+            throw new IllegalValueException(Event.MESSAGE_TIME_CONSTRAINTS);
+        }
         if (this.endTime == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "EndTime"));
+        }
+        if (!Event.isValidTime(this.endTime)) {
+            throw new IllegalValueException(Event.MESSAGE_TIME_CONSTRAINTS);
         }
 
         return new Event(name, venue, date, startTime, endTime);

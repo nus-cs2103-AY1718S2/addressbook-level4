@@ -62,12 +62,11 @@ public class EventTest {
         Event f1Race1 = new EventBuilder().build();
         Event f1Race2 = new EventBuilder().withName(VALID_EVENT_NAME_F1).withDate(VALID_EVENT_DATE_F1)
                 .withStartTime(VALID_EVENT_START_TIME_F1).withEndTime(VALID_EVENT_END_TIME_F1).build();
-        Event ndp = new EventBuilder().withName(VALID_EVENT_NAME_NDP).withDate(VALID_EVENT_DATE_NDP)
-                .withStartTime(VALID_EVENT_START_TIME_NDP).withEndTime(VALID_EVENT_END_TIME_NDP).build();
 
         assertTrue(f1Race1.equals(f1Race1));
+        assertFalse(f1Race1.equals(1));
         assertTrue(f1Race1.equals(f1Race2));
-        assertFalse(f1Race1.equals(ndp));
+        assertFalse(f1Race1.equals(new Event()));
     }
 
     @Test
@@ -75,11 +74,9 @@ public class EventTest {
         Event f1Race1 = new EventBuilder().build();
         Event f1Race2 = new EventBuilder().withName(VALID_EVENT_NAME_F1).withDate(VALID_EVENT_DATE_F1)
                 .withStartTime(VALID_EVENT_START_TIME_F1).withEndTime(VALID_EVENT_END_TIME_F1).build();
-        Event ndp = new EventBuilder().withName(VALID_EVENT_NAME_NDP).withDate(VALID_EVENT_DATE_NDP)
-                .withStartTime(VALID_EVENT_START_TIME_NDP).withEndTime(VALID_EVENT_END_TIME_NDP).build();
 
         assertTrue(f1Race1.toString().equals(f1Race1.toString()));
         assertTrue(f1Race1.toString().equals(f1Race2.toString()));
-        assertFalse(f1Race1.toString().equals(ndp.toString()));
+        assertFalse(f1Race1.toString().equals(new Event().toString()));
     }
 }

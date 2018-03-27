@@ -23,10 +23,10 @@ public class Event {
     public static final String TIME_VALIDATION_REGEX = "^(0[0-9]|1[0-9]|2[0-4])[0-5][0-9]";
 
     protected String name;
-    private String venue;
-    private String date;
-    private String startTime;
-    private String endTime;
+    protected String venue;
+    protected String date;
+    protected String startTime;
+    protected String endTime;
 
     /**
      * Default constructor, creating a blank Event.

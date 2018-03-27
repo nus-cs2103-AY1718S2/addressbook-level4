@@ -7,10 +7,10 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.model.Password;
 
 /**
- * JAXB-friendly version of the Person.
+ * JAXB-friendly version of the Password.
  */
 public class XmlAdaptedPassword {
-    
+
     @XmlElement(required = true)
     private byte[] currPassword;
 

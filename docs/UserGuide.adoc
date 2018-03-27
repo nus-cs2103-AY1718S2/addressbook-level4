@@ -197,6 +197,18 @@ Examples:
 
 * `edit_appointment ST/meet James n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
 
+=== Look At a Date: `look`
+
+look at a specific date, the Calendar GUI will focus on the date +
+Format: `look DF/18/03/2018`
+
+[TIP]
+Note that the date format must be in d/MM/yyyy
+
+Examples:
+
+* `look DF/11/09/2018`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -284,10 +296,6 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
-=== update existing appointment `[coming in v2.0]`
-the user is allowed to use command line to update an existing appointment by specifying the old appointment title and interval
-then the new appointment title and interval
-
 === add task to task pad`[coming in v2.0]`
 the user is allowed to use command line to add a task to the task pad GUI  specifying the task title , task details
 
@@ -317,6 +325,8 @@ e.g. `add_appointment n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
 e.g. `remove_appointment ST/Title of the appointment`
 * *Edit Appointment* `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE E/NEW End Date` +
 e.g. `edit_appointment ST/meet John n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
+* *Look At a Date* `look DF/DATE TO LOOK` +
+e.g. `look DF/18/03/2018`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

@@ -46,7 +46,7 @@ public class InfoPanel extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        birthdayList = new BirthdayList(null);
+        birthdayList = new BirthdayList();
         birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
     }
 
@@ -64,7 +64,8 @@ public class InfoPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         birthdayPlaceholder.getChildren().removeAll();
-        birthdayList = new BirthdayList(event.getBirthdayList());
+        birthdayList = new BirthdayList();
+        birthdayList.loadList(event.getBirthdayList());
         birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         birthdayPlaceholder.toFront();
     }

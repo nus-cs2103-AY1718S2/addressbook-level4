@@ -15,7 +15,8 @@ import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 import seedu.address.model.person.Person;
 
 /**
- * A ui for the status bar that is displayed at the header of the application.
+ * A ui for the notification dialog that is displayed at the start of the application and
+ * after `birthdays today` is called.
  */
 public class BirthdayNotification extends UiPart<Region> {
 
@@ -23,59 +24,9 @@ public class BirthdayNotification extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private final LocalDate currentDate;
-    private final int currentDay;
-    private final int currentMonth;
-    private final int currentYear;
-
     public BirthdayNotification() {
         super(FXML);
         registerAsAnEventHandler(this);
-
-        currentDate = LocalDate.now();
-        currentDay = currentDate.getDayOfMonth();
-        currentMonth = currentDate.getMonthValue();
-        currentYear = currentDate.getYear();
-    }
-
-    /**
-     * Helper method to parse the given list into their respective birthdays into a sorted string
-     * @param observablelist given list of current addressBook
-     * @return String to be displayed
-     */
-    private String parseBirthdaysFromObservableList(ObservableList<Person> observablelist) {
-        StringBuilder string = new StringBuilder();
-        List<Person> listOfPersonWithBirthdayToday = new ArrayList<Person>();
-
-        if (observablelist == null) {
-            return " ";
-        }
-        else if (observablelist.size() <= 0){
-            string.append("StardyTogether has no contacts :(\n");
-            return string.toString();
-        }
-
-        for (Person person: observablelist) {
-            if (person.getBirthday().getDay() == this.currentDay && person.getBirthday().getMonth() == this.currentMonth)
-                listOfPersonWithBirthdayToday.add(person);
-        }
-
-        for (Person person: listOfPersonWithBirthdayToday) {
-            int age;
-            age = currentYear - person.getBirthday().getYear();
-            string.append(person.getName().toString());
-            string.append(" (");
-            string.append(age);
-            if (age != 1) {
-                string.append(" years old)");
-            }
-            else if (age > 0){
-                string.append(" years old)");
-            }
-            string.append("\n");
-        }
-
-        return string.toString();
     }
 
     @Subscribe
@@ -86,8 +37,8 @@ public class BirthdayNotification extends UiPart<Region> {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
         alert.setTitle("Birthdays today");
-        alert.setHeaderText("It's their birthdays today (" + dtf.format(currentDate) + ")\n");
-        alert.setContentText(parseBirthdaysFromObservableList(event.getBirthdayList()));
+        alert.setHeaderText("It's their birthdays today (" + dtf.format(event.getCurrentDate()) + ")\n");
+        alert.setContentText(event.getBirthdayList());
         alert.showAndWait();
     }
 }

@@ -1,6 +1,7 @@
 package seedu.address;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -22,6 +23,7 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -253,7 +255,10 @@ public class MainApp extends Application {
     }
 
     private void autoOpenBirthdayNotification(){
+        LocalDate currentDate = LocalDate.now();
+
         if (model != null)
-            EventsCenter.getInstance().post(new BirthdayNotificationEvent(model.getAddressBook().getPersonList()));
+            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand.
+                    parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate),currentDate));
     }
 }

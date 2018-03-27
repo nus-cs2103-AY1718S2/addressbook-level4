@@ -4,15 +4,19 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
+import java.time.LocalDate;
+
 /**
  * Represents a selection change in the Person List Panel
  */
 public class BirthdayNotificationEvent extends BaseEvent {
 
-    private final ObservableList<Person> birthdayList;
+    private final String birthdayList;
+    private final LocalDate currentDate;
 
-    public BirthdayNotificationEvent(ObservableList<Person> newList) {
+    public BirthdayNotificationEvent(String newList, LocalDate today) {
         this.birthdayList = newList;
+        this.currentDate = today;
     }
 
     @Override
@@ -20,7 +24,9 @@ public class BirthdayNotificationEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public ObservableList<Person> getBirthdayList() {
+    public String getBirthdayList() {
         return birthdayList;
     }
+
+    public LocalDate getCurrentDate() { return currentDate; }
 }

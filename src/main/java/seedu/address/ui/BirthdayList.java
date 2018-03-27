@@ -22,61 +22,17 @@ public class BirthdayList extends UiPart<Region> {
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
-
     @FXML
     private TextArea birthdayList;
 
-    public BirthdayList(ObservableList<Person> list) {
+    public BirthdayList() {
         super(FXML);
         birthdayList.textProperty().bind(displayed);
-        Platform.runLater(() -> displayed.setValue(parseBirthdaysFromObservableList(list)));
     }
 
-    /**
-     * Helper method to parse the given list into their respective birthdays into a sorted string
-     * @param observablelist given list of current addressBook
-     * @return String to be displayed
-     */
-    private String parseBirthdaysFromObservableList(ObservableList<Person> observablelist) {
-        StringBuilder string = new StringBuilder();
-        List<Person> list = new ArrayList<Person>();
-
-        if (observablelist == null) {
-            return "Hello World";
-        }
-
-        for (Person person: observablelist) {
-            list.add(person);
-        }
-
-        list.sort(new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-
-                int o1Days = o1.getBirthday().getDay();
-                int o1Month = o1.getBirthday().getMonth();
-                int o2Days = o2.getBirthday().getDay();
-                int o2Month = o2.getBirthday().getMonth();
-
-                if (o1Month != o2Month) {
-                    return o1Month - o2Month;
-                }
-
-                return o1Days - o2Days;
-            }
-        });
-
-        for (Person person: list) {
-            string.append(person.getBirthday().getDay());
-            string.append("/");
-            string.append(person.getBirthday().getMonth());
-            string.append("/");
-            string.append(person.getBirthday().getYear());
-            string.append(" ");
-            string.append(person.getName().toString());
-            string.append("\n");
-        }
-
-        return string.toString();
+    public void loadList(String list){
+        Platform.runLater(() -> displayed.setValue(list));
     }
+
+
 }

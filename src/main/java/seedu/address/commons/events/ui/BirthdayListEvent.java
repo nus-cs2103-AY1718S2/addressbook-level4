@@ -9,9 +9,9 @@ import seedu.address.model.person.Person;
  */
 public class BirthdayListEvent extends BaseEvent {
 
-    private final ObservableList<Person> birthdayList;
+    private final String birthdayList;
 
-    public BirthdayListEvent(ObservableList<Person> newList) {
+    public BirthdayListEvent(String newList) {
         this.birthdayList = newList;
     }
 
@@ -20,7 +20,7 @@ public class BirthdayListEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public ObservableList<Person> getBirthdayList() {
+    public String getBirthdayList() {
         return birthdayList;
     }
 }

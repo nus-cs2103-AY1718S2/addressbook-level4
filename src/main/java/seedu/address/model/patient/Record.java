@@ -115,7 +115,8 @@ public class Record {
     }
 
     /**
-     * Returns the string that is equivalent to the command that created this class.
+     * The is an outdated method that was utilised when there was only 1 record per patient.
+     * It returns the string that is equivalent to the command that created this class.
      */
     public String toCommandString() {
         final StringBuilder builder = new StringBuilder();

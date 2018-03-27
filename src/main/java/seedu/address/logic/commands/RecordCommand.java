@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -28,14 +29,16 @@ public class RecordCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits the medical record of a patient in the address book. "
-            + "Parameters: "
-            + PREFIX_DATE + "DATE "
-            + PREFIX_SYMPTOM + "SYMPTOM "
-            + PREFIX_ILLNESS + "ILLNESS "
-            + PREFIX_TREATMENT + "TREATMENT "
+            + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_INDEX + "INDEX] "
+            + "[" + PREFIX_DATE + "DATE] "
+            + "[" + PREFIX_SYMPTOM + "SYMPTOM] "
+            + "[" + PREFIX_ILLNESS + "ILLNESS] "
+            + "[" + PREFIX_TREATMENT + "TREATMENT] "
             + "\n"
             + "Example: " + COMMAND_WORD + " "
             + "1 "
+            + PREFIX_INDEX + "1 "
             + PREFIX_DATE + "1st March 2018 "
             + PREFIX_SYMPTOM + "Headache, runny nose "
             + PREFIX_ILLNESS + "Flu "

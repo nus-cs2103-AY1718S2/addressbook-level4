@@ -239,17 +239,43 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Add To Do List: `AddToDo`
+=== Adding a to-do: `addToDo` `v1.2`
 
-Creates a todo list named `KEYWORD` +
+Adds a to-do to the address book +
 Alias: `aTD` +
-Format: `aTD KEYWORD[KEYWORDS]`
+Format: `addToDo CONTENT`
 
-[NOTE]
-====
-Keyword cannot be an empty input.
-====
-// end:AttToDo[]
+[TIP]
+A to-do should not have an empty content
+
+Examples:
+
+* `addToDo Do homework before next Wednesday`
+* `aTD Swim like a fish`
+
+=== Check a to-do as done: `check` `v1.3`
+
+Checks a to-do in the address book as done +
+Format: `check INDEX`
+
+[TIP]
+INDEX should not be 0 or larger then the size of the to-do list
+
+Examples:
+
+* `check 1`
+
+=== Uncheck a to-do as undone: `uncheck` `v1.3`
+
+Unchecks a to-do in the address book as undone +
+Format: `uncheck INDEX`
+
+[TIP]
+INDEX should not be 0 or larger then the size of the to-do list
+
+Examples:
+
+* `uncheck 1`
 
 === List Group Members: `ListGroupMembers`
 

@@ -118,9 +118,14 @@ public class CommandTestUtil {
     public static final String VALID_CONTENT = "Something to do";
     public static final String INVALID_CONTENT = "Something to do&"; // '&' not allowed in contents
 
+    public static final String VALID_STATUS_DONE = "done";
+    public static final String VALID_STATUS_UNDONE = "undone";
+    public static final String INVALID_STATUS = "invalid status";
+
     public static final String INFORMATION_A = "Group A";
     public static final String VALID_INFORMATION = "GROUP A";
     public static final String INVALID_INFORMATION = "Group! A"; //'!' not supported in information
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)

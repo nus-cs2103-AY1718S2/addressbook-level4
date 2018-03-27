@@ -23,6 +23,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
+import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -33,6 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<ToDo> filteredToDos;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredToDos = new FilteredList<>(this.addressBook.getToDoList());
     }
 
     public ModelManager() {
@@ -107,6 +110,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireAllNonNull(target, editedToDo);
+
+        addressBook.updateToDo(target, editedToDo);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addGroup(Group group) throws DuplicateGroupException {
         addressBook.addGroup(group);
         indicateAddressBookChanged();
@@ -135,6 +147,23 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered ToDo List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ToDo} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ToDo> getFilteredToDoList() {
+        return FXCollections.unmodifiableObservableList(filteredToDos);
+    }
+
+    @Override
+    public void updateFilteredToDoList(Predicate<ToDo> predicate) {
+        requireNonNull(predicate);
+        filteredToDos.setPredicate(predicate);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -152,5 +181,4 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 }

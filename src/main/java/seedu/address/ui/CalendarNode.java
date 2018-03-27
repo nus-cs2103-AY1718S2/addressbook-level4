@@ -32,4 +32,3 @@ public class CalendarNode extends AnchorPane {
         this.date = date;
     }
 }
-

@@ -14,6 +14,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Task;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -24,6 +25,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     @XmlElement
     private List<XmlAdaptedPerson> persons;
     @XmlElement
+    private List<XmlAdaptedTask> tasks;
+    @XmlElement
     private List<XmlAdaptedTag> tags;
 
     /**
@@ -33,6 +36,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
     /**
@@ -41,6 +45,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+        tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -58,6 +63,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
+        for (XmlAdaptedTask ta : tasks) {
+            addressBook.addTask(ta.toModelType());
+        }
         return addressBook;
     }
 
@@ -72,7 +80,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && tasks.equals(otherAb.tasks);
     }
 
     @Override
@@ -85,6 +93,18 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(persons);
+    }
+
+    @Override
+    public ObservableList<Task> getTaskList() {
+        final ObservableList<Task> tasks = this.tasks.stream().map(p -> {
+            try {
+                return p.toModelType();
+            } catch (IllegalValueException e) {
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(tasks);
     }
 
     @Override

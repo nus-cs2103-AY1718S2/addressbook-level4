@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
+import static seedu.address.testutil.TypicalEvents.F1RACE;
 import static seedu.address.testutil.TypicalGroups.GROUP_A;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -23,10 +24,12 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.todo.ToDo;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -57,6 +60,10 @@ public class AddressBookTest {
         AddressBook newData = getTypicalAddressBook();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
+
+        AddressBook newData2 = (AddressBook) SampleDataUtil.getSampleAddressBook();
+        addressBook.resetData(newData2);
+        assertEquals(newData2, addressBook);
     }
 
     @Test
@@ -66,7 +73,8 @@ public class AddressBookTest {
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<ToDo> newToDos = Arrays.asList(TODO_A);
         List<Group> newGroups = Arrays.asList(GROUP_A);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups);
+        List<Event> newEvents = Arrays.asList(F1RACE);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups, newEvents);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -79,7 +87,8 @@ public class AddressBookTest {
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<ToDo> newToDos = Arrays.asList(TODO_A, TODO_A);
         List<Group> newGroups = Arrays.asList(GROUP_A);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups);
+        List<Event> newEvents = Arrays.asList(F1RACE);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups, newEvents);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -92,7 +101,8 @@ public class AddressBookTest {
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<ToDo> newToDos = Arrays.asList(TODO_A);
         List<Group> newGroups = Arrays.asList(GROUP_A, GROUP_A);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups);
+        List<Event> newEvents = Arrays.asList(F1RACE);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups, newEvents);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -145,13 +155,15 @@ public class AddressBookTest {
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ToDo> todos = FXCollections.observableArrayList();
         private final ObservableList<Group> groups = FXCollections.observableArrayList();
+        private final ObservableList<Event> events = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
-                        Collection<ToDo> todos, Collection<Group> groups) {
+                        Collection<ToDo> todos, Collection<Group> groups, Collection<Event> events) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.todos.setAll(todos);
             this.groups.setAll(groups);
+            this.events.setAll(events);
         }
 
         @Override
@@ -173,6 +185,10 @@ public class AddressBookTest {
         public ObservableList<Group> getGroupList() {
             return groups;
         }
-    }
 
+        @Override
+        public ObservableList<Event> getEventList() {
+            return events;
+        }
+    }
 }

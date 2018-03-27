@@ -52,4 +52,22 @@ public class ScheduleTest {
         Assert.assertEquals("LT17", test.getVenue());
     }
 
+    @Test
+    public void equals_test() {
+        Assert.assertTrue(test.equals(test));
+        Assert.assertTrue(testBlank.equals(new Schedule()));
+        Assert.assertTrue(test.equals(new Schedule("1", "Lecture", "EVERY WEEK", "MONDAY",
+                "0000", "2359", "LT17")));
+        Assert.assertFalse(test.equals(1));
+        Assert.assertFalse(test.equals(testBlank));
+    }
+
+    @Test
+    public void toString_test() {
+        Assert.assertNotEquals(testBlank.toString(), test.toString());
+        String expectedString = "ClassNo: 1\nLessonType: Lecture\nWeekText: EVERY WEEK"
+                + "\nDayText: MONDAY\nStartTime: 0000\nEndTime: 2359\n";
+        Assert.assertEquals(test.toString(), expectedString);
+    }
+
 }

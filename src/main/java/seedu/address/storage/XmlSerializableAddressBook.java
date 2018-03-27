@@ -25,6 +25,8 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedToDo> todos;
     @XmlElement
     private List<XmlAdaptedGroup> groups;
+    @XmlElement
+    private List<XmlAdaptedEvent> events;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -35,6 +37,7 @@ public class XmlSerializableAddressBook {
         tags = new ArrayList<>();
         todos = new ArrayList<>();
         groups = new ArrayList<>();
+        events = new ArrayList<>();
     }
 
     /**
@@ -46,6 +49,7 @@ public class XmlSerializableAddressBook {
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         todos.addAll(src.getToDoList().stream().map(XmlAdaptedToDo::new).collect(Collectors.toList()));
         groups.addAll(src.getGroupList().stream().map(XmlAdaptedGroup::new).collect(Collectors.toList()));
+        events.addAll(src.getEventList().stream().map(XmlAdaptedEvent::new).collect(Collectors.toList()));
     }
 
     /**
@@ -68,6 +72,9 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedGroup group : groups) {
             addressBook.addGroup(group.toModelType());
         }
+        for (XmlAdaptedEvent event : events) {
+            addressBook.addEvent(event.toModelType());
+        }
         return addressBook;
     }
 
@@ -83,6 +90,6 @@ public class XmlSerializableAddressBook {
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
         return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && todos.equals(otherAb.todos)
-                && groups.equals(otherAb.groups);
+                && groups.equals(otherAb.groups) && events.equals(otherAb.events);
     }
 }

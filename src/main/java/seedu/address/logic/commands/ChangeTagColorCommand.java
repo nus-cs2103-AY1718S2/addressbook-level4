@@ -45,9 +45,6 @@ public class ChangeTagColorCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        if (!Tag.isValidTagColor(tagColor)) {
-            throw new AssertionError("Tag color is not defined");
-        }
         try {
             model.updateTag(tagToEdit, editedTag);
         } catch (TagNotFoundException tnfe) {

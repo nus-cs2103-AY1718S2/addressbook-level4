@@ -32,70 +32,71 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
-import seedu.address.testutil.GroupBuilder;
+import seedu.address.model.todo.exceptions.ToDoNotFoundException;
+import seedu.address.testutil.EventBuilder;
 
-public class AddGroupCommandTest {
+public class AddEventCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullGroup_throwsNullPointerException() {
+    public void constructor_nullEvent_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddGroupCommand(null);
+        new AddEventCommand(null);
     }
 
     @Test
-    public void execute_groupAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingGroupAdded modelStub = new ModelStubAcceptingGroupAdded();
-        Group validGroup = new GroupBuilder().build();
+    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
+        Event validEvent = new EventBuilder().build();
 
-        CommandResult commandResult = getAddGroupCommandForGroup(validGroup, modelStub).execute();
+        CommandResult commandResult = getAddEventCommandForEvent(validEvent, modelStub).execute();
 
-        assertEquals(String.format(AddGroupCommand.MESSAGE_SUCCESS, validGroup), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validGroup), modelStub.groupsAdded);
+        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
     }
 
     @Test
-    public void execute_duplicateGroup_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateGroupException();
-        Group validGroup = new GroupBuilder().build();
+    public void execute_duplicateEvent_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
+        Event validEvent = new EventBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddGroupCommand.MESSAGE_DUPLICATE_GROUP);
+        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 
-        getAddGroupCommandForGroup(validGroup, modelStub).execute();
+        getAddEventCommandForEvent(validEvent, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Group groupA = new GroupBuilder().withInformation("Group A").build();
-        Group groupB = new GroupBuilder().withInformation("Group B").build();
-        AddGroupCommand addGroupACommand = new AddGroupCommand(groupA);
-        AddGroupCommand addGroupBCommand = new AddGroupCommand(groupB);
+        Event f1Race = new EventBuilder().build();
+        Event iLight = new Event("iLight", "Marina Bay", "01/04/2018", "1930", "2359");
+        AddEventCommand addF1Command = new AddEventCommand(f1Race);
+        AddEventCommand addILightCommand = new AddEventCommand(iLight);
 
         // same object -> returns true
-        assertTrue(addGroupACommand.equals(addGroupACommand));
+        assertTrue(addF1Command.equals(addF1Command));
 
         // same values -> returns true
-        AddGroupCommand addGroupACommandCopy = new AddGroupCommand(groupA);
-        assertTrue(addGroupACommand.equals(addGroupACommandCopy));
+        AddEventCommand addF1CommandCopy = new AddEventCommand(f1Race);
+        assertTrue(addF1Command.equals(addF1CommandCopy));
 
         // different types -> returns false
-        assertFalse(addGroupACommand.equals(1));
+        assertFalse(addF1Command.equals(1));
 
         // null -> returns false
-        assertFalse(addGroupACommand.equals(null));
+        assertFalse(addF1Command.equals(null));
 
-        // different group -> returns false
-        assertFalse(addGroupACommand.equals(addGroupBCommand));
+        // different event -> returns false
+        assertFalse(addF1Command.equals(addILightCommand));
     }
 
     /**
-     * Generates a new AddGroupCommand with the details of the given group.
+     * Generates a new AddEventCommand with the details of the given event.
      */
-    private AddGroupCommand getAddGroupCommandForGroup(Group group, Model model) {
-        AddGroupCommand command = new AddGroupCommand(group);
+    private AddEventCommand getAddEventCommandForEvent(Event event, Model model) {
+        AddEventCommand command = new AddEventCommand(event);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -115,7 +116,7 @@ public class AddGroupCommandTest {
         }
 
         @Override
-        public void addToDo(ToDo todos) throws DuplicateToDoException {
+        public void addToDo(ToDo todo) throws DuplicateToDoException {
             fail("This method should not be called.");
         }
 
@@ -123,7 +124,6 @@ public class AddGroupCommandTest {
         public void addGroup(Group group) throws DuplicateGroupException {
             fail("This method should not be called.");
         }
-
         @Override
         public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException {
             fail("This method should not be called.");
@@ -158,8 +158,7 @@ public class AddGroupCommandTest {
         }
 
         @Override
-        public void updateToDo(ToDo target, ToDo editedToDo)
-                throws DuplicateToDoException {
+        public void updateToDo(ToDo target, ToDo editedToDo) throws DuplicateToDoException, ToDoNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -180,19 +179,19 @@ public class AddGroupCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
         public void updateFilteredToDoList(Predicate<ToDo> predicate) {
             fail("This method should not be called.");
         }
-
     }
 
     /**
-     * A Model stub that always throw a DuplicateGroupException when trying to add a group.
+     * A Model stub that always throw a DuplicateEventException when trying to add a event.
      */
-    private class ModelStubThrowingDuplicateGroupException extends ModelStub {
+    private class ModelStubThrowingDuplicateEventException extends ModelStub {
         @Override
-        public void addGroup(Group group) throws DuplicateGroupException {
-            throw new DuplicateGroupException();
+        public void addEvent(Event event) throws DuplicateEventException {
+            throw new DuplicateEventException();
         }
 
         @Override
@@ -202,15 +201,15 @@ public class AddGroupCommandTest {
     }
 
     /**
-     * A Model stub that always accept the group being added.
+     * A Model stub that always accept the event being added.
      */
-    private class ModelStubAcceptingGroupAdded extends ModelStub {
-        final ArrayList<Group> groupsAdded = new ArrayList<>();
+    private class ModelStubAcceptingEventAdded extends ModelStub {
+        final ArrayList<Event> eventsAdded = new ArrayList<>();
 
         @Override
-        public void addGroup(Group group) throws DuplicateGroupException {
-            requireNonNull(group);
-            groupsAdded.add(group);
+        public void addEvent(Event event) throws DuplicateEventException {
+            requireNonNull(event);
+            eventsAdded.add(event);
         }
 
         @Override
@@ -218,4 +217,5 @@ public class AddGroupCommandTest {
             return new AddressBook();
         }
     }
+
 }

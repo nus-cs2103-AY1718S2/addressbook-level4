@@ -1,5 +1,6 @@
 package seedu.recipe.ui;
 
+import java.io.File;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -45,16 +46,15 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(recipe.getUrl().toString());
     }
 
-
+    //@@author RyanAngJY
     private void loadLocalRecipe(Recipe recipe) {
-        browser.getEngine().loadContent(recipe.getName().toString());
+        URL defaultPage2 = MainApp.class.getResource(FXML_FILE_FOLDER + "MusicPlayer.jpg");
+        System.out.println(defaultPage2.toExternalForm());
+        String testURL = "file:/Users/administrator/Desktop/NotePad.jpg";
+        browser.getEngine().loadContent("<img src='" + testURL + "' width=300px/>" );
+        // browser.getEngine().loadContent("<strong>" + recipe.getName().toString() + "</strong>");
     }
-    
-//    private void loadLocalPage(String url) {
-//        URL url2 = getClass().getResource(FXML_FILE_FOLDER
-//                + "DummySearchPage.html/?name=chicken");
-//        loadPage(url2.toExternalForm());
-//    }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

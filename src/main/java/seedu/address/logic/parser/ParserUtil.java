@@ -10,7 +10,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+<<<<<<< HEAD
 import seedu.address.model.alias.Alias;
+=======
+import seedu.address.model.building.Building;
+>>>>>>> efea98c3aae202f996158a25db5ca7474bfc132a
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -205,5 +209,20 @@ public class ParserUtil {
 
         }
         return new Alias(command, alias);
+    }
+
+    /**
+     * Parses a {@code String tag} into a {@code Tag}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code tag} is invalid.
+     */
+    public static Building parseBuilding(String building) throws IllegalValueException {
+        requireNonNull(building);
+        String trimmedBuilding = building.trim();
+        if (!Building.isValidBuilding(trimmedBuilding)) {
+            throw new IllegalValueException(Building.MESSAGE_BUILDING_CONSTRAINTS);
+        }
+        return new Building(trimmedBuilding);
     }
 }

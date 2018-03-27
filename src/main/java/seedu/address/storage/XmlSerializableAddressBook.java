@@ -23,6 +23,8 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedTag> tags;
     @XmlElement
     private List<XmlAdaptedAlias> aliases;
+    @XmlElement
+    private XmlAdaptedPassword password;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -32,6 +34,7 @@ public class XmlSerializableAddressBook {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         aliases = new ArrayList<>();
+        password = new XmlAdaptedPassword();
     }
 
     /**
@@ -42,6 +45,7 @@ public class XmlSerializableAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         aliases.addAll(src.getAliasList().stream().map(XmlAdaptedAlias::new).collect(Collectors.toList()));
+        password = new XmlAdaptedPassword(src.getPassword());
     }
 
     /**
@@ -61,6 +65,7 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedAlias a : aliases) {
             addressBook.addAlias(a.toModelType());
         }
+        addressBook.updatePassword(password.toModelType());
         return addressBook;
     }
 

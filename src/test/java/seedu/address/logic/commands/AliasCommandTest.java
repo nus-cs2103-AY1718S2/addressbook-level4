@@ -9,7 +9,6 @@ import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND;
 import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
-//import static seedu.address.logic.parser.CommandParserTestUtil.assertParseAliasWord;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import java.io.IOException;
@@ -32,6 +31,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.AliasNotFoundException;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -181,13 +183,29 @@ public class AliasCommandTest {
         }
 
         @Override
-        public void importAddressBook(String filepath) throws DataConversionException, IOException {
+        public void updatePassword(byte[] password)  {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeAlias(String toRemove) throws AliasNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException {
             fail("This method should not be called.");
         }
 
         @Override
         public void addAlias(Alias alias) throws DuplicateAliasException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
+            fail("This method should not be called.");
+            return null;
         }
     }
 

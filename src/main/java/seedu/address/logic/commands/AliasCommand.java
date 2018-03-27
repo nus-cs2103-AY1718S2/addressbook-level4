@@ -36,7 +36,7 @@ public class AliasCommand extends UndoableCommand {
             UndoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD, ImportCommand.COMMAND_WORD);
 
     /**
-     * Creates an AliasCommand to add the specified {@code Person}
+     * Creates an AliasCommand to add the specified {@code Alias}
      */
     public AliasCommand(Alias alias) {
         requireNonNull(alias);

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -14,8 +15,12 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -52,6 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
+        addressBook.updatePassword(newData.getPassword());
         indicateAddressBookChanged();
     }
 
@@ -85,11 +91,33 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
+        if (!Building.isValidBuilding(building)) {
+            throw new BuildingNotFoundException();
+        }
+        return building.getAllRoomsSchedule();
+    }
+
+    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updatePassword(byte[] password) {
+        requireAllNonNull(password);
+
+        addressBook.updatePassword(password);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeAlias(String toRemove) throws AliasNotFoundException {
+        addressBook.removeAlias(toRemove);
         indicateAddressBookChanged();
     }
 
@@ -103,10 +131,13 @@ public class ModelManager extends ComponentManager implements Model {
      * @param filepath
      */
     @Override
-    public void importAddressBook(String filepath) throws DataConversionException, IOException {
+    public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
+                                                                            WrongPasswordException {
         requireNonNull(filepath);
-        XmlAddressBookStorage importedAddressBook = new XmlAddressBookStorage(filepath);
-        importedAddressBook.importAddressBook(filepath, this.addressBook);
+        requireNonNull(password);
+
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.importAddressBook(filepath, this.addressBook, password);
         indicateAddressBookChanged();
     }
 

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -18,9 +19,12 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.VacantCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.UniqueAliasList;
 
@@ -49,10 +53,9 @@ public class AddressBookParser {
 
         String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        UniqueAliasList aliasList = new UniqueAliasList();
 
-        if (aliasList.contains(commandWord)) {
-            commandWord = aliasList.getCommandFromAlias(commandWord);
+        if (UniqueAliasList.contains(commandWord)) {
+            commandWord = UniqueAliasList.getCommandFromAlias(commandWord);
         }
         switch (commandWord) {
 
@@ -97,6 +100,18 @@ public class AddressBookParser {
 
         case AliasCommand.COMMAND_WORD:
             return new AliasCommandParser().parse(arguments);
+
+        case UnaliasCommand.COMMAND_WORD:
+            return new UnaliasCommandParser().parse(arguments);
+
+        case VacantCommand.COMMAND_WORD:
+            return new VacantCommandParser().parse(arguments);
+
+        case PasswordCommand.COMMAND_WORD:
+            return new PasswordCommandParser().parse(arguments);
+
+        case BirthdaysCommand.COMMAND_WORD:
+            return new BirthdaysCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

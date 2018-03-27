@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -25,13 +26,18 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.Room;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.ReadOnlyJsonVenueInformation;
+import seedu.address.storage.ReadOnlyVenueInformation;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.ui.PasswordUiManager;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -40,7 +46,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 1, 1, true);
+    public static final Version VERSION = new Version(1, 3, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -50,7 +56,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-
+    private boolean passwordChanged;
 
     @Override
     public void init() throws Exception {
@@ -62,7 +68,10 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        ReadOnlyVenueInformation venueInformationStorage =
+                new ReadOnlyJsonVenueInformation(config.getVenueInformationFilePath());
+        initVenueInformation(venueInformationStorage);
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, venueInformationStorage);
 
         initLogging(config);
 
@@ -94,6 +103,9 @@ public class MainApp extends Application {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+        } catch (WrongPasswordException e) {
+            passwordChanged = true;
+            initialData = new AddressBook();
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
@@ -177,6 +189,29 @@ public class MainApp extends Application {
         return initializedPrefs;
     }
 
+    /**
+     * Initialize {@code nusVenues} and {@code nusBuildingsAndRooms} using the file at
+     * {@code storage}'s venue information file path
+     */
+    private void initVenueInformation(ReadOnlyVenueInformation storage) {
+        String venueInformationFilePath = storage.getVenueInformationFilePath();
+        logger.info("Using venueInformation file : " + venueInformationFilePath);
+
+        try {
+            Optional<Building> buildingOptional = storage.readBuildingsAndRoomsInformation();
+            Building building = buildingOptional.orElse(new Building("Test"));
+            Building.setNusBuildingsAndRooms(building.getBuildingsAndRooms());
+            Optional<Room> roomOptional = storage.readVenueInformation();
+            Room room = roomOptional.orElse(new Room("Test"));
+            Room.setNusVenues(room.getNusRooms());
+        } catch (DataConversionException de) {
+            logger.warning("UserPrefs file at " + venueInformationFilePath + " is not in the correct format.");
+        } catch (IOException ioe) {
+            logger.warning("Problem while reading from the file at " + venueInformationFilePath);
+        }
+
+    }
+
     private void initEventsCenter() {
         EventsCenter.getInstance().registerHandler(this);
     }
@@ -184,7 +219,12 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
-        ui.start(primaryStage);
+        if (passwordChanged) {
+            PasswordUiManager pw = new PasswordUiManager(storage, model, ui);
+            pw.start(primaryStage);
+        } else {
+            ui.start(primaryStage);
+        }
     }
 
     @Override

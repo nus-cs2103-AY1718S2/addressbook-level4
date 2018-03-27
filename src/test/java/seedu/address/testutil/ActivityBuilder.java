@@ -1,12 +1,11 @@
 package seedu.address.testutil;
 
-import seedu.address.model.activity.Activity;
-
 /**
  * A utility class to help with building Activity objects.
  */
-public interface ActivityBuilder {
+public interface ActivityBuilder<T> {
 
-    Activity build();
+    //@@author Kyomian
+    T build();
 
 }

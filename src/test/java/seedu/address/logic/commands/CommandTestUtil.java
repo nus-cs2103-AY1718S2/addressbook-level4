@@ -24,11 +24,14 @@ import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
 
+//@@author YuanQQLer
 /**
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
 
+    // ============================= TASK =============================================
+    // TODO: Add in Event constants at a later date
     public static final String VALID_NAME_MA2108_HOMEWORK = "MA2108 Homework 3";
     public static final String VALID_NAME_CS2010_QUIZ = "CS2010 Online Quiz 2";
     public static final String VALID_DATE_TIME_MA2108_HOMEWORK = "11/11/1111 11:11";
@@ -37,7 +40,10 @@ public class CommandTestUtil {
     public static final String VALID_REMARK_CS2010_QUIZ = "5% of total grade";
     public static final String VALID_TAG_MA2108 = "MA2108";
     public static final String VALID_TAG_CS2010 = "CS2010";
+    //@@author Kyomian
+    public static final String VALID_TAG_URGENT = "Urgent";
 
+    //@@author YuanQQLer
     public static final String NAME_DESC_MA2108_HOMEWORK = " " + PREFIX_NAME + VALID_NAME_MA2108_HOMEWORK;
     public static final String NAME_DESC_CS2010_QUIZ = " " + PREFIX_NAME + VALID_NAME_CS2010_QUIZ;
     public static final String DATE_TIME_DESC_MA2108_HOMEWORK = " " + PREFIX_DATE_TIME
@@ -45,15 +51,17 @@ public class CommandTestUtil {
     public static final String DATE_TIME_DESC_CS2010_QUIZ = " " + PREFIX_DATE_TIME + VALID_DATE_TIME_CS2010_QUIZ;
     public static final String REMARK_DESC_MA2108_HOMEWORK = " " + PREFIX_REMARK + VALID_REMARK_MA2108_HOMEWORK;
     public static final String REMARK_DESC_CS2010_QUIZ = " " + PREFIX_REMARK + VALID_REMARK_CS2010_QUIZ;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_CS2010;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_MA2108;
+    public static final String TAG_DESC_CS2010 = " " + PREFIX_TAG + VALID_TAG_CS2010;
+    public static final String TAG_DESC_MA2108 = " " + PREFIX_TAG + VALID_TAG_MA2108;
+    //@@author Kyomian
+    public static final String TAG_DESC_URGENT = " " + PREFIX_TAG + VALID_TAG_URGENT;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_DATE_TIME_DESC = " " + PREFIX_DATE_TIME + "911a"; // 'a' not allowed in phones
-    public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK; // empty string not allowed for addresses
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_TASK_NAME_DESC = " " + PREFIX_NAME + "CS2106 Assignment&"; // '&' not allowed
+    public static final String INVALID_TASK_DATE_TIME_DESC = " " + PREFIX_DATE_TIME + "2018-03-04 17:00";
+    public static final String INVALID_TASK_REMARK_DESC = " " + PREFIX_REMARK + "$"; // '$' not allowed
+    public static final String INVALID_TASK_TAG_DESC = " " + PREFIX_TAG + "CS2106*"; // '*' not allowed in tags
 
+    //@@author YuanQQLer
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 

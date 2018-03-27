@@ -42,9 +42,9 @@ public class TaskCommandTest {
     @Test
     public void execute_taskAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingTaskAdded modelStub = new ModelStubAcceptingTaskAdded();
-        Activity validTask = new TaskBuilder().build();
+        Task validTask = new TaskBuilder().build();
 
-        CommandResult commandResult = getTaskCommandForTask(validTask, modelStub).execute();
+        CommandResult commandResult = getTaskCommandForGivenTask(validTask, modelStub).execute();
 
         assertEquals(String.format(TaskCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validTask), modelStub.tasksAdded);
@@ -53,26 +53,26 @@ public class TaskCommandTest {
     @Test
     public void execute_duplicateTask_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicateActivityException();
-        Activity validTask = new TaskBuilder().build();
+        Task validTask = new TaskBuilder().build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(TaskCommand.MESSAGE_DUPLICATE_TASK);
 
-        getTaskCommandForTask(validTask, modelStub).execute();
+        getTaskCommandForGivenTask(validTask, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Activity assignment = new TaskBuilder().build();
-        Activity project = new TaskBuilder().withName("Project").build();
-        TaskCommand addAssignmentCommand = new TaskCommand((Task) assignment);
-        TaskCommand addProjectCommand = new TaskCommand((Task) project);
+        Task assignment = new TaskBuilder().build();
+        Task project = new TaskBuilder().withName("Project").build();
+        TaskCommand addAssignmentCommand = new TaskCommand(assignment);
+        TaskCommand addProjectCommand = new TaskCommand(project);
 
         // same object -> returns true
         assertTrue(addAssignmentCommand.equals(addAssignmentCommand));
 
         // same values -> returns true
-        TaskCommand addAssignmentCommandCopy = new TaskCommand((Task) assignment);
+        TaskCommand addAssignmentCommandCopy = new TaskCommand(assignment);
         assertTrue(addAssignmentCommand.equals(addAssignmentCommandCopy));
 
         // different types -> returns false
@@ -88,8 +88,8 @@ public class TaskCommandTest {
     /**
      * Generates a new TaskCommand with the details of the given task.
      */
-    private TaskCommand getTaskCommandForTask(Activity task, Model model) {
-        TaskCommand command = new TaskCommand((Task) task);
+    private TaskCommand getTaskCommandForGivenTask(Task task, Model model) {
+        TaskCommand command = new TaskCommand(task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.activity.Task;
@@ -21,11 +22,13 @@ public class TaskCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE_TIME + "DATETIME "
-            + "[" + PREFIX_REMARK + "REMARK]\n"
+            + "[" + PREFIX_REMARK + "REMARK] "
+            + "[" + PREFIX_TAG + "TAG]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Software Engineering Milestone 1 "
             + PREFIX_DATE_TIME + "01/08/2018 17:00 "
-            + PREFIX_REMARK + "Enhance major component";
+            + PREFIX_REMARK + "Enhance major component"
+            + PREFIX_TAG + "CS2103T";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the desk board";

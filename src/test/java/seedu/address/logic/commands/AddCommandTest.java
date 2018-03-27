@@ -61,7 +61,7 @@ public class AddCommandTest {
     }
 
     @Test
-    public void equals() {
+    public void equals() throws Exception {
         Patient alice = new PatientBuilder().withName("Alice").build();
         Patient bob = new PatientBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);

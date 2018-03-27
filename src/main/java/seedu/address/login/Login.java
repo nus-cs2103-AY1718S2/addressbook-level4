@@ -10,15 +10,18 @@ public interface Login {
     boolean checkLoginDetails(UserPass userpass) throws InvalidUsernameException, InvalidPasswordException;
 
     /** Returns a boolean indicating if username input is valid */
-    boolean checkUsername(UserPass userpass);
+    boolean checkUsername();
 
     /** Returns a boolean indicating if password input corresponds to given username */
-    boolean checkPassword(UserPass userpass);
+    boolean checkPassword();
 
     /** Stores a new username and password pair */
     void storeUserPass(UserPass userpass) throws UsernameTakenException;
 
     /** Initiates App for successful login **/
     void accessPermitted();
+
+    /** Returns String that represents profile ID **/
+    String getUsername();
 
 }

@@ -229,6 +229,12 @@ The `Login` component,
 
 * allows for users to login to a specific instance of the Pigeons address book,
 such that each user (Pigeon/Delivery Driver) can have a personalised list of customers to deliver to.
+* provides an interface for managing the entire login process with usernames and passwords
+in a paired structure `UserPass` stored in a json file in the implemented class `JsonUserPassStorage`
+which implements `UserPassStorage`.
+* `UserPass` consists of two Strings, the first being the username and the second being the password.
+The password is automatically hashed by the SHA-256 algorithm upon `UserPass` creation. A static `hash` method
+is provided in the `UserPass` class if SHA-256 hashing is required for any password verification.
 
 [[Design-Commons]]
 === Common classes
@@ -238,6 +244,11 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+=== Filter Command
+To add to the many commands necessary for users, filtering by date will be essential when trying to optimize the route per day.
+The filter command was added similar to how the find command has been implemented.
+When the user enters filter by a date in the UI the model with the list of data is updated using the date predicate.
+This updated model is then executed via the CommandResult class and output on the UI. It is stores as a readonly list in the model.
 
 === Route Optimization feature
 Since this program is meant for deliveries the route for the daily delivery must be optimized for the user.
@@ -255,11 +266,19 @@ Optimal Route = Point A --> Point C --> Point B (based on least about of km trav
 
 In the RouteOptimization class the sorting function will be responsible to determine the optimal route once the distances are obtained
 
-To getDistance - google API is required to get the geocodes for the locations and the DistanceMatrix can be obtained
-Once the matrix is obtained the distances between the places can be recorded.
-The addresses will be obtained for the filtered list in the database.
+To getDistance - google API is required to get the geocodes for the locations. Once the geocode for each address is obtained
+the distance between the two points is calculated and a matrix is returned with a distance property.
+The distance property gives the distance in kilometers from the origin to destination.
 
 The optimized route will the be fed into a mapping function to display the route and get the directions for the driver.
+
+==== Sorting addresses
+Once the distances have been found for all combinations of addresses on that filtered day they get stored in a Map with key: "address1_address2" and
+value: Double distance (in km). This hashmap gets sorted in order of distances and any irrelevant or duplicate calculations are removed.
+This sorted Hashmap now contains the key with the orign and destination address as well as the distance between the two.
+
+Coming soon - If the first key is A_B then the second key must be B_X where X is the address closest to B (not including A). Based on this logic a list of addresses
+will be created as the optimum delivery route.
 
 // tag::login[]
 === Login feature
@@ -271,7 +290,7 @@ Upon successful verification, the user will be brought to a user-customised vers
 
 The following sequence diagram shows how the checkLoginDetails method works:
 
-image::checkLoginDetails.jpg[width="800"]
+image::LoginDetails.png[width="800"]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -443,9 +462,18 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-=== [Focus] Retrieving distance from a person address to another person address
+=== Retrieving distance from a person address to another person address
+==== Current Implementation
 
-Retrieving distance from different address is a starting step to be able to build a optimized map for delivering.
+Like other commands, distance command uses the `AddressBookParser` class to parse the user command. The result of the command execution is encapsulated as a CommandResult object which is passed back to the Ui.
+
+The distance command execution won't affect the `Model` or raise any events since it only return the distance result.
+
+However, the result is depend on the `GetDistance` class which will using the `Google Map API` to calculate the distance from the HQ to the person address.
+
+The following sequence diagram shows how the `distance` command works:
+
+image::getDistanceOfPersonSdForLogic.png[width="800"]
 
 == Documentation
 

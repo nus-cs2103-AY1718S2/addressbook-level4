@@ -32,6 +32,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.JsonUserPassStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -57,6 +58,7 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
     protected Login login;
+    protected UserPassStorage userPassStorage;
 
     @Override
     public void init() throws Exception {
@@ -68,7 +70,7 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        UserPassStorage userPassStorage = new UserPassStorage();
+        UserPassStorage userPassStorage = new JsonUserPassStorage(config.getUserPassFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
         StorageManager storageManager = (StorageManager) storage;
 
@@ -83,6 +85,20 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs, login);
 
         initEventsCenter();
+    }
+
+    /**
+     * Reinitialises components to match previous state of specific user profile
+     */
+    private void reInit(Login login) {
+        String profile = login.getUsername();
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(profile + config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
+        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(profile + userPrefs.getAddressBookFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
+        model = initModelManager(storage, userPrefs);
+        logic = new LogicManager(model);
+        ui = new UiManager(logic, config, userPrefs, login);
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -202,6 +218,7 @@ public class MainApp extends Application {
      */
     public void startApp(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+        reInit(login);
         readWelcomeMessage();
         ui.start(primaryStage);
     }

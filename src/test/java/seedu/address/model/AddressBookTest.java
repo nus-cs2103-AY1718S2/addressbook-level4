@@ -37,7 +37,7 @@ public class AddressBookTest {
     private final AddressBook addressBook = new AddressBook();
 
     private final AddressBook addressBookWithAmyAndBob = new AddressBookBuilder().withPerson(AMY)
-            .withPerson(BOB).withPassword("test").build();
+            .withPerson(BOB).build();
 
     @Test
     public void constructor() {

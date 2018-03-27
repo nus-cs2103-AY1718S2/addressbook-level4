@@ -430,26 +430,68 @@ They are included as fields to be filled in when adding a new `Patient` or when 
 
 Both `AddCommand` and `EditCommand` have been modified to accept new inputs corresponding with the new fields implemented.
 
-Suppose that the user has just launched the application. The current list is shown in the figure below.
+Suppose that the user has just launched the application. The current list is shown in Figure 22 below.
 
 .The current queue
 image::Figure3-3-1-1.png[width="800"]
 
 The user now decides to edit the blood type of the first person in the list (he got a blood transfusion).
 
-`EditCommand` will search for the first person in the list and store it as the person to be edited as shown in Figure 3.3.1.2. below.
+`EditCommand` will search for the first person in the list and store it as the person to be edited.
 `EditCommand` will then create a new patient with the same attributes as the patient to be edited, except the remarks attribute
-which will be based on the user input. This new patient will be stored as the edited patient as shown in the figure below.
+which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 23 below.
 
 .The patient before and after editing
 image::Figure3-3-1-2.png[width="800"]
 
 `EditCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
-the new list will be as shown in the figure below.
+the new list will be as shown in Figure 24 below.
 
 .The queue with updated details
 image::Figure3-3-1-3.png[width="800"]
 // end::morefields[]
+
+// tag::addconditions[]
+=== Add conditions to the list of conditions of a patient
+==== Current Implementation
+
+The addition of conditions mechanism is managed by the `AddConditionCommand`.
+It allows the user to simply add on more conditions to the list of conditions a patient has, rather than have to retype all of the patient's conditions.
+
+Suppose that the user has just launched the application. The current list is shown in Figure 25 below.
+
+.The current queue
+image::Figure3-4-1-1.png[width="800"]
+
+The user now adds a `seafood` allergy to `David`{empty}'s list of medical conditions.
+
+`AddConditionCommand` will select the person in the list based on the index provided and store it as the person to be edited.
+`AddConditionCommand` will then create a new patient with the same attributes as the patient to be edited, except the with additional conditions
+which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 26 below.
+
+.The patient before and after editing
+image::Figure3-4-1-2.png[width="800"]
+
+`EditCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
+the new list will be as shown in Figure 27 below.
+
+.The queue with updated details
+image::Figure3-4-1-3.png[width="800"]
+
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: Implementation of `AddConditionCommand`
+
+* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise updatePerson to replace the `Patient`
+** Pros: Will be easy to implement due to existing utility methods.
+** Cons: May have performance issues in terms of memory usage.
+* **Alternative 2:** Create a public method in `UniqueTagList` for updating the remark which will be called by `Patient`
+** Pros: Will use less memory (no need to create new patient object).
+** Cons: Will require public access to the internal `UniqueTagList` (possible security concerns).
+// end::addconditions[]
 
 // tag::addqremoveq[]
 === Patient Visting Queue (waiting list for registration)

@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -97,7 +98,16 @@ public class RecordCommand extends UndoableCommand {
     private static Patient createEditedPerson(Patient patientToEdit, int recordIndex, Record record) {
         assert patientToEdit != null;
 
-        RecordList recordlist = patientToEdit.getRecordList();
+
+        ArrayList<Record> temp = new ArrayList<Record>();
+        for(int i = 0; i < patientToEdit.getRecordList().getNumberOfRecords(); i++){
+            String date = patientToEdit.getRecordList().getRecordList().get(i).getDate();
+            String symptom = patientToEdit.getRecordList().getRecordList().get(i).getSymptom();
+            String illness = patientToEdit.getRecordList().getRecordList().get(i).getIllness();
+            String treatment = patientToEdit.getRecordList().getRecordList().get(i).getTreatment();
+            temp.add(new Record(date, symptom, illness, treatment));
+        }
+        RecordList recordlist = new RecordList(temp);
         recordlist.edit(recordIndex, record);
 
         return new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),

@@ -36,10 +36,10 @@ public class LoginCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (LoginManager.authenticate(username, password)) {
-            LoginWindow loginWindow = new LoginWindow();
-            Stage stage = new Stage();
-            loginWindow.start(stage);
+        LoginWindow loginWindow = new LoginWindow();
+        Stage stage = new Stage();
+        loginWindow.start(stage);
+        if (LoginManager.authenticate()) {
             return new CommandResult(MESSAGE_LOGIN_SUCCESS + username);
         } else {
             throw new CommandException(MESSAGE_LOGIN_FAIL);

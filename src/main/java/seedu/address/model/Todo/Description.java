@@ -1,5 +1,6 @@
 package seedu.address.model.Todo;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
@@ -24,7 +25,7 @@ public class Description {
      * @param description A valid address.
      */
     public Description(String description) {
-        assert description != null : MESSAGE_DESCRIPTION_CONSTRAINTS;
+        requireNonNull(description);
         checkArgument(isValidDescription(description));
         this.value = description;
     }

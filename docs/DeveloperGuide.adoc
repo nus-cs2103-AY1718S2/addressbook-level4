@@ -1,6 +1,6 @@
 = Your TA - Developer Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -13,6 +13,32 @@ endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F09-B1/main/tree/master
 
 By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+Your TA is an address book application designed to amplify the capabilities of a university teaching assistant or tutor.
+It aims to provide all the essential functions needed to manage the administrative duties of handling a class as well as
+to aid the tutor to better connect with the class. It includes a calendar, scheduling capabilities, as well as the ability to mark
+attendance and participation as well.
+
+== How to contribute to Your TA?
+
+=== New Developers
+
+You may wish to refer to the https://github.com/CS2103JAN2018-F09-B1/main/blob/master/docs/DeveloperGuide.adoc#setting-up[set up] portion
+to set up the Your TA project file.
+
+Read through the rest of the guide to familiarise yourself with how Your TA components function together.
+
+Try making some enhancements or edits to a component and make a Pull Request (PR) to our repo! We will take a look at your PR and
+give you some feedback or even merge your code if it's great.
+
+=== Experienced Developers
+
+The Developer Guide contains the design of the models that make up the program. Each section also details how each and every functionality
+is implemented and how it interacts with the different models. We would greatly appreciate your help in fine-tuning the components and also
+welcome any suggestions or feedback to improve Your TA.
+
 
 == Setting up
 
@@ -547,13 +573,13 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 === Converting Documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+Use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
 Here are the steps to convert the project documentation files to PDF format.
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
-.  Within Chrome, click on the `Print` option in Chrome's menu.
+.  Click on the `Print` option in Chrome's menu.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 .Saving documentation as PDF files in Chrome
@@ -576,10 +602,10 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* To run the tests, You need to open a console or terminal and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
 
 [NOTE]
-See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+Detailed information on how to run tests using Gradle is specified in <<UsingGradle#, UsingGradle.adoc>>.
 
 *Method 3: Using Gradle (headless)*
 
@@ -593,13 +619,13 @@ We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.. _Unit Tests_ that test the individual components. These are in `seedu.address.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
+..  _Unit Tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+..  _Integration Tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
 e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
+..  Hybrids of Unit and Integration Tests. These test are checking multiple code units as well as how the are connected together. +
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
@@ -613,18 +639,21 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for Build Automation.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects.
+See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
+We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
+See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
-When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+When there are changes to asciidoc files in a pull request, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. +
+See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
 === Making a Release
 

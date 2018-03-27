@@ -16,7 +16,7 @@ public class Nric {
      * The first character of the NRIC must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NRIC_VALIDATION_REGEX = "[\\p{Alnum}]*";
+    public static final String NRIC_VALIDATION_REGEX = "[\\p{Alpha}][\\p{Digit}]{7}[\\p{Alpha}]";
 
     public final String value;
 

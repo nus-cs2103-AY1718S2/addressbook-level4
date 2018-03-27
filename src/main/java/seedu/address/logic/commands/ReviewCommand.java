@@ -86,11 +86,12 @@ public class ReviewCommand extends UndoableCommand {
 
         Review updatedReview = editPersonDescriptor.getReview().orElse(new Review());
 
-        Person person = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRating(), personToEdit.getTags());
-        person.setReview(updatedReview);
+        Person toReturn = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getCalendarId());
+        toReturn.setRating(personToEdit.getRating());
+        toReturn.setReview(updatedReview);
 
-        return person;
+        return toReturn;
     }
 
     @Override

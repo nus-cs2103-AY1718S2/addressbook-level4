@@ -173,10 +173,12 @@ public class XmlAdaptedPerson {
 
         final Set<Tag> tags = new HashSet<>(personTags);
 
-        Person person = new Person(name, phone, email, address, rating, tags, calendarId, id);
-        person.setReview(review);
+        Person toReturn = new Person(name, phone, email, address, tags, calendarId);
+        toReturn.setRating(rating);
+        toReturn.setReview(review);
+        toReturn.setId(id);
 
-        return person;
+        return toReturn;
     }
 
     @Override

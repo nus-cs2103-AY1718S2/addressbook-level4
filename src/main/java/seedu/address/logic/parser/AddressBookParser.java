@@ -8,11 +8,10 @@ import java.util.regex.Pattern;
 
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
+//import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ConversationCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -29,7 +28,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.ui.ResultDisplay;
+//import seedu.address.ui.ResultDisplay;
 
 /**
  * Parses user input.
@@ -104,7 +103,6 @@ public class AddressBookParser {
         case UnfavouriteCommand.COMMAND_WORD:
             return new UnfavouriteCommandParser().parse(arguments);
 
-<<<<<<< HEAD
         //@@ chweeee
         case "assistant":
             ConversationCommand.setUpAgent();

@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import java.util.Arrays;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ViewAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;

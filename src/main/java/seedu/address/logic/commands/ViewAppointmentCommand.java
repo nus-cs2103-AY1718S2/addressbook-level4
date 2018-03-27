@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
-import java.util.logging.Logger;
+import static java.util.Objects.requireNonNull;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
  * List all the patient appointments
@@ -14,8 +14,28 @@ public class ViewAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "viewappt";
     public static final String COMMAND_ALIAS = "va";
 
+    public static final String MESSAGE_USAGE_PATIENT = COMMAND_WORD + ": View list of appointments of a patient. "
+            + "Parameters: "
+            + "NAME";
+
     public static final String MESSAGE_SUCCESS = "Listed all appointments";
-    private static final Logger logger = LogsCenter.getLogger(ViewAppointmentCommand.class);
+    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database";
+    private final NameContainsKeywordsPredicate predicate;
+
+    /**
+     * Creates an ViewAppointmentCommand to view list of appointments
+     */
+    public ViewAppointmentCommand() {
+        this.predicate = null;
+    }
+
+    /**
+     * Creates an ViewAppointmentCommand to view list of appointments the specified {@code Patient}
+     */
+    public ViewAppointmentCommand(NameContainsKeywordsPredicate predicate) {
+        requireNonNull(predicate);
+        this.predicate = predicate;
+    }
 
     @Override
     public CommandResult execute() {

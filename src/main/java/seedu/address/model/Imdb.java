@@ -251,7 +251,7 @@ public class Imdb implements ReadOnlyImdb {
 
     @Override
     public ObservableList<Appointment> getPastAppointments() {
-        
+
         return null;
     }
 

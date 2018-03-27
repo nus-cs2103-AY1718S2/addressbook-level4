@@ -18,8 +18,12 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.Events;
 
 /**
  * Handles the OAuth authentication process for use with Google Calendar.
@@ -49,7 +53,7 @@ public class OAuthManager {
      * at ~/.credentials/calendar-java-quickstart
      */
     private static final List<String> SCOPES =
-        Arrays.asList(CalendarScopes.CALENDAR_READONLY);
+        Arrays.asList(CalendarScopes.CALENDAR);
 
     static {
         try {
@@ -100,6 +104,83 @@ public class OAuthManager {
                 .build();
     }
 
+    public static List<Event> getUpcomingEvents() throws IOException {
+        // Build a new authorized API client service.
+        // Note: Do not confuse this class with the
+        //   com.google.api.services.calendar.model.Calendar class.
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService();
+
+        // List the next 10 events from the primary calendar.
+        DateTime now = new DateTime(System.currentTimeMillis());
+        Events events = service.events().list("primary")
+                .setMaxResults(10)
+                .setTimeMin(now)
+                .setOrderBy("startTime")
+                .setSingleEvents(true)
+                .execute();
+        List<Event> upcomingEvents = events.getItems();
+        if (upcomingEvents.size() == 0) {
+            System.out.println("No upcoming events found.");
+        } else {
+            System.out.println("Upcoming events");
+            for (Event event : upcomingEvents) {
+                DateTime start = event.getStart().getDateTime();
+                DateTime end = event.getEnd().getDateTime();
+                String location = event.getLocation();
+                String personUniqueId = event.getDescription();
+                if (start == null) {
+                    start = event.getStart().getDate();
+                }
+                if (end == null) {
+                    end = event.getEnd().getDate();
+                }
+                if (location == null) {
+                    location = "No Location Specified";
+                }
+                System.out.printf("%s From: %s To: %s) @ %s [%s]\n",
+                        event.getSummary(), start, end, location, personUniqueId);
+            }
+        }
+
+        return upcomingEvents;
+    }
+
+    public static String addEvent() throws IOException {
+        // Build a new authorized API client service.
+        // Note: Do not confuse this class with the
+        //   com.google.api.services.calendar.model.Calendar class.
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService();
+
+        Event event = new Event()
+                .setSummary("Google I/O 2018")
+                .setLocation("800 Howard St., San Francisco, CA 94103")
+                .setDescription("A chance to hear more about Google's developer products.");
+
+        DateTime startDateTime = new DateTime("2018-03-28T09:00:00-07:00");
+        EventDateTime start = new EventDateTime()
+                .setDateTime(startDateTime)
+                .setTimeZone("America/Los_Angeles");
+        event.setStart(start);
+
+        DateTime endDateTime = new DateTime("2018-03-28T17:00:00-07:00");
+        EventDateTime end = new EventDateTime()
+                .setDateTime(endDateTime)
+                .setTimeZone("America/Los_Angeles");
+        event.setEnd(end);
+
+        String calendarId = "primary";
+        try {
+            event = service.events().insert(calendarId, event).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String eventUrl = event.getHtmlLink();
+        System.out.printf("Event created: %s\n", event.getHtmlLink());
+
+        return eventUrl;
+    }
 }
 
 //@@author

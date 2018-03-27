@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CalendarCommand;
+import seedu.address.logic.commands.CalendarAddCommand;
+import seedu.address.logic.commands.CalendarListCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -88,6 +90,12 @@ public class AddressBookParser {
 
         case CalendarCommand.COMMAND_WORD:
             return new CalendarCommand();
+
+        case CalendarAddCommand.COMMAND_WORD:
+            return new CalendarAddCommand();
+
+        case CalendarListCommand.COMMAND_WORD:
+            return new CalendarListCommand();
 
         case ErrorLogCommand.COMMAND_WORD:
             return new ErrorLogCommand();

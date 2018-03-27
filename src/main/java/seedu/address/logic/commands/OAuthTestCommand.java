@@ -11,7 +11,7 @@ import seedu.address.logic.OAuthManager;
  */
 public class OAuthTestCommand extends Command {
 
-    public static final String COMMAND_WORD = "oauthtest";
+    public static final String COMMAND_WORD = "reauthenticate";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tests OAuth.\n"
             + "Example: " + COMMAND_WORD;
@@ -22,6 +22,7 @@ public class OAuthTestCommand extends Command {
     public CommandResult execute() {
         try {
             OAuthManager.authorize();
+            OAuthManager.addEvent();
         } catch (IOException e) {
             // Do nothing for now
         }

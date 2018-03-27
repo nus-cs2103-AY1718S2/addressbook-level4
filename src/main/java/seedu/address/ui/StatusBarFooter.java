@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.model.AddressBookChangedWithoutStatusBarEvent;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -80,6 +79,4 @@ public class StatusBarFooter extends UiPart<Region> {
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
     }
 
-    @Subscribe
-    public void handleAddressBookChangedEventWithoutStatusBar(AddressBookChangedWithoutStatusBarEvent abce) { }
 }

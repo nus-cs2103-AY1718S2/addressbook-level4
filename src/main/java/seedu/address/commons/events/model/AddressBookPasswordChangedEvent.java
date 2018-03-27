@@ -3,18 +3,20 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyAddressBook;
 
-/** Indicates the AddressBook in the model has changed
- * but status bar remains unchanged.
+/**
+ * Indicates password changed
  * */
-public class AddressBookChangedWithoutStatusBarEvent extends BaseEvent {
+public class AddressBookPasswordChangedEvent extends BaseEvent {
+
+    public final String password;
 
     public final ReadOnlyAddressBook data;
 
-    public AddressBookChangedWithoutStatusBarEvent(ReadOnlyAddressBook data) {
+    public AddressBookPasswordChangedEvent(String password, ReadOnlyAddressBook data) {
+        this.password = password;
         this.data = data;
     }
 
-    @Override
     public String toString() {
         return "number of persons " + data.getPersonList().size() + ", number of tags " + data.getTagList().size();
     }

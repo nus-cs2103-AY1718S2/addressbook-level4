@@ -1,7 +1,10 @@
 package seedu.address.model;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE_APPT;
@@ -11,13 +14,11 @@ import static seedu.address.testutil.TypicalPersonsAndAppointments.CARL_APPT;
 
 import java.util.Arrays;
 
-import javafx.collections.ObservableList;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
+
+import javafx.collections.ObservableList;
 
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
@@ -46,9 +47,9 @@ public class ModelManagerTest {
 
     //@@author ng95junwei
     @Test
-    public void getTemplateList_return_ObservableList() {
+    public void getTemplateList_return_observableList() {
         ModelManager modelManager = new ModelManager();
-        assertThat(modelManager.getAllTemplates(),instanceOf(ObservableList.class));
+        assertThat(modelManager.getAllTemplates(), instanceOf(ObservableList.class));
     }
     //@@author
 

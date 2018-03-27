@@ -12,9 +12,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_EXPECTED_GRADUATION_YEAR = new Prefix("y/");
     public static final Prefix PREFIX_MAJOR = new Prefix("m/");
-
     public static final Prefix PREFIX_GRADE_POINT_AVERAGE = new Prefix("g/");
-
+    public static final Prefix PREFIX_JOB_APPLIED = new Prefix("j/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     //used only in add/edit command
     public static final Prefix PREFIX_RESUME = new Prefix("r/");

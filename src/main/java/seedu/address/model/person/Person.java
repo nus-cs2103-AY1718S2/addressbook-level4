@@ -22,6 +22,7 @@ public class Person {
     private final ExpectedGraduationYear expectedGraduationYear;
     private final Major major;
     private final GradePointAverage gradePointAverage;
+    private final JobApplied jobApplied;
     private final Rating rating;
     private final Resume resume;
     private final InterviewDate interviewDate;
@@ -33,10 +34,10 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, ExpectedGraduationYear expectedGraduationYear,
-                  Major major, GradePointAverage gradePointAverage, Rating rating,
+                  Major major, GradePointAverage gradePointAverage, JobApplied jobApplied, Rating rating,
                   Resume resume, InterviewDate interviewDate, Status status, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, expectedGraduationYear, major, rating, resume, interviewDate,
-                status, tags);
+        requireAllNonNull(name, phone, email, address, expectedGraduationYear, major, gradePointAverage, jobApplied,
+                rating, resume, interviewDate, status, tags);
 
         this.name = name;
         this.phone = phone;
@@ -45,6 +46,7 @@ public class Person {
         this.expectedGraduationYear = expectedGraduationYear;
         this.major = major;
         this.gradePointAverage = gradePointAverage;
+        this.jobApplied = jobApplied;
         this.rating = rating;
         this.resume = resume;
         this.interviewDate = interviewDate;
@@ -79,6 +81,10 @@ public class Person {
 
     public GradePointAverage getGradePointAverage() {
         return gradePointAverage;
+    }
+
+    public JobApplied getJobApplied() {
+        return jobApplied;
     }
 
     public Rating getRating() {
@@ -130,7 +136,7 @@ public class Person {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, phone, email, address, expectedGraduationYear,
-                major, gradePointAverage, rating, resume, interviewDate, status, tags);
+                major, gradePointAverage, jobApplied, rating, resume, interviewDate, status, tags);
     }
 
     @Override
@@ -149,6 +155,8 @@ public class Person {
                 .append(getMajor())
                 .append(" Grade point average: ")
                 .append(getGradePointAverage())
+                .append(" Job applied: ")
+                .append(getJobApplied())
                 .append(" Resume: ")
                 .append(getResume())
                 .append(" Status: ")

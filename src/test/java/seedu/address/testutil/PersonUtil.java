@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -39,6 +40,7 @@ public class PersonUtil {
         sb.append(PREFIX_EXPECTED_GRADUATION_YEAR + person.getExpectedGraduationYear().value + " ");
         sb.append(PREFIX_MAJOR + person.getMajor().value + " ");
         sb.append(PREFIX_GRADE_POINT_AVERAGE + person.getGradePointAverage().value + " ");
+        sb.append(PREFIX_JOB_APPLIED + person.getJobApplied().value + " ");
         if (!isNull(person.getResume().value)) {
             sb.append(PREFIX_RESUME + person.getResume().value + " ");
         }

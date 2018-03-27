@@ -8,6 +8,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Science</major>
         <gradePointAverage>4.84</gradePointAverage>
+        <jobApplied>Software Engineer</jobApplied>
         <status>Accepted</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -22,6 +23,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Engineering</major>
         <gradePointAverage>4.73</gradePointAverage>
+        <jobApplied>Android Developer</jobApplied>
         <status>New</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -36,6 +38,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Information Security</major>
         <gradePointAverage>4.92</gradePointAverage>
+        <jobApplied>Web Security Researcher</jobApplied>
         <status>1st round</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -50,6 +53,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Science</major>
         <gradePointAverage>4.24</gradePointAverage>
+        <jobApplied>Software Developer</jobApplied>
         <status>2nd round</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -64,6 +68,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Information Systems</major>
         <gradePointAverage>4.33</gradePointAverage>
+        <jobApplied>Java Developer</jobApplied>
         <status>Rejected</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -78,6 +83,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Business Analytics</major>
         <gradePointAverage>4.75</gradePointAverage>
+        <jobApplied>Data Analyst</jobApplied>
         <status>Waitlist</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -92,6 +98,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Science</major>
         <gradePointAverage>3.88</gradePointAverage>
+        <jobApplied>Back-end Developer</jobApplied>
         <status>Offered</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -106,6 +113,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Computer Engineering</major>
         <gradePointAverage>3.75</gradePointAverage>
+        <jobApplied>Software Engineer</jobApplied>
         <status>Withdrawn</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
@@ -120,6 +128,7 @@
         <expectedGraduationYear>2020</expectedGraduationYear>
         <major>Information Security</major>
         <gradePointAverage>3.11</gradePointAverage>
+        <jobApplied>Back-end Developer</jobApplied>
         <status>New</status>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>

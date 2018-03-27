@@ -15,6 +15,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.InterviewDate;
+import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -98,6 +99,7 @@ public class DeleteRatingCommand extends UndoableCommand {
         ExpectedGraduationYear expectedGraduationYear = targetPerson.getExpectedGraduationYear();
         Major major = targetPerson.getMajor();
         GradePointAverage gradePointAverage = targetPerson.getGradePointAverage();
+        JobApplied jobApplied = targetPerson.getJobApplied();
         Rating defaultRating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,
                 Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE);
         Resume resume = targetPerson.getResume();
@@ -106,7 +108,7 @@ public class DeleteRatingCommand extends UndoableCommand {
         Set<Tag> tags = targetPerson.getTags();
 
         return new Person(name, phone, email, address,
-                expectedGraduationYear, major, gradePointAverage,
+                expectedGraduationYear, major, gradePointAverage, jobApplied,
                 defaultRating, resume, interviewDate, status, tags);
     }
 

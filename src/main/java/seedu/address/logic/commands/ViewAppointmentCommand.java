@@ -50,10 +50,6 @@ public class ViewAppointmentCommand extends Command {
                 throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
             }
 
-            ObservableList<Appointment> pastAppointmentList = patientFound.getPastAppointmentList();
-
-            ObservableList<Appointment> upcomingAppointmentList = patientFound.getUpcomingAppointmentList();
-
             //event handler
             //command result
 

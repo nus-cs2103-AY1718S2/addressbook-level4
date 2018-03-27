@@ -27,7 +27,7 @@ public class RemoveAppointmentsCommand extends UndoableCommand {
     private final String searchText;
 
     /**
-     * Creates an AddCommand to add the specified {@code AppointmentEntry}
+     * Creates an RemoveAppointmentCommand to remove the specified {@code searchText}
      */
     public RemoveAppointmentsCommand(String searchText) {
         requireNonNull(searchText);

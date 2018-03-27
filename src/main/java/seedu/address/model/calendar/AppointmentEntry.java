@@ -36,16 +36,6 @@ public class AppointmentEntry {
         givenTitle = clonedEntry.getGivenTitle();
     }
 
-    /**
-     * Edit the appointment Entry to match a given appointment entry
-     *
-     */
-    public void editAppointmentEntry(AppointmentEntry referenceEntry) {
-        this.interval = new Interval(referenceEntry.getStartDate(), referenceEntry.getEndDate());
-        this.givenTitle = referenceEntry.getGivenTitle();
-
-    }
-
     public LocalDateTime getStartDate() {
         return interval.getStartDateTime();
     }

@@ -12,6 +12,7 @@ import com.calendarfx.model.Interval;
 
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditApointmentFailException;
 
 
 /**
@@ -70,7 +71,7 @@ public class InsuranceCalendar {
     /**
      * Remove appointments found with the given keywords in the calendar.
      *
-     * @throws AppointmentNotFoundException if the appointment to add is a duplicate of an existing appointments.
+     * @throws AppointmentNotFoundException if the appointment to remove does not exist.
      */
     public void removeAppointment(String searchText) throws AppointmentNotFoundException {
 
@@ -98,6 +99,31 @@ public class InsuranceCalendar {
         AppointmentEntry apppointmentEntryToCheck = new AppointmentEntry(givenTitle, givenInterval);
         appointmentEntries.remove(apppointmentEntryToCheck);
     }
+
+    /**
+     * edit appointments found with the the given searchText
+     *
+     * @throws EditApointmentFailException if the appointment to remove does not exist or duplicate appointment to add.
+     */
+    public void editAppointmentEntry(String searchText, AppointmentEntry referenceEntry)
+            throws EditApointmentFailException {
+
+        try {
+            removeAppointment(searchText);
+        } catch (AppointmentNotFoundException e) {
+            throw new EditApointmentFailException();
+        }
+
+        try {
+            addAppointment(referenceEntry);
+        } catch (DuplicateAppointmentException e) {
+            throw new EditApointmentFailException();
+        }
+
+
+
+    }
+
 
 
 

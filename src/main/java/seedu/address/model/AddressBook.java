@@ -18,6 +18,7 @@ import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.calendar.InsuranceCalendar;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditApointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -108,6 +109,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeAppointment(String searchText) throws AppointmentNotFoundException {
         calendar.removeAppointment(searchText);
+    }
+
+    /**
+     * edit an existing appointment entry in the calendar.
+     *
+     * @throws EditApointmentFailException if an equivalent appointment already exists.
+     */
+    public void editAppointment(String searchText, AppointmentEntry referenceEntry) throws EditApointmentFailException {
+        calendar.editAppointmentEntry(searchText, referenceEntry);
     }
 
     //// person-level operations

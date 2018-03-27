@@ -28,12 +28,13 @@ public class AddAppointmentCommand extends UndoableCommand {
             + PREFIX_END_INTERVAL + "14/08/2018 07:12:00 ";
 
     public static final String MESSAGE_SUCCESS = "New Appointment Added: %1$s";
-    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "appointment with the same title already exists in the calendar";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT =
+            "appointment with the same title already exists in the calendar";
 
     private final AppointmentEntry toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code AppointmentEntry}
+     * Creates an AddAppointmentCommand to add the specified {@code AppointmentEntry}
      */
     public AddAppointmentCommand(AppointmentEntry appointmentEntry) {
         requireNonNull(appointmentEntry);

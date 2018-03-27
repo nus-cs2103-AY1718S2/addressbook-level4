@@ -19,6 +19,7 @@ import seedu.address.commons.events.ui.RefreshCalendarEvent;
 import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditApointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -105,6 +106,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void removeAppointment(String searchText) throws AppointmentNotFoundException {
         addressBook.removeAppointment(searchText);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void editAppointment(String searchText, AppointmentEntry reference) throws EditApointmentFailException {
+        addressBook.editAppointment(searchText, reference);
+        indicateAddressBookChanged();
+
     }
 
     @Override

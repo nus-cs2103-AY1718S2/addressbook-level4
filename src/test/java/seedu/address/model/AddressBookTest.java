@@ -7,6 +7,10 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.BENSON_WITH_FRIENDS_TAG_REMOVED;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.CARL_WITHOUT_TAG;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -61,6 +65,26 @@ public class AddressBookTest {
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
+    }
+
+    @Test
+    public void sortDesc() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortDesc();
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(BENSON).withPerson(ALICE)
+                .withPerson(GEORGE).withPerson(FIONA).withPerson(ELLE).withPerson(DANIEL).withPerson(CARL).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortAsc() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortAsc();
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(CARL).withPerson(DANIEL)
+                .withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).withPerson(ALICE).withPerson(BENSON).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
     }
 
     @Test

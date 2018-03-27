@@ -34,7 +34,7 @@ public class RatingSortCommandTest {
         String expectedMessage = String.format(MESSAGE_RATING_SORT_SUCCESS, "descending");
 
         assertCommandSuccess(command, expectedMessage, Arrays.asList(
-                BENSON, GEORGE, ALICE, FIONA, ELLE, DANIEL, CARL));
+                BENSON, ALICE, GEORGE, FIONA, ELLE, DANIEL, CARL));
     }
 
     @Test

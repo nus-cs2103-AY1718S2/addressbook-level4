@@ -100,7 +100,7 @@ public class RecordCommand extends UndoableCommand {
 
 
         ArrayList<Record> temp = new ArrayList<Record>();
-        for(int i = 0; i < patientToEdit.getRecordList().getNumberOfRecords(); i++){
+        for (int i = 0; i < patientToEdit.getRecordList().getNumberOfRecords(); i++){
             String date = patientToEdit.getRecordList().getRecordList().get(i).getDate();
             String symptom = patientToEdit.getRecordList().getRecordList().get(i).getSymptom();
             String illness = patientToEdit.getRecordList().getRecordList().get(i).getIllness();

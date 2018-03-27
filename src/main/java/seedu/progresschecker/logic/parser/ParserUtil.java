@@ -16,6 +16,7 @@ import seedu.progresschecker.model.issues.Labels;
 import seedu.progresschecker.model.issues.Milestone;
 import seedu.progresschecker.model.issues.Title;
 import seedu.progresschecker.model.person.Email;
+import seedu.progresschecker.model.person.GithubUsername;
 import seedu.progresschecker.model.person.Major;
 import seedu.progresschecker.model.person.Name;
 import seedu.progresschecker.model.person.Phone;
@@ -210,6 +211,31 @@ public class ParserUtil {
         return body.isPresent() ? Optional.of(parseBody(body.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code String username} into a {@code GithubUsername}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code username} is invalid.
+     */
+
+    public static GithubUsername parseUsername(String username) throws IllegalValueException {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
+        if (!GithubUsername.isValidUsername(trimmedUsername)) {
+            throw new IllegalValueException(GithubUsername.MESSAGE_USERNAME_CONSTRAINTS);
+        }
+        return new GithubUsername(trimmedUsername);
+    }
+
+    /**
+     * Parses a {@code Optional<String> username} into an {@code Optional<GithubUsername>}
+     *     if {@code username} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GithubUsername> parseUsername(Optional<String> username) throws IllegalValueException {
+        requireNonNull(username);
+        return username.isPresent() ? Optional.of(parseUsername(username.get())) : Optional.empty();
+    }
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.

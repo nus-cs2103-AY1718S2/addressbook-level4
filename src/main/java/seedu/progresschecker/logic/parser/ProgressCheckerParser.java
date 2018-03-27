@@ -2,11 +2,28 @@ package seedu.progresschecker.logic.parser;
 
 import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.progresschecker.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.progresschecker.logic.commands.AddDefaultTasksCommand.DEFAULT_LIST_TITLE;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.progresschecker.logic.commands.*;
+import seedu.progresschecker.logic.commands.AddCommand;
+import seedu.progresschecker.logic.commands.AddDefaultTasksCommand;
+import seedu.progresschecker.logic.commands.ClearCommand;
+import seedu.progresschecker.logic.commands.Command;
+import seedu.progresschecker.logic.commands.CreateIssue;
+import seedu.progresschecker.logic.commands.DeleteCommand;
+import seedu.progresschecker.logic.commands.EditCommand;
+import seedu.progresschecker.logic.commands.ExitCommand;
+import seedu.progresschecker.logic.commands.FindCommand;
+import seedu.progresschecker.logic.commands.HelpCommand;
+import seedu.progresschecker.logic.commands.HistoryCommand;
+import seedu.progresschecker.logic.commands.ListCommand;
+import seedu.progresschecker.logic.commands.RedoCommand;
+import seedu.progresschecker.logic.commands.SelectCommand;
+import seedu.progresschecker.logic.commands.SortCommand;
+import seedu.progresschecker.logic.commands.UndoCommand;
+import seedu.progresschecker.logic.commands.ViewCommand;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 
 /**
@@ -36,6 +53,10 @@ public class ProgressCheckerParser {
         final String commandWordInLowerCase = commandWord.toLowerCase();
         final String arguments = matcher.group("arguments");
         switch (commandWordInLowerCase) {
+
+        case AddDefaultTasksCommand.COMMAND_WORD:
+        case AddDefaultTasksCommand.COMMAND_ALIAS:
+            return new AddDefaultTasksCommand(DEFAULT_LIST_TITLE);
 
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:

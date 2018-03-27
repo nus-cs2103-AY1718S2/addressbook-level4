@@ -6,6 +6,7 @@
         <name>Alice Pauline</name>
         <phone>85355255</phone>
         <email>alice@example.com</email>
+        <username>AliceGithub</username>
         <major>Computer Science</major>
         <year>2</year>
         <tagged>friends</tagged>
@@ -14,6 +15,7 @@
         <name>Benson Meier</name>
         <phone>98765432</phone>
         <email>johnd@example.com</email>
+        <username>BensonGithub</username>
         <major>Computer Science</major>
         <year>2</year>
         <tagged>owesMoney</tagged>
@@ -23,6 +25,7 @@
         <name>Carl Kurz</name>
         <phone>95352563</phone>
         <email>heinz@example.com</email>
+        <username>CarlGithub</username>
         <major>Information Security</major>
         <year>2</year>
     </persons>
@@ -30,6 +33,7 @@
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
+        <username>DanielGithub</username>
         <major>Computer Engineering</major>
         <year>2</year>
     </persons>
@@ -37,6 +41,7 @@
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
+        <username>ElleGithub</username>
         <major>Computer Science</major>
         <year>2</year>
     </persons>
@@ -44,6 +49,7 @@
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
+        <username>FionaGithub</username>
         <major>Computer Engineering</major>
         <year>2</year>
     </persons>
@@ -51,6 +57,7 @@
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
+        <username>GeorgeGithub</username>
         <major>Computer Science</major>
         <year>2</year>
     </persons>

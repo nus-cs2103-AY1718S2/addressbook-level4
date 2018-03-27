@@ -6,6 +6,7 @@ import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_YEAR;
 
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
@@ -23,6 +24,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_USERNAME + "USERNAME "
             + PREFIX_MAJOR + "MAJOR "
             + PREFIX_YEAR + "YEAR "
             + "[" + PREFIX_TAG + "TAG]...";
@@ -32,6 +34,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_USERNAME + "USERNAME "
             + PREFIX_MAJOR + "MAJOR "
             + PREFIX_YEAR + "YEAR "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -39,6 +42,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_USERNAME + "JohnGithub "
             + PREFIX_MAJOR + "Computer Science "
             + PREFIX_YEAR + "2 "
             + PREFIX_TAG + "friends "

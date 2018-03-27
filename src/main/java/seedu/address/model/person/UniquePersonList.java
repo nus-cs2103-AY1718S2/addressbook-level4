@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -93,6 +94,22 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(replacement);
     }
+
+    /**
+     * Sorts the list based on overall rating in ascending order
+     */
+    public void sortPersonsAsc() {
+        Collections.sort(internalList, Person::compareByOverallRating);
+    }
+
+    /**
+     * Sorts the list based on overall rating in descending order
+     */
+    public void sortPersonsDesc() {
+        Collections.sort(internalList, Person::compareByOverallRating);
+        Collections.reverse(internalList);
+    }
+
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

@@ -115,6 +115,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void sortPersonListAscOrder() {
+        addressBook.sortAsc();
+        Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
+        filteredPersons.setPredicate(currPredicate);
+    }
+
+    @Override
+    public void sortPersonListDescOrder() {
+        addressBook.sortDesc();
+        Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
+        filteredPersons.setPredicate(currPredicate);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {

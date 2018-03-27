@@ -7,9 +7,10 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
  */
 public class Event {
     protected String name;
-    protected String venue;
-    protected String startTime;
-    protected String endTime;
+    private String venue;
+    private String startTime;
+    private String endTime;
+
     /**
      * Default constructor, creating a blank Event.
      */

@@ -20,10 +20,11 @@ public class WeeklyEvent extends Event {
 
     public WeeklyEvent(Module mod, Schedule schedule) {
         this.name = mod.getModuleCode();
-        this.venue = schedule.getClassNo();
+        //This part of the code is for after Schedule's getter methods are implemented
+        /*this.venue = schedule.getClassNo();
         this.startTime = schedule.getStartTime();
         this.endTime = schedule.getEndTime();
-        this.day = schedule.getDayText();
+        this.day = schedule.getDayText();*/
         this.details = null;
     }
 

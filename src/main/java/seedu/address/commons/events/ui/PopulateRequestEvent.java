@@ -7,7 +7,10 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class PopulateRequestEvent extends BaseEvent {
 
-    public final String command;
+    public final String commandPreamble;
+    public final String commandUsageMessage;
+    public final String commandTemplate;
+    public final int caretIndex;
 
     public PopulateRequestEvent(String command) {
         this.command = command;

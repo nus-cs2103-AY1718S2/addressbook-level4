@@ -78,7 +78,7 @@ public abstract class AddressBookSystemTest {
         errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
 
         waitUntilBrowserLoaded(getBrowserPanel());
-        //assertApplicationStartingStateIsCorrect();
+        assertApplicationStartingStateIsCorrect();
     }
 
     @After

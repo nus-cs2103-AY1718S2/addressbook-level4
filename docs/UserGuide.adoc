@@ -74,7 +74,7 @@ Format: `help` or `h`
 
 ==== Logging into the system: `login` or `lg` [since v1.2]
 
-Logs the user into the IMDB, given a matching username and password.
+Logs the user into the IMDB, given a matching username and password. +
 Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
 
 ==== Listing entered commands : `history` or `hi`
@@ -372,11 +372,11 @@ IMDB will be able to attach images(X-ray scans) to a patient and retrieve the im
 
 === Queue Commands
 
-The commands listed in this section are commands that do not pertain to the queue.
+The commands listed in this section are commands that pertain to the queue.
 
 ==== Adding a patient into the visiting queue with patient name: `addq` [since v1.2]
 
-Add patient into visiting queue (registration).
+Adds patient into visiting queue (registration).
 Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
 
 Examples:
@@ -389,7 +389,7 @@ John will be added at the back of the visiting queue.
 
 ==== Removing a patient from the visiting queue with patient name: `removeq` [since v1.2]
 
-Remove the first patient from the visiting queue (check-out).
+Removes the first patient from the visiting queue (check-out).
 Format: `removeq` or `rq`
 
 Examples:
@@ -406,20 +406,20 @@ The commands listed in this section are commands that pertain to the patient's a
 
 ==== Adding a medical appointment with: `addappt` [coming in v1.4]
 
-Add a medical appointment with patient name, date, time.
+Adds a medical appointment with patient name, date, time.
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
 Examples:
 
 * `addappt Betsy 19/3/2018 1000` +
-Add a medical appointment for Betsy on 19/3/2018 at 10am.
+Adds a medical appointment for Betsy on 19/3/2018 at 10am.
 
 * `aa John 23/3/2019 1430` +
-Add a medical appointment for John on 23/3/2018 at 2:30pm.
+Adds a medical appointment for John on 23/3/2018 at 2:30pm.
 
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
 
-Delete a medical appointment of the patient.
+Deletes a medical appointment of the patient.
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 
 Examples:

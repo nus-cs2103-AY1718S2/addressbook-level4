@@ -12,7 +12,13 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B2/main/tree/master
 
-By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Mar 2018`      Licence: `MIT`
+
+== Intro
+
+Welcome to contactHeRo developer guide! This guide contains all the information you need to quickly get started in developing contactHeRo. +
+If you notice any mistakes or if there are any missing vital information then please let us know via contactHeRo@gmail.com. +
+Let's get started!
 
 == Setting up
 
@@ -431,7 +437,6 @@ _Figure 31 : Wireframe for Contact Details Panel._
 **Alternative 3 :** Show the `ContactDetailsDisplay` and `LinkedIn` as completely independent windows without tabs. +
 **Pros**: Completely isolates the `select` and `linkedIn` commands. +
 **Cons**: Removes the connectivity between a person's contact information and LinkedIn profile. Also, in the current implementation one is easily accessible from another, just by manually switching tabs which would not be possible with this alternative.
-1
 //end::details[]
 
 === [Proposed] Data Encryption
@@ -529,7 +534,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 === Running Tests
 
-There are three ways to run tests.
+There are three ways for you to run tests.
 
 [TIP]
 The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.

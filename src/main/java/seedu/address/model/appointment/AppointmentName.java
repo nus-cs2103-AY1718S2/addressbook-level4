@@ -8,7 +8,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents an appointment's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class ApptName {
+public class AppointmentName {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "appointment names should only contain alphanumeric characters and spaces, and it should not be blank";
@@ -22,11 +22,11 @@ public class ApptName {
     public final String name;
 
     /**
-     * Constructs a {@code ApptName}.
+     * Constructs a {@code AppointmentName}.
      *
      * @param name A valid name.
      */
-    public ApptName(String name) {
+    public AppointmentName(String name) {
         requireNonNull(name);
         checkArgument(isValidName(name), MESSAGE_NAME_CONSTRAINTS);
         this.name = name;
@@ -48,8 +48,8 @@ public class ApptName {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ApptName // instanceof handles nulls
-                && this.name.equals(((ApptName) other).name)); // state check
+                || (other instanceof AppointmentName // instanceof handles nulls
+                && this.name.equals(((AppointmentName) other).name)); // state check
     }
 
     @Override

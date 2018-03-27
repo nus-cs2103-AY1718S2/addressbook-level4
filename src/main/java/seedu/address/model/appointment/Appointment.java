@@ -3,7 +3,6 @@ package seedu.address.model.appointment;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.List;
 import java.util.Objects;
 
 import javafx.collections.ObservableList;
@@ -16,15 +15,15 @@ import seedu.address.model.person.UniquePersonList;
  */
 public class Appointment {
 
-    private final ApptName name;
-    private final ApptTime time;
+    private final AppointmentName name;
+    private final AppointmentTime time;
 
     private final UniquePersonList persons;
 
     /**
      * Every field must be present and not null.
      */
-    public Appointment(ApptName name, ApptTime time, UniquePersonList persons) {
+    public Appointment(AppointmentName name, AppointmentTime time, UniquePersonList persons) {
         requireAllNonNull(name, time);
         this.name = name;
         this.time = time;
@@ -32,11 +31,11 @@ public class Appointment {
     }
 
 
-    public ApptName getName() {
+    public AppointmentName getName() {
         return name;
     }
 
-    public ApptTime getTime() {
+    public AppointmentTime getTime() {
         return time;
     }
 

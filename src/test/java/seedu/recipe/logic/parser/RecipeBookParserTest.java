@@ -27,10 +27,13 @@ import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
 import seedu.recipe.logic.commands.RedoCommand;
 import seedu.recipe.logic.commands.SelectCommand;
+import seedu.recipe.logic.commands.TagCommand;
 import seedu.recipe.logic.commands.UndoCommand;
+import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
 import seedu.recipe.testutil.EditRecipeDescriptorBuilder;
 import seedu.recipe.testutil.RecipeBuilder;
 import seedu.recipe.testutil.RecipeUtil;
@@ -115,6 +118,25 @@ public class RecipeBookParserTest {
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_RECIPE), command);
     }
+
+    //@@author nicholasangcx
+    @Test
+    public void parseCommand_tag() throws Exception {
+        List<String> keywords = Arrays.asList("friends", "family", "owesMoney");
+        TagCommand command = (TagCommand) parser.parseCommand(
+                TagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new TagCommand(new TagContainsKeywordsPredicate(keywords),
+                keywords.toArray(new String[0])), command);
+    }
+
+    @Test
+    public void parseCommand_upload() throws Exception {
+        String filename = "RecipeBook";
+        UploadCommand command = (UploadCommand) parser.parseCommand(
+                UploadCommand.COMMAND_WORD + " " + filename);
+        assertEquals(new UploadCommand(filename + ".xml"), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

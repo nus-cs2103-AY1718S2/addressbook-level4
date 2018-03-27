@@ -299,6 +299,27 @@ The *`redo`* command fails as there are no *`undo`* commands executed previously
 *`redo`* (reapplies the *`clear`* command) +
 // end::undoredo[]
 
+=== Uploading all recipes : *`upload`*
+
+Uploads the xml file containing data of all recipes to Dropbox, giving it the specified filename.
+Format: *`upload FILENAME`*
+
+****
+* *_FILENAME_* must not start with / or \ or have consecutie slashes.
+* *_FILENAME_* will be concatenated with .xml to maintain formatting.
+* If *_FILENAME_* already exists in the user's Dropbox, one of two things will happen:
+** File will not be uploaded if contents of the two files are similar.
+** File will be uploaded and renamed to *_FILENAME(1..)_* if contents of the two files are different.
+****
+
+Examples:
+
+* *`upload RecipeBook`* +
+Data file will be uploaded to Dropbox with the name RecipeBook.xml.
+* Perform any *`add`*, *`delete`* or *`edit`* commands.
+* *`upload RecipeBook`* +
+Updated data file will be uploaded to Dropbox with the name RecipeBook(1).xml.
+
 === Clearing all entries: *`clear`*
 
 Clears all entries from the recipe book.
@@ -352,6 +373,10 @@ E.g. *`delete 3`*
 E.g. *`edit 2 n/Chicken pizza ing/flour,chicken,pepper`*
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 E.g. *`find Chicken Pizza`*
+* *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
+E.g. *`tag chicken favourites`*
+* *Upload* : `upload FILENAME` +
+E.g. *`upload RecipeBook`*
 * *List* : *`list`*
 * *Help* : *`help`*
 * *Select* : `select INDEX` +

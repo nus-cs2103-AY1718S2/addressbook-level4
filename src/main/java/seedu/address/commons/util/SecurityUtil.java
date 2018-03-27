@@ -27,18 +27,14 @@ import seedu.address.commons.exceptions.WrongPasswordException;
  */
 public class SecurityUtil {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private static final String DEFAULT_PASSWORD = "test";
+    private static final String DEFAULT_PASSWORD = "";
     private static final String XML = "xml";
 
     /**
-     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
-     *
-     * @param file Points to a valid file containing data
-     * @throws IOException thrown if cannot open file
+     * Don't encrypt if no password provided
      */
-    public static void encrypt(File file)throws IOException, WrongPasswordException {
-        byte[] hashedPassword = hashPassword(DEFAULT_PASSWORD);
-        encrypt(file, hashedPassword);
+    public static void encrypt(File file) {
+        return;
     }
 
     /**
@@ -60,9 +56,6 @@ public class SecurityUtil {
      */
     public static void encrypt(File file, byte[] password)throws IOException, WrongPasswordException {
         try {
-            if (password == null) {
-                return;
-            }
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretAesKey);
@@ -95,9 +88,6 @@ public class SecurityUtil {
      */
     public static void decrypt(File file, byte[] password) throws IOException, WrongPasswordException {
         try {
-            if (password == null) {
-                return;
-            }
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretAesKey);

@@ -5,11 +5,10 @@ public class Template {
     private final String title;
     private final String message;
 
-    public Template(){
-        this.purpose = "coldEmail"; // in camelCase
-        this.title = "Meet up over Coffee";
-        this.message = "Hey, I am from Addsurance and would like you ask if you are interested in planning your" +
-                "finances with us. Would you care to meet over coffee in the next week or so?";
+    public Template(String purpose, String title, String message){
+        this.purpose = purpose;
+        this.title = title;
+        this.message = message;
     }
 
     public String getMessage() {

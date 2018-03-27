@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.email.Template;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -54,6 +55,14 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    //@@author ng95junwei
+
+    Template selectTemplate(String search);
+
+    ObservableList<Template> getAllTemplates();
+
+    //@@author
 
     //@@author jlks96
     /** Deletes the given appointment. */

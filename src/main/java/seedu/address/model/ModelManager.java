@@ -16,6 +16,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.email.Template;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -113,7 +114,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
     //=========== Filtered Person List Accessors =============================================================
+    //@@author ng95junwei
+    @Override
+    public ObservableList<Template> getAllTemplates() {
+        return addressBook.getAllTemplates().asObservableList();
+    }
 
+    @Override
+    public Template selectTemplate(String search) {
+        ObservableList<Template> templates = getAllTemplates();
+        System.out.println("called");
+        Template template = templates.get(0);
+        return template;
+    }
+
+    //@@author
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
      * {@code addressBook}

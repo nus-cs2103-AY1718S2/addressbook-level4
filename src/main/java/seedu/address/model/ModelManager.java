@@ -115,6 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateToDo(target, editedToDo);
     }
 
+    @Override
     public synchronized void addGroup(Group group) throws DuplicateGroupException {
         addressBook.addGroup(group);
         indicateAddressBookChanged();

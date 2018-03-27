@@ -412,7 +412,7 @@ Different tags will perform different colours for clarification
 Change the theme to "dark" or "bright". +
 Format: `changeTheme THEME_CATEGORY`
 
-Example: 
+Example:
 
 * `changeTheme bright` +
 Set Employees Tracker's theme to be bright theme.

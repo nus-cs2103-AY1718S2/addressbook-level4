@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.UniqueJobList;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueJobList jobs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        jobs = new UniqueJobList();
     }
 
     public AddressBook() {}
@@ -59,6 +64,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setJobs(List<Job> jobs) throws DuplicateJobException {
+        this.jobs.setJobs(jobs);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -68,11 +77,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-
+        List<Job> syncedJobList = newData.getJobList().stream()
+                //.map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
         try {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+
+        try {
+            setJobs(syncedJobList);
+        } catch (DuplicateJobException e) {
+            throw new AssertionError("AddressBooks should not have duplicate jobs");
         }
     }
 
@@ -133,7 +150,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getProfilePicture(), correctTagReferences);
+                person.getCurrentPosition(), person.getCompany(), person.getProfilePicture(), correctTagReferences);
     }
 
     /**
@@ -174,10 +191,26 @@ public class AddressBook implements ReadOnlyAddressBook {
                 }
             }
             updatePerson(person, new Person(person.getName(),
-                    person.getPhone(), person.getEmail(), person.getAddress(), person.getProfilePicture(),
-                    afterRemovedTagSet.toSet()));
+                    person.getPhone(), person.getEmail(), person.getAddress(), person.getCurrentPosition(),
+                    person.getCompany(), person.getProfilePicture(), afterRemovedTagSet.toSet()));
         }
         tags.remove(t);
+    }
+
+    //// job-level operations
+
+    /**
+     * Adds a job to the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     *
+     * @throws DuplicateJobException if an equivalent job already exists.
+     */
+    public void addJob(Job job) throws DuplicateJobException {
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        jobs.add(job);
     }
 
     /// util methods
@@ -199,16 +232,22 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Job> getJobList() {
+        return jobs.asObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.jobs.equals(((AddressBook) other).jobs));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, jobs);
     }
 }

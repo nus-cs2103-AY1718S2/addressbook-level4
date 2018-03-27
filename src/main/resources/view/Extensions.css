@@ -27,13 +27,13 @@
 
 .details-key {
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
     -fx-text-fill: white;
     -fx-text-alignment: left;
 }
 
 .details-value {
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
     -fx-text-fill: white;
     -fx-text-alignment: left;
 }

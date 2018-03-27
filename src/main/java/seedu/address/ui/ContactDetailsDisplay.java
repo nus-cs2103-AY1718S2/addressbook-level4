@@ -47,6 +47,7 @@ public class ContactDetailsDisplay extends UiPart<Region> {
      */
     private void showPersonDetails(Person person) {
 
+        name.setWrapText(true);
         name.setText(person.getName().fullName);
         imageView.setImage(person.getProfilePicture().getImage());
 
@@ -60,6 +61,7 @@ public class ContactDetailsDisplay extends UiPart<Region> {
 
         keys.setItems(FXCollections.observableList(keysList));
         values.setItems(FXCollections.observableList(valuesList));
+        System.out.println(values);
     }
 
     /**
@@ -70,6 +72,8 @@ public class ContactDetailsDisplay extends UiPart<Region> {
         Label valueLabel = new Label(value);
         keyLabel.getStyleClass().add("details-key");
         valueLabel.getStyleClass().add("details-value");
+        keyLabel.setWrapText(true);
+        valueLabel.setWrapText(true);
 
         keysList.add(keyLabel);
         valuesList.add(valueLabel);

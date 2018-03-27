@@ -2,37 +2,21 @@ package seedu.address.model.event;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
-import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_F1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_VENUE_F1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_VENUE_NDP;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_DATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_END_TIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_START_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_DATE_F1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_DATE_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_F1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_END_TIME_F1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_END_TIME_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_DESC_F1;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_DESC_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_VENUE_DESC_F1;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_VENUE_DESC_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_DESC_F1;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_DESC_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_START_TIME_DESC_F1;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_START_TIME_DESC_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_END_TIME_DESC_F1;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_END_TIME_DESC_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_VENUE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_DATE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_START_TIME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_END_TIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_F1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_NDP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_F1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_NDP;
 
 import org.junit.Test;
 
-import seedu.address.model.event.Event;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.EventBuilder;
 

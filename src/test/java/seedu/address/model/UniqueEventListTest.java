@@ -4,13 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_VENUE_NDP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.event.Event;
 import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.testutil.EventBuilder;

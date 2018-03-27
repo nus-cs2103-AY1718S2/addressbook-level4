@@ -44,7 +44,7 @@ public class TypicalPersons {
             .withEmail("heinz@example.com").withAddress("wall street").withCurrentPosition("Marketing Intern")
             .withCompany("Facebook").withProfilePicture("./src/test/data/images/carl.jpeg").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withCurrentPosition("Economics Student")
+        .withEmail("cornelia@example.com").withAddress("10th street").withCurrentPosition("Economics Student")
             .withCompany("NTU").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").withCurrentPosition("HR Associate")

@@ -77,8 +77,8 @@ public class RecordCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Patient patientInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(patientInFilteredList).withRecordList("1 in/1 " +
-                "d/test s/test i/test t/test").build();
+        Patient editedPatient = new PatientBuilder(patientInFilteredList).withRecordList("1 in/1 "
+                + "d/test s/test i/test t/test").build();
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("test", "test", "test", "test"));
 
         String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);

@@ -9,8 +9,9 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.email.exceptions.DuplicateTemplateException;
+import seedu.address.model.email.exceptions.TemplateNotFoundException;
+
 
 //@@author ng95junwei
 /**
@@ -27,9 +28,9 @@ public class UniqueTemplateList implements Iterable<Template> {
     /**
      * Returns one Template closest to the template searched for
      */
-    public Template search(String search) throws TemplateNotFoundException{
-        for(Template t : internalList){
-            if(t.getPurpose().contains(search)){
+    public Template search(String search) throws TemplateNotFoundException {
+        for (Template t : internalList) {
+            if (t.getPurpose().contains(search)) {
                 return t;
             }
         }

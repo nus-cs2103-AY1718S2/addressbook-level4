@@ -14,8 +14,6 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import seedu.address.model.email.Template;
-
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -171,14 +169,14 @@ public class GmailUtil {
      * @param recipientEmail
      * @param ccEmail
      * @param fromEmail
-     * @param template
+     * @param title
+     * @param message
      * @throws IOException
      * @throws MessagingException
      */
-    public static void send(Gmail service, String recipientEmail, String ccEmail, String fromEmail, Template template
-    ) throws IOException, MessagingException {
-        Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, template.getTitle(),
-                template.getMessage()));
+    public static void send(Gmail service, String recipientEmail, String ccEmail, String fromEmail, String title,
+                            String message) throws IOException, MessagingException {
+        Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, title, message));
         service.users().messages().send("me", m).execute();
     }
 

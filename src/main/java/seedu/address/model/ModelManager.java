@@ -122,7 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Template selectTemplate(String search) throws TemplateNotFoundException{
+    public Template selectTemplate(String search) throws TemplateNotFoundException {
         return addressBook.getAllTemplates().search(search);
     }
 

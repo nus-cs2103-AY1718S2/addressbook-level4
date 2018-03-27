@@ -25,6 +25,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.email.Template;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -120,6 +121,20 @@ public class AddCommandTest {
         public void deletePerson(Person target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
+
+        //@@author ng95junwei
+        @Override
+        public ObservableList<Template> getAllTemplates() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Template selectTemplate(String search) {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
 
         //@@author jlks96
         @Override

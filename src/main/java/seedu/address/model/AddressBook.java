@@ -79,21 +79,25 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author ng95junwei
 
-    private static List<Template> generateTemplates(){
+    /**
+     * TBD replace with DB seed.
+     * @return a List of template to initialize AddressBook with
+     */
+    private static List<Template> generateTemplates() {
         List<Template> list = new ArrayList<>();
-        Template template1 = new Template("coldEmail","Meet up over Coffee",
-                "Hey, I am from Addsurance and would like you ask if you are interested in planning your" +
-                        "finances with us. Would you care to meet over coffee in the next week or so?");
-        Template template2 = new Template("followUpEmail","Follow up from last week",
-                "Hey, we met last week and I was still hoping if you would like to leave your " +
-                        "finances with us at Addsurance. Would you care to meet over coffee in the next week or so" +
-                        "to discuss further?");
+        Template template1 = new Template("coldEmail", "Meet up over Coffee",
+                "Hey, I am from Addsurance and would like you ask if you are interested in planning your"
+                        + " finances with us. Would you care to meet over coffee in the next week or so?");
+        Template template2 = new Template("followUpEmail", "Follow up from last week",
+                "Hey, we met last week and I was still hoping if you would like to leave your "
+                        + "finances with us at Addsurance. Would you care to meet over coffee in the next week or so"
+                        + " to discuss further?");
         list.add(template1);
         list.add(template2);
         return list;
     }
 
-    public void setTemplates() throws DuplicateTemplateException{
+    public void setTemplates() throws DuplicateTemplateException {
         this.templates.setTemplates(generateTemplates());
     }
 
@@ -120,7 +124,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicateAppointmentException e) {
             throw new AssertionError("AddressBooks should not have duplicate appointments");
         } catch (DuplicateTemplateException e) {
-            throw new AssertionError( "AddressBooks should not have duplicate templates");
+            throw new AssertionError("AddressBooks should not have duplicate templates");
         }
     }
 

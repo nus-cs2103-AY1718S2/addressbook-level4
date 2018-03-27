@@ -14,7 +14,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.insuranceCalendar.AppointmentEntry;
+import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;

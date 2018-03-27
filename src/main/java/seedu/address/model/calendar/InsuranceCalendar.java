@@ -1,13 +1,17 @@
-package seedu.address.model.insuranceCalendar;
+package seedu.address.model.calendar;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.model.Interval;
 
-import seedu.address.model.person.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
+import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
 
 
 /**
@@ -62,6 +66,40 @@ public class InsuranceCalendar {
         appointmentEntries.add(entry);
 
     }
+
+    /**
+     * Remove appointments found with the given keywords in the calendar.
+     *
+     * @throws AppointmentNotFoundException if the appointment to add is a duplicate of an existing appointments.
+     */
+    public void removeAppointments(String searchText) throws AppointmentNotFoundException {
+
+        List<Entry<?>> foundEntires = calendar.findEntries(searchText);
+        if (foundEntires.isEmpty()) {
+            throw new AppointmentNotFoundException();
+        }
+
+        for (Entry entry: foundEntires) {
+            removeAppointmentEntry (entry);
+        }
+        calendar.removeEntries(foundEntires);
+
+
+    }
+
+    /**
+     * remove a given entry in the appointmentEntries
+     *
+     */
+    public void removeAppointmentEntry(Entry entryToCheck) {
+
+        String givenTitle = entryToCheck.getTitle();
+        Interval givenInterval = entryToCheck.getInterval();
+        AppointmentEntry apppointmentEntryToCheck = new AppointmentEntry(givenTitle, givenInterval);
+        appointmentEntries.remove(apppointmentEntryToCheck);
+    }
+
+
 
     /**
      * Returns true if the calender contains an equivalent appointment as the given argument.

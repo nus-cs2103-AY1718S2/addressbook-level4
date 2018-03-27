@@ -14,11 +14,12 @@ import java.util.stream.Collectors;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.insuranceCalendar.AppointmentEntry;
-import seedu.address.model.insuranceCalendar.InsuranceCalendar;
+import seedu.address.model.calendar.AppointmentEntry;
+import seedu.address.model.calendar.InsuranceCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
+import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -99,6 +100,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
         calendar.addAppointment(entry);
     }
+
+    /**
+     * remove appointment entries related to the searchText in the calendar.
+     *
+     * @throws AppointmentNotFoundException if an equivalent appointment already exists.
+     */
+    public void removeAppointments(String searchText) throws AppointmentNotFoundException {
+        calendar.removeAppointments(searchText);
+    }
+
     //// person-level operations
 
     /**

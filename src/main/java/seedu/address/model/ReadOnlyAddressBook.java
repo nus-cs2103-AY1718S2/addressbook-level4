@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
 
-import seedu.address.model.insuranceCalendar.AppointmentEntry;
-import seedu.address.model.insuranceCalendar.InsuranceCalendar;
+import seedu.address.model.calendar.AppointmentEntry;
+import seedu.address.model.calendar.InsuranceCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 

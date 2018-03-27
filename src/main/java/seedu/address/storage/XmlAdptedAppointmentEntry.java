@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import com.calendarfx.model.Interval;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.insuranceCalendar.AppointmentEntry;
+import seedu.address.model.calendar.AppointmentEntry;
 
 /**
  * JAXB-friendly version of the Appointment Entry.

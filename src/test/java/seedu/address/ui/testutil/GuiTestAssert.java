@@ -23,6 +23,7 @@ public class GuiTestAssert {
 
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     * For {@code PersonCardHandle}
      */
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
@@ -34,6 +35,16 @@ public class GuiTestAssert {
 
         expectedCard.getTags().forEach(tag ->
                 assertEquals(expectedCard.getTagStyleClasses(tag), actualCard.getTagStyleClasses(tag)));
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     * For {@code ToDoCardHandle}
+     */
+    public static void assertCardEquals(ToDoCardHandle expectedCard, ToDoCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getContent(), actualCard.getContent());
+        assertEquals(expectedCard.getStatus(), actualCard.getStatus());
     }
 
     /**

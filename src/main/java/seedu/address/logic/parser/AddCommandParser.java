@@ -58,7 +58,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Remark remark = new Remark(""); //add command does not allow for adding of remarks
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Patient patient = new Patient(name, nric, phone, email, address, dob, bloodType, remark, tagList);
+            Patient patient = new Patient(name, nric, phone, email, address, dob, bloodType, remark, tagList, null);
 
             return new AddCommand(patient);
         } catch (IllegalValueException ive) {

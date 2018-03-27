@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -17,8 +18,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowPatientAppointmentRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.appointment.Appointment;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -38,6 +41,7 @@ public class MainWindow extends UiPart<Stage> {
     private PatientListPanel patientListPanel;
     private Config config;
     private UserPrefs prefs;
+    private PatientAppointmentPanel patientAppointmentPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -196,5 +200,18 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+    @Subscribe
+    private void handleShowPatientAppointment(ShowPatientAppointmentRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleShowPatientAppointment(event.data.getPastAppointmentList(),
+                event.data.getUpcomingAppointmentList());
+    }
+
+    private void handleShowPatientAppointment(ObservableList<Appointment> pastAppointments,
+                                              ObservableList<Appointment> upcomingAppointment) {
+
+        patientAppointmentPanel = new PatientAppointmentPanel(pastAppointments, upcomingAppointment);
+        browserPlaceholder.getChildren().add(patientAppointmentPanel.getRoot());
     }
 }

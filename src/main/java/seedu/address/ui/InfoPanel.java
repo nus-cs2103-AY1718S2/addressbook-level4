@@ -66,10 +66,10 @@ public class InfoPanel extends UiPart<Region> {
     private void handleBirthdayListEvent(BirthdayListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        //birthdayPlaceholder.getChildren().removeAll();
-        //birthdayList = new BirthdayList();
+        birthdayPlaceholder.getChildren().removeAll();
+        birthdayList = new BirthdayList();
         birthdayList.loadList(event.getBirthdayList());
-        //birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         birthdayPlaceholder.toFront();
     }
 }

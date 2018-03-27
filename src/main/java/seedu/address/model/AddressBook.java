@@ -241,8 +241,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
      *
-     * @throws DuplicateAppointmentException if updating the appointment's details causes the appointment to be equivalent to
-     *      another existing appointment in the list.
+     * @throws DuplicateAppointmentException if updating the appointment's details
+     *      causes the appointment to be equivalent toanother existing appointment in the list.
      * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
      */
     public void updateAppointment(Appointment target, Appointment editedAppointment)

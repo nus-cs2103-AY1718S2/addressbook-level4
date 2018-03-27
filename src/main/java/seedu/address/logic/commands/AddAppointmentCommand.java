@@ -27,7 +27,8 @@ public class AddAppointmentCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addappointment";
     public static final String COMMAND_ALIAS = "aa";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to the address book, persons are identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds an appointment to the address book, persons are identified "
             + "by the index number used in the last person listing. "
             + "Parameters: "
             + "[INDEX (must be a positive integer)]... "

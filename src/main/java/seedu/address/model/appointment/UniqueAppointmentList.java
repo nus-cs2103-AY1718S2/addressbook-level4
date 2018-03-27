@@ -10,8 +10,8 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 
 /**
  * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
@@ -49,7 +49,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     /**
      * Replaces the appointment {@code target} in the list with {@code editedAppointment}.
      *
-     * @throws DuplicateAppointmentException if the replacement is equivalent to another existing appointment in the list.
+     * @throws DuplicateAppointmentException if the replacement is equivalent
+     *         to another existing appointment in the list.
      * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
      */
     public void setAppointment(Appointment target, Appointment editedAppointment)

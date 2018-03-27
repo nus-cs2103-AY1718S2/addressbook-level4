@@ -54,8 +54,8 @@ public class ParserUtil {
 
     //@@author ongkuanyang
     /**
-     * Parses {@code oneBasedIndexes} into an {@code List<Index>} and returns it. Leading and trailing whitespaces will be
-     * trimmed. oneBasedIndexes is a space-separated String of indexes.
+     * Parses {@code oneBasedIndexes} into an {@code List<Index>} and returns it.
+     * Leading and trailing whitespaces will be trimmed. oneBasedIndexes is a space-separated String of indexes.
      * @throws IllegalValueException if any the specified indexes is invalid (not non-zero unsigned integer).
      */
     public static List<Index> parseIndexes(String oneBasedIndexes) throws IllegalValueException {
@@ -117,7 +117,11 @@ public class ParserUtil {
 
         Pattern pattern = Pattern.compile(DATETIME_REGEX);
         Matcher matcher = pattern.matcher(trimmedDatetime);
-        int year, month, day, hour, minute;
+        int year;
+        int month;
+        int day;
+        int hour;
+        int minute;
 
         if (matcher.matches()) {
             year = Integer.parseInt(matcher.group(1));

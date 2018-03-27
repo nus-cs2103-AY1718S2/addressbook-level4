@@ -43,8 +43,8 @@ public interface Model {
     /**
      * Replaces the given appointment {@code target} with {@code editedAppointment}.
      *
-     * @throws DuplicateAppointmentException if updating the appointment's details causes the apppointment to be equivalent to
-     *      another existing appointment in the list.
+     * @throws DuplicateAppointmentException if updating the appointment's details
+     *      causes the apppointment to be equivalent to another existing appointment in the list.
      * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
      */
     void updateAppointment(Appointment target, Appointment editedAppointment)

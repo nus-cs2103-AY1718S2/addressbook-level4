@@ -18,8 +18,8 @@ import java.time.format.DateTimeFormatter;
 public class AppointmentTime {
 
     public static final String MESSAGE_TIME_CONSTRAINTS =
-            "Year, month, day, hour and minute should constitute a valid date and time. " +
-            "Timezone should be of the form '{area}/{city}', such as 'Europe/Paris' or 'America/New_York'";
+            "Year, month, day, hour and minute should constitute a valid date and time. "
+            + "Timezone should be of the form '{area}/{city}', such as 'Europe/Paris' or 'America/New_York'";
 
     public final ZonedDateTime time;
 

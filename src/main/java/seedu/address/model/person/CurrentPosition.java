@@ -10,13 +10,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class CurrentPosition {
 
     public static final String MESSAGE_CURRENT_POSITION_CONSTRAINTS =
-            "Person's current position can take any values, and it should not be blank";
+            "Person's current position should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
      * The first character of the current position must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String CURRENT_POSITION_VALIDATION_REGEX = "[^\\s].*";
+    public static final String CURRENT_POSITION_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public final String value;
 

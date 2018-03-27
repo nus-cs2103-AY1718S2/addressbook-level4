@@ -39,8 +39,8 @@ public class XmlUtilTest {
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
-    private static final String VALID_CURRENT_POSITION = "Software Developer";
-    private static final String VALID_COMPANY = "ABC Tech";
+    private static final String VALID_CURRENT_POSITION = "Software Engineer";
+    private static final String VALID_COMPANY = "Google";
     private static final String VALID_PROFILE_PICTURE = "./src/test/data/images/hans.jpeg";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 

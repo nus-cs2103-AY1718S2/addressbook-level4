@@ -22,7 +22,7 @@ import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.Storage;
 
 /**
- * The UI component that is responsible for receiving user command inputs.
+ * The UI component that is responsible for receiving user password inputs.
  */
 public class PasswordBox extends UiPart<Region> {
 
@@ -35,7 +35,7 @@ public class PasswordBox extends UiPart<Region> {
     private final Model model;
 
     @FXML
-    private PasswordField commandTextField;
+    private PasswordField passwordTextField;
 
     public PasswordBox(Storage storage, Model model) {
         super(FXML);
@@ -44,7 +44,7 @@ public class PasswordBox extends UiPart<Region> {
         this.model = model;
 
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        passwordTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
     }
 
     /**
@@ -58,29 +58,18 @@ public class PasswordBox extends UiPart<Region> {
         }
     }
 
-    /**
-     * Sets {@code CommandBox}'s text field with {@code text} and
-     * positions the caret to the end of the {@code text}.
-     */
-    private void replaceText(String text) {
-        commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
-    }
 
     /**
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleCommandInputChanged() {
+    private void handlePasswordInputChanged() {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
-        String input = commandTextField.getText();
+        String input = passwordTextField.getText();
         try {
-            commandTextField.setText("");
+            passwordTextField.setText("");
             addressBookOptional = storage.readAddressBook(new Password(input));
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
-            }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
             model.resetData(initialData);
             raise(new PasswordCorrectEvent());
@@ -94,21 +83,20 @@ public class PasswordBox extends UiPart<Region> {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
         }
-        System.out.println(commandTextField.getText());
     }
 
     /**
-     * Sets the command box style to use the default style.
+     * Sets the password box style to use the default style.
      */
     private void setStyleToDefault() {
-        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        passwordTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
     /**
-     * Sets the command box style to indicate a failed command.
+     * Sets the password box style to indicate a wrong password.
      */
     private void setStyleToIndicateCommandFailure() {
-        ObservableList<String> styleClass = commandTextField.getStyleClass();
+        ObservableList<String> styleClass = passwordTextField.getStyleClass();
 
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;

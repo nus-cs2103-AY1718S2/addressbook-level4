@@ -99,6 +99,7 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && aliases.equals(otherAb.aliases);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && aliases.equals(otherAb.aliases)
+                && password.equals(otherAb.password);
     }
 }

@@ -126,21 +126,24 @@ public class DistanceCommandTest {
         }
     }
 
-    private void assertTwoPersonExecutionSuccess(Person person_origin, Index index_origin,
-                                                 Person person_destination, Index index_destination) {
-        DistanceCommand distanceCommand = prepareTwoPersonsCommand(index_origin, index_destination);
+    /**
+     * Executes a {@code DistanceCommand} with the given {@code persons and indexes}
+     */
+    private void assertTwoPersonExecutionSuccess(Person personAtOrigin, Index originIndex,
+                                                 Person personAtDestination, Index destinationIndex) {
+        DistanceCommand distanceCommand = prepareTwoPersonsCommand(originIndex, destinationIndex);
 
         try {
             CommandResult commandResult = distanceCommand.execute();
-            String address_origin = person_origin.getAddress().toString();
-            String address_destination = person_destination.getAddress().toString();
-            String name_origin = person_origin.getName().fullName;
-            String name_destination = person_destination.getName().fullName;
+            String addressOrigin = personAtOrigin.getAddress().toString();
+            String addressDestination = personAtDestination.getAddress().toString();
+            String nameOrigin = personAtOrigin.getName().fullName;
+            String nameDestination = personAtDestination.getName().fullName;
             GetDistance route = new GetDistance();
-            Double distance = route.getDistance(address_origin, address_destination);
+            Double distance = route.getDistance(addressOrigin, addressDestination);
 
             assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_PERSON_SUCCESS,
-                    name_origin, name_destination, distance),
+                    nameOrigin, nameDestination, distance),
                     commandResult.feedbackToUser);
         } catch (Exception ce) {
             System.out.println(ce.getMessage());
@@ -176,8 +179,8 @@ public class DistanceCommandTest {
     /**
      * Returns a {@code DistanceCommand} with two parameters {@code index}.
      */
-    private DistanceCommand prepareTwoPersonsCommand(Index index_origin, Index index_destination) {
-        DistanceCommand distanceCommand = new DistanceCommand(index_origin, index_destination);
+    private DistanceCommand prepareTwoPersonsCommand(Index originIndex, Index destinationIndex) {
+        DistanceCommand distanceCommand = new DistanceCommand(originIndex, destinationIndex);
         distanceCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return distanceCommand;
     }

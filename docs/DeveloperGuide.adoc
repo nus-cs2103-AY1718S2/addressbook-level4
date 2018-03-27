@@ -16,7 +16,7 @@ By: `Team W09-B2`      Since: `Mar 2018`      Licence: `MIT`
 
 == Intro
 
-Welcome to contactHeRo developer guide. This guide aims to contain all the information required to quickly get you to start developing contactHeRo. +
+Welcome to contactHeRo developer guide! This guide contains all the information you need to quickly get started in developing contactHeRo. +
 If you notice any mistakes or if there are any missing vital information then please let us know via contactHeRo@gmail.com. +
 Let's get started!
 

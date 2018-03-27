@@ -135,7 +135,7 @@ public class CommandBox extends UiPart<Region> {
 
     @Subscribe
     private void handlePopulateRequestEvent(PopulateRequestEvent event) {
-        replaceText(event.command);
+        replaceText(event.commandTemplate, event.caretIndex);
     }
 
     /**

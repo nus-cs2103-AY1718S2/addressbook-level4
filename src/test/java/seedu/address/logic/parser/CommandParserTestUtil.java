@@ -39,21 +39,4 @@ public class CommandParserTestUtil {
             assertEquals(expectedMessage, pe.getMessage());
         }
     }
-
-    /**
-     * Asserts that the parsing of alias word if is command wordis unsuccessful and the error message
-     * equals to {@code expectedMessage}.
-     */
-    public static void assertParseAliasWord(Parser parser, List<String> commands) {
-        //testing alias that it is not a command word
-        String message = String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
-                AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION);
-        int length = commands.size();
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
-                String command = commands.get(i) + " " + commands.get(j);
-                assertParseFailure(parser, command, message);
-            }
-        }
-    }
 }

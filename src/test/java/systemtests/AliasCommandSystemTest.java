@@ -48,11 +48,11 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Alias toAdd) {
         Model expectedModel = getModel();
-//        try {
-//            expectedModel.addAlias(toAdd);
-//        } catch (DuplicateAliasException dpe) {
-//            throw new IllegalArgumentException("toAdd already exists in the model.");
-//        }
+        try {
+            expectedModel.addAlias(toAdd);
+        } catch (DuplicateAliasException dpe) {
+            throw new IllegalArgumentException("toAdd already exists in the model.");
+        }
         String expectedResultMessage = String.format(AliasCommand.MESSAGE_SUCCESS, toAdd);
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);

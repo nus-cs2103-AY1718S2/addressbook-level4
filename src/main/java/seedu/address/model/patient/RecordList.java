@@ -35,7 +35,7 @@ public class RecordList {
         this.numRecord = recordList.size();
     }
 
-    public RecordList(String string) throws ParseException { //placeholder code
+    public RecordList(String string) throws ParseException {
         this.recordList = new ArrayList<Record>();
         String[] lines = string.split("\\r?\\n");
         for (int i = 0; i < lines.length; i++) {
@@ -76,8 +76,11 @@ public class RecordList {
     /**
      * Returns true if all fields of record are non-null.
      */
-    public static boolean isValidRecord(RecordList test) {
-        requireAllNonNull(test, test.getNumberOfRecords(), test.getRecordList());
+    public static boolean isValidRecordList(RecordList test) {
+        requireAllNonNull(test, test.getNumberOfRecords(), test);
+        for (int i = 0; i < test.getNumberOfRecords(); i++) {
+            requireAllNonNull(test.getRecordList().get(i));
+        }
         return true;
     }
 

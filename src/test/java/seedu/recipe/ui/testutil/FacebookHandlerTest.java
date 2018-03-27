@@ -69,9 +69,8 @@ public class FacebookHandlerTest {
     }
 
     /**
-     * Returns true if Computer has Internet connection.
+     * Returns true if computer has internet connectivity.
      */
-    //https://sqa.stackexchange.com/questions/6036/how-to-check-my-pc-is-having-internet-connection-using-java
     private boolean hasInternetConnection() {
         try {
             URL url = new URL(VALID_URL);

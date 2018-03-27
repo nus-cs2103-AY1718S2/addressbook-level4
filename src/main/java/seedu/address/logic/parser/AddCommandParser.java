@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -23,6 +24,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.InterviewDate;
+import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -45,12 +47,12 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR, PREFIX_GRADE_POINT_AVERAGE,
+                        PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR, PREFIX_GRADE_POINT_AVERAGE, PREFIX_JOB_APPLIED,
                         PREFIX_RESUME, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap,
-                PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_EXPECTED_GRADUATION_YEAR,
-                PREFIX_MAJOR, PREFIX_GRADE_POINT_AVERAGE)
+                PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR,
+                PREFIX_GRADE_POINT_AVERAGE, PREFIX_JOB_APPLIED)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -66,6 +68,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Major major = ParserUtil.parseMajor(argMultimap.getValue(PREFIX_MAJOR)).get();
             GradePointAverage gradePointAverage = ParserUtil.parseGradePointAverage(argMultimap
                     .getValue(PREFIX_GRADE_POINT_AVERAGE)).get();
+            JobApplied jobApplied = ParserUtil.parseJobApplied(argMultimap.getValue(PREFIX_JOB_APPLIED)).get();
 
             // Optional fields
             Optional<Resume> resumeOptional = ParserUtil.parseResume(argMultimap.getValue(PREFIX_RESUME));
@@ -81,7 +84,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Person person = new Person(name, phone, email, address, expectedGraduationYear,
-                    major, gradePointAverage, rating, resume, interviewDate, status, tagList);
+                    major, gradePointAverage, jobApplied, rating, resume, interviewDate, status, tagList);
             return new AddCommand(person);
 
         } catch (IllegalValueException ive) {

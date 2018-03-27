@@ -100,7 +100,7 @@ public class RateCommand extends UndoableCommand {
 
         return new Person(personToRate.getName(), personToRate.getPhone(), personToRate.getEmail(),
                 personToRate.getAddress(), personToRate.getExpectedGraduationYear(), personToRate.getMajor(),
-                personToRate.getGradePointAverage(), rating, personToRate.getResume(),
+                personToRate.getGradePointAverage(), personToRate.getJobApplied(), rating, personToRate.getResume(),
                 personToRate.getInterviewDate(), personToRate.getStatus(), personToRate.getTags());
     }
 

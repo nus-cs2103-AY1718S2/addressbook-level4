@@ -7,6 +7,7 @@
     <expectedGraduationYear>2020</expectedGraduationYear>
     <major>Computer Science</major>
     <gradePointAverage>4.77</gradePointAverage>
+    <jobApplied>Software Engineer</jobApplied>
     <status>offer accepted</status>
     <resume>src/test/data/XmlUtilTest/hans.pdf</resume>
     <interviewDate>1540814400</interviewDate>

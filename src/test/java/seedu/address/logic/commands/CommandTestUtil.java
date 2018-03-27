@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -52,6 +53,8 @@ public class CommandTestUtil {
     public static final String VALID_GRADE_POINT_AVERAGE_BOB = "4.93";
     public static final String VALID_MAJOR_AMY = "Computer Science";
     public static final String VALID_MAJOR_BOB = "Information Security";
+    public static final String VALID_JOB_APPLIED_AMY = "Software Engineer";
+    public static final String VALID_JOB_APPLIED_BOB = "Web Security Analyst";
     public static final String VALID_TECHNICAL_SKILLS_SCORE_AMY = "4";
     public static final String VALID_TECHNICAL_SKILLS_SCORE_BOB = "4.5";
     public static final String VALID_COMMUNICATION_SKILLS_SCORE_AMY = "3";
@@ -84,6 +87,8 @@ public class CommandTestUtil {
             + VALID_GRADE_POINT_AVERAGE_BOB;
     public static final String MAJOR_DESC_AMY = " " + PREFIX_MAJOR + VALID_MAJOR_AMY;
     public static final String MAJOR_DESC_BOB = " " + PREFIX_MAJOR + VALID_MAJOR_BOB;
+    public static final String JOB_APPLIED_DESC_AMY = " " + PREFIX_JOB_APPLIED + VALID_JOB_APPLIED_AMY;
+    public static final String JOB_APPLIED_DESC_BOB = " " + PREFIX_JOB_APPLIED + VALID_JOB_APPLIED_BOB;
     public static final String RESUME_DESC_AMY = " " + PREFIX_RESUME + VALID_RESUME_AMY;
     public static final String RESUME_DESC_BOB = "";
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
@@ -98,6 +103,8 @@ public class CommandTestUtil {
     public static final String INVALID_GRADE_POINT_AVERAGE_DESC = " " + PREFIX_GRADE_POINT_AVERAGE
             + "5.1"; // not in range
     public static final String INVALID_MAJOR_DESC = " " + PREFIX_MAJOR + "&Computer"; // '&' not allowed in major
+    public static final String INVALID_JOB_APPLIED_DESC =
+            " " + PREFIX_JOB_APPLIED + " "; // empty string not allowed in job applied
     public static final String INVALID_RATING_DESC = " " + PREFIX_TECHNICAL_SKILLS_SCORE + "-10"
             + " " + PREFIX_COMMUNICATION_SKILLS_SCORE + "0"
             + " " + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + "7.5"
@@ -114,9 +121,11 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withTags(VALID_TAG_FRIEND).withResume(VALID_RESUME_AMY).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withJobApplied(VALID_JOB_APPLIED_BOB)
                 .withResume(VALID_RESUME_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 

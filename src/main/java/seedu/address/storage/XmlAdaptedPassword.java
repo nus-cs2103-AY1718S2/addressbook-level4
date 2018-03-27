@@ -1,6 +1,6 @@
 package seedu.address.storage;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -50,7 +50,7 @@ public class XmlAdaptedPassword {
         }
 
         XmlAdaptedPassword otherPassword = (XmlAdaptedPassword) other;
-        return Objects.equals(currPassword, otherPassword.currPassword)
-                && Objects.equals(prevPassword, otherPassword.prevPassword);
+        return Arrays.equals(currPassword, otherPassword.currPassword)
+                && Arrays.equals(prevPassword, otherPassword.prevPassword);
     }
 }

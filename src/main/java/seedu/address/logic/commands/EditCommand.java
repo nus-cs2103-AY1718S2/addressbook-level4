@@ -181,7 +181,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.nric, this.phone, this.email,
+                    this.address, this.dob, this.bloodType, this.tags);
         }
 
         public void setName(Name name) {
@@ -274,9 +275,12 @@ public class EditCommand extends UndoableCommand {
             EditPersonDescriptor e = (EditPersonDescriptor) other;
 
             return getName().equals(e.getName())
+                    && getNric().equals(e.getNric())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getDob().equals(e.getDob())
+                    && getBloodType().equals(e.getBloodType())
                     && getTags().equals(e.getTags());
         }
     }

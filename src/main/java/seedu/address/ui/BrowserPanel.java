@@ -50,7 +50,8 @@ public class BrowserPanel extends UiPart<Region> {
         String personfilepath = htmlWriter.writePerson();
         // URL personPage = MainApp.class.getResource(FXML_FILE_FOLDER + PERSON_PAGE);
         // loadPage(personPage.toExternalForm());
-        loadPage(personfilepath);
+        loadPage("file:///" + personfilepath);
+        // loadPage("file:///C:/Users/wisuc/Documents/NUS/Y2S2/CS2103/main/PersonPage.html");
         // loadPage(SEARCH_PAGE_URL + person.getName().fullName);
     }
 

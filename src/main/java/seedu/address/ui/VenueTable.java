@@ -57,7 +57,11 @@ public class VenueTable extends UiPart<Region> {
         initializeColumns();
         initializeTableColumns();
     }
-    private void initializeColumns(){
+
+    /**
+     * Initializes columns
+     */
+    private void initializeColumns() {
         columns = new ArrayList<>();
         columns.add(roomId);
         columns.add(eightAm);
@@ -74,17 +78,22 @@ public class VenueTable extends UiPart<Region> {
         columns.add(sevenPm);
         columns.add(eightPm);
     }
-    private void initializeTableColumns(){
-        for(int i = 0 ; i < columns.size(); i++) {
+
+    /**
+     * Initializes table columns
+     */
+    private void initializeTableColumns() {
+        for (int i = 0; i < columns.size(); i++) {
             final int j = i;
             columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
         }
     }
+
     /**
      * Sets the command box style to indicate a vacant or occupied room.
      */
     public void setStyle() {
-        for(int i = 0 ; i < columns.size() ; i++) {
+        for (int i = 0; i < columns.size(); i++) {
             columns.get(i).setCellFactory(column -> {
                 return new TableCell<ArrayList<String>, String>() {
                     @Override
@@ -99,8 +108,7 @@ public class VenueTable extends UiPart<Region> {
                             if (getItem().equals(OCCUPIED_STYLE_CLASS)) {
                                 setTextFill(Color.BLACK);
                                 setStyle("-fx-background-color: #F08080");
-                            }
-                            else if (getItem().equals(VACANT_STYLE_CLASS)) {
+                            } else if (getItem().equals(VACANT_STYLE_CLASS)) {
                                 setTextFill(Color.BLACK);
                                 setStyle("-fx-background-color: #17A589");
                             }

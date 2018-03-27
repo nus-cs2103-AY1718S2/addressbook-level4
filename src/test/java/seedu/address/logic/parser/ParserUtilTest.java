@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.building.Building;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -38,6 +39,10 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+
+    private static final String VALID_BUILDING = "COM1";
+
+    private static final String INVALID_BUILDING = "COM*";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -242,5 +247,16 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseBuilding_validBuilding() throws Exception {
+        Building building = new Building(VALID_BUILDING);
+        assertEquals(building, ParserUtil.parseBuilding(VALID_BUILDING));
+    }
+
+    @Test
+    public void parsePhone_invalidBuilding_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseBuilding(INVALID_BUILDING));
     }
 }

@@ -130,7 +130,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + CURRENT_POSITION_DESC_AMY + COMPANY_DESC_AMY + PROFILE_PICTURE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except current position -> added */
+        /* Case: add a person with all fields same as another person in the address book
+        except current position -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_BOB).withCurrentPosition(VALID_CURRENT_POSITION_BOB)
                 .withCompany(VALID_COMPANY_AMY).withProfilePicture(VALID_PROFILE_PICTURE_AMY)

@@ -64,16 +64,16 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_addGroup() throws Exception {
         Group group = new GroupBuilder().build();
-        AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_WORD +
-        " " + group.getInformation());
+        AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_WORD
+                + " " + group.getInformation());
         assertEquals(new AddGroupCommand(group), command);
     }
 
     @Test
     public void parseCommand_addGroupAlias() throws Exception {
         Group group = new GroupBuilder().build();
-        AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_ALIAS +
-                " " + group.getInformation());
+        AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_ALIAS
+                + " " + group.getInformation());
         assertEquals(new AddGroupCommand(group), command);
     }
 

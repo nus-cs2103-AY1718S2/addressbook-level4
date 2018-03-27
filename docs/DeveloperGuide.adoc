@@ -475,11 +475,27 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
-=== UI optimisation
+=== Sort existing employees
+The implementation of `sort` command involves following objects: +
 
-* Different tags are performed in different colours
-* Adjust font size to Helvetica and Times New Roman for clearer visual effect
-* Alert words when user types in an illegal command will be in red colour
+. Command: SortCommand
+. Parser: SortCommandParser, AddressBookParser
+. AddressBook, UniquePersonList
+
+The details of implementation of `sort` command are as follow:
+
+. `SortCommandParser` guarantees Employees Tracker to accept `sort` command.
+. `SortCommandParser` extracts the sorting field from user input.
+. `ModelManager` and `UniquePersonList` provide sorting algorithm, called by `AddressBook`.
+. `UniquePersonList` will sort the units by giving field
+
+
+=== Change theme of Employees Tracker
+
+`changeTheme` command is used to change the theme to `dark` or `bright`
+
+* `changeTheme` is achieved by handling `changeThemeEvent` in `MainWindow`
+* a new "theme" field is added in GuiSettings
 
 === Logging
 
@@ -915,7 +931,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * (major) each employee has his own timetable and manager can add events on anyone's timetable
 . Yang Yuqing
 * (minor) be able to sort the employees by existing field (ie. name, phone, email, address, rate)
-* (major) UI optimization (may change)
+* (major) UI optimization
 . Ho Bing Xuan
 * (minor) add Rating features
 * (major) notification feature for timetable entry

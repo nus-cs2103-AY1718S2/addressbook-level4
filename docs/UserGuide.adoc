@@ -165,7 +165,7 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * Wildcard `*example*` searches for field that **contains** keyword `example`
 * Wildcard `*example` searches for field that **ends** with keyword `example`
-* Wildcard `example*` searches for ffield that **starts** with keyword `example`
+* Wildcard `example*` searches for field that **starts** with keyword `example`
 * If the first keyword is not a prefix, this command would assume a global search for **all** fields.
 * A global search does an **OR** search between keywords
 * A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes.

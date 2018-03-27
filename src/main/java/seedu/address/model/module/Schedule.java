@@ -27,8 +27,8 @@ public class Schedule {
         this.venue = "";
     }
 
-    public Schedule(String classNo, String lessonType, String weekText, String dayText, String startTime, String endTime,
-             String venue) {
+    public Schedule(String classNo, String lessonType, String weekText, String dayText,
+             String startTime, String endTime, String venue) {
         this.classNo = classNo;
         this.lessonType = lessonType;
         this.weekText = weekText;

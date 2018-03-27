@@ -60,5 +60,5 @@ public class WeeklyEvent extends Event {
                 && otherEvent.getEndTime().equals(this.getEndTime())
                 && otherEvent.getDay().equals(this.getDay())
                 && otherEvent.getDetails().equals(this.getDetails());
-    }    
+    }
 }

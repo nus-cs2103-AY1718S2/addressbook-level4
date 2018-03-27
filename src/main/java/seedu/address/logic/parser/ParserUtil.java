@@ -182,7 +182,7 @@ public class ParserUtil {
     public static Date parseDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        Parser dateParser = new Parser();
+        com.joestelmach.natty.Parser dateParser = new Parser();
         List<DateGroup> dateGroups = dateParser.parse(trimmedDate);
         return dateGroups.get(0).getDates().get(0);
     }

@@ -118,7 +118,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
         /* Case: filters the person list before adding -> added */
-        //showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        //showPersonsWithName(KEYPHRASE_MATCHING_MEIER);
         //assertCommandSuccess(IDA);
 
         /* ------------------------ Perform add operation while a person card is selected --------------------------- */
@@ -156,7 +156,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
         //assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: invalid keyword -> rejected */
+        /* Case: invalid keyphrase -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
         //assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 

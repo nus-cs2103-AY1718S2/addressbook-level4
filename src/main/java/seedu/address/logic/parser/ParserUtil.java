@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -75,12 +75,12 @@ public class ParserUtil {
 
 
     /**
-     * Parses a {@code String input} into a {@code LocalDate}.
+     * Parses a {@code String input} into a {@code LocalDateTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
-    static LocalDate parseDate(String input) throws  IllegalValueException {
+    static LocalDateTime parseDateTime(String input) throws  IllegalValueException {
         requireNonNull(input);
         String trimmedInput = input.trim();
 
@@ -88,11 +88,11 @@ public class ParserUtil {
 
         try {
 
-            LocalDate localDate = LocalDate.parse(trimmedInput, formatter);
-            return localDate;
+            LocalDateTime dateTime = LocalDateTime.parse(trimmedInput, formatter);
+            return dateTime;
 
         } catch (DateTimeParseException e) {
-            throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_CONSTRAINTS);
+            throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_TIME_CONSTRAINTS);
         }
 
 
@@ -100,12 +100,12 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> input} into an {@code Optional<LocalDate>} if {@code input} is present.
+     * Parses a {@code Optional<String> input} into an {@code Optional<LocalDateTime>} if {@code input} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<LocalDate> parseDate(Optional<String> input) throws IllegalValueException {
+    public static Optional<LocalDateTime> parseDateTime(Optional<String> input) throws IllegalValueException {
         requireNonNull(input);
-        return input.isPresent() ? Optional.of(parseDate(input.get())) : Optional.empty();
+        return input.isPresent() ? Optional.of(parseDateTime(input.get())) : Optional.empty();
     }
 
     /**

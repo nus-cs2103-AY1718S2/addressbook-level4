@@ -6,8 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_INTERVAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_INTERVAL;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import java.util.stream.Stream;
 
@@ -40,9 +39,9 @@ public class AddAppointmentCommandPaser implements Parser<AddAppointmentCommand>
 
         try {
             String appointmentTitle = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get();
-            LocalDate startDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_START_INTERVAL)).get();
-            LocalDate endDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_END_INTERVAL)).get();
-            Interval interval = new Interval(startDate, LocalTime.MIN, endDate, LocalTime.MAX);
+            LocalDateTime startDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START_INTERVAL)).get();
+            LocalDateTime endDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_END_INTERVAL)).get();
+            Interval interval = new Interval(startDateTime, endDateTime);
 
 
             AppointmentEntry appointmentEntry = new AppointmentEntry(appointmentTitle, interval);

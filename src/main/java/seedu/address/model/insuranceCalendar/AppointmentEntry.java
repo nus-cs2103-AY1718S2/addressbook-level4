@@ -2,7 +2,7 @@ package seedu.address.model.insuranceCalendar;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
@@ -14,9 +14,9 @@ import com.calendarfx.model.Interval;
 
 public class AppointmentEntry {
 
-    public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Dates should be in the format of dd/MM/yyyy";
-    public static final String DATE_VALIDATION = "d/MM/yyyy";
+    public static final String MESSAGE_DATE_TIME_CONSTRAINTS =
+            "Date and Time should be in the format of dd/MM/yyyy HH:mm:ss";
+    public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm:ss";
 
     private final Entry appointmentEntry;
     private final Interval interval;
@@ -36,12 +36,12 @@ public class AppointmentEntry {
         givenTitle = clonedEntry.getGivenTitle();
     }
 
-    public LocalDate getStartDate() {
-        return interval.getStartDate();
+    public LocalDateTime getStartDate() {
+        return interval.getStartDateTime();
     }
 
-    public LocalDate getEndDate() {
-        return interval.getEndDate();
+    public LocalDateTime getEndDate() {
+        return interval.getEndDateTime();
     }
 
     public Entry getAppointmentEntry() {

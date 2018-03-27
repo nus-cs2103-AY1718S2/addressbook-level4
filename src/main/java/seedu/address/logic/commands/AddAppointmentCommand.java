@@ -20,12 +20,12 @@ public class AddAppointmentCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to the calendar. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_START_INTERVAL + "START DATE "
-            + PREFIX_END_INTERVAL + "END DATE "
+            + PREFIX_START_INTERVAL + "START DATE TIME "
+            + PREFIX_END_INTERVAL + "END DATE TIME"
             + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Meet John "
-            + PREFIX_START_INTERVAL + "14/08/2018 "
-            + PREFIX_END_INTERVAL + "14/08/2018";
+            + PREFIX_START_INTERVAL + "14/08/2018 06:12:00 "
+            + PREFIX_END_INTERVAL + "14/08/2018 07:12:00 ";
 
     public static final String MESSAGE_SUCCESS = "New Appointment Added: %1$s";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the calendar";

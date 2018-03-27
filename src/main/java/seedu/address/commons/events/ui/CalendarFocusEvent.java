@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Represents a calendar GUI refresh request
+ * Represents a calendar GUI focus date request
  */
 public class CalendarFocusEvent extends BaseEvent {
     public final LocalDate dateToLook;

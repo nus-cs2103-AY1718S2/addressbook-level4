@@ -22,6 +22,7 @@ import seedu.address.logic.commands.LookDateCommand;
 import seedu.address.logic.commands.PredictCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveAppointmentsCommand;
+import seedu.address.logic.commands.ReturnMonthViewCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -103,6 +104,9 @@ public class AddressBookParser {
 
         case LookDateCommand.COMMAND_WORD:
             return new LookDateCommandParser().parse(arguments);
+
+        case ReturnMonthViewCommand.COMMAND_WORD:
+            return  new ReturnMonthViewCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

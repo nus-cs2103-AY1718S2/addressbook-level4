@@ -209,6 +209,11 @@ Examples:
 
 * `look DF/11/09/2018`
 
+=== Back to calendar Month View: `back`
+
+set the Calendar View to Month View +
+Format: `back`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -327,6 +332,7 @@ e.g. `remove_appointment ST/Title of the appointment`
 e.g. `edit_appointment ST/meet John n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
 * *Look At a Date* `look DF/DATE TO LOOK` +
 e.g. `look DF/18/03/2018`
+* *Back to Month View* `back`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

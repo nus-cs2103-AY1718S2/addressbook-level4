@@ -3,9 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_TIME_DESC_CS2010_QUIZ;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_TIME_DESC_MA2108_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TASK_DATE_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TASK_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TASK_REMARK_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TASK_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_CS2010_QUIZ;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_MA2108_HOMEWORK;
@@ -29,9 +27,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.TaskCommand;
-import seedu.address.model.activity.DateTime;
 import seedu.address.model.activity.Name;
-import seedu.address.model.activity.Remark;
 import seedu.address.model.activity.Task;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.TaskBuilder;

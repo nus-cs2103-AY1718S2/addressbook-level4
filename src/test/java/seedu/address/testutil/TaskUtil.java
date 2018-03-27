@@ -29,7 +29,7 @@ public class TaskUtil {
         sb.append(PREFIX_DATE_TIME + task.getDueDateTime().toString() + " ");
         sb.append(PREFIX_REMARK + task.getRemark().value + " ");
         task.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
+            s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
     }

@@ -44,7 +44,7 @@ public class TaskCommandIntegrationTest {
     // Questionable - does the app check for duplicate task?
     public void execute_duplicateTask_throwsCommandException() {
         Activity activityInList = model.getDeskBoard().getActivityList().get(0);
-        assertCommandFailure(prepareCommand( (Task) activityInList, model), model, TaskCommand.MESSAGE_DUPLICATE_TASK);
+        assertCommandFailure(prepareCommand((Task) activityInList, model), model, TaskCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     /**

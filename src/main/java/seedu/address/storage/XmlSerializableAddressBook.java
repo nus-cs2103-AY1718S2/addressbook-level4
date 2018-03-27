@@ -65,7 +65,7 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedToDo todo : todos) {
             addressBook.addToDo(todo.toModelType());
         }
-        for(XmlAdaptedGroup group : groups) {
+        for (XmlAdaptedGroup group : groups) {
             addressBook.addGroup(group.toModelType());
         }
         return addressBook;

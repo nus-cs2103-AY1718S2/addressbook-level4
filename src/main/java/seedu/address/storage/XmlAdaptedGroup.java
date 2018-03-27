@@ -5,8 +5,8 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.group.Information;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
 
 /**
  * JAXB-friendly version of the Group.
@@ -22,7 +22,8 @@ public class XmlAdaptedGroup {
      * Constructs an XmlAdaptedGroup.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedGroup() {}
+    public XmlAdaptedGroup() {
+    }
 
     /**
      * Constructs an {@code XmlAdaptedGroup} with the given group details.
@@ -47,7 +48,8 @@ public class XmlAdaptedGroup {
      */
     public Group toModelType() throws IllegalValueException {
         if (this.information == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Information.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Information.class.getSimpleName()));
         }
         if (!Information.isValidInformation(this.information)) {
             throw new IllegalValueException(Information.MESSAGE_INFORMATION_CONSTRAINTS);

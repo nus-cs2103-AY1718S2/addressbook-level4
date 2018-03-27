@@ -22,7 +22,6 @@ import seedu.address.model.DeskBoard;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;

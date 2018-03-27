@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowPatientAppointmentRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
@@ -21,6 +23,7 @@ public class ViewAppointmentCommand extends Command {
             + "NAME";
 
     public static final String MESSAGE_SUCCESS = "Listed all appointments";
+    public static final String MESSAGE_SUCCESS_PATIENT = "Listed all appointments made by %1$s";
     public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database";
     private final NameContainsKeywordsPredicate predicate;
 
@@ -50,11 +53,10 @@ public class ViewAppointmentCommand extends Command {
                 throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
             }
 
-            //event handler
-            //command result
+            EventsCenter.getInstance().post(new ShowPatientAppointmentRequestEvent(patientFound));
 
+            return new CommandResult(String.format(MESSAGE_SUCCESS_PATIENT, patientFound.getName()));
         }
-
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

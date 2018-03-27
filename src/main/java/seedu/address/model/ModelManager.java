@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
@@ -67,6 +68,13 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author jlks96
+    /** Raises an event to indicate a new appointment has been added */
+    private void indicateAppointmentAdded(Appointment appointment) {
+        raise(new NewAppointmentAddedEvent(appointment));
+    }
+    //@@author
+
     //=========== Person Mutators =============================================================
 
     @Override
@@ -111,6 +119,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        indicateAppointmentAdded(appointment);
         indicateAddressBookChanged();
     }
     //@@author

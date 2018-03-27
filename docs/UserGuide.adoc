@@ -301,39 +301,56 @@ Medeina will change to light theme.
 
 === Exiting the program : `exit` or `q`
 
-To exit the program. +
+You can easily exit Medeina on the command line without having to move your mouse. +
 The command format should be: `exit` or `q`
 
 
-=== Saving the data
+=== Data saving
 
-Data in Medeina are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+The data in Medeina is automatically saved to the hard disk after any command that may result in a change in the storage. +
+Commands that may result in a change in the storage are:
+
+* `add` or `a` +
+This command will add new information into the storage.
+* `edit` or `ed` +
+This command will update information in the storage.
+* `delete` or `d` +
+This command will remove information in the storage.
+
+You do not need to manually save the data.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+Coming v2.0, the data you have will be automatically encrypted after commands that may change the storage, so that you do not have to worry about it being stolen. +
+You do not need to manually encrypt your data files.
 // end::dataencryption[]
 
-=== Creating user accounts to manage usage `[coming in v2.0]`
+=== Creating other user profiles `[coming in v2.0]`
 
-Create user accounts and log in to the application using assigned credentials. Usernames will be reflected for changes made in the application.
+Coming v2.0, Medeina will have user accounts, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves. +
+This command will be added when it is released.
 
-=== Set user permissions `[coming in v2.0]`
+=== Setting user permissions `[coming in v2.0]`
 
-The assigned administrator of the application (e.g. Veterinarian) can set user permissions for clinic staffs. +
+Coming v2.0, Medeina will have user permissions, to ensure that protected information is not easily changed by other staff. There will be an administrator role to gain total access in the application. +
 
-Examples:
+Information that vet assistants should not change:
 
-* Vet assistants can add new pet patients and their owners to the application, but cannot delete any pet patient or owner from the application.
+* You can add new information (contacts, pet patients, appointments) to the application, but you should not be able to delete it.
 
-* Vet assistants can view medical histories of pet patients but not modify them.
+* You can see the medical histories of pet patients but should not modify it.
 
-=== Support multi-users `[coming in v2.0]`
+Information that vets should not change:
 
-The application can be used concurrently on different systems and the data will be synced over an internet connection. This allow Veterinarians
-and their assistants to access Medeina simultaneously in different rooms.
+* You should not change information belonging to other vets in the application without permission.
+
+The command will be added when it is released.
+
+=== Supporting multiple users `[coming in v2.0]`
+
+Coming v2.0, Medeina can be used concurrently on different systems. The data will be synced over an internet connection. This allow Veterinarians and their assistants to access Medeina simultaneously in different rooms, making it easier to collaborate with others. +
+The command will be added when it is released.
 
 == FAQ
 

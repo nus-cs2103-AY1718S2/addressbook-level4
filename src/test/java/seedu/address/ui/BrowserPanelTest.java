@@ -1,9 +1,9 @@
 package seedu.address.ui;
 
-//import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
+import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalStudents.ALICE;
+import static seedu.address.testutil.TypicalStudents.CARL;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
@@ -14,17 +14,17 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
-import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.BrowserDisplayEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
-    private StudentPanelSelectionChangedEvent selectionChangedEventStub;
+    private BrowserDisplayEvent browserEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new StudentPanelSelectionChangedEvent(new StudentCard(ALICE, 0));
+        browserEventStub = new BrowserDisplayEvent(new StudentCard(CARL, 0));
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -39,10 +39,11 @@ public class BrowserPanelTest extends GuiUnitTest {
         assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 
         // associated web page of a student
-        postNow(selectionChangedEventStub);
-        URL expectedStudentUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getAddress().urlstyle());
+        postNow(browserEventStub);
+        URL expectedStudentUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + CARL.getAddress().urlstyle()
+                + "?dg=dbrw&newdg=1");
 
-        //waitUntilBrowserLoaded(browserPanelHandle);
+        waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedStudentUrl, browserPanelHandle.getLoadedUrl());
     }
 }

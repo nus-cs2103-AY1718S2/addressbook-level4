@@ -1,8 +1,8 @@
 package seedu.address.model.student.dashboard;
 
-import java.util.List;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Represents a homework in a Student's Dashboard
@@ -15,33 +15,19 @@ public class Homework {
     private final boolean isCompleted;
 
     public Homework(String desc, Date dueDate) {
+        requireAllNonNull(desc, dueDate);
+
         this.desc = desc;
         this.dueDate = dueDate;
         this.isCompleted = false;
     }
 
     public Homework(String desc, Date dueDate, boolean isCompleted) {
+        requireAllNonNull(desc, dueDate);
+
         this.desc = desc;
         this.dueDate = dueDate;
         this.isCompleted = isCompleted;
-    }
-
-    /**
-     * Creates and return a deep copy of the {@code toCopy} Homework
-     */
-    public static Homework copyHomework(Homework toCopy) {
-        String copyDesc = new String(toCopy.getDesc());
-        Date copyDate = new Date(toCopy.getDueDate().getValue());
-        boolean copyIsCompleted = toCopy.isCompleted();
-
-        return new Homework(copyDesc, copyDate, copyIsCompleted);
-    }
-
-    /**
-     * Creates and returns a deep copy of the list of Homework.
-     */
-    public static List<Homework> copyHomeworkList(List<Homework> listToCopy) {
-        return listToCopy.stream().map(Homework::copyHomework).collect(Collectors.toList());
     }
 
     public String getDesc() {

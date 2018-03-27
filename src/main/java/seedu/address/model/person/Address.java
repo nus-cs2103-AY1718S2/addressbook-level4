@@ -20,6 +20,10 @@ public class Address {
 
     public final String value;
 
+    public Address() {
+        value = "";
+    }
+
     /**
      * Constructs an {@code Address}.
      *

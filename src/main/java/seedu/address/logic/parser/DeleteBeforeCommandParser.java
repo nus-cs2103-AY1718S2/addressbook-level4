@@ -35,7 +35,7 @@ public class DeleteBeforeCommandParser implements Parser<DeleteBeforeCommand> {
         }
 
         try {
-            DateAdded inputDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            DateAdded inputDate = ParserUtil.parseDateAdded(argMultimap.getValue(PREFIX_DATE)).get();
             Set<Tag> inputTags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");

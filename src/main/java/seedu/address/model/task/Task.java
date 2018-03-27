@@ -52,21 +52,21 @@ public class Task {
      * @return
      */
     private long calculatePriority(long daysBetween, int priority) {
-        long calPriority = ((1 / daysBetween) * 50) + priority;
+        long calPriority = ((1 / (daysBetween + 1)) * 50) + priority;
 
         return calPriority;
     }
 
     public int getDeadlineDay() {
-        return Integer.getInteger(deadline.day);
+        return deadline.day;
     }
 
     public int getDeadlineYear() {
-        return Integer.getInteger(deadline.year);
+        return deadline.year;
     }
 
     public int getDeadlineMonth() {
-        return Integer.getInteger(deadline.month);
+        return deadline.month;
     }
 
     @Override

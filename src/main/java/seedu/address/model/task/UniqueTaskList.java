@@ -24,8 +24,6 @@ public class UniqueTaskList implements Iterable<Task> {
 
     private final ObservableList<Task> internalList = FXCollections.observableArrayList();
 
-    private final ObservableList<Task>[][] calendarList = new ObservableList[6][31];
-
     private Date dateNow = new Date();
 
     private LocalDate now = dateNow.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -47,24 +45,6 @@ public class UniqueTaskList implements Iterable<Task> {
     public void add(Task toAdd) {
         requireNonNull(toAdd);
         internalList.add(toAdd);
-
-        int day = toAdd.getDeadlineDay();
-        int month = toAdd.getDeadlineMonth();
-        int year = toAdd.getDeadlineYear();
-        int index;
-        if (year == now.getYear()) {
-            index = month - monthNow;
-        } else {
-            index = 12 - monthNow + month;
-        }
-        calendarList[index][day].add(toAdd);
-    }
-
-    /**
-     * Accessor for calendarList
-     */
-    public ObservableList<Task>[][] getCalendarList() {
-        return calendarList;
     }
 
     /**
@@ -72,7 +52,7 @@ public class UniqueTaskList implements Iterable<Task> {
      *
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      */
-    public void setPerson(Task target, Task editedTask)
+    public void setTask(Task target, Task editedTask)
             throws TaskNotFoundException {
         requireNonNull(editedTask);
 

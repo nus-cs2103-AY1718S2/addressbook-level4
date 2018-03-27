@@ -23,7 +23,7 @@ public class AddTaskCommand extends UndoableCommand {
             + PREFIX_PRIORITY + "PRIORITY LEVEL(from 0 - 50, 0 being lowest priority, 50 being highest priority) \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TASK_DESC + "Dance till I drop "
-            + PREFIX_DEADLINE + "20/03/2018 "
+            + PREFIX_DEADLINE + "20-03-2018 "
             + PREFIX_PRIORITY + "1";
 
     public static final String MESSAGE_SUCCESS = "New Task added: %1$s";
@@ -41,7 +41,6 @@ public class AddTaskCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-
         model.addTask(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 

@@ -1,11 +1,14 @@
 package seedu.address.model;
 
+import java.time.YearMonth;
+
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.DeadlineIsCurrentMonthPredicate;
 import seedu.address.model.task.Task;
 
 /**
@@ -14,6 +17,11 @@ import seedu.address.model.task.Task;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    Predicate<Task> PREDICATE_SHOW_ALL_TASKS = unused -> true;
+
+    Predicate<Task> PREDICATE_SHOW_ALL_CURRENT_TASKS =
+        new DeadlineIsCurrentMonthPredicate(YearMonth.now().getMonthValue());
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -51,5 +59,11 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Updates the filter of the filtered task list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTaskList(Predicate<Task> predicate);
 
 }

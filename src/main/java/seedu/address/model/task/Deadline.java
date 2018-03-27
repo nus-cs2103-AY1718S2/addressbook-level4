@@ -3,10 +3,8 @@ package seedu.address.model.task;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 /**
  * Represents a Task's deadline in the address book.
@@ -16,13 +14,13 @@ public class Deadline {
 
 
     public static final String MESSAGE_DEADLINE_CONSTRAINTS =
-            "Deadline should be a valid date in the format dd/mm/yyyy. Tasks cannot be scheduled in the past. "
-                + "And tasks can only be scheduled at most 6 months in advance.";
+            "Deadline should be a valid date in the format dd-mm-yyyy. Tasks cannot be scheduled in the past. ";
+    public final String dateString;
     public final LocalDate value;
     public final long daysBetween;
-    public final String day;
-    public final String month;
-    public final String year;
+    public final int day;
+    public final int month;
+    public final int year;
 
     /**
      * Constructs a {@code Deadline}.
@@ -31,16 +29,16 @@ public class Deadline {
      */
     public Deadline(String deadline) {
         requireNonNull(deadline);
+        dateString = deadline;
         try {
-            String[] splitDeadline = deadline.split("/");
-            day = splitDeadline[0];
-            month = splitDeadline[1];
-            year = splitDeadline[2];
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate deadlineDate = LocalDate.parse(deadline, formatter);
+            String[] splitDeadline = deadline.split("-");
+            day = Integer.parseInt(splitDeadline[0]);
+            month = Integer.parseInt(splitDeadline[1]);
+            year = Integer.parseInt(splitDeadline[2]);
+            LocalDate deadlineDate = LocalDate.now().withDayOfMonth(Integer.valueOf(day))
+                .withMonth(Integer.valueOf(month)).withYear(Integer.valueOf(year));
             this.value = deadlineDate;
-            Date dateNow = new Date();
-            LocalDate now = dateNow.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate now = LocalDate.now();
             daysBetween = ChronoUnit.DAYS.between(now, deadlineDate);
             int diff;
 
@@ -65,7 +63,7 @@ public class Deadline {
      */
     public static boolean isValidDeadline(String test) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate deadlineDate = LocalDate.parse(test, formatter);
         } catch (Exception e) {
             throw new IllegalArgumentException(MESSAGE_DEADLINE_CONSTRAINTS);

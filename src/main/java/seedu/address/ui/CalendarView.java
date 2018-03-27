@@ -15,19 +15,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.UniqueTaskList;
 
 /**
  * The Calendar of the app.
  */
 public class CalendarView extends UiPart<Region> {
 
-    private static final String FXML = "CalendarView.fxml";
+    private static final String FXML = "CalendarViewWithoutButtons.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private ArrayList<CalendarNode> allCalendarDays = new ArrayList<>(35);
-    private ObservableList<Task>[][] calendarList;
     private YearMonth currentYearMonth;
-    private int currentIndex = 0;
+    private int[] numTasks = new int[31];
+    private ObservableList<Task> tasks;
+    private int currentMonth = 0;
 
     @FXML
     private VBox calendarVBox;
@@ -43,20 +43,20 @@ public class CalendarView extends UiPart<Region> {
     /**
      * Creates the calendar of the app
      */
-    public CalendarView(UniqueTaskList taskList) {
+    public CalendarView(ObservableList<Task> tasks) {
         super(FXML);
-
+        this.tasks = tasks;
         YearMonth yearMonth = YearMonth.now();
         currentYearMonth = yearMonth;
-        calendarList = taskList.getCalendarList();
-        initCalendar();
-        setCalendarDays(yearMonth);
+        currentMonth = yearMonth.getMonthValue();
+        setArray(tasks);
+        initCalendar(yearMonth);
     }
 
     /**
      * Create rows and columns with anchor panes for the calendar
      */
-    private void initCalendar() {
+    private void initCalendar(YearMonth yearMonth) {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
@@ -66,50 +66,54 @@ public class CalendarView extends UiPart<Region> {
                 allCalendarDays.add(ap);
             }
         }
+        setCalendarDays(yearMonth);
     }
 
+    /**
+     * Updates numTask array.
+     */
+    public void setArray(ObservableList<Task> tasks) {
+        tasks.forEach((task) -> {
+            if (task.getDeadlineMonth() == currentYearMonth.getMonthValue()
+                && task.getDeadlineYear() == currentYearMonth.getYear()) {
+                numTasks[task.getDeadlineDay() - 1]++;
+            }
+        });
+    }
     /**
      * Set the days of the calendar to display the correct date
      * @param yearMonth year and month of the current month
      */
     public void setCalendarDays(YearMonth yearMonth) {
-
-        if (currentIndex < 0 || currentIndex > 5) {
-            LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
-            while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
-                calendarDate = calendarDate.minusDays(1);
-            }
-            for (CalendarNode ap : allCalendarDays) {
-                if (ap.getChildren().size() != 0) {
-                    ap.getChildren().remove(0);
-                }
-                Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
-                ap.setDate(calendarDate);
-                ap.setTopAnchor(txt, 5.0);
-                ap.setLeftAnchor(txt, 5.0);
-                ap.getChildren().add(txt);
-                calendarDate = calendarDate.plusDays(1);
-            }
-            calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
-        } else {
-            LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
-            while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
-                calendarDate = calendarDate.minusDays(1);
-            }
-            for (CalendarNode ap : allCalendarDays) {
-                if (ap.getChildren().size() != 0) {
-                    ap.getChildren().remove(0);
-                }
-                Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()) + "\n\n"
-                    + String.valueOf(calendarList[currentIndex][calendarDate.getDayOfMonth()].size()) + " Tasks. ");
-                ap.setDate(calendarDate);
-                ap.setTopAnchor(txt, 5.0);
-                ap.setLeftAnchor(txt, 5.0);
-                ap.getChildren().add(txt);
-                calendarDate = calendarDate.plusDays(1);
-            }
-            calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+        LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
+        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
+            calendarDate = calendarDate.minusDays(1);
         }
+        for (CalendarNode ap : allCalendarDays) {
+            if (ap.getChildren().size() != 0) {
+                ap.getChildren().remove(0);
+            }
+            Text txt;
+            if (numTasks[calendarDate.getDayOfMonth() - 1] != 0) {
+                txt = new Text(String.valueOf(calendarDate.getDayOfMonth()) + "\n\n"
+                        + numTasks[calendarDate.getDayOfMonth() - 1] + " Tasks. ");
+            } else {
+                txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
+            }
+            ap.setDate(calendarDate);
+            ap.setTopAnchor(txt, 5.0);
+            ap.setLeftAnchor(txt, 5.0);
+            ap.getChildren().add(txt);
+            calendarDate = calendarDate.plusDays(1);
+        }
+        calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+    }
+
+    /**
+     * Refreshes the calendar with new information.
+     */
+    public void refreshCalendar() {
+        initCalendar(currentYearMonth);
     }
 
     @FXML
@@ -118,7 +122,7 @@ public class CalendarView extends UiPart<Region> {
      */
     private void handlePreviousButtonAction() {
         currentYearMonth = currentYearMonth.minusMonths(1);
-        currentIndex -= 1;
+        currentMonth = currentYearMonth.getMonthValue();
         setCalendarDays(currentYearMonth);
     }
 
@@ -128,7 +132,7 @@ public class CalendarView extends UiPart<Region> {
      */
     private void handleNextButtonAction() {
         currentYearMonth = currentYearMonth.plusMonths(1);
-        currentIndex += 1;
+        currentMonth = currentYearMonth.getMonthValue();
         setCalendarDays(currentYearMonth);
     }
 

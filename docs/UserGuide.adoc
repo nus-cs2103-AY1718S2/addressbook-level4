@@ -63,15 +63,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS y/EXPECTED_GRADUATION_YEAR m/MAJOR [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 y/2020 m/Computer Science`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 y/2018 m/Information Security t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 y/2020 m/Computer Science g/4.93 j/Software Tester`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 y/2018 m/Information Security g/4.56 j/Web Security Analyst t/Python`
 
 === Listing all persons : `list`
 
@@ -81,7 +81,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [g/GRADE_POINT_AVERAGE] [j/JOB_APPLIED] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -202,7 +202,8 @@ Format: `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROB
 
 ****
 * Rates the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* The scores should be a number in the range of 1 to 5 (inclusive). Scores are rounded to two decimal places.
+* The scores should be a number in the range of 1 to 5 (inclusive). Scores with more than two decimal places are rounded to two decimal places.
+* If you have rated the student, existing scores will be overwritten.
 ****
 
 Examples:
@@ -325,12 +326,12 @@ Sends and receives emails within HR+.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS y/EXPECTED_GRADUATION_YEAR m/MAJOR [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 y/2020 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 y/2020 m/Information System g/4.33 j/Software Engineer t/Android t/Java`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [j/JOB_APPLIED] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`

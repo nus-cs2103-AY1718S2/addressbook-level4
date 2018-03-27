@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -21,14 +23,16 @@ public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to HR+. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_EXPECTED_GRADUATION_YEAR + "EXPECTED GRADUATION YEAR "
-            + PREFIX_MAJOR + "MAJOR"
+            + PREFIX_MAJOR + "MAJOR "
+            + PREFIX_GRADE_POINT_AVERAGE + "GRADE POINT AVERAGE "
+            + PREFIX_JOB_APPLIED + "JOB APPLIED "
             + "[" + PREFIX_RESUME + "RESUME] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
@@ -38,13 +42,15 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_EXPECTED_GRADUATION_YEAR + "2020 "
             + PREFIX_MAJOR + "Computer Science "
+            + PREFIX_GRADE_POINT_AVERAGE + "4.93 "
+            + PREFIX_JOB_APPLIED + "Software Developer "
             + PREFIX_RESUME + "jdoe.pdf "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney\n"
+            + PREFIX_TAG + "Java "
+            + PREFIX_TAG + "Go\n"
             + "The status is initialised to be 'new'.";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in HR+";
 
     private final Person toAdd;
 

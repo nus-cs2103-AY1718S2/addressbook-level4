@@ -14,7 +14,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.InterviewDate;
+import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -45,6 +47,10 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String major;
     @XmlElement(required = true)
+    private String gradePointAverage;
+    @XmlElement(required = true)
+    private String jobApplied;
+    @XmlElement(required = true)
     private String status;
     //optional fields
     @XmlElement(nillable = true)
@@ -74,8 +80,8 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
-                            String major, String technicalSkillsScore, String communicationSkillsScore,
-                            String problemSolvingSkillsScore, String experienceScore,
+                            String major, String gradePointAverage, String jobApplied, String technicalSkillsScore,
+                            String communicationSkillsScore, String problemSolvingSkillsScore, String experienceScore,
                             String resume, String interviewDate, String status, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
@@ -83,6 +89,8 @@ public class XmlAdaptedPerson {
         this.address = address;
         this.expectedGraduationYear = expectedGraduationYear;
         this.major = major;
+        this.gradePointAverage = gradePointAverage;
+        this.jobApplied = jobApplied;
         this.technicalSkillsScore = technicalSkillsScore;
         this.communicationSkillsScore = communicationSkillsScore;
         this.problemSolvingSkillsScore = problemSolvingSkillsScore;
@@ -107,6 +115,8 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         expectedGraduationYear = source.getExpectedGraduationYear().value;
         major = source.getMajor().value;
+        gradePointAverage = source.getGradePointAverage().value;
+        jobApplied = source.getJobApplied().value;
         technicalSkillsScore = Double.toString(source.getRating().technicalSkillsScore);
         communicationSkillsScore = Double.toString(source.getRating().communicationSkillsScore);
         problemSolvingSkillsScore = Double.toString(source.getRating().problemSolvingSkillsScore);
@@ -181,6 +191,24 @@ public class XmlAdaptedPerson {
         }
         final Major major = new Major(this.major);
 
+        if (this.gradePointAverage == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    GradePointAverage.class.getSimpleName()));
+        }
+        if (!GradePointAverage.isValidGradePointAverage(this.gradePointAverage)) {
+            throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+        }
+        final GradePointAverage gradePointAverage = new GradePointAverage(this.gradePointAverage);
+
+        if (this.jobApplied == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    JobApplied.class.getSimpleName()));
+        }
+        if (!JobApplied.isValidJobApplied(this.jobApplied)) {
+            throw new IllegalValueException(JobApplied.MESSAGE_JOB_APPLIED_CONSTRAINTS);
+        }
+        final JobApplied jobApplied = new JobApplied(this.jobApplied);
+
         if (this.status == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName()));
         }
@@ -190,8 +218,10 @@ public class XmlAdaptedPerson {
         final Status status = new Status(this.status);
 
         if (technicalSkillsScore == null || communicationSkillsScore == null
-                || problemSolvingSkillsScore == null || experienceScore == null
-                || !Rating.isValidOrDefaultScore(Double.valueOf(technicalSkillsScore))
+                || problemSolvingSkillsScore == null || experienceScore == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Rating.class.getSimpleName()));
+        }
+        if (!Rating.isValidOrDefaultScore(Double.valueOf(technicalSkillsScore))
                 || !Rating.isValidOrDefaultScore(Double.valueOf(communicationSkillsScore))
                 || !Rating.isValidOrDefaultScore(Double.valueOf(problemSolvingSkillsScore))
                 || !Rating.isValidOrDefaultScore(Double.valueOf(experienceScore))) {
@@ -216,7 +246,7 @@ public class XmlAdaptedPerson {
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, expectedGraduationYear,
-                major, rating, resume, interviewDate, status, tags);
+                major, gradePointAverage, jobApplied, rating, resume, interviewDate, status, tags);
     }
 
     @Override
@@ -236,6 +266,8 @@ public class XmlAdaptedPerson {
                 && Objects.equals(address, otherPerson.address)
                 && Objects.equals(expectedGraduationYear, otherPerson.expectedGraduationYear)
                 && Objects.equals(major, otherPerson.major)
+                && Objects.equals(gradePointAverage, otherPerson.gradePointAverage)
+                && Objects.equals(jobApplied, otherPerson.jobApplied)
                 && Objects.equals(interviewDate, otherPerson.interviewDate)
                 && Objects.equals(status, otherPerson.status)
                 && tagged.equals(otherPerson.tagged);

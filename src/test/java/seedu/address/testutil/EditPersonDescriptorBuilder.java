@@ -8,6 +8,8 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
+import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -41,6 +43,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setExpectedGraduationYear(person.getExpectedGraduationYear());
         descriptor.setMajor(person.getMajor());
+        descriptor.setGradePointAverage(person.getGradePointAverage());
+        descriptor.setJobApplied(person.getJobApplied());
         descriptor.setResume(person.getResume());
         descriptor.setTags(person.getTags());
     }
@@ -90,6 +94,22 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withMajor(String major) {
         descriptor.setMajor(new Major(major));
+        return this;
+    }
+
+    /**
+     * Sets the {@code GradePointAverage} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withGradePointAverage(String gradePointAverage) {
+        descriptor.setGradePointAverage(new GradePointAverage(gradePointAverage));
+        return this;
+    }
+
+    /**
+     * Sets the {@code JobApplied} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withJobApplied(String jobApplied) {
+        descriptor.setJobApplied(new JobApplied(jobApplied));
         return this;
     }
 

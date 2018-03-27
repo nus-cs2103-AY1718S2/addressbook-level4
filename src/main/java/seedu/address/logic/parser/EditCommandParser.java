@@ -5,6 +5,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -38,7 +40,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR, PREFIX_RESUME, PREFIX_TAG);
+                        PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR, PREFIX_GRADE_POINT_AVERAGE, PREFIX_JOB_APPLIED,
+                        PREFIX_RESUME, PREFIX_TAG);
 
         Index index;
 
@@ -57,6 +60,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseExpectedGraduationYear(argMultimap.getValue(PREFIX_EXPECTED_GRADUATION_YEAR))
                     .ifPresent(editPersonDescriptor::setExpectedGraduationYear);
             ParserUtil.parseMajor(argMultimap.getValue(PREFIX_MAJOR)).ifPresent(editPersonDescriptor::setMajor);
+            ParserUtil.parseGradePointAverage(argMultimap.getValue(PREFIX_GRADE_POINT_AVERAGE))
+                    .ifPresent(editPersonDescriptor::setGradePointAverage);
+            ParserUtil.parseJobApplied(argMultimap.getValue(PREFIX_JOB_APPLIED))
+                    .ifPresent(editPersonDescriptor::setJobApplied);
             parseResumeForEdit(argMultimap.getValue(PREFIX_RESUME)).ifPresent(editPersonDescriptor::setResume);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {

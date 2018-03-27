@@ -7,13 +7,19 @@ import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EXPECTED_GRADUATION_YEAR_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EXPECTED_GRADUATION_YEAR_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.GRADE_POINT_AVERAGE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.GRADE_POINT_AVERAGE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EXPECTED_GRADUATION_YEAR_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_GRADE_POINT_AVERAGE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_JOB_APPLIED_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MAJOR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.JOB_APPLIED_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.JOB_APPLIED_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.MAJOR_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.MAJOR_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
@@ -27,6 +33,10 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTED_GRADUATION_YEAR_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTED_GRADUATION_YEAR_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GRADE_POINT_AVERAGE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GRADE_POINT_AVERAGE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_JOB_APPLIED_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_JOB_APPLIED_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MAJOR_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MAJOR_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -49,6 +59,8 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
+import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -100,6 +112,9 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_EXPECTED_GRADUATION_YEAR_DESC,
                 ExpectedGraduationYear.MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS); // invalid expected grad year
         assertParseFailure(parser, "1" + INVALID_MAJOR_DESC, Major.MESSAGE_MAJOR_CONSTRAINTS); // invalid major
+        assertParseFailure(parser, "1" + INVALID_GRADE_POINT_AVERAGE_DESC,
+                GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS); // invalid grade point average
+        assertParseFailure(parser, "1" + INVALID_JOB_APPLIED_DESC, JobApplied.MESSAGE_JOB_APPLIED_CONSTRAINTS);
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_PHONE_CONSTRAINTS);
@@ -124,12 +139,15 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY;
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
+                + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
                 .withMajor(VALID_MAJOR_AMY)
+                .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
+                .withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -190,6 +208,20 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
+        // gradePointAverage
+        userInput = targetIndex.getOneBased() + GRADE_POINT_AVERAGE_DESC_AMY;
+        descriptor = new EditPersonDescriptorBuilder()
+                .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // jobApplied
+        userInput = targetIndex.getOneBased() + JOB_APPLIED_DESC_AMY;
+        descriptor = new EditPersonDescriptorBuilder()
+                .withJobApplied(VALID_JOB_APPLIED_AMY).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
         descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
@@ -201,17 +233,21 @@ public class EditCommandParserTest {
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased()  + PHONE_DESC_AMY + ADDRESS_DESC_AMY
-                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + GRADE_POINT_AVERAGE_DESC_AMY
                 + EMAIL_DESC_AMY + TAG_DESC_FRIEND + PHONE_DESC_AMY
                 + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND + EXPECTED_GRADUATION_YEAR_DESC_BOB
                 + MAJOR_DESC_BOB + PHONE_DESC_BOB + ADDRESS_DESC_BOB
                 + EMAIL_DESC_BOB + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
+                + GRADE_POINT_AVERAGE_DESC_AMY
+                + JOB_APPLIED_DESC_AMY + JOB_APPLIED_DESC_BOB
                 + TAG_DESC_HUSBAND;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
                 .withMajor(VALID_MAJOR_AMY)
+                .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
+                .withJobApplied(VALID_JOB_APPLIED_BOB)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -230,10 +266,12 @@ public class EditCommandParserTest {
         // other valid values specified
         userInput = targetIndex.getOneBased() + EMAIL_DESC_BOB + INVALID_PHONE_DESC
                 + INVALID_EXPECTED_GRADUATION_YEAR_DESC + ADDRESS_DESC_BOB + PHONE_DESC_BOB
-                + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB;
+                + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB
+                + GRADE_POINT_AVERAGE_DESC_BOB + JOB_APPLIED_DESC_BOB;
         descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_BOB)
-                .withMajor(VALID_MAJOR_BOB).build();
+                .withMajor(VALID_MAJOR_BOB).withGradePointAverage(VALID_GRADE_POINT_AVERAGE_BOB)
+                .withJobApplied(VALID_JOB_APPLIED_BOB).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

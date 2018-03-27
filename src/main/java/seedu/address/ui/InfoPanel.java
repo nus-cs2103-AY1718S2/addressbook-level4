@@ -164,7 +164,7 @@ public class InfoPanel extends UiPart<Region> {
         infoMainEmail.setText(person.getEmail().value);
         infoMainAddress.setText(person.getAddress().value);
         infoMainPhone.setText(person.getPhone().value);
-        infoMainPosition.setText("-");
+        infoMainPosition.setText(person.getJobApplied().value);
         infoMainStatus.setText(person.getStatus().value);
         infoMainStatus.setTextFill(person.getStatus().color);
         infoMainComments.setText("-");

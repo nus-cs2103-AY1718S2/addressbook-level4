@@ -88,7 +88,7 @@ public class XmlAddressBookStorageTest {
     public void readAddressBookWithPassword_invalidAndValidPersonAddressBook_throwDataConversionException()
             throws Exception {
         thrown.expect(DataConversionException.class);
-        readAddressBook("invalidAndValidPersonAddressBook.xml", new Password("test"));
+        readAddressBook("invalidAndValidPersonAddressBook.xml");
     }
 
     @Test
@@ -151,6 +151,21 @@ public class XmlAddressBookStorageTest {
         readBack = xmlAddressBookStorage.readAddressBook(new Password("test")).get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
 
+    }
+
+    @Test
+    public void saveAddressBook_changedPassword_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        AddressBook original = getTypicalAddressBook();
+        original.updatePassword(new Password("test"));
+        original.updatePassword(SecurityUtil.hashPassword("new"));
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.saveAddressBook(original, filePath);
+
+        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath, new Password(
+                                        SecurityUtil.hashPassword("new"),
+                                        SecurityUtil.hashPassword(TEST_PASSWORD))).get();
+        assertEquals(original, new AddressBook(readBack));
     }
 
     @Test

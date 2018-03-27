@@ -39,7 +39,7 @@ public class XmlUtilTest {
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
-    private static final String VALID_BIRTHDAY = "010195";
+    private static final String VALID_BIRTHDAY = "01011995";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
@@ -124,10 +124,6 @@ public class XmlUtilTest {
     @Test
     public void saveDataToFile_validFile_dataSaved() throws Exception {
         TEMP_FILE.createNewFile();
-
-
-
-
 
         XmlSerializableAddressBook dataToWrite = new XmlSerializableAddressBook(new AddressBook());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);

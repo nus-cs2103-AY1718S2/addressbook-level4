@@ -41,11 +41,20 @@
 
 .table-view {
     -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-control-inner-background: #424d5f;
+    -fx-background-color: #424d5f;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+}
+
+.table-cell {
+    -fx-alignment: CENTER-LEFT;
+    -fx-background-color: #24363f;
 }
 
 .table-view .column-header-background {
@@ -65,10 +74,10 @@
 }
 
 .table-view .column-header .label {
-    -fx-font-size: 20pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
-    -fx-alignment: center-left;
+    -fx-alignment: center;
     -fx-opacity: 1;
 }
 
@@ -317,6 +326,17 @@
 }
 
 #commandTextField {
+    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-insets: 0;
+    -fx-border-color: #383838 #383838 #ffffff #383838;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+#passwordTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
     -fx-border-color: #383838 #383838 #ffffff #383838;

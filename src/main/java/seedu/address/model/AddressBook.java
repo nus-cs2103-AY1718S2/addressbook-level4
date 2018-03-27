@@ -86,7 +86,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-
+        updatePassword(newData.getPassword());
         try {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
@@ -253,7 +253,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
+                + password + " password";
         // TODO: refine later
     }
 
@@ -270,6 +271,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Alias> getAliasList() {
         return aliases.getAliasObservableList();
+    }
+
+    @Override
+    public void resetAliasList() {
+        aliases.resetHashmap();
     }
 
     @Override

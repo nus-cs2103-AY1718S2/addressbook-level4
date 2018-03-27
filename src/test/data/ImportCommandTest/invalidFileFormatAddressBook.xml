@@ -4,7 +4,7 @@
         <name>Alice Pauline</name>
         <phone isPrivate="false">85355255</phone>
         <email isPrivate="false">alice@example.com</email>
-        <birthday>010199</birthday>
+        <birthday>01011995</birthday>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -12,7 +12,7 @@
         <phone isPrivate="false">98765432</phone>
         <email isPrivate="false">johnd@example.com</email>
         <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>010299</birthday>
+        <birthday>01021998</birthday>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>

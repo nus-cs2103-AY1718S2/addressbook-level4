@@ -38,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private BirthdayNotification birthdayNotification;
 
     @FXML
     private StackPane infoPlaceholder;
@@ -130,6 +131,8 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        birthdayNotification = new BirthdayNotification();
     }
 
     void hide() {

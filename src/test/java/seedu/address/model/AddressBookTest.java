@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
@@ -36,7 +37,7 @@ public class AddressBookTest {
     private final AddressBook addressBook = new AddressBook();
 
     private final AddressBook addressBookWithAmyAndBob = new AddressBookBuilder().withPerson(AMY)
-            .withPerson(BOB).withPassword("test").build();
+            .withPerson(BOB).build();
 
     @Test
     public void constructor() {
@@ -108,6 +109,13 @@ public class AddressBookTest {
     }
 
     @Test
+    public void createdWithPassword_passwordChanged_passwordChanged() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBook("new");
+        Password expectedPassword = new Password("new");
+        assertEquals(expectedPassword, addressBookUpdatedPassword.getPassword());
+    }
+
+    @Test
     public void updatePasswordWithClass_passwordChanged_passwordUpdated() throws Exception {
         AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
         addressBookUpdatedPassword.updatePassword(new Password("new"));
@@ -151,6 +159,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Alias> getAliasList() {
             return aliases;
+        }
+
+        @Override
+        public void resetAliasList() {
+            fail("This method should not be called.");
         }
 
         @Override

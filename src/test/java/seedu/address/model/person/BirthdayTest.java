@@ -22,20 +22,31 @@ public class BirthdayTest {
 
     @Test
     public void isValidBirthday() {
-        // null phone number
+        // null birthday
         Assert.assertThrows(NullPointerException.class, () -> Birthday.isValidBirthday(null));
 
-        // invalid phone numbers
+        // invalid birthdays
         assertFalse(Birthday.isValidBirthday("")); // empty string
         assertFalse(Birthday.isValidBirthday(" ")); // spaces only
-        assertFalse(Birthday.isValidBirthday("1234")); // less than 6 numbers
-        assertFalse(Birthday.isValidBirthday("1234567")); // more than 6 numbers
-        assertFalse(Birthday.isValidBirthday("phone")); // non-numeric
+        assertFalse(Birthday.isValidBirthday("123456")); // less than 8 numbers
+        assertFalse(Birthday.isValidBirthday("12345678")); // more than 8 numbers
+        assertFalse(Birthday.isValidBirthday("32011995")); // invalid day
+        assertFalse(Birthday.isValidBirthday("01131995")); // invalid month
+        assertFalse(Birthday.isValidBirthday("phonezzz")); // non-numeric
         assertFalse(Birthday.isValidBirthday("9011p041")); // alphabets within digits
-        assertFalse(Birthday.isValidBirthday("12 04 95")); // spaces within digits
+        assertFalse(Birthday.isValidBirthday("12 04 1995")); // spaces within digits
 
-        // valid phone numbers
-        assertTrue(Birthday.isValidBirthday("010199")); // exactly 6 numbers
+        // valid birthday
+        assertTrue(Birthday.isValidBirthday("01011995")); // exactly 6 numbers
+    }
+
+    @Test
+    public void getValidDayMonth() {
+        Birthday birthdayStub = new Birthday("01121995");
+
+        assertTrue(birthdayStub.getDay() == 1); // check Day
+        assertTrue(birthdayStub.getMonth() == 12); // check Month
+        assertTrue(birthdayStub.getYear() == 1995); // check Year
     }
 }
 

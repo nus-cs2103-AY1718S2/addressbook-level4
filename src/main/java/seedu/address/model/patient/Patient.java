@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.collections.ObservableList;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -27,11 +31,13 @@ public class Patient {
 
     private final UniqueTagList tags;
 
+    private final UniqueAppointmentList appointments;
+
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null except appointment.
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address,
-                   DateOfBirth dob, BloodType bloodType, Remark remark, RecordList recordList, Set<Tag> tags) {
+                   DateOfBirth dob, BloodType bloodType, Remark remark, RecordList recordList, Set<Tag> tags, Set<Appointment> appointments) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.nric = nric;
@@ -44,6 +50,12 @@ public class Patient {
         this.recordList = recordList;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+
+        if (appointments != null) {
+            this.appointments = new UniqueAppointmentList(appointments);
+        } else {
+            this.appointments = new UniqueAppointmentList();
+        }
     }
 
     public Name getName() {
@@ -90,6 +102,18 @@ public class Patient {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    public Set<Appointment> getAppointments() {
+        return Collections.unmodifiableSet(appointments.toSet());
+    }
+
+    public ObservableList<Appointment> getPastAppointmentList() throws ParseException {
+        return appointments.getPastAppointmentObservableList();
+    }
+
+    public ObservableList<Appointment> getUpcomingAppointmentList() throws ParseException {
+        return appointments.getUpcomingAppointmentObservableList();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -115,7 +139,7 @@ public class Patient {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, phone, email, address, dob, bloodType, remark, recordList, tags);
+        return Objects.hash(name, nric, phone, email, address, dob, bloodType, remark, recordList, tags, appointments);
     }
 
     @Override

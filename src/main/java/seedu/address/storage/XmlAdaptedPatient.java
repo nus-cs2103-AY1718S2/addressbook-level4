@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.BloodType;
 import seedu.address.model.patient.DateOfBirth;
@@ -52,6 +53,9 @@ public class XmlAdaptedPatient {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement
+    private List<XmlAdaptedAppointment> appointments = new ArrayList<>();
+
     /**
      * Constructs an XmlAdaptedPatient.
      * This is the no-arg constructor that is required by JAXB.
@@ -62,7 +66,7 @@ public class XmlAdaptedPatient {
      * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
     public XmlAdaptedPatient(String name, String nric, String phone, String email, String address, String dob,
-                             String bloodType, List<XmlAdaptedTag> tagged) {
+                             String bloodType, List<XmlAdaptedTag> tagged, List<XmlAdaptedAppointment> appointments) {
         this.name = name;
         this.nric = nric;
         this.phone = phone;
@@ -72,6 +76,10 @@ public class XmlAdaptedPatient {
         this.bloodType = bloodType;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+
+        if (appointments != null) {
+            this.appointments = new ArrayList<>(appointments);
         }
     }
 
@@ -94,6 +102,10 @@ public class XmlAdaptedPatient {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+
+        for (Appointment appointment : source.getAppointments()) {
+            appointments.add(new XmlAdaptedAppointment(appointment));
+        }
     }
 
     /**
@@ -103,8 +115,14 @@ public class XmlAdaptedPatient {
      */
     public Patient toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
+        final List<Appointment> patientAppointment = new ArrayList<>();
+
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+
+        for (XmlAdaptedAppointment appointment : appointments) {
+            patientAppointment.add(appointment.toModelType());
         }
 
         if (this.name == null) {
@@ -175,7 +193,10 @@ public class XmlAdaptedPatient {
         final RecordList recordList = new RecordList(this.recordList);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, recordList, tags);
+
+        final Set<Appointment> appointments = new HashSet<>(patientAppointment);
+
+        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, recordList, tags, appointments);
     }
 
     @Override
@@ -196,6 +217,7 @@ public class XmlAdaptedPatient {
                 && Objects.equals(address, otherPerson.address)
                 && Objects.equals(dob, otherPerson.dob)
                 && Objects.equals(bloodType, otherPerson.bloodType)
-                && tagged.equals(otherPerson.tagged);
+                && tagged.equals(otherPerson.tagged)
+                && appointments.equals(otherPerson.appointments);
     }
 }

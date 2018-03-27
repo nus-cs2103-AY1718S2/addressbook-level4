@@ -61,7 +61,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Patient patient = new Patient(name, nric, phone, email, address,
-                    dob, bloodType, remark, recordList, tagList);
+                    dob, bloodType, remark, recordList, tagList, null);
 
             return new AddCommand(patient);
         } catch (IllegalValueException ive) {

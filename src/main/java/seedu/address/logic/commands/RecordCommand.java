@@ -102,7 +102,7 @@ public class RecordCommand extends UndoableCommand {
 
         return new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),
                 patientToEdit.getEmail(), patientToEdit.getAddress(), patientToEdit.getDob(),
-                patientToEdit.getBloodType(), patientToEdit.getRemark(), recordlist, patientToEdit.getTags());
+                patientToEdit.getBloodType(), patientToEdit.getRemark(), recordlist, patientToEdit.getTags(), patientToEdit.getAppointments());
     }
 
     @Override

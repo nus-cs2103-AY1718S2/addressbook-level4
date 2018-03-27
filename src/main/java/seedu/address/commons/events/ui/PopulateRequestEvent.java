@@ -76,6 +76,6 @@ public class PopulateRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " " + command;
+        return this.getClass().getSimpleName() + ": " + commandPreamble;
     }
 }

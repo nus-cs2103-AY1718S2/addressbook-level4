@@ -75,7 +75,12 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         birthday = source.getBirthday().value;
-        appointment = source.getAppointment().value;
+        if (source.getAppointment() == null) {
+            appointment = null;
+        }
+        else {
+            appointment = source.getAppointment().value;
+        }
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));

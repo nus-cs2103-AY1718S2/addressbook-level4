@@ -231,7 +231,7 @@ Selects the 2nd person in contactHeRo.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-On running the above command, you should a similar result as the following (refer to figure 4).
+On running the above command, you should see a similar result as the following (refer to figure 4).
 
 .Select Command Execution
 image::selectCommand.png[width="790"]

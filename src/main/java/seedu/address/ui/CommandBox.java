@@ -92,11 +92,19 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and
+     * positions the caret to the specified index.
+     */
+    private void replaceText(String text, int caretPosition) {
+        commandTextField.setText(text);
+        commandTextField.positionCaret(caretPosition);
+    }
+
+    /**
+     * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.
      */
     private void replaceText(String text) {
-        commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        replaceText(text, text.length());
     }
 
     /**

@@ -11,7 +11,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W11-B4/main
 
 By: `Team W11-B4`      Since: `Feb 2018`      Licence: `MIT`
 
@@ -42,7 +42,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/010195` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/010195` : adds a contact named `John Doe` to StardyTogether.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -148,7 +148,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons taking that module: `module` (coming in v1.3)
+=== Locating persons taking that module: `module` (coming in v1.4)
 
 Finds persons who is taking the module as specified. +
 Format: `module MODULE_CODE`
@@ -229,7 +229,7 @@ Selects the 2nd person in StardyTogether.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Importing address book : `import` (since v1.1)
+=== Importing data : `import` (since v1.1)
 
 Imports an encrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
 Format: `import FILEPATH PASSWORD`
@@ -246,7 +246,7 @@ Example:
 * `import data/addressBook.xml testpassword` +
 Imports `addressBook.xml` file at data folder using "testpassword" as the password.
 
-=== Vacant study rooms finder : `vacant` (coming in v1.3)
+=== Vacant study rooms finder : `vacant` (since in v1.3)
 
 Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +
 Format: `vacant BUILDING`

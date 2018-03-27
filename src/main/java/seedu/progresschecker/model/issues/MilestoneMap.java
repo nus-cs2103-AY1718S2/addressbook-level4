@@ -7,20 +7,20 @@ import java.util.HashMap;
  */
 public final class MilestoneMap {
 
-    private static HashMap<String, Integer> milestoneMap;
+    private static HashMap<Milestone, Integer> milestoneMap;
 
     /* Milestone Mappings */
-    private static final String MILESTONE_ONE = new String("v1.1");
-    private static final String MILESTONE_TWO = new String("v1.2");
-    private static final String MILESTONE_THREE = new String("v1.3");
-    private static final String MILESTONE_FOUR = new String("v1.4");
-    private static final String MILESTONE_FIVE_RC = new String("v1.5rc");
-    private static final String MILESTONE_FIVE = new String("v1.5");
+    private static final Milestone MILESTONE_ONE = new Milestone("v1.1");
+    private static final Milestone MILESTONE_TWO = new Milestone("v1.2");
+    private static final Milestone MILESTONE_THREE = new Milestone("v1.3");
+    private static final Milestone MILESTONE_FOUR = new Milestone("v1.4");
+    private static final Milestone MILESTONE_FIVE_RC = new Milestone("v1.5rc");
+    private static final Milestone MILESTONE_FIVE = new Milestone("v1.5");
 
     /**
      * Returns a hashmap of milestones
      */
-    public static HashMap<String, Integer> getMilestoneMap() {
+    public static HashMap<Milestone, Integer> getMilestoneMap() {
         milestoneMap = new HashMap<>();
         createMilestoneHashMap();
         return milestoneMap;

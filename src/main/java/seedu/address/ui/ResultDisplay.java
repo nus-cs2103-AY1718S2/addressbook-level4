@@ -54,7 +54,7 @@ public class ResultDisplay extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleNewPopulateRequestEvent(PopulateRequestEvent event) {
+    private void handlePopulateRequestEvent(PopulateRequestEvent event) {
         setStyleToIndicateCommandSuccess();
         final String messageUsage;
         switch (event.command) {

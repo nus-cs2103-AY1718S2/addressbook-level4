@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.ChangeThemeCommand.BRIGHT_THEME_CSS_FILE_NAME;
+import static seedu.address.logic.commands.ChangeThemeCommand.DARK_THEME_CSS_FILE_NAME;
+
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -8,6 +11,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -18,13 +22,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.theme.Theme;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -90,7 +97,6 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
-
         setAccelerators();
         registerAsAnEventHandler(this);
 
@@ -180,7 +186,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), Theme.getTheme());
     }
 
     /**
@@ -190,6 +196,15 @@ public class MainWindow extends UiPart<Stage> {
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+    @FXML
+    private void handleChangeDarkTheme() {
+        EventsCenter.getInstance().post(new ChangeThemeEvent("dark"));
+    }
+
+    @FXML
+    private void handleChangeBrightTheme() {
+        EventsCenter.getInstance().post(new ChangeThemeEvent("bright"));
     }
 
     void show() {
@@ -218,6 +233,31 @@ public class MainWindow extends UiPart<Stage> {
         handleHelp();
     }
 
+    @Subscribe
+    private void handleChangeThemeEvent (ChangeThemeEvent changeThemeEvent) {
+        Scene scene = primaryStage.getScene();
+        // Clear the original theme
+        scene.getStylesheets().clear();
+
+        String newTheme = changeThemeEvent.getTheme();
+        String cssFileName = null;
+
+        // Get the associate CSS file path for theme
+        switch (newTheme) {
+        case "dark":
+            cssFileName = DARK_THEME_CSS_FILE_NAME;
+            break;
+        case "bright":
+            cssFileName = BRIGHT_THEME_CSS_FILE_NAME;
+            break;
+        default:
+            cssFileName = DARK_THEME_CSS_FILE_NAME;
+            //Theme.changeTheme(primaryStage, changeThemeEvent.getTheme());
+        }
+
+        scene.getStylesheets().add(cssFileName);
+        primaryStage.setScene(scene);
+    }
     /**
      * Show the notification panel with an animation
      */

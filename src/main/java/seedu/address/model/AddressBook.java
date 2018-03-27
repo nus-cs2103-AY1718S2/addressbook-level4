@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -31,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueToDoList todos;
+    private final UniqueGroupList groups;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -38,11 +42,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */
-    {
+     */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         todos = new UniqueToDoList();
+        groups = new UniqueGroupList();
     }
 
     public AddressBook() {
@@ -70,6 +74,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.todos.setToDos(todos);
     }
 
+    public void setGroups(List<Group> groups) throws DuplicateGroupException {
+        this.groups.setGroups(groups);
+    }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -80,14 +87,18 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
         List<ToDo> syncedToDoList = newData.getToDoList();
+        List<Group> syncedGroupList = newData.getGroupList();
 
         try {
             setPersons(syncedPersonList);
             setToDos(syncedToDoList);
+            setGroups(syncedGroupList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         } catch (DuplicateToDoException e) {
             throw new AssertionError("AddressBooks should not have duplicate todos");
+        } catch (DuplicateGroupException e) {
+            throw new AssertionError("AddressBooks Should not have duplicate groups");
         }
     }
 
@@ -165,6 +176,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// to-do-level operations
+
     /**
      * Adds a to-do to the address book.
      *
@@ -178,6 +190,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    ////Group operation
+    public void addGroup(Group group) throws DuplicateGroupException {
+        groups.add(group);
     }
 
     //// util methods
@@ -201,6 +218,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ToDo> getToDoList() {
         return todos.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return groups.asObservableList();
     }
 
     @Override

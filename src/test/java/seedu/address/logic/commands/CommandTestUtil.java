@@ -23,7 +23,7 @@ import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
 
-//@@author YuanQQLer
+//@@author
 /**
  * Contains helper methods for testing commands.
  */
@@ -42,7 +42,7 @@ public class CommandTestUtil {
     //@@author Kyomian
     public static final String VALID_TAG_URGENT = "Urgent";
 
-    //@@author YuanQQLer
+    //@@author
     public static final String NAME_DESC_MA2108_HOMEWORK = " " + PREFIX_NAME + VALID_NAME_MA2108_HOMEWORK;
     public static final String NAME_DESC_CS2010_QUIZ = " " + PREFIX_NAME + VALID_NAME_CS2010_QUIZ;
     public static final String DATE_TIME_DESC_MA2108_HOMEWORK = " " + PREFIX_DATE_TIME
@@ -60,7 +60,7 @@ public class CommandTestUtil {
     public static final String INVALID_TASK_REMARK_DESC = " " + PREFIX_REMARK + "$"; // '$' not allowed
     public static final String INVALID_TASK_TAG_DESC = " " + PREFIX_TAG + "CS2106*"; // '*' not allowed in tags
 
-    //@@author YuanQQLer
+    //@@author
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 

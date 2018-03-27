@@ -141,8 +141,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
-            return true;
+        if (persons.contains(key)) {
+            return persons.remove(key);
         } else {
             throw new PersonNotFoundException();
         }

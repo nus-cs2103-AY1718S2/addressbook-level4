@@ -190,7 +190,8 @@ public class TypicalPatients {
         temp = null;
         try {
             temp = new PatientBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
-                    .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withDob(VALID_DOB_AMY)
+                    .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                    .withAddress(VALID_ADDRESS_AMY).withDob(VALID_DOB_AMY)
                     .withBloodType(VALID_BLOODTYPE_AMY).withTags(VALID_TAG_FRIEND).build();
         } catch (ParseException pe) {
             try {
@@ -201,9 +202,10 @@ public class TypicalPatients {
         }
         AMY = temp;
         temp = null;
-        try{
+        try {
             temp = new PatientBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_BOB)
-                    .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withDob(VALID_DOB_BOB)
+                    .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+                    .withAddress(VALID_ADDRESS_BOB).withDob(VALID_DOB_BOB)
                     .withBloodType(VALID_BLOODTYPE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
         } catch (ParseException pe) {

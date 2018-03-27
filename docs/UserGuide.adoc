@@ -188,7 +188,7 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
    3. Phone field that contains keyword `8` **AND**
    4. Major field that starts with keyword `Computer`
 
-=== Filter persons by expected graduation year: `filter`
+=== Filter persons by multiple fields: `filter`[since v1.3]
 
 Filters persons whose keyword is within the specified range.
 Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE]`
@@ -198,7 +198,6 @@ Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE]`
 * `filter` command will only be filtering based on the current view of the person list, instead of all the persons.
 * Within each prefix, `filter` command will match all entries that satisfies at least one keyword range. You can think of an `OR` operator within the prefix.
 * `filter` command will match all persons that only matches every prefixes. You can think of an `AND` operator between all prefixes.
-
 
 Examples:
 
@@ -363,6 +362,9 @@ Searches all fields that has a fuzzy match with user input.
 === Provide a list of search results in text `[coming in v1.4]`
 
 Text summary of the search results after user executes the `find` command.
+
+=== Add more field support in `filter` command [coming in v1.4]
+Fields like interview date, status and maybe else will be supported.
 
 === Highlights search results in user interface `[coming in v2.0]`
 

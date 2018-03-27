@@ -17,12 +17,15 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.*;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.tag.Tag;
 
 
@@ -175,9 +178,8 @@ public final class ImportContactsCommand extends UndoableCommand {
                     address = csvRecord.get("Address");
                     addDate = new DateAdded(formatter.format(date));
                 } catch (Exception e) {
-                    throw new CommandException("csvRecord failed. Check csv file to make sure" +
-                            "fields are separated correctly along with headers\n" +
-                            e);
+                    throw new CommandException("csvRecord failed. Check csv file to make sure"
+                            + "fields are separated correctly along with headers\n" + e);
                 }
 
                 printResult(name, email, phone, address); //mainly for debugging
@@ -197,23 +199,9 @@ public final class ImportContactsCommand extends UndoableCommand {
                 }
 
                 try {
-                        //upl.add(personToAdd);
-
-                        model.addPerson(personToAdd);
-                        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-
-
- //                   AddCommand addMe = new AddCommand(personToAdd); //not the most efficient...
-                    //                   addMe.executeUndoableCommand();
-
-//                requireNonNull(model);
-//                try {
-//                    model.addPerson(personToAdd);
-//                    return new CommandResult(String.format(MESSAGE_SUCCESS, personToAdd));
-//                } catch (DuplicatePersonException e) {
-//                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-//                }
-
+                    //upl.add(personToAdd);
+                    model.addPerson(personToAdd);
+                    model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
                 } catch (Exception e) {
                     throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
                     + e);

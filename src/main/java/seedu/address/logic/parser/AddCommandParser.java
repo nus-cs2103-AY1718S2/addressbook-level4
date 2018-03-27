@@ -24,7 +24,6 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
-import seedu.address.model.patient.Record;
 import seedu.address.model.patient.RecordList;
 import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
@@ -61,7 +60,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             RecordList recordList = new RecordList(); //add command does not allow for adding of records
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Patient patient = new Patient(name, nric, phone, email, address, dob, bloodType, remark, recordList, tagList);
+            Patient patient = new Patient(name, nric, phone, email, address,
+                    dob, bloodType, remark, recordList, tagList);
 
             return new AddCommand(patient);
         } catch (IllegalValueException ive) {

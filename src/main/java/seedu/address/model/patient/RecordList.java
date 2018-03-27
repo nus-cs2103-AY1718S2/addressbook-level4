@@ -1,18 +1,11 @@
 package seedu.address.model.patient;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import seedu.address.logic.commands.RecordCommand;
-import seedu.address.logic.parser.RecordCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -45,7 +38,7 @@ public class RecordList {
     public RecordList(String string) throws ParseException { //placeholder code
         this.recordList = new ArrayList<Record>();
         String lines[] = string.split("\\r?\\n");
-        for(int i = 0; i < lines.length; i++){
+        for (int i = 0; i < lines.length; i++) {
             recordList.add(new Record(lines[i]));
         }
         this.numRecord = lines.length;
@@ -91,9 +84,9 @@ public class RecordList {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < numRecord; i++){
+        for (int i = 0; i < numRecord; i++) {
             builder.append("Index: ")
-                    .append((i+1) + " ")
+                    .append((i + 1) + " ")
                     .append(recordList.get(i).toString())
                     .append("\n");
         }
@@ -105,10 +98,10 @@ public class RecordList {
      */
     public String toCommandString() {
         final StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < numRecord; i++){
+        for (int i = 0; i < numRecord; i++) {
             builder.append("1 ") //as the command will not be executed, we will be placing a dummy patient index
             .append(PREFIX_INDEX)
-            .append((i+1) + " ")
+            .append((i + 1) + " ")
             .append(recordList.get(i).toCommandStringRecordList())
             .append("\n");
         }
@@ -116,10 +109,9 @@ public class RecordList {
     }
 
     public void edit(int recordIndex, Record record) {
-        if(this.numRecord > recordIndex){
+        if (this.numRecord > recordIndex) {
             this.set(recordIndex, record);
-        }
-        else{ //will always add new record as long as index > numRecords
+        } else { //will always add new record as long as index > numRecords
             this.recordList.add(record);
             this.numRecord += 1;
         }

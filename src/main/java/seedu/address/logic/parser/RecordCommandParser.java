@@ -27,7 +27,8 @@ public class RecordCommandParser implements Parser<RecordCommand> {
      */
     public RecordCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_DATE, PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT);
+                ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_DATE,
+                        PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT);
 
         Index patientIndex;
         Index recordIndex;

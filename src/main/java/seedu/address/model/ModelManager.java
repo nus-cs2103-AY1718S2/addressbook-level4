@@ -3,8 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -14,7 +12,6 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ImdbChangedEvent;
-import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -30,8 +27,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
     private final FilteredList<Patient> patientVisitingQueue;
-    private final List<Appointment> pastAppointmentList;
-    private final List<Appointment> upcomingAppointmentList;
 
     /**
      * Initializes a ModelManager with the given Imdb and userPrefs.
@@ -45,8 +40,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.imdb = new Imdb(addressBook);
         filteredPatients = new FilteredList<>(this.imdb.getPersonList());
         patientVisitingQueue = new FilteredList<>(this.imdb.getUniquePatientQueue());
-        pastAppointmentList = new ArrayList<>();
-        upcomingAppointmentList = new ArrayList<>();
     }
 
     public ModelManager() {
@@ -121,16 +114,6 @@ public class ModelManager extends ComponentManager implements Model {
         if (filteredPatients.size() > 0) {
             return filteredPatients.get(0);
         }
-        return null;
-    }
-
-    @Override
-    public ObservableList<Appointment> getPastAppointments(Patient patient) {
-        return null;
-    }
-
-    @Override
-    public ObservableList<Appointment> getUpcomingAppointments(Patient patient) {
         return null;
     }
 

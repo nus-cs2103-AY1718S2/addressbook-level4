@@ -161,16 +161,6 @@ public class AddCommandTest {
         public Patient getPatientFromList(Predicate<Patient> predicate) {
             return null;
         }
-
-        @Override
-        public ObservableList<Appointment> getPastAppointments(Patient patient) {
-            return null;
-        }
-
-        @Override
-        public ObservableList<Appointment> getUpcomingAppointments(Patient patient) {
-            return null;
-        }
     }
 
     /**

@@ -250,17 +250,6 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     @Override
-    public ObservableList<Appointment> getPastAppointments() {
-
-        return null;
-    }
-
-    @Override
-    public ObservableList<Appointment> getUpcomingAppointments() {
-        return null;
-    }
-
-    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Imdb // instanceof handles nulls

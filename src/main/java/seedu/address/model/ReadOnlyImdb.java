@@ -33,16 +33,4 @@ public interface ReadOnlyImdb {
      * This list will not contain any duplicate patient in the queue.
      */
     ObservableList<Patient> getUniquePatientQueue();
-
-    /**
-     * Returns an unmodifiable view of the past appointments of a patient.
-     * This list will not contain any duplicate appointments.
-     */
-    ObservableList<Appointment> getPastAppointments();
-
-    /**
-     * Returns an unmodifiable view of the upcoming appointments of a patient.
-     * This list will not contain any duplicate appointments.
-     */
-    ObservableList<Appointment> getUpcomingAppointments();
 }

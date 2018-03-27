@@ -140,16 +140,6 @@ public class ImdbTest {
         public ObservableList<Patient> getUniquePatientQueue() {
             return visitingQueue;
         }
-
-        @Override
-        public ObservableList<Appointment> getPastAppointments() {
-            return null;
-        }
-
-        @Override
-        public ObservableList<Appointment> getUpcomingAppointments() {
-            return null;
-        }
     }
 
 }

@@ -9,11 +9,11 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores deskboard data in an XML file
+ * Stores desk board data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given deskboard data to the specified file.
+     * Saves the given desk board data to the specified file.
      */
     public static void saveDataToFile(File file, XmlSerializableDeskBoard deskBoard)
             throws FileNotFoundException {
@@ -25,7 +25,7 @@ public class XmlFileStorage {
     }
 
     /**
-     * Returns address book in the file or an empty address book
+     * Returns desk board in the file or an empty desk board
      */
     public static XmlSerializableDeskBoard loadDataFromSaveFile(File file) throws DataConversionException,
                                                                             FileNotFoundException {

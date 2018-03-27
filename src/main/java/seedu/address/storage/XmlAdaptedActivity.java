@@ -10,6 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.tag.Tag;
 
+//@@author karenfrilya97
 /**
  * JAXB-friendly version of the Activity.
  */

@@ -16,6 +16,7 @@ import seedu.address.model.activity.Name;
 import seedu.address.model.activity.Task;
 import seedu.address.testutil.Assert;
 
+//@@author karenfrilya97
 public class XmlAdaptedTaskTest {
 
     private static final Task ASSIGNMENT2_TASK = (Task) ASSIGNMENT2;

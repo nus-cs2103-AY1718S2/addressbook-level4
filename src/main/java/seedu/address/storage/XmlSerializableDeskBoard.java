@@ -14,6 +14,7 @@ import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
 
+//@@author karenfrilya97
 /**
  * An Immutable DeskBoard that is serializable to XML format
  */

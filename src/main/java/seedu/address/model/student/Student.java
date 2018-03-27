@@ -134,7 +134,7 @@ public class Student {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" programminglanguage: ")
+                .append(" Programming Language: ")
                 .append(getProgrammingLanguage())
                 .append(" Tags: ");
         getTags().forEach(builder::append);

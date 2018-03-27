@@ -9,8 +9,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class ProgrammingLanguage {
 
-    public static final String MESSAGE_PROGRAMMING_LANGUAGE_CONSTRAINTS = "Programming language should be alphanumeric";
-    public static final String PROGRAMMING_LANGUAGE_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_PROGRAMMING_LANGUAGE_CONSTRAINTS = "Programming language should be a visibile "
+            + "character";
+    public static final String PROGRAMMING_LANGUAGE_VALIDATION_REGEX = "\\p{Graph}+";
 
     public final String programmingLanguage;
 

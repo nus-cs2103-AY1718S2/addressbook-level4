@@ -160,6 +160,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Checks for the existence of {@code key} in this {@code AddressBook}.
+     * @throws StudentNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean checkForStudentInAdressBook(Student key) throws StudentNotFoundException {
+        if (students.contains(key)) {
+            return true;
+        } else {
+            throw new StudentNotFoundException();
+        }
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

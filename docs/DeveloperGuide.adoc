@@ -295,9 +295,9 @@ An example of the edit command would be: edit 1 cm/interested in bascketball
 //tag::archive[]
 === Archive feature
 ==== Current Implementation
-The archive feature allows the salesperson to archive clients that he no longer contacts, but does not want to delete as he possible might want to contact him/her again. Once archived, the client is not shown in the list. To display the client, either find or listall command has to be used. The client is then displayed in a red font with strikethrough, indicating that he/she is archived.
+The archive feature allows the salesperson to archive clients that he no longer contacts, but does not want to delete as he possible might want to contact him/her again. Once archived, the client is not shown in the list. To display the client, either `find` or `listall` command has to be used. The client is then displayed in a red font with strikethrough, indicating that he/she is archived.
 
-The archival feature is implemented by adding a boolean variable isArchived in the Person model. Listing is filtered through the use of a predicate, PREDICATE_SHOW_UNARCHIVED_PERSONS, that will filter for those clients that are unarchived
+The archival feature is implemented by adding a boolean variable `isArchived` in the Person model. Listing is filtered through the use of a predicate, `PREDICATE_SHOW_UNARCHIVED_PERSONS`, that will filter for those clients that are unarchived
 
 ==== Design Considerations
 

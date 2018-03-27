@@ -83,10 +83,13 @@ public class CommandTestUtil {
     public static final String CONTENT_E = "ToDo E";
     public static final String CONTENT_B = "ToDo B";
 
-
-
     public static final String VALID_CONTENT = "Something to do";
     public static final String INVALID_CONTENT = "Something to do&"; // '&' not allowed in contents
+
+    public static final String VALID_STATUS_DONE = "done";
+    public static final String VALID_STATUS_UNDONE = "undone";
+    public static final String INVALID_STATUS = "invalid status";
+
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)

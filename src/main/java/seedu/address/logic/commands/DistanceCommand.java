@@ -25,25 +25,25 @@ public class DistanceCommand extends Command {
     public static final String MESSAGE_DISTANCE_FROM_HQ_SUCCESS = "Distance from Head quarter to this Person: %1$s km";
     public static final String MESSAGE_DISTANCE_FROM_PERSON_SUCCESS = "Distance from %1$s to %2$s: %3$s km";
 
-    private Index targetIndex_origin = null;
-    private Index targetIndex_destination;
+    private Index targetIndexOrigin = null;
+    private Index targetIndexDestination;
 
     /**
      * constructor for DistanceCommand calculating distance from HQ to a person
      * @param targetIndex
      */
     public DistanceCommand(Index targetIndex) {
-        this.targetIndex_destination = targetIndex;
+        this.targetIndexDestination = targetIndex;
     }
 
     /**
      * constructor for DistanceCommand calculating distance from a person to another person
-     * @param targetIndex_origin
-     * @param targetIndex_destination
+     * @param targetIndexOrigin
+     * @param targetIndexDestination
      */
-    public DistanceCommand(Index targetIndex_origin, Index targetIndex_destination) {
-        this.targetIndex_origin = targetIndex_origin;
-        this.targetIndex_destination = targetIndex_destination;
+    public DistanceCommand(Index targetIndexOrigin, Index targetIndexDestination) {
+        this.targetIndexOrigin = targetIndexOrigin;
+        this.targetIndexDestination = targetIndexDestination;
     }
 
     @Override
@@ -54,38 +54,38 @@ public class DistanceCommand extends Command {
         String destination;
         String personName_origin = "";
         String personName_destination = "";
-        if (targetIndex_origin == null) {
-            if (targetIndex_destination.getZeroBased() >= lastShownList.size()) {
+        if (targetIndexOrigin == null) {
+            if (targetIndexDestination.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
-            int indexZeroBased_destination = targetIndex_destination.getZeroBased();
-            Person person = lastShownList.get(indexZeroBased_destination);
+            int indexZeroBasedDestination = targetIndexDestination.getZeroBased();
+            Person person = lastShownList.get(indexZeroBasedDestination);
             origin = "Kent Ridge MRT";
             destination = person.getAddress().toString();
-        }
-
-        else {
-            if (targetIndex_origin.getZeroBased() >= lastShownList.size()
-                    || targetIndex_destination.getZeroBased() >= lastShownList.size()) {
+        } else {
+            if (targetIndexOrigin.getZeroBased() >= lastShownList.size()
+                    || targetIndexDestination.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
-            int indexZeroBased_origin = targetIndex_origin.getZeroBased();
-            int indexZeroBased_destination = targetIndex_destination.getZeroBased();
-            Person person_origin = lastShownList.get(indexZeroBased_origin);
-            Person person_destination = lastShownList.get(indexZeroBased_destination);
-            origin = person_origin.getAddress().toString();
-            destination = person_destination.getAddress().toString();
-            personName_origin = person_origin.getName().toString();
-            personName_destination = person_destination.getName().toString();
+            int indexZeroBasedOrigin = targetIndexOrigin.getZeroBased();
+            int indexZeroBasedDestination = targetIndexDestination.getZeroBased();
+            Person personOrigin = lastShownList.get(indexZeroBasedOrigin);
+            Person personDestination = lastShownList.get(indexZeroBasedDestination);
+            origin = personOrigin.getAddress().toString();
+            destination = personDestination.getAddress().toString();
+            personName_origin = personOrigin.getName().toString();
+            personName_destination = personDestination.getName().toString();
         }
 
         try {
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(origin, destination);
-            return targetIndex_origin == null ? new CommandResult(String.format(MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance))
-                    : new CommandResult(String.format(MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personName_origin, personName_destination, distance));
+            return targetIndexOrigin == null ? new CommandResult(String.format
+                    (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance))
+                    : new CommandResult(String.format(
+                            MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personName_origin, personName_destination, distance));
         } catch (Exception e) {
             throw new CommandException(Messages.MESSAGE_PERSON_ADDRESS_CANNOT_FIND);
         }
@@ -95,6 +95,6 @@ public class DistanceCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DistanceCommand // instanceof handles nulls
-                && this.targetIndex_destination.equals(((DistanceCommand) other).targetIndex_destination)); // state check
+                && this.targetIndexDestination.equals(((DistanceCommand) other).targetIndexDestination)); // state check
     }
 }

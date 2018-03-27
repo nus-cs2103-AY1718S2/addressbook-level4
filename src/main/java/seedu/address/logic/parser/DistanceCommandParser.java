@@ -21,12 +21,10 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
         String[] selectedIndexes = args.split(" ");
         try {
             if (selectedIndexes.length == 3) {
-                Index index_1 = ParserUtil.parseIndex(selectedIndexes[1].trim());
-                Index index_2 = ParserUtil.parseIndex(selectedIndexes[2].trim());
-                return new DistanceCommand(index_1, index_2);
-            }
-
-            else {
+                Index firstIndex = ParserUtil.parseIndex(selectedIndexes[1].trim());
+                Index secondIndex = ParserUtil.parseIndex(selectedIndexes[2].trim());
+                return new DistanceCommand(firstIndex, secondIndex);
+            } else {
                 Index index = ParserUtil.parseIndex(args);
                 return new DistanceCommand(index);
             }

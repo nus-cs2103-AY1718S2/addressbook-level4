@@ -30,6 +30,10 @@ public class SortCommandTest {
         // same object -> returns true
         assertTrue(firstSortCommand.equals(firstSortCommand));
 
+        // same values -> returns true
+        SortCommand secondSortCommandcopy = new SortCommand("name");
+        assertTrue(secondSortCommand.equals(secondSortCommandcopy));
+
         // different types -> returns false
         assertFalse(secondSortCommand.equals(1));
 

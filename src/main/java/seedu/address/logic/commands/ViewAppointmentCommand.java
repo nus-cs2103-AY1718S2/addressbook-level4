@@ -2,11 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowPatientAppointmentRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 

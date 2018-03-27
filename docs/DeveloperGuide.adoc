@@ -559,7 +559,7 @@ The groups in the group list are facilitated by `Group` class. Each `Group` obje
 Address book stores all groups in `UniqueGroupList`.
 `Group`,`Information` and `UniqueGroupList` class reside inside `Model` component. The following is the class diagram showing the relationship between `Group` and `Information`:
 
-image::GroupInformationtClassDiagram.png[width="800"]
+image:GroupInformationClassDiagram.png[width ="800"]
 
 Suppose that the user has just launched the application. The `UniqueGroupList` in the address book will be empty if no groups have been added before.
 
@@ -567,7 +567,7 @@ The user executes a new `AddGroupCommand` with `Information`, to add a new group
 The new group is added to the `UniqueGroupList` and the current state of the address book is saved.
 The following sequence diagram shows how the addGroup operation works:
 
-image::AddGroupSequenceDiagram.png[width="800"]
+image:AddGroupSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 

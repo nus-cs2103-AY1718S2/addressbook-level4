@@ -70,7 +70,7 @@ public class AddEventCommandParserTest {
                 .withVenue(VALID_EVENT_VENUE_NDP).withDate(VALID_EVENT_DATE_NDP)
                 .withStartTime(VALID_EVENT_START_TIME_NDP).withEndTime(VALID_EVENT_END_TIME_NDP).build();
         assertParseSuccess(parser, EVENT_NAME_DESC_NDP + EVENT_VENUE_DESC_NDP + EVENT_DATE_DESC_NDP
-                        + EVENT_START_TIME_DESC_NDP+ EVENT_END_TIME_DESC_NDP,
+                        + EVENT_START_TIME_DESC_NDP + EVENT_END_TIME_DESC_NDP,
                 new AddEventCommand(expectedEventMultipleTags));
     }
 

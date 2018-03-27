@@ -20,6 +20,7 @@ public class PatientCardHandle extends NodeHandle<Node> {
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String REMARK_FIELD_ID = "#remark";
+    private static final String RECORDLIST_FIELD_ID = "#recordList";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
@@ -31,6 +32,7 @@ public class PatientCardHandle extends NodeHandle<Node> {
     private final Label phoneLabel;
     private final Label emailLabel;
     private final Label remarkLabel;
+    private final Label recordListLabel;
     private final List<Label> tagLabels;
 
     public PatientCardHandle(Node cardNode) {
@@ -45,6 +47,7 @@ public class PatientCardHandle extends NodeHandle<Node> {
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.remarkLabel = getChildNode(REMARK_FIELD_ID);
+        this.recordListLabel = getChildNode(RECORDLIST_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -88,6 +91,10 @@ public class PatientCardHandle extends NodeHandle<Node> {
 
     public String getRemark() {
         return remarkLabel.getText();
+    }
+
+    public String getRecordList() {
+        return recordListLabel.getText();
     }
 
     public List<String> getTags() {

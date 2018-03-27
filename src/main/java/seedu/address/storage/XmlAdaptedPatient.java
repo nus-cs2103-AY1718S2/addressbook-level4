@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.BloodType;
@@ -18,6 +19,8 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Record;
+import seedu.address.model.patient.RecordList;
 import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 
@@ -44,6 +47,8 @@ public class XmlAdaptedPatient {
     private String bloodType;
     @XmlElement(required = true)
     private String remark;
+    @XmlElement(required = true)
+    private String recordList;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -92,6 +97,7 @@ public class XmlAdaptedPatient {
         dob = source.getDob().value;
         bloodType = source.getBloodType().value;
         remark = source.getRemark().value;
+        recordList = source.getRecordList().toCommandString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -179,10 +185,18 @@ public class XmlAdaptedPatient {
 
         final Remark remark = new Remark(this.remark);
 
+        try {
+            final RecordList recordList = new RecordList(this.recordList);
+        } catch (ParseException pe) {
+            throw new IllegalValueException(Record.MESSAGE_RECORD_CONSTRAINTS);
+        }
+        final RecordList recordList = new RecordList(this.recordList);
+
         final Set<Tag> tags = new HashSet<>(personTags);
 
         final Set<Appointment> appointments = new HashSet<>(patientAppointment);
-        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, tags, appointments);
+
+        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, recordList, tags, appointments);
     }
 
     @Override

@@ -29,6 +29,7 @@ import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemovePasswordCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -79,6 +80,13 @@ public class AddressBookParserTest {
         PasswordCommand command = (PasswordCommand) parser.parseCommand(
                 PasswordCommand.COMMAND_WORD + " test");
         assertEquals(new PasswordCommand("test"), command);
+    }
+
+    @Test
+    public void parseCommand_nopassword() throws Exception {
+        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD) instanceof RemovePasswordCommand);
+        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD + " 3")
+                instanceof RemovePasswordCommand);
     }
 
     @Test

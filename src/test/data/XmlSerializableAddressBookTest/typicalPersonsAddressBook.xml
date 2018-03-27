@@ -56,8 +56,5 @@
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>
-	<password>
-        <currPassword>qUqP5cyxm6YcTAhz05Hphw==</currPassword>
-        <prevPassword>qUqP5cyxm6YcTAhz05Hphw==</prevPassword>
-    </password>
+	<password/>
 </addressbook>

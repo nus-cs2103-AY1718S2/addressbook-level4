@@ -101,7 +101,8 @@ public class ProfilePicture {
             String fileExtension = extractFileExtension(profilePicture);
             Date date = new Date();
             destPath = PROFILE_PICTURE_FOLDER.concat(
-                    date.toString().replace(" ", "").concat(".").concat(fileExtension));
+                    date.toString().replace(":", "").replace(" ", "").concat(
+                            ".").concat(fileExtension));
             File dest = new File(destPath);
             Files.copy(source.toPath(), dest.toPath());
         } catch (IOException e) {

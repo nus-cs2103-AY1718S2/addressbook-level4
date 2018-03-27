@@ -160,7 +160,7 @@ public class FindGroupCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
-        command = "FiNdGrOuP neighbours";
+        command = "GrOuPFiNd neighbours";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 

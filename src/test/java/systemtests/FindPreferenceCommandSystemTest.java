@@ -161,7 +161,7 @@ public class FindPreferenceCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
-        command = "FiNdPREferenCE necklaces";
+        command = "PREferenCEFiNd necklaces";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 

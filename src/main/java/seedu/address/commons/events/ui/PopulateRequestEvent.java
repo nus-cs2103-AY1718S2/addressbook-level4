@@ -13,7 +13,54 @@ public class PopulateRequestEvent extends BaseEvent {
     public final int caretIndex;
 
     public PopulateRequestEvent(String command) {
-        this.command = command;
+        switch (command) {
+        case "add":
+            commandPreamble = AddCommand.COMMAND_WORD;
+            commandUsageMessage = AddCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble
+                    + " " + PREFIX_NAME
+                    + "  " + PREFIX_PHONE
+                    + "  " + PREFIX_EMAIL
+                    + "  " + PREFIX_ADDRESS
+                    + "  " + PREFIX_TAG;
+            caretIndex = (AddCommand.COMMAND_WORD + " " + PREFIX_NAME + " ").length();
+            break;
+        case "edit":
+            commandPreamble = EditCommand.COMMAND_WORD;
+            commandUsageMessage = EditCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble
+                    + "  " + PREFIX_NAME
+                    + "  " + PREFIX_PHONE
+                    + "  " + PREFIX_EMAIL
+                    + "  " + PREFIX_ADDRESS
+                    + "  " + PREFIX_TAG;
+            caretIndex = (EditCommand.COMMAND_WORD + " ").length();
+            break;
+        case "delete":
+            commandPreamble = DeleteCommand.COMMAND_WORD;
+            commandUsageMessage = DeleteCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble + " ";
+            caretIndex = commandTemplate.length();
+            break;
+        case "locate":
+            commandPreamble = LocateCommand.COMMAND_WORD;
+            commandUsageMessage = LocateCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble + " ";
+            caretIndex = commandTemplate.length();
+            break;
+        case "find":
+            commandPreamble = FindCommand.COMMAND_WORD;
+            commandUsageMessage = FindCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble + " -";
+            caretIndex = commandTemplate.length();
+            break;
+        default:
+            commandPreamble = FindCommand.COMMAND_WORD;
+            commandUsageMessage = FindCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble + " -";
+            caretIndex = commandTemplate.length();
+            // should be exception
+        }
     }
 
     @Override

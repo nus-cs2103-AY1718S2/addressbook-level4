@@ -189,6 +189,17 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}, the model and storage contains the same alias objects as {@code expectedModel}
+     */
+    protected void assertEqualAlias(String expectedCommandInput, String expectedResultMessage, Model expectedModel) {
+        assertEquals("", getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertEquals(expectedModel, getModel());
+        assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+    }
+
+    /**
      * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */

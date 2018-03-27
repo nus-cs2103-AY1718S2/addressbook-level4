@@ -16,6 +16,7 @@ public class AliasBuilder {
     public AliasBuilder() {
         command = DEFAULT_COMMAND;
         alias = DEFAULT_ALIAS;
+
     }
 
     /**

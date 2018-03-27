@@ -1,6 +1,17 @@
 package seedu.address.commons.events.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import seedu.address.commons.events.BaseEvent;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.LocateCommand;
 
 /**
  * Indicates that a new result is available.

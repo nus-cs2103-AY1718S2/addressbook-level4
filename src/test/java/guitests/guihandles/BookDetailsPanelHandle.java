@@ -30,6 +30,7 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
     private List<Label> categoriesLabel;
 
     private String lastRememberedIsbn;
+    private boolean lastRememberedVisibility;
 
     public BookDetailsPanelHandle(Node bookDetailsPanelNode) {
         super(bookDetailsPanelNode);
@@ -82,6 +83,14 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
 
     public boolean isVisible() {
         return getRootNode().isVisible();
+    }
+
+    public void rememberVisibility() {
+        lastRememberedVisibility = isVisible();
+    }
+
+    public boolean isVisibilityChanged() {
+        return !lastRememberedVisibility == isVisible();
     }
 
     public void rememberIsbn() {

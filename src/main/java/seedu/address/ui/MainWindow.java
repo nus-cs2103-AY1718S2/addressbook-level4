@@ -18,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.WindowSettings;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
+import seedu.address.commons.events.ui.ClearBookDetailsRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
@@ -251,6 +252,12 @@ public class MainWindow extends UiPart<Stage> {
             searchResultsPanel.getRoot().setVisible(false);
             recentBooksPanel.getRoot().setVisible(true);
         });
+    }
+
+    @Subscribe
+    private void handleClearBookDetailsRequestEvent(ClearBookDetailsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> bookDetailsPanel.clear());
     }
 
 }

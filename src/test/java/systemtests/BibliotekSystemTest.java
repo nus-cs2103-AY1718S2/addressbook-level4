@@ -232,14 +232,16 @@ public abstract class BibliotekSystemTest {
         getSearchResultsPanel().rememberSelectedBookCard();
         getRecentBooksPanel().rememberSelectedBookCard();
         getBookDetailsPanel().rememberIsbn();
+        getBookDetailsPanel().rememberVisibility();
     }
 
     /**
      * Asserts that the book details panel remains displaying the details of the previously selected book.
-     * @see BookDetailsPanelHandle#isIsbnChanged()
+     * @see BookDetailsPanelHandle#isIsbnChanged() and BookDetailsPanelHandle#isVisibilityChanged()
      */
     protected void assertBookDetailsPanelUnchanged() {
-        assertFalse(getBookDetailsPanel().isIsbnChanged());
+        assertFalse(getBookDetailsPanel().isIsbnChanged()
+                || getBookDetailsPanel().isVisibilityChanged());
     }
 
     /**

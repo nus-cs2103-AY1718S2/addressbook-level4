@@ -34,7 +34,6 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
         selectBook(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedBookListCardDeselected();
-        assertBookDetailsPanelUnchanged();
 
         /* Case: clear empty book shelf -> cleared */
         assertCommandSuccess(ClearCommand.COMMAND_WORD);

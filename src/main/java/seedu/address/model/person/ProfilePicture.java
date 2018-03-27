@@ -18,7 +18,7 @@ public class ProfilePicture {
             "Profile picture name should be a valid image name,"
                     + " and it should end with either jpeg, jpg, png, gif or bmp";
     public static final String MESSAGE_PROFILEPICTURE_NOT_EXISTS =
-            "Profile picture does not exists. Please give another profile picture";
+            "Profile picture does not exist. Please give another profile picture";
 
     // alphanumeric and special characters
     public static final String PROFILE_PICTURE_VALIDATION_REGEX = "^$|([^\\s]+(\\.(?i)(jpeg|jpg|png|gif|bmp))$)";

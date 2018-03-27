@@ -53,8 +53,8 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, String profilePicture,
-                            String currentPosition, String company, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String currentPosition, String company, 
+                            String profilePicture, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -141,7 +141,7 @@ public class XmlAdaptedPerson {
         if (this.company == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Company.class.getSimpleName()));
         }
-        if (!Company.isValidCompany(this.address)) {
+        if (!Company.isValidCompany(this.company)) {
             throw new IllegalValueException(Company.MESSAGE_COMPANY_CONSTRAINTS);
         }
         final Company company = new Company(this.company);

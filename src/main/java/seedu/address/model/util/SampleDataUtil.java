@@ -5,6 +5,12 @@ import java.util.Set;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.Location;
+import seedu.address.model.job.NumberOfPositions;
+import seedu.address.model.job.Position;
+import seedu.address.model.job.Team;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.CurrentPosition;
@@ -44,15 +50,33 @@ public class SampleDataUtil {
         };
     }
 
+    public static Job[] getSampleJobs() {
+        return new Job[] {
+            new Job(new Position("Software Engineer"), new Team("Cloud Services"), new Location("Singapore"),
+                new NumberOfPositions("2")),
+            new Job(new Position("Marketing Intern"), new Team("Social Media Marketing"), new Location("Kuala Lampur, Malaysia"), 
+                new NumberOfPositions("1")),
+            new Job(new Position("DevOps Engineer"), new Team("DevOps"), new Location("Singapore"),
+                new NumberOfPositions("3")),
+            new Job(new Position("Product Manager"), new Team("Mobile Products"), new Location("Singapore"),
+                new NumberOfPositions("1"))
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
             }
+            for (Job sampleJob : getSampleJobs()) {
+                sampleAb.addJob(sampleJob);
+            }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
+        } catch (DuplicateJobException e) {
+            throw new AssertionError("sample data cannot contain duplicate jobs", e);
         }
     }
 

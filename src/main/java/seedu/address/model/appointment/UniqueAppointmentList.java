@@ -130,6 +130,18 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         return internalList.hashCode();
     }
 
+    public ObservableList<Appointment> getPastAppointmentObservableList() {
+        Set<Appointment> appointmentSet = toSet();
+        ObservableList pastAppointments = FXCollections.observableArrayList();
+
+        for (Appointment appt : appointmentSet) {
+            if (DateTime.isBefore(appt.getAppointmentDateTimeString())) {
+                pastAppointments.add(appt);
+            }
+        }
+        return FXCollections.unmodifiableObservableList(pastAppointments);
+    }
+
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list
      */

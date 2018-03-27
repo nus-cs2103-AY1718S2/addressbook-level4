@@ -97,15 +97,7 @@ public class Patient {
     }
 
     public ObservableList<Appointment> getPastAppointmentList() {
-        Set<Appointment> appointmentSet = appointments.toSet();
-        ObservableList pastAppointments = FXCollections.observableArrayList();
-
-        for (Appointment appt : appointmentSet) {
-            if (DateTime.isBefore(appt.getAppointmentDateTimeString())) {
-                pastAppointments.add(appt);
-            }
-        }
-        return FXCollections.unmodifiableObservableList(pastAppointments);
+        return appointments.getPastAppointmentObservableList();
     }
 
     @Override

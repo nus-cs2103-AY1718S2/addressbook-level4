@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.DateTime;
 
 /**
  * JAXB-friendly adapted version of the Appointment.

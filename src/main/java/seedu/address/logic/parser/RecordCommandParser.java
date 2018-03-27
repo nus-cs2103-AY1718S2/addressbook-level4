@@ -39,7 +39,8 @@ public class RecordCommandParser implements Parser<RecordCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_DATE, PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT)
+        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_DATE,
+                PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT)
                 || argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }

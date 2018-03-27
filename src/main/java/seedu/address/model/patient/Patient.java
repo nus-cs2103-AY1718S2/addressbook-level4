@@ -37,7 +37,8 @@ public class Patient {
      * Every field must be present and not null except appointment.
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address,
-                   DateOfBirth dob, BloodType bloodType, Remark remark, RecordList recordList, Set<Tag> tags, Set<Appointment> appointments) {
+                   DateOfBirth dob, BloodType bloodType, Remark remark,
+                   RecordList recordList, Set<Tag> tags, Set<Appointment> appointments) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.nric = nric;

@@ -11,12 +11,18 @@ import seedu.address.model.appointment.Appointment;
  */
 public class TypicalAppointments {
 
-    public static final Appointment ALLY = new AppointmentBuilder().withOwner(TypicalPersons.ALICE.getNric())
-            .withRemark("Requires Home Visit").withDateTime("2018-12-31 12:30")
-            .withTags("checkup").build();
-    public static final Appointment BENNY = new AppointmentBuilder().withOwner(TypicalPersons.BENSON.getNric())
-            .withRemark("May require isolation").withDateTime("2018-12-31 14:30")
-            .withTags("surgery").build();
+    public static final Appointment ALLY = new AppointmentBuilder()
+            .withOwnerNric("S9012345A")
+            .withPetPatientName("Hammy")
+            .withRemark("Requires Home Visit")
+            .withDateTime("2018-12-31 12:30")
+            .withAppointmentTags("checkup").build();
+    public static final Appointment BENNY = new AppointmentBuilder()
+            .withOwnerNric("S1239049B")
+            .withPetPatientName("Lissy")
+            .withRemark("May require isolation")
+            .withDateTime("2018-12-31 14:30")
+            .withAppointmentTags("surgery").build();
 
     private TypicalAppointments() {} // prevents instantiation
 

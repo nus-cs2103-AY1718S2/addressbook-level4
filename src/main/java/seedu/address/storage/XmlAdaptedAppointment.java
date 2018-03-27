@@ -14,7 +14,8 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
-import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
+import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -25,16 +26,16 @@ public class XmlAdaptedAppointment {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment %s field is missing!";
 
     @XmlElement(required = true)
-    private String owner;
+    private String ownerNric;
     @XmlElement(required = true)
-    private String petPatient;
+    private String petPatientName;
     @XmlElement(required = true)
     private String remark;
     @XmlElement(required = true)
     private String dateTime;
 
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedTag> appointmentTagged = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedAppointment.
@@ -45,12 +46,14 @@ public class XmlAdaptedAppointment {
     /**
      * Constructs an {@code XmlAdaptedAppointment} with the given appointment details.
      */
-    public XmlAdaptedAppointment(String owner, String remark, String dateTime, List<XmlAdaptedTag> tagged) {
-        this.owner = owner;
+    public XmlAdaptedAppointment(String ownerNric, String petPatientName, String remark,
+                                 String dateTime, List<XmlAdaptedTag> appointmentTagged) {
+        this.ownerNric = ownerNric;
+        this.petPatientName = petPatientName;
         this.remark = remark;
         this.dateTime = dateTime;
-        if (tagged != null) {
-            this.tagged = new ArrayList<>(tagged);
+        if (appointmentTagged != null) {
+            this.appointmentTagged = new ArrayList<>(appointmentTagged);
         }
     }
 
@@ -60,13 +63,13 @@ public class XmlAdaptedAppointment {
      * @param source future changes to this will not affect the created XmlAdaptedAppointment
      */
     public XmlAdaptedAppointment(Appointment source) {
-        owner = source.getOwnerNric().toString();
-        petPatient = source.getPetPatientName().toString();
+        ownerNric = source.getOwnerNric().toString();
+        petPatientName = source.getPetPatientName().toString();
         remark = source.getRemark().value;
         dateTime = source.getFormattedLocalDateTime();
-        tagged = new ArrayList<>();
-        for (Tag tag : source.getType()) {
-            tagged.add(new XmlAdaptedTag(tag));
+        appointmentTagged = new ArrayList<>();
+        for (Tag tag : source.getAppointmentTags()) {
+            appointmentTagged.add(new XmlAdaptedTag(tag));
         }
     }
 
@@ -77,17 +80,26 @@ public class XmlAdaptedAppointment {
      */
     public Appointment toModelType() throws IllegalValueException {
         final List<Tag> appointmentTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
+        for (XmlAdaptedTag tag : appointmentTagged) {
             appointmentTags.add(tag.toModelType());
         }
 
-        if (this.owner == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        if (this.ownerNric == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Nric.class.getSimpleName()));
         }
-        if (!Name.isValidName(this.owner)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        if (!Nric.isValidNric(this.ownerNric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
         }
-        final Name owner = new Name(this.owner);
+        final Nric ownerNric = new Nric(this.ownerNric);
+
+        if (this.petPatientName == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, PetPatientName.class.getSimpleName()));
+        }
+        if (!PetPatientName.isValidName(this.petPatientName)) {
+            throw new IllegalValueException(PetPatientName.MESSAGE_PET_NAME_CONSTRAINTS);
+        }
+        final PetPatientName petPatientName = new PetPatientName(this.petPatientName);
 
         if (this.remark == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
@@ -95,6 +107,7 @@ public class XmlAdaptedAppointment {
         if (!Remark.isValidRemark(this.remark)) {
             throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
         }
+
         final Remark remark = new Remark(this.remark);
 
         if (this.dateTime == null) {
@@ -114,8 +127,8 @@ public class XmlAdaptedAppointment {
         final LocalDateTime dateTime = localDateTime;
 
 
-        final Set<Tag> tags = new HashSet<>(appointmentTags);
-        return new Appointment(owner, remark, dateTime, tags);
+        final Set<Tag> thisAppointmentTags = new HashSet<>(appointmentTags);
+        return new Appointment(ownerNric, petPatientName, remark, dateTime, thisAppointmentTags);
     }
 
     @Override
@@ -129,10 +142,10 @@ public class XmlAdaptedAppointment {
         }
 
         XmlAdaptedAppointment otherAppointment = (XmlAdaptedAppointment) other;
-        return Objects.equals(owner, otherAppointment.owner)
-                && Objects.equals(petPatient, otherAppointment.petPatient)
+        return Objects.equals(ownerNric, otherAppointment.ownerNric)
+                && Objects.equals(petPatientName, otherAppointment.petPatientName)
                 && Objects.equals(remark, otherAppointment.remark)
                 && Objects.equals(dateTime, otherAppointment.dateTime)
-                && tagged.equals(otherAppointment.tagged);
+                && appointmentTagged.equals(otherAppointment.appointmentTagged);
     }
 }

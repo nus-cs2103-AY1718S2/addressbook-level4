@@ -12,6 +12,7 @@ import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.commons.util.StringUtil;
 import seedu.progresschecker.model.issues.Assignees;
 import seedu.progresschecker.model.issues.Body;
+import seedu.progresschecker.model.issues.Labels;
 import seedu.progresschecker.model.issues.Milestone;
 import seedu.progresschecker.model.issues.Title;
 import seedu.progresschecker.model.person.Email;
@@ -135,6 +136,32 @@ public class ParserUtil {
         }
         return assigneesSet;
     }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+
+    public static Labels parseLabels(String labels) {
+        requireNonNull(labels);
+        String trimmedLabels = labels.trim();
+        return new Labels(trimmedLabels);
+    }
+
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Labels> parseLabels(Collection<String> labels) throws IllegalValueException {
+        requireNonNull(labels);
+        final Set<Labels> labelsSet = new HashSet<>();
+        for (String labelName : labels) {
+            labelsSet.add(parseLabels(labelName));
+        }
+        return labelsSet;
+    }
+
 
     /**
      * Parses a {@code String name} into a {@code Name}.

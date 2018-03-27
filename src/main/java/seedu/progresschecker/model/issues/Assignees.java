@@ -1,7 +1,6 @@
 package seedu.progresschecker.model.issues;
 
 import static java.util.Objects.requireNonNull;
-//import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents all the assignees to an issue

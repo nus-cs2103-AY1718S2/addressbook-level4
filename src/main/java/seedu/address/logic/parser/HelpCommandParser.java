@@ -2,8 +2,13 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 
+import com.sun.xml.internal.messaging.saaj.soap.FastInfosetDataContentHandler;
 import seedu.address.logic.commands.CompleteCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -23,13 +28,13 @@ public class HelpCommandParser implements Parser<HelpCommand> {
      */
     public HelpCommandParser()  {
         availableCommands = new ArrayList<String>();
-        availableCommands.add("add");
-        availableCommands.add("delete");
-        availableCommands.add("edit");
-        availableCommands.add("find");
-        availableCommands.add("select");
+        availableCommands.add(DeleteCommand.COMMAND_WORD);
+        availableCommands.add(EditCommand.COMMAND_WORD);
+        availableCommands.add(FindCommand.COMMAND_WORD);
+        availableCommands.add(SelectCommand.COMMAND_WORD);
         availableCommands.add(TaskCommand.COMMAND_WORD);
         availableCommands.add(CompleteCommand.COMMAND_WORD);
+        availableCommands.add(DeleteCommand.ALIAS);
     }
 
     /**

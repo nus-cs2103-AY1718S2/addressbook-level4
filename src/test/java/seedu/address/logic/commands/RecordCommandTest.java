@@ -80,6 +80,7 @@ public class RecordCommandTest {
         Patient editedPatient = new PatientBuilder(patientInFilteredList).withRecordList("1 in/1 "
                 + "d/test s/test i/test t/test").build();
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("test", "test", "test", "test"));
+        RecordCommand undoCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("", "", "", ""));
 
         String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
 
@@ -87,6 +88,7 @@ public class RecordCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
 
         assertCommandSuccess(recordCommand, model, expectedMessage, expectedModel);
+        undoCommand.execute();
     }
 
     @Test
@@ -120,6 +122,7 @@ public class RecordCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("test", "test", "test", "test"));
+        RecordCommand toUndoCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("", "", "", ""));
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
 
         // edit -> first patient edited
@@ -133,6 +136,8 @@ public class RecordCommandTest {
         // redo -> same first patient edited again
         expectedModel.updatePerson(patientToEdit, editedPatient);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        toUndoCommand.execute();
     }
 
     @Test
@@ -163,7 +168,8 @@ public class RecordCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("a", "a", "a", "a"));
+        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("b", "b", "b", "b"));
+        RecordCommand toUndoCommand = prepareCommand(INDEX_SECOND_PERSON, 0, new Record("", "", "", ""));
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
@@ -181,6 +187,7 @@ public class RecordCommandTest {
         assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), patientToEdit);
         // redo -> edits same second patient in unfiltered patient list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        toUndoCommand.execute();
     }
 
     @Test

@@ -258,6 +258,22 @@ Example:
 * `import data/addressBook.xml testpassword` +
 Imports `addressBook.xml` file at data folder using "testpassword" as the password.
 
+=== Exporting data : `export` (coming in v1.4)
+
+Exports the current list of the existing StardyTogether application with password encryption to the specified filepath
+Format: `export FILEPATH PASSWORD`
+
+****
+* Exports an instance of StardyTogether to the specified `FILEPATH`.
+* Encrypt that instance using the `PASSWORD` provided.
+* The filepath refers to the filepath where the instance file will be stored.
+****
+
+Example:
+
+* `export data/addressBook.xml testpassword` +
+Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption.
+
 === Vacant study rooms finder : `vacant` (since in v1.3)
 
 Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +
@@ -408,8 +424,10 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *Help* : `help`
 * *History* : `history`
-* *Import* : `import FILEPATH` +
-e.g.`import data/addressBook.xml`
+* *Import* : `import FILEPATH PASSWORD` +
+e.g.`import data/addressBook.xml testpassword`
+* *Export* : `Export FILEPATH PASSWORD` +
+e.g.`Export data/addressBook.xml testpassword`
 * *List* : `list`
 * *Password* : `password PASSWORD` +
 e.g. `password test`

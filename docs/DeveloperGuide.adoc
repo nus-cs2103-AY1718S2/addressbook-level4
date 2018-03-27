@@ -695,6 +695,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student with friends |be notified of birthdays today |wish them happy birthday
 
+|`* * *` |student with friends |export contacts taking similar module to another friend |let my friend know who is taking similar modules
+
 |`* * *` |busy student |have short forms of commands |type more quickly
 
 |`* * *` |busy student |have my customized short forms of commands |type even quicker and in my own style

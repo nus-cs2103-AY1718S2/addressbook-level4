@@ -2,13 +2,12 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.alias.Alias;
-import seedu.address.model.alias.exceptions.DuplicateAliasException;
-
 import java.util.Arrays;
 import java.util.List;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
 /**
  * Adds an alias pair to the address book.
@@ -27,13 +26,12 @@ public class AliasCommand extends UndoableCommand {
             + "Please choose another alias";
     public static final String MESSAGE_INVALID_COMMAND = "Invalid command word! \n%1$s";
     public static final String MESSAGE_INVALID_COMMAND_DESCRIPTION = "There is no such command to alias to.";
-
-
-    private final Alias toAdd;
     private static final List<String> commands = Arrays.asList(AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD,
             SelectCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
             ListCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD,
             UndoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD, ImportCommand.COMMAND_WORD);
+
+    private final Alias toAdd;
 
     /**
      * Creates an AliasCommand to add the specified {@code Alias}
@@ -46,7 +44,7 @@ public class AliasCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-       if (!commands.contains(toAdd.getCommand())) {
+        if (!commands.contains(toAdd.getCommand())) {
             throw new CommandException(
                     String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
                             AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));

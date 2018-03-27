@@ -5,11 +5,8 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND;
-import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,9 +16,9 @@ import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -30,8 +27,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.alias.Alias;
-import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.person.Person;
@@ -62,12 +59,13 @@ public class AliasCommandTest {
         assertEquals(Arrays.asList(validAlias), modelStub.aliasesAdded);
     }
 
+    @Test
     public void execute_duplicateAlias_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicateAliasException();
         Alias validAlias = new AliasBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AliasCommand.MESSAGE_DUPLICATE_ALIAS);
 
         getAliasCommand(validAlias, modelStub).execute();
     }

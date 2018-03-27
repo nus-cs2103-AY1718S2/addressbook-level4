@@ -182,6 +182,10 @@ public abstract class AddressBookSystemTest {
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
+    /**
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}, the model and storage contains the same alias objects as {@code expectedModel}
+     */
     protected void assertEqualAlias(String expectedCommandInput, String expectedResultMessage, Model expectedModel) {
         assertEquals("", getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());

@@ -54,7 +54,7 @@ public class ViewAppointmentCommand extends Command {
 
             Set<Appointment> appointmentSet = patientFound.getAppointments();
 
-            //ObservableList<Appointment> pastAppointmentList = getPastAppointmentList(appointmentSet);
+            ObservableList<Appointment> pastAppointmentList = getPastAppointmentList(appointmentSet);
 
             //ObservableList<Appointment> upcomingAppointmentList = getUpcomingAppointmentList(appointmentSet);
 
@@ -67,6 +67,10 @@ public class ViewAppointmentCommand extends Command {
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    private static ObservableList<Appointment> getPastAppointmentList(Set<Appointment> appointmentSet) {
+        return null;
     }
 
     private static void printOutAppointmentInLog(ObservableList<Appointment> appointments) {

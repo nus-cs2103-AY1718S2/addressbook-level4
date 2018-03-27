@@ -53,6 +53,9 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem exitMenuItem;
 
     @FXML
+    private MenuItem undoMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -85,6 +88,7 @@ public class MainWindow extends UiPart<Stage> {
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("Alt + Q"));
+        setAccelerator(undoMenuItem, KeyCombination.valueOf("Ctrl + Z"));
     }
 
     /**
@@ -184,6 +188,11 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
+    }
+
+    @FXML
+    private void handleUndo() {
+        // pass control to CommandBox, @TODO to be implemented
     }
 
     public PersonListPanel getPersonListPanel() {

@@ -12,6 +12,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -404,6 +405,12 @@ public class ImdbParser {
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
                 return new ViewAppointmentCommandParser().parse(arguments);
+
+            case DeleteAppointmentCommand.COMMAND_WORD:
+                return new DeleteAppointmentCommandParser().parse(arguments);
+
+            case DeleteAppointmentCommand.COMMAND_ALIAS:
+                return new DeleteAppointmentCommandParser().parse(arguments);
 
             case AddPatientQueueCommand.COMMAND_WORD:
                 return new AddPatientQueueCommandParser().parse(arguments);

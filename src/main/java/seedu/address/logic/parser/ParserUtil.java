@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.DoubleUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.RatingSortCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
@@ -375,6 +376,37 @@ public class ParserUtil {
         }
         return experienceScore.isPresent() ? Optional.of(parseExperienceScore(
                 experienceScore.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String sortOrder} into a {@code RatingSortCommand.SortOrder}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code sortOrder} is invalid.
+     */
+    public static RatingSortCommand.SortOrder parseSortOrder(String sortOrder)
+            throws IllegalValueException {
+        requireNonNull(sortOrder);
+        String trimmedSortOrder = sortOrder.trim();
+        if (!RatingSortCommand.isValidSortOrder(trimmedSortOrder)) {
+            throw new IllegalValueException(RatingSortCommand.MESSAGE_INVALID_SORT_ORDER);
+        }
+        if (trimmedSortOrder.equals(RatingSortCommand.SORT_ORDER_ASC)) {
+            return RatingSortCommand.SortOrder.ASC;
+        } else {
+            return RatingSortCommand.SortOrder.DESC;
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<String> sortOrder} into an {@code Optional<RatingSortCommand.SortOrder>}
+     * if {@code sortOrder} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<RatingSortCommand.SortOrder> parseSortOrder(Optional<String> sortOrder)
+            throws IllegalValueException {
+        requireNonNull(sortOrder);
+        return sortOrder.isPresent() ? Optional.of(parseSortOrder(sortOrder.get())) : Optional.empty();
     }
 
     /**

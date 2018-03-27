@@ -11,7 +11,16 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RatingSortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new RatingSortCommand object
+ */
 public class RatingSortCommandParser {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the RatingSortCommand
+     * and returns an RatingSortCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public RatingSortCommand parse(String args) throws ParseException {
         requireNonNull(args);
 

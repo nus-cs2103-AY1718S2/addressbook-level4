@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.TaskCommand;
 //import seedu.address.logic.commands.ClearCommand;
@@ -21,6 +22,7 @@ import seedu.address.logic.commands.TaskCommand;
 //import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author Kyomian
 /**
  * Parses user input.
  */
@@ -50,6 +52,9 @@ public class DeskBoardParser {
 
         case TaskCommand.COMMAND_WORD:
             return new TaskCommandParser().parse(arguments);
+
+        case EventCommand.COMMAND_WORD:
+            return new EventCommandParser().parse(arguments);
 
         //case EditCommand.COMMAND_WORD:
             //return new EditCommandParser().parse(arguments);

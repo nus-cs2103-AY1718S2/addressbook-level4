@@ -12,7 +12,7 @@ import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
-
+//@@author YuanQQLer
 /**
  * This the class to build event
  */
@@ -100,7 +100,9 @@ public class EventBuilder implements ActivityBuilder {
         this.location = new Location(location);
         return this;
     }
-    public Activity build() {
+
+    //@@author Kyomian
+    public Event build() {
         return new Event(name, startDateTime, endDateTime, location, remark, tags);
     }
 

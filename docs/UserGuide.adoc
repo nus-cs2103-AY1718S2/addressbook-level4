@@ -96,7 +96,7 @@ Adds a task to the desk board.
 * `task n/Programming Methodology Assignment 2 d/16/03/2018 23:59`
 
 === Adding an event: `event`
-*`As of  v1.5`*
+*`As of  v1.3`*
 
 Adds an event to the desk board. +
 

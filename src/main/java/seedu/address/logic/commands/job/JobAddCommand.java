@@ -12,6 +12,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 
+/**
+ * Adds a job opening to contactHeRo.
+ */
 public class JobAddCommand extends UndoableCommand{
 
     public static final String COMMAND_WORD = "addjob";
@@ -65,5 +68,5 @@ public class JobAddCommand extends UndoableCommand{
                 || (other instanceof JobAddCommand // instanceof handles nulls
                 && toAdd.equals(((JobAddCommand) other).toAdd));
     }
-    
+
 }

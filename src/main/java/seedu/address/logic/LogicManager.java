@@ -55,7 +55,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<Job> getFilteredJobList() {
         return model.getFilteredJobList();
     }
-    
+
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());

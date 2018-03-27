@@ -294,7 +294,7 @@ public class ParserUtil {
         requireNonNull(team);
         return team.isPresent() ? Optional.of(parseTeam(team.get())) : Optional.empty();
     }
-    
+
     /**
      * Parses a {@code String location} into a {@code Location}.
      * Leading and trailing whitespaces will be trimmed.

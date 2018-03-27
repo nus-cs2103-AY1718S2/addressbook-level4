@@ -37,5 +37,4 @@ public class CurrentPositionTest {
         assertTrue(CurrentPosition.isValidCurrentPosition("Marketing Intern")); // with capital letters
         assertTrue(CurrentPosition.isValidCurrentPosition("First year undergraduate student")); // long current positions
     }
-
 }

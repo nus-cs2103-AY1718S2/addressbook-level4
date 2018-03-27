@@ -64,9 +64,9 @@ public class CommandList {
 
         case FindCommand.COMMAND_WORD:
             return FindCommand.COMMAND_SYNTAX;
-            
+
         case JobAddCommand.COMMAND_WORD:
-            return JobAddCommand.COMMAND_SYNTAX;    
+            return JobAddCommand.COMMAND_SYNTAX;
 
         default:
             return matchedCommandWord;

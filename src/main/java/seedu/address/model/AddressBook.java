@@ -63,11 +63,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
-    
+
     public void setJobs(List<Job> jobs) throws DuplicateJobException {
         this.jobs.setJobs(jobs);
     }
-    
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -149,7 +149,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), 
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
                 person.getCurrentPosition(), person.getCompany(), person.getProfilePicture(), correctTagReferences);
     }
 

@@ -226,7 +226,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
-        
+
         public void setCurrentPosition(CurrentPosition currentPosition) {
             this.currentPosition = currentPosition;
         }

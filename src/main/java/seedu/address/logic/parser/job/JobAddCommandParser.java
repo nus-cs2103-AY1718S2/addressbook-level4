@@ -45,7 +45,7 @@ public class JobAddCommandParser implements Parser<JobAddCommand>{
             Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM)).get();
             Location location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
             NumberOfPositions numberOfPositions = ParserUtil.parseNumberOfPositions(argMultimap.getValue(PREFIX_NUMBER_OF_POSITIONS)).get();
-            
+
             Job job = new Job(position, team, location, numberOfPositions);
 
             return new JobAddCommand(job);
@@ -61,5 +61,5 @@ public class JobAddCommandParser implements Parser<JobAddCommand>{
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-    
+
 }

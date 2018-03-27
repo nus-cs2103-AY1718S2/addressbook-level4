@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
+import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 
 /**
  * A list of to-dos that enforces uniqueness between its elements and does not allow nulls.
@@ -42,6 +43,28 @@ public class UniqueToDoList implements Iterable<ToDo> {
             throw new DuplicateToDoException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Replaces the to-do {@code target} in the list with {@code editedToDo}.
+     *
+     * @throws DuplicateToDoException if the replacement is equivalent to another existing to-do in the list.
+     * @throws ToDoNotFoundException if {@code target} could not be found in the list.
+     */
+    public void setToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireNonNull(editedToDo);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new ToDoNotFoundException();
+        }
+
+        if (!target.equals(editedToDo) && internalList.contains(editedToDo)) {
+            throw new DuplicateToDoException();
+        }
+
+        internalList.set(index, editedToDo);
     }
 
     public void setToDos(UniqueToDoList replacement) {

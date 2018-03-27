@@ -1,6 +1,9 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_UNDONE;
+
 import seedu.address.model.todo.Content;
+import seedu.address.model.todo.Status;
 import seedu.address.model.todo.ToDo;
 
 /**
@@ -12,8 +15,11 @@ public class ToDoBuilder {
 
     private Content content;
 
+    private Status status;
+
     public ToDoBuilder() {
         content = new Content(DEFAULT_CONTENT);
+        status = new Status(VALID_STATUS_UNDONE);
     }
 
     /**
@@ -21,6 +27,7 @@ public class ToDoBuilder {
      */
     public ToDoBuilder(ToDo todoToCopy) {
         content = todoToCopy.getContent();
+        status = todoToCopy.getStatus();
     }
 
     /**
@@ -31,8 +38,16 @@ public class ToDoBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Content} of the {@code ToDo} that we are building.
+     */
+    public ToDoBuilder withStatus(String status) {
+        this.status = new Status(status);
+        return this;
+    }
+
     public ToDo build() {
-        return new ToDo(content);
+        return new ToDo(content, status);
     }
 
 }

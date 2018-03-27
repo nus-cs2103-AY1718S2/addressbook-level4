@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B2/main
 
-By: `Team W09-B2`      Since: `Mar 2018`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -23,7 +23,7 @@ Other than that, you can also `view the linkedIn profiles` of your potential emp
 
 == Quick Start
 
-You can begin using contactHeRo by following a few simple steps below:
+You can begin using contactHeRo by following a few simple steps below.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -366,7 +366,7 @@ On running the above command, you should see the following success message: +
 You can exit the program using the following format. +
 Format: `exit`
 
-=== Auto-completing command
+=== Auto-complete command
 
 To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
 [NOTE]
@@ -415,7 +415,7 @@ You will soon be able to set reminders for meetings, appointments or any other e
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
-=== Using login system `[coming in v2.0]`
+=== Login system `[coming in v2.0]`
 
 The login system shall provide security to your data stored in contactHeRo.
 

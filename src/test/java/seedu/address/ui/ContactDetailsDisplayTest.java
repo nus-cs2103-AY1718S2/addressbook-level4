@@ -13,7 +13,6 @@ import seedu.address.testutil.PersonBuilder;
 
 public class ContactDetailsDisplayTest extends GuiUnitTest {
 
-    private static final String DEFAULT_TEXT = "Select a person to view his/her details";
     private ContactDetailsDisplayHandle contactDetailsDisplayHandle;
 
     @Before
@@ -26,8 +25,6 @@ public class ContactDetailsDisplayTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        // default result text
-        assertEquals(DEFAULT_TEXT, contactDetailsDisplayHandle.getName());
 
         // new result received
         Person person = new PersonBuilder().build();

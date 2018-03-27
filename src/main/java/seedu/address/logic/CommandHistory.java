@@ -33,6 +33,7 @@ public class CommandHistory {
     /**
      *  Clears the history.
      */
-    public void clearHistory() { userInputHistory.clear(); }
-
+    public void clearHistory() {
+        userInputHistory.clear();
+    }
 }

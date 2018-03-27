@@ -1,5 +1,7 @@
 package seedu.address.model.module;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -16,14 +18,13 @@ public class Module {
     private String moduleTitle = "";
     private ArrayList<Schedule> timetable = new ArrayList<>();
 
-    public Module() {
-        System.out.println("i'm called mod");
-    }
+    public Module(){}
 
-    public Module(String moduleCode, String moduleTitle) {
+    public Module(String moduleCode, String moduleTitle, ArrayList<Schedule> timetable) {
+        requireAllNonNull(moduleCode, moduleTitle);
         this.moduleCode = moduleCode;
         this.moduleTitle = moduleTitle;
-        timetable = new ArrayList<>();
+        this.timetable = timetable;
     }
 
     public String getModuleCode() {
@@ -34,7 +35,7 @@ public class Module {
         return moduleTitle;
     }
 
-    public ArrayList<Schedule> getTimetable() {
+    public ArrayList<Schedule> getScheduleList() {
         return timetable;
     }
 

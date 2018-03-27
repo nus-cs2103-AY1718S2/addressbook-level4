@@ -56,30 +56,8 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handlePopulateRequestEvent(PopulateRequestEvent event) {
         setStyleToIndicateCommandSuccess();
-        final String messageUsage;
-        switch (event.command) {
-        case "add":
-            messageUsage = AddCommand.MESSAGE_USAGE;
-            break;
-        case "edit":
-            messageUsage = EditCommand.MESSAGE_USAGE;
-            break;
-        case "delete":
-            messageUsage = DeleteCommand.MESSAGE_USAGE;
-            break;
-        case "locate":
-            messageUsage = LocateCommand.MESSAGE_USAGE;
-            break;
-        case "find":
-            messageUsage = FindCommand.MESSAGE_USAGE;
-            break;
-        default:
-            // should be an Exception
-            messageUsage = "";
-        }
-
         Platform.runLater(() -> {
-            displayed.setValue(messageUsage);
+            displayed.setValue(event.commandUsageMessage);
         });
     }
 

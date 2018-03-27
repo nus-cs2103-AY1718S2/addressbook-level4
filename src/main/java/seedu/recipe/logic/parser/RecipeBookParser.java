@@ -21,6 +21,7 @@ import seedu.recipe.logic.commands.SelectCommand;
 import seedu.recipe.logic.commands.ShareCommand;
 import seedu.recipe.logic.commands.TagCommand;
 import seedu.recipe.logic.commands.UndoCommand;
+import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 
 /**
@@ -91,6 +92,9 @@ public class RecipeBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
+        case UploadCommand.COMMAND_WORD:
+            return new UploadCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

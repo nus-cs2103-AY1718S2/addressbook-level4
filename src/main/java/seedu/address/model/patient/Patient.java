@@ -52,7 +52,7 @@ public class Patient {
         if (appointments != null) {
             this.appointments = new UniqueAppointmentList(appointments);
         } else {
-            this.appointments = null;
+            this.appointments = new UniqueAppointmentList();
         }
     }
 

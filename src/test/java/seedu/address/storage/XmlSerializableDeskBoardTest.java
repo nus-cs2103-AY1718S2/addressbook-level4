@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.junit.Rule;
@@ -9,6 +11,8 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.model.DeskBoard;
+import seedu.address.testutil.TypicalActivities;
 
 public class XmlSerializableDeskBoardTest {
 
@@ -19,6 +23,17 @@ public class XmlSerializableDeskBoardTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    /**
+     * Test
+     */
+    public void toModelType_typicalActivitiesFile_success() throws Exception {
+        XmlSerializableDeskBoard dataFromFile = XmlUtil.getDataFromFile(TYPICAL_ACTIVITIES_FILE,
+                XmlSerializableDeskBoard.class);
+        DeskBoard deskBoardFromFile = dataFromFile.toModelType();
+        DeskBoard typicalActivitiesDeskBoard = TypicalActivities.getTypicalDeskBoard();
+        assertEquals(deskBoardFromFile, typicalActivitiesDeskBoard);
+    }
 
     @Test
     public void toModelType_invalidActivityFile_throwsIllegalValueException() throws Exception {

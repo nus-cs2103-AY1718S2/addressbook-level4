@@ -81,7 +81,7 @@ public class Task extends Activity {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Task Name")
+        builder.append("Task Name: ")
                 .append(getName())
                 .append(" Due Date/Time: ")
                 .append(getDateTime())

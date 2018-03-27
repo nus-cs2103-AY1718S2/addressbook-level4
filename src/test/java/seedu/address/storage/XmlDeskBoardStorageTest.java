@@ -1,6 +1,11 @@
 package seedu.address.storage;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
+import static seedu.address.testutil.TypicalActivities.DEMO1;
+import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.io.IOException;
 
@@ -65,6 +70,33 @@ public class XmlDeskBoardStorageTest {
     public void readDeskBoard_invalidAndValidActivityDeskBoard_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
         readDeskBoard("invalidAndValidActivityDeskBoard.xml");
+    }
+
+    /**
+     * Test
+     */
+    public void readAndSaveDeskBoard_allInOrder_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempDeskBoard.xml";
+        DeskBoard original = getTypicalDeskBoard();
+        XmlDeskBoardStorage xmlDeskBoardStorage = new XmlDeskBoardStorage(filePath);
+
+        //Save in new file and read back
+        xmlDeskBoardStorage.saveDeskBoard(original, filePath);
+        ReadOnlyDeskBoard readBack = xmlDeskBoardStorage.readDeskBoard(filePath).get();
+        assertEquals(original, new DeskBoard(readBack));
+
+        //Modify data, overwrite exiting file, and read back
+        original.addActivity(ASSIGNMENT3);
+        original.removeActivity(ASSIGNMENT1);
+        xmlDeskBoardStorage.saveDeskBoard(original, filePath);
+        readBack = xmlDeskBoardStorage.readDeskBoard(filePath).get();
+        assertEquals(original, new DeskBoard(readBack));
+
+        //Save and read without specifying file path
+        original.addActivity(DEMO1);
+        xmlDeskBoardStorage.saveDeskBoard(original); //file path not specified
+        readBack = xmlDeskBoardStorage.readDeskBoard().get(); //file path not specified
+        assertEquals(original, new DeskBoard(readBack));
     }
 
     @Test

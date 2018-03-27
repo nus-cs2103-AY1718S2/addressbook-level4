@@ -22,6 +22,7 @@ import seedu.address.model.DeskBoard;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
@@ -127,6 +128,19 @@ public class TaskCommandTest {
 
         @Override
         public ObservableList<Activity> getFilteredActivityList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author jasmoon
+        @Override
+        public ObservableList<Task> getFilteredTaskList()    {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<Event> getFilteredEventList() {
             fail("This method should not be called.");
             return null;
         }

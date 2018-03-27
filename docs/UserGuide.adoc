@@ -426,6 +426,16 @@ User will receive alert message in red colours when typing in an illegal message
 
 Different tags will perform different colours for clarification
 
+=== Changing the theme : `changeTheme`
+
+Change the theme to "dark" or "bright". +
+Format: `changeTheme THEME_CATEGORY`
+
+Example:
+
+* `changeTheme bright` +
+Set Employees Tracker's theme to be bright theme.
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +

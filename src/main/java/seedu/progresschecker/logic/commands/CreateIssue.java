@@ -3,6 +3,7 @@ package seedu.progresschecker.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_ASSIGNEES;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_BODY;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_LABEL;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MILESTONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TITLE;
 
@@ -20,6 +21,7 @@ import org.kohsuke.github.GitHub;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.issues.Assignees;
 import seedu.progresschecker.model.issues.Issue;
+import seedu.progresschecker.model.issues.Labels;
 
 /**
  * Adds a person to the ProgressChecker.
@@ -32,7 +34,8 @@ public class CreateIssue extends Command {
             + PREFIX_TITLE + "TITLE "
             + PREFIX_ASSIGNEES + "ASSIGNEES "
             + PREFIX_MILESTONE + "MILESTONE "
-            + PREFIX_BODY + "BODY ";
+            + PREFIX_BODY + "BODY "
+            + PREFIX_LABEL + "LABELS";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Create an issue in your team organisation. "
             + "Parameters: "
@@ -40,11 +43,13 @@ public class CreateIssue extends Command {
             + PREFIX_ASSIGNEES + "ASSIGNEES "
             + PREFIX_MILESTONE + "MILESTONE "
             + PREFIX_BODY + "BODY "
+            + PREFIX_LABEL + "LABELS"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + "Add new create issue command "
             + PREFIX_ASSIGNEES + "johndoe "
             + PREFIX_MILESTONE + "v1.1 "
-            + PREFIX_BODY + "This is a test issue ";
+            + PREFIX_BODY + "This is a test issue "
+            + PREFIX_LABEL + "bug";
     public static final String MESSAGE_SUCCESS = "New issue created: %1$s";
 
     private final Issue toBeCreated;
@@ -64,10 +69,13 @@ public class CreateIssue extends Command {
             GHRepository repository = github.getRepository("AdityaA1998/samplerepo-pr-practice");
             GHIssueBuilder issueBuilder = repository.createIssue(toBeCreated.getTitle().toString());
             issueBuilder.body(toBeCreated.getBody().toString());
-            issueBuilder.label("shag");
+            //issueBuilder.label("shag");
 
             List<Assignees> assigneesList = toBeCreated.getAssignees();
+            List<Labels> labelsList = toBeCreated.getLabelsList();
+
             ArrayList<GHUser> listOfUsers = new ArrayList<>();
+            ArrayList<String> listOfLabels = new ArrayList<>();
 
             for (int i = 0; i < assigneesList.size(); i++) {
                 listOfUsers.add(github.getUser(assigneesList.get(i).toString()));
@@ -76,7 +84,7 @@ public class CreateIssue extends Command {
             GHMilestone check = repository.getMilestone(1);
             GHIssue issue = issueBuilder.create();
             issue.setAssignees(listOfUsers);
-            issue.setLabels("sure", "okay");
+            issue.setLabels(listOfLabels.toArray(new String[0]));
             issue.setMilestone(check);
         } catch (IOException e) {
             throw new CommandException("Impossible de cr�er le ticket gitHub");

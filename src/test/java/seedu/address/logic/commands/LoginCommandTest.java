@@ -30,40 +30,15 @@ public class LoginCommandTest {
         Model expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
         LoginManager.logout();
 
-        LoginCommand commandSuccess = new LoginCommand(TEST_USERNAME, TEST_PASSWORD);
-        assertCommandSuccess(commandSuccess, model, MESSAGE_LOGIN_SUCCESS + TEST_USERNAME, expectedModel);
-    }
-
-    @Test
-    public void execute_fail_displaysFailMessage() throws Exception {
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(MESSAGE_LOGIN_FAIL);
-
-        LoginCommand expectFail = new LoginCommand(TEST_USERNAME, FAKE_PASSWORD);
-        expectFail.execute();
+        LoginCommand commandSuccess = new LoginCommand();
+        assertCommandSuccess(commandSuccess, model, "", expectedModel);
     }
 
     @Test
     public void equals() {
-        LoginCommand aliceCorrectLogin = new LoginCommand("alice", "password123");
-        LoginCommand aliceWrongLogin = new LoginCommand("alice", "password456");
-        LoginCommand bobLogin = new LoginCommand("bob", "password123");
+        LoginCommand loginCommand = new LoginCommand();
+        LoginCommand loginCommandCopy = new LoginCommand();
 
-        // same object -> returns true
-        assertTrue(aliceCorrectLogin.equals(aliceCorrectLogin));
-
-        // same values -> returns true
-        LoginCommand aliceCorrectLoginCopy = new LoginCommand("alice", "password123");
-        assertTrue(aliceCorrectLogin.equals(aliceCorrectLoginCopy));
-
-        // different types -> returns false
-        assertFalse(aliceCorrectLogin.equals(1));
-
-        // null -> returns false
-        assertFalse(aliceCorrectLogin.equals(null));
-
-        // different values -> returns false
-        assertFalse(aliceCorrectLogin.equals(aliceWrongLogin));
-        assertFalse(aliceCorrectLogin.equals(bobLogin));
+        assertTrue(loginCommand.equals(loginCommandCopy));
     }
 }

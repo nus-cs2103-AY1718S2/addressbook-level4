@@ -17,7 +17,7 @@ public class LoginCommandParser implements Parser<LoginCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public LoginCommand parse(String args) throws ParseException {
-        if (!args.equals("")) {
+        if (!args.trim().equals("")) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
         }

@@ -23,6 +23,7 @@ import seedu.organizer.logic.commands.ListCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.SelectCommand;
 import seedu.organizer.logic.commands.ToggleCommand;
+import seedu.organizer.logic.commands.ToggleSubtaskCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
 
@@ -70,6 +71,12 @@ public class OrganizerParser {
 
         case ToggleCommand.COMMAND_ALIAS:
             return new ToggleCommandParser().parse(arguments);
+
+        case ToggleSubtaskCommand.COMMAND_WORD:
+            return new ToggleSubtaskCommandParser().parse(arguments);
+
+        case ToggleSubtaskCommand.COMMAND_ALIAS:
+            return new ToggleSubtaskCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);

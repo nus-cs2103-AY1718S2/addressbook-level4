@@ -131,6 +131,15 @@ public class TaskBuilder {
         return this;
     }
 
+
+    /**
+     * Add {@code Subtask} to the {@code Task} that we are building.
+     */
+    public TaskBuilder addSubtask(String name) {
+        this.subtasks.add(new Subtask(new Name(name)));
+        return this;
+    }
+
     public Task build() {
         return new Task(name, priority, deadline, dateAdded, description, status, tags, subtasks);
     }

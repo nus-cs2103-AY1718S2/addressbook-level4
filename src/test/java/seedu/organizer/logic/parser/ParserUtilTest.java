@@ -1,11 +1,14 @@
 package seedu.organizer.logic.parser;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.organizer.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.organizer.logic.parser.ParserUtil.MESSAGE_WRONG_PART_COUNT;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +20,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.exceptions.IllegalValueException;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
@@ -63,6 +67,82 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_TASK, ParserUtil.parseIndex("  1  "));
+    }
+
+    @Test
+    public void parseMultipleIndex_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseIndexAsArray("10 a");
+    }
+
+    @Test
+    public void parseMultipleIndex_outOfRangeInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        ParserUtil.parseIndexAsArray(Long.toString(Integer.MAX_VALUE + 1));
+    }
+
+    @Test
+    public void parseMultipleIndex_outOfRangeInputWithSomeValidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        ParserUtil.parseIndexAsArray(Long.toString(Integer.MAX_VALUE + 1) + " 1 2");
+    }
+
+    @Test
+    public void parseMultipleIndex_validInput_success() throws Exception {
+        Index[] testCase = {INDEX_FIRST_TASK, INDEX_SECOND_TASK};
+
+        // No whitespaces
+        assertArrayEquals(testCase, ParserUtil.parseIndexAsArray("1 2"));
+
+        // Leading and trailing whitespaces
+        assertArrayEquals(testCase, ParserUtil.parseIndexAsArray("  1   2  "));
+    }
+
+    @Test
+    public void parseSubtaskIndex_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseSubtaskIndex("10 a");
+    }
+
+    @Test
+    public void parseSubtaskIndex_outOfRangeInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        ParserUtil.parseSubtaskIndex(Long.toString(Integer.MAX_VALUE + 1));
+    }
+
+    @Test
+    public void parseSubtaskIndex_outOfRangeInputWithSomeValidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        ParserUtil.parseSubtaskIndex(Long.toString(Integer.MAX_VALUE + 1) + " 2");
+    }
+
+    @Test
+    public void parseSubtaskIndex_oneIndex_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_WRONG_PART_COUNT);
+        ParserUtil.parseSubtaskIndex("2");
+    }
+
+    @Test
+    public void parseSubtaskIndex_threeIndex_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_WRONG_PART_COUNT);
+        ParserUtil.parseSubtaskIndex("2 3 4");
+    }
+
+    @Test
+    public void parseSubtaskIndex_validInput_success() throws Exception {
+        Index[] testCase = {INDEX_FIRST_TASK, INDEX_SECOND_TASK};
+
+        // No whitespaces
+        assertArrayEquals(testCase, ParserUtil.parseSubtaskIndex("1 2"));
+
+        // Leading and trailing whitespaces
+        assertArrayEquals(testCase, ParserUtil.parseSubtaskIndex("  1   2  "));
     }
 
     @Test

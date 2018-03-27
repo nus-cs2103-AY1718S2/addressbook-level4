@@ -29,6 +29,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_WRONG_PART_COUNT = "Number of parts is incorrect";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -42,6 +43,41 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code oneBasedIndex} into an array of {@code Index} and returns it. Leading and trailing whitespaces
+     * will be trimmed.
+     *
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static Index[] parseIndexAsArray(String oneBasedIndex) throws IllegalValueException {
+        String trimmedIndex = oneBasedIndex.trim();
+        String[] rawIndex = trimmedIndex.split(" +");
+        Index[] result = new Index[rawIndex.length];
+
+        for (int i = 0; i < rawIndex.length; i++) {
+            if (!StringUtil.isNonZeroUnsignedInteger(rawIndex[i])) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            result[i] = Index.fromOneBased(Integer.parseInt(rawIndex[i]));
+        }
+
+        return result;
+    }
+
+    /**
+     * Parses {@code oneBasedIndex} into an array of {@code Index} with length 2 and returns it. Leading and trailing
+     * whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static Index[] parseSubtaskIndex(String oneBasedIndex) throws IllegalValueException {
+        Index[] result = parseIndexAsArray(oneBasedIndex);
+        if (result.length != 2) {
+            throw new IllegalValueException(MESSAGE_WRONG_PART_COUNT);
+        }
+        return result;
     }
 
     /**

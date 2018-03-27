@@ -54,7 +54,7 @@ public class TypicalTasks {
             .withDescription("Revise for CS2106 midterms").withStatus(true).build();
     public static final Task MOCKEXAM = new TaskBuilder().withName("Mock exam").withPriority("6")
             .withDeadline("2019-05-23").withDateAdded(currentDate)
-            .withDescription("Mock exam for CS1101S - Revise!").build();
+            .withDescription("Mock exam for CS1101S - Revise!").addSubtask("Study").build();
 
     // Manually added
     public static final Task MAKEPRESENT = new TaskBuilder().withName("Make present").withPriority("7")

@@ -462,15 +462,37 @@ Add a subtask to an existing task. +
 Add a subtask with name `Submit report` to the 1st task.
 ====
 
+==== Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
+
+Toggle the status of the subtask identified by the index number used in the last task listing
+between `Done` and `Not Done`. +
+
+[.format]
+====
+[format-title]#Format:# `toggle-subtask TASK_INDEX SUBTASK_INDEX`
+====
+
+* Toggle the status of the `SUBTASK_INDEX`-th subtask of task at the specified by `TASK_INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`list`# +
+[example]#`toggle-subtask 1 1`# +
+Toggle the first subtask of the first task in the PrioriTask.
+* [example]#`find homework`# +
+[example]#`toggle-subtask 2 4`# +
+Toggle the fourth subtask of the second task in th result of `find homework` command.
+====
+
 ==== Deleting a subtask from a task `[coming in v2.0]`
 
 _{ coming in v2.0 }_
 
 ==== Editing a subtask `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
-==== Mark subtask as complete `[coming in v2.0]`
 
 _{ coming in v2.0 }_
 
@@ -522,3 +544,5 @@ e.g.[example-no-box]#`toggle 3`#
 === Subtask Feature
 * *Add Subtask* : [format-no-box]#`adds INDEX n/NAME`# +
 e.g. [example-no-box]#`adds 1 n/Submit Report`#
+* *Toggle Subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
+e.g.[example-no-box]#`toggle-subtask 3 2`#

@@ -18,6 +18,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.GetDistance;
 import seedu.address.logic.RouteOptimization;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -108,8 +109,9 @@ public class DistanceCommandTest {
         try {
             CommandResult commandResult = distanceCommand.execute();
             String address = person.getAddress().toString();
-            String headQuarterAddress = "Kent Ridge MRT";
-            RouteOptimization route = new RouteOptimization();
+            String headQua
+            rterAddress = "Kent Ridge MRT";
+            GetDistance route = new GetDistance();
             Double distance = route.getDistance(headQuarterAddress, address);
 
             assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_PERSON_SUCCESS, distance),

@@ -4,8 +4,6 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
-import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 

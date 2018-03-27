@@ -5,8 +5,6 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
-import seedu.address.model.activity.Task;
 
 /**
  * API of the Logic component

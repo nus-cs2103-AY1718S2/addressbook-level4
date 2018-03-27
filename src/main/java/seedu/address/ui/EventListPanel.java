@@ -18,7 +18,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
 
 /**
  * Panel containing the list of events.

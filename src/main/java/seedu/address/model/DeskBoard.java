@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
-import seedu.address.model.activity.Task;
 import seedu.address.model.activity.UniqueActivityList;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;

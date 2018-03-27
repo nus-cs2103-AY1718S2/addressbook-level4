@@ -37,8 +37,8 @@ public class EventCard extends UiPart<Region>   {
 
     public EventCard(Activity event, int displayedIndex)   {
         super(FXML);
-        assert (event instanceof  Event):"The activity passed in should be of type Event";
-        this.event =(Event) event;
+        assert (event instanceof  Event) : "The activity passed in should be of type Event";
+        this.event = (Event) event;
         id.setText(displayedIndex + ". ");
         name.setText(this.event.getName().fullName);
         startDateTime.setText(this.event.getStartDateTime().toString());

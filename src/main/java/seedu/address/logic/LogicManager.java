@@ -12,8 +12,6 @@ import seedu.address.logic.parser.DeskBoardParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
-import seedu.address.model.activity.Task;
 
 /**
  * The main LogicManager of the app.

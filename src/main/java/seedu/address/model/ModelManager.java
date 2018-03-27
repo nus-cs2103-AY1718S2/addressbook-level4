@@ -13,9 +13,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.DeskBoardChangedEvent;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
 import seedu.address.model.activity.EventOnlyPredicate;
-import seedu.address.model.activity.Task;
 import seedu.address.model.activity.TaskOnlyPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
@@ -103,7 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<Activity> getFilteredTaskList()   {
-        FilteredList<Activity> taskList =  new FilteredList<>(filteredActivities,new TaskOnlyPredicate());
+        FilteredList<Activity> taskList =  new FilteredList<>(filteredActivities, new TaskOnlyPredicate());
         ObservableList<Activity> result = FXCollections.unmodifiableObservableList(taskList);
         return result;
     }
@@ -114,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<Activity> getFilteredEventList() {
-        FilteredList<Activity> eventList =  new FilteredList<>(filteredActivities,new EventOnlyPredicate());
+        FilteredList<Activity> eventList =  new FilteredList<>(filteredActivities, new EventOnlyPredicate());
         ObservableList<Activity> result = FXCollections.unmodifiableObservableList(eventList);
         return result;
     }

@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Set;
+
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
@@ -50,15 +52,16 @@ public class ViewAppointmentCommand extends Command {
                 throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
             }
 
+            Set<Appointment> appointmentSet = patientFound.getAppointments();
+
+            
+
             //get past appointments by patientfound
+
             //get upcoming appointments by patientfound
             //event handler
             //command result
 
-
-            ObservableList<Appointment> appointmentList = model.getImdb().getAppointmentList();
-
-            printOutAppointmentInLog(appointmentList);
         }
 
         return new CommandResult(MESSAGE_SUCCESS);

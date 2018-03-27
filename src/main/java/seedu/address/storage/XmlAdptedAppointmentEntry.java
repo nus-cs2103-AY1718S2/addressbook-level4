@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -23,9 +22,9 @@ public class XmlAdptedAppointmentEntry {
     public static final String MISSING_FIELD_TITLE = "[TITLE]";
     public static final String MISSING_FIELD_START_DATE = "[START_DATE]";
     public static final String MISSING_FIELD_END_DATE = "[END_DATE]";
-    public static final String DATE_VALIDATION = "yyyy-MM-d";
+    public static final String DATE_VALIDATION = "yyyy-MM-d'T'HH:mm";
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Dates should be in the format of yyyy-MM-d";
+            "Dates should be in the format of yyyy-MM-d'T'HH:mm";
 
     @XmlElement(required = true)
     private String title;
@@ -58,8 +57,8 @@ public class XmlAdptedAppointmentEntry {
      */
     public XmlAdptedAppointmentEntry(AppointmentEntry source) {
         title = source.getGivenTitle();
-        startDate = source.getStartDate().toString();
-        endDate = source.getEndDate().toString();
+        startDate = source.getStartDateTime().toString();
+        endDate = source.getEndDateTime().toString();
     }
 
     /**
@@ -87,19 +86,18 @@ public class XmlAdptedAppointmentEntry {
 
         final String newEndDate = this.endDate;
 
-        final Interval interval = new Interval(getLocatDate(newStartDate), LocalTime.MIN, getLocatDate(newEndDate),
-                LocalTime.MAX);
+        final Interval interval = new Interval(getLocatDateTime(newStartDate), getLocatDateTime(newEndDate));
 
         return new AppointmentEntry(title, interval);
     }
 
-    LocalDate getLocatDate(String date) throws IllegalValueException {
+    LocalDateTime getLocatDateTime(String date) throws IllegalValueException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_VALIDATION);
 
         try {
 
-            LocalDate localDate = LocalDate.parse(date, formatter);
-            return localDate;
+            LocalDateTime localDatetime = LocalDateTime.parse(date, formatter);
+            return localDatetime;
 
         } catch (DateTimeParseException e) {
             throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);

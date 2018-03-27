@@ -36,11 +36,11 @@ public class AppointmentEntry {
         givenTitle = clonedEntry.getGivenTitle();
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDateTime getStartDateTime() {
         return interval.getStartDateTime();
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDateTime getEndDateTime() {
         return interval.getEndDateTime();
     }
 

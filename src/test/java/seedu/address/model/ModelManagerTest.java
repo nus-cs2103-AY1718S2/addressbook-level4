@@ -1,7 +1,10 @@
 package seedu.address.model;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE_APPT;
@@ -14,6 +17,8 @@ import java.util.Arrays;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import javafx.collections.ObservableList;
 
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
@@ -37,6 +42,14 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredAppointmentList().remove(0);
+    }
+    //@@author
+
+    //@@author ng95junwei
+    @Test
+    public void getTemplateList_return_observableList() {
+        ModelManager modelManager = new ModelManager();
+        assertThat(modelManager.getAllTemplates(), instanceOf(ObservableList.class));
     }
     //@@author
 

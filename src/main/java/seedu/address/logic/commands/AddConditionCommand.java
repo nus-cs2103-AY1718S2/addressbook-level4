@@ -44,7 +44,8 @@ public class AddConditionCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "ac";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds conditions to the list of conditions of the "
-            + "patient identified by the index number used in the last patient listing. \n"
+            + "patient identified by the index number used in the last patient listing. "
+            + "If a condition already exists, it will be ignored. \n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_TAG + "CONDITION...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -113,6 +114,11 @@ public class AddConditionCommand extends UndoableCommand {
         BloodType updatedBloodType = editPersonDescriptor.getBloodType().orElse(patientToEdit.getBloodType());
         Remark updatedRemark = patientToEdit.getRemark(); //edit command cannot change remarks
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(patientToEdit.getTags());
+        if (patientToEdit.getTags() != null) {
+            updatedTags = new HashSet<>();
+            updatedTags.addAll(patientToEdit.getTags());
+            updatedTags.addAll(editPersonDescriptor.getModifiableTags());
+        }
 
         return new Patient(updatedName, updatedNric, updatedPhone, updatedEmail, updatedAddress,
                 updatedDob, updatedBloodType, updatedRemark, updatedTags);
@@ -242,20 +248,19 @@ public class AddConditionCommand extends UndoableCommand {
         }
 
         /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void addTags(Set<Tag> tags) {
-            this.tags.addAll(tags);
-        }
-
-        /**
          * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code tags} is null.
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        /**
+         * Returns a modifiable tag set for internal use
+         */
+        public Set<Tag> getModifiableTags() {
+            return tags;
         }
 
         @Override

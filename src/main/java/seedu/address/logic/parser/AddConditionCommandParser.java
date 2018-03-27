@@ -41,7 +41,7 @@ public class AddConditionCommandParser implements Parser<AddConditionCommand> {
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         try {
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::addTags);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

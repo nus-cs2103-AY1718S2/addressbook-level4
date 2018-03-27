@@ -8,9 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.TaskCommand;
-import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.activity.Event;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;

@@ -86,6 +86,7 @@ public class CommandTestUtil {
     public static final String VALID_CONTENT = "Something to do";
     public static final String INVALID_CONTENT = "Something to do&"; // '&' not allowed in contents
 
+    public static final String INFORMATION_A = "Group A";
     public static final String VALID_INFORMATION = "GROUP A";
     public static final String INVALID_INFORMATION = "Group! A"; //'!' not supported in information
     static {

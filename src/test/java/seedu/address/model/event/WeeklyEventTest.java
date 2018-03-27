@@ -20,7 +20,6 @@ import org.junit.Test;
 
 import seedu.address.model.module.Module;
 import seedu.address.model.module.Schedule;
-import seedu.address.testutil.Assert;
 
 public class WeeklyEventTest {
 

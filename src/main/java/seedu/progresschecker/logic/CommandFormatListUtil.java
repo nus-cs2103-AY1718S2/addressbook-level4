@@ -15,6 +15,7 @@ import seedu.progresschecker.logic.commands.RedoCommand;
 import seedu.progresschecker.logic.commands.SelectCommand;
 import seedu.progresschecker.logic.commands.SortCommand;
 import seedu.progresschecker.logic.commands.UndoCommand;
+import seedu.progresschecker.logic.commands.UploadCommand;
 import seedu.progresschecker.logic.commands.ViewCommand;
 
 /**
@@ -43,8 +44,9 @@ public final class CommandFormatListUtil {
         commandFormatList.add(ListCommand.COMMAND_WORD);
         commandFormatList.add(RedoCommand.COMMAND_WORD);
         commandFormatList.add(SelectCommand.COMMAND_FORMAT);
-        commandFormatList.add(UndoCommand.COMMAND_WORD);
         commandFormatList.add(SortCommand.COMMAND_WORD);
+        commandFormatList.add(UndoCommand.COMMAND_WORD);
+        commandFormatList.add(UploadCommand.COMMAND_FORMAT);
         commandFormatList.add(ViewCommand.COMMAND_FORMAT);
 
         //sorting the commandFormatList

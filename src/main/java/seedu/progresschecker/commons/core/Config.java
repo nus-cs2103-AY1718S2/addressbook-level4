@@ -1,8 +1,5 @@
 package seedu.progresschecker.commons.core;
 
-import javax.imageio.*;
-import java.awt.Image;
-import java.io.File;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -12,7 +9,6 @@ import java.util.logging.Level;
 public class Config {
 
     public static final String DEFAULT_CONFIG_FILE = "config.json";
-    public static final Image DEFAULT_PHOTO = null;
 
     // Config values customizable through config file
     private String appTitle = "ProgressChecker";

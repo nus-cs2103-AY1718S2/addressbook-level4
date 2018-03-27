@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import java.util.ArrayList;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -30,6 +31,7 @@ public class CommandList {
 
         //add all commands to the list lexicographically
         commandList.add(AddCommand.COMMAND_WORD);
+        commandList.add(CalendarCommand.COMMAND_WORD);
         commandList.add(ClearCommand.COMMAND_WORD);
         commandList.add(ClearHistoryCommand.COMMAND_WORD);
         commandList.add(DeleteCommand.COMMAND_WORD);

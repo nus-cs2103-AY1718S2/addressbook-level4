@@ -13,7 +13,7 @@ public class TaskOnlyPredicate implements Predicate<Activity> {
 
     @Override
     public boolean test(Activity activity) {
-        return activity.getActivityType().equals("EVENT");
+        return activity.getActivityType().equals("TASK");
     }
 
     @Override

@@ -40,6 +40,13 @@ public class XmlAdaptedToDoTest {
     }
 
     @Test
+    public void toModelType_nullStatus_throwsIllegalValueException() {
+        XmlAdaptedToDo todo = new XmlAdaptedToDo(VALID_CONTENT, null);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+    }
+
+    @Test
     public void toModelType_invalidStatus_throwsIllegalValueException() {
         XmlAdaptedToDo todo =
                 new XmlAdaptedToDo(VALID_CONTENT, INVALID_STATUS);

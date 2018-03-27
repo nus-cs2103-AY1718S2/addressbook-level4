@@ -19,8 +19,4 @@ public class ToDoPanelSelectionChangedEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
-    public ToDoCard getNewSelection() {
-        return newSelection;
-    }
 }

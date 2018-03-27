@@ -49,4 +49,18 @@ public class StatusTest {
         Status forthStatus = new Status(VALID_STATUS_UNDONE);
         assertTrue(thirdStatus.hashCode() == forthStatus.hashCode());
     }
+
+    @Test
+    public void equals() {
+        Status firstStatus = new Status(VALID_STATUS_DONE);
+        Status secondStatus = new Status(VALID_STATUS_DONE);
+        assertTrue(firstStatus.equals(firstStatus));
+        assertTrue(firstStatus.equals(secondStatus));
+    }
+
+    @Test
+    public void isSameStatusString() {
+        Status status = new Status(VALID_STATUS_DONE);
+        assertTrue(status.toString().equals(VALID_STATUS_DONE));
+    }
 }

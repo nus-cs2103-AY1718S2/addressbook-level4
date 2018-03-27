@@ -112,7 +112,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void removeAppointments(String searchText) throws AppointmentNotFoundException {
+        public void removeAppointment(String searchText) throws AppointmentNotFoundException {
             fail("This method should not be called.");
         }
 

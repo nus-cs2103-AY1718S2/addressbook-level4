@@ -72,7 +72,7 @@ public class InsuranceCalendar {
      *
      * @throws AppointmentNotFoundException if the appointment to add is a duplicate of an existing appointments.
      */
-    public void removeAppointments(String searchText) throws AppointmentNotFoundException {
+    public void removeAppointment(String searchText) throws AppointmentNotFoundException {
 
         List<Entry<?>> foundEntires = calendar.findEntries(searchText);
         if (foundEntires.isEmpty()) {
@@ -98,6 +98,7 @@ public class InsuranceCalendar {
         AppointmentEntry apppointmentEntryToCheck = new AppointmentEntry(givenTitle, givenInterval);
         appointmentEntries.remove(apppointmentEntryToCheck);
     }
+
 
 
 

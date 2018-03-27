@@ -102,8 +102,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeAppointments(String searchText) throws AppointmentNotFoundException {
-        addressBook.removeAppointments(searchText);
+    public void removeAppointment(String searchText) throws AppointmentNotFoundException {
+        addressBook.removeAppointment(searchText);
         indicateAddressBookChanged();
     }
 

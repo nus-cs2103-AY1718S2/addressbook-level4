@@ -106,8 +106,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws AppointmentNotFoundException if an equivalent appointment already exists.
      */
-    public void removeAppointments(String searchText) throws AppointmentNotFoundException {
-        calendar.removeAppointments(searchText);
+    public void removeAppointment(String searchText) throws AppointmentNotFoundException {
+        calendar.removeAppointment(searchText);
     }
 
     //// person-level operations

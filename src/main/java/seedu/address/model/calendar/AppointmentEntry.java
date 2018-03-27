@@ -19,8 +19,8 @@ public class AppointmentEntry {
     public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm:ss";
 
     private final Entry appointmentEntry;
-    private final Interval interval;
-    private final String givenTitle;
+    private Interval interval;
+    private String givenTitle;
 
     public AppointmentEntry(String title, Interval timeSlot) {
         requireAllNonNull(title, timeSlot);
@@ -34,6 +34,16 @@ public class AppointmentEntry {
         appointmentEntry = new Entry(clonedEntry.getGivenTitle(), clonedEntry.getInterval());
         interval = clonedEntry.getInterval();
         givenTitle = clonedEntry.getGivenTitle();
+    }
+
+    /**
+     * Edit the appointment Entry to match a given appointment entry
+     *
+     */
+    public void editAppointmentEntry(AppointmentEntry referenceEntry) {
+        this.interval = new Interval(referenceEntry.getStartDate(), referenceEntry.getEndDate());
+        this.givenTitle = referenceEntry.getGivenTitle();
+
     }
 
     public LocalDateTime getStartDate() {
@@ -79,8 +89,6 @@ public class AppointmentEntry {
         }
 
         AppointmentEntry otherAppointment = (AppointmentEntry) other;
-        return otherAppointment.givenTitle.equals(this.getGivenTitle())
-                && otherAppointment.getStartDate().equals(this.getStartDate())
-                && otherAppointment.getEndDate().equals(this.getEndDate());
+        return otherAppointment.givenTitle.equals(this.getGivenTitle());
     }
 }

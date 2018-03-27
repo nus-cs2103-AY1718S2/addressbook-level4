@@ -37,7 +37,7 @@ public interface Model {
     void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException;
 
     /** remove appointments associated with the given searchText */
-    void removeAppointments(String searchText) throws AppointmentNotFoundException;
+    void removeAppointment(String searchText) throws AppointmentNotFoundException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

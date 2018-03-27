@@ -7,21 +7,21 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 
 /**
- * removes appointments whose title match with the searchText in the address book's calendar.
+ * removes appointment whose title match with the searchText in the address book's calendar.
  */
 
 public class RemoveAppointmentsCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "remove_appointments";
+    public static final String COMMAND_WORD = "remove_appointment";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": remove appointments whose title match with the search text in the calendar. "
+            + ": remove appointment whose title match with the search text in the calendar. "
             + "Parameters: "
             + PREFIX_SEARCH_TEXT + "SEARCH TEXT "
             + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_SEARCH_TEXT + "title of the appointment ";
 
-    public static final String MESSAGE_SUCCESS = "Appointments with title %1$s removed";
+    public static final String MESSAGE_SUCCESS = "Appointment with title %1$s removed";
     public static final String MESSAGE_NO_SUCH_APPOINTMENT = "No such appointment exists in the calendar";
 
     private final String searchText;
@@ -37,7 +37,7 @@ public class RemoveAppointmentsCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.removeAppointments(searchText);
+            model.removeAppointment(searchText);
             return new CommandResult(String.format(MESSAGE_SUCCESS, searchText));
         } catch (AppointmentNotFoundException e) {
             throw new CommandException(MESSAGE_NO_SUCH_APPOINTMENT);

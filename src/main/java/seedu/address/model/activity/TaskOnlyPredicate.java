@@ -4,11 +4,10 @@ import java.util.function.Predicate;
 
 //@@author YuanQQLer
 /**
- * This class gives a predicate that returns only the event in a list.
+ * This class gives a predicate that returns only the tasks in a list.
  */
-public class EventOnlyPredicate implements Predicate<Activity> {
-
-    public EventOnlyPredicate() {
+public class TaskOnlyPredicate implements Predicate<Activity> {
+    public TaskOnlyPredicate() {
         ;
     }
 
@@ -20,7 +19,7 @@ public class EventOnlyPredicate implements Predicate<Activity> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EventOnlyPredicate); // instanceof handles nulls
+                || (other instanceof TaskOnlyPredicate); // instanceof handles nulls
     }
 
 }

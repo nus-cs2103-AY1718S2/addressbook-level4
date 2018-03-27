@@ -296,10 +296,10 @@ public class ImdbParser {
                 return new RemarkCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_WORD:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

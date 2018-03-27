@@ -47,7 +47,6 @@ public class ViewAppointmentCommand extends Command {
 
     private static void printOutAppointmentInLog(ObservableList<Appointment> appointments) {
         appointments.forEach(appointment -> {
-            
         });
     }
 }

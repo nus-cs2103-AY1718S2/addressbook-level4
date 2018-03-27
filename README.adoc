@@ -12,7 +12,7 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application built for salesmen. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* This is a desktop addressbook and calendar application built for salesmen. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is meant to keep track of a large number of clients based across many different countries as well as the appointments that are scheduled with them. It supports note-taking and archiving.
 
 == Site Map

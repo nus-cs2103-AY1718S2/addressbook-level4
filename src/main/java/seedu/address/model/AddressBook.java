@@ -11,6 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,6 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueAppointmentList appointments;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +42,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        appointments = new UniqueAppointmentList();
     }
 
     public AddressBook() {}
@@ -59,6 +65,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        this.appointments.setAppointments(appointments);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -71,8 +81,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             setPersons(syncedPersonList);
+            setAppointments(newData.getAppointmentList());
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (DuplicateAppointmentException e) {
+            throw new AssertionError("AddressBooks should not have duplicate appointments");
         }
     }
 
@@ -138,7 +151,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             persons.setPerson(target, target);
         } catch (DuplicatePersonException e) {
-            // Impossible to have this exception
+            throw new AssertionError("Archiving a person only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
         }
     }
 
@@ -152,7 +166,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             persons.setPerson(target, target);
         } catch (DuplicatePersonException e) {
-            // Impossible to have this exception
+            throw new AssertionError("Unrchiving a person only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
         }
     }
     //@@author
@@ -198,6 +213,45 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(persons);
         persons.sort();
     }
+
+    //@@author ongkuanyang
+    //// appointment-level operations
+
+    /**
+     * Adds an appointment to the address book.
+     *
+     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     */
+    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+        appointments.add(appointment);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws AppointmentNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeAppointment(Appointment key) throws AppointmentNotFoundException {
+        if (appointments.remove(key)) {
+            return true;
+        } else {
+            throw new AppointmentNotFoundException();
+        }
+    }
+
+    /**
+     * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if updating the appointment's details
+     *      causes the appointment to be equivalent toanother existing appointment in the list.
+     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
+     */
+    public void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireNonNull(editedAppointment);
+
+        appointments.setAppointment(target, editedAppointment);
+    }
+    //@@author
 
     //// tag-level operations
 
@@ -250,6 +304,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Appointment> getAppointmentList() {
+        return appointments.asObservableList();
     }
 
     @Override

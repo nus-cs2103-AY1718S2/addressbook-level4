@@ -25,6 +25,8 @@ public class RateCommandTest {
         Person editedPerson = new PersonBuilder().withRating("1").withEmail("alice@example.com").build();
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().build();
         descriptor.setRating(new Rating("1"));
+        Person editedPerson = new PersonBuilder().withRating("1").withEmail("alice@example.com").withReview("Lazy")
+                .build();
 
         RateCommand rateCommand = new RateCommand(INDEX_FIRST_PERSON, descriptor);
         rateCommand.setData(model, new CommandHistory(), new UndoRedoStack());

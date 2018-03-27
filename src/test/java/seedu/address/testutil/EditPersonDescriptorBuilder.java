@@ -11,6 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
+import seedu.address.model.person.Review;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,6 +39,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setRating(person.getRating());
+        descriptor.setReview(person.getReview());
         descriptor.setTags(person.getTags());
     }
 
@@ -72,11 +74,20 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(new Address(address));
         return this;
     }
+
     /**
      * Sets the {@code Rating} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withRating(String rating) {
         descriptor.setRating(new Rating(rating));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Review} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withReview(String review) {
+        descriptor.setReview(new Review(review));
         return this;
     }
 

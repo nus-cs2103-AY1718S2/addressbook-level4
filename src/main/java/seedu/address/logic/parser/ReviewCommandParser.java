@@ -49,8 +49,10 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
         EventsCenter.getInstance().registerHandler(this);
         EventsCenter.getInstance().post(new ShowReviewDialogEvent());
 
-        if (reviewInput == null || reviewInput.isEmpty()) {
+        if (reviewInput == null) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
+        } else if (reviewInput.isEmpty()) {
+            reviewInput = "-";
         }
         String review = reviewInput;
 

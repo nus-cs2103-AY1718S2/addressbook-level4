@@ -56,8 +56,8 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         rating = personToCopy.getRating();
+        review = personToCopy.getReview();
         tags = new HashSet<>(personToCopy.getTags());
-
     }
 
     /**

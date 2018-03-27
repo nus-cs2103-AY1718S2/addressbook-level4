@@ -31,6 +31,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
             .withRating("5")
+            .withReview("Lazy")
             .build();
     public static final Person ALICE_DEFAULT = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")

@@ -143,6 +143,8 @@ public class Person {
                 .append(getAddress())
                 .append(" Rating: ")
                 .append(getRatingDisplay())
+                .append(" Review: ")
+                .append(getReview())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

@@ -27,5 +27,21 @@ public class Template {
     public String getTitle() {
         return this.title;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Template)) {
+            return false;
+        }
+
+        Template otherTemplate = (Template) other;
+        return otherTemplate.getTitle().equals(this.getTitle())
+                && otherTemplate.getPurpose().equals(this.getPurpose())
+                && otherTemplate.getMessage().equals(this.getMessage());
+    }
 }
 //@@author

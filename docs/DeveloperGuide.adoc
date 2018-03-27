@@ -877,13 +877,15 @@ Major Enhancement :
 
 Minor Enhancement :
 
-** Upgrades the existing `find` command to support finding persons whose details contain
-any of the given keywords or part thereof
+** Enhance find command to include all the fields of a Person, and also to check for partial matches.
 
 Major Enhancement :
 
-** Implements an emailing functionality that allows user to email persons in the address book using
-existing templates
+** Implement email function which takes in a search parameter and a template parameter
+*** Adding the email utility into the Application
+*** Implementing `Email` Package and its subsidiary models
+*** Implementing persistence of data for Email Templates
+*** Implementing add and remove for new Email Templates
 
 *Lucas Gaylord*
 
@@ -894,20 +896,6 @@ Minor Enhancement :
 Major Enhancement :
 
 ** Implements a batch importing and exporting contacts function from and to CSV format files.
-
-*Ng Jun Wei*
-
-Minor Enhancement :
-
-** Enhance find command to include all the fields of a Person, and also to check for partial matches.
-
-Major Enhancement :
-
-** Implement email function which takes in a search parameter and a template parameter
-*** Adding the email utility into the Application
-*** Implementing `Email` Package and its subsidiary models
-*** Implementing persistence of data for Email Templates
-*** Implementing add and remove for new Email Templates
 
 [appendix]
 == User Stories
@@ -935,9 +923,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |redo an action |revert to the later state
 
-|`* * *` |user |add multiple entries under the same contact category for the same client |avoid creating multiple contacts for the same client
+|`* * *` |user |manage appointment dates and details in a calendar |keep track of them systematically
 
-|`* * *` |user |store appointment dates and details |keep track of them
+|`* * *` |user |send email using customised templates |easily follow up with clients
+
+|`* * *` |user |export the contacts to CSV format files |further make use of them
+
+|`* * *` |user |import contacts from CSV format files |speed up the process of adding new contacts
+
+|`* * *` |user |add multiple entries under the same contact category for the same client |avoid creating multiple contacts for the same client
 
 |`* * *` |user |set reminders |be reminded about appointments and events
 
@@ -953,8 +947,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a tag from everyone in the address book |save time
 
-|`* *` |user |export the contacts to a spreadsheet |further make use of them
-
 |`* *` |user |prioritise clients |single out the more profitable clients
 
 |`* *` |user |email clients from the address book |make arrangements with them
@@ -966,8 +958,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |automate emails and SMS sending |remind clients of upcoming appointments
 
 |`* *` |user |can change the colour theme of my address book |customise the address book to my liking
-
-|`* *` |user |import contacts from xls and doc files |speed up the process of adding new contacts
 
 |`* *` |user |back up my address book periodically |avoid losing all data
 
@@ -1053,11 +1043,12 @@ Use case ends.
 
 * 2b.  The person is not in the list.
 +
+[none]
 ** 2b1.  AddressBook returns error message.
 +
 Use case ends.
 
-
+[discrete]
 === Use case: Email contacts
 
 *MSS*
@@ -1078,10 +1069,12 @@ Use case ends.
 
 * 2b.  The person is not in the list.
 +
+[none]
 ** 2b1.  AddressBook returns error message.
 +
 Use case ends.
 
+[discrete]
 === Use case: Delete dated persons
 
 *MSS*
@@ -1106,6 +1099,8 @@ Steps 2a1 - 2a2 are repeated until date entered is correct.
 Use case resumes from step 3.
 
 * 3a.  If there is no matched persons added before the cut off date
++
+[none]
 ** 3a1.  AddressBook shows error message
 +
 Use case ends.

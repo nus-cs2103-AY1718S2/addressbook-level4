@@ -48,7 +48,12 @@ public class Patient {
         this.remark = remark;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.appointments = new UniqueAppointmentList(appointments);
+
+        if (appointments != null) {
+            this.appointments = new UniqueAppointmentList(appointments);
+        } else {
+            this.appointments = null;
+        }
     }
 
     public Name getName() {

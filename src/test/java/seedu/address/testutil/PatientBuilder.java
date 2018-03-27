@@ -30,7 +30,7 @@ public class PatientBuilder {
     public static final String DEFAULT_BLOODTYPE = "A";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_APPOINTMENTS = "25/3/2018 1100";
+    public static final String DEFAULT_APPOINTMENTS = "";
 
     private Name name;
     private Nric nric;
@@ -93,6 +93,15 @@ public class PatientBuilder {
      */
     public PatientBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
+    }
+
+    /**
+     * Parses the {@code appointments} into a {@code Set<Appointment>}
+     * and set it to the {@code Patient} that we are building.
+     */
+    public PatientBuilder withAppointments(String ... appointments) {
+        this.appointments = SampleDataUtil.getAppointmentSet(appointments);
         return this;
     }
 

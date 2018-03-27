@@ -218,7 +218,7 @@ public class XmlAdaptedPerson {
         final Resume resume;
         if (!isNull(this.resume) && !Resume.isValidResume(this.resume)) {
             resume = new Resume(null);
-        }else{
+        } else {
             resume = new Resume(this.resume);
         }
 

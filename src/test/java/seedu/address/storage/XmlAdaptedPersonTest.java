@@ -248,18 +248,6 @@ public class XmlAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidResume_throwsIllegalValueException() {
-        XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                        VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
-                        VALID_GRADE_POINT_AVERAGE, VALID_TECHNICAL_SKILLS_SCORE,
-                        VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, INVALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
-        String expectedMessage = Resume.MESSAGE_RESUME_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
     public void toModelType_invalidInterviewDate_throwsIllegalValueException() {
         XmlAdaptedPerson person =
                 new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,

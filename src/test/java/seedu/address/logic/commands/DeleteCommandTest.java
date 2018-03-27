@@ -36,7 +36,7 @@
 //        Activity activityToDelete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
 //        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
 //
-//        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, activityToDelete);
+//        String expectedMessage = String.format(DeleteCommand.MESSAGE_COMPLETE_TASK_SUCCESS, activityToDelete);
 //
 //        ModelManager expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
 //        expectedModel.deleteActivity(activityToDelete);
@@ -59,7 +59,7 @@
 //        Activity activityToDelete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
 //        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
 //
-//        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, activityToDelete);
+//        String expectedMessage = String.format(DeleteCommand.MESSAGE_COMPLETE_TASK_SUCCESS, activityToDelete);
 //
 //        Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
 //        expectedModel.deleteActivity(activityToDelete);

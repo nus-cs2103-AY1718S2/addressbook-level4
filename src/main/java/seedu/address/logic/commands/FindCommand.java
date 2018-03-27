@@ -16,7 +16,8 @@ public class FindCommand extends Command {
             + "name and/or tags "
             + "contains any of the specified keyphrases (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...\n"
+            + "Parameters: find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE) "
+            + "[n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...\n"
             + "Example: " + COMMAND_WORD + " n/Alice Bob n/Charlie t/Friends t/OwesMoney";
 
     private final Predicate<Person> predicate;

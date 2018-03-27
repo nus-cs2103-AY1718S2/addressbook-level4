@@ -31,7 +31,8 @@ public class FieldContainKeyphrasesPredicate implements Predicate<Person> {
                 || (other instanceof FieldContainKeyphrasesPredicate // instanceof handles nulls
                 && this.namePredicate.equals(((FieldContainKeyphrasesPredicate) other).namePredicate)
                 && this.tagPredicate.equals(((FieldContainKeyphrasesPredicate) other).tagPredicate)
-                && this.ratingPredicate.equals(((FieldContainKeyphrasesPredicate) other).ratingPredicate)); // state check
+                && this.ratingPredicate.equals(((
+                        FieldContainKeyphrasesPredicate) other).ratingPredicate)); // state check
     }
 
 }

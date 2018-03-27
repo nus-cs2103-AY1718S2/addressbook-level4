@@ -18,14 +18,17 @@ public class TagContainsKeyphrasesPredicateTest {
         List<String> firstPredicateKeyphraseList = Collections.singletonList("first");
         List<String> secondPredicateKeyphraseList = Arrays.asList("first", "second");
 
-        TagContainsKeyphrasesPredicate firstPredicate = new TagContainsKeyphrasesPredicate(firstPredicateKeyphraseList);
-        TagContainsKeyphrasesPredicate secondPredicate = new TagContainsKeyphrasesPredicate(secondPredicateKeyphraseList);
+        TagContainsKeyphrasesPredicate firstPredicate = new TagContainsKeyphrasesPredicate(
+                firstPredicateKeyphraseList);
+        TagContainsKeyphrasesPredicate secondPredicate = new TagContainsKeyphrasesPredicate(
+                secondPredicateKeyphraseList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        TagContainsKeyphrasesPredicate firstPredicateCopy = new TagContainsKeyphrasesPredicate(firstPredicateKeyphraseList);
+        TagContainsKeyphrasesPredicate firstPredicateCopy = new TagContainsKeyphrasesPredicate(
+                firstPredicateKeyphraseList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -60,7 +63,8 @@ public class TagContainsKeyphrasesPredicateTest {
     @Test
     public void test_tagDoesNotContainKeyphrases_returnsFalse() {
         // Non-matching keyphrase
-        TagContainsKeyphrasesPredicate predicate = new TagContainsKeyphrasesPredicate(Collections.singletonList("Friends"));
+        TagContainsKeyphrasesPredicate predicate = new TagContainsKeyphrasesPredicate(
+                Collections.singletonList("Friends"));
         assertFalse(predicate.test(new PersonBuilder().withTags("Enemy", "Nemesis").build()));
 
         // Keyphrase match name, phone, email, and address, but does not match tag

@@ -18,14 +18,17 @@ public class NameContainsKeyphrasesPredicateTest {
         List<String> firstPredicateKeyphraseList = Collections.singletonList("first");
         List<String> secondPredicateKeyphraseList = Arrays.asList("first", "second");
 
-        NameContainsKeyphrasesPredicate firstPredicate = new NameContainsKeyphrasesPredicate(firstPredicateKeyphraseList);
-        NameContainsKeyphrasesPredicate secondPredicate = new NameContainsKeyphrasesPredicate(secondPredicateKeyphraseList);
+        NameContainsKeyphrasesPredicate firstPredicate = new NameContainsKeyphrasesPredicate(
+                firstPredicateKeyphraseList);
+        NameContainsKeyphrasesPredicate secondPredicate = new NameContainsKeyphrasesPredicate(
+                secondPredicateKeyphraseList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        NameContainsKeyphrasesPredicate firstPredicateCopy = new NameContainsKeyphrasesPredicate(firstPredicateKeyphraseList);
+        NameContainsKeyphrasesPredicate firstPredicateCopy = new NameContainsKeyphrasesPredicate(
+                firstPredicateKeyphraseList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -60,7 +63,8 @@ public class NameContainsKeyphrasesPredicateTest {
     @Test
     public void test_nameDoesNotContainKeyphrases_returnsFalse() {
         // Non-matching keyphrase
-        NameContainsKeyphrasesPredicate predicate = new NameContainsKeyphrasesPredicate(Collections.singletonList("Carol"));
+        NameContainsKeyphrasesPredicate predicate = new NameContainsKeyphrasesPredicate(
+                Collections.singletonList("Carol"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         // Keyphrase match phone, email, address, and tag, but does not match name

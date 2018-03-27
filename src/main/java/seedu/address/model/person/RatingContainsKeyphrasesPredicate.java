@@ -19,7 +19,8 @@ public class RatingContainsKeyphrasesPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         return keyphrases.isEmpty()
                 || keyphrases.stream()
-                .anyMatch(keyphrase -> StringUtil.containsWordsIgnoreCase(person.getRating().value.toString(), keyphrase));
+                .anyMatch(keyphrase -> StringUtil.containsWordsIgnoreCase(
+                        person.getRating().value.toString(), keyphrase));
     }
 
     @Override

@@ -57,8 +57,6 @@ public class Password {
      * @param password is the password to be used. Cannot be null
      */
     public void updatePassword(byte[] password) {
-        requireNonNull(password);
-
         prevPassword = currentPassword;
         currentPassword = password;
     }

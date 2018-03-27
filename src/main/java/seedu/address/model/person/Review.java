@@ -10,7 +10,7 @@ public class Review {
     public static final String MESSAGE_REVIEW_CONSTRAINTS =
             "Person addresses can take any values, and it should not be blank";
     public static final String REVIEW_VALIDATION_REGEX = "[^\\s].*";
-    private static final String DEFAULT_INVALID_REVIEW = "-";
+    private static final String DEFAULT_REVIEW = "-";
 
     public final String value;
 
@@ -18,7 +18,7 @@ public class Review {
      * Constructs a {@code Review} for a new person who hasn't been assigned a review.
      */
     public Review() {
-        value = DEFAULT_INVALID_REVIEW;
+        value = DEFAULT_REVIEW;
     }
 
     /**

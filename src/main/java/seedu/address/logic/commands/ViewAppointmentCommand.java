@@ -3,8 +3,10 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.model.patient.Patient;
 
 /**
  * List all the patient appointments
@@ -38,10 +40,27 @@ public class ViewAppointmentCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
-        ObservableList<Appointment> appointmentList = model.getImdb().getAppointmentList();
+    public CommandResult execute() throws CommandException {
 
-        printOutAppointmentInLog(appointmentList);
+        if (this.predicate != null) {
+
+            Patient patientFound = model.getPatientFromList(predicate);
+
+            if (patientFound == null) {
+                throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
+            }
+
+            //get past appointments by patientfound
+            //get upcoming appointments by patientfound
+            //event handler
+            //command result
+
+
+            ObservableList<Appointment> appointmentList = model.getImdb().getAppointmentList();
+
+            printOutAppointmentInLog(appointmentList);
+        }
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

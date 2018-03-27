@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyImdb;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -158,6 +159,16 @@ public class AddCommandTest {
 
         @Override
         public Patient getPatientFromList(Predicate<Patient> predicate) {
+            return null;
+        }
+
+        @Override
+        public ObservableList<Appointment> getPastAppointments(Patient patient) {
+            return null;
+        }
+
+        @Override
+        public ObservableList<Appointment> getUpcomingAppointments(Patient patient) {
             return null;
         }
     }

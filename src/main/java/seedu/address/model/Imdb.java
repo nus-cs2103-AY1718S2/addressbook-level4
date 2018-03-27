@@ -30,6 +30,8 @@ public class Imdb implements ReadOnlyImdb {
     private final UniqueTagList tags;
     private final UniqueAppointmentList appointments;
     private final UniquePatientVisitingQueue visitingQueue;
+    private final UniqueAppointmentList pastAppointments;
+    private final UniqueAppointmentList upcomingAppointments;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -43,6 +45,8 @@ public class Imdb implements ReadOnlyImdb {
         tags = new UniqueTagList();
         appointments = new UniqueAppointmentList();
         visitingQueue = new UniquePatientVisitingQueue();
+        pastAppointments = new UniqueAppointmentList();
+        upcomingAppointments = new UniqueAppointmentList();
     }
 
     public Imdb() {}
@@ -243,6 +247,17 @@ public class Imdb implements ReadOnlyImdb {
     @Override
     public ObservableList<Patient> getUniquePatientQueue() {
         return visitingQueue.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Appointment> getPastAppointments() {
+        
+        return null;
+    }
+
+    @Override
+    public ObservableList<Appointment> getUpcomingAppointments() {
+        return null;
     }
 
     @Override

@@ -1,28 +1,22 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.DateTime;
-import seedu.address.model.activity.Name;
-import seedu.address.model.activity.Remark;
-import seedu.address.model.activity.Task;
 import seedu.address.model.tag.Tag;
 
+//@@author karenfrilya97
 /**
  * JAXB-friendly version of the Activity.
  */
-//TODO : NEED TO CHANGE WHEN MODEL CHANGES
-public class XmlAdaptedActivity {
+public abstract class XmlAdaptedActivity {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Activity's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "%s's %s field is missing!";
 
     @XmlElement(required = true)
     protected String name;
@@ -72,43 +66,9 @@ public class XmlAdaptedActivity {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted activity
      */
-    public Activity toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
-        }
+    public abstract Activity toModelType() throws IllegalValueException;
 
-        if (this.name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Name.class.getSimpleName()));
-        }
-        if (!Name.isValidName(this.name)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
-        }
-        final Name name = new Name(this.name);
-
-        if (this.dateTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    DateTime.class.getSimpleName()));
-        }
-        if (!DateTime.isValidDateAndTime(this.dateTime)) {
-            throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
-        }
-        final DateTime dateTime = new DateTime(this.dateTime);
-
-        if (this.remark == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Remark.class.getSimpleName()));
-        }
-        if (!Remark.isValidRemark(this.remark)) {
-            throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
-        }
-        final Remark remark = new Remark(this.remark);
-
-        final Set<Tag> tags = new HashSet<>(personTags);
-        //Changed Here.
-        return new Task(name, dateTime, remark, tags);
-    }
+    public abstract String getActivityType();
 
     @Override
     public boolean equals(Object other) {

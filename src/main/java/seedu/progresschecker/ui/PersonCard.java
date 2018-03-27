@@ -4,17 +4,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.progresschecker.logic.commands.exceptions.CommandException;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import seedu.progresschecker.MainApp;
 import seedu.progresschecker.model.person.Person;
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class PersonCard extends UiPart<Region> {
+public class  PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static final String[] TAG_COLORS =
@@ -48,9 +49,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private ImageView profile;
+    private Rectangle profile;
 
-    public PersonCard(Person person, int displayedIndex) throws CommandException {
+    public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
@@ -65,7 +66,8 @@ public class PersonCard extends UiPart<Region> {
             label.getStyleClass().add(getTagColor(tag.tagName));
             tags.getChildren().add(label);
         });
-        profile.setImage(Image.impl_fromPlatformImage(person.getImage()));
+        Image profilePhoto = new Image(MainApp.class.getResourceAsStream(person.getPhotoPath()));
+        profile.setFill(new ImagePattern(profilePhoto));
     }
 
     /**
@@ -85,13 +87,6 @@ public class PersonCard extends UiPart<Region> {
             sum += c;
         }
         return sum;
-    }
-
-    /**
-     * Updates the profile photo
-     */
-    public void updatePhoto() {
-        profile.setImage(Image.impl_fromPlatformImage(person.getImage()));
     }
 
     @Override

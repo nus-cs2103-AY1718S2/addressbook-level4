@@ -16,7 +16,7 @@ public class BloodType {
      * The first character of the blood type must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String BLOODTYPE_VALIDATION_REGEX = "[\\p{Alpha}\\p{Punct}]*";
+    public static final String BLOODTYPE_VALIDATION_REGEX = "[\\p{Alpha}]{1,2}[\\p{Punct}]?";
 
     public final String value;
 

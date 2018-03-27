@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.LoginManager;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddConditionCommand;
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -191,12 +192,22 @@ public class ImdbParser {
             case AddPatientQueueCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
+
             case RemovePatientQueueCommand.COMMAND_WORD:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
+
             case RemovePatientQueueCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
+
+            case AddConditionCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        AddConditionCommand.MESSAGE_USAGE));
+
+            case AddConditionCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        AddConditionCommand.MESSAGE_USAGE));
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -307,6 +318,12 @@ public class ImdbParser {
 
             case RecordCommand.COMMAND_ALIAS:
                 return new RecordCommandParser().parse(arguments);
+
+            case AddConditionCommand.COMMAND_WORD:
+                return new AddConditionCommandParser().parse(arguments);
+
+            case AddConditionCommand.COMMAND_ALIAS:
+                return new AddConditionCommandParser().parse(arguments);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -426,8 +443,16 @@ public class ImdbParser {
 
             case RemovePatientQueueCommand.COMMAND_WORD:
                 return new RemovePatientQueueCommandParser().parse(arguments);
+
             case RemovePatientQueueCommand.COMMAND_ALIAS:
                 return new RemovePatientQueueCommandParser().parse(arguments);
+
+            case AddConditionCommand.COMMAND_WORD:
+                return new AddConditionCommandParser().parse(arguments);
+
+            case AddConditionCommand.COMMAND_ALIAS:
+                return new AddConditionCommandParser().parse(arguments);
+
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }

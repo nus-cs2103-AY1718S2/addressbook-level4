@@ -10,9 +10,7 @@ import seedu.address.model.Password;
  * JAXB-friendly version of the Person.
  */
 public class XmlAdaptedPassword {
-
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Password field is missing!";
-
+    
     @XmlElement(required = true)
     private byte[] currPassword;
 

@@ -15,7 +15,7 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <ListView fx:id="pastAppointmentList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="pastAppointmentCardListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                      </children>
                      <StackPane.margin>
                         <Insets top="30.0" />
@@ -31,7 +31,7 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <ListView fx:id="upcomingAppointmentList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <ListView fx:id="upcomingAppointmentCardListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>

@@ -66,7 +66,7 @@ public class AddressBookTest {
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<ToDo> newToDos = Arrays.asList(TODO_A);
         List<Group> newGroups = Arrays.asList(GROUP_A);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos ,newGroups);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -79,7 +79,7 @@ public class AddressBookTest {
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<ToDo> newToDos = Arrays.asList(TODO_A, TODO_A);
         List<Group> newGroups = Arrays.asList(GROUP_A);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos ,newGroups);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -92,7 +92,7 @@ public class AddressBookTest {
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<ToDo> newToDos = Arrays.asList(TODO_A);
         List<Group> newGroups = Arrays.asList(GROUP_A, GROUP_A);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos ,newGroups);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newToDos, newGroups);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -146,7 +146,8 @@ public class AddressBookTest {
         private final ObservableList<ToDo> todos = FXCollections.observableArrayList();
         private final ObservableList<Group> groups = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<ToDo> todos, Collection<Group> groups) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
+                        Collection<ToDo> todos, Collection<Group> groups) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.todos.setAll(todos);

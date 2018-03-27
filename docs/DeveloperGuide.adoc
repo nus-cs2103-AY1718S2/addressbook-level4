@@ -484,21 +484,6 @@ The ProfilePicture constructor is called when `AddCommand` or `EditCommand` is e
 
 diagrams::ModelComponentClassDiagram.pptx[width="650"]
 
-=== Emailing a contact
-
-==== Current implementation
-The `EmailCommand` class will allow user to open an email interface to send email to the chosen contact. `EmailCommand` extends the `Command` class. It takes in an index through the `EmailCommandParser`,
-similar to the implementation of `DeleteCommand` and `DeleteCommandParser`.
-
-==== Design consideration
-===== Aspect: How to send an email
-* **Alternative 1 (current choice):** Using Gmail API to send an email.
-** Pros: Able to customize the UI that the user will use to send out an email.
-** Cons: Will take more time to implement due to additional UI components.
-* **Alternative 2:** Using `Webview` to display the Gmail drafting url.
-** Pros: Faster implementation as similar feature has been done before.
-** Cons: Not customizable and text may appear small in `Webview`.
-
 == Documentation
 
 We use asciidoc for writing documentation.

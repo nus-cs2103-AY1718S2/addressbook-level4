@@ -16,8 +16,7 @@ public class UnaliasCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " a";
 
     public static final String MESSAGE_SUCCESS = "Alias has been removed!";
-    public static final String MESSAGE_UNKNOWN_UNALIAS = "This alias does not exist. \n%1$s";
-    public static final String MESSAGE_UNKNOWN_UNALIAS_DESCRIPTION = "There is no such alias previously set.";
+    public static final String MESSAGE_UNKNOWN_UNALIAS = "This alias does not exist.";
 
     private final String toRemove;
 

@@ -191,8 +191,8 @@ public class ParserUtil {
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Date> parseDate(Optional<Date> date) throws IllegalValueException {
+    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(parseDate(date.get().toString())) : Optional.empty();
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
 }

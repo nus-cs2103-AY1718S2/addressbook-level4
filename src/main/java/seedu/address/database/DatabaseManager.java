@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
+import seedu.address.model.event.WeeklyEvent;
 import seedu.address.model.module.Module;
 import seedu.address.model.module.Schedule;
 import seedu.address.model.person.TimeTableLink;
@@ -62,7 +64,9 @@ public class DatabaseManager {
      *
      * @param query to be parsed
      */
-    public void parseEvents(String query) {
+    public ArrayList<WeeklyEvent> parseEvents(String query) {
+        ArrayList<WeeklyEvent> eventList = new ArrayList<>();
+
         StringTokenizer queryTokenizer = new StringTokenizer(query, "&");
         while (queryTokenizer.hasMoreTokens()) {
             StringTokenizer modTokenizer = new StringTokenizer(queryTokenizer.nextToken(), "=");
@@ -79,6 +83,7 @@ public class DatabaseManager {
                     String queryLessonNum = lessonTokenizer.nextToken();
                     if (queryAbbrev.equals(lessonAbbrev.get(schedule.getLessonType()))
                             && queryLessonNum.equals(schedule.getClassNo())) {
+                        eventList.add(new WeeklyEvent(module, schedule));
                         System.out.println(schedule.getLessonType() + " " + schedule.getClassNo()); //TODO: remove
                         System.out.println("\t" + schedule.getDayText());
                         System.out.println("\t" + schedule.getStartTime() + " to " + schedule.getEndTime());
@@ -89,6 +94,7 @@ public class DatabaseManager {
             }
 
         }
+        return  eventList;
     }
 
     /**

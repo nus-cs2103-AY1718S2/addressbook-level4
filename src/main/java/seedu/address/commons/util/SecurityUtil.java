@@ -34,7 +34,7 @@ public class SecurityUtil {
      * Don't encrypt if no password provided
      */
     public static void encrypt(File file) {
-        return;
+
     }
 
     /**

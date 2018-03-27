@@ -2,20 +2,23 @@ package guitests.guihandles;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import seedu.address.model.book.Book;
-import seedu.address.ui.BookCard;
 
 /**
- * Provides a handle for {@code BookListPanel} containing the list of {@code BookCard}.
+ * Provides a handle for {@code BookListPanel} containing the list of {@code Book}.
  */
-public class BookListPanelHandle extends NodeHandle<ListView<BookCard>> {
+public class BookListPanelHandle extends NodeHandle<ListView<Book>> {
     public static final String BOOK_LIST_VIEW_ID = "#bookListView";
 
-    private Optional<BookCard> lastRememberedSelectedBookCard;
+    private static final String CARD_PANE_ID = "#cardPane";
 
-    public BookListPanelHandle(ListView<BookCard> bookListPanelNode) {
+    private Optional<Book> lastRememberedSelectedBookCard;
+
+    public BookListPanelHandle(ListView<Book> bookListPanelNode) {
         super(bookListPanelNode);
     }
 
@@ -25,13 +28,17 @@ public class BookListPanelHandle extends NodeHandle<ListView<BookCard>> {
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
     public BookCardHandle getHandleToSelectedCard() {
-        List<BookCard> bookList = getRootNode().getSelectionModel().getSelectedItems();
+        List<Book> bookList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (bookList.size() != 1) {
             throw new AssertionError("Book list size expected 1.");
         }
 
-        return new BookCardHandle(bookList.get(0).getRoot());
+        return getAllCardNodes().stream()
+                .map(BookCardHandle::new)
+                .filter(handle -> handle.equals(bookList.get(0)))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 
     /**
@@ -45,7 +52,7 @@ public class BookListPanelHandle extends NodeHandle<ListView<BookCard>> {
      * Returns true if a card is currently selected.
      */
     public boolean isAnyCardSelected() {
-        List<BookCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+        List<Book> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCardsList.size() > 1) {
             throw new AssertionError("Card list size expected 0 or 1.");
@@ -55,39 +62,31 @@ public class BookListPanelHandle extends NodeHandle<ListView<BookCard>> {
     }
 
     /**
-     * Navigates the listview to display and select the book.
+     * Navigates the listview to display and select {@code book}.
      */
     public void navigateToCard(Book book) {
-        List<BookCard> cards = getRootNode().getItems();
-        Optional<BookCard> matchingCard = cards.stream().filter(card -> card.book.equals(book)).findFirst();
-
-        if (!matchingCard.isPresent()) {
+        if (!getRootNode().getItems().contains(book)) {
             throw new IllegalArgumentException("Book does not exist.");
         }
 
         guiRobot.interact(() -> {
-            getRootNode().scrollTo(matchingCard.get());
-            getRootNode().getSelectionModel().select(matchingCard.get());
+            getRootNode().scrollTo(book);
         });
         guiRobot.pauseForHuman();
     }
 
     /**
-     * Returns the book card handle of a book associated with the {@code index} in the list.
+     * Navigates the listview to {@code index}.
      */
-    public BookCardHandle getBookCardHandle(int index) {
-        return getBookCardHandle(getRootNode().getItems().get(index).book);
-    }
+    public void navigateToCard(int index) {
+        if (index < 0 || index >= getRootNode().getItems().size()) {
+            throw new IllegalArgumentException("Index is out of bounds.");
+        }
 
-    /**
-     * Returns the {@code BookCardHandle} of the specified {@code book} in the list.
-     */
-    public BookCardHandle getBookCardHandle(Book book) {
-        Optional<BookCardHandle> handle = getRootNode().getItems().stream()
-                .filter(card -> card.book.equals(book))
-                .map(card -> new BookCardHandle(card.getRoot()))
-                .findFirst();
-        return handle.orElseThrow(() -> new IllegalArgumentException("Book does not exist."));
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(index);
+        });
+        guiRobot.pauseForHuman();
     }
 
     /**
@@ -98,10 +97,35 @@ public class BookListPanelHandle extends NodeHandle<ListView<BookCard>> {
     }
 
     /**
-     * Remembers the selected {@code BookCard} in the list.
+     * Returns the book card handle of a book associated with the {@code index} in the list.
+     * @throws IllegalStateException if the selected card is currently not in the scene graph.
+     */
+    public BookCardHandle getBookCardHandle(int index) {
+        return getAllCardNodes().stream()
+                .map(BookCardHandle::new)
+                .filter(handle -> handle.equals(getBook(index)))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    private Book getBook(int index) {
+        return getRootNode().getItems().get(index);
+    }
+
+    /**
+     * Returns all card nodes in the scene graph.
+     * Card nodes that are visible in the listview are definitely in the scene graph, while some nodes that are not
+     * visible in the listview may also be in the scene graph.
+     */
+    private Set<Node> getAllCardNodes() {
+        return guiRobot.lookup(CARD_PANE_ID).queryAll();
+    }
+
+    /**
+     * Remembers the selected {@code Book} in the list.
      */
     public void rememberSelectedBookCard() {
-        List<BookCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+        List<Book> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
             lastRememberedSelectedBookCard = Optional.empty();
@@ -111,11 +135,11 @@ public class BookListPanelHandle extends NodeHandle<ListView<BookCard>> {
     }
 
     /**
-     * Returns true if the selected {@code BookCard} is different from the value remembered by the most recent
+     * Returns true if the selected {@code Book} is different from the value remembered by the most recent
      * {@code rememberSelectedBookCard()} call.
      */
     public boolean isSelectedBookCardChanged() {
-        List<BookCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+        List<Book> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
             return lastRememberedSelectedBookCard.isPresent();

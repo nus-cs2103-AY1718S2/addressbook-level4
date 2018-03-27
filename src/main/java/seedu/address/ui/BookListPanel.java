@@ -2,8 +2,6 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import org.fxmisc.easybind.EasyBind;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
@@ -25,7 +23,7 @@ public class BookListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(BookListPanel.class);
 
     @FXML
-    private ListView<BookCard> bookListView;
+    private ListView<Book> bookListView;
 
     public BookListPanel(ObservableList<Book> bookList) {
         super(FXML);
@@ -34,9 +32,7 @@ public class BookListPanel extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<Book> bookList) {
-        ObservableList<BookCard> mappedList = EasyBind.map(
-                bookList, (book) -> new BookCard(book, bookList.indexOf(book) + 1));
-        bookListView.setItems(mappedList);
+        bookListView.setItems(bookList);
         bookListView.setCellFactory(listView -> new BookListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
@@ -52,7 +48,7 @@ public class BookListPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code BookCard} at the {@code index} and selects it.
+     * Scrolls to the {@code Book} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -73,19 +69,19 @@ public class BookListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code BookCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code Book}.
      */
-    class BookListViewCell extends ListCell<BookCard> {
+    class BookListViewCell extends ListCell<Book> {
 
         @Override
-        protected void updateItem(BookCard book, boolean empty) {
+        protected void updateItem(Book book, boolean empty) {
             super.updateItem(book, empty);
 
             if (empty || book == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(book.getRoot());
+                setGraphic(new BookCard(book, getIndex() + 1).getRoot());
             }
         }
     }

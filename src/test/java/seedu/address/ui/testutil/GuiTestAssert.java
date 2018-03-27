@@ -1,6 +1,7 @@
 package seedu.address.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,21 +38,14 @@ public class GuiTestAssert {
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
     public static void assertCardEquals(BookCardHandle expectedCard, BookCardHandle actualCard) {
-        assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAuthors(), actualCard.getAuthors());
-        assertEquals(expectedCard.getCategories(), actualCard.getCategories());
-        assertEquals(expectedCard.getTitle(), actualCard.getTitle());
+        assertTrue(actualCard.equals(expectedCard));
     }
 
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedBook}.
      */
     public static void assertCardDisplaysBook(Book expectedBook, BookCardHandle actualCard) {
-        assertEquals(expectedBook.getTitle().title, actualCard.getTitle());
-        assertEquals(expectedBook.getAuthors().stream().map(author -> author.fullName)
-                        .collect(Collectors.toList()), actualCard.getAuthors());
-        assertEquals(expectedBook.getCategories().stream().map(category -> category.category)
-                        .collect(Collectors.toList()), actualCard.getCategories());
+        assertTrue(actualCard.equals(expectedBook));
     }
 
     /**
@@ -60,6 +54,7 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(BookListPanelHandle bookListPanelHandle, Book... books) {
         for (int i = 0; i < books.length; i++) {
+            bookListPanelHandle.navigateToCard(i);
             assertCardDisplaysBook(books[i], bookListPanelHandle.getBookCardHandle(i));
         }
     }
@@ -70,16 +65,18 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(SearchResultsPanelHandle searchResultsPanelHandle, Book... books) {
         for (int i = 0; i < books.length; i++) {
+            searchResultsPanelHandle.navigateToCard(i);
             assertCardDisplaysBook(books[i], searchResultsPanelHandle.getBookCardHandle(i));
         }
     }
 
     /**
-     * Asserts that the list in {@code searchResultsPanelHandle} displays the details of {@code books} correctly and
+     * Asserts that the list in {@code recentBooksPanelHandle} displays the details of {@code books} correctly and
      * in the correct order.
      */
     public static void assertListMatching(RecentBooksPanelHandle recentBooksPanelHandle, Book... books) {
         for (int i = 0; i < books.length; i++) {
+            recentBooksPanelHandle.navigateToCard(i);
             assertCardDisplaysBook(books[i], recentBooksPanelHandle.getBookCardHandle(i));
         }
     }
@@ -101,7 +98,7 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that the list in {@code searchResultsPanelHandle} displays the details of {@code books} correctly and
+     * Asserts that the list in {@code recentBooksPanelHandle} displays the details of {@code books} correctly and
      * in the correct order.
      */
     public static void assertListMatching(RecentBooksPanelHandle recentBooksPanelHandle, List<Book> books) {

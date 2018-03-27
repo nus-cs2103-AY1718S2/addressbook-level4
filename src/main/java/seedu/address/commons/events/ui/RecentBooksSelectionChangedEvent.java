@@ -1,16 +1,16 @@
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.ui.BookCard;
+import seedu.address.model.book.Book;
 
 /**
  * Represents a selection change in the Recent Books Panel.
  */
 public class RecentBooksSelectionChangedEvent extends BaseEvent {
 
-    private final BookCard newSelection;
+    private final Book newSelection;
 
-    public RecentBooksSelectionChangedEvent(BookCard newSelection) {
+    public RecentBooksSelectionChangedEvent(Book newSelection) {
         this.newSelection = newSelection;
     }
 
@@ -19,7 +19,7 @@ public class RecentBooksSelectionChangedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public BookCard getNewSelection() {
+    public Book getNewSelection() {
         return newSelection;
     }
 }

@@ -2,8 +2,6 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import org.fxmisc.easybind.EasyBind;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
@@ -30,7 +28,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     @FXML
     private Label infoLabel;
     @FXML
-    private ListView<BookCard> searchResultsListView;
+    private ListView<Book> searchResultsListView;
 
     public SearchResultsPanel(ObservableList<Book> searchResults) {
         super(FXML);
@@ -39,9 +37,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<Book> searchResults) {
-        ObservableList<BookCard> mappedList = EasyBind.map(
-                searchResults, (book) -> new BookCard(book, searchResults.indexOf(book) + 1));
-        searchResultsListView.setItems(mappedList);
+        searchResultsListView.setItems(searchResults);
         searchResultsListView.setCellFactory(listView -> new BookListViewCell());
         setEventHandlerForSelectionChangeEvent();
         setEventHandlerForListChangeEvent();
@@ -58,7 +54,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     }
 
     private void setEventHandlerForListChangeEvent() {
-        searchResultsListView.getItems().addListener((ListChangeListener<BookCard>) c -> {
+        searchResultsListView.getItems().addListener((ListChangeListener<Book>) c -> {
             long newSize = c.getList().size();
             infoLabel.setText(String.format(INFO_TEXT, newSize));
         });
@@ -70,7 +66,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code BookCard} at the {@code index} and selects it.
+     * Scrolls to the {@code Book} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -91,19 +87,19 @@ public class SearchResultsPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code BookCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code Book}.
      */
-    class BookListViewCell extends ListCell<BookCard> {
+    class BookListViewCell extends ListCell<Book> {
 
         @Override
-        protected void updateItem(BookCard book, boolean empty) {
+        protected void updateItem(Book book, boolean empty) {
             super.updateItem(book, empty);
 
             if (empty || book == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(book.getRoot());
+                setGraphic(new BookCard(book, getIndex() + 1).getRoot());
             }
         }
     }

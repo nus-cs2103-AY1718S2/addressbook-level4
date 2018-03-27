@@ -94,18 +94,18 @@ public class BookDetailsPanel extends UiPart<Region> {
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showBook(event.getNewSelection().book);
+        showBook(event.getNewSelection());
     }
 
     @Subscribe
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showBook(event.getNewSelection().book);
+        showBook(event.getNewSelection());
     }
 
     @Subscribe
     private void handleRecentBooksSelectionChangedEvent(RecentBooksSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showBook(event.getNewSelection().book);
+        showBook(event.getNewSelection());
     }
 }

@@ -151,12 +151,12 @@ public class LogicManager extends ComponentManager implements Logic {
     @Subscribe
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.addRecentBook(event.getNewSelection().book);
+        model.addRecentBook(event.getNewSelection());
     }
 
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.addRecentBook(event.getNewSelection().book);
+        model.addRecentBook(event.getNewSelection());
     }
 }

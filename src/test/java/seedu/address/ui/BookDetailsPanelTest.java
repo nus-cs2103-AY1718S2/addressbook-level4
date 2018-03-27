@@ -32,27 +32,27 @@ public class BookDetailsPanelTest extends GuiUnitTest {
         assertFalse(bookDetailsPanelHandle.isVisible());
 
         // check that the correct details are displayed
-        postNow(new BookListSelectionChangedEvent(new BookCard(ARTEMIS, 0)));
+        postNow(new BookListSelectionChangedEvent(ARTEMIS));
         assertDetailsPanelDisplaysBook(ARTEMIS);
 
         // check that the correct details are displayed
-        postNow(new BookListSelectionChangedEvent(new BookCard(BABYLON_ASHES, 1)));
+        postNow(new BookListSelectionChangedEvent(BABYLON_ASHES));
         assertDetailsPanelDisplaysBook(BABYLON_ASHES);
 
         // no categories
         Book bookWithNoCategories = new BookBuilder().withCategories().build();
-        postNow(new BookListSelectionChangedEvent(new BookCard(bookWithNoCategories, 0)));
+        postNow(new BookListSelectionChangedEvent(bookWithNoCategories));
         assertDetailsPanelDisplaysBook(bookWithNoCategories);
 
         // no authors
         Book bookWithNoAuthors = new BookBuilder().withAuthors().build();
-        postNow(new BookListSelectionChangedEvent(new BookCard(bookWithNoAuthors, 0)));
+        postNow(new BookListSelectionChangedEvent(bookWithNoAuthors));
         assertDetailsPanelDisplaysBook(bookWithNoAuthors);
 
         // empty book
         Book emptyBook = new BookBuilder().withGid("").withTitle("").withAuthors().withCategories()
                 .withDescription("").withIsbn("").withPublicationDate("").withPublisher("").build();
-        postNow(new BookListSelectionChangedEvent(new BookCard(emptyBook, 0)));
+        postNow(new BookListSelectionChangedEvent(emptyBook));
         assertDetailsPanelDisplaysBook(emptyBook);
     }
 

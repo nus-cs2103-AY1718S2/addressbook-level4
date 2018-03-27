@@ -488,9 +488,30 @@ Toggle the first subtask of the first task in the PrioriTask.
 Toggle the fourth subtask of the second task in th result of `find homework` command.
 ====
 
-==== Deleting a subtask from a task `[coming in v2.0]`
+==== Deleting a subtask from a task: `delete-subtask` or `ds` `[since v1.3]`
 
-_{ coming in v2.0 }_
+Deletes the specified subtask from the PrioriTask. +
+
+[.format]
+====
+[format-title]#Format:# `delete-subtask TASK_INDEX SUBTASK_INDEX`
+====
+
+* Delete the `SUBTASK_INDEX`-th subtask of task at the specified by `TASK_INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`list`# +
+[example]#`delete-subtask 1 1`# +
+Delete the first subtask of the first task in the PrioriTask.
+* [example]#`find cleaning`# +
+[example]#`delete-subtask 2 4`# +
+Delete the fourth subtask of the second task in th result of `find cleaning` command.
+====
 
 ==== Editing a subtask `[coming in v2.0]`
 
@@ -546,3 +567,5 @@ e.g.[example-no-box]#`toggle 3`#
 e.g. [example-no-box]#`adds 1 n/Submit Report`#
 * *Toggle Subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
 e.g.[example-no-box]#`toggle-subtask 3 2`#
+* *Delete Subtask* : [format]#`delete-subtask TASK_INDEX SUBTASK_INDEX`# +
+e.g. [example-no-box]#`delete-subtask 2 3`#

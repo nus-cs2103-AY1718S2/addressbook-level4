@@ -19,6 +19,7 @@ import seedu.organizer.logic.commands.AddCommand;
 import seedu.organizer.logic.commands.AddSubtaskCommand;
 import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
+import seedu.organizer.logic.commands.DeleteSubtaskCommand;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.logic.commands.ExitCommand;
 import seedu.organizer.logic.commands.FindDeadlineCommand;
@@ -77,6 +78,18 @@ public class OrganizerParserTest {
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_TASK), command);
         assertEquals(new DeleteCommand(INDEX_FIRST_TASK), commandAlias);
+    }
+
+    @Test
+    public void parseCommand_deleteSubtask() throws Exception {
+        DeleteSubtaskCommand command = (DeleteSubtaskCommand) parser.parseCommand(
+                DeleteSubtaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + " "
+                        + INDEX_FIRST_TASK.getOneBased());
+        DeleteSubtaskCommand commandAlias = (DeleteSubtaskCommand) parser.parseCommand(
+                DeleteSubtaskCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK.getOneBased() + " "
+                        + INDEX_FIRST_TASK.getOneBased());
+        assertEquals(new DeleteSubtaskCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK), command);
+        assertEquals(new DeleteSubtaskCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK), commandAlias);
     }
 
     @Test

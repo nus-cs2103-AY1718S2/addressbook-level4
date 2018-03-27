@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.ToDoCardHandle;
 import seedu.address.model.person.Person;
+import seedu.address.model.todo.ToDo;
 import seedu.address.ui.PersonCard;
 
 /**
@@ -44,6 +46,14 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
 
         assertTagsEqual(expectedPerson, actualCard);
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedToDo}.
+     */
+    public static void assertCardDisplaysToDo(ToDo expectedToDo, ToDoCardHandle actualCard) {
+        assertEquals(expectedToDo.getContent().value, actualCard.getContent());
+        assertEquals(expectedToDo.getStatus().value, actualCard.getStatus());
     }
 
     /**

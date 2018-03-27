@@ -21,6 +21,8 @@ public class StudentInfoDisplayEvent extends BaseEvent {
         return "Displaying full information for " + student.getName();
     }
 
-    public Student getStudent() { return student; }
+    public Student getStudent() {
+        return student;
+    }
 
 }

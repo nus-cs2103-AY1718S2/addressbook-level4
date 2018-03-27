@@ -460,7 +460,7 @@ The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the 
 
 ===== Aspect: Implementation of `AddToDoCommand`
 
-* **Alternative 1 (current choice):** Add a new method `setStatus(Status newStatus)` in `ToDo` 
+* **Alternative 1 (current choice):** Add a new method `setStatus(Status newStatus)` in `ToDo`
 ** Pros: We do not need to create a new `ToDo` object to replace the existing to-do.
 ** Cons: The implementation does not follow the Single Responsibility Principle.
 

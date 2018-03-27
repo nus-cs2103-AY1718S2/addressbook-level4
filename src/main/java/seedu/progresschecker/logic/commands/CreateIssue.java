@@ -65,7 +65,7 @@ public class CreateIssue extends Command {
     public CommandResult execute() throws CommandException {
 
         try {
-            GitHub github = GitHub.connect();
+            GitHub github = GitHub.connectUsingPassword("AdityaA1998", "Aditya@123");
             GHRepository repository = github.getRepository("AdityaA1998/samplerepo-pr-practice");
             GHIssueBuilder issueBuilder = repository.createIssue(toBeCreated.getTitle().toString());
             issueBuilder.body(toBeCreated.getBody().toString());
@@ -79,6 +79,10 @@ public class CreateIssue extends Command {
 
             for (int i = 0; i < assigneesList.size(); i++) {
                 listOfUsers.add(github.getUser(assigneesList.get(i).toString()));
+            }
+
+            for (int i = 0; i < labelsList.size(); i++) {
+                listOfLabels.add(labelsList.get(i).toString());
             }
 
             GHMilestone check = repository.getMilestone(1);

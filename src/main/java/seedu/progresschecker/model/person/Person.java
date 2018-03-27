@@ -1,19 +1,13 @@
 package seedu.progresschecker.model.person;
 
+import static seedu.progresschecker.commons.core.Config.DEFAULT_PHOTO;
 import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.progresschecker.logic.commands.UploadCommand.MESSAGE_IMAGE_NOT_FOUND;
 
-import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Image;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
-
-import javafx.scene.image.Image;
-import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.tag.Tag;
 import seedu.progresschecker.model.tag.UniqueTagList;
 
@@ -29,6 +23,7 @@ public class Person {
     private final GithubUsername username;
     private final Major major;
     private final Year year;
+    private Image profilePhoto;
 
     private final UniqueTagList tags;
 
@@ -46,6 +41,7 @@ public class Person {
         this.year = year;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.profilePhoto = DEFAULT_PHOTO;
     }
 
     public Name getName() {
@@ -72,15 +68,8 @@ public class Person {
         return year;
     }
 
-    public Image getImage() throws CommandException {
-        BufferedImage update = null;
-        try {
-            update = ImageIO.read(new File("../images/clock.png"));
-            Image toUpdate = new Image (String.valueOf(update));
-            return toUpdate;
-        } catch (IOException E) {
-            throw new CommandException(MESSAGE_IMAGE_NOT_FOUND);
-        }
+    public Image getImage() {
+        return profilePhoto;
     }
 
     /**
@@ -89,6 +78,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    public void updatePhoto(Image image) {
+        this.profilePhoto = image;
     }
 
     @Override

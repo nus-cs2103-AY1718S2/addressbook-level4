@@ -60,7 +60,7 @@
                   </children>
                </GridPane>
           </VBox>
-            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profile" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/profile_photo.jpg" />
                </image>
@@ -74,5 +74,4 @@
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-   
 </HBox>

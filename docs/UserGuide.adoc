@@ -169,7 +169,7 @@ The name given to the appointment as its title must be unique
 
 Examples:
 
-* `add_appointment n/meet John S/11/09/2018 15:00:00  E/11/09/2018 16:00`
+* `add_appointment n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
 
 === remove existing appointment : `remove_appointment`
 
@@ -183,6 +183,19 @@ This works as we enforces unique titles for appointments.
 Examples:
 
 * `remove_appointment ST/Title of the appointment`
+
+=== Editing an appointment: `edit_appointment`
+
+edit an existing appointment in the address book calendar +
+Format: `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE TIME E/NEW END DATE TIME`
+
+[TIP]
+Make sure the search text matches the title of an existing appointment and the new title do not duplicates
+with other existing appointments
+
+Examples:
+
+* `edit_appointment ST/meet James n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
 
 === Listing entered commands : `history`
 
@@ -299,9 +312,11 @@ the user is allowed to use command line to remove a task to the task pad GUI  sp
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Add Appointment* `add_appointment n/NAME S/START DATE E/End Date` +
-e.g. `add_appointment n/Meet James S/14/08/2018 15:00:00 S/14/08/2018 16:00`
+e.g. `add_appointment n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
 * *Remove Appointment* `remove_appointment ST/SEARCH TEXT` +
 e.g. `remove_appointment ST/Title of the appointment`
+* *Edit Appointment* `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE E/NEW End Date` +
+e.g. `edit_appointment ST/meet John n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

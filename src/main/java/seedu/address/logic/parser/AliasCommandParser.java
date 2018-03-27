@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -27,11 +28,6 @@ import seedu.address.model.alias.Alias;
  */
 public class AliasCommandParser implements Parser<AliasCommand> {
 
-    private List<String> commands = Arrays.asList(AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD,
-            SelectCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
-            ListCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD,
-            UndoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD, ImportCommand.COMMAND_WORD);
-
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
@@ -43,21 +39,12 @@ public class AliasCommandParser implements Parser<AliasCommand> {
         if (trimmedArgs.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
-        } else if (!commands.contains(trimmedArgs[0])) {
-            throw new ParseException(
-                    String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
-                            AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
-        } else if (commands.contains(trimmedArgs[1])) {
-            throw new ParseException(
-                    String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
-                            AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION));
         }
-
-        Alias aliasCreated = new Alias(trimmedArgs[0], trimmedArgs[1]);
-        return new AliasCommand(aliasCreated);
-    }
-
-    public List<String> getCommands() {
-        return commands;
+        try {
+            Alias aliasCreated = ParserUtil.parseAlias(trimmedArgs[0], trimmedArgs[1]);
+            return new AliasCommand(aliasCreated);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
     }
 }

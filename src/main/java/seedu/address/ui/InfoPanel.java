@@ -45,7 +45,7 @@ public class InfoPanel extends UiPart<Region> {
     /**
      * Helper method to fill UI placeholders
      */
-    void fillInnerParts() {
+    public void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 

@@ -152,9 +152,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         Person toReturn = new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getRating(),
-                correctTagReferences, person.getCalendarId(), person.getId());
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                correctTagReferences, person.getCalendarId());
+        toReturn.setRating(person.getRating());
         toReturn.setReview(person.getReview());
+        toReturn.setId(person.getId());
         return toReturn;
 
     }

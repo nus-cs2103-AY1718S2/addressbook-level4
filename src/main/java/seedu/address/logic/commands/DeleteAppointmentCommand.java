@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.model.patient.Patient;
 
 /**
  * Delete a patient's appointment
@@ -32,6 +33,14 @@ public class DeleteAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        Patient patientFound = model.getPatientFromList(predicate);
+
+        if (patientFound == null) {
+            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
+        }
+
+
+
         return null;
     }
 

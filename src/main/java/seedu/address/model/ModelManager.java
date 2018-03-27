@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
@@ -116,6 +117,10 @@ public class ModelManager extends ComponentManager implements Model {
             return filteredPatients.get(0);
         }
         return null;
+    }
+
+    public synchronized void deletePatientAppointment(Patient patient, Index index) {
+        
     }
 
     public UniqueAppointmentList getPatientAppointments(Patient patient) {

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
@@ -107,6 +108,10 @@ public class Patient {
     public ObservableList<Appointment> getUpcomingAppointmentList() throws ParseException {
         return appointments.getUpcomingAppointmentObservableList();
     }
+
+//    public void deletePatientAppointment(Index index) {
+//        appointments.delete(index);
+//    }
 
     @Override
     public boolean equals(Object other) {

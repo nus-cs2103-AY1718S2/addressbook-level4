@@ -15,6 +15,7 @@ import seedu.address.commons.events.ui.PasswordCorrectEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.Password;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.ReadOnlyJsonVenueInformation;
 import seedu.address.storage.Storage;
@@ -41,7 +42,7 @@ public class PasswordBoxTest extends GuiUnitTest {
     public void setUp() throws Exception {
 
         Storage storageManager = setUpStorage();
-        Model model = new ModelManager(storageManager.readAddressBook().get());
+        Model model = new ModelManager(storageManager.readAddressBook(new Password(CORRECT_PASSWORD)).get());
 
         PasswordBox commandBox = new PasswordBox(storageManager, model);
         passwordBoxHandle = new PasswordBoxHandle(getChildNode(commandBox.getRoot(),

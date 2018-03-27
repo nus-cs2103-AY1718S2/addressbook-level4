@@ -3,10 +3,9 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.SecurityUtil;
-import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Adds a person to the address book.
+ * Adds a password to the address book.
  */
 public class PasswordCommand extends Command {
 
@@ -21,7 +20,7 @@ public class PasswordCommand extends Command {
 
     private String password;
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an PasswordCommand to add the specified password
      */
     public PasswordCommand(String password) {
         requireNonNull(password);
@@ -29,7 +28,7 @@ public class PasswordCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
         requireNonNull(model);
         byte[] hashedPassword = SecurityUtil.hashPassword(password);
         model.updatePassword(hashedPassword);

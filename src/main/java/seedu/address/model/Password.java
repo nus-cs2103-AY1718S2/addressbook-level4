@@ -17,8 +17,6 @@ public class Password {
     private byte[] prevPassword;
 
     public Password() {
-        currentPassword = SecurityUtil.hashPassword(DEFAULT_PASSWORD);
-        prevPassword = currentPassword;
     }
 
     public Password(String password) {
@@ -59,15 +57,16 @@ public class Password {
      * @param password is the password to be used. Cannot be null
      */
     public void updatePassword(byte[] password) {
-        requireNonNull(password);
-
         prevPassword = currentPassword;
         currentPassword = password;
     }
 
     @Override
     public String toString() {
-        return new String(currentPassword);
+        if (currentPassword != null) {
+            return new String(currentPassword);
+        }
+        return null;
     }
 
     @Override

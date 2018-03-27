@@ -11,10 +11,10 @@ import seedu.address.model.Password;
  */
 public class XmlAdaptedPassword {
 
-    @XmlElement(required = true)
+    @XmlElement
     private byte[] currPassword;
 
-    @XmlElement(required = true)
+    @XmlElement
     private byte[] prevPassword;
 
     /**

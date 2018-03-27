@@ -107,7 +107,7 @@ public class AddressBookParser {
             return new EmailCommandParser().parse(arguments);
 
         case CalendarCommand.COMMAND_WORD:
-                return new CalendarCommand();
+            return new CalendarCommand();
 
         case JobAddCommand.COMMAND_WORD:
             return new JobAddCommandParser().parse(arguments);

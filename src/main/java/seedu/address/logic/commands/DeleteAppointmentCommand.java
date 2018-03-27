@@ -4,7 +4,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
-public class DeleteAppointmentCommand extends Command{
+/**
+ * Delete a patient's appointment
+ */
+public class DeleteAppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "delappt";
     public static final String COMMAND_ALIAS = "da";

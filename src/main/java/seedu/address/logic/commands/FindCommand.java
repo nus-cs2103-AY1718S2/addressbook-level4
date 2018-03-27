@@ -5,8 +5,8 @@ import java.util.function.Predicate;
 import seedu.address.model.person.Person;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Finds and lists all persons in address book whose name contains any of the argument keyphrases.
+ * Keyphrase matching is case insensitive.
  */
 public class FindCommand extends Command {
 
@@ -14,9 +14,9 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose:\n"
             + "name and/or tags "
-            + "contains any of the specified keywords (case-insensitive) "
+            + "contains any of the specified keyphrases (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: (n/NAME_KEYWORDS | t/TAG_KEYWORDS)  [n/MORE_KEYWORDS] [t/MORE_KEYWORDS]\n"
+            + "Parameters: find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...\n"
             + "Example: " + COMMAND_WORD + " n/Alice Bob n/Charlie t/Friends t/OwesMoney";
 
     private final Predicate<Person> predicate;

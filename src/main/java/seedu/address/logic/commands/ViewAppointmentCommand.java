@@ -59,9 +59,4 @@ public class ViewAppointmentCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
-    private static void printOutAppointmentInLog(ObservableList<Appointment> appointments) {
-        appointments.forEach(appointment -> {
-        });
-    }
 }

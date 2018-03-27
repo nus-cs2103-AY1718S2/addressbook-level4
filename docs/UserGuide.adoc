@@ -143,17 +143,22 @@ Returns any person having phone number `999` and email `test@example.com`
 
 === Filter persons by expected graduation year: `filter`
 
-Filters persons whose expected graduation year is before or equal to the given keywords. +
-Format: `filter y/KEYWORD`
+Filters persons whose keyword is within the specified range.
+Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE]`
 
-****
-* The keyword must be a valid year.
-****
+* Keyword is in the format of (1) `KEYWORD` or (2) `KEYWORD1 - KEYWORD2` or (3) a combination of (1) and (2) `KEYWORD1, KEYWORD2 - KEYWORD3, KEYWORD4`.
+* Each keyword must be valid with respect to the preceding prefix.
+* `filter` command will only be filtering based on the current view of the person list, instead of all the persons.
+* Within each prefix, `filter` command will match all entries that satisfies at least one keyword range. You can think of an `OR` operator within the prefix.
+* `filter` command will match all persons that only matches every prefixes. You can think of an `AND` operator between all prefixes.
+
 
 Examples:
 
 * `filter y/2020` +
-Returns all persons whose graudation year is before or equal to 2020
+Returns all persons whose graudation year that is exactly 2020
+* `filter y/2019-2021' r/4.3, 4.5-5.0
+Returns all persons whose graduation year between 2019 and 2021, and whose rating is either 4.3, or between 4.5 to 5.0
 
 === Deleting a person : `delete`
 
@@ -334,7 +339,7 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *Filter* : `filter y/KEYWORD` +
+* *Filter* : `filter [y/KEYWORD] [r/RATING]` +
 e.g. `filter y/2019`
 * *List* : `list`
 * *Help* : `help`

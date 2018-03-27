@@ -20,7 +20,7 @@ public class SortAddresses {
      */
     public Map<String, Double> sortByComparator(Map<String, Double> unsortMap) {
         List<Entry<String, Double>> list = new LinkedList<Entry<String, Double>>(unsortMap.entrySet());
-        boolean order = false;
+        boolean order = true;
         // Sorting the list based on values
         Collections.sort(list, new Comparator<Entry<String, Double>>() {
             public int compare(Entry<String, Double> val1, Entry<String, Double> val2) {
@@ -67,6 +67,9 @@ public class SortAddresses {
             }
         }
         for (Entry<String, Double> entry : sortedMap.entrySet()) {
+
+
+
             /*TODO: WANT TO PUT SOME LOGIC HERE SO THAT THE DISTANCES ARE RANKED IN ORDER OF SHORTEST DISTANCE BUT ALSO
              * THE ADDRESSES MAKE SENSE SO IF SHORTEST IS A - B THE NEXT SHOULD BE THE SHORTEST DISTANCE FROM B - X
              * WHERE X IS UNKNOWN

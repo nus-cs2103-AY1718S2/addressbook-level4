@@ -109,6 +109,13 @@ public class AddressBookTest {
     }
 
     @Test
+    public void createdWithPassword_passwordChanged_passwordChanged() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBook("new");
+        Password expectedPassword = new Password("new");
+        assertEquals(expectedPassword, addressBookUpdatedPassword.getPassword());
+    }
+
+    @Test
     public void updatePasswordWithClass_passwordChanged_passwordUpdated() throws Exception {
         AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
         addressBookUpdatedPassword.updatePassword(new Password("new"));

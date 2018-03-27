@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 
 /**
  * A ui for the info panal that is displayed when the vacant command is called.
  */
 public class VenueTable extends UiPart<Region> {
-
+    private static final String OCCUPIED_STYLE_CLASS = "occupied";
+    private static final String VACANT_STYLE_CLASS = "vacant";
     private static final String FXML = "VenueTable.fxml";
 
+    private ArrayList<TableColumn<ArrayList<String>, String>> columns;
     @FXML
     private TableView venueTable;
     @FXML
@@ -50,19 +54,60 @@ public class VenueTable extends UiPart<Region> {
     public VenueTable(ObservableList<ArrayList<String>> schedules) {
         super(FXML);
         venueTable.setItems(schedules);
-        roomId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(0)));
-        eightAm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(1)));
-        nineAm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(2)));
-        tenAm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(3)));
-        elevenAm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(4)));
-        twelvePm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(5)));
-        onePm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(6)));
-        twoPm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(7)));
-        threePm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(8)));
-        fourPm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(9)));
-        fivePm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(10)));
-        sixPm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(11)));
-        sevenPm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(12)));
-        eightPm.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(13)));
+        initializeColumns();
+        initializeTableColumns();
+    }
+    private void initializeColumns(){
+        columns = new ArrayList<>();
+        columns.add(roomId);
+        columns.add(eightAm);
+        columns.add(nineAm);
+        columns.add(tenAm);
+        columns.add(elevenAm);
+        columns.add(twelvePm);
+        columns.add(onePm);
+        columns.add(twoPm);
+        columns.add(threePm);
+        columns.add(fourPm);
+        columns.add(fivePm);
+        columns.add(sixPm);
+        columns.add(sevenPm);
+        columns.add(eightPm);
+    }
+    private void initializeTableColumns(){
+        for(int i = 0 ; i < columns.size(); i++) {
+            final int j = i;
+            columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
+        }
+    }
+    /**
+     * Sets the command box style to indicate a vacant or occupied room.
+     */
+    public void setStyle() {
+        for(int i = 0 ; i < columns.size() ; i++) {
+            columns.get(i).setCellFactory(column -> {
+                return new TableCell<ArrayList<String>, String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (item == null || empty) {
+                            setText(null);
+                            setStyle("");
+                        } else {
+                            setText(item);
+                            if (getItem().equals(OCCUPIED_STYLE_CLASS)) {
+                                setTextFill(Color.BLACK);
+                                setStyle("-fx-background-color: #F08080");
+                            }
+                            else if (getItem().equals(VACANT_STYLE_CLASS)) {
+                                setTextFill(Color.BLACK);
+                                setStyle("-fx-background-color: #17A589");
+                            }
+                        }
+                    }
+                };
+            });
+        }
     }
 }

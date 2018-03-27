@@ -42,15 +42,10 @@ public class VacantCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
-            String result = "";
             ArrayList<ArrayList<String>> allRoomsSchedule = model.getAllRoomsSchedule(building);
-            for (int i = 0; i < allRoomsSchedule.size(); i++) {
-                result += allRoomsSchedule.get(i) + "\n";
-            }
             ObservableList<ArrayList<String>> schedule = FXCollections.observableArrayList(allRoomsSchedule);
             EventsCenter.getInstance().post(new VenueTableEvent(schedule));
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS + "\n" + result));
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
         } catch (BuildingNotFoundException e) {
             throw new CommandException(MESSAGE_INVALID_BUILDING);
         }

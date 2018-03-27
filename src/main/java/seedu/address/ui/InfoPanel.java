@@ -79,5 +79,6 @@ public class InfoPanel extends UiPart<Region> {
         venueTable = new VenueTable(event.getSchedule());
         venuePlaceholder.getChildren().add(venueTable.getRoot());
         venuePlaceholder.toFront();
+        venueTable.setStyle();
     }
 }

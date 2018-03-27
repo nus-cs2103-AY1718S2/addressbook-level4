@@ -1121,6 +1121,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 
+|`* * *` |user |be able to view misc info of my students on a different page |have an easier viewing of them
+
+|`* * *` |user |view the profile pictures of each student(if it exists) |learn to recognise them
+
+|`* * *` |user |be able to add/change a profile picture for my students |
+
+|`* * *` |user | be able to edit the miscalleneous information of a student |have the most updated version of a student's information
+
+|`* * *` |user |have a remarks column included in the misc info for each student |add specific remarks for each particular student that may be important to note
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
 |`* * *` |user |add a new student |

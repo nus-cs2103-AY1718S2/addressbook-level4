@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.ScheduleChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
@@ -24,14 +25,18 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private XmlRequiredIndexStorage  xmlRequiredIndexStorage;
     private ScheduleStorage scheduleStorage;
+
 
     public StorageManager(AddressBookStorage addressBookStorage,
                           UserPrefsStorage userPrefsStorage, ScheduleStorage scheduleStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        xmlRequiredIndexStorage = new XmlRequiredIndexStorage("data/requiredStudentIndex.xml");
         this.scheduleStorage = scheduleStorage;
+
     }
 
     // ================ UserPrefs methods ==============================
@@ -97,6 +102,32 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+
+    /**
+     *  Saves the required index of the {@code Student}
+     * @param newIndex
+     * @throws IOException
+     */
+    public void saveRequiredIndex(int newIndex) throws IOException {
+        String requiredIndexFilePath = xmlRequiredIndexStorage.getFilePath();
+        logger.fine("Attempting to write to data file: " + requiredIndexFilePath);
+        XmlRequiredIndexStorage.updateData(newIndex, requiredIndexFilePath);
+    }
+
+    /**
+     * Handles the event where the required student index for displaying misc info is changed
+     * @param event
+     */
+    @Subscribe
+    public void handleRequiredStudentIndexChangedEvent(RequiredStudentIndexChangeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveRequiredIndex(event.getNewIndex());
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
     // ================ Schedule methods ==============================
 
     @Override
@@ -139,8 +170,10 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local schedule data changed, saving to file"));
         try {
             saveSchedule(event.data);
+
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
 }

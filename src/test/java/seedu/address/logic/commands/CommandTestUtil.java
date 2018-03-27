@@ -71,9 +71,11 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_CURRENT_POSITION_DESC = " " + PREFIX_CURRENT_POSITION; // empty string not allowed for current position
+    public static final String INVALID_CURRENT_POSITION_DESC =
+            " " + PREFIX_CURRENT_POSITION; // empty string not allowed for current position
     public static final String INVALID_COMPANY_DESC = " " + PREFIX_COMPANY + "G@ogle"; // '@' not allowed in companies
     public static final String INVALID_PROFILE_PICTURE_DESC = " " + PREFIX_PROFILE_PICTURE + "Emy.jpx";
+
     // .jpx not allowed in profile picture
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 

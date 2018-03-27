@@ -55,7 +55,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            CurrentPosition currentPosition = ParserUtil.parseCurrentPosition(argMultimap.getValue(PREFIX_CURRENT_POSITION)).get();
+            CurrentPosition currentPosition = ParserUtil.parseCurrentPosition(
+                    argMultimap.getValue(PREFIX_CURRENT_POSITION)).get();
             Company company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();
             Optional<ProfilePicture> optionalProfilePicture =
                     ParserUtil.parseProfilePicture(argMultimap.getValue(PREFIX_PROFILE_PICTURE));

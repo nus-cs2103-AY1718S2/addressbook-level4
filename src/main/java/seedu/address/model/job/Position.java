@@ -55,5 +55,5 @@ public class Position {
     public int hashCode() {
         return value.hashCode();
     }
-    
+
 }

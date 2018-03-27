@@ -2,22 +2,22 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 
+import seedu.address.logic.commands.ClearHistoryCommand;
+import seedu.address.logic.commands.EmailCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.job.JobAddCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.ClearCommand;
-import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
-import seedu.address.logic.commands.EmailCommand;
-import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.person.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.person.LinkedInCommand;
 import seedu.address.logic.commands.person.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.person.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
 
 /**
  * Contains the list of commands.

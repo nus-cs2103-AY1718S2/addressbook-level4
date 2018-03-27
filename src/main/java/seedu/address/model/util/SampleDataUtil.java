@@ -29,7 +29,7 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"), new CurrentPosition("Software Engineer"), 
+                new Address("Blk 30 Geylang Street 29, #06-40"), new CurrentPosition("Software Engineer"),
                 new Company("Google"), new ProfilePicture("./src/test/data/images/joe.jpeg"),
                 getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
@@ -54,8 +54,8 @@ public class SampleDataUtil {
         return new Job[] {
             new Job(new Position("Software Engineer"), new Team("Cloud Services"), new Location("Singapore"),
                 new NumberOfPositions("2")),
-            new Job(new Position("Marketing Intern"), new Team("Social Media Marketing"), new Location("Kuala Lampur, Malaysia"), 
-                new NumberOfPositions("1")),
+            new Job(new Position("Marketing Intern"), new Team("Social Media Marketing"),
+                new Location("Kuala Lampur, Malaysia"), new NumberOfPositions("1")),
             new Job(new Position("DevOps Engineer"), new Team("DevOps"), new Location("Singapore"),
                 new NumberOfPositions("3")),
             new Job(new Position("Product Manager"), new Team("Mobile Products"), new Location("Singapore"),

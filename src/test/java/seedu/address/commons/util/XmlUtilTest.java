@@ -82,7 +82,7 @@ public class XmlUtilTest {
     public void xmlAdaptedPersonFromFile_fileWithMissingPersonField_validResult() throws Exception {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
-        XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(null, VALID_PHONE, VALID_EMAIL, 
+        XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(null, VALID_PHONE, VALID_EMAIL,
                 VALID_ADDRESS, VALID_CURRENT_POSITION, VALID_COMPANY, VALID_PROFILE_PICTURE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }

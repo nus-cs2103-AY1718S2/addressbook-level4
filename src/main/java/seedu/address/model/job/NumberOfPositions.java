@@ -11,7 +11,7 @@ public class NumberOfPositions {
 
     public static final String MESSAGE_NUMBER_OF_POSITIONS_CONSTRAINTS =
             "Job positions can only contain numbers";
-    
+
     public static final String NUMBER_OF_POSITIONS_VALIDATION_REGEX = "\\d+";
 
     public final String value;

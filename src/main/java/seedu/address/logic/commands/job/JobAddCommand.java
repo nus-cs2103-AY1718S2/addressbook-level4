@@ -15,7 +15,7 @@ import seedu.address.model.job.exceptions.DuplicateJobException;
 /**
  * Adds a job opening to contactHeRo.
  */
-public class JobAddCommand extends UndoableCommand{
+public class JobAddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addjob";
 

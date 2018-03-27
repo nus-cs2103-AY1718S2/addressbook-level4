@@ -9,7 +9,7 @@ import java.util.Objects;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Job {
-    
+
     private final Position position;
     private final Team team;
     private final Location location;

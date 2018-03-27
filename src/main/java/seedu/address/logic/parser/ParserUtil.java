@@ -35,7 +35,8 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_NUMBER_OF_POSITIONS = "Number of Positions is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_NUMBER_OF_POSITIONS = "Number of Positions is not a "
+            + "non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -142,9 +143,11 @@ public class ParserUtil {
      * Parses a {@code Optional<String> company} into an {@code Optional<Company>} if {@code company} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<CurrentPosition> parseCurrentPosition(Optional<String> currentPosition) throws IllegalValueException {
+    public static Optional<CurrentPosition> parseCurrentPosition(Optional<String> currentPosition)
+            throws IllegalValueException {
         requireNonNull(currentPosition);
-        return currentPosition.isPresent() ? Optional.of(parseCurrentPosition(currentPosition.get())) : Optional.empty();
+        return currentPosition.isPresent() ? Optional.of(parseCurrentPosition(currentPosition.get()))
+                : Optional.empty();
     }
 
     /**
@@ -335,11 +338,14 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> numberOfPositions} into an {@code Optional<String>} if {@code numberOfPositions} is present.
+     * Parses a {@code Optional<String> numberOfPositions} into an {@code Optional<String>}
+     * if {@code numberOfPositions} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<NumberOfPositions> parseNumberOfPositions(Optional<String> numberOfPositions) throws IllegalValueException {
+    public static Optional<NumberOfPositions> parseNumberOfPositions(Optional<String> numberOfPositions)
+            throws IllegalValueException {
         requireNonNull(numberOfPositions);
-        return numberOfPositions.isPresent() ? Optional.of(parseNumberOfPositions(numberOfPositions.get())) : Optional.empty();
+        return numberOfPositions.isPresent() ? Optional.of(parseNumberOfPositions(numberOfPositions.get()))
+                : Optional.empty();
     }
 }

@@ -1,6 +1,6 @@
 package seedu.address.model.person;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -36,5 +36,8 @@ public class CompanyTest {
         assertTrue(Company.isValidCompany("facebook 2nd")); // alphanumeric characters
         assertTrue(Company.isValidCompany("Capital Ventures")); // with capital letters
         assertTrue(Company.isValidCompany("Google Services Pvt Ltd")); // long companys
+    }
+
+    private void assertTrue(boolean google) {
     }
 }

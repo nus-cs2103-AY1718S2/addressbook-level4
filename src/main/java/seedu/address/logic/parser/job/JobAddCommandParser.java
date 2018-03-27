@@ -25,7 +25,7 @@ import seedu.address.model.job.Team;
 /**
  * Parses input arguments and creates a new JobAddCommand object
  */
-public class JobAddCommandParser implements Parser<JobAddCommand>{
+public class JobAddCommandParser implements Parser<JobAddCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the JobAddCommand
@@ -44,7 +44,8 @@ public class JobAddCommandParser implements Parser<JobAddCommand>{
             Position position = ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION)).get();
             Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM)).get();
             Location location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
-            NumberOfPositions numberOfPositions = ParserUtil.parseNumberOfPositions(argMultimap.getValue(PREFIX_NUMBER_OF_POSITIONS)).get();
+            NumberOfPositions numberOfPositions =
+                    ParserUtil.parseNumberOfPositions(argMultimap.getValue(PREFIX_NUMBER_OF_POSITIONS)).get();
 
             Job job = new Job(position, team, location, numberOfPositions);
 

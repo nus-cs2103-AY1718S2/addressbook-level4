@@ -87,13 +87,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag t) throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
+    public void deleteTag(Tag t) throws PersonNotFoundException, DuplicatePersonException,
+            UniqueTagList.DuplicateTagException {
         addressBook.removeTag(t);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addJob(Job job) throws DuplicateJobException { 
+    public synchronized void addJob(Job job) throws DuplicateJobException {
         addressBook.addJob(job);
         updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
         indicateAddressBookChanged();

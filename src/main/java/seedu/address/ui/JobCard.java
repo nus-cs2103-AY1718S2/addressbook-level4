@@ -46,7 +46,7 @@ public class JobCard extends UiPart<Region> {
         jobLocation.setText(job.getLocation().value);
         numberOfPositions.setText("Positions: " + job.getNumberOfPositions().value);
     }
-    
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

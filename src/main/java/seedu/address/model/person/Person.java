@@ -22,15 +22,15 @@ public class Person {
     private final Address address;
     private final ProfilePicture profilePicture;
     private final CurrentPosition currentPosition;
-    private final Company company;  
+    private final Company company;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, CurrentPosition currentPosition, Company company,
-                  ProfilePicture profilePicture, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, CurrentPosition currentPosition,
+                  Company company, ProfilePicture profilePicture, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags, currentPosition, company);
         this.name = name;
         this.phone = phone;
@@ -38,7 +38,7 @@ public class Person {
         this.address = address;
         this.currentPosition = currentPosition;
         this.company = company;
-        
+
         if (profilePicture == null) {
             this.profilePicture = new ProfilePicture();
         } else {
@@ -67,7 +67,7 @@ public class Person {
     public ProfilePicture getProfilePicture() {
         return profilePicture;
     }
-    
+
     public Company getCompany() {
         return company;
     }

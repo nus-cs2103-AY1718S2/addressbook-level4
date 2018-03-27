@@ -10,7 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class CurrentPosition {
 
     public static final String MESSAGE_CURRENT_POSITION_CONSTRAINTS =
-            "Person's current position should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Person's current position should only contain alphanumeric characters and spaces, and it should "
+                    + "not be blank";
 
     /*
      * The first character of the current position must not be a whitespace,

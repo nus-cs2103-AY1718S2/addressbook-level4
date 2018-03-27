@@ -1,6 +1,5 @@
 package seedu.address.storage;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -63,7 +62,8 @@ public class XmlAdaptedJob {
      */
     public Job toModelType() throws IllegalValueException {
         if (this.position == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Position.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Position.class.getSimpleName()));
         }
         if (!Position.isValidPosition(this.position)) {
             throw new IllegalValueException(Position.MESSAGE_POSITION_CONSTRAINTS);
@@ -79,7 +79,8 @@ public class XmlAdaptedJob {
         final Team team = new Team(this.team);
 
         if (this.location == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Location.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Location.class.getSimpleName()));
         }
         if (!Location.isValidLocation(this.location)) {
             throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
@@ -87,13 +88,14 @@ public class XmlAdaptedJob {
         final Location location = new Location(this.location);
 
         if (this.numberOfPositions == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, NumberOfPositions.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    NumberOfPositions.class.getSimpleName()));
         }
         if (!NumberOfPositions.isValidNumberOfPositions(this.numberOfPositions)) {
             throw new IllegalValueException(NumberOfPositions.MESSAGE_NUMBER_OF_POSITIONS_CONSTRAINTS);
         }
         final NumberOfPositions numberOfPositions = new NumberOfPositions(this.numberOfPositions);
-        
+
         return new Job(position, team, location, numberOfPositions);
     }
 

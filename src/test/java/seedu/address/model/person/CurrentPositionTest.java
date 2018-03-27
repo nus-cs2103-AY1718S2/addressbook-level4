@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -35,6 +36,6 @@ public class CurrentPositionTest {
         assertTrue(CurrentPosition.isValidCurrentPosition("12345")); // numbers only
         assertTrue(CurrentPosition.isValidCurrentPosition("2nd year student")); // alphanumeric characters
         assertTrue(CurrentPosition.isValidCurrentPosition("Marketing Intern")); // with capital letters
-        assertTrue(CurrentPosition.isValidCurrentPosition("First year undergraduate student")); // long current positions
+        assertTrue(CurrentPosition.isValidCurrentPosition("First year undergraduate student")); // long position
     }
 }

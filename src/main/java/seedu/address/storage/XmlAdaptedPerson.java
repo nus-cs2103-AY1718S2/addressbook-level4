@@ -53,8 +53,8 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, String currentPosition, String company, 
-                            String profilePicture, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String currentPosition,
+                            String company, String profilePicture, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -80,7 +80,7 @@ public class XmlAdaptedPerson {
         currentPosition = source.getCurrentPosition().value;
         company = source.getCompany().value;
         profilePicture = source.getProfilePicture().filePath;
-        
+
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -131,7 +131,8 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         if (this.currentPosition == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, CurrentPosition.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    CurrentPosition.class.getSimpleName()));
         }
         if (!CurrentPosition.isValidCurrentPosition(this.currentPosition)) {
             throw new IllegalValueException(CurrentPosition.MESSAGE_CURRENT_POSITION_CONSTRAINTS);

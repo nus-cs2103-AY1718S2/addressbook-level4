@@ -41,8 +41,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
-                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_CURRENT_POSITION, PREFIX_COMPANY,
-                        PREFIX_PROFILE_PICTURE , PREFIX_TAG);
+                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_CURRENT_POSITION,
+                        PREFIX_COMPANY, PREFIX_PROFILE_PICTURE , PREFIX_TAG);
 
         Index index;
 

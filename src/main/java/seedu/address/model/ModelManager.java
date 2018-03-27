@@ -15,7 +15,6 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.RefreshCalendarEvent;
 import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
@@ -78,7 +77,6 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
-        raise(new RefreshCalendarEvent());
     }
 
     @Override

@@ -9,7 +9,7 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.RefreshCalendarEvent;
+import seedu.address.commons.events.ui.CalendarFocusEvent;
 
 /**
  * The Calendar Panel of the App.
@@ -47,8 +47,8 @@ public class CalendarPanel {
 
 
     @Subscribe
-    private void handleRefreshClendarEvent(RefreshCalendarEvent event) {
-        calendarPage.refreshData();
+    private void handleCalendarFocusEvent(CalendarFocusEvent event) {
+        calendarPage.showDate(event.dateToLook);
     }
 
     public CalendarView getCalendarPage() {

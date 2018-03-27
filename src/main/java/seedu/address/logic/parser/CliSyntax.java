@@ -18,6 +18,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_ACTUALSPENDING = new Prefix("as/");
     public static final Prefix PREFIX_EXPECTEDSPENDING = new Prefix("es/");
     public static final Prefix PREFIX_AGE = new Prefix("age/");
+    public static final Prefix PREFIX_DATE_FOCUS = new Prefix("DF/");
 
 
 }

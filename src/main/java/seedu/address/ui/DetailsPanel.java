@@ -21,8 +21,12 @@ public class DetailsPanel extends UiPart<Region> {
 
     private ContactDetailsDisplay contactDetailsDisplay;
     private BrowserPanel browserPanel;
+    private CalendarPanel calendarPanel;
 
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
+
+    @FXML
+    private Tab calendar;
 
     @FXML
     private Tab profile;
@@ -54,6 +58,14 @@ public class DetailsPanel extends UiPart<Region> {
     public void addBrowserPanel() {
         browserPanel = new BrowserPanel();
         linkedIn.setContent(browserPanel.getRoot());
+    }
+
+    /**
+     * Adds the CalendarView to the DetailsPanel
+     */
+    public void addCalendarPanel() {
+        CalendarPanel calendarPanel = new CalendarPanel();
+        calendar.setContent(calendarPanel.getRoot());
     }
 
     /**

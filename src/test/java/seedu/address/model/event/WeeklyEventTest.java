@@ -14,6 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_F1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_F1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_NDP;
+import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.Test;
 
@@ -28,14 +29,14 @@ public class WeeklyEventTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new WeeklyEvent(null, null, null, null, null));
-        Assert.assertThrows(NullPointerException.class, () -> new WeeklyEvent(null, null));
+        assertThrows(NullPointerException.class, () -> new WeeklyEvent(null, null, null, null, (String[]) null));
+        assertThrows(NullPointerException.class, () -> new WeeklyEvent(null, null));
     }
 
     @Test
     public void isValidWeeklyEventName_null_throwsNullPointerException() {
         // null event name
-        Assert.assertThrows(NullPointerException.class, () -> WeeklyEvent.isValidName(null));
+        assertThrows(NullPointerException.class, () -> WeeklyEvent.isValidName(null));
     }
 
     @Test

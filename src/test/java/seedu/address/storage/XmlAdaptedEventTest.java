@@ -60,7 +60,7 @@ public class XmlAdaptedEventTest {
 
     @Test
     public void toModelType_nullVenue_throwsIllegalValueException() {
-        XmlAdaptedEvent event = 
+        XmlAdaptedEvent event =
                 new XmlAdaptedEvent(VALID_NAME, null, VALID_DATE, VALID_START_TIME, VALID_END_TIME);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "Venue");
         Assert.assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
@@ -95,6 +95,7 @@ public class XmlAdaptedEventTest {
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "StartTime");
         Assert.assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
+
     @Test
     public void toModelType_invalidEndTime_throwsIllegalValueException() {
         XmlAdaptedEvent event =

@@ -152,6 +152,6 @@ public class UniqueEventListTest {
     public void setEvents_null_throwsNullPointerException() throws Exception {
         UniqueEventList uniqueEventList = new UniqueEventList();
         thrown.expect(NullPointerException.class);
-        uniqueEventList.setEvents((List<Event>)null);
+        uniqueEventList.setEvents((List<Event>) null);
     }
 }

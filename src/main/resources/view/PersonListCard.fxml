@@ -66,12 +66,10 @@
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-   <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="profile" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
       <HBox.margin>
          <Insets right="80.0" top="15.0" />
       </HBox.margin>
-      <image>
          <Image url="@../images/profile_photo.jpg" />
-      </image>
    </ImageView>
 </HBox>

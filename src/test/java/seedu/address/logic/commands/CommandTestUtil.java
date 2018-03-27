@@ -6,8 +6,11 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ENDTIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTTIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.NameContainsFullKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -42,6 +46,11 @@ public class CommandTestUtil {
     public static final String VALID_DATE_ADDED_BOB = "02/02/2018";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_PERSONNAME = "Jacob";
+    public static final String VALID_DATE = "01/01/2018";
+    public static final String VALID_STARTTIME = "10:30";
+    public static final String VALID_ENDTIME = "11:30";
+    public static final String VALID_LOCATION = "Silver Way";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -55,6 +64,11 @@ public class CommandTestUtil {
     public static final String DATE_ADDED_DESC_BOB = " " + PREFIX_DATE + VALID_DATE_ADDED_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String PERSONNAME_DESC = " " + PREFIX_NAME + VALID_PERSONNAME;
+    public static final String DATE_DESC = " " + PREFIX_DATE + VALID_DATE;
+    public static final String STARTTIME_DESC = " " + PREFIX_STARTTIME + VALID_STARTTIME;
+    public static final String ENDTIME_DESC = " " + PREFIX_ENDTIME + VALID_ENDTIME;
+    public static final String LOCATION_DESC = " " + PREFIX_LOCATION + VALID_LOCATION;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -62,6 +76,11 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_DATE_ADDED_DESC = " " + PREFIX_DATE + "12/34";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_PERSONNAME_DESC = " " + PREFIX_NAME + "Jacob&"; // '&' not allowed in names
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "01/01"; // incomplete date
+    public static final String INVALID_STARTTIME_DESC = " " + PREFIX_STARTTIME + "1030"; // not in HH:mm format
+    public static final String INVALID_ENDTIME_DESC = " " + PREFIX_ENDTIME + "26:30"; // illegal time
+    public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION; //  empty string not allowed for addresses
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -98,13 +117,15 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the address book, the filtered person list and the filtered appointment list
+     * in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<Person> expectedFilteredPersonList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<Appointment> expectedFilteredAppointmentList = new ArrayList<>(actualModel.getFilteredAppointmentList());
 
         try {
             command.execute();
@@ -112,12 +133,13 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredPersonList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredAppointmentList, actualModel.getFilteredAppointmentList());
         }
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
+     * Updates {@code model}'s filtered person list to show only the person at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
     public static void showPersonAtIndex(Model model, Index targetIndex) {
@@ -131,7 +153,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first person in {@code model}'s filtered person list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
         Person firstPerson = model.getFilteredPersonList().get(0);

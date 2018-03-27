@@ -14,6 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.tag.Tag;
 
+//@@author jlks96
 /**
  * Parses input arguments and creates a new DeleteBeforeCommand object
  */
@@ -34,7 +35,7 @@ public class DeleteBeforeCommandParser implements Parser<DeleteBeforeCommand> {
         }
 
         try {
-            DateAdded inputDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            DateAdded inputDate = ParserUtil.parseDateAdded(argMultimap.getValue(PREFIX_DATE)).get();
             Set<Tag> inputTags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");

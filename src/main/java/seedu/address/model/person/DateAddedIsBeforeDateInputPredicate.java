@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.function.Predicate;
 
+//@@author jlks96
 /**
  * Tests that a {@code Person}'s {@code DateAdded} is before the date input.
  */

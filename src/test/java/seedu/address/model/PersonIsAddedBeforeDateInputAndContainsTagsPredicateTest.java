@@ -2,12 +2,13 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.BOB;
 import static seedu.address.testutil.TypicalTags.TAG_SET_FRIEND;
 import static seedu.address.testutil.TypicalTags.TAG_SET_HUSBAND;
 
 import org.junit.Test;
 
+//@@author jlks96
 public class PersonIsAddedBeforeDateInputAndContainsTagsPredicateTest {
     @Test
     public void equals() {

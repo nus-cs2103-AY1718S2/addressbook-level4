@@ -102,6 +102,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author jlks96
     /**
      * Creates and returns a {@code DateAdded} with the dateAdded attribute representing the current date
      * @return current date in the following format: dd/MM/yyyy
@@ -112,6 +113,7 @@ public class PersonBuilder {
         this.dateAdded =  new DateAdded(dateFormatter.format(calendar.getTime()));
         return this;
     }
+    //@@author
 
     public Person build() {
         return new Person(name, phone, email, address, dateAdded, tags);

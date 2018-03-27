@@ -1,6 +1,5 @@
 package guitests.guihandles;
 
-import guitests.guihandles.exceptions.CalendarPanelHandle;
 import javafx.stage.Stage;
 
 /**

@@ -26,13 +26,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.ALICE;
-import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.AMY;
-import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.BOB;
-import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.CARL;
-import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.HOON;
-import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.IDA;
-import static seedu.address.testutil.TypicalPersonsWithAutoDateGeneration.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersonsAndAppointmentsWithAutoDateGeneration.ALICE;
+import static seedu.address.testutil.TypicalPersonsAndAppointmentsWithAutoDateGeneration.AMY;
+import static seedu.address.testutil.TypicalPersonsAndAppointmentsWithAutoDateGeneration.BOB;
+import static seedu.address.testutil.TypicalPersonsAndAppointmentsWithAutoDateGeneration.CARL;
+import static seedu.address.testutil.TypicalPersonsAndAppointmentsWithAutoDateGeneration.HOON;
+import static seedu.address.testutil.TypicalPersonsAndAppointmentsWithAutoDateGeneration.IDA;
+import static seedu.address.testutil.TypicalPersonsAndAppointmentsWithAutoDateGeneration.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -139,7 +139,7 @@ public class AddAliasSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different tags -> rejected */
-        // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
+        // "friends" is an existing tag used in the default model, see TypicalPersonsAndAppointments#ALICE
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
         // AddressBook#addPerson(Person)
         command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";

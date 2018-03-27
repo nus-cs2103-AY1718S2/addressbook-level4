@@ -6,9 +6,14 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.createDate;
+import static seedu.address.testutil.TypicalDates.DATE_FIRST_JAN;
+import static seedu.address.testutil.TypicalDates.VALID_DATE_DESC;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalTags.TAG_FRIEND;
+import static seedu.address.testutil.TypicalTags.VALID_TAG_DESC_FRIEND;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,11 +21,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteBeforeCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -30,8 +38,11 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.AppointmentBuilder;
+import seedu.address.testutil.AppointmentUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -81,6 +92,38 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
+
+    //@@author jlks96
+    @Test
+    public void parseCommand_deleteBefore() throws Exception {
+        DeleteBeforeCommand command = (DeleteBeforeCommand) parser.parseCommand(
+                DeleteBeforeCommand.COMMAND_WORD + VALID_DATE_DESC + VALID_TAG_DESC_FRIEND);
+        assertEquals(new DeleteBeforeCommand(DATE_FIRST_JAN, new HashSet<>(Arrays.asList(TAG_FRIEND))), command);
+    }
+
+    @Test
+    public void parseCommand_deleteBeforeAlias() throws Exception {
+        DeleteBeforeCommand command = (DeleteBeforeCommand) parser.parseCommand(
+                DeleteBeforeCommand.COMMAND_ALIAS + VALID_DATE_DESC + VALID_TAG_DESC_FRIEND);
+        assertEquals(new DeleteBeforeCommand(DATE_FIRST_JAN, new HashSet<>(Arrays.asList(TAG_FRIEND))), command);
+    }
+
+    @Test
+    public void parseCommand_addAppointment() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        AddAppointmentCommand command =
+                (AddAppointmentCommand) parser.parseCommand(AppointmentUtil.getAddAppointmentCommand(appointment));
+        assertEquals(new AddAppointmentCommand(appointment), command);
+    }
+
+    @Test
+    public void parseCommand_addAppointmentAlias() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        AddAppointmentCommand command =
+                (AddAppointmentCommand) parser.parseCommand(AppointmentUtil.getAddAppointmentAlias(appointment));
+        assertEquals(new AddAppointmentCommand(appointment), command);
+    }
+    //@@author jlks96
 
     @Test
     public void parseCommand_edit() throws Exception {
@@ -215,6 +258,26 @@ public class AddressBookParserTest {
     public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_email() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "test");
+        String[] nameKeywordArray = new String[]{ "foo" };
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)),
+                "test"), command);
+    }
+
+    @Test
+    public void parseCommand_emailAlias() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "test");
+        String[] nameKeywordArray = new String[]{ "foo" };
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)),
+                "test"), command);
     }
 
     @Test

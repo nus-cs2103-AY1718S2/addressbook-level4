@@ -5,7 +5,7 @@ import static seedu.address.logic.commands.DeleteBeforeCommand.MESSAGE_DELETE_PE
 import static seedu.address.testutil.TypicalDates.DATE_FIRST_JAN;
 import static seedu.address.testutil.TypicalDates.INVALID_DATE_DESC;
 import static seedu.address.testutil.TypicalDates.VALID_DATE_DESC;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE;
 import static seedu.address.testutil.TypicalTags.INVALID_TAG_DESC;
 import static seedu.address.testutil.TypicalTags.TAG_SET_FRIEND;
 import static seedu.address.testutil.TypicalTags.VALID_TAG_DESC_FRIEND;
@@ -26,6 +26,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author jlks96
 public class DeleteBeforeAliasSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_BEFORE_COMMAND_FORMAT =

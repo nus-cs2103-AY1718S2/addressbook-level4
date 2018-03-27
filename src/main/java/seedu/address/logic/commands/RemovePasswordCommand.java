@@ -9,7 +9,6 @@ public class RemovePasswordCommand extends Command {
 
     public static final String COMMAND_WORD = "nopassword";
     public static final String MESSAGE_SUCCESS = "Password removed.";
-    
     @Override
     public CommandResult execute() {
         requireNonNull(model);

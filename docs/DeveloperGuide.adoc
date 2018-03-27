@@ -16,6 +16,8 @@ By: `Team T09-B3`      Since: `Feb 2018`      Licence: `MIT`
 
 == Setting up
 
+There are some things you will need to set up before getting started in contributing to ProgressChecker. Below lists the important key elements you will have to configure.
+
 === Prerequisites
 
 . *JDK `1.8.0_60`* or later
@@ -34,21 +36,27 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
+. https://www.atlassian.com/git/tutorials/comparing-workflows#forking-workflow[Fork] this repo, and https://nus-cs2103-ay1718s2.github.io/website/book/gitAndGithub/init/index.html[clone] the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
+... Click `Configure` > `Project Defaults` > `Project Structure`
+image:setup2.png[width="600"] +
+_step 3.i_
+... Click `New...` and find the directory of the JDK
 . Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
+. Locate the `build.gradle` file and select it. Click `OK` +
+image:setup3.png[width="600"]  +
+_step 5_
 . Click `Open as Project`
 . Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
+image:setup5.png[width="600"]  +
+_step 8_
 
 === Verifying the setup
 
-. Run the `seedu.progresschecker.MainApp` and try a few commands
+. Run the `gradlew.bat run` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -68,7 +76,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-T09-B3/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-T09-B3/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -94,6 +102,9 @@ When you are ready to start coding,
 == Design
 
 [[Design-Architecture]]
+
+ProgressChecker consists of multiple components that work together via an event-driven structure. This section will break down the various components in details to help you jump straight into understanding the architecture in depth.
+
 === Architecture
 
 .Architecture Diagram
@@ -185,7 +196,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `ProgressCheckerParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a teammate) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
@@ -238,6 +249,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
+.Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the ProgressChecker before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -275,21 +287,24 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the ProgressChecker. The current state of the ProgressChecker is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th teammate in the ProgressChecker. The current state of the ProgressChecker is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.Undo/Redo Stack at Starting Point
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new teammate.
 
+.Undo/Redo Stack with New Command `add`
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the teammate was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the ProgressChecker to the state before the `add` command executed.
 
+.Undo/Redo Stack with Command `undo`
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -297,6 +312,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Sequence Diagram of Undo/Redo
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the ProgressChecker to the state after the command is executed).
@@ -306,14 +322,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.Undo/Redo Stack with New Command `clear`
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.Undo/Redo Stack with Command `list`
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram of Undo/Redo
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -333,7 +352,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+** Pros: Will use less memory (e.g. for `delete`, just save the teammate being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
@@ -367,6 +386,7 @@ The Upload command will allow users to upload their preferred image to replace t
 
 Upload can be undoable. The following diagram shows the inheritance diagram for upload command:
 
+.Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
 
 UploadCommand is implemented this way:
@@ -412,7 +432,8 @@ The `find` command shows the searched contact currently. However, the user does 
 
 The following diagram shows the UML diagram for `find` command :
 
-image::FindCommandUMLDiagram.png[width="115"]
+.UML Diagram of `find` Command
+image::FindCommandUMLDiagram.png[width="120"]
 
 To implement the dynamic search, we used the following method - as soon as the user enters any character in the command box, the text is retrieved from
 the command box and checked if it is the `find` command. If it is the `find` command, dynamic search is started. After the `find` command is detected in the
@@ -523,7 +544,7 @@ The default LOs and todos for all weeks would be stored as a local file upon whi
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `newtasklist`.
 
-.Component interactions for `newtasklist` command (part 1)
+.Component Interactions for `newtasklist` Command
 image::SDforAddDefaultTaskList.png[width="800"]
 
 [NOTE]
@@ -625,7 +646,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 == Documentation
 
-We use asciidoc for writing documentation.
+We use asciidoc for writing documentation. This section talks about how you can modify and publish the existing documentations.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -655,6 +676,8 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+
+ProgressChecker uses JUnit tests to check for its correctness. This section covers the type of tests and how to run them.
 
 === Running Tests
 
@@ -739,7 +762,7 @@ b. Require developers to download those libraries manually (this creates extra w
 [appendix]
 == Suggested Programming Tasks to Get Started
 
-Suggested path for new programmers:
+It might be your first time working with a large code base. If so, here is a suggested path for new programmers to kick start your first functionality:
 
 1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
 
@@ -758,7 +781,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove teammates in the list.
 +
 ****
 * Hints
@@ -785,9 +808,9 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/ProgressChecker.java[`ProgressChecker`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/ProgressChecker.java[`ProgressChecker`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/ProgressChecker.java[`ProgressChecker`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/ProgressChecker.java[`ProgressChecker`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/ProgressChecker.java[`ProgressChecker`] allows you to update a teammate, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ProgressChecker.java[`ProgressChecker`]. Loop through each person, and remove the `tag` from each person.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ProgressChecker.java[`ProgressChecker`]. Loop through each teammates, and remove the `tag` from each teammate.
 ** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `ProgressChecker#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
@@ -798,12 +821,12 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your ProgressChecker application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your ProgressChecker application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last teammate in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside teammate cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
 +
 **Before**
 +
@@ -863,10 +886,10 @@ image::getting-started-ui-status-after.png[width="500"]
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
 ** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the ProgressChecker is updated.
 * Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleProgressCheckerChangedEvent(ProgressCheckerChangedEvent)`] to update the number of persons whenever there are new changes to the progresschecker.
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of teammates when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleProgressCheckerChangedEvent(ProgressCheckerChangedEvent)`] to update the number of teammates whenever there are new changes to the progresschecker.
 ** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/ProgressCheckerSystemTest.java[`ProgressCheckerSystemTest`] to also verify the new total number of persons status bar.
+** For system tests, modify link:{repoURL}/src/test/java/systemtests/ProgressCheckerSystemTest.java[`ProgressCheckerSystemTest`] to also verify the new total number of teammates status bar.
 ** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
 ****
 
@@ -896,15 +919,15 @@ By creating this command, you will get a chance to learn how to implement a feat
 *Scenario:* You are a software maintainer for `progresschecker`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a teammate specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first teammate to `Likes to drink coffee.`
 * `remark 1 r/` +
-Removes the remark for the first person.
+Removes the remark for the first teammate.
 
 ==== Step-by-step Instructions
 
@@ -987,7 +1010,7 @@ Since `Person` can now have a `Remark`, we should add a helper method to link:{r
 **Tests:**
 
 . Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
+. Try and use the method on any sample `us` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
 Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
@@ -1005,7 +1028,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 **Main:**
 
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a teammate.
 
 **Tests:**
 
@@ -1017,6 +1040,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == Product Scope
+
+This section covers what ProgressChecker is meant to be and what it can do for the users. Your name and feature contribution will be listed here.
 
 *Target user profile*:
 
@@ -1049,7 +1074,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 **Kang Anmin:**
 
-. (Minor) Change/Add more fields of information for persons in the contact list, in order to fit the specific context of this software. It also lays a foundation for other operations.
+. (Minor) Change/Add more fields of information for teammates in the contact list, in order to fit the specific context of this software. It also lays a foundation for other operations.
 . (Major) LO management: Add LOs to google tasks (the users google account, load tasks and sign completion.
 
 **Lai Liwen:**
@@ -1067,14 +1092,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == User Stories
 
+This section lists the actions that both new and long-time users can and may want to perform with ProgressChecker.
+
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |new user |upload a photo of my face |help others recognize me
 
 |`* * *` |new user |fill in my details such as name, email, 8 digits phone number |provide necessary information for platform maintenance
 
@@ -1085,6 +1110,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |add a teammate's details |help myself to track my current teammates' progress
 
 |`* * *` |user |delete a teammate |remove an entry of a teammate that I'm no longer grouped with
+
+|`* * *` |new user |upload a photo for myself or my teammates |help me to recognize my teammates
+
+|`* * *` |new user |load a photo of myself or my teammates from github |help me to recognize my teammates
 
 |`* * *` |user |search information in our module website based on keywords |navigate and reference the information I need quickly
 
@@ -1110,135 +1139,41 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user with many persons in the ProgressChecker |sort persons by name |locate a person easily
+|`* *` |user with many teammates in the ProgressChecker |sort teammates by name |locate a teammate easily
 |=======================================================================
 
 [appendix]
 == Use Cases
 
+This section list the sequence of events for a feature. It includes possible scenarios in which a feature is not interacted with as intended which you can defense against.
+
 (For all use cases below, the *System* is the `ProgressChecker` and the *Actor* is the `user`, unless specified otherwise)
-
-[discrete]
-=== Use case: Upload a photo for the profile
-
-*MSS*
-
-1.  User requests to view their profile
-2.  ProgressChecker shows the profile of the user
-3.  User requests to upload a new photo to the profile
-4.  ProgressChecker adds a new photo to the profile of user
-5.  Profile displays the new photo
-+
-Use case ends.
-
-*Extensions*
-
-* 1a. Picture intented to add cannot be found.
-+
-[none]
-** 1a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
 
 [discrete]
 === Use case: Add teammate
 
-_{ to be added }_
-
-[discrete]
-=== Use case: Delete teammate
-
 *MSS*
 
-1.  User requests to list teammates
-2.  ProgressChecker shows a list of teammates
-3.  User requests to delete a specific teammate in the list
-4.  ProgressChecker deletes the teammate
+1.  User requests to add a specific teammate in the list
+2.  ProgressChecker add the teammate
 +
 Use case ends.
 
 *Extensions*
 
-* 2a. The list is empty.
+* 1a. The teammate has already been existing in the list.
 +
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-
-** 3a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Autocomplete a command
-
-*MSS*
-
-1.  User types an incomplete command
-2.  User presses `tab` key to complete the command
-3.  ProgessChecker returns the completed command with dummy fields if there exists a specific format
-+
-Use case ends.
-
-*Extensions*
-
-* 1a. Specified command does not exist.
-+
-[none]
-** 1a1. ProgressChecker doesn't do anything and waits for the right key/command to be entered.
-** 1a2. It waits for the right letter to be pressed or the correct command to be entered.
-+
-Use case resumes at step 1.
-
-[discrete]
-=== Use case: Find teammate
-
-*MSS*
-
-1.  User types find
-2.  ProgressChecker automatically shows the list dynamically without the user needing to press enter key
-3.  User need not need to type the whole name, substrings will generate results
-4.  ProgressChecker displays the necessary results
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The contact list is empty.
-+
-Use case resumes at step 2.
-
-* 3a. The given substring doesn't exist in any name
-+
-[none]
-** 3a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Search for information
-
-_{ to be added }_
-
-[discrete]
-=== Use case: View contents of a specific week
-
-*MSS*
-
-1.  User requests to view a specific week
-2.  ProgressChecker shows content of the specified week
-+
-Use case ends.
-
-*Extensions*
-
-* 1a. Specified week does not exist.
 
 ** 1a1. ProgressChecker shows an error message.
 +
-Use case ends.
+Use case resumes at step 1.
+
+* 1a. The given information is invalid.
++
+
+** 1a1. ProgressChecker shows an error message.
++
+Use case resumes at step 1.
 
 [discrete]
 === Use case: Add the default task list
@@ -1253,7 +1188,7 @@ Use case ends.
 
 *Extensions*
 
-* 2a. No Intenet Access.
+* 2a. No Internet Access.
 +
 Use case ends.
 
@@ -1276,36 +1211,6 @@ Use case ends.
 * 3c. The list already exists.
 +
 Use case ends.
-
-[discrete]
-=== Use case: Mark a learning outcome as completed
-
-*MSS*
-
-1.  User requests to list tasks(LOs)
-2.  ProgressChecker shows a list of tasks(LOs)
-3.  User provides an index to requests to mark the corresponding LO in the list as completed
-4.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
-5.  ProgressChecker executes command to mark the LO as completed in google tasks under the user's google account
-+
-Use case ends.
-
-*Extensions*
-
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 2b. The list has not been created yet (invalid list name).
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-
-** 3a1. ProgressChecker shows an error message.
-+
-Use case resumes at step 2.
 
 [discrete]
 === Use case: Answer a question and save
@@ -1340,44 +1245,183 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: List an issue
+=== Use case: Assign an issue to a teammate
 
 _{ to be added }_
 
 [discrete]
-=== Use case: Assign an issue to a teammate
+=== Use case: Autocomplete a command
 
-_{ to be added }_
+*MSS*
+
+1.  User types an incomplete command
+2.  User presses `tab` key to complete the command
+3.  ProgessChecker returns the completed command with dummy fields if there exists a specific format
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified command does not exist.
++
+[none]
+** 1a1. ProgressChecker doesn't do anything and waits for the right key/command to be entered.
+** 1a2. It waits for the right letter to be pressed or the correct command to be entered.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete teammate
+
+*MSS*
+
+1.  User requests to list teammates
+2.  ProgressChecker shows a list of teammates
+3.  User requests to delete a specific teammate in the list
+4.  ProgressChecker deletes the teammate
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+
+** 3a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Close an issue
 
 _{ to be added }_
 
+[discrete]
+=== Use case: Find teammate
+
+*MSS*
+
+1.  User types find
+2.  ProgressChecker automatically shows the list dynamically without the user needing to press enter key
+3.  User need not need to type the whole name, substrings will generate results
+4.  ProgressChecker displays the necessary results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The contact list is empty.
++
+Use case resumes at step 2.
+
+* 3a. The given substring doesn't exist in any name
++
+[none]
+** 3a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: List an issue
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Mark a learning outcome as completed
+
+*MSS*
+
+1.  User requests to list tasks(LOs)
+2.  ProgressChecker shows a list of tasks(LOs)
+3.  User provides an index to requests to mark the corresponding LO in the list as completed
+4.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+5.  ProgressChecker executes command to mark the LO as completed in google tasks under the user's google account
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 2b. The list has not been created yet (invalid list name).
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+
+** 3a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Search for information
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Upload a photo for the profile
+
+*MSS*
+
+1.  User requests to view their profile
+2.  ProgressChecker shows the profile of the user
+3.  User requests to upload a new photo to the profile
+4.  ProgressChecker adds a new photo to the profile of user
+5.  Profile displays the new photo
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Picture intented to add cannot be found.
++
+[none]
+** 1a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View contents of a specific week
+
+*MSS*
+
+1.  User requests to view a specific week
+2.  ProgressChecker shows content of the specified week
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified week does not exist.
+
+** 1a1. ProgressChecker shows an error message.
++
+Use case ends.
+
 [appendix]
 == Non Functional Requirements
 
+This sections list the criteria needed for the system and software.
+
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  The data cannot be retrieved from outside.
 .  The product may need 3-5 minutes to build up for the first time.
-.  The data cannot be retrieved from outside
-.  User need to authenticate with their Google Tasks credentials
-.  User can only view the information of their teammates
+.  User can only view the information of their teammates.
+.  User need to authenticate with their Google Tasks credentials.
 
 [appendix]
 == Glossary
-
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
-
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
-
-[[GUI]] GUI::
-Graphical User Interface
-
-[[sequence-diagram]] Sequence Diagram::
-A sequence diagram shows object interactions shown in time sequence.
 
 [[Build-Automation]] Build Automation::
 Build automation is the process of automating the creation of a software build and the associated processes including: compiling computer source code into binary code, packaging binary code, and running automated tests.
@@ -1385,27 +1429,22 @@ Build automation is the process of automating the creation of a software build a
 [[Gradle]] Gradle::
 Gradle is an open-source build automation system.
 
-[appendix]
-== Product Survey
+[[GUI]] GUI::
+Graphical User Interface
 
-*Product Name*
+[[mainstream-os]] Mainstream OS::
+Windows, Linux, Unix, OS-X
 
-Author: ...
+[[private-contact-detail]] Private contact detail::
+A contact detail that is not meant to be shared with others
 
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+[[sequence-diagram]] Sequence Diagram::
+A sequence diagram shows object interactions shown in time sequence.
 
 [appendix]
 == Instructions for Manual Testing
 
-Given below are instructions to test the app manually.
+You may want to do manual testing to familiarise yourself with the software. Given below are instructions to test the app manually.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
@@ -1426,15 +1465,15 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a teammate
 
-. Deleting a person while all persons are listed
+. Deleting a teammate while all teammates are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all teammates using the `list` command. Multiple teammates in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No teammate is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 

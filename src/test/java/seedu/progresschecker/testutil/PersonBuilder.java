@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.progresschecker.model.person.Email;
+import seedu.progresschecker.model.person.GithubUsername;
 import seedu.progresschecker.model.person.Major;
 import seedu.progresschecker.model.person.Name;
 import seedu.progresschecker.model.person.Person;
@@ -20,6 +21,7 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    public static final String DEFAULT_USERNAME = "AliceGithub";
     public static final String DEFAULT_MAJOR = "Computer Science";
     public static final String DEFAULT_YEAR = "2";
     public static final String DEFAULT_TAGS = "friends";
@@ -27,6 +29,7 @@ public class PersonBuilder {
     private Name name;
     private Phone phone;
     private Email email;
+    private GithubUsername username;
     private Major major;
     private Year year;
     private Set<Tag> tags;
@@ -35,6 +38,7 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
+        username = new GithubUsername(DEFAULT_USERNAME);
         major = new Major(DEFAULT_MAJOR);
         year = new Year(DEFAULT_YEAR);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
@@ -47,6 +51,7 @@ public class PersonBuilder {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
+        username = personToCopy.getUsername();
         major = personToCopy.getMajor();
         year = personToCopy.getYear();
         tags = new HashSet<>(personToCopy.getTags());
@@ -100,8 +105,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code GithubUsername} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withUsername(String username) {
+        this.username = new GithubUsername(username);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, major, year, tags);
+        return new Person(name, phone, email, username, major, year, tags);
     }
 
 }

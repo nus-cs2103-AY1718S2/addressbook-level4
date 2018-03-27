@@ -5,6 +5,7 @@
         <name>Ha!ns Mu@ster</name>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@gmail.com</email>
+        <username isPrivate="false">HansGithub</username>
         <major isPrivate="false">Computer Science</major>
         <year isPrivate="false">2</year>
     </persons>

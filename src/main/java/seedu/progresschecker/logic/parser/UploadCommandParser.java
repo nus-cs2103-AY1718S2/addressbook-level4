@@ -1,10 +1,10 @@
 package seedu.progresschecker.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.nio.file.Paths;
-
 import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.logic.commands.UploadCommand;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 
@@ -18,13 +18,15 @@ public class UploadCommandParser  implements Parser<UploadCommand>  {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UploadCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        requireNonNull(args);
+        Index index;
+        try {
+            String[] content = args.trim().split(" ");
+            index = ParserUtil.parseIndex(content[0]);
+            return new UploadCommand(index, content[1]);
+        } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
         }
-        String[] content = trimmedArgs.split("\\s");
-        return new UploadCommand(new Index (Integer.parseInt(content[1])), Paths.get(content[2]));
     }
-
 }

@@ -112,7 +112,7 @@ public class AddressBookParser {
             return new PasswordCommandParser().parse(arguments);
 
         case BirthdaysCommand.COMMAND_WORD:
-            return new BirthdaysCommand();
+            return new BirthdaysCommandParser().parse(arguments);
 
         case RemovePasswordCommand.COMMAND_WORD:
             return new RemovePasswordCommandParser().parse(arguments);

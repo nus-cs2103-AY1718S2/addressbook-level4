@@ -37,11 +37,7 @@ public class InfoPanel extends UiPart<Region> {
     public InfoPanel() {
         super(FXML);
 
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        birthdayList = new BirthdayList(null);
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        fillInnerParts();
 
         venueTable = new VenueTable(null);
         venuePlaceholder.getChildren().add(venueTable.getRoot());
@@ -54,12 +50,23 @@ public class InfoPanel extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
+    /**
+     * Helper method to fill UI placeholders
+     */
+    public void fillInnerParts() {
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        birthdayList = new BirthdayList();
+        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+    }
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         browserPanel.loadPersonPage(event.getNewSelection().person);
 
-        birthdayPlaceholder.getChildren().removeAll();
+        //birthdayPlaceholder.getChildren().removeAll();
         browserPlaceholder.toFront();
     }
 
@@ -67,9 +74,10 @@ public class InfoPanel extends UiPart<Region> {
     private void handleBirthdayListEvent(BirthdayListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        birthdayPlaceholder.getChildren().removeAll();
-        birthdayList = new BirthdayList(event.getBirthdayList());
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        //birthdayPlaceholder.getChildren().removeAll();
+        //birthdayList = new BirthdayList();
+        birthdayList.loadList(event.getBirthdayList());
+        //birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         birthdayPlaceholder.toFront();
     }
 

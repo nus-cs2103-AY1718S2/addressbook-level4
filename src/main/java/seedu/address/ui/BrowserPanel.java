@@ -14,6 +14,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
+import seedu.address.storage.HtmlWriter;
 
 /**
  * The Browser Panel of the App.
@@ -26,6 +27,8 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String PERSON_PAGE = "PersonPage.html";
 
     private static final String FXML = "BrowserPanel.fxml";
+
+    private static final HtmlWriter htmlWriter = new HtmlWriter();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -43,8 +46,11 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadPersonPage(Person person) {
-        URL personPage = MainApp.class.getResource(FXML_FILE_FOLDER + PERSON_PAGE);
-        loadPage(personPage.toExternalForm());
+        // method to write to html
+        String personfilepath = htmlWriter.writePerson();
+        // URL personPage = MainApp.class.getResource(FXML_FILE_FOLDER + PERSON_PAGE);
+        // loadPage(personPage.toExternalForm());
+        loadPage(personfilepath);
         // loadPage(SEARCH_PAGE_URL + person.getName().fullName);
     }
 

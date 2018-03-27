@@ -953,10 +953,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 +
 * Major Feature: Find
 +
-** Allows users to find all fields that match the exact keyword inputted
-** Supports finding all fields that contain the keyword input
-** Adds a fuzzy find function that enables users to find all fields that are a fuzzy match of the keyword inputted
-** Highlights the search keyword in results if found
+** Allows users to find all fields that match the exact keyword input
+** Supports finding all fields that contains the keyword input
+** Supports finding all fields that start with the keyword input
+** Supports finding all fields that end with the keyword input
+** Adds a fuzzy find function that enables users to find all fields that are a fuzzy match of the keyword input
 +
 * Minor Features:
 +

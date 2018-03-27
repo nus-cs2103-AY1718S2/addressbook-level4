@@ -25,6 +25,18 @@ public class UniqueTemplateList implements Iterable<Template> {
     private final ObservableList<Template> internalList = FXCollections.observableArrayList();
 
     /**
+     * Returns one Template closest to the template searched for
+     */
+    public Template search(String search) throws TemplateNotFoundException{
+        for(Template t : internalList){
+            if(t.getPurpose().contains(search)){
+                return t;
+            }
+        }
+        throw new TemplateNotFoundException();
+    }
+
+    /**
      * Returns true if the list contains an equivalent template as the given argument.
      */
     public boolean contains(Template toCheck) {

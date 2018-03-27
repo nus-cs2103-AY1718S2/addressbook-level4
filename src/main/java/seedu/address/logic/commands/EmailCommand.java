@@ -5,6 +5,7 @@ import com.google.api.services.gmail.Gmail;
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.util.GmailUtil;
+import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.email.Template;
@@ -36,21 +37,21 @@ public class EmailCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(){
         // Build a new authorized API client service.
 
         model.updateFilteredPersonList(predicate);
         ObservableList<Person> emailList = model.getFilteredPersonList();
-        Template template = model.selectTemplate(this.search);
         for (Person p : emailList) {
             try {
+                Template template = model.selectTemplate(this.search);
                 GmailUtil handler = new GmailUtil();
                 Gmail service = handler.getService();
                 handler.send(service, p.getEmail().toString(), "",
                         service.users().getProfile("me").getUserId(), template);
             } catch (Exception e) {
                 System.out.println(e);
-                System.out.println("Some IOException occurred");
+                System.out.println("Some Exception occurred");
             }
         }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));

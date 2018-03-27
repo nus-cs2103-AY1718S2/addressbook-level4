@@ -17,6 +17,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.email.Template;
+import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -121,11 +122,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Template selectTemplate(String search) {
-        ObservableList<Template> templates = getAllTemplates();
-        System.out.println("called");
-        Template template = templates.get(0);
-        return template;
+    public Template selectTemplate(String search) throws TemplateNotFoundException{
+        return addressBook.getAllTemplates().search(search);
     }
 
     //@@author

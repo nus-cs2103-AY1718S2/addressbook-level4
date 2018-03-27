@@ -8,6 +8,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.email.Template;
+import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -58,7 +59,7 @@ public interface Model {
 
     //@@author ng95junwei
 
-    Template selectTemplate(String search);
+    Template selectTemplate(String search) throws TemplateNotFoundException;
 
     ObservableList<Template> getAllTemplates();
 

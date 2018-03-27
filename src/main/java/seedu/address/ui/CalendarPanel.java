@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.logging.Logger;
@@ -43,11 +42,18 @@ public class CalendarPanel extends UiPart<Region> {
         source = new CalendarSource("My Calendars");
     }
 
+    /**
+     * Add calendar to calendarSource
+     * @param calendar
+     */
     public void addCalendars(Calendar... calendar) {
         calendar[0].setStyle(Calendar.Style.STYLE1);
         source.getCalendars().addAll(calendar);
     }
 
+    /**
+     * Set update Time for Time Thread
+     */
     private void startTimeThread() {
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
             @Override

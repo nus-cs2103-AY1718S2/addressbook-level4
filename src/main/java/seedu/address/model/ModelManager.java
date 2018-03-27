@@ -15,6 +15,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AddressBookChangedWithoutStatusBarEvent;
 import seedu.address.commons.events.model.PasswordChangedEvent;
 import seedu.address.commons.events.model.TimetableEntryAddedEvent;
 import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
@@ -68,6 +69,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to indicate the model has changed except status bar*/
+    private void indicateAddressBookChangedWithoutStatusBar() {
+        raise(new AddressBookChangedWithoutStatusBarEvent(addressBook));
+    }
+
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -103,7 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setPassword(String password) {
         addressBook.setPassword(password);
-        indicateAddressBookChanged();
+        indicateAddressBookChangedWithoutStatusBar();
         indicatePasswordChangedEvent(password);
     }
 

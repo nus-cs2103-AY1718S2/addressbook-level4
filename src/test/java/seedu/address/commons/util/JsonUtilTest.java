@@ -1,6 +1,5 @@
 package seedu.address.commons.util;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -8,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.org.apache.bcel.internal.generic.IADD;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.DataConversionException;
@@ -49,7 +47,7 @@ public class JsonUtilTest {
     @Test
     public void deserializeArrayFromJsonFile_noExceptionThrown() throws DataConversionException, IOException {
         FileUtil.writeToFile(SERIALIZATION_ARRAY_FILE, "[" + SerializableTestClass.JSON_STRING_REPRESENTATION
-        + "," + SerializableTestClass.JSON_STRING_REPRESENTATION + "]" );
+                + "," + SerializableTestClass.JSON_STRING_REPRESENTATION + "]");
 
         List<SerializableTestClass> serializableTestClassList = JsonUtil
                 .readJsonArrayFromFile(SERIALIZATION_ARRAY_FILE.getPath(), SerializableTestClass.class);
@@ -64,7 +62,7 @@ public class JsonUtilTest {
 
         assertEquals(expected.size(), serializableTestClassList.size());
 
-        for (int i = 0; i< expected.size(); i++){
+        for (int i = 0; i < expected.size(); i++) {
             SerializableTestClass expectedObject = expected.get(i);
             SerializableTestClass actualObject = serializableTestClassList.get(i);
 

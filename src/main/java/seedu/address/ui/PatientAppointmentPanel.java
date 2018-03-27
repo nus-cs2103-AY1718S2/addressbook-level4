@@ -35,15 +35,17 @@ public class PatientAppointmentPanel extends UiPart<Region> {
     private void setConnections(ObservableList<Appointment> pastAppointmentList,
                                 ObservableList<Appointment> upcomingAppointmentList) {
 
-        int pastAppointmentListSize = pastAppointmentList.size();
-        ObservableList<AppointmentCard> pastMappedList = EasyBind.map(
-                pastAppointmentList, (appointment -> new AppointmentCard(appointment,
-                        pastAppointmentListSize + 1)));
-        pastAppointmentCardListView.setItems(pastMappedList);
-        ObservableList<AppointmentCard> upcomingMappedList = EasyBind.map(
-                upcomingAppointmentList, (appointment -> new AppointmentCard(appointment,
-                        pastAppointmentListSize + upcomingAppointmentList.indexOf(appointment) + 1)));
-        upcomingAppointmentCardListView.setItems(upcomingMappedList);
+//        int pastAppointmentListSize = pastAppointmentList.size();
+//        ObservableList<AppointmentCard> pastMappedList = EasyBind.map(
+//                pastAppointmentList, (appointment -> new AppointmentCard(appointment,
+//                        pastAppointmentListSize + 1)));
+//        pastAppointmentCardListView.setItems(pastMappedList);
+//        pastAppointmentCardListView.setCellFactory(listView -> new AppointmentListViewCell());
+//        ObservableList<AppointmentCard> upcomingMappedList = EasyBind.map(
+//                upcomingAppointmentList, (appointment -> new AppointmentCard(appointment,
+//                        pastAppointmentListSize + upcomingAppointmentList.indexOf(appointment) + 1)));
+//        upcomingAppointmentCardListView.setItems(upcomingMappedList);
+//        upcomingAppointmentCardListView.setCellFactory(listView-> new AppointmentListViewCell());
     }
 
     /**

@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * A list of appointment that enforces no nulls and uniqueness between its elements.
@@ -130,7 +131,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         return internalList.hashCode();
     }
 
-    public ObservableList<Appointment> getPastAppointmentObservableList() {
+    public ObservableList<Appointment> getPastAppointmentObservableList() throws ParseException {
         Set<Appointment> appointmentSet = toSet();
         ObservableList pastAppointments = FXCollections.observableArrayList();
 
@@ -142,7 +143,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         return FXCollections.unmodifiableObservableList(pastAppointments);
     }
 
-    public ObservableList<Appointment> getUpcomingAppointmentObservableList() {
+    public ObservableList<Appointment> getUpcomingAppointmentObservableList() throws ParseException {
         Set<Appointment> appointmentSet = toSet();
         ObservableList pastAppointments = FXCollections.observableArrayList();
 

@@ -20,6 +20,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowPatientAppointmentRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
 
@@ -202,7 +203,7 @@ public class MainWindow extends UiPart<Stage> {
         handleHelp();
     }
     @Subscribe
-    private void handleShowPatientAppointment(ShowPatientAppointmentRequestEvent event) {
+    private void handleShowPatientAppointment(ShowPatientAppointmentRequestEvent event) throws ParseException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleShowPatientAppointment(event.data.getPastAppointmentList(),
                 event.data.getUpcomingAppointmentList());

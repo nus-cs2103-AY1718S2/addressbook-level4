@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.tag.Tag;
@@ -94,11 +95,11 @@ public class Patient {
         return Collections.unmodifiableSet(appointments.toSet());
     }
 
-    public ObservableList<Appointment> getPastAppointmentList() {
+    public ObservableList<Appointment> getPastAppointmentList() throws ParseException {
         return appointments.getPastAppointmentObservableList();
     }
 
-    public ObservableList<Appointment> getUpcomingAppointmentList() {
+    public ObservableList<Appointment> getUpcomingAppointmentList() throws ParseException {
         return appointments.getUpcomingAppointmentObservableList();
     }
 

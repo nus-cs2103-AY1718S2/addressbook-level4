@@ -3,6 +3,8 @@ package seedu.address.model.appointment;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import seedu.address.logic.parser.exceptions.ParseException;
+
 /**
  * Appointment DateTime in Imdb
  * Gurantees: details are present and not null, field values are validated, immutable
@@ -10,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 public class DateTime {
 
     public static final int APPOINTMENT_DURATION = 30;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
     private String dateString;
     private String timeString;
 
@@ -31,13 +33,18 @@ public class DateTime {
      * @param dateTimeString
      * @return true if the date is already past
      */
-    public static boolean isBefore(String dateTimeString) {
+    public static boolean isBefore(String dateTimeString) throws ParseException {
         String trimmedArgs = dateTimeString.trim();
 
         String[] dateTimeKeys = trimmedArgs.split("\\s");
 
-        LocalDate compareDate = LocalDate.parse(dateTimeKeys[0], formatter);
+        LocalDate compareDate;
 
+        try {
+            compareDate = LocalDate.parse(dateTimeKeys[0], formatter);
+        } catch (Exception e) {
+            throw new ParseException(e.getMessage());
+        }
         return compareDate.isBefore(LocalDate.now());
     }
 
@@ -46,12 +53,18 @@ public class DateTime {
      * @param dateTimeString
      * @return true if the date is ahead
      */
-    public static boolean isAfterOrEqual(String dateTimeString) {
+    public static boolean isAfterOrEqual(String dateTimeString) throws ParseException {
         String trimmedArgs = dateTimeString.trim();
 
         String[] dateTimeKeys = trimmedArgs.split("\\s");
 
-        LocalDate compareDate = LocalDate.parse(dateTimeKeys[0], formatter);
+        LocalDate compareDate;
+
+        try {
+            compareDate = LocalDate.parse(dateTimeKeys[0], formatter);
+        } catch (Exception e) {
+            throw new ParseException(e.getMessage());
+        }
 
         return (compareDate.isAfter(LocalDate.now()) || compareDate.isEqual(LocalDate.now()));
     }

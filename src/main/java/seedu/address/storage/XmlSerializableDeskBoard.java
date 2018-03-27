@@ -10,15 +10,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.DeskBoard;
 import seedu.address.model.ReadOnlyDeskBoard;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.Event;
+import seedu.address.model.activity.Task;
 
+//@@author karenfrilya97
 /**
  * An Immutable DeskBoard that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "deskboard")
 public class XmlSerializableDeskBoard {
 
     @XmlElement
-    private List<XmlAdaptedActivity> activities;
+    private List<XmlAdaptedTask> tasks;
+    @XmlElement
+    private List<XmlAdaptedEvent> events;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -27,7 +33,8 @@ public class XmlSerializableDeskBoard {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableDeskBoard() {
-        activities = new ArrayList<>();
+        tasks = new ArrayList<>();
+        events = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
@@ -36,7 +43,13 @@ public class XmlSerializableDeskBoard {
      */
     public XmlSerializableDeskBoard(ReadOnlyDeskBoard src) {
         this();
-        activities.addAll(src.getActivityList().stream().map(XmlAdaptedActivity::new).collect(Collectors.toList()));
+        for (Activity activity : src.getActivityList()) {
+            if (activity instanceof Task) {
+                tasks.add(new XmlAdaptedTask((Task) activity));
+            } else if (activity instanceof Event) {
+                events.add(new XmlAdaptedEvent((Event) activity));
+            }
+        }
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -51,8 +64,11 @@ public class XmlSerializableDeskBoard {
         for (XmlAdaptedTag t : tags) {
             deskBoard.addTag(t.toModelType());
         }
-        for (XmlAdaptedActivity a : activities) {
-            deskBoard.addActivity(a.toModelType());
+        for (XmlAdaptedActivity a : tasks) {
+            deskBoard.addActivity(((XmlAdaptedTask) a).toModelType());
+        }
+        for (XmlAdaptedActivity e : events) {
+            deskBoard.addActivity(((XmlAdaptedEvent) e).toModelType());
         }
         return deskBoard;
     }
@@ -67,7 +83,7 @@ public class XmlSerializableDeskBoard {
             return false;
         }
 
-        XmlSerializableDeskBoard otherAb = (XmlSerializableDeskBoard) other;
-        return activities.equals(otherAb.activities) && tags.equals(otherAb.tags);
+        XmlSerializableDeskBoard otherDb = (XmlSerializableDeskBoard) other;
+        return tasks.equals(otherDb.tasks) && events.equals(otherDb.events) && tags.equals(otherDb.tags);
     }
 }

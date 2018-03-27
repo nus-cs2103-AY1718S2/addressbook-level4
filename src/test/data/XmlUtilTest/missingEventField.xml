@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Event with missing endDateTime field -->
+<event>
+    <name>CIP</name>
+    <dateTime>02/04/2018 08:00</dateTime>
+    <location>michegan ave</location>
+    <tagged>CIP</tagged>
+</event>

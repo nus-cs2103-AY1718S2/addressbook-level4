@@ -3,10 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.exceptions.InvalidPasswordException;
-import seedu.address.model.exceptions.InvalidUsernameException;
-import seedu.address.model.exceptions.MultipleLoginException;
-import seedu.address.model.exceptions.UserLogoutException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -19,6 +17,7 @@ import seedu.address.model.tag.UniqueTagList;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Job> PREDICATE_SHOW_ALL_JOBS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -54,19 +53,16 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    /**
-     * Logs the user into contactHeRo.
-     * @throws InvalidUsernameException if username is invalid.
-     * @throws InvalidPasswordException if the password is invalid.
-     * @throws MultipleLoginException if a user is already logged in.
-     */
-    void login(String username, String password) throws InvalidUsernameException,
-                                    InvalidPasswordException, MultipleLoginException;
+    /** Adds the given person */
+    void addJob(Job job) throws DuplicateJobException;
+
+    /** Returns an unmodifiable view of the filtered person list */
+    ObservableList<Job> getFilteredJobList();
 
     /**
-     * Logs the user out of contactHeRo
-     * @throws UserLogoutException if no user is login to the system.
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
      */
-    void logout() throws UserLogoutException;
+    void updateFilteredJobList(Predicate<Job> predicate);
 
 }

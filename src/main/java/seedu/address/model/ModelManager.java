@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -13,10 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.exceptions.InvalidPasswordException;
-import seedu.address.model.exceptions.InvalidUsernameException;
-import seedu.address.model.exceptions.MultipleLoginException;
-import seedu.address.model.exceptions.UserLogoutException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -32,8 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
-    private Optional<String> user; // tracks current user
-    private final Account account; // manages the user
+    private final FilteredList<Job> filteredJobs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,8 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        this.account = new Account();
-        this.user = Optional.empty();
+        filteredJobs = new FilteredList<>(this.addressBook.getJobList());
     }
 
     public ModelManager() {
@@ -92,41 +87,17 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag t)
-            throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
+    public void deleteTag(Tag t) throws PersonNotFoundException, DuplicatePersonException,
+            UniqueTagList.DuplicateTagException {
         addressBook.removeTag(t);
         indicateAddressBookChanged();
     }
 
-    /**
-     * Logs the user into the system.
-     * @throws InvalidUsernameException
-     * @throws InvalidPasswordException
-     * @throws MultipleLoginException
-     */
     @Override
-    public void login(String username, String password)
-            throws InvalidUsernameException, InvalidPasswordException, MultipleLoginException {
-        if (user.isPresent()) {
-            throw new MultipleLoginException();
-        } else {
-            requireNonNull(account);
-            account.identify(username, password);
-            user = user.of(username);
-        }
-    }
-
-    /**
-     * Logs the user out of the system.
-     * @throws UserLogoutException
-     */
-    @Override
-    public void logout() throws UserLogoutException {
-        if (user.isPresent()) {
-            user = user.empty();
-        } else {
-            throw new UserLogoutException();
-        }
+    public synchronized void addJob(Job job) throws DuplicateJobException {
+        addressBook.addJob(job);
+        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+        indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -161,7 +132,24 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredJobs.equals(other.filteredJobs);
     }
 
+    //=========== Filtered Job List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Jobs} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
 }

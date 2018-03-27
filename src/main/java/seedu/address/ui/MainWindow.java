@@ -38,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
     private DetailsPanel detailsPanel;
+    private JobListPanel jobListPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -56,6 +57,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane jobListPanelPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -131,6 +135,9 @@ public class MainWindow extends UiPart<Stage> {
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        jobListPanel = new JobListPanel(logic.getFilteredJobList());
+        jobListPanelPlaceholder.getChildren().add(jobListPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());

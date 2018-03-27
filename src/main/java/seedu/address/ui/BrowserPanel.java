@@ -22,6 +22,9 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String SEARCH_PAGE_URL =
             "https://www.linkedin.com/search/results/index/?keywords=";
     private static final String FXML = "BrowserPanel.fxml";
+    private static final String CHROME_41_USER_AGENT =
+            "Mozilla/5.0 (Linux; <Android Version>; <Build Tag etc.>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) "
+            + "Chrome/<Chrome Rev> Mobile Safari/<WebKit Rev>\n";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -42,7 +45,13 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(SEARCH_PAGE_URL + person.getName().fullName);
     }
 
+    /**
+     * Loads the page with url {@code url}.
+     */
     public void loadPage(String url) {
+        browser.getEngine().setUserAgent(
+                CHROME_41_USER_AGENT
+        );
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 

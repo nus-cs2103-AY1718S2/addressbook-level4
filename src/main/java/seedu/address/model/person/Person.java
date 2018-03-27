@@ -21,18 +21,23 @@ public class Person {
     private final Email email;
     private final Address address;
     private final ProfilePicture profilePicture;
+    private final CurrentPosition currentPosition;
+    private final Company company;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, ProfilePicture profilePicture, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, CurrentPosition currentPosition,
+                  Company company, ProfilePicture profilePicture, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags, currentPosition, company);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.currentPosition = currentPosition;
+        this.company = company;
 
         if (profilePicture == null) {
             this.profilePicture = new ProfilePicture();
@@ -63,6 +68,14 @@ public class Person {
         return profilePicture;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public CurrentPosition getCurrentPosition() {
+        return currentPosition;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -83,13 +96,15 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getCurrentPosition().equals(this.getCurrentPosition())
+                && otherPerson.getCompany().equals(this.getCompany());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, profilePicture, tags);
+        return Objects.hash(name, phone, email, address, profilePicture, currentPosition, company, tags);
     }
 
     @Override
@@ -102,8 +117,10 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Profile Picture: ")
-                .append(getProfilePicture())
+                .append(" Current Position: ")
+                .append(getCurrentPosition())
+                .append(" Company: ")
+                .append(getCompany())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

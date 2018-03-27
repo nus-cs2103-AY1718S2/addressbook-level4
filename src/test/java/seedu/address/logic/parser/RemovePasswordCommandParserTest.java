@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.RemovePasswordCommand;
 

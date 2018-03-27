@@ -130,7 +130,7 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        CalendarPanel calendarPanel = new CalendarPanel();
+        CalendarPanel calendarPanel = new CalendarPanel(logic.getFilteredAppointmentList());
         calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
     }
 

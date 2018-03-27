@@ -1,15 +1,22 @@
 package seedu.address.ui;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
+import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewAppointmentAddedEvent;
+import seedu.address.model.appointment.Appointment;
 
 //@@author jlks96
 /**
@@ -18,40 +25,83 @@ import seedu.address.commons.core.LogsCenter;
 public class CalendarPanel extends UiPart<CalendarView> {
 
     private static final String FXML = "CalendarPanel.fxml";
+    private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
+    private static final String ENTRY_TITLE = "Appointment with ";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @javafx.fxml.FXML
     private CalendarView calendarView;
+    private Calendar calendar;
 
-    public CalendarPanel() {
+    public CalendarPanel(ObservableList<Appointment> appointments) {
         super(FXML);
-        loadCalendar();
+        initializeCalendar();
+        setUpCalendarView();
+        loadEntries(appointments);
         updateTime();
         registerAsAnEventHandler(this);
     }
 
     /**
-     * Loads calendar into the calendarView
+     * Initializes the calendar
      */
-    private void loadCalendar() {
+    private void initializeCalendar() {
+        calendar = new Calendar("Appointments");
+    }
 
-        Calendar appointments = new Calendar("Appointments");
-
-        appointments.setStyle(Calendar.Style.STYLE3);
-
+    /**
+     * Sets up the calendar view
+     */
+    private void setUpCalendarView() {
         CalendarSource calendarSource = new CalendarSource("My Calendar");
-        calendarSource.getCalendars().addAll(appointments);
+        calendarSource.getCalendars().addAll(calendar);
 
         calendarView.getCalendarSources().addAll(calendarSource);
 
         calendarView.setRequestedTime(LocalTime.now());
-
+        calendarView.showMonthPage();
     }
 
     /**
-     * Update the current date and time shown in the calendar
-     * Derived from http://dlsc.com/wp-content/html/calendarfx/manual.html
+     * Loads {@code appointments} into the calendar
+     */
+    private void loadEntries(ObservableList<Appointment> appointments) {
+        appointments.stream().forEach(this::loadEntry);
+    }
+
+    /**
+     * Creates an entry with the {@code appointment} details and loads it into the calendar
+     */
+    private void loadEntry(Appointment appointment) {
+        String dateString = appointment.getDate().date;
+        String startTimeString = appointment.getStartTime().time;
+        String endTimeString = appointment.getEndTime().time;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+        LocalDateTime startDateTime = LocalDateTime.parse(dateString + " " + startTimeString, formatter);
+        LocalDateTime endDateTime = LocalDateTime.parse(dateString + " " + endTimeString, formatter);
+
+        Entry entry = new Entry();
+        entry.setInterval(startDateTime, endDateTime);
+        entry.setLocation(appointment.getLocation().value);
+        entry.setTitle(ENTRY_TITLE + appointment.getName());
+        entry.setCalendar(calendar);
+    }
+
+    /**
+     * Handles the event where a new appointment is added by loading the appointment into the calendar
+     * @param event contains the newly added appointment
+     */
+    @Subscribe
+    private void handleNewAppointmentAddedEvent(NewAppointmentAddedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadEntry(event.getAppointmentAdded());
+    }
+
+    /**
+     * Update the current date and time shown in the calendar as a thread in the background
+     * Adapted from http://dlsc.com/wp-content/html/calendarfx/manual.html
      */
     private void updateTime() {
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
@@ -71,12 +121,10 @@ public class CalendarPanel extends UiPart<CalendarView> {
                     }
 
                 }
-            };
+            }
         };
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
     }
-
-
 }

@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalAppointmentEntires.getTypicalAppointmentAddressBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -32,6 +33,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getMyCalendarEntries());
     }
 
     @Test
@@ -45,6 +47,10 @@ public class AddressBookTest {
         AddressBook newData = getTypicalAddressBook();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
+
+        AddressBook newDataAppointment = getTypicalAppointmentAddressBook();
+        addressBook.resetData(newDataAppointment);
+        assertEquals(newDataAppointment, addressBook);
     }
 
     @Test
@@ -52,7 +58,7 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, new InsuranceCalendar());
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -78,9 +84,11 @@ public class AddressBookTest {
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final InsuranceCalendar calendar = new InsuranceCalendar();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, InsuranceCalendar calendar) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.calendar.clearAppointments();
+            this.calendar.copyAppointments(calendar);
         }
 
         @Override

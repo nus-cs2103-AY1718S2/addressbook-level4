@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- inValid appointment -->
+    <appointmentEntries>
+        <startDate>2018-03-29T13:00</startDate>
+        <endDate>2018-03-29T14:00</endDate>
+    </appointmentEntries>
+</addressbook>

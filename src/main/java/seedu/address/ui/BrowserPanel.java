@@ -45,6 +45,9 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(SEARCH_PAGE_URL + person.getName().fullName);
     }
 
+    /**
+     * Loads the page with url {@code url}.
+     */
     public void loadPage(String url) {
         browser.getEngine().setUserAgent(
                 CHROME_41_USER_AGENT

@@ -164,6 +164,11 @@ Examples:
 * `module CS2010` +
 Returns all persons having CS2010 in their modules
 
+=== Removal of password: `nopassword` (since v1.3)
+
+Removes the password of the application. +
+Format: `nopassword`
+
 === Viewing a collated birthday list: `birthdays` (since v1.3)
 
 Displays a list that contains all the birthdays of all contacts ordered by date +
@@ -396,6 +401,7 @@ e.g.`import data/addressBook.xml`
 * *List* : `list`
 * *Password* : `password PASSWORD` +
 e.g. `password test`
+* *Remove Password* : `nopassword`
 * *Redo* : `redo`
 * *Select* : `select INDEX` +
 e.g.`select 2`

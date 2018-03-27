@@ -2,11 +2,7 @@ package seedu.progresschecker.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.awt.FlowLayout;
-import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,10 +10,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import javafx.collections.ObservableList;
 import seedu.progresschecker.model.person.Person;
@@ -167,24 +159,14 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     }
 
     /**
-     * Upload image from this {@Path path}.
-     * @throws FileNotFoundException if the file of this {@Path path} is not found.
+     * Uploads {@code Image} from the {@code path} offered
+     * @throws IOException if the {@code image} is not found
      */
-    public void uploadPhoto(Path path) throws IOException {
-        try {
-            BufferedImage img = ImageIO.read(path.toFile());
-            ImageIcon icon = new ImageIcon(img);
-            JFrame frame = new JFrame();
-            frame.setLayout(new FlowLayout());
-            frame.setSize(20, 20);
-            JLabel lbl = new JLabel();
-            lbl.setIcon(icon);
-            frame.add(lbl);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        } catch (FileNotFoundException FNF){
-            throw new FileNotFoundException();
-        }
+    public void uploadPhoto(Person target, String path)
+            throws DuplicatePersonException, PersonNotFoundException {
+        Person tempPerson = target;
+        target.updatePhoto(path);
+        persons.setPerson(tempPerson, target);
     }
 
     //// tag-level operations

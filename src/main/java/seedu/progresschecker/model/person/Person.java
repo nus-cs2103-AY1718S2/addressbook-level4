@@ -1,9 +1,7 @@
 package seedu.progresschecker.model.person;
 
-import static seedu.progresschecker.commons.core.Config.DEFAULT_PHOTO;
 import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.awt.Image;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -17,13 +15,15 @@ import seedu.progresschecker.model.tag.UniqueTagList;
  */
 public class Person {
 
+    private static String DEFAULT_PHOTO_PATH = "/images/profile_photo.jpg";
+
     private final Name name;
     private final Phone phone;
     private final Email email;
     private final GithubUsername username;
     private final Major major;
     private final Year year;
-    private Image profilePhoto;
+    private String photoPath;
 
     private final UniqueTagList tags;
 
@@ -41,7 +41,7 @@ public class Person {
         this.year = year;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.profilePhoto = DEFAULT_PHOTO;
+        this.photoPath = DEFAULT_PHOTO_PATH;
     }
 
     public Name getName() {
@@ -68,8 +68,8 @@ public class Person {
         return year;
     }
 
-    public Image getImage() {
-        return profilePhoto;
+    public String getPhotoPath() {
+        return photoPath;
     }
 
     /**
@@ -80,8 +80,8 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
-    public void updatePhoto(Image image) {
-        this.profilePhoto = image;
+    public void updatePhoto(String path) {
+        this.photoPath = path;
     }
 
     @Override

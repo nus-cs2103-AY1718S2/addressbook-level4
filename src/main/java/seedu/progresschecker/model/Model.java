@@ -51,6 +51,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /** Uploads the given photo with given path */
-    void uploadPhoto(Path path) throws FileNotFoundException, IOException;
+    void uploadPhoto(Person target, String path)
+            throws DuplicatePersonException, PersonNotFoundException, IOException;
 
 }

@@ -108,12 +108,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void uploadPhoto(Path path) throws IOException {
-        try {
-            progressChecker.uploadPhoto(path);
-        } catch (FileNotFoundException FNF) {
-            throw new FileNotFoundException();
-        }
+    public void uploadPhoto(Person target, String path)
+            throws DuplicatePersonException, PersonNotFoundException, IOException {
+        progressChecker.uploadPhoto(target, path);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateProgressCheckerChanged();
     }

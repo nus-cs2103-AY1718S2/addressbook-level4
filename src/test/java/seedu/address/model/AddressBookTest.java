@@ -76,6 +76,7 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final InsuranceCalendar calendar = new InsuranceCalendar();
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
@@ -99,7 +100,7 @@ public class AddressBookTest {
 
         @Override
         public InsuranceCalendar getMyCalendar() {
-            return null;
+            return calendar;
         }
     }
 

@@ -8,9 +8,9 @@ import com.calendarfx.model.CalendarSource;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.calendar.AppointmentEntry;
-import seedu.address.model.person.Person;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 

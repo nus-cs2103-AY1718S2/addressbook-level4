@@ -170,6 +170,18 @@ Examples:
 
 * `add_appointment n/meet John S/11/09/2018 15:00:00  E/11/09/2018 16:00:00`
 
+=== remove existing appointments : `remove_appointments`
+
+Removes appointments whose title match the given search text +
+Format: `remove_appointments ST/SEARCH TEXT`
+
+[TIP]
+All appointments with the title that match the given search text will be removed
+
+Examples:
+
+* `remove_appointments ST/Title of the appointment`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -257,9 +269,6 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
-=== remove existing appointment `[coming in v2.0]`
-the user is allowed to use command line to delete an existing appointment by specifying the appointment title and interval
-
 === update existing appointment `[coming in v2.0]`
 the user is allowed to use command line to update an existing appointment by specifying the old appointment title and interval
 then the new appointment title and interval
@@ -289,6 +298,8 @@ the user is allowed to use command line to remove a task to the task pad GUI  sp
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Add Appointment* `add_appointment n/NAME S/START DATE E/End Date` +
 e.g. `add_appointment n/Meet James S/14/08/2018 15:00:00 S/14/08/2018 16:00:00`
+* *Remove Appointments* `remove_appointments ST/SEARCH TEXT` +
+e.g. `remove_appointments ST/Title of the appointment`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

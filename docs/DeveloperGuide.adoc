@@ -266,11 +266,19 @@ Optimal Route = Point A --> Point C --> Point B (based on least about of km trav
 
 In the RouteOptimization class the sorting function will be responsible to determine the optimal route once the distances are obtained
 
-To getDistance - google API is required to get the geocodes for the locations and the DistanceMatrix can be obtained
-Once the matrix is obtained the distances between the places can be recorded.
-The addresses will be obtained for the filtered list in the database.
+To getDistance - google API is required to get the geocodes for the locations. Once the geocode for each address is obtained
+the distance between the two points is calculated and a matrix is returned with a distance property.
+The distance property gives the distance in kilometers from the origin to destination.
 
 The optimized route will the be fed into a mapping function to display the route and get the directions for the driver.
+
+==== Sorting addresses
+Once the distances have been found for all combinations of addresses on that filtered day they get stored in a Map with key: "address1_address2" and
+value: Double distance (in km). This hashmap gets sorted in order of distances and any irrelevant or duplicate calculations are removed.
+This sorted Hashmap now contains the key with the orign and destination address as well as the distance between the two.
+
+Coming soon - If the first key is A_B then the second key must be B_X where X is the address closest to B (not including A). Based on this logic a list of addresses
+will be created as the optimum delivery route.
 
 // tag::login[]
 === Login feature

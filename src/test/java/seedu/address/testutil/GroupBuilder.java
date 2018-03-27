@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
-import seedu.address.model.group.Information;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
 
 /**
  * A utility class to help with building Group objects.

@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.group.Information;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Detail;
 import seedu.address.model.person.Email;
@@ -246,5 +247,20 @@ public class ParserUtil {
         } else {
             throw new IllegalValueException(Tag.MESSAGE_TAG_COLOR_CONSTRAINTS);
         }
+    }
+
+    /**
+     * Parses a {@code String content} into a {@code Content}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code content} is invalid.
+     */
+    public static Information parseInformation(String information) throws IllegalValueException {
+        requireNonNull(information);
+        String trimmedInformation = information.trim();
+        if (!Content.isValidContent(trimmedInformation)) {
+            throw new IllegalValueException(Information.MESSAGE_INFORMATION_CONSTRAINTS);
+        }
+        return new Information(trimmedInformation);
     }
 }

@@ -9,7 +9,14 @@
         <address>123, Jurong West Ave 6, #08-111</address>
         <link>http://modsn.us/MYwiD</link>
         <detail>Likes tennis</detail>
-        <tagged>friends</tagged>
+        <tagged>
+            <name>friends</name>
+            <color>undefined</color>
+        </tagged>
+        <tagged>
+            <name>CS3230</name>
+            <color>undefined</color>
+        </tagged>
     </persons>
     <persons>
         <name>Benson Meier</name>
@@ -18,8 +25,18 @@
         <address>311, Clementi Ave 2, #02-25</address>
         <link>http://modsn.us/gka24</link>
         <detail>Likes tennis</detail>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <tagged>
+            <name>owesMoney</name>
+            <color>undefined</color>
+        </tagged>
+        <tagged>
+            <name>friends</name>
+            <color>undefined</color>
+        </tagged>
+        <tagged>
+            <name>CS3230</name>
+            <color>undefined</color>
+        </tagged>
     </persons>
     <persons>
         <name>Carl Kurz</name>
@@ -56,11 +73,23 @@
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
+
+
         <email>anna@example.com</email>
         <address>4th street</address>
         <link>http://modsn.us/hwWlG</link>
         <detail>Likes tennis</detail>
     </persons>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <tags>
+        <name>friends</name>
+        <color>undefined</color>
+    </tags>
+    <tags>
+        <name>owesMoney</name>
+        <color>undefined</color>
+    </tags>
+    <tags>
+        <name>CS3230</name>
+        <color>undefined</color>
+    </tags>
 </addressbook>

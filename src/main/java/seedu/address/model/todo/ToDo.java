@@ -11,17 +11,36 @@ import java.util.Objects;
 public class ToDo {
 
     private final Content content;
+    private Status status;
 
     /**
      * Every field must be present and not null.
+     * Constructs an {@code ToDo} with the given details.
+     * Status is "undone" by default
      */
     public ToDo(Content content) {
         requireAllNonNull(content);
         this.content = content;
+        this.status = new Status("undone");
+    }
+
+    /**
+     * Every field must be present and not null.
+     * Constructs an {@code ToDo} with the given details.
+     */
+    public ToDo(Content content, Status status) {
+        requireAllNonNull(content);
+        requireAllNonNull(status);
+        this.content = content;
+        this.status = status;
     }
 
     public Content getContent() {
         return content;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     @Override
@@ -50,6 +69,4 @@ public class ToDo {
         builder.append(getContent());
         return builder.toString();
     }
-
 }
-

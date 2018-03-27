@@ -83,10 +83,16 @@ public class CommandTestUtil {
     public static final String CONTENT_E = "ToDo E";
     public static final String CONTENT_B = "ToDo B";
 
-
-
     public static final String VALID_CONTENT = "Something to do";
     public static final String INVALID_CONTENT = "Something to do&"; // '&' not allowed in contents
+
+    public static final String VALID_STATUS_DONE = "done";
+    public static final String VALID_STATUS_UNDONE = "undone";
+    public static final String INVALID_STATUS = "invalid status";
+
+    public static final String INFORMATION_A = "Group A";
+    public static final String VALID_INFORMATION = "GROUP A";
+    public static final String INVALID_INFORMATION = "Group! A"; //'!' not supported in information
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -103,7 +109,7 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel}
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
+                                            Model expectedModel) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);

@@ -68,12 +68,12 @@ public class Schedule {
 
     @Override
     public String toString() {
-        String toRet = "ClassNo: " + classNo
+        return "ClassNo: " + classNo
                 + "\nLessonType: " + lessonType
                 + "\nWeekText: " + weekText
                 + "\nDayText: " + dayText
                 + "\nStartTime: " + startTime
-                + "\nEndTime: " + endTime + "\n";
-        return toRet;
+                + "\nEndTime: " + endTime
+                + "\nVenue: " + venue + "\n";
     }
 }

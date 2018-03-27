@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.DuplicateEventException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
@@ -35,6 +38,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private final UniqueToDoList todos;
     private final UniqueGroupList groups;
+    private final UniqueEventList events;
 
     /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -48,6 +52,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         todos = new UniqueToDoList();
         groups = new UniqueGroupList();
+        events = new UniqueEventList();
     }
 
     public AddressBook() {
@@ -198,6 +203,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.add(group);
     }
 
+    ////Event operations
+    /**
+     * Adds an event to the address book.
+     * @throws DuplicateEventException if an equivalent event already exists.
+     */
+    public void addEvent(Event e) throws DuplicateEventException {
+        events.add(e);
+    }
+
     //// util methods
 
     @Override
@@ -224,6 +238,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Event> getEventList() {
+        return events.asObservableList();
     }
 
     @Override

@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.event.DuplicateEventException;
+import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Person;
@@ -107,6 +109,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addGroup(Group group) throws DuplicateGroupException {
         addressBook.addGroup(group);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addEvent(Event event) throws DuplicateEventException {
+        addressBook.addEvent(event);
         indicateAddressBookChanged();
     }
 

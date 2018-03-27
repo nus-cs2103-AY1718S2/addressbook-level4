@@ -16,7 +16,7 @@ public class WeeklyEvent extends Event {
     private String[] details;
 
     public WeeklyEvent(String name, String venue, String start, String end, String... details) {
-        super(name, venue, start, end);
+        super(name, venue, "NA", start, end);
         this.day = details[0];          //Placeholder command
         this.details = details;
     }

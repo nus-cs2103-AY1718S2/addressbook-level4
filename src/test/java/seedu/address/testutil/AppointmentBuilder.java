@@ -20,7 +20,7 @@ public class AppointmentBuilder {
      */
     public AppointmentBuilder(Appointment appointmentToCopy) {
         patientName = appointmentToCopy.getPatientName();
-        dateTime = appointmentToCopy.getAppointmentDateTime();
+        dateTime = appointmentToCopy.getAppointmentDateTimeString();
     }
 
     /**
@@ -40,6 +40,6 @@ public class AppointmentBuilder {
     }
 
     public Appointment build() {
-        return new Appointment(patientName, dateTime);
+        return new Appointment(dateTime);
     }
 }

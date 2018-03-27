@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ImdbChangedEvent;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -114,6 +115,10 @@ public class ModelManager extends ComponentManager implements Model {
         if (filteredPatients.size() > 0) {
             return filteredPatients.get(0);
         }
+        return null;
+    }
+
+    public UniqueAppointmentList getPatientAppointments(Patient patient) {
         return null;
     }
 

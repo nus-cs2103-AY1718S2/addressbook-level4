@@ -21,6 +21,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemovePatientQueueCommand;
@@ -307,10 +308,16 @@ public class ImdbParser {
                 return new RemarkCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_WORD:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
+
+            case RecordCommand.COMMAND_WORD:
+                return new RecordCommandParser().parse(arguments);
+
+            case RecordCommand.COMMAND_ALIAS:
+                return new RecordCommandParser().parse(arguments);
 
             case AddConditionCommand.COMMAND_WORD:
                 return new AddConditionCommandParser().parse(arguments);
@@ -417,16 +424,22 @@ public class ImdbParser {
                 return new RemarkCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_WORD:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             case AddPatientQueueCommand.COMMAND_WORD:
                 return new AddPatientQueueCommandParser().parse(arguments);
 
             case AddPatientQueueCommand.COMMAND_ALIAS:
                 return new AddPatientQueueCommandParser().parse(arguments);
+
+            case RecordCommand.COMMAND_WORD:
+                return new RecordCommandParser().parse(arguments);
+
+            case RecordCommand.COMMAND_ALIAS:
+                return new RecordCommandParser().parse(arguments);
 
             case RemovePatientQueueCommand.COMMAND_WORD:
                 return new RemovePatientQueueCommandParser().parse(arguments);

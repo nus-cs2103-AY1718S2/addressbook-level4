@@ -70,6 +70,7 @@ public class ViewAppointmentCommand extends Command {
     }
 
     private static ObservableList<Appointment> getPastAppointmentList(Set<Appointment> appointmentSet) {
+        
         return null;
     }
 

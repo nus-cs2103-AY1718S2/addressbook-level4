@@ -41,4 +41,18 @@ public class DateTime {
         return compareDate.isBefore(LocalDate.now());
     }
 
+    /**
+     * Check if the date is ahead compared with today
+     * @param dateTimeString
+     * @return true if the date is ahead
+     */
+    public static boolean isAfterOrEqual(String dateTimeString) {
+        String trimmedArgs = dateTimeString.trim();
+
+        String[] dateTimeKeys = trimmedArgs.split("\\s");
+
+        LocalDate compareDate = LocalDate.parse(dateTimeKeys[0], formatter);
+
+        return (compareDate.isAfter(LocalDate.now()) || compareDate.isEqual(LocalDate.now()));
+    }
 }

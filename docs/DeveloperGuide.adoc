@@ -413,6 +413,8 @@ The details of implementation are as follow:
 . `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
 . `edited` Person is used to replace `toEdit` Person in `AddressBook`
 
+`Review` uses JavaFX's TextInputDialog to get the review input from the user instead of from command box.
+
 === Lock and unlock the application
 
 `lock` command and `unlock` command are implemented in a similar manner. Both have the same command format.

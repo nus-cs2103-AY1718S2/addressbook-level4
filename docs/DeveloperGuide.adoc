@@ -14,9 +14,15 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+Welcome to Medeina! Medeina is a application designed to help veterinarians and their assistants to manage contacts and appointments. Medeina is a command-line based application, all actions can be done using only keyboard.
+This developer guide aims to help new developers to get started with Medeina, and also serves as a reference for even experienced Medeina contributors.
+
 == Setting up
 
 === Prerequisites
+
+To successfully install and run Medeina, you'll need the following:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -34,6 +40,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
+To set up Medeina in your computer, follow these steps:
+
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
@@ -48,10 +56,14 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
+To check if the setup is successful:
+
 . Run the `seedu.address.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+
+Before you start contributing to Medeina, the following configurations are required:
 
 ==== Configuring the coding style
 
@@ -131,6 +143,8 @@ For example, the `Logic` component (see the class diagram given below) defines i
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
+The above diagram shows the relations between each subcomponents within the Logic component.
+
 [discrete]
 ==== Events-Driven nature of the design
 
@@ -155,6 +169,8 @@ The sections below give more details of each component.
 [[Design-Ui]]
 === UI component
 
+The following diagram displays the structure of the UI component.
+
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
@@ -173,12 +189,17 @@ The `UI` component,
 [[Design-Logic]]
 === Logic component
 
+The following diagram displays the structure of the Logic component.
+
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
+The following diagram displays the structures of the commands in Logic component.
+
 .Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
 image::LogicCommandClassDiagram.png[width="800"]
+
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]

@@ -169,7 +169,7 @@ public class MainWindow extends UiPart<Stage> {
      * Opens the help window.
      */
     @FXML
-    public void handleHelp() {
+    private void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }

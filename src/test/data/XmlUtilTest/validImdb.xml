@@ -10,6 +10,10 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
     <patients>
         <name>Ruth Mueller</name>
@@ -21,6 +25,10 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
     <patients>
         <name>Heinz Kurz</name>
@@ -32,6 +40,10 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
     <patients>
         <name>Cornelia Meier</name>
@@ -43,6 +55,10 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
     <patients>
         <name>Werner Meyer</name>
@@ -54,6 +70,10 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
     <patients>
         <name>Lydia Kunz</name>
@@ -65,6 +85,10 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
     <patients>
         <name>Anna Best</name>
@@ -76,6 +100,10 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
     <patients>
         <name>Stefan Meier</name>
@@ -87,6 +115,10 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
     <patients>
         <name>Martin Mueller</name>
@@ -98,5 +130,9 @@
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false"></remark>
         <recordList isPrivate="false">1 in/1 d/ s/ i/ t/</recordList>
+        <appointments>
+            <patientName></patientName>
+            <dateTime>21/3/2018 1100</dateTime>
+        </appointments>
     </patients>
 </imdb>

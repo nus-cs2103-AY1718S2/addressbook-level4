@@ -297,10 +297,10 @@ public class ImdbParser {
                 return new RemarkCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_WORD:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             case RecordCommand.COMMAND_WORD:
                 return new RecordCommandParser().parse(arguments);
@@ -407,10 +407,10 @@ public class ImdbParser {
                 return new RemarkCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_WORD:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
-                return new ViewAppointmentCommand();
+                return new ViewAppointmentCommandParser().parse(arguments);
 
             case AddPatientQueueCommand.COMMAND_WORD:
                 return new AddPatientQueueCommandParser().parse(arguments);

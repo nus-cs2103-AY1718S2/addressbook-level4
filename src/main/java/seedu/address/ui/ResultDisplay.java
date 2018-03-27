@@ -58,24 +58,24 @@ public class ResultDisplay extends UiPart<Region> {
         setStyleToIndicateCommandSuccess();
         final String messageUsage;
         switch (event.command) {
-            case "add":
-                messageUsage = AddCommand.MESSAGE_USAGE;
-                break;
-            case "edit":
-                messageUsage = EditCommand.MESSAGE_USAGE;
-                break;
-            case "delete":
-                messageUsage = DeleteCommand.MESSAGE_USAGE;
-                break;
-            case "locate":
-                messageUsage = LocateCommand.MESSAGE_USAGE;
-                break;
-            case "find":
-                messageUsage = FindCommand.MESSAGE_USAGE;
-                break;
-            default:
-                // should be an Exception
-                messageUsage = "";
+        case "add":
+            messageUsage = AddCommand.MESSAGE_USAGE;
+            break;
+        case "edit":
+            messageUsage = EditCommand.MESSAGE_USAGE;
+            break;
+        case "delete":
+            messageUsage = DeleteCommand.MESSAGE_USAGE;
+            break;
+        case "locate":
+            messageUsage = LocateCommand.MESSAGE_USAGE;
+            break;
+        case "find":
+            messageUsage = FindCommand.MESSAGE_USAGE;
+            break;
+        default:
+            // should be an Exception
+            messageUsage = "";
         }
 
         Platform.runLater(() -> {

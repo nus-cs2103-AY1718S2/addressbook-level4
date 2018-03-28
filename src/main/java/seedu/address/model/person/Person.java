@@ -7,10 +7,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.Insurance.Insurance;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents a Person in the address book.
@@ -54,7 +54,7 @@ public class Person {
      * TODO: To be phased out
      */
 
-        public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday,
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday,
             Appointment appointment, Group group) {
         requireAllNonNull(name, phone, email, address, tags, birthday);
         this.name = name;
@@ -97,7 +97,7 @@ public class Person {
     }
 
     public Group getGroup() {
-            return group;
+        return group;
     }
 
     public Insurance getInsurance() {

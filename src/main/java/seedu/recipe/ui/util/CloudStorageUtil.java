@@ -15,6 +15,7 @@ import com.google.common.base.Strings;
 
 import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.logic.commands.CommandResult;
+import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 
 /**
@@ -42,7 +43,7 @@ public class CloudStorageUtil {
      * @return {@code CommandResult}
      * @throws DbxException
      */
-    private CommandResult upload() throws UploadCommandException, IOException {
+    public static void upload(String uploadFilename) {
         // Ensures access token has been obtained
         requireNonNull(CloudStorageUtil.getAccessToken());
 
@@ -52,15 +53,14 @@ public class CloudStorageUtil {
 
         // Upload "recipebook.xml" to Dropbox
         try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
-            client.files().uploadBuilder("/" + xmlExtensionFilename)
+            client.files().uploadBuilder("/" + uploadFilename)
                     .withAutorename(true)
                     .uploadAndFinish(in);
         } catch (IOException e) {
-            throw new IOException(MESSAGE_FAILURE);
+
         } catch (DbxException dbe) {
-            throw new UploadCommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
         }
-        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     /**

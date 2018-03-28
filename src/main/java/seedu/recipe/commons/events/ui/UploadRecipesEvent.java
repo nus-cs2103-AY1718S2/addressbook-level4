@@ -8,6 +8,16 @@ import seedu.recipe.commons.events.BaseEvent;
  */
 public class UploadRecipesEvent extends BaseEvent {
 
+    private String xmlExtensionFilename;
+
+    public UploadRecipesEvent(String xmlExtensionFilename) {
+        this.xmlExtensionFilename = xmlExtensionFilename;
+    }
+
+    public String getUploadFilename() {
+        return this.xmlExtensionFilename;
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

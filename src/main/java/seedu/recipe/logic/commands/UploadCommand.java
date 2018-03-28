@@ -32,7 +32,7 @@ public class UploadCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new UploadRecipesEvent());
+        EventsCenter.getInstance().post(new UploadRecipesEvent(xmlExtensionFilename));
 
         return new CommandResult(MESSAGE_SUCCESS);
     }

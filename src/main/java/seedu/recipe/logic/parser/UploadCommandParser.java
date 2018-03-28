@@ -1,10 +1,10 @@
 //@@author nicholasangcx
 package seedu.recipe.logic.parser;
 
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
-
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments and creates a new UploadCommand object
@@ -25,9 +25,9 @@ public class UploadCommandParser implements Parser<UploadCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
 
         }
-        String XmlExtensionFilename = ParserUtil.parseFilename(filename);
+        String xmlExtensionFilename = ParserUtil.parseFilename(filename);
 
-        return new UploadCommand(XmlExtensionFilename);
+        return new UploadCommand(xmlExtensionFilename);
     }
 }
 //@author

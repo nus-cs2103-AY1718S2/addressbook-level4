@@ -2,13 +2,13 @@ package seedu.recipe.logic;
 
 import java.util.logging.Logger;
 
-import com.dropbox.core.DbxException;
 import javafx.collections.ObservableList;
 import seedu.recipe.commons.core.ComponentManager;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.logic.commands.Command;
 import seedu.recipe.logic.commands.CommandResult;
 import seedu.recipe.logic.commands.exceptions.CommandException;
+import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 import seedu.recipe.logic.parser.RecipeBookParser;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.Model;
@@ -33,7 +33,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException, DbxException {
+    public CommandResult execute(String commandText) throws CommandException, ParseException, UploadCommandException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = recipeBookParser.parseCommand(commandText);

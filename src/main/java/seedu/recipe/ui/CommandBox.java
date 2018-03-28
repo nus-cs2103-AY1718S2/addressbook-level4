@@ -9,6 +9,7 @@ import static seedu.recipe.ui.util.KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COM
 import java.util.logging.Logger;
 
 import com.dropbox.core.DbxException;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;

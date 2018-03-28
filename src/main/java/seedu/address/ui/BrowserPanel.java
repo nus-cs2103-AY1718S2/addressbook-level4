@@ -43,7 +43,7 @@ public class BrowserPanel extends UiPart<Region> {
     /**
     * To load person page according to person name
     */
-    private void loadPersonPage(Person person) {
+    public void loadPersonPage(Person person) {
         URL personPage = MainApp.class.getResource(PROFILE_DIRECTORY + person.getName().fullName + PERSON_PAGE);
         loadPage(personPage.toExternalForm());
     }

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,6 +109,11 @@ public class AddCommandTest {
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void addPage(Person person) throws IOException {
+
         }
 
         @Override

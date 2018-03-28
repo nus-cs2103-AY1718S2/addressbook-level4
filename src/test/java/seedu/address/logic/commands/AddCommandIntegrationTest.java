@@ -13,6 +13,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 
+import java.io.IOException;
+
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
  */
@@ -39,7 +41,7 @@ public class AddCommandIntegrationTest {
     */
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
+    public void execute_duplicatePerson_throwsCommandException() throws IOException {
         Person personInList = model.getAddressBook().getPersonList().get(0);
         assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
     }

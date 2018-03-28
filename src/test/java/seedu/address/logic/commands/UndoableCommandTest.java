@@ -16,6 +16,8 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+import java.io.IOException;
+
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final DummyCommand dummyCommand = new DummyCommand(model);
@@ -37,7 +39,7 @@ public class UndoableCommandTest {
     }
 
     @Test
-    public void redo() {
+    public void redo() throws IOException {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         // redo() should cause the model's filtered list to show all persons

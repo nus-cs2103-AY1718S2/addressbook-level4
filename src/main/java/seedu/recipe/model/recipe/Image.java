@@ -4,8 +4,6 @@ package seedu.recipe.model.recipe;
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
-import java.net.URL;
-
 /**
  * Represents a Recipe's image in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidImage(String)}
@@ -13,6 +11,7 @@ import java.net.URL;
 public class Image {
 
     public static final String NULL_IMAGE_REFERENCE = "-";
+    public static final String FILE_PREFIX = "file:";
     public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid";
     public final String value;
 
@@ -24,24 +23,15 @@ public class Image {
     public Image(String imagePath) {
         requireNonNull(imagePath);
         checkArgument(isValidImage(imagePath), MESSAGE_IMAGE_CONSTRAINTS);
-        this.value = imagePath;
+        this.value = FILE_PREFIX + imagePath;
     }
 
     /**
      *  Returns true if a given string is a valid file path, or no file path has been assigned
      */
     public static boolean isValidImage(String testImagePath) {
-        if (testImagePath.equals(NULL_IMAGE_REFERENCE)) {
-            return true;
-        }
-        try {
-            URL url = new URL(testImagePath);
-            url.toURI();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-
+        // TO BE COMPLETED
+        return true;
     }
 
     @Override

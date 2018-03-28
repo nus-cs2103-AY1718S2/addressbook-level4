@@ -1,7 +1,6 @@
 package seedu.recipe.model.recipe;
 
 import static seedu.recipe.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.recipe.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;

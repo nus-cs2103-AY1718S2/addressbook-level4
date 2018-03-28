@@ -14,11 +14,9 @@ endif::[]
 
 By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
-== Preaface
-
-Fastis is a meet-up scheduler aimed at students in the National University of Singapore (NUS). It seeks to ease the process of scheduling meetings and discussions, especially between project teammates. Fastis provides functionality to quickly retrieve and process the schedules of different people/groups to help users plan for meet-ups. This guide documents important information for developers seeking to modify the application.
-
-
+== Introduction
+image:FASTIS.png[width="500"] +
+Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and generate a suitable meetup time.
 == Setting up
 The following steps will guide you on the set up of FASTIS.
 
@@ -526,7 +524,7 @@ Fastis lists all persons in Fastis that have tags similar to input.
 Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 tag.
 
-image:listGroupMemberSequenceDiagram.png[width="800"]
+image:listGroupMemberSequenceDiagram.png[width="800"] +
 When user types in command line `ListGroupMembers` or `lgm` , Fastis will use the keyword provided to search for the
 group tag and list out all members under the same group tag.
 
@@ -634,13 +632,11 @@ image:AddGroupSequenceDiagram.png[width="800"]
 ==== Design Considerations
 
 ===== Aspect: Implementation of `AddGroupCommand`
-
-* **Alternative 1 (current choice):** Add a new abstract method `executeAddGroupCommand()`
-** Pros: We will not lose any addGroup functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
-** Cons: Classes that inherit from `AddGroupCommand` must remember to call `super.execute()`, or lose the ability to addGroup.
+* **Alternative 1 (current choice):** Add a new command method `AddGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+* **Alternative 2:** Add a new abstract method `executeAddGroupCommand()`
+** Pros: It is not able to lose any addGroup functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
+** Cons: It is hard for new developers to understand the template pattern.
 
 // end::addGroup[]
 

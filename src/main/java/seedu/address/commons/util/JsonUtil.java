@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
@@ -74,6 +76,37 @@ public class JsonUtil {
         }
 
         return Optional.of(jsonFile);
+    }
+
+    /**
+     * Returns the Json Array from the given file or an empty ArrayList if the file is not found.
+     * If any values are missing from the file, default values will be used, as long as the file is a valid json file.
+     * @param filePath cannot be null.
+     * @param classOfObjectToDeserialize Json file has to correspond to the structure in the class given here.
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public static <T> ArrayList<T> readJsonArrayFromFile(
+            String filePath, Class<T> classOfObjectToDeserialize) throws DataConversionException {
+        requireNonNull(filePath);
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            logger.info("Json file "  + file + " not found");
+            return new ArrayList<T>();
+        }
+
+        ArrayList<T> jsonFile;
+
+        try {
+            JavaType javaType = objectMapper.getTypeFactory()
+                    .constructCollectionType(ArrayList.class, classOfObjectToDeserialize);
+            jsonFile = objectMapper.readValue(file, javaType);
+        } catch (IOException e) {
+            logger.warning("Error reading from jsonFile file " + file + ": " + e);
+            throw new DataConversionException(e);
+        }
+
+        return Optional.of(jsonFile).orElse(new ArrayList<T>());
     }
 
     /**

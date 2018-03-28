@@ -1,8 +1,10 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.smplatform.Link;
+import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,9 +35,9 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
-    @XmlElement(required = true)
-    private String link;
 
+    @XmlElement
+    private List<XmlAdaptedSocialMediaPlatform> platforms = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -67,7 +70,14 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        link = source.getSocialMediaPlatform().getLink().value;
+
+        //@@author Nethergale
+        platforms = new ArrayList<>();
+        for (String key : source.getSocialMediaPlatformMap().keySet()) {
+            platforms.add(new XmlAdaptedSocialMediaPlatform(key, source.getSocialMediaPlatformMap().get(key).getLink()));
+        }
+
+        //@@author
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -80,6 +90,14 @@ public class XmlAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Person toModelType() throws IllegalValueException {
+        //@@author Nethergale
+        final Map<String, SocialMediaPlatform> personSocialMediaPlatforms = new HashMap<>();
+        for (XmlAdaptedSocialMediaPlatform platform : platforms) {
+            SocialMediaPlatform platformModel = platform.toModelType();
+            personSocialMediaPlatforms.put(Link.getLinkType(platformModel.getLink().value), platformModel);
+        }
+
+        //@@author
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
@@ -117,9 +135,8 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
-        final Link link = new Link(this.link);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, link, tags);
+        return new Person(name, phone, email, address, personSocialMediaPlatforms, tags);
     }
 
     @Override

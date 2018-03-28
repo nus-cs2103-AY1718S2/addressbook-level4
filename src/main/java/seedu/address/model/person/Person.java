@@ -4,11 +4,10 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.smplatform.Facebook;
-import seedu.address.model.smplatform.Link;
 import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -23,21 +22,21 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
-    private final SocialMediaPlatform smp;
+    private final Map<String, SocialMediaPlatform> smpMap;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Link link, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Map<String, SocialMediaPlatform> socialMediaPlatformMap, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.smp = new Facebook();
-        smp.setLink(link);
+        this.smpMap = socialMediaPlatformMap;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -58,10 +57,16 @@ public class Person {
         return address;
     }
 
-    public SocialMediaPlatform getSocialMediaPlatform() {
-        return smp;
+    //@@author Nethergale
+    /**
+     * Returns an immutable social media platform map, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Map<String, SocialMediaPlatform> getSocialMediaPlatformMap() {
+        return Collections.unmodifiableMap(smpMap);
     }
 
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -70,6 +75,7 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    //@@author Nethergale
     /**
      * Returns a person comparator, which compares the names alphabetically.
      * Similar names are compared lexicographically.
@@ -79,6 +85,7 @@ public class Person {
             s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2));
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {

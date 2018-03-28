@@ -24,7 +24,7 @@ public class DeleteAppointmentCommandParserTest {
     @Test
     public void parse_validArgs_returnDeleteAppointmentCommand() throws IllegalValueException {
         DeleteAppointmentCommand expectedCommand = new DeleteAppointmentCommand(
-                new NameContainsKeywordsPredicate(Arrays.asList("Alice")), ParserUtil.parseIndex("1"));
+                new NameContainsKeywordsPredicate(Arrays.asList("Alice", "1")), ParserUtil.parseIndex("1"));
         assertParseSuccess(parser, "Alice 1", expectedCommand);
         assertParseSuccess(parser, "\n Alice 1 \n", expectedCommand);
     }

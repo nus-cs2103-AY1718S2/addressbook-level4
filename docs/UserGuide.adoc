@@ -396,8 +396,8 @@ e.g.`select 2`
 * *Redo* : `redo`
 * *ChangeTagColor* : `changeTagColor` +
 e.g. `changeTagColor friends blue`
-* *Add To Do : `addToDo`
-* *List Group Members : `listGroupMembers` +
+* *Add To Do* : `addToDo`
+* *List Group Members* : `listGroupMembers` +
 e.g. `listGroupMembers CS1010`
-* *Add Group : `addGroup` +
+* *Add Group* : `addGroup` +
 e.g. `addGroup CS3230`

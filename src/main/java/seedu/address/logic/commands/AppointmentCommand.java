@@ -8,7 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 
 /**
@@ -34,6 +36,7 @@ public class AppointmentCommand extends UndoableCommand {
             + PREFIX_END_TIME + "1600 ";
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in EduBuddy";
 
     private final Index index;
     private final Appointment toAdd;
@@ -52,14 +55,18 @@ public class AppointmentCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        model.addAppointment(toAdd);
-        List<Person> lastShownList = model.getFilteredPersonList();
-        selectedPerson = lastShownList.get(index.getZeroBased());
-        String appointmentDetails = toAdd.getStartTime() + " to " + toAdd.getEndTime() + " on "  + toAdd.getDate()
-                                    + " with " + selectedPerson.getName();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentDetails));
+        try {
+            model.addAppointment(toAdd);
+            List<Person> lastShownList = model.getFilteredPersonList();
+            selectedPerson = lastShownList.get(index.getZeroBased());
+            String appointmentDetails = toAdd.getStartTime() + " to " + toAdd.getEndTime() + " on " + toAdd.getDate()
+                    + " with " + selectedPerson.getName();
+            return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentDetails));
+        } catch (DuplicateAppointmentException e){
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        }
     }
 
     @Override

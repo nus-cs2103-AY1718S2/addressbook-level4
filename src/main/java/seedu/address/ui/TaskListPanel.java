@@ -17,8 +17,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
-import seedu.address.model.activity.Task;
 
 /**
  * Panel containing the list of activities.
@@ -69,6 +67,8 @@ public class TaskListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code TaskCard}.

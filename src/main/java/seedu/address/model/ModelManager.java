@@ -75,7 +75,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateActivity(Activity target, Activity editedActivity)
+    public synchronized void updateActivity(Activity target, Activity editedActivity)
             throws DuplicateActivityException, ActivityNotFoundException {
         requireAllNonNull(target, editedActivity);
 

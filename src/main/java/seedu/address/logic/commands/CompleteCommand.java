@@ -9,6 +9,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.ActivityNotFoundException;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
 //@@Author YuanQLLer
 /**
@@ -38,7 +40,14 @@ public class CompleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(activityToComplete);
-        activityToComplete.setCompleted(true);
+        try {
+            Activity completedActivity = activityToComplete.getCompletedCopy();
+            model.updateActivity(activityToComplete, completedActivity);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("The target activity cannot be missing");
+        } catch (DuplicateActivityException dae) {
+            throw new AssertionError("The completed activity cannot be duplicated");
+        }
         return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_SUCCESS, activityToComplete));
     }
 

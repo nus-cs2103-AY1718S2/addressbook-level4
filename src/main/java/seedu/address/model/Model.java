@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -31,6 +32,9 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+
+    void addPage(Person person) throws IOException;
+
     /** Adds the given appointment */
     void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
 
@@ -55,6 +59,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
 
     /**
      * Removes a specific tag from everyone in the address book.

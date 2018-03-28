@@ -16,7 +16,7 @@ public class Issue {
     private final Milestone milestone;
     private final Body body;
     private final List<Labels> labelsList;
-    
+
     /**
      * Every field must be present and not null.
      */

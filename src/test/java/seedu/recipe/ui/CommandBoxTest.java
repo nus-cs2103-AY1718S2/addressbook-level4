@@ -25,9 +25,8 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "should not work for now";
     private static final String COMMAND_THAT_HAS_MULTIPLE_LINES = FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES + LF
             + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
-    private static final String FIRST_SUGGESTION = "a/";
-    private static final String SECOND_SUGGESTION = "add";
-    private static final String COMMAND_WITH_NEW_LINE_USING_SUGGESTIONS = SECOND_SUGGESTION + LF + FIRST_SUGGESTION;
+    private static final String SECOND_SUGGESTION = "clear";
+    private static final String THIRD_SUGGESTION = "delete";
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -100,8 +99,10 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND);
         guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
         guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
         guiRobot.push(KeyCode.ENTER);
-        assertInput(COMMAND_WITH_NEW_LINE_USING_SUGGESTIONS);
+        assertInput(THIRD_SUGGESTION);
     }
 
     //@@author

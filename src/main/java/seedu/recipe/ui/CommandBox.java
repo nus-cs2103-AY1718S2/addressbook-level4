@@ -22,6 +22,7 @@ import seedu.recipe.logic.Logic;
 import seedu.recipe.logic.commands.CommandResult;
 import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.logic.parser.exceptions.ParseException;
+import seedu.recipe.ui.util.AutoCompletionUtil;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -39,6 +40,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextArea commandTextArea;
     private SuggestionsPopUp suggestionsPopUp;
+    private AutoCompletionUtil autoCompletionUtil;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -46,7 +48,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextArea.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        suggestionsPopUp = new SuggestionsPopUp(this);
+        autoCompletionUtil = new AutoCompletionUtil();
+        suggestionsPopUp = new SuggestionsPopUp(this, autoCompletionUtil);
     }
 
     /**

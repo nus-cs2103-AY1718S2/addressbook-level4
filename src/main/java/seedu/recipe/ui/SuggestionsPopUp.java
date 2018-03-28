@@ -1,9 +1,10 @@
 package seedu.recipe.ui;
 
+import static seedu.recipe.ui.util.AutoCompletionUtil.APPLICATION_COMMANDS;
 import static seedu.recipe.ui.util.AutoCompletionUtil.APPLICATION_KEYWORDS;
 import static seedu.recipe.ui.util.AutoCompletionUtil.MAX_SUGGESTIONS;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,12 +27,12 @@ public class SuggestionsPopUp extends ContextMenu {
     private TextInputProcessorUtil textInputProcessor;
     private AutoCompletionUtil autoCompletionUtil;
 
-    protected SuggestionsPopUp(CommandBox commandBox) {
+    protected SuggestionsPopUp(CommandBox commandBox, AutoCompletionUtil autoCompletionUtil) {
         super();
         this.commandBox = commandBox;
         commandTextArea = commandBox.getCommandTextArea();
         textInputProcessor = new TextInputProcessorUtil();
-        autoCompletionUtil = new AutoCompletionUtil();
+        this.autoCompletionUtil = autoCompletionUtil;
     }
 
     /**
@@ -51,7 +52,10 @@ public class SuggestionsPopUp extends ContextMenu {
         textInputProcessor.setFont(commandTextArea.getFont());
         String lastWord = textInputProcessor.getLastWord();
         // finds suggestions and displays
-        findSuggestions(lastWord, Arrays.asList(APPLICATION_KEYWORDS));
+        ArrayList<String> suggestionList = new ArrayList<>(APPLICATION_KEYWORDS);
+        suggestionList.addAll(APPLICATION_COMMANDS);
+
+        findSuggestions(lastWord, suggestionList);
 
         // gets caret position based on input text and font
         double anchorX = findDisplayPositionX(textInputProcessor.getCaretPositionX());

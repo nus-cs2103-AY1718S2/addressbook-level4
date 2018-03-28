@@ -22,7 +22,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
-public class AddressBook implements ReadOnlyAddressBook {
+public class CoinBook implements ReadOnlyCoinBook {
 
     private final UniqueCoinList coins;
     private final UniqueTagList tags;
@@ -39,12 +39,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public CoinBook() {}
 
     /**
-     * Creates an AddressBook using the Coins and Tags in the {@code toBeCopied}
+     * Creates an CoinBook using the Coins and Tags in the {@code toBeCopied}
      */
-    public AddressBook(ReadOnlyAddressBook toBeCopied) {
+    public CoinBook(ReadOnlyCoinBook toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -60,9 +60,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code CoinBook} with {@code newData}.
      */
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyCoinBook newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
         List<Coin> syncedCoinList = newData.getCoinList().stream()
@@ -85,8 +85,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateCoinException if an equivalent coin already exists.
      */
-    public void addCoin(Coin p) throws DuplicateCoinException {
-        Coin coin = syncWithMasterTagList(p);
+    public void addCoin(Coin c) throws DuplicateCoinException {
+        Coin coin = syncWithMasterTagList(c);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any coin
         // in the coin list.
@@ -95,7 +95,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given coin {@code target} in the list with {@code editedCoin}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedCoin}.
+     * {@code CoinBook}'s tag list will be updated with the tags of {@code editedCoin}.
      *
      * @throws DuplicateCoinException if updating the coin's details causes the coin to be equivalent to
      *      another existing coin in the list.
@@ -132,12 +132,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         coinTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Coin(
-                coin.getName(), coin.getPhone(), coin.getEmail(), coin.getAddress(), correctTagReferences);
+                coin.getName(), coin.getCode(), correctTagReferences);
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws CoinNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * Removes {@code key} from this {@code CoinBook}.
+     * @throws CoinNotFoundException if the {@code key} is not in this {@code CoinBook}.
      */
     public boolean removeCoin(Coin key) throws CoinNotFoundException {
         if (coins.remove(key)) {
@@ -174,9 +174,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && this.coins.equals(((AddressBook) other).coins)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                || (other instanceof CoinBook // instanceof handles nulls
+                && this.coins.equals(((CoinBook) other).coins)
+                && this.tags.equalsOrderInsensitive(((CoinBook) other).tags));
     }
 
     @Override

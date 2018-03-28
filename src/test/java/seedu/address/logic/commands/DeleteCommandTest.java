@@ -38,7 +38,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_COIN_SUCCESS, coinToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
         expectedModel.deleteCoin(coinToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -61,7 +61,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_COIN_SUCCESS, coinToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
         expectedModel.deleteCoin(coinToDelete);
         showNoCoin(expectedModel);
 
@@ -74,7 +74,7 @@ public class DeleteCommandTest {
 
         Index outOfBoundIndex = INDEX_SECOND_COIN;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getCoinList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getCoinBook().getCoinList().size());
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
@@ -88,7 +88,7 @@ public class DeleteCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Coin coinToDelete = model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_COIN);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
 
         // delete -> first coin deleted
         deleteCommand.execute();
@@ -131,7 +131,7 @@ public class DeleteCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_COIN);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
 
         showCoinAtIndex(model, INDEX_SECOND_COIN);
         Coin coinToDelete = model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased());

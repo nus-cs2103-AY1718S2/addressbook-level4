@@ -9,11 +9,9 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.coin.Address;
+import seedu.address.model.coin.Code;
 import seedu.address.model.coin.Coin;
-import seedu.address.model.coin.Email;
 import seedu.address.model.coin.Name;
-import seedu.address.model.coin.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,11 +24,7 @@ public class XmlAdaptedCoin {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String phone;
-    @XmlElement(required = true)
-    private String email;
-    @XmlElement(required = true)
-    private String address;
+    private String code;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -44,11 +38,9 @@ public class XmlAdaptedCoin {
     /**
      * Constructs an {@code XmlAdaptedCoin} with the given coin details.
      */
-    public XmlAdaptedCoin(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedCoin(String name, String code, List<XmlAdaptedTag> tagged) {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+        this.code = code;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -61,9 +53,7 @@ public class XmlAdaptedCoin {
      */
     public XmlAdaptedCoin(Coin source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
+        code = source.getCode().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -89,32 +79,16 @@ public class XmlAdaptedCoin {
         }
         final Name name = new Name(this.name);
 
-        if (this.phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        if (this.code == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Code.class.getSimpleName()));
         }
-        if (!Phone.isValidPhone(this.phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+        if (!Code.isValidCode(this.code)) {
+            throw new IllegalValueException(Code.MESSAGE_CODE_CONSTRAINTS);
         }
-        final Phone phone = new Phone(this.phone);
-
-        if (this.email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-        if (!Email.isValidEmail(this.email)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        final Email email = new Email(this.email);
-
-        if (this.address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(this.address)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        final Address address = new Address(this.address);
+        final Code code = new Code(this.code);
 
         final Set<Tag> tags = new HashSet<>(coinTags);
-        return new Coin(name, phone, email, address, tags);
+        return new Coin(name, code, tags);
     }
 
     @Override
@@ -129,9 +103,7 @@ public class XmlAdaptedCoin {
 
         XmlAdaptedCoin otherCoin = (XmlAdaptedCoin) other;
         return Objects.equals(name, otherCoin.name)
-                && Objects.equals(phone, otherCoin.phone)
-                && Objects.equals(email, otherCoin.email)
-                && Objects.equals(address, otherCoin.address)
+                && Objects.equals(code, otherCoin.code)
                 && tagged.equals(otherCoin.tagged);
     }
 }

@@ -24,7 +24,7 @@ public class AddressBookTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final AddressBook addressBook = new AddressBook();
+    private final CoinBook addressBook = new CoinBook();
 
     @Test
     public void constructor() {
@@ -40,7 +40,7 @@ public class AddressBookTest {
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = getTypicalAddressBook();
+        CoinBook newData = getTypicalAddressBook();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
     }
@@ -50,7 +50,7 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Coin> newCoins = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newCoins, newTags);
+        CoinBookStub newData = new CoinBookStub(newCoins, newTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -69,13 +69,13 @@ public class AddressBookTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose coins and tags lists can violate interface constraints.
+     * A stub ReadOnlyCoinBook whose coins and tags lists can violate interface constraints.
      */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
+    private static class CoinBookStub implements ReadOnlyCoinBook {
         private final ObservableList<Coin> coins = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Coin> coins, Collection<? extends Tag> tags) {
+        CoinBookStub(Collection<Coin> coins, Collection<? extends Tag> tags) {
             this.coins.setAll(coins);
             this.tags.setAll(tags);
         }

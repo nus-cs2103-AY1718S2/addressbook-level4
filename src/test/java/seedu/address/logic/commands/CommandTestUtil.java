@@ -17,7 +17,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.NameContainsKeywordsPredicate;
@@ -31,8 +31,8 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_PHONE_AMY = "11111111";
-    public static final String VALID_PHONE_BOB = "22222222";
+    public static final String VALID_PHONE_AMY = "AAA";
+    public static final String VALID_PHONE_BOB = "BBB";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
@@ -65,10 +65,10 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditCoinDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withPhone(VALID_PHONE_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
@@ -97,7 +97,7 @@ public class CommandTestUtil {
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        CoinBook expectedAddressBook = new CoinBook(actualModel.getCoinBook());
         List<Coin> expectedFilteredList = new ArrayList<>(actualModel.getFilteredCoinList());
 
         try {
@@ -105,7 +105,7 @@ public class CommandTestUtil {
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedAddressBook, actualModel.getAddressBook());
+            assertEquals(expectedAddressBook, actualModel.getCoinBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredCoinList());
         }
     }

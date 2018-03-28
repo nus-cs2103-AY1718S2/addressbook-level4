@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.CoinBook;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
 import seedu.address.model.tag.Tag;
@@ -9,22 +9,22 @@ import seedu.address.model.tag.Tag;
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withCoin("John", "Doe").withTag("Friend").build();}
+ *     {@code CoinBook ab = new AddressBookBuilder().withCoin("John", "Doe").withTag("Friend").build();}
  */
 public class AddressBookBuilder {
 
-    private AddressBook addressBook;
+    private CoinBook addressBook;
 
     public AddressBookBuilder() {
-        addressBook = new AddressBook();
+        addressBook = new CoinBook();
     }
 
-    public AddressBookBuilder(AddressBook addressBook) {
+    public AddressBookBuilder(CoinBook addressBook) {
         this.addressBook = addressBook;
     }
 
     /**
-     * Adds a new {@code Coin} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Coin} to the {@code CoinBook} that we are building.
      */
     public AddressBookBuilder withCoin(Coin coin) {
         try {
@@ -36,7 +36,7 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
+     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code CoinBook} that we are building.
      */
     public AddressBookBuilder withTag(String tagName) {
         try {
@@ -47,7 +47,7 @@ public class AddressBookBuilder {
         return this;
     }
 
-    public AddressBook build() {
+    public CoinBook build() {
         return addressBook;
     }
 }

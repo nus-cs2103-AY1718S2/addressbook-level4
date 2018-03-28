@@ -3,14 +3,14 @@
     <!-- Valid Coin -->
     <coins>
         <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
+        <code isPrivate="false">9482424</code>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
     </coins>
-    <!-- Coin with invalid phone field -->
+    <!-- Coin with invalid code field -->
     <coins>
         <name>Hans Muster</name>
-        <phone isPrivate="false">948asdf2424</phone>
+        <code isPrivate="false">948asdf2424</code>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
     </coins>

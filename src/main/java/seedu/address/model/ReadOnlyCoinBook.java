@@ -7,7 +7,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Unmodifiable view of an address book
  */
-public interface ReadOnlyAddressBook {
+public interface ReadOnlyCoinBook {
 
     /**
      * Returns an unmodifiable view of the coins list.

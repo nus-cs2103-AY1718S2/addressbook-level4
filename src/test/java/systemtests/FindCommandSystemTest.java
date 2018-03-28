@@ -82,7 +82,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find same coins in address book after deleting 1 of them -> 1 coin found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
-        assertFalse(getModel().getAddressBook().getCoinList().contains(BENSON));
+        assertFalse(getModel().getCoinBook().getCoinList().contains(BENSON));
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, DANIEL);
@@ -112,17 +112,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find phone number of coin in address book -> 0 coins found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find address of coin in address book -> 0 coins found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find email of coin in address book -> 0 coins found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getCode().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

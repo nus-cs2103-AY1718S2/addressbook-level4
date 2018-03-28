@@ -28,8 +28,8 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withCoin(ALICE).withCoin(BENSON).build();
-        AddressBook differentAddressBook = new AddressBook();
+        CoinBook addressBook = new AddressBookBuilder().withCoin(ALICE).withCoin(BENSON).build();
+        CoinBook differentAddressBook = new CoinBook();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true

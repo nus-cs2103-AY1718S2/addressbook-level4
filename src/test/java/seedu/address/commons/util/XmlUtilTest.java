@@ -14,10 +14,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.AddressBook;
+import seedu.address.model.CoinBook;
 import seedu.address.storage.XmlAdaptedCoin;
 import seedu.address.storage.XmlAdaptedTag;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableCoinBook;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.CoinBuilder;
 import seedu.address.testutil.TestUtil;
@@ -36,8 +36,7 @@ public class XmlUtilTest {
     private static final String INVALID_PHONE = "9482asf424";
 
     private static final String VALID_NAME = "Hans Muster";
-    private static final String VALID_PHONE = "9482424";
-    private static final String VALID_EMAIL = "hans@example";
+    private static final String VALID_PHONE = "ABC";
     private static final String VALID_ADDRESS = "4th street";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
@@ -47,7 +46,7 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_nullFile_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        XmlUtil.getDataFromFile(null, AddressBook.class);
+        XmlUtil.getDataFromFile(null, CoinBook.class);
     }
 
     @Test
@@ -59,18 +58,18 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_missingFile_fileNotFoundException() throws Exception {
         thrown.expect(FileNotFoundException.class);
-        XmlUtil.getDataFromFile(MISSING_FILE, AddressBook.class);
+        XmlUtil.getDataFromFile(MISSING_FILE, CoinBook.class);
     }
 
     @Test
     public void getDataFromFile_emptyFile_dataFormatMismatchException() throws Exception {
         thrown.expect(JAXBException.class);
-        XmlUtil.getDataFromFile(EMPTY_FILE, AddressBook.class);
+        XmlUtil.getDataFromFile(EMPTY_FILE, CoinBook.class);
     }
 
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
-        AddressBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableAddressBook.class).toModelType();
+        CoinBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableCoinBook.class).toModelType();
         assertEquals(9, dataFromFile.getCoinList().size());
         assertEquals(0, dataFromFile.getTagList().size());
     }
@@ -80,7 +79,7 @@ public class XmlUtilTest {
         XmlAdaptedCoin actualCoin = XmlUtil.getDataFromFile(
                 MISSING_COIN_FIELD_FILE, XmlAdaptedCoinWithRootElement.class);
         XmlAdaptedCoin expectedCoin = new XmlAdaptedCoin(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                null, VALID_PHONE, VALID_TAGS);
         assertEquals(expectedCoin, actualCoin);
     }
 
@@ -89,7 +88,7 @@ public class XmlUtilTest {
         XmlAdaptedCoin actualCoin = XmlUtil.getDataFromFile(
                 INVALID_COIN_FIELD_FILE, XmlAdaptedCoinWithRootElement.class);
         XmlAdaptedCoin expectedCoin = new XmlAdaptedCoin(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_TAGS);
         assertEquals(expectedCoin, actualCoin);
     }
 
@@ -98,14 +97,14 @@ public class XmlUtilTest {
         XmlAdaptedCoin actualCoin = XmlUtil.getDataFromFile(
                 VALID_COIN_FILE, XmlAdaptedCoinWithRootElement.class);
         XmlAdaptedCoin expectedCoin = new XmlAdaptedCoin(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_TAGS);
         assertEquals(expectedCoin, actualCoin);
     }
 
     @Test
     public void saveDataToFile_nullFile_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        XmlUtil.saveDataToFile(null, new AddressBook());
+        XmlUtil.saveDataToFile(null, new CoinBook());
     }
 
     @Test
@@ -117,23 +116,23 @@ public class XmlUtilTest {
     @Test
     public void saveDataToFile_missingFile_fileNotFoundException() throws Exception {
         thrown.expect(FileNotFoundException.class);
-        XmlUtil.saveDataToFile(MISSING_FILE, new AddressBook());
+        XmlUtil.saveDataToFile(MISSING_FILE, new CoinBook());
     }
 
     @Test
     public void saveDataToFile_validFile_dataSaved() throws Exception {
         TEMP_FILE.createNewFile();
-        XmlSerializableAddressBook dataToWrite = new XmlSerializableAddressBook(new AddressBook());
+        XmlSerializableCoinBook dataToWrite = new XmlSerializableCoinBook(new CoinBook());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
+        XmlSerializableCoinBook dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableCoinBook.class);
         assertEquals(dataToWrite, dataFromFile);
 
-        AddressBookBuilder builder = new AddressBookBuilder(new AddressBook());
-        dataToWrite = new XmlSerializableAddressBook(
+        AddressBookBuilder builder = new AddressBookBuilder(new CoinBook());
+        dataToWrite = new XmlSerializableCoinBook(
                 builder.withCoin(new CoinBuilder().build()).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
+        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableCoinBook.class);
         assertEquals(dataToWrite, dataFromFile);
     }
 

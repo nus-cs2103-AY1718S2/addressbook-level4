@@ -2,55 +2,55 @@
 <addressbook>
     <coins>
         <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
+        <code isPrivate="false">AAA</code>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
     </coins>
     <coins>
         <name>Ruth Mueller</name>
-        <phone isPrivate="false">87249245</phone>
+        <code isPrivate="false">BBB</code>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
     </coins>
     <coins>
         <name>Heinz Kurz</name>
-        <phone isPrivate="false">95352563</phone>
+        <code isPrivate="false">CCC</code>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
     </coins>
     <coins>
         <name>Cornelia Meier</name>
-        <phone isPrivate="false">87652533</phone>
+        <code isPrivate="false">DDD</code>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
     </coins>
     <coins>
         <name>Werner Meyer</name>
-        <phone isPrivate="false">9482224</phone>
+        <code isPrivate="false">EEE</code>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
     </coins>
     <coins>
         <name>Lydia Kunz</name>
-        <phone isPrivate="false">9482427</phone>
+        <code isPrivate="false">FFF</code>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
     </coins>
     <coins>
         <name>Anna Best</name>
-        <phone isPrivate="false">9482442</phone>
+        <code isPrivate="false">GGG</code>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
     </coins>
     <coins>
         <name>Stefan Meier</name>
-        <phone isPrivate="false">8482424</phone>
+        <code isPrivate="false">HHH</code>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
     </coins>
     <coins>
         <name>Martin Mueller</name>
-        <phone isPrivate="false">8482131</phone>
+        <code isPrivate="false">III</code>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
     </coins>

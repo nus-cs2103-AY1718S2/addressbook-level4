@@ -12,7 +12,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CoinBookChangedEvent;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -80,7 +80,7 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+    public void handleAddressBookChangedEvent(CoinBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));

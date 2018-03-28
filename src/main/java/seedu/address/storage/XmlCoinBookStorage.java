@@ -12,49 +12,49 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCoinBook;
 
 /**
- * A class to access AddressBook data stored as an xml file on the hard disk.
+ * A class to access CoinBook data stored as an xml file on the hard disk.
  */
-public class XmlAddressBookStorage implements AddressBookStorage {
+public class XmlCoinBookStorage implements CoinBookStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlCoinBookStorage.class);
 
     private static final String backupFilePath = "data/backup.xml";
 
     private String filePath;
 
-    public XmlAddressBookStorage(String filePath) {
+    public XmlCoinBookStorage(String filePath) {
         this.filePath = filePath;
     }
 
-    public String getAddressBookFilePath() {
+    public String getCoinBookFilePath() {
         return filePath;
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(filePath);
+    public Optional<ReadOnlyCoinBook> readCoinBook() throws DataConversionException, IOException {
+        return readCoinBook(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}
+     * Similar to {@link #readCoinBook()}
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException,
+    public Optional<ReadOnlyCoinBook> readCoinBook(String filePath) throws DataConversionException,
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
         File addressBookFile = new File(filePath);
 
         if (!addressBookFile.exists()) {
-            logger.info("AddressBook file "  + addressBookFile + " not found");
+            logger.info("CoinBook file "  + addressBookFile + " not found");
             return Optional.empty();
         }
 
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        XmlSerializableCoinBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
@@ -64,26 +64,26 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+    public void saveCoinBook(ReadOnlyCoinBook addressBook) throws IOException {
+        saveCoinBook(addressBook, filePath);
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
+     * Similar to {@link #saveCoinBook(ReadOnlyCoinBook)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+    public void saveCoinBook(ReadOnlyCoinBook addressBook, String filePath) throws IOException {
         requireNonNull(addressBook);
         requireNonNull(filePath);
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableCoinBook(addressBook));
     }
 
     @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, backupFilePath);
+    public void backupCoinBook(ReadOnlyCoinBook addressBook) throws IOException {
+        saveCoinBook(addressBook, backupFilePath);
     }
 
 }

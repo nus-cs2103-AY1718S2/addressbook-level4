@@ -31,7 +31,7 @@ public class AddCommandIntegrationTest {
     public void execute_newCoin_success() throws Exception {
         Coin validCoin = new CoinBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
         expectedModel.addCoin(validCoin);
 
         assertCommandSuccess(prepareCommand(validCoin, model), model,
@@ -40,7 +40,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_duplicateCoin_throwsCommandException() {
-        Coin coinInList = model.getAddressBook().getCoinList().get(0);
+        Coin coinInList = model.getCoinBook().getCoinList().get(0);
         assertCommandFailure(prepareCommand(coinInList, model), model, AddCommand.MESSAGE_DUPLICATE_COIN);
     }
 

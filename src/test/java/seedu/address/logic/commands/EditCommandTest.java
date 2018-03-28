@@ -24,7 +24,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.EditCommand.EditCoinDescriptor;
-import seedu.address.model.AddressBook;
+import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -47,7 +47,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_COIN_SUCCESS, editedCoin);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new CoinBook(model.getCoinBook()), new UserPrefs());
         expectedModel.updateCoin(model.getFilteredCoinList().get(0), editedCoin);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -59,7 +59,7 @@ public class EditCommandTest {
         Coin lastCoin = model.getFilteredCoinList().get(indexLastCoin.getZeroBased());
 
         CoinBuilder coinInList = new CoinBuilder(lastCoin);
-        Coin editedCoin = coinInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Coin editedCoin = coinInList.withName(VALID_NAME_BOB).withCode(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
 
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB)
@@ -68,7 +68,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_COIN_SUCCESS, editedCoin);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new CoinBook(model.getCoinBook()), new UserPrefs());
         expectedModel.updateCoin(lastCoin, editedCoin);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -81,7 +81,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_COIN_SUCCESS, editedCoin);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new CoinBook(model.getCoinBook()), new UserPrefs());
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -97,7 +97,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_COIN_SUCCESS, editedCoin);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new CoinBook(model.getCoinBook()), new UserPrefs());
         expectedModel.updateCoin(model.getFilteredCoinList().get(0), editedCoin);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -117,7 +117,7 @@ public class EditCommandTest {
         showCoinAtIndex(model, INDEX_FIRST_COIN);
 
         // edit coin in filtered list into a duplicate in address book
-        Coin coinInList = model.getAddressBook().getCoinList().get(INDEX_SECOND_COIN.getZeroBased());
+        Coin coinInList = model.getCoinBook().getCoinList().get(INDEX_SECOND_COIN.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_COIN,
                 new EditCoinDescriptorBuilder(coinInList).build());
 
@@ -142,7 +142,7 @@ public class EditCommandTest {
         showCoinAtIndex(model, INDEX_FIRST_COIN);
         Index outOfBoundIndex = INDEX_SECOND_COIN;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getCoinList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getCoinBook().getCoinList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
                 new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB).build());
@@ -159,7 +159,7 @@ public class EditCommandTest {
         Coin coinToEdit = model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased());
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder(editedCoin).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_COIN, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new CoinBook(model.getCoinBook()), new UserPrefs());
 
         // edit -> first coin edited
         editCommand.execute();
@@ -205,7 +205,7 @@ public class EditCommandTest {
         Coin editedCoin = new CoinBuilder().build();
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder(editedCoin).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_COIN, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new CoinBook(model.getCoinBook()), new UserPrefs());
 
         showCoinAtIndex(model, INDEX_SECOND_COIN);
         Coin coinToEdit = model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased());

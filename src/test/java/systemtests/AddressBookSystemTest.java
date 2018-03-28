@@ -37,7 +37,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.model.AddressBook;
+import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalCoins;
 import seedu.address.ui.BrowserPanel;
@@ -45,7 +45,7 @@ import seedu.address.ui.CommandBox;
 import seedu.address.ui.ResultDisplay;
 
 /**
- * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
+ * A system test class for CoinBook, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
 public abstract class AddressBookSystemTest {
@@ -89,7 +89,7 @@ public abstract class AddressBookSystemTest {
     /**
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
-    protected AddressBook getInitialData() {
+    protected CoinBook getInitialData() {
         return TypicalCoins.getTypicalAddressBook();
     }
 
@@ -148,7 +148,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showAllCoins() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertEquals(getModel().getAddressBook().getCoinList().size(), getModel().getFilteredCoinList().size());
+        assertEquals(getModel().getCoinBook().getCoinList().size(), getModel().getFilteredCoinList().size());
     }
 
     /**
@@ -156,7 +156,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showCoinsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assertTrue(getModel().getFilteredCoinList().size() < getModel().getAddressBook().getCoinList().size());
+        assertTrue(getModel().getFilteredCoinList().size() < getModel().getCoinBook().getCoinList().size());
     }
 
     /**
@@ -172,7 +172,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void deleteAllCoins() {
         executeCommand(ClearCommand.COMMAND_WORD);
-        assertEquals(0, getModel().getAddressBook().getCoinList().size());
+        assertEquals(0, getModel().getCoinBook().getCoinList().size());
     }
 
     /**
@@ -185,7 +185,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getCoinBook(), testApp.readStorageAddressBook());
         assertListMatching(getCoinListPanel(), expectedModel.getFilteredCoinList());
     }
 
@@ -289,7 +289,7 @@ public abstract class AddressBookSystemTest {
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         String expectedItemCountStatus = String.format(ITEM_COUNT_STATUS,
-                testApp.getModel().getAddressBook().getCoinList().size());
+                testApp.getModel().getCoinBook().getCoinList().size());
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
         assertEquals(expectedItemCountStatus, handle.getItemCount());
         assertFalse(handle.isSaveLocationChanged());

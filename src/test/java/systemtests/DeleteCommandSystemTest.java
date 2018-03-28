@@ -69,7 +69,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
          * -> rejected
          */
         showCoinsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getCoinList().size();
+        int invalidIndex = getModel().getCoinBook().getCoinList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
 
@@ -98,7 +98,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
-                getModel().getAddressBook().getCoinList().size() + 1);
+                getModel().getCoinBook().getCoinList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
 

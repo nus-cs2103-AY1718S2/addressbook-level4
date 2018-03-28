@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- Coin with an invalid phone field -->
+<!-- Coin with an invalid code field -->
 <coin>
     <name>Hans Muster</name>
-    <phone>9482asf424</phone>
-    <email>hans@example</email>
+    <code>9482asf424</code>
     <address>4th street</address>
     <tagged>friends</tagged>
 </coin>

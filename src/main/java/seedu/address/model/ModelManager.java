@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CoinBookChangedEvent;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
@@ -23,51 +23,51 @@ import seedu.address.model.coin.exceptions.DuplicateCoinException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final CoinBook coinBook;
     private final FilteredList<Coin> filteredCoins;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given coinBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyCoinBook coinBook, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(coinBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + coinBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
-        filteredCoins = new FilteredList<>(this.addressBook.getCoinList());
+        this.coinBook = new CoinBook(coinBook);
+        filteredCoins = new FilteredList<>(this.coinBook.getCoinList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new CoinBook(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
+    public void resetData(ReadOnlyCoinBook newData) {
+        coinBook.resetData(newData);
         indicateAddressBookChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public ReadOnlyCoinBook getCoinBook() {
+        return coinBook;
     }
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+        raise(new CoinBookChangedEvent(coinBook));
     }
 
     @Override
     public synchronized void deleteCoin(Coin target) throws CoinNotFoundException {
-        addressBook.removeCoin(target);
+        coinBook.removeCoin(target);
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addCoin(Coin coin) throws DuplicateCoinException {
-        addressBook.addCoin(coin);
+        coinBook.addCoin(coin);
         updateFilteredCoinList(PREDICATE_SHOW_ALL_COINS);
         indicateAddressBookChanged();
     }
@@ -77,7 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicateCoinException, CoinNotFoundException {
         requireAllNonNull(target, editedCoin);
 
-        addressBook.updateCoin(target, editedCoin);
+        coinBook.updateCoin(target, editedCoin);
         indicateAddressBookChanged();
     }
 
@@ -85,7 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Returns an unmodifiable view of the list of {@code Coin} backed by the internal list of
-     * {@code addressBook}
+     * {@code coinBook}
      */
     @Override
     public ObservableList<Coin> getFilteredCoinList() {
@@ -112,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
+        return coinBook.equals(other.coinBook)
                 && filteredCoins.equals(other.filteredCoins);
     }
 

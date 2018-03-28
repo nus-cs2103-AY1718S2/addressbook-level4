@@ -5,11 +5,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditCoinDescriptor;
-import seedu.address.model.coin.Address;
+import seedu.address.model.coin.Code;
 import seedu.address.model.coin.Coin;
-import seedu.address.model.coin.Email;
 import seedu.address.model.coin.Name;
-import seedu.address.model.coin.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,9 +31,7 @@ public class EditCoinDescriptorBuilder {
     public EditCoinDescriptorBuilder(Coin coin) {
         descriptor = new EditCoinDescriptor();
         descriptor.setName(coin.getName());
-        descriptor.setPhone(coin.getPhone());
-        descriptor.setEmail(coin.getEmail());
-        descriptor.setAddress(coin.getAddress());
+        descriptor.setCode(coin.getCode());
         descriptor.setTags(coin.getTags());
     }
 
@@ -48,26 +44,10 @@ public class EditCoinDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditCoinDescriptor} that we are building.
+     * Sets the {@code Code} of the {@code EditCoinDescriptor} that we are building.
      */
     public EditCoinDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Email} of the {@code EditCoinDescriptor} that we are building.
-     */
-    public EditCoinDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code EditCoinDescriptor} that we are building.
-     */
-    public EditCoinDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
+        descriptor.setCode(new Code(phone));
         return this;
     }
 

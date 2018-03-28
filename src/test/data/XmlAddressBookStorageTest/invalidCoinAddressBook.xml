@@ -3,7 +3,7 @@
     <!-- Coin with invalid name field -->
     <coins>
         <name>Ha!ns Mu@ster</name>
-        <phone isPrivate="false">9482424</phone>
+        <code isPrivate="false">9482424</code>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
     </coins>

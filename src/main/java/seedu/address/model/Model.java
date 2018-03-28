@@ -15,10 +15,10 @@ public interface Model {
     Predicate<Coin> PREDICATE_SHOW_ALL_COINS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyCoinBook newData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the CoinBook */
+    ReadOnlyCoinBook getCoinBook();
 
     /** Deletes the given coin. */
     void deleteCoin(Coin target) throws CoinNotFoundException;

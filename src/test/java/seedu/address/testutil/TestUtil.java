@@ -35,20 +35,20 @@ public class TestUtil {
      * Returns the middle index of the coin in the {@code model}'s coin list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getCoinList().size() / 2);
+        return Index.fromOneBased(model.getCoinBook().getCoinList().size() / 2);
     }
 
     /**
      * Returns the last index of the coin in the {@code model}'s coin list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getCoinList().size());
+        return Index.fromOneBased(model.getCoinBook().getCoinList().size());
     }
 
     /**
      * Returns the coin in the {@code model}'s coin list at {@code index}.
      */
     public static Coin getCoin(Model model, Index index) {
-        return model.getAddressBook().getCoinList().get(index.getZeroBased());
+        return model.getCoinBook().getCoinList().get(index.getZeroBased());
     }
 }

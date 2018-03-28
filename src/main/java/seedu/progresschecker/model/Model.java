@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
 import seedu.progresschecker.model.person.exceptions.PersonNotFoundException;
@@ -29,6 +30,9 @@ public interface Model {
 
     /** Sorts the persons in ProgressChecker according to their names in alphabetical order */
     void sort();
+
+    /** creates and issue on github */
+    void createIssueOnGitHub(Issue issue) throws IOException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

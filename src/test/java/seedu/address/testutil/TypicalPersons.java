@@ -55,7 +55,8 @@ public class TypicalPersons {
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
             .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS, VALID_SUBJECT_PHYSICS,
-                      VALID_SUBJECT_ENGLISH, VALID_SUBJECT_MALAY , VALID_SUBJECT_BIOLOGY, VALID_SUBJECT_HISTORY).build();
+                      VALID_SUBJECT_ENGLISH, VALID_SUBJECT_MALAY , VALID_SUBJECT_BIOLOGY, VALID_SUBJECT_HISTORY)
+            .build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS,
                       VALID_SUBJECT_PHYSICS, VALID_SUBJECT_ENGLISH, VALID_SUBJECT_MALAY , VALID_SUBJECT_BIOLOGY,

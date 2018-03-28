@@ -40,7 +40,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setBirthday(person.getBirthday());
         descriptor.setAppointment(person.getAppointment());
-        descriptor.setGroup((person.getGroup()));
+        descriptor.setGroup(person.getGroup());
         descriptor.setTags(person.getTags());
     }
 

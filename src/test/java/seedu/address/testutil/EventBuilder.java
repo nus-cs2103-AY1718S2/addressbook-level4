@@ -3,7 +3,6 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
 import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Location;
@@ -12,7 +11,7 @@ import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
-
+//@@author YuanQQLer
 /**
  * This the class to build event
  */
@@ -100,7 +99,9 @@ public class EventBuilder implements ActivityBuilder {
         this.location = new Location(location);
         return this;
     }
-    public Activity build() {
+
+    //@@author Kyomian
+    public Event build() {
         return new Event(name, startDateTime, endDateTime, location, remark, tags);
     }
 

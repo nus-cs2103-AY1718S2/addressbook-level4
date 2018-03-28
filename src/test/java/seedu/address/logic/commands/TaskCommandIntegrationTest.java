@@ -5,7 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import org.junit.Before;
-//import org.junit.Test;
+import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -16,8 +16,9 @@ import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.Task;
 import seedu.address.testutil.TaskBuilder;
 
+//@@author Kyomian
 /**
- * Contains integration tests (interaction with the Model) for {@code AddCommand}.
+ * Contains integration tests (interaction with the Model) for {@code TaskCommand}.
  */
 public class TaskCommandIntegrationTest {
 
@@ -28,34 +29,29 @@ public class TaskCommandIntegrationTest {
         model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
-    public void execute_newPerson_success() throws Exception {
-        Activity validActivity = new TaskBuilder().build();
+    @Test
+    public void execute_newTask_success() throws Exception {
+        Task validTask = new TaskBuilder().build();
 
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
-        expectedModel.addActivity(validActivity);
+        expectedModel.addActivity(validTask);
 
-        assertCommandSuccess(prepareCommand(validActivity, model), model,
-                String.format(TaskCommand.MESSAGE_SUCCESS, validActivity), expectedModel);
+        assertCommandSuccess(prepareCommand(validTask, model), model,
+                String.format(TaskCommand.MESSAGE_SUCCESS, validTask), expectedModel);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
-    public void execute_duplicatePerson_throwsCommandException() {
+    @Test
+    // Questionable - does the app check for duplicate task?
+    public void execute_duplicateTask_throwsCommandException() {
         Activity activityInList = model.getDeskBoard().getActivityList().get(0);
-        assertCommandFailure(prepareCommand(activityInList, model), model, TaskCommand.MESSAGE_DUPLICATE_TASK);
+        assertCommandFailure(prepareCommand((Task) activityInList, model), model, TaskCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     /**
-     * Generates a new {@code AddCommand} which upon execution, adds {@code activity} into the {@code model}.
+     * Generates a new {@code TaskCommand} which upon execution, adds {@code task} into the {@code model}.
      */
-    private TaskCommand prepareCommand(Activity activity, Model model) {
-        TaskCommand command = new TaskCommand((Task) activity);
+    private TaskCommand prepareCommand(Task task, Model model) {
+        TaskCommand command = new TaskCommand(task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

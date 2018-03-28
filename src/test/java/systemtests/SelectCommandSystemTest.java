@@ -6,7 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_ACTIVITY_SUCCESS;
 import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
-import static seedu.address.testutil.TypicalActivities.getTypicalActivitiess;
+import static seedu.address.testutil.TypicalActivities.getTypicalActivities;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
 //import org.junit.Test;
@@ -32,7 +32,7 @@ public class SelectCommandSystemTest extends RemarkBookSystemTest {
         assertCommandSuccess(command, INDEX_FIRST_ACTIVITY);
 
         /* Case: select the last card in the activity list -> selected */
-        Index personCount = Index.fromOneBased(getTypicalActivitiess().size());
+        Index personCount = Index.fromOneBased(getTypicalActivities().size());
         command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
         assertCommandSuccess(command, personCount);
 

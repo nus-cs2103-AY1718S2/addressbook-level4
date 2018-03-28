@@ -57,12 +57,6 @@ public class BrowserPanelTest extends GuiUnitTest {
         assertEquals(expectedRecipeUrl, browserPanelHandle.getLoadedUrl());
 
         //@@author RyanAngJY
-        // login page to share recipe
-        postNow(shareRecipeEvent);
-        expectedRecipeUrl = new URL(FacebookHandler.getPostDomain() + recipeStub.getUrl()
-                + FacebookHandler.getRedirectEmbedded());
-        assertEquals(expectedRecipeUrl, browserPanelHandle.getLoadedUrl());
-
         shareRecipeEvent = new ShareRecipeEvent(Index.fromZeroBased(1), recipeStubWithoutUrl);
         postNow(shareRecipeEvent);
         expectedRecipeUrl = new URL(FacebookHandler.REDIRECT_DOMAIN);

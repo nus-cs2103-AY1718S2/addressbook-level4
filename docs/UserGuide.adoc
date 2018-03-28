@@ -343,13 +343,13 @@ Examples:
 record 1 +
 Displays all the medical records for the first person in the result of the list command.
 
-==== Editing the medical records for a patient : record [coming in v1.4]
+==== Editing the medical records for a patient : record [since v1.3]
 
 Edits the medical records for a patient specified by the index number used in the last patient listing. +
-Format: record INDEX d/[DATE] s/[SYMPTOMS] i/[ILLNESS] t/[TREATMENT] r/[REMARKS]
+Format: record INDEX in/[RECORD INDEX] d/[DATE] s/[SYMPTOMS] i/[ILLNESS] t/[TREATMENT] r/[REMARKS]
 
 **
-* Selects the person at the specified `INDEX` and edits the medical records for that patient.
+* Selects the person at the specified `INDEX` and edits the medical records at the specified `RECORDINDEX` for that patient.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 **
@@ -357,8 +357,8 @@ Format: record INDEX d/[DATE] s/[SYMPTOMS] i/[ILLNESS] t/[TREATMENT] r/[REMARKS]
 Examples:
 
 * list +
-record 1 d/19 March 2018 s/Runny nose, Headache i/Flu t/Zyrtec +
-Edits the record for the first person to Date:19 March 2018 Symptoms:Runny nose, Headache
+record 1 in/2 d/19 March 2018 s/Runny nose, Headache i/Flu t/Zyrtec +
+Edits the second record for the first person to Date:19 March 2018 Symptoms:Runny nose, Headache
 Illness:Flu Treatment:Zyrtec`.
 
 ==== Printing a patient's formatted medical records : `print` [coming in v1.4]

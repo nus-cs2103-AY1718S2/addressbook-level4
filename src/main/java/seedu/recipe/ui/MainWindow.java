@@ -19,7 +19,6 @@ import seedu.recipe.commons.core.GuiSettings;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.recipe.commons.events.ui.ExitAppRequestEvent;
-import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.ShowHelpRequestEvent;
 import seedu.recipe.logic.Logic;
 import seedu.recipe.model.UserPrefs;

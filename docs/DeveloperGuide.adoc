@@ -12,13 +12,19 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team T09-B1`      Since: `Mar 2018`      Licence: `MIT`
+By: `CS2103JAN2018-T09-B1`      Since: `Mar 2018`      Licence: `MIT`
 
+== Introduction
+Welcome to _EduBuddy_! This application is based on a Command Line Interface(CLI),
+and is designed for secondary school teachers to manage student profiles in
+a simple and efficient manner.
 
-
-
+This developer guide will help to provide you with a detailed walk-through of _EduBuddy_,
+from the application set up procedure, to the explanation of the features and
+troubleshooting methods.
 
 == Setting up
+This section helps to guide you through the necessary steps to launch our application.
 
 === Prerequisites
 
@@ -96,6 +102,8 @@ When you are ready to start coding,
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
+This section illustrates the overall design of our application and provides
+the details of its individual components.
 
 [[Design-Architecture]]
 === Architecture
@@ -502,6 +510,34 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::browserpanel[]
+=== Browser Panel Revamp
+
+.First Half of Browser Panel
+image::browser1.png[width="600"]
+.Second Half of Browser Panel
+image::browser2.png[width="600"]
+
+We will use a html page with w3.css framework support to implement the new Browser Panel.
+The browser panel can be controlled from the CLI interface, which manipulates the data in the browser panel.
+
+The browser will be invoked by the selection of a student from ui/BrowserPanel. loadPersonPage() invokes the html file
+of the student selected stored in resources/StudentPage.
+
+*To Be implemented*
+Creation of a html StudentPage file:
+
+After add command is called successfully, a template file from StudentPage will be duplicated as a backup,
+and renamed as the name that is called from the add command.
+
+*To Be implemented*
+Editing StudentPage file:
+After edit command is called, list of new string will be stored into a javascript file and parsed into the
+html file called by the function.
+
+
+// end::browserpanel[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -554,6 +590,8 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+This section explains the various testing methods available in our application
+and also provides some troubleshooting techniques.
 
 === Running Tests
 
@@ -920,9 +958,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Target user profile*:
 
 * is a secondary school teacher
-* needs to know more about students they teach
+* needs to know more about the students that they have taught
 * has a need to track results
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of students
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
@@ -938,17 +976,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 |Name | Major |Minor
 |Johnny  |Display Panel: Add display panel functionalities to UI window | Data Integration: Integrate data input from user into display window
 
-|Xin Hui |Academic Section: Helps teachers to view and manage students' academic information | Subject Class Database: Create subject class and integrate input into command. Add L1R5 calculation support into subject inputs.
+|Xin Hui |Academic Section: Help teachers to view and manage students' academic information | Subject Class Database: Create subject class and integrate input into command. Add L1R5 calculation support into subject inputs.
 
-|Kun Hong |Administrative Information: Add support for automatic register number calculation and class allocation | Tag Support: Enhance tag functionalities in EduBuddy
+|Kun Hong |Administrative Information: Add student administrative information into EduBuddy | Tag Support: Enhance tag functionalities in EduBuddy
 
-|Keng Seng |Advanced Sorting Functionalities: Add advanced sorting functionalities into EduBuddy | Command Support: Adding commands to EduBuddy to enhance user experience
+
+
+|Keng Seng |Calendar: Add calendar features which supports different administrative tasks | Sorting feature: Add sorting functionalities based on various parameters
 
 |=======================================================================
-
-
-
-
 
 [appendix]
 == User Stories
@@ -968,7 +1004,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |access student's academic and non-academic achievements |stream the students properly (e.g. Normal Academic, Normal Technical, Express)
 
-|`* * *` |teacher |edit remarks of each individual student |update the students' individual needs that occur during class and to ease the writing of a testimonial.
+
+|`* * *` |teacher |access student profiles easily  | have first hand information on all my students without going through a lot of documentation
+
+|`* * *` |teacher |edit remarks of each individual student |update the students' individual needs that occur during class
 
 |`* *` |teacher |filter and group students |access information of specific students
 
@@ -995,7 +1034,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `EduBuddy` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person

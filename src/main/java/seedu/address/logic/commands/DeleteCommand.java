@@ -41,7 +41,9 @@ public class DeleteCommand extends UndoableCommand {
         requireNonNull(personToDelete);
         try {
             model.deletePerson(personToDelete);
-            DeleteCalendar.execute(personToDelete.getCalendarId());
+            if (personToDelete.getCalendarId().compareTo("testCalendarId") != 0) {
+                DeleteCalendar.execute(personToDelete.getCalendarId());
+            }
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         } catch (IOException ioe) {

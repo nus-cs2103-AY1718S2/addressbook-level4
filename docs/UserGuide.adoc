@@ -284,46 +284,46 @@ _{explain how the user can enable/disable data encryption}_
 |Syntax
 
 |add
-|[Alt+A]
+|kbd:[Alt+A]
 |`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
 |clear
-|[Alt+C]
+|kbd:[Alt+C]
 |`clear`
 
 |delete
-|[Alt+D]
+|kbd:[Alt+D]
 |`delete INDEX`
 
 |edit
-|[Alt+E]
+|kbd:[Alt+E]
 |`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
 |find
-|[Ctrl+F]
+|kbd:[Ctrl+F]
 |`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
 |list
-|[F2]
+|kbd:[F2]
 |`list`
 
 |help
-|[F1]
+|kbd:[F1]
 |`help`
 
 |select
-|[Alt+S]
+|kbd:[Alt+S]
 |`select INDEX`
 
 |history
-|[Alt+H]
+|kbd:[Alt+H]
 |`history`
 
 |undo
-|[Ctrl+Z]
+|kbd:[Ctrl+Z]
 |`undo`
 
 |redo
-|[Ctrl+Y]
+|kbd:[Ctrl+Y]
 |`redo`
 |===

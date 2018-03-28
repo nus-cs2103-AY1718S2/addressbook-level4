@@ -165,11 +165,12 @@ public class ParserUtil {
         return subjectSet;
     }
 
-     * Parses a {@code String remark} into a {@code Remark}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code name} is invalid.
-     */
+     /**
+      * Parses a {@code String remark} into a {@code Remark}.
+      * Leading and trailing whitespaces will be trimmed.
+      *
+      * @throws IllegalValueException if the given {@code name} is invalid.
+      */
     public static Remark parseRemark(String remark) {
         requireNonNull(remark);
         String trimmedRemark = remark.trim();
@@ -183,6 +184,7 @@ public class ParserUtil {
     public static Optional<Remark> parseRemark(Optional<String> remark) {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
+    }
     /**
      * Parses a {@code String date} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.

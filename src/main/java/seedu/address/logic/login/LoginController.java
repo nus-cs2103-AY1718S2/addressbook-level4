@@ -6,6 +6,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for LoginLayout. Handles button press.
+ */
 public class LoginController {
     @FXML
     private TextField usernameField;
@@ -16,6 +19,9 @@ public class LoginController {
     @FXML
     private Text messageText;
 
+    /**
+     * Authenticates input username and password when login button is clicked
+     */
     @FXML
     protected void handleButtonAction(ActionEvent event) {
         String username = this.usernameField.getText();

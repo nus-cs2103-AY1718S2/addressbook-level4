@@ -43,6 +43,6 @@ Runs on all mainstream OS:: Hassle-free. Get Medeina now and use it today.
 == Acknowledgements
 
 * Original source: https://github.com/se-edu/addressbook-level4[Address Book Level 4] by https://github.com/se-edu/[SE-EDU]
-* Application icon: Icon made by www.freepik.com[Freepik] from [www.flaticon.com]FLATICON
+* Application icon: Made by http://www.freepik.com[Freepik] from www.flaticon.com[FLATICON]
 
 == Licence : link:LICENSE[MIT]

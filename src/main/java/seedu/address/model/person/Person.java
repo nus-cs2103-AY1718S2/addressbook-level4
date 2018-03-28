@@ -128,8 +128,7 @@ public class Person {
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
                 && otherPerson.getBirthday().equals(this.getBirthday())
-                && otherPerson.getGroup().equals(this.getGroup())
-                && otherPerson.getInsurance().equals((this.getInsurance()));
+                && otherPerson.getGroup().equals(this.getGroup());
     }
 
     @Override

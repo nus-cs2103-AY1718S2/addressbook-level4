@@ -32,11 +32,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_GROUP, PREFIX_TAG,
-                        PREFIX_BIRTHDAY, PREFIX_APPOINTMENT, PREFIX_INSURANCE);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_GROUP,
+                        PREFIX_TAG, PREFIX_BIRTHDAY, PREFIX_APPOINTMENT, PREFIX_INSURANCE);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY,
+                PREFIX_GROUP) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
@@ -53,7 +53,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                  appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT)).get();
             }
             Insurance insurance = null;
-            if(argMultimap.getValue(PREFIX_INSURANCE).isPresent()){
+            if (argMultimap.getValue(PREFIX_INSURANCE).isPresent()){
                 insurance = ParserUtil.parseInsurance(argMultimap.getValue(PREFIX_INSURANCE)).get();
             }
 

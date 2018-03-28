@@ -14,7 +14,7 @@ public class ViewCommand extends Command {
 
     public static final String COMMAND_WORD = "view";
     public static final String COMMAND_ALIAS = "v";
-    public static final String COMMAND_FORMAT = COMMAND_WORD + "WEEK-NUMBER";
+    public static final String COMMAND_FORMAT = COMMAND_WORD + " WEEK-NUMBER";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             // TODO: change description and parameter range when appropriate

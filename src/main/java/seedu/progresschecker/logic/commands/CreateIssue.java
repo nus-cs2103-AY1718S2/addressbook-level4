@@ -17,7 +17,7 @@ import seedu.progresschecker.model.issues.Issue;
  */
 public class CreateIssue extends Command {
 
-    public static final String COMMAND_WORD = "createissue";
+    public static final String COMMAND_WORD = "+issue";
     public static final String COMMAND_ALIAS = "ci";
     public static final String COMMAND_FORMAT = COMMAND_WORD + " "
             + PREFIX_TITLE + "TITLE "

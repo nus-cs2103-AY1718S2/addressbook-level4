@@ -16,7 +16,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.PopulateRequestEvent;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -224,7 +224,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleAdd() {
-        raise(new PopulateRequestEvent("add"));
+        raise(new PopulatePrefixesRequestEvent("add"));
     }
 
     /**
@@ -232,7 +232,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleEdit() {
-        raise(new PopulateRequestEvent("edit"));
+        raise(new PopulatePrefixesRequestEvent("edit"));
     }
 
     /**
@@ -240,7 +240,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleDelete() {
-        raise(new PopulateRequestEvent("delete"));
+        raise(new PopulatePrefixesRequestEvent("delete"));
     }
 
     /**
@@ -248,7 +248,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleLocate() {
-        raise(new PopulateRequestEvent("locate"));
+        raise(new PopulatePrefixesRequestEvent("locate"));
     }
 
     /**
@@ -256,7 +256,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleFind() {
-        raise(new PopulateRequestEvent("find"));
+        raise(new PopulatePrefixesRequestEvent("find"));
+    }
     }
 
     void show() {
@@ -270,8 +271,6 @@ public class MainWindow extends UiPart<Stage> {
     private void handleExit() {
         raise(new ExitAppRequestEvent());
     }
-
-
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;

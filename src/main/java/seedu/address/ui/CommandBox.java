@@ -11,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.events.ui.PopulateRequestEvent;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -129,8 +129,13 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    /**
+     * Handles the event where a valid keyboard shortcut is pressed
+     * to populate the CommandBox with command prefixes,
+     * {@code PopulatePrefixesRequestEvent}.
+     */
     @Subscribe
-    private void handlePopulateRequestEvent(PopulateRequestEvent event) {
+    private void handlePopulatePrefixesRequestEvent(PopulatePrefixesRequestEvent event) {
         replaceText(event.commandTemplate, event.caretIndex);
     }
 

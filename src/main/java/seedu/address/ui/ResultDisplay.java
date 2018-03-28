@@ -13,7 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.events.ui.PopulateRequestEvent;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -51,10 +51,10 @@ public class ResultDisplay extends UiPart<Region> {
     /**
      * Handles the event where a valid keyboard shortcut is pressed
      * to populate the CommandBox with command prefixes,
-     * {@code PopulateRequestEvent}.
+     * {@code PopulatePrefixesRequestEvent}.
      */
     @Subscribe
-    private void handlePopulateRequestEvent(PopulateRequestEvent event) {
+    private void handlePopulatePrefixesRequestEvent(PopulatePrefixesRequestEvent event) {
         setStyleToIndicateCommandSuccess();
         Platform.runLater(() -> {
             displayed.setValue(event.commandUsageMessage);

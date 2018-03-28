@@ -106,7 +106,7 @@ public class BrowserPanel extends UiPart<Region> {
 
                     if (url.contains(CloudStorageUtil.getRedirectDomain())) {
                         if (CloudStorageUtil.checkAndSetAccessToken(url)) {
-                            CloudStorageUtil.upload();
+                            CloudStorageUtil.upload(uploadFilename);
                         }
                     }
 

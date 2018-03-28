@@ -1,7 +1,6 @@
 package seedu.recipe.ui.util;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,9 +13,6 @@ import com.dropbox.core.v2.DbxClientV2;
 import com.google.common.base.Strings;
 
 import seedu.recipe.commons.util.FileUtil;
-import seedu.recipe.logic.commands.CommandResult;
-import seedu.recipe.logic.commands.UploadCommand;
-import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 
 /**
  * Contains data and methods needed for cloud storage
@@ -38,6 +34,17 @@ public class CloudStorageUtil {
     private static String accessToken = "";
 
     /**
+     * Returns true if CloudStorageUtil already has an access token.
+     */
+    public static boolean hasAccessToken() {
+
+    }
+
+    public static boolean checkAndSetAccessToken(String url) {
+
+    }
+
+    /**
      * Creates a Dropbox client with the user's {@code getAccessToken()}
      * and uploads file specified by {@code RECIPE_BOOK_FILE} to their Dropbox account
      * @return {@code CommandResult}
@@ -56,9 +63,7 @@ public class CloudStorageUtil {
             client.files().uploadBuilder("/" + uploadFilename)
                     .withAutorename(true)
                     .uploadAndFinish(in);
-        } catch (IOException e) {
-
-        } catch (DbxException dbe) {
+        } catch (IOException | DbxException e) {
 
         }
     }

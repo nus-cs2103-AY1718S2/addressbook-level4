@@ -397,7 +397,7 @@ e.g.`select 2`
 * *ChangeTagColor* : `changeTagColor` +
 e.g. `changeTagColor friends blue`
 * *Add To Do* : `addToDo`
-* *List Group Members* : `listGroupMembers` +
+* *List Group Members* : `listGroupMembers KEYWORD [MORE_KEYWORDS]` +
 e.g. `listGroupMembers CS1010`
-* *Add Group* : `addGroup` +
+* *Add Group* : `addGroup KEYWORD` +
 e.g. `addGroup CS3230`

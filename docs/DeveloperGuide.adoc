@@ -501,10 +501,10 @@ To do this, a commission storage will be created to store existing commission, a
 We are creating export functionality so that the users of the application can take the data that is being locally stored and download it onto their personal computer.
 There will be various types of data to export with different ways to export (i.e. file types).
 
-*Since v1.2*
+*Since v1.3*
 
 * The application will handle the `export` command with one argument (Format: `export EXPORT_TYPE`).
-* The application simply catches the command but does not exporting at the moment.
+* The application simply catches the command but does not exporting at the moment for the calendar.
 * The export types are from an enum class at `seedu.address.model.export.ExportType`.
 * To add another export type to be caught by the user's input, simply add another value to the enum class mentioned above.
 

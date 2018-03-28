@@ -2,6 +2,9 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueGroupList groups;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UserPrefs userPrefs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -40,6 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        userPrefs = new UserPrefs();
         groups = new UniqueGroupList();
     }
 
@@ -161,6 +166,33 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    //// export-level operations
+
+    public void exportPortfolio() {
+        try {
+            PrintWriter pw = new PrintWriter(new File(userPrefs.getExportPortfolioFilePath()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("Name,Phone,Email,Address,Tags\n");
+            for (Person person : persons) {
+                System.out.println(person);
+                sb.append("\"" + person.getName().toString() + "\"");
+                sb.append(",");
+                sb.append("\"" + person.getPhone().toString() + "\"");
+                sb.append(",");
+                sb.append("\"" + person.getEmail().toString() + "\"");
+                sb.append(",");
+                sb.append("\"" + person.getAddress().toString() + "\"");
+                sb.append(",");
+                sb.append("\"" + person.getTags().toString() + "\"");
+                sb.append("\n");
+            }
+            pw.write(sb.toString());
+            pw.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File was not found");
+        }
     }
 
     //// util methods

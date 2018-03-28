@@ -6,10 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BLOODTYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BREED;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_COLOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_SPECIES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -64,17 +64,17 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_PETPATIENT = COMMAND_WORD + " -p : Adds a pet patient to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PET_PATIENT_SPECIES + "SPECIES "
-            + PREFIX_PET_PATIENT_BREED + "BREED "
-            + PREFIX_PET_PATIENT_COLOUR + "COLOUR "
-            + PREFIX_PET_PATIENT_BLOODTYPE + "BLOOD_TYPE "
+            + PREFIX_SPECIES + "SPECIES "
+            + PREFIX_BREED + "BREED "
+            + PREFIX_COLOUR + "COLOUR "
+            + PREFIX_BLOODTYPE + "BLOOD_TYPE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Jewel "
-            + PREFIX_PET_PATIENT_SPECIES + "Cat "
-            + PREFIX_PET_PATIENT_BREED + "Persian Ragdoll "
-            + PREFIX_PET_PATIENT_COLOUR + "Calico "
-            + PREFIX_PET_PATIENT_BLOODTYPE + "AB";
+            + PREFIX_SPECIES + "Cat "
+            + PREFIX_BREED + "Persian Ragdoll "
+            + PREFIX_COLOUR + "Calico "
+            + PREFIX_BLOODTYPE + "AB";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s\n";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in Medeina.";
@@ -149,32 +149,6 @@ public class AddCommand extends UndoableCommand {
         return message;
     }
 
-    /**
-     * Checks whether a Person object with ownerNric exists.
-     * Return the Person object if it exists.
-     */
-    public Person getPersonWithNric() {
-        for (Person p : model.getAddressBook().getPersonList()) {
-            if (p.getNric().equals(ownerNric)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Checks whether a PetPatient object with ownerNric and petPatientName exists.
-     * Return the PetPatient object if it exists.
-     */
-    public PetPatient getPetPatientWithNricAndName() {
-        for (PetPatient p : model.getAddressBook().getPetPatientList()) {
-            if (p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
@@ -184,7 +158,6 @@ public class AddCommand extends UndoableCommand {
             case 2: return addNewAppt();
             case 3: return addNewPetPatient();
             case 4: return addNewPerson();
-
             default: throw new CommandException(MESSAGE_USAGE);
             }
 
@@ -248,6 +221,32 @@ public class AddCommand extends UndoableCommand {
         model.addPetPatient(toAddPet);
         model.addAppointment(toAddAppt);
         return new CommandResult(String.format(message, toAddOwner, toAddPet, toAddAppt));
+    }
+
+    /**
+     * Checks whether a Person object with ownerNric exists.
+     * Return the Person object if it exists.
+     */
+    public Person getPersonWithNric() {
+        for (Person p : model.getAddressBook().getPersonList()) {
+            if (p.getNric().equals(ownerNric)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Checks whether a PetPatient object with ownerNric and petPatientName exists.
+     * Return the PetPatient object if it exists.
+     */
+    public PetPatient getPetPatientWithNricAndName() {
+        for (PetPatient p : model.getAddressBook().getPetPatientList()) {
+            if (p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     @Override

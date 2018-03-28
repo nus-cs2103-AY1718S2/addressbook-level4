@@ -6,10 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BLOODTYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BREED;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_COLOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_SPECIES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -116,29 +116,29 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(
                         petInfo,
                         PREFIX_NAME,
-                        PREFIX_PET_PATIENT_SPECIES,
-                        PREFIX_PET_PATIENT_BREED,
-                        PREFIX_PET_PATIENT_COLOUR,
-                        PREFIX_PET_PATIENT_BLOODTYPE,
+                        PREFIX_SPECIES,
+                        PREFIX_BREED,
+                        PREFIX_COLOUR,
+                        PREFIX_BLOODTYPE,
                         PREFIX_TAG);
 
         if (!arePrefixesPresent(
                 argMultimap,
                 PREFIX_NAME,
-                PREFIX_PET_PATIENT_BREED,
-                PREFIX_PET_PATIENT_SPECIES,
-                PREFIX_PET_PATIENT_COLOUR,
-                PREFIX_PET_PATIENT_BLOODTYPE)
+                PREFIX_BREED,
+                PREFIX_SPECIES,
+                PREFIX_COLOUR,
+                PREFIX_BLOODTYPE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PETPATIENT));
         }
 
         try {
             PetPatientName name = ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME)).get();
-            String species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_PET_PATIENT_SPECIES)).get();
-            String breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_PET_PATIENT_BREED)).get();
-            String color = ParserUtil.parseColour(argMultimap.getValue(PREFIX_PET_PATIENT_COLOUR)).get();
-            String bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_PET_PATIENT_BLOODTYPE)).get();
+            String species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_SPECIES)).get();
+            String breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_BREED)).get();
+            String color = ParserUtil.parseColour(argMultimap.getValue(PREFIX_COLOUR)).get();
+            String bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             PetPatient petPatient = new PetPatient(name, species, breed, color, bloodType, tagList);

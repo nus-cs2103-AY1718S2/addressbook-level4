@@ -9,10 +9,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BLOODTYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BREED;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_COLOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_SPECIES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -87,10 +87,10 @@ public class CommandTestUtil {
     public static final String VALID_BLOODTYPE_JOKER = "O";
 
     public static final String NAME_DESC_JOKER = " " + PREFIX_NAME + VALID_NAME_JOKER;
-    public static final String SPECIES_DESC_JOKER = " " + PREFIX_PET_PATIENT_SPECIES + VALID_SPECIES_JOKER;
-    public static final String BREED_DESC_JOKER = " " + PREFIX_PET_PATIENT_BREED + VALID_BREED_JOKER;
-    public static final String COLOUR_DESC_JOKER = " " + PREFIX_PET_PATIENT_COLOUR + VALID_COLOUR_JOKER;
-    public static final String BLOODTYPE_DESC_JOKER = " " + PREFIX_PET_PATIENT_BLOODTYPE + VALID_BLOODTYPE_JOKER;
+    public static final String SPECIES_DESC_JOKER = " " + PREFIX_SPECIES + VALID_SPECIES_JOKER;
+    public static final String BREED_DESC_JOKER = " " + PREFIX_BREED + VALID_BREED_JOKER;
+    public static final String COLOUR_DESC_JOKER = " " + PREFIX_COLOUR + VALID_COLOUR_JOKER;
+    public static final String BLOODTYPE_DESC_JOKER = " " + PREFIX_BLOODTYPE + VALID_BLOODTYPE_JOKER;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

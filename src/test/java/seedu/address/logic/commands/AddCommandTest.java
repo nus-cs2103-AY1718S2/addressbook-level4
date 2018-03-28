@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -111,6 +113,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addPage(Person person) throws IOException {
+
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -150,6 +157,11 @@ public class AddCommandTest {
 
         @Override
         public void sortPersonList(String parameter) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void addAppointment(Appointment appointment) {
             fail("This method should not be called");
         }
     }

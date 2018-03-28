@@ -6,6 +6,7 @@ import java.util.Set;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -18,18 +19,22 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_NRIC = "S8535525Z";
     public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_SUBJECTS = "English A1";
+    public static final String[] DEFAULT_SUBJECTS = {"English A1",  "Mathematics A1", "History A1", "H.Tamil A1",
+                                                     "Chemistry A1", "Physics A1"};
+    public static final String DEFAULT_REMARK = " ";
 
     private Name name;
     private Nric nric;
     private Set<Tag> tags;
     private Set<Subject> subjects;
+    private Remark remark;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         nric = new Nric(DEFAULT_NRIC);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         subjects = SampleDataUtil.getSubjectSet(DEFAULT_SUBJECTS);
+        remark = new Remark(DEFAULT_REMARK);
     }
 
     /**
@@ -40,6 +45,8 @@ public class PersonBuilder {
         nric = personToCopy.getNric();
         tags = new HashSet<>(personToCopy.getTags());
         subjects = new HashSet<>(personToCopy.getSubjects());
+        remark = personToCopy.getRemark();
+
     }
 
     /**
@@ -74,8 +81,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, nric, tags, subjects);
+        return new Person(name, nric, tags, subjects, remark);
     }
 
 }

@@ -89,20 +89,48 @@ public class Recipe {
     }
 
     public String getRecipeInHtmlFormat() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + "Recipe.css");
+        URL recipeCss = MainApp.class.getResource(FXML_FILE_FOLDER + "Recipe.css");
+        URL bootstrapCss = MainApp.class.getResource(FXML_FILE_FOLDER + "bootstrap.css");
+        String testURL = "file:/Users/administrator/Desktop/NotePad.jpg";
 
         return "<html>"
                 + "<head>"
-                + "<link rel='stylesheet' type='text/css' href='" + defaultPage.toExternalForm() + "' />"
+                + "<link rel='stylesheet' type='text/css' href='" + bootstrapCss.toExternalForm() + "' />"
+                + "<link rel='stylesheet' type='text/css' href='" + recipeCss.toExternalForm() + "' />"
                 + "</head>"
                 + "<body>"
-                + "<h1>" + name + "</h1>"
+                + "<div class='row'>"
+                + "<h1 class='name'>" + name + "</h1>"
+                + "<div class='col-sm-6'>"
+                + "<div class='col-sm-3'>"
+                + "<h5>Cooking Time:</h5>"
                 + "<p>" + cookingTime + "</p>"
+                + "</div>"
+                + "<div class='col-sm-3'>"
+                + "<h5>Preparation Time:</h5>"
                 + "<p>" + preparationTime + "</p>"
+                + "</div>"
+                + "<div class='col-sm-3'>"
+                + "<h5>Calories:</h5>"
                 + "<p>" + calories + "</p>"
+                + "</div>"
+                + "<div class='col-sm-3'>"
+                + "<h5>Servings:</h5>"
                 + "<p>" + servings + "</p>"
+                + "</div>"
+                + "</div>"
+                + "<div class='col-sm-6'>"
+                + "<img src='" + testURL + "' width=300px/>"
+                + "</div>"
+                + "<div class='col-sm-12'>"
+                + "<div class='col-sm-12'>"
                 + "<p>" + ingredient + "</p>"
+                + "</div>"
+                + "<div class='col-sm-12'>"
                 + "<p>" + instruction + "</p>"
+                + "</div>"
+                + "</div>"
+                + "</div>"
                 + "</body>"
                 + "</html>";
     }

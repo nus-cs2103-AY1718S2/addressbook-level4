@@ -13,6 +13,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.database.DatabaseManager;
+import seedu.address.model.person.Person;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -47,6 +50,13 @@ public class ResultDisplay extends UiPart<Region> {
                 setStyleToIndicateCommandFailure();
             }
         });
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Person selected = event.getNewSelection().person;
+        DatabaseManager.getInstance().parseEvents(selected.getTimeTableLink());
     }
 
     /**

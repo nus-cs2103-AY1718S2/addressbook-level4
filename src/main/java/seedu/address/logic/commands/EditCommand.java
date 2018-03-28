@@ -2,9 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_IMAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -25,6 +27,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -34,6 +37,7 @@ import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
@@ -62,6 +66,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_GRADE_POINT_AVERAGE + "GRADE POINT AVERAGE] "
             + "[" + PREFIX_JOB_APPLIED + "JOB APPLIED] "
             + "[" + PREFIX_RESUME + "RESUME] "
+            + "[" + PREFIX_IMAGE + "IMAGE] "
+            + "[" + PREFIX_COMMENT + "COMMENT] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -136,6 +142,9 @@ public class EditCommand extends UndoableCommand {
         Rating rating = personToEdit.getRating();
 
         Resume updatedResume = editPersonDescriptor.getResume().orElse(personToEdit.getResume());
+        ProfileImage updatedProfileImage = editPersonDescriptor.getProfileImage()
+                .orElse(personToEdit.getProfileImage());
+        Comment updatedComment = editPersonDescriptor.getComment().orElse(personToEdit.getComment());
 
         // Doesn't allow editing of interview date
         InterviewDate interviewDate = personToEdit.getInterviewDate();
@@ -146,8 +155,8 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedExpectedGraduationYear,
-                updatedMajor, updatedGradePointAverage, updatedJobApplied, rating, updatedResume,
-                interviewDate, status, updatedTags);
+                updatedMajor, updatedGradePointAverage, updatedJobApplied, rating, updatedResume, updatedProfileImage,
+                updatedComment, interviewDate, status, updatedTags);
     }
 
     @Override
@@ -183,6 +192,8 @@ public class EditCommand extends UndoableCommand {
         private GradePointAverage gradePointAverage;
         private JobApplied jobApplied;
         private Resume resume;
+        private ProfileImage profileImage;
+        private Comment comment;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -201,6 +212,8 @@ public class EditCommand extends UndoableCommand {
             setGradePointAverage(toCopy.gradePointAverage);
             setJobApplied(toCopy.jobApplied);
             setResume(toCopy.resume);
+            setProfileImage(toCopy.profileImage);
+            setComment(toCopy.comment);
             setTags(toCopy.tags);
         }
 
@@ -210,7 +223,7 @@ public class EditCommand extends UndoableCommand {
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
                     this.expectedGraduationYear, this.major, this.gradePointAverage, this.jobApplied,
-                    this.resume, this.tags);
+                    this.resume, this.profileImage, this.comment, this.tags);
         }
 
         public void setName(Name name) {
@@ -280,6 +293,23 @@ public class EditCommand extends UndoableCommand {
         public Optional<Resume> getResume() {
             return Optional.ofNullable(resume);
         }
+
+        public void setProfileImage(ProfileImage profileImage) {
+            this.profileImage = profileImage;
+        }
+
+        public Optional<ProfileImage> getProfileImage() {
+            return Optional.ofNullable(profileImage);
+        }
+
+        public void setComment(Comment comment) {
+            this.comment = comment;
+        }
+
+        public Optional<Comment> getComment() {
+            return Optional.ofNullable(comment);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -320,6 +350,8 @@ public class EditCommand extends UndoableCommand {
                     && getMajor().equals(e.getMajor())
                     && getGradePointAverage().equals(e.getGradePointAverage())
                     && getResume().equals(e.getResume())
+                    && getProfileImage().equals(e.getProfileImage())
+                    && getComment().equals(e.getComment())
                     && getTags().equals(e.getTags());
         }
     }

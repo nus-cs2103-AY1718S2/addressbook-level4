@@ -2,9 +2,11 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_IMAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -20,6 +22,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -29,6 +32,7 @@ import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
@@ -48,7 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR, PREFIX_GRADE_POINT_AVERAGE, PREFIX_JOB_APPLIED,
-                        PREFIX_RESUME, PREFIX_TAG);
+                        PREFIX_RESUME, PREFIX_IMAGE, PREFIX_COMMENT, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap,
                 PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR,
@@ -74,6 +78,16 @@ public class AddCommandParser implements Parser<AddCommand> {
             Optional<Resume> resumeOptional = ParserUtil.parseResume(argMultimap.getValue(PREFIX_RESUME));
             Resume resume = resumeOptional.isPresent() ? resumeOptional.get() : new Resume(null);
 
+            Optional<ProfileImage> profileImageOptional =
+                    ParserUtil.parseProfileImage(argMultimap.getValue(PREFIX_IMAGE));
+            ProfileImage profileImage = profileImageOptional.isPresent() ?
+                    profileImageOptional.get() : new ProfileImage(null);
+
+            Optional<Comment> commentOptional =
+                    ParserUtil.parseComment(argMultimap.getValue(PREFIX_COMMENT));
+            Comment comment = commentOptional.isPresent() ?
+                    commentOptional.get() : new Comment(null);
+
             // Default-valued fields
             Rating rating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,
                     Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE);
@@ -83,8 +97,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             // Other fields
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Person person = new Person(name, phone, email, address, expectedGraduationYear,
-                    major, gradePointAverage, jobApplied, rating, resume, interviewDate, status, tagList);
+            Person person = new Person(name, phone, email, address, expectedGraduationYear, major, gradePointAverage,
+                    jobApplied, rating, resume, profileImage, comment, interviewDate, status, tagList);
             return new AddCommand(person);
 
         } catch (IllegalValueException ive) {

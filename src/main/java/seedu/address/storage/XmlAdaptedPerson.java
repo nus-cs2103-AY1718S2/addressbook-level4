@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -21,6 +22,7 @@ import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
@@ -33,7 +35,7 @@ public class XmlAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
-    //compulsory fields
+    // Compulsory fields
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -52,9 +54,14 @@ public class XmlAdaptedPerson {
     private String jobApplied;
     @XmlElement(required = true)
     private String status;
-    //optional fields
+    @XmlElement(required = true)
+    private String comment;
+
+    // Optional fields
     @XmlElement(nillable = true)
     private String resume;
+    @XmlElement(nillable = true)
+    private String profileImage;
     @XmlElement(nillable = true)
     private String interviewDate;
 
@@ -82,7 +89,8 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
                             String major, String gradePointAverage, String jobApplied, String technicalSkillsScore,
                             String communicationSkillsScore, String problemSolvingSkillsScore, String experienceScore,
-                            String resume, String interviewDate, String status, List<XmlAdaptedTag> tagged) {
+                            String resume, String profileImage, String comment, String interviewDate, String status,
+                            List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -96,8 +104,11 @@ public class XmlAdaptedPerson {
         this.problemSolvingSkillsScore = problemSolvingSkillsScore;
         this.experienceScore = experienceScore;
         this.resume = resume;
+        this.profileImage = profileImage;
+        this.comment = comment;
         this.interviewDate = interviewDate;
         this.status = status;
+
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -122,6 +133,8 @@ public class XmlAdaptedPerson {
         problemSolvingSkillsScore = Double.toString(source.getRating().problemSolvingSkillsScore);
         experienceScore = Double.toString(source.getRating().experienceScore);
         resume = source.getResume().value;
+        profileImage = source.getProfileImage().value;
+        comment = source.getComment().value;
         interviewDate = source.getInterviewDate().toString();
         status = source.getStatus().value;
         tagged = new ArrayList<>();
@@ -235,6 +248,21 @@ public class XmlAdaptedPerson {
         }
         final Resume resume = new Resume(this.resume);
 
+        final ProfileImage profileImage;
+        if (!isNull(this.profileImage) && !ProfileImage.isValidFile(this.profileImage)) {
+            profileImage = new ProfileImage(null);
+        } else {
+            profileImage = new ProfileImage(this.profileImage);
+        }
+
+        if (this.comment == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Comment.class.getSimpleName()));
+        }
+        if (!Comment.isValidComment(this.comment)) {
+            throw new IllegalValueException(Comment.MESSAGE_COMMENT_CONSTRAINTS);
+        }
+        final Comment comment = new Comment(this.comment);
+
         InterviewDate interviewDate = new InterviewDate();
         if (!isNull(this.interviewDate)) {
             try {
@@ -245,8 +273,8 @@ public class XmlAdaptedPerson {
         }
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, expectedGraduationYear,
-                major, gradePointAverage, jobApplied, rating, resume, interviewDate, status, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, major, gradePointAverage, jobApplied,
+                rating, resume, profileImage, comment, interviewDate, status, tags);
     }
 
     @Override

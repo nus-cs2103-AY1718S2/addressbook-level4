@@ -101,7 +101,8 @@ public class InterviewCommand extends UndoableCommand {
                 personToInterview.getAddress(), personToInterview.getExpectedGraduationYear(),
                 personToInterview.getMajor(), personToInterview.getGradePointAverage(),
                 personToInterview.getJobApplied(), personToInterview.getRating(),
-                personToInterview.getResume(), new InterviewDate(dateTime), personToInterview.getStatus(),
+                personToInterview.getResume(), personToInterview.getProfileImage(), personToInterview.getComment(),
+                new InterviewDate(dateTime), personToInterview.getStatus(),
                 personToInterview.getTags());
     }
 

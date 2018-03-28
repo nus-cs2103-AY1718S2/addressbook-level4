@@ -10,6 +10,8 @@
     <jobApplied>Software Engineer</jobApplied>
     <status>offer accepted</status>
     <resume>src/test/data/XmlUtilTest/hans.pdf</resume>
+    <profileImage>src/test/data/XmlUtilTest/gates.jpg</profileImage>
+    <comment/>
     <interviewDate>1540814400</interviewDate>
     <tagged>friends</tagged>
 </person>

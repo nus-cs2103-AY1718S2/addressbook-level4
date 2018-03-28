@@ -4,6 +4,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.AddCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EXPECTED_GRADUATION_YEAR_DESC_AMY;
@@ -11,6 +13,7 @@ import static seedu.address.logic.commands.CommandTestUtil.EXPECTED_GRADUATION_Y
 import static seedu.address.logic.commands.CommandTestUtil.GRADE_POINT_AVERAGE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.GRADE_POINT_AVERAGE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EXPECTED_GRADUATION_YEAR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_GRADE_POINT_AVERAGE_DESC;
@@ -18,6 +21,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_JOB_APPLIED_D
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MAJOR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_PROFILE_IMAGE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_RESUME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.JOB_APPLIED_DESC_AMY;
@@ -28,11 +32,15 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.PROFILE_IMAGE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PROFILE_IMAGE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.RESUME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMENT_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMENT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTED_GRADUATION_YEAR_AMY;
@@ -46,6 +54,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_IMAGE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_IMAGE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RESUME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
@@ -67,6 +77,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -75,6 +86,7 @@ import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -96,7 +108,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + EXPECTED_GRADUATION_YEAR_DESC_AMY + " "
                 + MAJOR_DESC_AMY + " " + GRADE_POINT_AVERAGE_DESC_AMY + " "
-                + JOB_APPLIED_DESC_AMY + " " + RESUME_DESC_AMY + " " + TAG_DESC_FRIEND + " ";
+                + JOB_APPLIED_DESC_AMY + " " + RESUME_DESC_AMY + " " + PROFILE_IMAGE_DESC_AMY + " "
+                + COMMENT_DESC_AMY + " " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -115,10 +128,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
                 .withMajor(VALID_MAJOR_AMY).withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY)
-                .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + GRADE_POINT_AVERAGE_DESC_AMY
-                + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
@@ -127,10 +141,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withMajor(VALID_MAJOR_AMY)
                 .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY)
-                .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + GRADE_POINT_AVERAGE_DESC_AMY
-                + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */
@@ -138,11 +153,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
                 .withMajor(VALID_MAJOR_AMY)
                 .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY).withJobApplied(VALID_JOB_APPLIED_AMY)
-                .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + GRADE_POINT_AVERAGE_DESC_AMY
-                + JOB_APPLIED_DESC_AMY
-                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
@@ -150,11 +165,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_BOB).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
                 .withMajor(VALID_MAJOR_AMY).withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY)
-                .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + GRADE_POINT_AVERAGE_DESC_AMY
-                + JOB_APPLIED_DESC_AMY
-                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book
@@ -163,11 +178,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_BOB)
                 .withMajor(VALID_MAJOR_AMY).withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY)
-                .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_AMY + GRADE_POINT_AVERAGE_DESC_AMY
-                + JOB_APPLIED_DESC_AMY
-                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book
@@ -176,11 +191,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
                 .withMajor(VALID_MAJOR_BOB).withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY)
-                .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_BOB + GRADE_POINT_AVERAGE_DESC_AMY
-                + JOB_APPLIED_DESC_AMY
-                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book
@@ -189,10 +204,25 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
                 .withMajor(VALID_MAJOR_AMY)
                 .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_BOB)
-                .withResume(VALID_RESUME_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
-                + GRADE_POINT_AVERAGE_DESC_BOB + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + GRADE_POINT_AVERAGE_DESC_BOB + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY
+                + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add a person with all fields same as another person in the address book except comment -> added */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
+                .withMajor(VALID_MAJOR_AMY)
+                .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_BOB)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
+                + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY
+                + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -202,7 +232,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with resume, command with parameters in random order -> added */
         toAdd = AMY;
         command = AddCommand.COMMAND_WORD + RESUME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY
-                + TAG_DESC_FRIEND + EMAIL_DESC_AMY + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
+                + TAG_DESC_FRIEND + EMAIL_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
                 + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
@@ -348,8 +379,15 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid resume -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
-                + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY +  INVALID_RESUME_DESC;
+                + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY + INVALID_RESUME_DESC;
         assertCommandFailure(command, Resume.MESSAGE_RESUME_CONSTRAINTS);
+
+        /* Case: invalid profile image -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
+                + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY + INVALID_PROFILE_IMAGE_DESC;
+        assertCommandFailure(command, ProfileImage.MESSAGE_IMAGE_CONSTRAINTS);
+
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY

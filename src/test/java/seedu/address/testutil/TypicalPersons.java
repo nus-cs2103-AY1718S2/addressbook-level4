@@ -1,7 +1,10 @@
 package seedu.address.testutil;
 
+import static java.util.Objects.isNull;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMENT_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMENT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMUNICATION_SKILLS_SCORE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMUNICATION_SKILLS_SCORE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
@@ -21,6 +24,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROBLEM_SOLVING_SKILLS_SCORE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROBLEM_SOLVING_SKILLS_SCORE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_IMAGE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_IMAGE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RESUME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RESUME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -50,6 +55,8 @@ public class TypicalPersons {
             .withRating("2.7", "3.9",
                     "2.5", "2.5")
             .withResume(formPathFromFileName("alice.pdf"))
+            .withProfileImage(formImagePathFromFileName("elon.jpg"))
+            .withComment("Alice!")
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withResume(formPathFromFileName(null))
@@ -59,6 +66,8 @@ public class TypicalPersons {
             .withJobApplied("Software Engineer")
             .withRating("4", "4.5",
                     "3", "3.5")
+            .withProfileImage(formImagePathFromFileName("gates.jpg"))
+            .withComment("Benson!")
             .withStatus(2).withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
@@ -76,6 +85,8 @@ public class TypicalPersons {
             .withJobApplied("Web Security Researcher")
             .withRating("-1", "-1",
                     "-1", "-1")
+            .withProfileImage(formImagePathFromFileName("jobs.jpg"))
+            .withComment("Daniel!")
             .withResume(formPathFromFileName("daniel.pdf")).build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
@@ -84,7 +95,9 @@ public class TypicalPersons {
             .withGradePointAverage("4.33")
             .withJobApplied("Big Data Analyst")
             .withRating("-1", "-1",
-                    "-1", "-1").withStatus(7).build();
+                    "-1", "-1")
+            .withProfileImage(formImagePathFromFileName("larry.jpg"))
+            .withComment("Elle!").withStatus(7).build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
             .withExpectedGraduationYear("2019")
@@ -92,7 +105,9 @@ public class TypicalPersons {
             .withGradePointAverage("4.75")
             .withJobApplied("Software Engineer")
             .withRating("-1", "-1",
-                    "-1", "-1").withStatus(1).build();
+                    "-1", "-1")
+            .withProfileImage(formImagePathFromFileName("mark.jpg"))
+            .withComment("Fiona!").withStatus(1).build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
             .withExpectedGraduationYear("2022")
@@ -133,6 +148,7 @@ public class TypicalPersons {
             .withRating(VALID_TECHNICAL_SKILLS_SCORE_AMY, VALID_COMMUNICATION_SKILLS_SCORE_AMY,
                     VALID_PROBLEM_SOLVING_SKILLS_SCORE_AMY, VALID_EXPERIENCE_SCORE_AMY)
             .withResume(VALID_RESUME_AMY)
+            .withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
             .withTags(VALID_TAG_FRIEND).build();
 
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -143,12 +159,14 @@ public class TypicalPersons {
             .withJobApplied(VALID_JOB_APPLIED_BOB)
             .withRating(VALID_TECHNICAL_SKILLS_SCORE_BOB, VALID_COMMUNICATION_SKILLS_SCORE_BOB,
                     VALID_PROBLEM_SOLVING_SKILLS_SCORE_BOB, VALID_EXPERIENCE_SCORE_BOB)
+            .withProfileImage(VALID_PROFILE_IMAGE_BOB).withComment(VALID_COMMENT_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
     public static final String KEYWORD_MATCHING_2019 = "2019"; //A keyword that matches 2020
 
     private static final String RESUME_PATH = "src/test/resources/resume/";
+    private static final String IMAGE_PATH = "src/test/resources/photos/";
 
     private TypicalPersons() {} // prevents instantiation
 
@@ -181,6 +199,17 @@ public class TypicalPersons {
             return RESUME_PATH + fileName;
         }
     }
+
+    /**
+     * Forms the image path from image file name
+     */
+    private static String formImagePathFromFileName(String fileName) {
+        if (isNull(fileName)) {
+            return null;
+        }
+        return IMAGE_PATH + fileName;
+    }
+
     public static void main(String[] args) {
         System.out.println(ALICE);
     }

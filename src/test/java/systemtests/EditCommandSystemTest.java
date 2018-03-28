@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EXPECTED_GRADUATION_YEAR_DESC_AMY;
@@ -23,10 +25,13 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.PROFILE_IMAGE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PROFILE_IMAGE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.RESUME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMENT_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPECTED_GRADUATION_YEAR_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_GRADE_POINT_AVERAGE_AMY;
@@ -35,8 +40,11 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_MAJOR_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_IMAGE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RESUME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_IMAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -79,11 +87,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_AMY + "  "
                 + PHONE_DESC_AMY + " " + EMAIL_DESC_AMY + "  " + ADDRESS_DESC_AMY + " "
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + " " + MAJOR_DESC_AMY + " "
-                + GRADE_POINT_AVERAGE_DESC_AMY + " "
-                + JOB_APPLIED_DESC_AMY + " "
-                + RESUME_DESC_AMY + " " + TAG_DESC_FRIEND + " ";
+                + GRADE_POINT_AVERAGE_DESC_AMY + " " + JOB_APPLIED_DESC_AMY + " "
+                + RESUME_DESC_AMY + " " + PROFILE_IMAGE_DESC_AMY + " " + COMMENT_DESC_AMY + " " + TAG_DESC_FRIEND + " ";
         Person editedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withResume(VALID_RESUME_AMY)
+                .withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
                 .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY).withMajor(VALID_MAJOR_AMY)
                 .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY)
@@ -105,7 +113,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit a person with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
-                + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY
+                + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, index, AMY);
 
         /* Case: edit some fields -> edited */
@@ -121,10 +130,16 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedPerson = new PersonBuilder(personToEdit).withResume(null).build();
         assertCommandSuccess(command, index, editedPerson);
 
+        /* Case: empty comment -> emptied */
+        index = INDEX_FIRST_PERSON;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_COMMENT.getPrefix();
+        editedPerson = new PersonBuilder(personToEdit).withResume(null).withComment(null).build();
+        assertCommandSuccess(command, index, editedPerson);
+
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
-        editedPerson = new PersonBuilder(personToEdit).withResume(null).withTags().build();
+        editedPerson = new PersonBuilder(personToEdit).withResume(null).withComment(null).withTags().build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
@@ -156,9 +171,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         selectPerson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
-                + GRADE_POINT_AVERAGE_DESC_AMY
-                + JOB_APPLIED_DESC_AMY
-                + RESUME_DESC_AMY + TAG_DESC_FRIEND;
+                + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY
+                + RESUME_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new person's name
         assertCommandSuccess(command, index, AMY, index);
@@ -205,22 +219,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                 + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
-
-        /* Case: edit a person with new values same as another person's values -> rejected */
-        executeCommand(PersonUtil.getAddCommand(BOB));
-        assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
-        index = INDEX_FIRST_PERSON;
-        assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB + GRADE_POINT_AVERAGE_DESC_BOB
-                + JOB_APPLIED_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
-
-        /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB
-                + GRADE_POINT_AVERAGE_DESC_BOB + JOB_APPLIED_DESC_BOB + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     /**

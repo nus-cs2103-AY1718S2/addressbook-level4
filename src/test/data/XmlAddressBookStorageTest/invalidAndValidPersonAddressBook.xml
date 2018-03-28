@@ -10,6 +10,7 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
+        <comment/>
     </persons>
     <!-- Person with invalid phone field -->
     <persons>
@@ -21,5 +22,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
+        <comment/>
     </persons>
 </addressbook>

@@ -15,9 +15,11 @@ public class CliSyntax {
     public static final Prefix PREFIX_GRADE_POINT_AVERAGE = new Prefix("g/");
     public static final Prefix PREFIX_JOB_APPLIED = new Prefix("j/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
-    //used only in add/edit command
+    // Used only in add/edit command
     public static final Prefix PREFIX_RESUME = new Prefix("r/");
-    //used only in filter command
+    public static final Prefix PREFIX_IMAGE = new Prefix("i/");
+    public static final Prefix PREFIX_COMMENT = new Prefix("c/");
+    // Used only in filter command
     public static final Prefix PREFIX_RATING = new Prefix("r/");
 
     public static final Prefix PREFIX_TECHNICAL_SKILLS_SCORE = new Prefix("t/");

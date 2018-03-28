@@ -36,9 +36,9 @@ public class AddGroupCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Executes the {@code AddGroupCommand} that adds {@code addGroup} to the model and asserts that the,<br>
-     * 1. Command box displays an empty string.<br>
-     * 2. Command box has the default style class.<br>
-     * 3. Result display box displays the success message of executing {@code AddGroupCommand} with the details of
+     * 1. Command node displays an empty string.<br>
+     * 2. Command node has the default style class.<br>
+     * 3. Result display node displays the success message of executing {@code AddGroupCommand} with the details of
      * {@code addGroup}.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
      * the current model added with {@code addGroup}.<br>
@@ -72,7 +72,7 @@ public class AddGroupCommandSystemTest extends AddressBookSystemTest {
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Group)} except asserts that
      * the,<br>
-     * 1. Result display box displays {@code expectedResultMessage}.<br>
+     * 1. Result display node displays {@code expectedResultMessage}.<br>
      * 2. {@code Model}, {@code Storage} and {@code GroupListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
      * @see AddGroupCommandSystemTest#assertCommandSuccess(String, Group)
@@ -87,9 +87,9 @@ public class AddGroupCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Executes {@code command} and asserts that the,<br>
-     * 1. Command box displays {@code command}.<br>
-     * 2. Command box has the error style class.<br>
-     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 1. Command node displays {@code command}.<br>
+     * 2. Command node has the error style class.<br>
+     * 3. Result display node displays {@code expectedResultMessage}.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by

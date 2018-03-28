@@ -480,7 +480,7 @@
 
 #calendarPlaceholder .notThisMonthDate {
     -fx-font: 13px Tahoma;
-    -fx-fill: silver;
-    -fx-stroke: silver;
+    -fx-fill: #888;
+    -fx-stroke: #888;
     -fx-stroke-width: 0.5;
 }

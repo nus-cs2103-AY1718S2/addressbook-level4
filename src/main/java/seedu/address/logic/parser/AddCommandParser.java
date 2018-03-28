@@ -18,11 +18,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Insurance.Insurance;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
-import seedu.address.model.group.Group;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -58,11 +58,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Group group = ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP)).get();
             Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
             Appointment appointment = null;
-           if (argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
-                 appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT)).get();
+            if (argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
+                appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT)).get();
             }
             Insurance insurance = null;
-           if (argMultimap.getValue(PREFIX_INSURANCE).isPresent()) {
+            if (argMultimap.getValue(PREFIX_INSURANCE).isPresent()) {
                 insurance = ParserUtil.parseInsurance(argMultimap.getValue(PREFIX_INSURANCE)).get();
             }
 

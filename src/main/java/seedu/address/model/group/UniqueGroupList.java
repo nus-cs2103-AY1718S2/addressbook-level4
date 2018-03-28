@@ -123,7 +123,8 @@ public class UniqueGroupList implements Iterable<Group> {
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
     public static class DuplicateGroupException extends DuplicateDataException {
-        protected DuplicateGroupException() { super("Operation would result in duplicate groups");
+        protected DuplicateGroupException() {
+        super("Operation would result in duplicate groups");
         }
     }
 }

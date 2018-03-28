@@ -153,10 +153,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person with n/ + p/ + e/ a/ + y/ prefix (1 value per field - one incorrect) -> 0 persons found */
+        /* Case: find person with n/ + p/ + e/ a/ prefix (1 value per field - one incorrect) -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " n/" + DANIEL.getName() + " " + " p/" + DANIEL.getPhone().value
-                + " e/" + DANIEL.getEmail().value + " a/" + DANIEL.getAddress().value
-                + " y/" + GEORGE.getExpectedGraduationYear().value;
+                + " e/" + GEORGE.getEmail().value + " a/" + DANIEL.getAddress().value;
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();

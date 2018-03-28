@@ -22,6 +22,9 @@ public class CliSyntax {
     // Used only in filter command
     public static final Prefix PREFIX_RATING = new Prefix("r/");
 
+    // used in rating_sort command only
+    public static final Prefix PREFIX_SORT_ORDER = new Prefix("o/");
+
     public static final Prefix PREFIX_TECHNICAL_SKILLS_SCORE = new Prefix("t/");
     public static final Prefix PREFIX_COMMUNICATION_SKILLS_SCORE = new Prefix("c/");
     public static final Prefix PREFIX_PROBLEM_SOLVING_SKILLS_SCORE = new Prefix("p/");

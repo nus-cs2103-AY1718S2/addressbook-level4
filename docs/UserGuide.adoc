@@ -188,19 +188,23 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
    3. Phone field that contains keyword `8` **AND**
    4. Major field that starts with keyword `Computer`
 
-=== Filter persons by expected graduation year: `filter`
+=== Filter persons by multiple fields: `filter`[since v1.3]
 
-Filters persons whose expected graduation year is before or equal to the given keywords. +
-Format: `filter y/KEYWORD`
+Filters persons whose keyword is within the specified range.
+Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE]`
 
-****
-* The keyword must be a valid year.
-****
+* Keyword is in the format of (1) `KEYWORD` or (2) `KEYWORD1 - KEYWORD2` or (3) a combination of (1) and (2) `KEYWORD1, KEYWORD2 - KEYWORD3, KEYWORD4`.
+* Each keyword must be valid with respect to the preceding prefix.
+* `filter` command will only be filtering based on the current view of the person list, instead of all the persons.
+* Within each prefix, `filter` command will match all entries that satisfies at least one keyword range. You can think of an `OR` operator within the prefix.
+* `filter` command will match all persons that only matches every prefixes. You can think of an `AND` operator between all prefixes.
 
 Examples:
 
 * `filter y/2020` +
-Returns all persons whose graudation year is before or equal to 2020
+Returns all persons whose graudation year that is exactly 2020
+* `filter y/2019-2021' r/4.3, 4.5-5.0
+Returns all persons whose graduation year between 2019 and 2021, and whose rating is either 4.3, or between 4.5 to 5.0
 
 === Deleting a person : `delete`
 
@@ -242,7 +246,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Rating a student : `rate`
+=== Rating a student : `rate` [since v1.1]
 
 Rates the student identified by the index number used in the last person listing. +
 Format: `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE`
@@ -260,7 +264,24 @@ Rates the 1st person to have technical skills score of 4.5, communication skills
 * `rate 2 t/3 c/5 p/3.5 e/2` +
 Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2.
 
-=== Deleting the rating given to an applicant : `deleteRating`
+=== Sorting the list of students based on overall rating score : `rating_sort` [since v1.3]
+
+Sorts the current list of students in HR+ based on overall rating score in descending or ascending order. +
+Format: `rating_sort o/SORT ORDER`
+
+****
+* The sort order can only be `asc` (ascending order) or `desc` (descending order).
+* If the list has been filtered, only current students on the list will be sorted instead of all students in HR+.
+****
+
+Examples:
+
+* `rating_sort o/acs` +
+Sorts the current list of students according to their overall rating in ascending order.
+* `rating_sort o/desc` +
+Sorts the current list of students according to their overall rating in descending order.
+
+=== Deleting the rating given to an applicant : `deleteRating` [since v1.2]
 
 Deletes the rating given to the applicant identified by the index number used in the last person listing. +
 Format: `deleteRating INDEX`
@@ -359,6 +380,9 @@ Searches all fields that has a fuzzy match with user input.
 
 Text summary of the search results after user executes the `find` command.
 
+=== Add more field support in `filter` command [coming in v1.4]
+Fields like interview date, status and maybe else will be supported.
+
 === Highlights search results in user interface `[coming in v2.0]`
 
 Highlights search results after user executes the `find` command.
@@ -388,7 +412,7 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *Filter* : `filter y/KEYWORD` +
+* *Filter* : `filter [y/KEYWORD] [r/RATING]` +
 e.g. `filter y/2019`
 * *List* : `list`
 * *Help* : `help`
@@ -396,7 +420,9 @@ e.g. `filter y/2019`
 e.g.`select 2`
 * *Rate* : `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE` +
 e.g. `rate 1 t/4.5 c/3 p/4 e/3.5`
-* *deleteRating* : `deleteRating INDEX` +
+* *Rating Sort* : `rating_sort o/SORT ORDER` +
+e.g. `rating_sort o/asc`
+* *Delete Rating* : `deleteRating INDEX` +
 e.g. `deleteRating 1`
 * *History* : `history`
 * *Undo* : `undo`

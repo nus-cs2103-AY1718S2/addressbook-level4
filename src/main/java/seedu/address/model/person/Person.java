@@ -185,4 +185,14 @@ public class Person {
         return builder.toString();
     }
 
+    /**
+     * Compares the overall ratings of two {@code Person} objects.
+     * @param p1
+     * @param p2
+     * @return 1 if p1 has a higher overall rating, 0 if p1 and p2 have equal overall rating and -1 otherwise.
+     */
+    public static int compareByOverallRating(Person p1, Person p2) {
+        return Double.compare(p1.getRating().getOverallScore(),
+                p2.getRating().getOverallScore());
+    }
 }

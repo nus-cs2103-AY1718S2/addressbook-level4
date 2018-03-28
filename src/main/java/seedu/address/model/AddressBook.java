@@ -77,6 +77,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Sorts all students in HR+ based on overall rating in ascending order
+     */
+    public void sortAsc() {
+        persons.sortPersonsAsc();
+    }
+
+    /**
+     * Sorts all students in HR+ based on overall rating in descending order
+     */
+    public void sortDesc() {
+        persons.sortPersonsDesc();
+    }
+
     //// person-level operations
 
     /**

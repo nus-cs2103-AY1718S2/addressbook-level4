@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.RatingSortCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -30,12 +31,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_SORT_ORDER = "a";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_SORT_ORDER = "asc";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -192,6 +195,35 @@ public class ParserUtilTest {
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
         assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
+    }
+
+    @Test
+    public void parseSortOrder_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseSortOrder((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((Optional<String>) null));
+    }
+
+    @Test
+    public void parseSortOrder_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(
+            IllegalValueException.class, () -> ParserUtil.parseSortOrder(INVALID_SORT_ORDER));
+        Assert.assertThrows(
+            IllegalValueException.class, () -> ParserUtil.parseSortOrder(Optional.of(INVALID_SORT_ORDER)));
+    }
+
+    @Test
+    public void parseSortOrder_validValueWithoutWhitespace_returnsSortOrder() throws Exception {
+        RatingSortCommand.SortOrder expectedSortOrder = RatingSortCommand.SortOrder.ASC;
+        assertEquals(expectedSortOrder, ParserUtil.parseSortOrder(VALID_SORT_ORDER));
+        assertEquals(Optional.of(expectedSortOrder), ParserUtil.parseSortOrder(Optional.of(VALID_SORT_ORDER)));
+    }
+
+    @Test
+    public void parseSortOrder_validValueWithWhitespace_returnsSortOrder() throws Exception {
+        RatingSortCommand.SortOrder expectedSortOrder = RatingSortCommand.SortOrder.ASC;
+        String sortOrderWithWhitespace = WHITESPACE + VALID_SORT_ORDER + WHITESPACE;
+        assertEquals(expectedSortOrder, ParserUtil.parseSortOrder(sortOrderWithWhitespace));
+        assertEquals(Optional.of(expectedSortOrder), ParserUtil.parseSortOrder(Optional.of(sortOrderWithWhitespace)));
     }
 
     @Test

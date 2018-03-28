@@ -19,6 +19,7 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final int uniqueid;
 
     private final UniqueTagList tags;
 
@@ -31,8 +32,11 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
+
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+
+        this.uniqueid = hashCode();
     }
 
     public Name getName() {
@@ -49,6 +53,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public int getUniqueid() {
+        return uniqueid;
     }
 
     /**

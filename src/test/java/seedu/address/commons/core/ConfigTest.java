@@ -14,7 +14,7 @@ public class ConfigTest {
 
     @Test
     public void toString_defaultObject_stringReturned() {
-        String defaultConfigAsString = "App title : Address App\n"
+        String defaultConfigAsString = "App title : Session Logger and Planner (SLAP) for Social Workers\n"
                 + "Current log level : INFO\n"
                 + "Preference file Location : preferences.json";
 

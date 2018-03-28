@@ -375,6 +375,12 @@ Data files created by FASTIS will be encrypted using the `password` you have pro
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+== Appendix
+
+=== Timetable Links
+
+Timetable links can be retrieved from the NUSmods website. To retrieve it simply go the the NUSMods website and click the *share* button.
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +

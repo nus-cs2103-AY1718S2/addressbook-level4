@@ -20,9 +20,6 @@ public class UploadCommandParserTest {
         // no index specified
         assertParseFailure(parser, VALID_PATH_AMY, MESSAGE_INVALID_FORMAT);
 
-        // no field specified
-        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
-
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }

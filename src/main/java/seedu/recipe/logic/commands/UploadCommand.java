@@ -53,7 +53,7 @@ public class UploadCommand extends Command {
     }
 
     /**
-     * Creates a Dropbox client with the user's {@code ACCESS_TOKEN}
+     * Creates a Dropbox client with the user's {@code getAccessToken()}
      * and uploads file specified by {@code RECIPE_BOOK_FILE} to their Dropbox account
      * @return {@code CommandResult}
      * @throws DbxException

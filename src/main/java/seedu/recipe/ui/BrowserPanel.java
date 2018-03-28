@@ -102,6 +102,9 @@ public class BrowserPanel extends UiPart<Region> {
                 if (newState == Worker.State.SUCCEEDED) {
                     String url = browserEngine.getLocation();
 
+                    if (url.contains(CloudStorageUtil.getRedirectDomain())) {
+                        
+                    }
                     if (FacebookHandler.checkAndSetAccessToken(url)) {
                         FacebookHandler.postRecipeOnFacebook(recipeToShare);
                     }

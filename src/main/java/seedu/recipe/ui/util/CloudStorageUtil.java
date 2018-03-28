@@ -6,6 +6,10 @@ import com.google.common.base.Strings;
 
 import seedu.recipe.commons.util.FileUtil;
 
+/**
+ * Contains data and methods needed for cloud storage
+ * (uploading to dropbox) purposes.
+ */
 public class CloudStorageUtil {
 
     public static final String RECIPE_DATA_FOLDER = FileUtil.getPath("data/");
@@ -27,6 +31,10 @@ public class CloudStorageUtil {
 
     public static void setAccessToken(String accessToken) {
         ACCESS_TOKEN = accessToken;
+    }
+
+    public static String getRedirectDomain() {
+        return REDIRECT_DOMAIN;
     }
 
     public static String getAppropriateUrl() {

@@ -3,6 +3,7 @@ package seedu.recipe.ui;
 import static seedu.recipe.ui.util.AutoCompletionUtil.APPLICATION_KEYWORDS;
 import static seedu.recipe.ui.util.AutoCompletionUtil.MAX_SUGGESTIONS;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -101,13 +102,19 @@ public class SuggestionsPopUp extends ContextMenu {
         textInputProcessor.setContent(commandTextArea.getText());
 
         String autoCompletionText;
+        int caretPosition;
         if (autoCompletionUtil.isCommandKeyWord(item.getText())) {
             autoCompletionText = autoCompletionUtil.getAutoCompletionText(item.getText());
+            caretPosition = item.getText().length() + 1;
         } else {
             autoCompletionText = textInputProcessor.replaceLastWord(item.getText());
+            caretPosition = autoCompletionText.length();
         }
 
-        item.setOnAction(event -> commandBox.replaceText(autoCompletionText));
+        item.setOnAction(event -> {
+            commandBox.replaceText(autoCompletionText);
+            commandTextArea.positionCaret(caretPosition);
+        });
         getItems().add(item);
     }
 }

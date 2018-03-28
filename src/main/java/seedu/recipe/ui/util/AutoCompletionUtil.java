@@ -26,6 +26,18 @@ public class AutoCompletionUtil {
                 CliSyntax.PREFIX_PREPARATION_TIME.toString(), CliSyntax.PREFIX_TAG.toString(),
                 CliSyntax.PREFIX_URL.toString()));
         prefixesForCommand.put("add", addPrefixes);
+
+        ArrayList<String> editPrefixes = new ArrayList<>(Arrays.asList(CliSyntax.PREFIX_NAME.toString(),
+                CliSyntax.PREFIX_INGREDIENT.toString(), CliSyntax.PREFIX_INSTRUCTION.toString(),
+                CliSyntax.PREFIX_PREPARATION_TIME.toString(), CliSyntax.PREFIX_TAG.toString(),
+                CliSyntax.PREFIX_URL.toString()));
+        prefixesForCommand.put("edit", editPrefixes);
+
+        for (String command : APPLICATION_KEYWORDS) {
+            if (!command.equals("add") && !command.equals("edit")) {
+                prefixesForCommand.put(command, new ArrayList<>());
+            }
+        }
     }
 
     /**

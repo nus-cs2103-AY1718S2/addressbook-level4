@@ -31,6 +31,7 @@ public class MainWindow extends UiPart<Stage> {
 
     public static final String DARK_THEME_CSS = "DarkTheme.css";
     public static final String LIGHT_THEME_CSS = "LightTheme.css";
+    public static final String EXTENSIONS_CSS = "Extensions.css";
 
     private static final String FXML = "MainWindow.fxml";
 
@@ -215,6 +216,7 @@ public class MainWindow extends UiPart<Stage> {
         } else {
             scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + LIGHT_THEME_CSS).toExternalForm());
         }
+        scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + EXTENSIONS_CSS).toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }

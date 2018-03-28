@@ -27,6 +27,7 @@ import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
 import seedu.recipe.logic.commands.RedoCommand;
 import seedu.recipe.logic.commands.SelectCommand;
+import seedu.recipe.logic.commands.ShareCommand;
 import seedu.recipe.logic.commands.TagCommand;
 import seedu.recipe.logic.commands.UndoCommand;
 import seedu.recipe.logic.commands.UploadCommand;
@@ -118,6 +119,15 @@ public class RecipeBookParserTest {
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_RECIPE), command);
     }
+
+    //@@author RyanAngJY
+    @Test
+    public void parseCommand_share() throws Exception {
+        ShareCommand command = (ShareCommand) parser.parseCommand(
+                ShareCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased());
+        assertEquals(new ShareCommand(INDEX_FIRST_RECIPE), command);
+    }
+    //@@author
 
     //@@author nicholasangcx
     @Test

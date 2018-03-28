@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -16,6 +15,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationEvent;
 import seedu.address.logic.GetDistance;
 
 import seedu.address.model.person.Person;
@@ -27,7 +27,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://www.google.com.sg/maps/dir/Kent+Ridge+MRT+Station,+Singapore/";
+            "https://www.google.com.sg/maps/dir/Kent+Ridge+MRT+Station/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -53,7 +53,6 @@ public class BrowserPanel extends UiPart<Region> {
         String addressValue = person.getAddress().value.trim();
         int stringCutIndex;
         String addressWithoutUnit;
-        List<Person> num;
 
         if (addressValue.indexOf('#') > 2) {
             stringCutIndex = addressValue.indexOf('#') - 2;
@@ -98,10 +97,26 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    /**
+     * Get controller
+     */
+
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         GetDistance distance = new GetDistance();
         loadPersonDirection(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    public void handleShowMultiLocationEvent(ShowMultiLocationEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
+        for (String adress: event.sortedList) {
+            url.append(adress);
+            url.append("/");
+        }
+        loadPage(url.toString());
     }
 }

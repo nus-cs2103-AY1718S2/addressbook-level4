@@ -52,8 +52,8 @@ public class DistanceCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
         String origin;
         String destination;
-        String personName_origin = "";
-        String personName_destination = "";
+        String personNameOrigin = "";
+        String personNameDestination = "";
         if (targetIndexOrigin == null) {
             if (targetIndexDestination.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -75,8 +75,8 @@ public class DistanceCommand extends Command {
             Person personDestination = lastShownList.get(indexZeroBasedDestination);
             origin = personOrigin.getAddress().toString();
             destination = personDestination.getAddress().toString();
-            personName_origin = personOrigin.getName().toString();
-            personName_destination = personDestination.getName().toString();
+            personNameOrigin = personOrigin.getName().toString();
+            personNameDestination = personDestination.getName().toString();
         }
 
         try {
@@ -85,7 +85,7 @@ public class DistanceCommand extends Command {
             return targetIndexOrigin == null ? new CommandResult(String.format
                     (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance))
                     : new CommandResult(String.format(
-                            MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personName_origin, personName_destination, distance));
+                            MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
         } catch (Exception e) {
             throw new CommandException(Messages.MESSAGE_PERSON_ADDRESS_CANNOT_FIND);
         }

@@ -1,11 +1,13 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowMultiLocationEvent;
 import seedu.address.logic.RouteOptimization;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.DatePredicate;
-
 
 /**
  * Filters and lists all persons in address book whose date contains any of the argument dates.
@@ -27,13 +29,15 @@ public class FilterCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() throws CommandException, IOException {
 
         RouteOptimization route = new RouteOptimization();
         List<String> optimizedRoute;
 
         model.updateFilteredPersonList(predicate);
+
         optimizedRoute = route.getAddresses(model);
+        EventsCenter.getInstance().post(new ShowMultiLocationEvent(optimizedRoute));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 
     }

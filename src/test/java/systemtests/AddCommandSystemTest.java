@@ -15,6 +15,10 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_CHARLIE;
+import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_DION;
+import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_ELIAS;
+import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_FION;
 import static seedu.address.logic.commands.CommandTestUtil.OPTION_OWNER;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
@@ -28,6 +32,10 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_CHARLIE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_DION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_ELIAS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_FION;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -54,6 +62,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -87,39 +96,50 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a person with all fields same as another person in the address book except name -> added */
+        /* Case: add a person with all fields same as another person in the address book except name -> rejected */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withNric(VALID_NRIC_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + NRIC_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_NRIC);
+
+        /* Case: add a person with all fields same as another person in the address book except name and nric
+        -> accepted */
+        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withNric(VALID_NRIC_BOB).withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + NRIC_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except phone -> added */
+        /* Case: add a person with all fields same as another person in the address book except phone and nric
+        -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withNric(VALID_NRIC_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withNric(VALID_NRIC_CHARLIE).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY
-            + ADDRESS_DESC_AMY + NRIC_DESC_AMY + TAG_DESC_FRIEND;
+            + ADDRESS_DESC_AMY + NRIC_DESC_CHARLIE + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except email -> added */
+        /* Case: add a person with all fields same as another person in the address book except email and nric
+        -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_AMY).withNric(VALID_NRIC_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withNric(VALID_NRIC_DION).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB
-            + ADDRESS_DESC_AMY + NRIC_DESC_AMY + TAG_DESC_FRIEND;
+            + ADDRESS_DESC_AMY + NRIC_DESC_DION + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except address -> added */
+        /* Case: add a person with all fields same as another person in the address book except address and nric
+        -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_BOB).withNric(VALID_NRIC_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_BOB).withNric(VALID_NRIC_ELIAS).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-            + ADDRESS_DESC_BOB + NRIC_DESC_AMY + TAG_DESC_FRIEND;
+            + ADDRESS_DESC_BOB + NRIC_DESC_ELIAS + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except NRIC -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-            .withAddress(VALID_ADDRESS_AMY).withNric(VALID_NRIC_BOB).withTags(VALID_TAG_FRIEND).build();
+            .withAddress(VALID_ADDRESS_AMY).withNric(VALID_NRIC_FION).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-            + ADDRESS_DESC_AMY + NRIC_DESC_BOB + TAG_DESC_FRIEND;
+            + ADDRESS_DESC_AMY + NRIC_DESC_FION + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -249,6 +269,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
             expectedModel.addPerson(toAdd);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
+        } catch (DuplicateNricException e) {
+            throw new IllegalArgumentException("toAdd's NRIC already exists in the model.");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
 

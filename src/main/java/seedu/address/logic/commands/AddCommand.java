@@ -19,6 +19,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
@@ -33,8 +34,40 @@ public class AddCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
 
-    //NEED TO UPDATE THE MESSAGE_USAGE (CONSOLIDATE)
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " -o : Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = "To add a new person: "
+            + COMMAND_WORD + " -o " + PREFIX_NAME + "NAME "
+            + PREFIX_PHONE + "PHONE "
+            + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_NRIC + "NRIC "
+            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "To add a new pet patient: "
+            + COMMAND_WORD + " -p " + PREFIX_NAME + "NAME "
+            + PREFIX_SPECIES + "SPECIES "
+            + PREFIX_BREED + "BREED "
+            + PREFIX_COLOUR + "COLOUR "
+            + PREFIX_BLOODTYPE + "BLOOD_TYPE "
+            + "[" + PREFIX_TAG + "TAG]... -o " + PREFIX_NRIC + "OWNER_NRIC\n"
+            + "To add a new appointment: "
+            + COMMAND_WORD + " -a " + PREFIX_DATE + "DATE "
+            + PREFIX_REMARK + "REMARK "
+            + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]... -o " + PREFIX_NRIC + "OWNER_NRIC -p "
+            + PREFIX_NAME +" PET_NAME\n"
+            + "To add all new: " + COMMAND_WORD + " -o " + PREFIX_NAME + "OWNER_NAME "
+            + PREFIX_PHONE + "PHONE "
+            + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_NRIC + "NRIC "
+            + "[" + PREFIX_TAG + "TAG]... -p " + PREFIX_NAME + "PET_NAME "
+            + PREFIX_SPECIES + "SPECIES "
+            + PREFIX_BREED + "BREED "
+            + PREFIX_COLOUR + "COLOUR "
+            + PREFIX_BLOODTYPE + "BLOOD_TYPE "
+            + "[" + PREFIX_TAG + "TAG]... -a "  + PREFIX_DATE + "DATE "
+            + PREFIX_REMARK + "REMARK "
+            + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]...";
+
+    public static final String MESSAGE_PERSON = "Option -o : Person details. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -42,7 +75,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_NRIC + "NRIC "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "Example: " + "-o "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
@@ -51,18 +84,18 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_APPOINTMENT = COMMAND_WORD + " -a : Adds an appointment. "
+    public static final String MESSAGE_APPOINTMENT = "Option -a : Appointment details. "
             + "Parameters: "
             + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
             + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "Example: " + "-a "
             + PREFIX_DATE + "2018-12-31 12:30 "
             + PREFIX_REMARK + "nil "
             + PREFIX_TAG + "checkup "
             + PREFIX_TAG + "vaccination";
 
-    public static final String MESSAGE_PETPATIENT = COMMAND_WORD + " -p : Adds a pet patient to the address book. "
+    public static final String MESSAGE_PETPATIENT = COMMAND_WORD + " -p : Pet Patient details. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_SPECIES + "SPECIES "
@@ -70,7 +103,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_COLOUR + "COLOUR "
             + PREFIX_BLOODTYPE + "BLOOD_TYPE "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "Example: " + "-p "
             + PREFIX_NAME + "Jewel "
             + PREFIX_SPECIES + "Cat "
             + PREFIX_BREED + "Persian Ragdoll "
@@ -79,6 +112,7 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s\n";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in Medeina.";
+    public static final String MESSAGE_DUPLICATE_NRIC = "This is already someone with this NRIC.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This particular appointment already exists in Medeina.";
     public static final String MESSAGE_DUPLICATE_PET_PATIENT = "This pet patient already exists in Medeina";
     public static final String MESSAGE_INVALID_NRIC = "The specified NRIC does not belong to anyone in Medeina."
@@ -164,6 +198,8 @@ public class AddCommand extends UndoableCommand {
 
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (DuplicateNricException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_NRIC);
         } catch (DuplicatePetPatientException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PET_PATIENT);
         } catch (DuplicateAppointmentException e) {
@@ -171,7 +207,7 @@ public class AddCommand extends UndoableCommand {
         }
     }
 
-    private CommandResult addNewPerson() throws DuplicatePersonException {
+    private CommandResult addNewPerson() throws DuplicatePersonException, DuplicateNricException {
         model.addPerson(toAddOwner);
         return new CommandResult(String.format(message, toAddOwner));
     }
@@ -216,8 +252,8 @@ public class AddCommand extends UndoableCommand {
      * Add a new appointment, a new pet patient and a new person.
      * (New appointment for the new patient under a new person).
      */
-    private CommandResult addAllNew() throws DuplicatePersonException, DuplicatePetPatientException,
-            DuplicateAppointmentException {
+    private CommandResult addAllNew() throws DuplicatePersonException, DuplicateNricException,
+            DuplicatePetPatientException, DuplicateAppointmentException {
         model.addPerson(toAddOwner);
         model.addPetPatient(toAddPet);
         model.addAppointment(toAddAppt);

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.io.IOException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -17,7 +19,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-import java.io.IOException;
 
 
 public class LogicManagerTest {
@@ -59,8 +60,10 @@ public class LogicManagerTest {
      * Also confirms that {@code expectedModel} is as specified.
      * @see #assertCommandBehavior(Class, String, String, Model)
      */
-    private void assertCommandSuccess(String inputCommand, String expectedMessage, Model expectedModel) throws IOException {
-        assertCommandBehavior(null, inputCommand, expectedMessage, expectedModel);
+    private void assertCommandSuccess(String inputCommand, String expectedMessage, Model expectedModel)
+            throws IOException {
+        assertCommandBehavior(null,
+                inputCommand, expectedMessage, expectedModel);
     }
 
     /**
@@ -83,7 +86,8 @@ public class LogicManagerTest {
      * Executes the command, confirms that the exception is thrown and that the result message is correct.
      * @see #assertCommandBehavior(Class, String, String, Model)
      */
-    private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage) throws IOException {
+    private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage)
+            throws IOException {
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel);
     }

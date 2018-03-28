@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.Imdb;
+import seedu.address.storage.XmlAdaptedAppointment;
 import seedu.address.storage.XmlAdaptedPatient;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableImdb;
@@ -43,6 +44,8 @@ public class XmlUtilTest {
     private static final String VALID_DOB = "10/10/1991";
     private static final String VALID_BLOODTYPE = "B+";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final List<XmlAdaptedAppointment> VALID_APPOINTMENTS = Collections.singletonList(
+            new XmlAdaptedAppointment("26/3/2018 1030"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -83,7 +86,8 @@ public class XmlUtilTest {
         XmlAdaptedPatient actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPatientWithRootElement.class);
         XmlAdaptedPatient expectedPerson = new XmlAdaptedPatient(
-                VALID_NAME, null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB, VALID_BLOODTYPE, VALID_TAGS);
+                VALID_NAME, null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB, VALID_BLOODTYPE, VALID_TAGS,
+                VALID_APPOINTMENTS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -93,7 +97,7 @@ public class XmlUtilTest {
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPatientWithRootElement.class);
         XmlAdaptedPatient expectedPerson = new XmlAdaptedPatient(
                 VALID_NAME, VALID_NRIC, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB,
-                VALID_BLOODTYPE, VALID_TAGS);
+                VALID_BLOODTYPE, VALID_TAGS, VALID_APPOINTMENTS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -103,7 +107,7 @@ public class XmlUtilTest {
                 VALID_PERSON_FILE, XmlAdaptedPatientWithRootElement.class);
         XmlAdaptedPatient expectedPerson = new XmlAdaptedPatient(
                 VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DOB,
-                VALID_BLOODTYPE, VALID_TAGS);
+                VALID_BLOODTYPE, VALID_TAGS, VALID_APPOINTMENTS);
         assertEquals(expectedPerson, actualPerson);
     }
 

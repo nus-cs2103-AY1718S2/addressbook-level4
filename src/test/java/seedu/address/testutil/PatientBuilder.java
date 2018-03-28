@@ -3,6 +3,8 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.BloodType;
 import seedu.address.model.patient.DateOfBirth;
@@ -11,6 +13,7 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.RecordList;
 import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -28,7 +31,13 @@ public class PatientBuilder {
     public static final String DEFAULT_DOB = "11/11/1991";
     public static final String DEFAULT_BLOODTYPE = "A";
     public static final String DEFAULT_REMARK = "";
+    public static final String DEFAULT_DATE = "";
+    public static final String DEFAULT_SYMPTOM = "";
+    public static final String DEFAULT_ILLNESS = "";
+    public static final String DEFAULT_TREATMENT = "";
+    public static final String DEFAULT_RECORDLIST = "1 in/1 d/ s/ i/ t/\n";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_APPOINTMENTS = "";
 
     private Name name;
     private Nric nric;
@@ -38,9 +47,11 @@ public class PatientBuilder {
     private DateOfBirth dob;
     private BloodType bloodType;
     private Remark remark;
+    private RecordList recordList;
     private Set<Tag> tags;
+    private Set<Appointment> appointments;
 
-    public PatientBuilder() {
+    public PatientBuilder() throws ParseException {
         name = new Name(DEFAULT_NAME);
         nric = new Nric(DEFAULT_NRIC);
         phone = new Phone(DEFAULT_PHONE);
@@ -49,7 +60,9 @@ public class PatientBuilder {
         dob = new DateOfBirth(DEFAULT_DOB);
         bloodType = new BloodType(DEFAULT_BLOODTYPE);
         remark = new Remark(DEFAULT_REMARK);
+        recordList = new RecordList(DEFAULT_RECORDLIST);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        appointments = SampleDataUtil.getAppointmentSet(DEFAULT_APPOINTMENTS);
     }
 
     /**
@@ -64,7 +77,9 @@ public class PatientBuilder {
         dob = patientToCopy.getDob();
         bloodType = patientToCopy.getBloodType();
         remark = patientToCopy.getRemark();
+        recordList = patientToCopy.getRecordList();
         tags = new HashSet<>(patientToCopy.getTags());
+        appointments = new HashSet<>(patientToCopy.getAppointments());
     }
 
     /**
@@ -88,6 +103,15 @@ public class PatientBuilder {
      */
     public PatientBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
+    }
+
+    /**
+     * Parses the {@code appointments} into a {@code Set<Appointment>}
+     * and set it to the {@code Patient} that we are building.
+     */
+    public PatientBuilder withAppointments(String ... appointments) {
+        this.appointments = SampleDataUtil.getAppointmentSet(appointments);
         return this;
     }
 
@@ -139,8 +163,16 @@ public class PatientBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Record} of the {@code Patient} that we are building.
+     */
+    public PatientBuilder withRecordList(String commandString) throws ParseException {
+        this.recordList = new RecordList(commandString);
+        return this;
+    }
+
     public Patient build() {
-        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, tags);
+        return new Patient(name, nric, phone, email, address, dob, bloodType, remark, recordList, tags, appointments);
     }
 
 }

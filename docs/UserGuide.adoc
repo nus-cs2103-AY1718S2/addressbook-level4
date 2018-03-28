@@ -45,9 +45,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Try out the commands below to get a feel of the app:
 
 * *`login bob password456`*: logs you into the IMDB as Bob. Note that some commands will not work unless you are logged in.
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the IMDB.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all patients
+* **`add`**`n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dob/11/11/1991 b/B+` : adds a patient named `John Doe` to the IMDB.
+* **`delete`**`3` : deletes the 3rd patient shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -74,7 +74,7 @@ Format: `help` or `h`
 
 ==== Logging into the system: `login` or `lg` [since v1.2]
 
-Logs the user into the IMDB with a matching username and password.
+Logs the user into the IMDB with a matching username and password. +
 Format: `login` or `lg`
 
 ==== Listing entered commands : `history` or `hi`
@@ -242,18 +242,18 @@ Edits the remark for the first patient to Likes to drink coffee.
 `remark 1 r/` +
 Removes the remark for the first patient.
 
-==== Adding a condition to an existing patient: `addc` [coming in v1.3]
+==== Adding a condition to an existing patient: `addc` [since v1.3]
 
 Adds a medical condition to an existing patient.
 Format: `addc` or `ac`
 
 Examples:
 
-* `addc Betsy aspirin` +
-Aspirin will be added to the list of conditions that Betsy has.
+* `addc 1 aspirin` +
+`aspirin` will be added to the list of conditions that the patient at index `1` has.
 
-* `ac John asthma` +
-Asthma will be added to the list of conditions that John has.
+* `ac 2 asthma` +
+`asthma` will be added to the list of conditions that the patient at index `2` has.
 
 ==== Removing the condition of an existing patient: `removec` [coming in v1.4]
 
@@ -262,18 +262,18 @@ Format: `removec` or `rc`
 
 Examples:
 
-* `removec Betsy aspirin` +
-Aspirin will be removed from the list of conditions that Betsy has.
+* `removec 1 aspirin` +
+`aspirin` will be removed from the list of conditions that the patient at index `1` has.
 
-* `rc John asthma` +
-Asthma will be removed from the list of conditions that John has.
+* `rc 2 asthma` +
+`asthma` will be removed from the list of conditions that the patient at index `2` has.
 
 ==== Listing all patients : `list` or `ls`
 
 Shows a list of all patients in the IMDB. +
 Format: `list` or `ls`
 
-==== Viewing certain details only: `filter` [coming in v1.3]
+==== Viewing certain details only: `filter` [coming in v1.4]
 
 Switches between showing personal details only, medical information only.
 Format: `filter` or `fil`
@@ -372,11 +372,11 @@ IMDB will be able to attach images(X-ray scans) to a patient and retrieve the im
 
 === Queue Commands
 
-The commands listed in this section are commands that do not pertain to the queue.
+The commands listed in this section are commands that pertain to the queue.
 
 ==== Adding a patient into the visiting queue with patient name: `addq` [since v1.2]
 
-Add patient into visiting queue (registration).
+Adds patient into visiting queue (registration).
 Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
 
 Examples:
@@ -389,7 +389,7 @@ John will be added at the back of the visiting queue.
 
 ==== Removing a patient from the visiting queue with patient name: `removeq` [since v1.2]
 
-Remove the first patient from the visiting queue (check-out).
+Removes the first patient from the visiting queue (check-out).
 Format: `removeq` or `rq`
 
 Examples:
@@ -406,22 +406,24 @@ The commands listed in this section are commands that pertain to the patient's a
 
 ==== Adding a medical appointment with: `addappt` [coming in v1.4]
 
-Add a medical appointment with patient name, date, time.
+Adds a medical appointment with patient name, date, time.
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
 Examples:
+
 * `addappt Betsy 19/3/2018 1000` +
-Add a medical appointment for Betsy on 19/3/2018 at 10am.
+Adds a medical appointment for Betsy on 19/3/2018 at 10am.
 
 * `aa John 23/3/2019 1430` +
-Add a medical appointment for John on 23/3/2018 at 2:30pm.
+Adds a medical appointment for John on 23/3/2018 at 2:30pm.
 
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
 
-Delete a medical appointment of the patient.
+Deletes a medical appointment of the patient.
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 
 Examples:
+
 * `delappt Betsy 2` +
 Delete a medical appointment of Betsy with index number 2.
 
@@ -434,6 +436,7 @@ Shows a list of medical appointments of the patient.
 Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
 
 Examples:
+
 * `viewappt Betsy` +
 List of medical appointments made by Betsy.
 
@@ -446,6 +449,7 @@ Shows a list of medical appointments of a particular date.
 Format: `viewappt DATE` or `va DATE`
 
 Examples:
+
 * `viewappt 19/3/2018` +
 List of medical appointments on 19/3/2018.
 
@@ -484,7 +488,11 @@ e.g. `find` or `f James Jake`
 e.g.`select` or `s 2`
 * *Remark* : `remark` or `rk INDEX r/[REMARK]` +
 e.g.`remark` or `rk 1 r/Likes to drink coffee.`
-* *View Appointment* : `viewappt` or `va`
+* *Add patient into visiting queue* : `addq` or `aq`
+* *Remove patient from visiting queue* : `removeq` or `rq`
+* *View appointments* : `viewappt` or `va`
+* *Add new appointment* : `addappt` or `aa`
+* *Delete appointment* : `delappt` or `da`
 * *History* : `history` or `hi`
 * *Undo* : `undo` or `u` or `z`
 * *Redo* : `redo` or `r` or `y`

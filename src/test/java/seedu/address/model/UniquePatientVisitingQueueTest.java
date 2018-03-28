@@ -17,11 +17,11 @@ public class UniquePatientVisitingQueueTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Patient samplePatient = new PatientBuilder().build();
     private UniquePatientVisitingQueue queueToTest = new UniquePatientVisitingQueue();
 
     @Test
     public void execute_addPatient_addSuccessful() throws Exception {
+        Patient samplePatient = new PatientBuilder().build();
         UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
         anotherQueue.add(samplePatient);
         queueToTest.add(samplePatient);
@@ -30,6 +30,7 @@ public class UniquePatientVisitingQueueTest {
 
     @Test
     public void execute_removePatient_removeSuccessful() throws Exception {
+        Patient samplePatient = new PatientBuilder().build();
         UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
         anotherQueue.add(samplePatient);
         queueToTest.add(samplePatient);
@@ -40,6 +41,7 @@ public class UniquePatientVisitingQueueTest {
 
     @Test
     public void execute_duplicatePatient_throwsDuplicateException() throws Exception {
+        Patient samplePatient = new PatientBuilder().build();
         queueToTest.add(samplePatient);
 
         thrown.expect(DuplicatePatientException.class);

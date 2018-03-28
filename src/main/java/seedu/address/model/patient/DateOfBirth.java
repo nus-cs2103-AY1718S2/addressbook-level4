@@ -16,7 +16,8 @@ public class DateOfBirth {
      * The first character of the DOB must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DOB_VALIDATION_REGEX = "[\\p{Digit}\\p{Punct}]*";
+    public static final String DOB_VALIDATION_REGEX =
+            "[\\p{Digit}]{2}[\\p{Punct}][\\p{Digit}]{2}[\\p{Punct}][\\p{Digit}]{4}";
 
     public final String value;
 

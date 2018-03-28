@@ -14,7 +14,7 @@ import seedu.address.testutil.PatientBuilder;
 public class PatientCardTest extends GuiUnitTest {
 
     @Test
-    public void display() {
+    public void display() throws Exception {
         // no tags
         Patient patientWithNoTags = new PatientBuilder().withTags(new String[0]).build();
         PatientCard patientCard = new PatientCard(patientWithNoTags, 1);
@@ -29,7 +29,7 @@ public class PatientCardTest extends GuiUnitTest {
     }
 
     @Test
-    public void equals() {
+    public void equals() throws Exception {
         Patient patient = new PatientBuilder().build();
         PatientCard patientCard = new PatientCard(patient, 0);
 

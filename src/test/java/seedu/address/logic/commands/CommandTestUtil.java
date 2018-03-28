@@ -26,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
+import seedu.address.testutil.AEditPersonDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -49,6 +50,8 @@ public class CommandTestUtil {
     public static final String VALID_BLOODTYPE_BOB = "A";
     public static final String VALID_REMARK_AMY = "Monthly blood test";
     public static final String VALID_REMARK_BOB = "Weekly checkup";
+    public static final String VALID_RECORD_AMY = "1 in/1 d/1st March 2018 s/Headache, runny nose i/Flu t/Zyrtec";
+    public static final String VALID_RECORD_BOB = "1 in/1 d/22/03/16 s/High temperature i/Fever t/Panadol";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String UNUSED_TAG = "UNUSED";
@@ -86,12 +89,20 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final AddConditionCommand.EditPersonDescriptor ADESC_AMY;
+    public static final AddConditionCommand.EditPersonDescriptor ADESC_BOB;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        ADESC_AMY = new AEditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        ADESC_BOB = new AEditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }

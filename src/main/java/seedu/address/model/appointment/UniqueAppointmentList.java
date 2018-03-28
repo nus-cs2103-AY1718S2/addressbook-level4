@@ -1,5 +1,6 @@
 package seedu.address.model.appointment;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
@@ -8,8 +9,10 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * A list of appointment that enforces no nulls and uniqueness between its elements.
@@ -128,6 +131,43 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
+    }
+
+    public ObservableList<Appointment> getPastAppointmentObservableList() throws ParseException {
+        Set<Appointment> appointmentSet = toSet();
+        ObservableList pastAppointments = FXCollections.observableArrayList();
+
+        for (Appointment appt : appointmentSet) {
+            if (DateTime.isBefore(appt.getAppointmentDateTimeString())) {
+                pastAppointments.add(appt);
+            }
+        }
+        return FXCollections.unmodifiableObservableList(pastAppointments);
+    }
+
+    public ObservableList<Appointment> getUpcomingAppointmentObservableList() throws ParseException {
+        Set<Appointment> appointmentSet = toSet();
+        ObservableList pastAppointments = FXCollections.observableArrayList();
+
+        for (Appointment appt : appointmentSet) {
+            if (DateTime.isAfterOrEqual(appt.getAppointmentDateTimeString())) {
+                pastAppointments.add(appt);
+            }
+        }
+        return FXCollections.unmodifiableObservableList(pastAppointments);
+    }
+
+    /**
+     * Returns true if the element is deleted..
+     */
+    public boolean remove(Index index) {
+        requireNonNull(index);
+        Appointment appointmentToDelete = getAppointmentByIndex(index);
+        return internalList.remove(appointmentToDelete);
+    }
+
+    public Appointment getAppointmentByIndex(Index index) {
+        return (Appointment) internalList.get(index.getZeroBased());
     }
 
     /**

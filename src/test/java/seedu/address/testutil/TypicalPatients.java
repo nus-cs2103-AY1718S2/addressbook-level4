@@ -53,8 +53,7 @@ public class TypicalPatients {
                     .withTags("friends")
                     .withNric("S1234567A")
                     .withBloodType("A")
-                    .withDob("11/11/1991")
-                    .build();
+                    .withDob("11/11/1991").build();
         } catch (ParseException pe) {
             try {
                 throw pe;
@@ -131,7 +130,9 @@ public class TypicalPatients {
                     .withEmail("lydia@example.com").withAddress("little tokyo")
                     .withNric("S1234512F")
                     .withBloodType("O+")
-                    .withDob("06/06/1986").build();
+                    .withDob("06/06/1986")
+                    .withAppointments("28/3/2018 1230")
+                    .build();
         } catch (ParseException pe) {
             try {
                 throw pe;
@@ -146,7 +147,8 @@ public class TypicalPatients {
                     .withEmail("anna@example.com").withAddress("4th street")
                     .withRemark("Comes for checkup every Tuesday").withNric("S1234567A")
                     .withBloodType("B+")
-                    .withDob("11/11/1991").build();
+                    .withDob("11/11/1991")
+                    .withAppointments("28/3/2018 1230").build();
         } catch (ParseException pe) {
             try {
                 throw pe;

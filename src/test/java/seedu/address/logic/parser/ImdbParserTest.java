@@ -18,6 +18,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -294,12 +295,34 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_viewAppointmentCommandAlias() throws Exception {
-        LoginManager.authenticate("alice", "password123");
+        LoginManager.authenticate("bob", "password456");
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
                 ViewAppointmentCommand.COMMAND_ALIAS + " " + keywords.stream()
                         .collect(Collectors.joining(" ")));
         assertEquals(new ViewAppointmentCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_deleteAppointment() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz", "1");
+        DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
+                DeleteAppointmentCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new DeleteAppointmentCommand(new NameContainsKeywordsPredicate(keywords),
+                ParserUtil.parseIndex("1")), command);
+    }
+
+    @Test
+    public void parseCommand_deleteAppointmentCommandAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz", "1");
+        DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
+                DeleteAppointmentCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new DeleteAppointmentCommand(new NameContainsKeywordsPredicate(keywords),
+                ParserUtil.parseIndex("1")), command);
     }
 
     @Test

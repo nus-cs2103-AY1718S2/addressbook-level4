@@ -126,7 +126,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input
      */
     public void createIssueOnGitHub(Issue i) throws IOException {
-        GitHub github = GitHub.connect(userLogin, userAuthentication);
+        GitHub github = GitHub.connect("anminkang", "f5fc426375cdd2d09b255045df36a8c41876ccb5");
         GHRepository repository = github.getRepository(repoName);
         GHIssueBuilder issueBuilder = repository.createIssue(i.getTitle().toString());
         issueBuilder.body(i.getBody().toString());

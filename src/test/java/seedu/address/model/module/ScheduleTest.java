@@ -80,7 +80,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testEquals(){
+    public void testEquals() {
         Assert.assertTrue(test.equals(test));
         Assert.assertTrue(test.equals(new Schedule(DEFAULT_CLASSNO, DEFAULT_LESSON_TYPE, DEFAULT_WEEK_TEXT,
                 DEFAULT_DAY_TEXT, DEFAULT_START_TIME, DEFAULT_END_TIME, DEFAULT_VENUE)));

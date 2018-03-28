@@ -8,6 +8,8 @@ import java.util.Set;
 
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
 
 /**
  * Represents a Person in the address book.
@@ -21,14 +23,16 @@ public class Person {
     private final Address address;
     private final Birthday birthday;
     private final Appointment appointment;
+    private final Group group;
 
     private final UniqueTagList tags;
+    private final UniqueGroupList groups;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday,
-            Appointment appointment) {
+            Appointment appointment, Group group) {
         requireAllNonNull(name, phone, email, address, tags, birthday);
         this.name = name;
         this.phone = phone;
@@ -36,13 +40,17 @@ public class Person {
         this.address = address;
         this.birthday = birthday;
         this.appointment = appointment;
+        this.group = group;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.groups = new UniqueGroupList(group);
+
     }
 
     /**
      * TODO: To be phased out
      */
+    /*
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
@@ -54,6 +62,7 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
+    */
 
     public Name getName() {
         return name;
@@ -79,6 +88,8 @@ public class Person {
         return appointment;
     }
 
+    public Group getGroup() { return group;}
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -102,13 +113,15 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getBirthday().equals(this.getBirthday());
+                && otherPerson.getBirthday().equals(this.getBirthday())
+                && otherPerson.getGroup().equals(this.getGroup());
+
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, birthday, appointment);
+        return Objects.hash(name, phone, email, address, tags, birthday, appointment, group);
     }
 
     @Override

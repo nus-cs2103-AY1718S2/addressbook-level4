@@ -19,6 +19,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.group.Group;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -168,7 +169,16 @@ public class ParserUtil {
         }
         return tagSet;
     }
-  
+
+    /**
+     * Parses a {@code Optional<String> group} into an {@code Optional<Group>} if {@code group} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Group> parseGroup (Optional<String> group) throws IllegalValueException {
+        requireNonNull(group);
+        return group.isPresent() ? Optional.of(new Group (group.get())) : Optional.empty();
+    }
+
     /**
      * Parses a {@code String birthday} into a {@code Birthday}.
      * Leading and trailing whitespaces will be trimmed.

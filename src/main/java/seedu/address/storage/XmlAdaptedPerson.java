@@ -17,6 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.group.Group;
 
 /**
  * JAXB-friendly version of the Person.
@@ -39,6 +40,8 @@ public class XmlAdaptedPerson {
     @XmlElement
     private String appointment;
     @XmlElement
+    private String group;
+    @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
@@ -50,7 +53,7 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged, String birthday, String appointment) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged, String birthday, String appointment, String group) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -59,6 +62,7 @@ public class XmlAdaptedPerson {
         if (appointment != null) {
             this.appointment = appointment;
         }
+        this.group = group;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -75,6 +79,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         birthday = source.getBirthday().value;
+        group = source.getGroup().groupName;
         if (source.getAppointment() == null) {
             appointment = null;
         }
@@ -143,8 +148,16 @@ public class XmlAdaptedPerson {
         }
         final Appointment appointment = new Appointment(this.appointment);
 
+        if (this.group == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Group.class.getSimpleName()));
+        }
+        if (!Group.isValidGroup(this.group)) {
+            throw new IllegalValueException(Group.MESSAGE_GROUP_CONSTRAINTS);
+        }
+        final Group group = new Group(this.group);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags, birthday, appointment);
+        return new Person(name, phone, email, address, tags, birthday, appointment, group);
     }
 
     @Override

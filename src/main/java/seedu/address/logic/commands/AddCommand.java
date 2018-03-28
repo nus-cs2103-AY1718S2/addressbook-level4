@@ -52,7 +52,7 @@ public class AddCommand extends UndoableCommand {
             + COMMAND_WORD + " -a " + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
             + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]... -o " + PREFIX_NRIC + "OWNER_NRIC -p "
-            + PREFIX_NAME +" PET_NAME\n"
+            + PREFIX_NAME + " PET_NAME\n"
             + "To add all new: " + COMMAND_WORD + " -o " + PREFIX_NAME + "OWNER_NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "

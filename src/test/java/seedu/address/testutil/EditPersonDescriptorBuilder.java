@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -14,6 +15,7 @@ import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
@@ -46,6 +48,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setGradePointAverage(person.getGradePointAverage());
         descriptor.setJobApplied(person.getJobApplied());
         descriptor.setResume(person.getResume());
+        descriptor.setProfileImage(person.getProfileImage());
+        descriptor.setComment(person.getComment());
         descriptor.setTags(person.getTags());
     }
 
@@ -118,6 +122,22 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withResume(String resume) {
         descriptor.setResume(new Resume(resume));
+        return this;
+    }
+
+    /**
+     * Sets the {@code ProfileImage} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withProfileImage(String profileImage) {
+        descriptor.setProfileImage(new ProfileImage(profileImage));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Comment} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withComment(String comment) {
+        descriptor.setComment(new Comment(comment));
         return this;
     }
 

@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -16,6 +17,7 @@ import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
@@ -27,6 +29,7 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class PersonBuilder {
     private static final String RESUME_PATH = "src/test/resources/resume/";
+    private static final String PROFILE_IMAGE_PATH = "src/test/resources/photos/";
 
     private static final String DEFAULT_NAME = "Alice Pauline";
     private static final String DEFAULT_PHONE = "85355255";
@@ -41,6 +44,8 @@ public class PersonBuilder {
     private static final String DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE = "-1";
     private static final String DEFAULT_EXPERIENCE_SCORE = "-1";
     private static final String DEFAULT_RESUME = "alice.pdf";
+    private static final String DEFAULT_PROFILE_IMAGE = "gates.jpg";
+    private static final String DEFAULT_COMMENT = "";
     private static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -53,6 +58,8 @@ public class PersonBuilder {
     private JobApplied jobApplied;
     private Rating rating;
     private Resume resume;
+    private ProfileImage profileImage;
+    private Comment comment;
     private InterviewDate interviewDate;
     private Status status;
 
@@ -72,6 +79,8 @@ public class PersonBuilder {
                 Double.valueOf(DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_EXPERIENCE_SCORE));
         resume = new Resume(formPathFromFileName(DEFAULT_RESUME));
+        profileImage = new ProfileImage(formImagePathFromFileName(DEFAULT_PROFILE_IMAGE));
+        comment = new Comment(DEFAULT_COMMENT);
         interviewDate = new InterviewDate();
         status = new Status();
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
@@ -91,6 +100,8 @@ public class PersonBuilder {
         jobApplied = personToCopy.getJobApplied();
         rating = personToCopy.getRating();
         resume = personToCopy.getResume();
+        profileImage = personToCopy.getProfileImage();
+        comment = personToCopy.getComment();
         interviewDate = personToCopy.getInterviewDate();
         status = personToCopy.getStatus();
         tags = new HashSet<>(personToCopy.getTags());
@@ -189,6 +200,22 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code ProfileImage} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withProfileImage(String profileImage) {
+        this.profileImage = new ProfileImage(profileImage);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Comment} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withComment(String comment) {
+        this.comment = new Comment(comment);
+        return this;
+    }
+
+    /**
      * Sets the {@code InterviewDate} of the {@code Person} that we are building.
      */
     public PersonBuilder withInterviewDate(LocalDateTime interviewDate) {
@@ -208,8 +235,8 @@ public class PersonBuilder {
      * Builds and returns a {@code Person}.
      */
     public Person build() {
-        return new Person(name, phone, email, address, expectedGraduationYear,
-                major, gradePointAverage, jobApplied, rating, resume, interviewDate, status, tags);
+        return new Person(name, phone, email, address, expectedGraduationYear, major, gradePointAverage, jobApplied,
+                rating, resume, profileImage, comment, interviewDate, status, tags);
     }
 
     /**
@@ -223,4 +250,13 @@ public class PersonBuilder {
         }
     }
 
+    /**
+     * Forms the image path from image file name
+     */
+    private static String formImagePathFromFileName(String fileName) {
+        if (isNull(fileName)) {
+            return null;
+        }
+        return PROFILE_IMAGE_PATH + fileName;
+    }
 }

@@ -48,6 +48,8 @@ public class XmlUtilTest {
     private static final String VALID_PROBLEM_SOLVING_SKILLS_SCORE = "3";
     private static final String VALID_EXPERIENCE_SCORE = "2.5";
     private static final String VALID_RESUME = TEST_DATA_FOLDER + "hans.pdf";
+    private static final String VALID_PROFILE_IMAGE = TEST_DATA_FOLDER + "gates.jpg";
+    private static final String VALID_COMMENT = "Competitive programmer";
     private static final String VALID_INTERVIEW_DATE = "1540814400";
     private static final String VALID_STATUS = "offer accepted";
     private static final List<XmlAdaptedTag> VALID_TAGS =
@@ -96,6 +98,7 @@ public class XmlUtilTest {
                 VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
                 VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
@@ -109,6 +112,7 @@ public class XmlUtilTest {
                 VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
                 VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
@@ -122,6 +126,7 @@ public class XmlUtilTest {
                 VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                 VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
                 VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }

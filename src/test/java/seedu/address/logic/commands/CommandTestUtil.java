@@ -5,11 +5,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMUNICATION_SKILLS_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_IMAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -39,6 +41,8 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
  */
 public class CommandTestUtil {
     public static final String RESUME_PATH = "src/test/resources/resume/";
+    public static final String IMAGE_PATH = "src/test/resources/photos/";
+
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
     public static final String VALID_PHONE_AMY = "11111111";
@@ -65,6 +69,10 @@ public class CommandTestUtil {
     public static final String VALID_EXPERIENCE_SCORE_BOB = "4.5";
     public static final String VALID_RESUME_AMY = RESUME_PATH + "amy.pdf";
     public static final String VALID_RESUME_BOB = null;
+    public static final String VALID_PROFILE_IMAGE_AMY = IMAGE_PATH + "jobs.jpg";
+    public static final String VALID_PROFILE_IMAGE_BOB = null;
+    public static final String VALID_COMMENT_AMY = "Good interaction skill";
+    public static final String VALID_COMMENT_BOB = "";
 
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
@@ -91,6 +99,10 @@ public class CommandTestUtil {
     public static final String JOB_APPLIED_DESC_BOB = " " + PREFIX_JOB_APPLIED + VALID_JOB_APPLIED_BOB;
     public static final String RESUME_DESC_AMY = " " + PREFIX_RESUME + VALID_RESUME_AMY;
     public static final String RESUME_DESC_BOB = "";
+    public static final String PROFILE_IMAGE_DESC_AMY = " " + PREFIX_IMAGE + VALID_PROFILE_IMAGE_AMY;
+    public static final String PROFILE_IMAGE_DESC_BOB = "";
+    public static final String COMMENT_DESC_AMY = " " + PREFIX_COMMENT + VALID_COMMENT_AMY;
+    public static final String COMMENT_DESC_BOB = "";
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -110,6 +122,8 @@ public class CommandTestUtil {
             + " " + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + "7.5"
             + " " + PREFIX_EXPERIENCE_SCORE + "0.5"; // scores should be between 1 and 5 or equal to default value -1
     public static final String INVALID_RESUME_DESC = " " + PREFIX_RESUME + "fileDoesNot.exist";
+    public static final String INVALID_PROFILE_IMAGE_DESC = " " + PREFIX_IMAGE + "fileNotFound.jpg";
+    public static final String INVALID_COMMENT_DESC = " " + PREFIX_COMMENT + "Comment\nwith newline";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -122,11 +136,14 @@ public class CommandTestUtil {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY)
-                .withTags(VALID_TAG_FRIEND).withResume(VALID_RESUME_AMY).build();
+                .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY)
+                .withComment(VALID_COMMENT_AMY).withTags(VALID_TAG_FRIEND).build();
+
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withJobApplied(VALID_JOB_APPLIED_BOB)
-                .withResume(VALID_RESUME_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withResume(VALID_RESUME_BOB).withProfileImage(VALID_PROFILE_IMAGE_BOB)
+                .withComment(VALID_COMMENT_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

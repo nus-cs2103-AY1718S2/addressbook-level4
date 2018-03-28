@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -41,6 +42,7 @@ public class XmlAdaptedPersonTest {
     private static final String INVALID_PROBLEM_SOLVING_SKILLS_SCORE = "0";
     private static final String INVALID_EXPERIENCE_SCORE = "5.5";
     private static final String INVALID_RESUME = "fileDoesNot.exist";
+    private static final String INVALID_COMMENT = "Comment\nComment";
     private static final String INVALID_INTERVIEW_DATE = "Tomorrow";
     private static final String INVALID_STATUS = "dead";
     private static final String INVALID_TAG = "#friend";
@@ -62,6 +64,8 @@ public class XmlAdaptedPersonTest {
     private static final String VALID_EXPERIENCE_SCORE = Double.toString(
             BENSON.getRating().getExperienceScore());
     private static final String VALID_RESUME = BENSON.getResume().toString();
+    private static final String VALID_PROFILE_IMAGE = BENSON.getProfileImage().toString();
+    private static final String VALID_COMMENT = BENSON.getComment().toString();
     private static final String VALID_INTERVIEW_DATE = "1540814400";
     private static final String VALID_STATUS = BENSON.getStatus().toString();
     private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
@@ -82,7 +86,8 @@ public class XmlAdaptedPersonTest {
                         VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                         VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = Name.MESSAGE_NAME_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -94,7 +99,8 @@ public class XmlAdaptedPersonTest {
                 VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                 VALID_TECHNICAL_SKILLS_SCORE,
                 VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -107,7 +113,8 @@ public class XmlAdaptedPersonTest {
                         VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                         VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = Phone.MESSAGE_PHONE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -120,7 +127,8 @@ public class XmlAdaptedPersonTest {
                 VALID_JOB_APPLIED,
                 VALID_TECHNICAL_SKILLS_SCORE,
                 VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -134,7 +142,8 @@ public class XmlAdaptedPersonTest {
                         VALID_JOB_APPLIED,
                         VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = Email.MESSAGE_EMAIL_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -146,7 +155,8 @@ public class XmlAdaptedPersonTest {
                 VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                 VALID_TECHNICAL_SKILLS_SCORE,
                 VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -159,7 +169,8 @@ public class XmlAdaptedPersonTest {
                         VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                         VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = Address.MESSAGE_ADDRESS_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -171,7 +182,8 @@ public class XmlAdaptedPersonTest {
                 VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                 VALID_TECHNICAL_SKILLS_SCORE,
                 VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -184,7 +196,8 @@ public class XmlAdaptedPersonTest {
                         VALID_JOB_APPLIED,
                         VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = ExpectedGraduationYear.MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -195,7 +208,8 @@ public class XmlAdaptedPersonTest {
                 VALID_ADDRESS,  null, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
                 VALID_TECHNICAL_SKILLS_SCORE,
                 VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 ExpectedGraduationYear.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -208,7 +222,8 @@ public class XmlAdaptedPersonTest {
                         VALID_EXPECTED_GRADUATION_YEAR, INVALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
                         VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = Major.MESSAGE_MAJOR_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -219,7 +234,8 @@ public class XmlAdaptedPersonTest {
                 VALID_ADDRESS,  VALID_EXPECTED_GRADUATION_YEAR, null,
                 VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
                 VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 Major.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -232,7 +248,8 @@ public class XmlAdaptedPersonTest {
                         VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
                         INVALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -244,6 +261,7 @@ public class XmlAdaptedPersonTest {
                 VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
                 INVALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
                 VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = JobApplied.MESSAGE_JOB_APPLIED_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -255,6 +273,7 @@ public class XmlAdaptedPersonTest {
                 VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
                 null, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
                 VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 JobApplied.class.getSimpleName());
@@ -267,7 +286,8 @@ public class XmlAdaptedPersonTest {
                 VALID_ADDRESS,  VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
                 null, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
                 VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 GradePointAverage.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -279,8 +299,22 @@ public class XmlAdaptedPersonTest {
                 VALID_ADDRESS, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
                 VALID_JOB_APPLIED, INVALID_TECHNICAL_SKILLS_SCORE, INVALID_COMMUNICATION_SKILLS_SCORE,
                 INVALID_PROBLEM_SOLVING_SKILLS_SCORE, INVALID_EXPERIENCE_SCORE,
-                VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = Rating.MESSAGE_RATING_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidComment_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                        VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
+                        VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
+                        VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, INVALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+        String expectedMessage = Comment.MESSAGE_COMMENT_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
@@ -291,7 +325,8 @@ public class XmlAdaptedPersonTest {
                         VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
                         VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, INVALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        INVALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = InterviewDate.MESSAGE_INTERVIEW_DATE_XML_ERROR;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -302,7 +337,8 @@ public class XmlAdaptedPersonTest {
                 VALID_ADDRESS,  VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
                 VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
                 VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, null, VALID_TAGS);
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, null, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 Status.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -315,7 +351,8 @@ public class XmlAdaptedPersonTest {
                         VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
                         VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, INVALID_STATUS, VALID_TAGS);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, INVALID_STATUS, VALID_TAGS);
         String expectedMessage = Status.MESSAGE_STATUS_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -329,7 +366,8 @@ public class XmlAdaptedPersonTest {
                         VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
                         VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
                         VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_INTERVIEW_DATE, VALID_STATUS, invalidTags);
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, invalidTags);
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 

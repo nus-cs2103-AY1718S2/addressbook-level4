@@ -107,6 +107,7 @@ public class StatusCommand extends UndoableCommand {
                 personToUpdateStatus.getExpectedGraduationYear(), personToUpdateStatus.getMajor(),
                 personToUpdateStatus.getGradePointAverage(), personToUpdateStatus.getJobApplied(),
                 personToUpdateStatus.getRating(), personToUpdateStatus.getResume(),
+                personToUpdateStatus.getProfileImage(), personToUpdateStatus.getComment(),
                 personToUpdateStatus.getInterviewDate(), updatedStatus, personToUpdateStatus.getTags());
     }
 

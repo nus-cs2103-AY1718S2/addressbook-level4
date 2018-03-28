@@ -2,9 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_IMAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -34,6 +36,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_GRADE_POINT_AVERAGE + "GRADE POINT AVERAGE "
             + PREFIX_JOB_APPLIED + "JOB APPLIED "
             + "[" + PREFIX_RESUME + "RESUME] "
+            + "[" + PREFIX_IMAGE + "IMAGE] "
+            + "[" + PREFIX_COMMENT + "COMMENT] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -45,6 +49,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_GRADE_POINT_AVERAGE + "4.93 "
             + PREFIX_JOB_APPLIED + "Software Developer "
             + PREFIX_RESUME + "jdoe.pdf "
+            + PREFIX_IMAGE + "photo.jpg "
+            + PREFIX_COMMENT + "Extraordinary Regex skill "
             + PREFIX_TAG + "Java "
             + PREFIX_TAG + "Go\n"
             + "The status is initialised to be 'new'.";

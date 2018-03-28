@@ -13,6 +13,7 @@ import seedu.address.commons.util.DoubleUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.RatingSortCommand;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -20,6 +21,7 @@ import seedu.address.model.person.JobApplied;
 import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
@@ -458,5 +460,54 @@ public class ParserUtil {
     public static Optional<Resume> parseResume(Optional<String> resume) throws IllegalValueException {
         requireNonNull(resume);
         return resume.isPresent() ? Optional.of(parseResume(resume.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String profileImage} into a {@code ProfileImage}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code profileImage} is invalid.
+     */
+    public static ProfileImage parseProfileImage(String profileImage) throws IllegalValueException {
+        requireNonNull(profileImage);
+        String trimmedProfileImage = profileImage.trim();
+        if (!ProfileImage.isValidFile(trimmedProfileImage)) {
+            throw new IllegalValueException(ProfileImage.MESSAGE_IMAGE_CONSTRAINTS);
+        }
+        return new ProfileImage(trimmedProfileImage);
+    }
+
+    /**
+     * Parses a {@code Optional<String> profileImage} into an {@code Optional<ProfileImage>}
+     * if {@code profileImage} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ProfileImage> parseProfileImage(Optional<String> profileImage) throws IllegalValueException {
+        requireNonNull(profileImage);
+        return profileImage.isPresent() ? Optional.of(parseProfileImage(profileImage.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String comment} into a {@code Comment}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code comment} is invalid.
+     */
+    public static Comment parseComment(String comment) throws IllegalValueException {
+        requireNonNull(comment);
+        String trimmedComment = comment.trim();
+        if (!Comment.isValidComment(trimmedComment)) {
+            throw new IllegalValueException(Comment.MESSAGE_COMMENT_CONSTRAINTS);
+        }
+        return new Comment(trimmedComment);
+    }
+
+    /**
+     * Parses a {@code Optional<String> comment} into an {@code Optional<Comment>} if {@code comment} is present.
+     * See header comment of this class regarding the use of {@code Comment} parameters.
+     */
+    public static Optional<Comment> parseComment(Optional<String> comment) throws IllegalValueException {
+        requireNonNull(comment);
+        return comment.isPresent() ? Optional.of(parseComment(comment.get())) : Optional.empty();
     }
 }

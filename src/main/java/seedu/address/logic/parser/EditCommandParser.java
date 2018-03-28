@@ -3,9 +3,11 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_IMAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -23,6 +25,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Comment;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Resume;
 import seedu.address.model.tag.Tag;
 
@@ -41,7 +45,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_MAJOR, PREFIX_GRADE_POINT_AVERAGE, PREFIX_JOB_APPLIED,
-                        PREFIX_RESUME, PREFIX_TAG);
+                        PREFIX_RESUME, PREFIX_IMAGE, PREFIX_COMMENT, PREFIX_TAG);
 
         Index index;
 
@@ -64,7 +68,11 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .ifPresent(editPersonDescriptor::setGradePointAverage);
             ParserUtil.parseJobApplied(argMultimap.getValue(PREFIX_JOB_APPLIED))
                     .ifPresent(editPersonDescriptor::setJobApplied);
+
             parseResumeForEdit(argMultimap.getValue(PREFIX_RESUME)).ifPresent(editPersonDescriptor::setResume);
+            parseProfileImageForEdit(argMultimap.getValue(PREFIX_IMAGE))
+                    .ifPresent(editPersonDescriptor::setProfileImage);
+            parseCommentForEdit(argMultimap.getValue(PREFIX_COMMENT)).ifPresent(editPersonDescriptor::setComment);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -91,6 +99,36 @@ public class EditCommandParser implements Parser<EditCommand> {
         } else {
             return ParserUtil.parseResume(resume);
         }
+    }
+
+    /**
+     * Parses {@code Optional<ProfileImage> profileImage} into a {@code Optional<ProfileImage>}
+     * if {@code profileImage} is non-empty.
+     * If profile image is present and equals to empty string, it will be parsed into a
+     * {@code ProfileImage} containing null value.
+     */
+    private Optional<ProfileImage> parseProfileImageForEdit(Optional<String> profileImage)
+            throws IllegalValueException {
+        assert profileImage != null;
+        if (!profileImage.isPresent()) {
+            return Optional.empty();
+        }
+        if (profileImage.get().equals("")) {
+            return Optional.of(new ProfileImage(null));
+        } else {
+            return ParserUtil.parseProfileImage(profileImage);
+        }
+    }
+
+    /**
+     * Parses {@code Optional<Comment> comment} into a {@code Optional<Comment>} if {@code comment} is non-empty.
+     */
+    private Optional<Comment> parseCommentForEdit(Optional<String> comment) throws IllegalValueException {
+        assert comment != null;
+        if (!comment.isPresent()) {
+            return Optional.empty();
+        }
+        return ParserUtil.parseComment(comment);
     }
 
     /**

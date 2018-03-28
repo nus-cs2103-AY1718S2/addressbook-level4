@@ -10,14 +10,17 @@ import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
+//import seedu.address.commons.core.EventsCenter;
+//import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
+
+/**
+ * Handles changes to any Map user interfaces.
+ */
 
 public class MapManager {
     /**
      * Helps with retrieving the geocode from given address.
      */
-
     public static class GeocodeUtil {
 
         private static GeocodingService geocodingService = new GeocodingService();
@@ -27,7 +30,7 @@ public class MapManager {
          */
         public static class MyGeocodingServiceCallback implements GeocodingServiceCallback {
             private GoogleMap map;
-            public MyGeocodingServiceCallback(GoogleMap map){
+            public MyGeocodingServiceCallback(GoogleMap map) {
                 this.map = map;
             }
             @Override

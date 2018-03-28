@@ -521,7 +521,7 @@ Fastis lists all persons in Fastis that have tags similar to input.
 Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 tag.
 
-image:listGroupMemberSequenceDiagram.png[width="800"]
+image:listGroupMemberSequenceDiagram.png[width="800"] +
 When user types in command line `ListGroupMembers` or `lgm` , Fastis will use the keyword provided to search for the
 group tag and list out all members under the same group tag.
 
@@ -629,13 +629,11 @@ image:AddGroupSequenceDiagram.png[width="800"]
 ==== Design Considerations
 
 ===== Aspect: Implementation of `AddGroupCommand`
-
-* **Alternative 1 (current choice):** Add a new abstract method `executeAddGroupCommand()`
-** Pros: We will not lose any addGroup functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
-** Cons: Classes that inherit from `AddGroupCommand` must remember to call `super.execute()`, or lose the ability to addGroup.
+* **Alternative 1 (current choice):** Add a new command method `AddGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+* **Alternative 2:** Add a new abstract method `executeAddGroupCommand()`
+** Pros: It is not able to lose any addGroup functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
+** Cons: It is hard for new developers to understand the template pattern.
 
 // end::addGroup[]
 

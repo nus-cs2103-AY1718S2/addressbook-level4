@@ -277,65 +277,53 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-[%header,cols=4*]
+[%header,cols=3*]
 |===
 |Command
 |Keyboard shortcut
 |Syntax
-|Example Command
 
 |Add
 |`Alt` + `A`
 |`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
-|`add n: James Ho p: 22224444 e: jamesho@example.com a: 123, Clementi Rd, 1234665 t: friend t: colleague`
 
 |Clear
 |`Alt` + `C`
 |`clear`
-|
 
 |Delete
 |`Alt` + `D`
 |`delete INDEX`
-|
 
 |Edit
 |`Alt` + `E`
 |`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
-|`edit 2 n: James Lee e: jameslee@example.com`
 
 |Find
 |`Ctrl` + `F`
-|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
-|`find -all James Jake`
+|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]``
 
 |List
 |`F2`
 |`list`
-|
 
 |Help
 |`F1`
 |`help`
-|
 
 |Select
 |`Alt` + `S`
 |`select INDEX`
-|`select 2`
 
 |History
 |`Alt` + `H`
 |`history`
-|
 
 |Undo
 |`Ctrl` + `Z`
 |`undo`
-|
 
 |Redo
 |`Ctrl` + `Y`
 |`redo`
-|
 |===

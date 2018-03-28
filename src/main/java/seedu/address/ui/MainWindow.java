@@ -58,21 +58,6 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem redoMenuItem;
 
     @FXML
-    private MenuItem populateAddMenuItem;
-
-    @FXML
-    private MenuItem populateEditMenuItem;
-
-    @FXML
-    private MenuItem populateDeleteMenuItem;
-
-    @FXML
-    private MenuItem populateLocateMenuItem;
-
-    @FXML
-    private MenuItem populateFindMenuItem;
-
-    @FXML
     private MenuItem clearMenuItem;
 
     @FXML
@@ -80,6 +65,21 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private MenuItem listMenuItem;
+
+    @FXML
+    private MenuItem populateFindMenuItem;
+
+    @FXML
+    private MenuItem populateAddMenuItem;
+
+    @FXML
+    private MenuItem populateDeleteMenuItem;
+
+    @FXML
+    private MenuItem populateEditMenuItem;
+
+    @FXML
+    private MenuItem populateLocateMenuItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -115,18 +115,22 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("Alt + Q"));
+
         setAccelerator(undoMenuItem, KeyCombination.valueOf("Ctrl + Z"));
         setAccelerator(redoMenuItem, KeyCombination.valueOf("Ctrl + Y"));
-        setAccelerator(populateAddMenuItem, KeyCombination.valueOf("Alt + A"));
-        setAccelerator(populateEditMenuItem, KeyCombination.valueOf("Alt + E"));
-        setAccelerator(populateDeleteMenuItem, KeyCombination.valueOf("Alt + D"));
-        setAccelerator(populateLocateMenuItem, KeyCombination.valueOf("Alt + L"));
-        setAccelerator(populateFindMenuItem, KeyCombination.valueOf("Ctrl + F"));
         setAccelerator(clearMenuItem, KeyCombination.valueOf("Alt + C"));
+
         setAccelerator(historyMenuItem, KeyCombination.valueOf("Alt + H"));
         setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
+        setAccelerator(populateFindMenuItem, KeyCombination.valueOf("Ctrl + F"));
+
+        setAccelerator(populateAddMenuItem, KeyCombination.valueOf("Alt + A"));
+        setAccelerator(populateDeleteMenuItem, KeyCombination.valueOf("Alt + D"));
+        setAccelerator(populateEditMenuItem, KeyCombination.valueOf("Alt + E"));
+        setAccelerator(populateLocateMenuItem, KeyCombination.valueOf("Alt + L"));
+
+        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
 
     /**
@@ -233,46 +237,6 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Populates the {@code CommandBox} with the {@code AddCommand} prefixes.
-     */
-    @FXML
-    private void handleAdd() {
-        raise(new PopulatePrefixesRequestEvent("add"));
-    }
-
-    /**
-     * Populates the {@code CommandBox} with the {@code EditCommand} prefixes.
-     */
-    @FXML
-    private void handleEdit() {
-        raise(new PopulatePrefixesRequestEvent("edit"));
-    }
-
-    /**
-     * Populates the {@code CommandBox} with the {@code DeleteCommand} prefixes.
-     */
-    @FXML
-    private void handleDelete() {
-        raise(new PopulatePrefixesRequestEvent("delete"));
-    }
-
-    /**
-     * Populates the {@code CommandBox} with the {@code LocateCommand} prefixes.
-     */
-    @FXML
-    private void handleLocate() {
-        raise(new PopulatePrefixesRequestEvent("locate"));
-    }
-
-    /**
-     * Populates the {@code CommandBox} with the {@code FindCommand} prefixes.
-     */
-    @FXML
-    private void handleFind() {
-        raise(new PopulatePrefixesRequestEvent("find"));
-    }
-
-    /**
      * Executes the {@code clear} operation
      */
     @FXML
@@ -294,6 +258,46 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleList() {
         raise(new ExecuteCommandRequestEvent("list"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code FindCommand} prefixes.
+     */
+    @FXML
+    private void handleFind() {
+        raise(new PopulatePrefixesRequestEvent("find"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code AddCommand} prefixes.
+     */
+    @FXML
+    private void handleAdd() {
+        raise(new PopulatePrefixesRequestEvent("add"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code DeleteCommand} prefixes.
+     */
+    @FXML
+    private void handleDelete() {
+        raise(new PopulatePrefixesRequestEvent("delete"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code EditCommand} prefixes.
+     */
+    @FXML
+    private void handleEdit() {
+        raise(new PopulatePrefixesRequestEvent("edit"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code LocateCommand} prefixes.
+     */
+    @FXML
+    private void handleLocate() {
+        raise(new PopulatePrefixesRequestEvent("locate"));
     }
 
     void show() {

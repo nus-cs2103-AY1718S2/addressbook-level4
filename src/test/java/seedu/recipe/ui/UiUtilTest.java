@@ -5,10 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.recipe.ui.UiUtil.HEX_COLOR_BLACK;
 import static seedu.recipe.ui.UiUtil.HEX_COLOR_WHITE;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-
 import java.util.regex.Pattern;
 
 import org.junit.Test;
@@ -65,20 +61,6 @@ public class UiUtilTest {
 
         // dark CSS color code
         assertTrue(HEX_COLOR_WHITE.equals(UiUtil.getMatchingColorFromGivenColor(DARK_COLOR_CODE)));
-    }
-
-    @Test
-    public void copyToClipboard() {
-        String stringInClipboard = null;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Clipboard clipboard = toolkit.getSystemClipboard();
-        UiUtil.copyToClipboard(VALID_STRING);
-        try {
-            stringInClipboard = (String) clipboard.getData(DataFlavor.stringFlavor);
-        } catch (Exception exception) {
-            // problem with clipboard
-        }
-        assertTrue(VALID_STRING.equals(stringInClipboard));
     }
 }
 //@@author

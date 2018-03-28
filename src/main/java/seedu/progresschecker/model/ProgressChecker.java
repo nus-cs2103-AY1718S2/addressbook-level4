@@ -210,6 +210,17 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         }
     }
 
+    /**
+     * Uploads {@code Image} from the {@code path} offered
+     * @throws IOException if the {@code image} is not found
+     */
+    public void uploadPhoto(Person target, String path)
+            throws DuplicatePersonException, PersonNotFoundException {
+        Person tempPerson = target;
+        target.updatePhoto(path);
+        persons.setPerson(tempPerson, target);
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

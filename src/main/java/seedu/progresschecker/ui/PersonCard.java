@@ -2,9 +2,14 @@ package seedu.progresschecker.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import seedu.progresschecker.MainApp;
 import seedu.progresschecker.model.person.Person;
 
 /**
@@ -15,7 +20,6 @@ public class PersonCard extends UiPart<Region> {
     private static final String FXML = "PersonListCard.fxml";
     private static final String[] TAG_COLORS =
         { "red", "orange", "yellow", "green", "blue", "purple" };
-
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -44,6 +48,8 @@ public class PersonCard extends UiPart<Region> {
     private Label username;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Rectangle profile;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -60,6 +66,8 @@ public class PersonCard extends UiPart<Region> {
             label.getStyleClass().add(getTagColor(tag.tagName));
             tags.getChildren().add(label);
         });
+        Image profilePhoto = new Image(MainApp.class.getResourceAsStream(person.getPhotoPath()));
+        profile.setFill(new ImagePattern(profilePhoto));
     }
 
     /**

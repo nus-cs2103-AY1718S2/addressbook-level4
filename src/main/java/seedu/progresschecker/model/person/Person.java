@@ -15,12 +15,15 @@ import seedu.progresschecker.model.tag.UniqueTagList;
  */
 public class Person {
 
+    private static String defaultPath = "/images/profile_photo.jpg";
+
     private final Name name;
     private final Phone phone;
     private final Email email;
     private final GithubUsername username;
     private final Major major;
     private final Year year;
+    private String photoPath;
 
     private final UniqueTagList tags;
 
@@ -38,6 +41,7 @@ public class Person {
         this.year = year;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.photoPath = defaultPath;
     }
 
     public Name getName() {
@@ -64,6 +68,9 @@ public class Person {
         return year;
     }
 
+    public String getPhotoPath() {
+        return photoPath;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -71,6 +78,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    public void updatePhoto(String path) {
+        this.photoPath = path;
     }
 
     @Override

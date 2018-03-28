@@ -375,7 +375,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
-
 // end::undoredo[]
 
 // tag::upload[]
@@ -421,7 +420,7 @@ If the path is invalid or the image cannot be found, the upload will not be succ
 * **Alternative 2:** user will upload image into our github folder manually
 ** Pros: Everyone can see the update of profile photo.
 ** Cons: Quite trobulesome to upload photo manually first.
-// end::undoredo[]
+// end::upload[]
 
 // tag::search[]
 === Dynamic Search Implementation

@@ -2,8 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,6 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
 <HBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -60,18 +59,15 @@
                   </children>
                </GridPane>
           </VBox>
+            <Rectangle fx:id="profile" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" stroke="BLACK" strokeType="INSIDE" width="80.0">
+               <HBox.margin>
+                  <Insets top="30.0" />
+               </HBox.margin>
+            </Rectangle>
          </children>
       </HBox>
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-   <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-      <HBox.margin>
-         <Insets right="80.0" top="15.0" />
-      </HBox.margin>
-      <image>
-         <Image url="@../images/profile_photo.jpg" />
-      </image>
-   </ImageView>
 </HBox>

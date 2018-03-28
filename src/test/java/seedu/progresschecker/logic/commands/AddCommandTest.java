@@ -145,6 +145,12 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void uploadPhoto(Person target, String path)
+                throws DuplicatePersonException, PersonNotFoundException, IOException {
+            fail("This method should not be called.");
+        }
     }
 
     /**

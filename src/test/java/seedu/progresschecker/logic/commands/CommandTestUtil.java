@@ -45,6 +45,8 @@ public class CommandTestUtil {
     public static final String VALID_YEAR_BOB = "3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_PATH_AMY = "/images/contact/amy.jpg";
+    public static final String VALID_PATH_BOB = "/images/contact/bob.jpg";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -69,6 +71,8 @@ public class CommandTestUtil {
     public static final String INVALID_MAJOR_DESC = " " + PREFIX_MAJOR; // empty string not allowed for majors
     public static final String INVALID_YEAR_DESC = " " + PREFIX_YEAR + "9"; // year of study cannot exceed 5
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_PATH_DESC = "/images/ "; // prefix of path is not completed
+
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

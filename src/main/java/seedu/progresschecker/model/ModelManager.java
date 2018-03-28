@@ -112,6 +112,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void uploadPhoto(Person target, String path)
+            throws DuplicatePersonException, PersonNotFoundException, IOException {
+        progressChecker.uploadPhoto(target, path);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateProgressCheckerChanged();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {

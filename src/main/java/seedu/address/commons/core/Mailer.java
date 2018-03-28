@@ -1,17 +1,15 @@
 package seedu.address.commons.core;
 
-import seedu.address.model.person.Person;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import seedu.address.model.person.Person;
 
 /**
  * Send personalized emails to drivers and customers
@@ -48,7 +46,9 @@ public class Mailer {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(p.getEmail().toString()));
 
                 String subject = "Your delivery is arriving today!";
-                String body = "Dear " + p.getName().toString() + ", please be at your place today some pigeons may visit you :)";
+                String body = "Dear "
+                        + p.getName().toString()
+                        + ", please be at your place today some pigeons may visit you :)";
                 message.setSubject(subject);
                 message.setText(body);
             }

@@ -82,6 +82,9 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem locateMenuItem;
 
     @FXML
+    private MenuItem selectMenuItem;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -129,6 +132,7 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerator(deleteMenuItem, KeyCombination.valueOf("Alt + D"));
         setAccelerator(editMenuItem, KeyCombination.valueOf("Alt + E"));
         setAccelerator(locateMenuItem, KeyCombination.valueOf("Alt + L"));
+        setAccelerator(selectMenuItem, KeyCombination.valueOf("Alt + S"));
 
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
@@ -298,6 +302,14 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleLocate() {
         raise(new PopulatePrefixesRequestEvent("locate"));
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code SelectCommand} prefixes.
+     */
+    @FXML
+    private void handleSelect() {
+        raise(new PopulatePrefixesRequestEvent("select"));
     }
 
     void show() {

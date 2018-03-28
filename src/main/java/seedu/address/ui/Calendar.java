@@ -34,7 +34,7 @@ public class Calendar extends UiPart<Region> {
     private Text calendarHeader;
     private YearMonth currentYearMonth;
     private ObservableList<Event> events;
-    
+
     @FXML
     private ListView<CalendarDate> calendarListView;
 

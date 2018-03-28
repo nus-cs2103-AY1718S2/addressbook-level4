@@ -84,14 +84,14 @@ public class CalendarDate extends UiPart<Region> {
     public void setDate(LocalDate date, YearMonth currentYM) {
         day.setText("" + date.getDayOfMonth());
         if (date.equals(LocalDate.now())) {
-            setStyleClass(node,"weekend");
+            setStyleClass(node, "weekend");
         } else {
             setStyleClass(node, "date");
         }
         if (date.getMonth().equals(currentYM.getMonth())) {
-            setStyleClass(day,"thisMonthDate");
+            setStyleClass(day, "thisMonthDate");
         } else {
-            setStyleClass(day,"notThisMonthDate");
+            setStyleClass(day, "notThisMonthDate");
         }
     }
 

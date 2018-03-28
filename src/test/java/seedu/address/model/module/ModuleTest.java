@@ -1,6 +1,7 @@
 package seedu.address.model.module;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 
@@ -43,5 +44,11 @@ public class ModuleTest {
                 "moduleCode: " + DEFAULT_MODULE_CODE + " moduleTitle: " + DEFAULT_MODULE_TITLE + "\n"
                         + new ArrayList<>().toString());
 
+    }
+
+    @Test
+    public void testEquals(){
+        assertEquals(test, new Module(DEFAULT_MODULE_CODE, DEFAULT_MODULE_TITLE));
+        assertNotEquals(test, new Module("CS1101", DEFAULT_MODULE_TITLE));
     }
 }

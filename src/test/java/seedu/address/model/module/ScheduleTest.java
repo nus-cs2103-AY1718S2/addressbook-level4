@@ -79,4 +79,12 @@ public class ScheduleTest {
         Assert.assertEquals(expectedBlank, testBlank.toString());
     }
 
+    @Test
+    public void testEquals(){
+        Assert.assertEquals(test, new Schedule(DEFAULT_CLASSNO, DEFAULT_LESSON_TYPE, DEFAULT_WEEK_TEXT,
+                DEFAULT_DAY_TEXT, DEFAULT_START_TIME, DEFAULT_END_TIME, DEFAULT_VENUE));
+        Assert.assertNotEquals(test, new Schedule("4", DEFAULT_LESSON_TYPE, DEFAULT_WEEK_TEXT,
+                DEFAULT_DAY_TEXT, DEFAULT_START_TIME, DEFAULT_END_TIME, DEFAULT_VENUE));
+    }
+
 }

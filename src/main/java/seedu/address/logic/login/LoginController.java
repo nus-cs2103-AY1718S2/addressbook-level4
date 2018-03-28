@@ -35,7 +35,5 @@ public class LoginController {
                 messageText.setText("Username and password do not match!");
             }
         }
-
-        System.out.println(username + " " + password);
     }
 }

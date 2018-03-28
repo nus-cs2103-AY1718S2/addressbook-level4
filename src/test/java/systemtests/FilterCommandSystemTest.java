@@ -34,8 +34,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         /* Case: filter multiple persons in address book, 1 keywords -> 2 persons found */
         command = FilterCommand.COMMAND_WORD + " 2018-03-24";
         ModelHelper.setFilteredList(expectedModel, FIONA, ELLE);
-        //assertCommandSuc
-        // cess(command, expectedModel);
+        //assertCommandSuccess(command, expectedModel);
 
         /* Case: filter multiple persons in address book 1 non-matching keyword
          * -> 0 persons found

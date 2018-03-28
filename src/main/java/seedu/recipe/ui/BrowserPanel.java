@@ -109,10 +109,11 @@ public class BrowserPanel extends UiPart<Region> {
         });
     }
     //@@author
-
+/*
     //@@author nicholasangcx
     @Subscribe
     private void handleDbAuthorizationEvent(DbAuthorizationEvent event) {
         loadPage(CloudStorageUtil.getAuthorizationUrl())
     }
+    */
 }

@@ -9,7 +9,7 @@ public class CalendarTest extends GuiUnitTest {
     @Test
     public void equals() {
         //Current time
-        Calendar calendar = new Calendar();
-        assertEquals(calendar, new Calendar());
+        Calendar calendar = new Calendar(null);
+        assertEquals(calendar, new Calendar(null));
     }
 }

@@ -19,7 +19,7 @@ public abstract class StageHandle {
     protected final GuiRobot guiRobot = new GuiRobot();
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private final Stage stage;
+    protected final Stage stage;
 
     public StageHandle(Stage stage) {
         this.stage = requireNonNull(stage);

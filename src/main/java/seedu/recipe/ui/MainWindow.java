@@ -28,10 +28,10 @@ import seedu.recipe.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
-    private static final String FXML = "MainWindow.fxml";
+    public static final String DARK_THEME_CSS = "DarkTheme.css";
+    public static final String LIGHT_THEME_CSS = "LightTheme.css";
 
-    private static final String DARK_THEME_CSS = "DarkTheme.css";
-    private static final String LIGHT_THEME_CSS = "LightTheme.css";
+    private static final String FXML = "MainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 

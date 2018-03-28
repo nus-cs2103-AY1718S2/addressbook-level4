@@ -26,7 +26,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     public void setUp() {
         selectionChangedEventStub = new RecipePanelSelectionChangedEvent(new RecipeCard(ALICE, 0));
 
-        guiRobot.interact(() -> browserPanel = new BrowserPanel());
+        guiRobot.interact(() -> browserPanel = new BrowserPanel(true));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());

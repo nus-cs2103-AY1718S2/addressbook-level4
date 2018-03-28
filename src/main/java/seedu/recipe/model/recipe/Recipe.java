@@ -1,11 +1,15 @@
 package seedu.recipe.model.recipe;
 
 import static seedu.recipe.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.recipe.ui.UiPart.FXML_FILE_FOLDER;
 
+import java.net.URL;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.recipe.MainApp;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.model.tag.UniqueTagList;
 
@@ -82,6 +86,25 @@ public class Recipe {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    public String getRecipeInHtmlFormat() {
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + "Recipe.css");
+
+        return "<html>"
+                + "<head>"
+                + "<link rel='stylesheet' type='text/css' href='" + defaultPage.toExternalForm() + "' />"
+                + "</head>"
+                + "<body>"
+                + "<h1>" + name + "</h1>"
+                + "<p>" + cookingTime + "</p>"
+                + "<p>" + preparationTime + "</p>"
+                + "<p>" + calories + "</p>"
+                + "<p>" + servings + "</p>"
+                + "<p>" + ingredient + "</p>"
+                + "<p>" + instruction + "</p>"
+                + "</body>"
+                + "</html>";
     }
 
     @Override

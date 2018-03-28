@@ -1,6 +1,5 @@
 package seedu.recipe.ui;
 
-import java.io.File;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -60,11 +59,9 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads the text recipe onto the browser
      */
     private void loadLocalRecipe(Recipe recipe) {
-        URL defaultPage2 = MainApp.class.getResource(FXML_FILE_FOLDER + "MusicPlayer.jpg");
-        System.out.println(defaultPage2.toExternalForm());
         String testURL = "file:/Users/administrator/Desktop/NotePad.jpg";
-        browser.getEngine().loadContent("<img src='" + testURL + "' width=300px/>" );
-        // browser.getEngine().loadContent("<strong>" + recipe.getName().toString() + "</strong>");
+        // browser.getEngine().loadContent("<img src='" + testURL + "' width=300px/>" );
+        browser.getEngine().loadContent(recipe.getRecipeInHtmlFormat());
     }
     //@@author
 

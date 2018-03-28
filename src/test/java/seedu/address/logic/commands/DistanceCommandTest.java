@@ -153,7 +153,7 @@ public class DistanceCommandTest {
 
             ShowMultiLocationEvent lastEvent =
                     (ShowMultiLocationEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-            assertEquals(addressesList,lastEvent.sortedList);
+            assertEquals(addressesList, lastEvent.sortedList);
             assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_PERSON_SUCCESS,
                     nameOrigin, nameDestination, distance),
                     commandResult.feedbackToUser);

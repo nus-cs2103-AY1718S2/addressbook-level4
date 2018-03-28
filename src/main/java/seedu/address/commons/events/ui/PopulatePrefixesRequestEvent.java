@@ -13,6 +13,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.LocateCommand;
+import seedu.address.logic.commands.SelectCommand;
 
 /**
  * Indicates that a new result is available.
@@ -67,9 +68,9 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
             caretIndex = commandTemplate.length();
             break;
         default:
-            commandPreamble = FindCommand.COMMAND_WORD;
-            commandUsageMessage = FindCommand.MESSAGE_USAGE;
-            commandTemplate = commandPreamble + " -";
+            commandPreamble = SelectCommand.COMMAND_WORD;
+            commandUsageMessage = SelectCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble + " ";
             caretIndex = commandTemplate.length();
             // should be exception
         }

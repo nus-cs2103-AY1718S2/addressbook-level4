@@ -55,7 +55,9 @@ public class Person {
         return address;
     }
 
-    public int getUniqueid() { return uniqueid; }
+    public int getUniqueid() {
+        return uniqueid;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

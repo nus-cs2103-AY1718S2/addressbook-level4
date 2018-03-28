@@ -146,6 +146,10 @@ public class OAuthManager {
         return upcomingEvents;
     }
 
+    /**
+     * Hardcoded example of adding event to Google Calendar via API
+     * @throws IOException
+     */
     public static String addEvent() throws IOException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
@@ -158,18 +162,43 @@ public class OAuthManager {
                 .setLocation("800 Howard St., San Francisco, CA 94103")
                 .setDescription("A chance to hear more about Google's developer products.");
 
-        DateTime startDateTime = new DateTime("2018-03-28T09:00:00-07:00");
+        DateTime startDateTime = new DateTime("2018-03-29T09:00:00-07:00");
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
                 .setTimeZone("America/Los_Angeles");
         event.setStart(start);
 
-        DateTime endDateTime = new DateTime("2018-03-28T17:00:00-07:00");
+        DateTime endDateTime = new DateTime("2018-03-29T17:00:00-07:00");
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
                 .setTimeZone("America/Los_Angeles");
         event.setEnd(end);
 
+        String calendarId = "primary";
+        try {
+            event = service.events().insert(calendarId, event).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String eventUrl = event.getHtmlLink();
+        System.out.printf("Event created: %s\n", event.getHtmlLink());
+
+        return eventUrl;
+    }
+
+    /**
+     * A wrapper of the Google Calendar Event: insert API endpoint to create a new calendar event
+     * and add it to a user's Google Calendar.
+     * @return a the event URL as a string.
+     * @throws IOException
+     */
+    public static String addEvent(Event event) throws IOException {
+        // Build a new authorized API client service.
+        // Note: Do not confuse this class with the
+        //   com.google.api.services.calendar.model.Calendar class.
+
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService();
         String calendarId = "primary";
         try {
             event = service.events().insert(calendarId, event).execute();

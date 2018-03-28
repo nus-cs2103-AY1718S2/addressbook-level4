@@ -10,16 +10,17 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import guitests.guihandles.ErrorLogHandle;
 import org.junit.Test;
 
 import guitests.GuiRobot;
 import guitests.guihandles.CalendarWindowHandle;
-import seedu.address.logic.commands.ErrorLogCommand;
+import guitests.guihandles.ErrorLogHandle;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.ErrorLogCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.StatusBarFooter;
+
 
 /**
  * A system test class for the calendar window, which contains interaction with other UI components.

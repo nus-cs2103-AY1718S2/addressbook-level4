@@ -1,17 +1,11 @@
 package seedu.progresschecker.logic.parser;
 
 import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.progresschecker.logic.commands.CommandTestUtil.INVALID_PATH_DESC;
 import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_PATH_AMY;
-import static seedu.progresschecker.logic.commands.CommandTestUtil.VALID_PATH_BOB;
 import static seedu.progresschecker.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.progresschecker.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import org.junit.Test;
 
-import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.commands.UploadCommand;
 
 public class UploadCommandParserTest {

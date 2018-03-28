@@ -39,25 +39,26 @@ public class CreateIssue extends Command {
             + PREFIX_MILESTONE + "v1.1 "
             + PREFIX_BODY + "This is a test issue "
             + PREFIX_LABEL + "bug";
-    public static final String MESSAGE_SUCCESS = "New issue created: %1$s";
+    public static final String MESSAGE_SUCCESS = "Issue successfully created on Github";
+    public static final String MESSAGE_FAILURE = "There is some error in the parameter or authentication";
 
-    private final Issue toBeCreated;
+    private final Issue toCreate;
 
     /**
      * Creates an CreateIssue to create the specified {@code Issue}
      */
     public CreateIssue(Issue issue) {
         requireNonNull(issue);
-        toBeCreated = issue;
+        toCreate = issue;
     }
     @Override
     public CommandResult execute() throws CommandException {
 
         try {
-            model.createIssueOnGitHub(toBeCreated);
-            return new CommandResult("Issue successfully created on Github");
+            model.createIssueOnGitHub(toCreate);
+            return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException e) {
-            throw new CommandException("There is some error in the parameter or authentication");
+            throw new CommandException(MESSAGE_FAILURE);
         }
     }
 

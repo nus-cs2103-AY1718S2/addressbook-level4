@@ -14,7 +14,6 @@ public class Assignees {
      * The first character of the Assignee must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    //public static final String MILESTONE_VALIDATION_REGEX = "[^\\s].*";
 
     public final String fullAssignees;
 

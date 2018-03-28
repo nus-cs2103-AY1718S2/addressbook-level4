@@ -130,7 +130,6 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         GHRepository repository = github.getRepository(repoName);
         GHIssueBuilder issueBuilder = repository.createIssue(i.getTitle().toString());
         issueBuilder.body(i.getBody().toString());
-        //issueBuilder.label("shag");
 
         List<Assignees> assigneesList = i.getAssignees();
         List<Labels> labelsList = i.getLabelsList();

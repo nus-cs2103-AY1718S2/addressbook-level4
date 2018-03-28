@@ -28,6 +28,7 @@ import seedu.address.model.ReadOnlyUserDatabase;
 import seedu.address.model.UserDatabase;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.util.SampleUsersUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
@@ -111,7 +112,7 @@ public class MainApp extends Application {
             if (!userDatabaseOptional.isPresent()) {
                 logger.info("Users file not found. Will be starting with a empty UserDatabase");
             }
-            initialUsers = userDatabaseOptional.orElseGet(UserDatabase::new);
+            initialUsers = userDatabaseOptional.orElseGet(SampleUsersUtil::getSampleUserDatabase);
         } catch (DataConversionException e) {
             logger.warning("Users file not in the correct format. Will be starting with an empty AddressBook");
             initialUsers = new UserDatabase();

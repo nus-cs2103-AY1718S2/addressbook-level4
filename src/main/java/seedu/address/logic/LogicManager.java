@@ -46,6 +46,7 @@ public class LogicManager extends ComponentManager implements Logic {
             } else {
                 logger.info("User attempts to use a command without logging in first.");
                 result = executeNoLoginCommands(commandText, command);
+                history.clear();
             }
             undoRedoStack.push(command);
             return result;

@@ -75,7 +75,7 @@ public class TestApp extends MainApp {
      */
     public AddressBook readStorageAddressBook() {
         try {
-            return new AddressBook(storage.readAddressBook().get());
+            return new AddressBook(storage.readAddressBook().get(), true);
         } catch (DataConversionException dce) {
             throw new AssertionError("Data is not in the AddressBook format.");
         } catch (IOException ioe) {
@@ -94,14 +94,16 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
+        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs(), true);
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }
 
     @Override
     public void start(Stage primaryStage) {
+
         ui.start(primaryStage);
+        this.initTest();
     }
 
     public static void main(String[] args) {

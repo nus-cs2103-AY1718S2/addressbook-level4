@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= SLAP for Social Workers - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,11 +13,14 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T15-B3`      Since: `FEB 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Session Logger and Planner (SLAP) for Social Workers is for those who *prefer to use a desktop app for managing their schedule and
+contacts*. More importantly, SLAP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having
+the benefits of a Graphical User Interface (GUI). If you can type fast, SLAP can get your daily scheduling and
+contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -29,7 +32,9 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The Login GUI should appear in a few seconds.
+.  Enter your username and password. Press Enter.
+.  If login is successful, the GUI should appear.
 +
 image::Ui.png[width="790"]
 +
@@ -59,6 +64,37 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Viewing help : `help`
 
 Format: `help`
+
+=== Login : `login`
+
+Logs the user into the application.
+Format: `login u/USERNAME p/PASSWORD`
+
+****
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
+=== Logout: `logout`
+
+Logs the user out of the application.
+Format: `logout`
+
+=== Switching between feature interfaces : `switch`
+
+Switches to the user interface feature identified by the user. +
+Format: `switch FEATURE`
+
+****
+* Switches to the specified `FEATURE`
+* `FEATURE` must be either "details", "calendar" or "scheduler".
+****
+
+Examples:
+
+* `switch calendar` +
+Switches to `calendar` tab and displays contents
+* `switch details` +
+Switches to `details` tab and displays contents
 
 === Adding a person: `add`
 
@@ -118,6 +154,20 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Filtering contacts by tag: `filter`
+
+Filters persons whose contact contains the given tag. +
+Format: `filter TAG`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+****
+
+Examples:
+
+* `filter friends` +
+Returns any person that has the tag `friends`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -166,6 +216,41 @@ Format: `history`
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+=== Opening a calendar : `calendar`
+
+Opens a calendar in a webview. Will eventually have the option to be opened in the in application scene switcher.
+Format: `calendar`
+
+[NOTE]
+====
+The user can also open the calendar by pressing the `F8` function key, or by pressing `View > Open Calendar`
+====
+
+=== Adding and event to the calendar : `event-add`
+
+Allows a user to add an event directly to their calendar.
+Format: `event-add t/<title> l/<location> ds/<start date/time> de/<end date/time> n/<notes>`
+
+=== Deleting an event from the calendar : `event-delete`
+
+Displays a list of upcoming events to the user and lets them select one to delete.
+Format: `event-delete`
+
+=== Editing an event in the calendar : `event-edit`
+
+Displays a list of upcoming events to the user and lets them select one to edit.
+Format: `event-edit`
+
+=== Opening the Error Log : `errorlog`
+
+Opens the error log in a new window.
+Format: `errorlog`
+
+[NOTE]
+====
+The user can also open the error log by pressing `View > Show Error Log`
 ====
 
 // tag::undoredo[]
@@ -230,14 +315,27 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+SLAP data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
+
+=== Login to your account:
+
+SLAP will request for your login credentials (username and password) before allowing you to access it.
+
+=== Logout from your account: `logout`
+
+SLAP allows to log out from your account so that you can ensure confidentiality of your data.
+
+
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Encryption is done automatically when SLAP is logged out or is exited.
+
+=== Export SLAP `[coming in v2.0]`
+
+Exports your SLAP into a file so that it can be transported across systems.
 
 == FAQ
 
@@ -257,8 +355,14 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
+* *Calendar* : `calendar` `[Since v1.1]`
+* *Error* : `errorlog` `[Since v1.2]`
+* *Switch* : `switch FEATURE` +
+e.g.`switch scheduler`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Logout* : `logout`
+* *Login Status* : `login-status`

@@ -41,7 +41,6 @@ public class AddressBookTest {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
         assertEquals(Collections.emptyList(), addressBook.getAppointmentList());
-        assertEquals(Collections.emptyList(), addressBook.getAppointmentTagList());
     }
 
     @Test
@@ -143,18 +142,8 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Tag> getAppointmentTagList() {
-            return appointmentTags;
-        }
-
-        @Override
         public ObservableList<PetPatient> getPetPatientList() {
             return petPatients;
-        }
-
-        @Override
-        public ObservableList<Tag> getPetPatientTagList() {
-            return petPatientTags;
         }
     }
 

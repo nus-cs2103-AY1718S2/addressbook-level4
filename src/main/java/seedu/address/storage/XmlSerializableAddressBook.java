@@ -25,8 +25,6 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedAppointment> appointments;
     @XmlElement
     private List<XmlAdaptedPetPatient> petPatients;
-    @XmlElement
-    private List<XmlAdaptedTag> petPatientTags;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -37,7 +35,6 @@ public class XmlSerializableAddressBook {
         tags = new ArrayList<>();
         appointments = new ArrayList<>();
         petPatients = new ArrayList<>();
-        petPatientTags = new ArrayList<>();
     }
 
     /**
@@ -52,8 +49,6 @@ public class XmlSerializableAddressBook {
         appointments.addAll(src.getAppointmentList().stream().map(XmlAdaptedAppointment::new)
                 .collect(Collectors.toList()));
         petPatients.addAll(src.getPetPatientList().stream().map(XmlAdaptedPetPatient::new)
-                .collect(Collectors.toList()));
-        petPatientTags.addAll(src.getPetPatientTagList().stream().map(XmlAdaptedTag::new)
                 .collect(Collectors.toList()));
     }
 
@@ -77,9 +72,6 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPetPatient pp : petPatients) {
             addressBook.addPetPatient(pp.toModelType());
         }
-        for (XmlAdaptedTag pt : petPatientTags) {
-            addressBook.addPetPatientTag(pt.toModelType());
-        }
         return addressBook;
     }
 
@@ -97,7 +89,6 @@ public class XmlSerializableAddressBook {
         return persons.equals(otherAb.persons)
                 && tags.equals(otherAb.tags)
                 && appointments.equals(otherAb.appointments)
-                && petPatients.equals(otherAb.petPatients)
-                && petPatientTags.equals(otherAb.petPatientTags);
+                && petPatients.equals(otherAb.petPatients);
     }
 }

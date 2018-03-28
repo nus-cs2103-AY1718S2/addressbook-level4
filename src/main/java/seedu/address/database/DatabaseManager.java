@@ -38,7 +38,7 @@ public class DatabaseManager {
                 put("Packaged Tutorial", "PTUT");
                 put("Recitation", "REC");
                 put("Sectional Teaching", "SEC");
-                put("Seminar-Style Modue Class", "SEM");
+                put("Seminar-Style Module Class", "SEM");
                 put("Tutorial", "TUT");
                 put("Tutorial Type 2", "TUT2");
                 put("Tutorial Type 2", "TUT3");

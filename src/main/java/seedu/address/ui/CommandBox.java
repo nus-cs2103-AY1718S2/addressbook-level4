@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ExecuteCommandRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.ListElementPointer;
@@ -137,6 +138,17 @@ public class CommandBox extends UiPart<Region> {
     @Subscribe
     private void handlePopulatePrefixesRequestEvent(PopulatePrefixesRequestEvent event) {
         replaceText(event.commandTemplate, event.caretIndex);
+    }
+
+    /**
+     * Handles the event where a valid keyboard shortcut is pressed
+     * to execute a command immediately
+     * {@code CommandRequestEvent}.
+     */
+    @Subscribe
+    private void handleExecuteCommandRequestEvent(ExecuteCommandRequestEvent event) {
+        replaceText(event.commandPreamble);
+        handleCommandInputChanged();
     }
 
     /**

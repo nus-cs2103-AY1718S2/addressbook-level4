@@ -44,8 +44,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             Nric nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<Subject> subjectList = ParserUtil.parseSubjects(argMultimap.getAllValues(PREFIX_SUBJECT));
-            Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
-
+            Remark remark;
+            if (!(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
+                remark = ParserUtil.parseRemark(" ");
+            }else {
+                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+            }
             Person person = new Person(name, nric, tagList, subjectList, remark);
 
             return new AddCommand(person);

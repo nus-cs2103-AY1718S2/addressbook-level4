@@ -11,9 +11,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.login.Password;
-import seedu.address.model.login.Username;
-import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -29,10 +26,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private final Username username;
-    private final Password password;
-
-    private boolean hasLoggedIn;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -46,11 +39,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {
-        hasLoggedIn = false;
-        this.username = new Username("slap");
-        this.password = new Password("password");
-    }
+    public AddressBook() {}
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -60,53 +49,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         resetData(toBeCopied);
     }
 
-    /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied} and logged-in status
-     */
-    public AddressBook(ReadOnlyAddressBook toBeCopied, boolean loggedin) {
-        this();
-        resetData(toBeCopied);
-        hasLoggedIn = loggedin;
-    }
-
-    //@@author kaisertanqr
-    /// login authentication operations
-
-    /**
-     * Returns the login status of the user.
-     */
-    public boolean hasLoggedIn() {
-        return hasLoggedIn;
-    }
-
-    /**
-     * Sets the login status of the user to {@code status}.
-     * @param status
-     */
-    public void setLoginStatus(boolean status) {
-        hasLoggedIn = status;
-    }
-
-
-    /**
-     * Checks the login credentials whether it matches the one in addressbook.
-     *
-     * @param username
-     * @param password
-     * @throws AlreadyLoggedInException is the user is already logged in.
-     */
-    public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
-        if (hasLoggedIn) {
-            throw new AlreadyLoggedInException();
-        } else if (!username.equals(this.username) || !password.equals(this.password)) {
-            return hasLoggedIn;
-        } else {
-            hasLoggedIn = true;
-            return hasLoggedIn;
-        }
-    }
-
-    //@@author
 
     //// list overwrite operations
 

@@ -11,6 +11,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
+    private String usersFilePath = "data/users.xml";
     private String addressBookName = "SLAP for Social Workers";
 
     public UserPrefs() {
@@ -31,6 +32,14 @@ public class UserPrefs {
 
     public String getAddressBookFilePath() {
         return addressBookFilePath;
+    }
+
+    public String getUsersFilePath() {
+        return usersFilePath;
+    }
+
+    public void setUsersFilePath(String usersFilePath) {
+        this.usersFilePath = usersFilePath;
     }
 
     public void setAddressBookFilePath(String addressBookFilePath) {

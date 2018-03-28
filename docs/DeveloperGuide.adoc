@@ -1228,34 +1228,18 @@ _{More to be added}_
 
 [appendix]
 == Glossary
-User
-.  An User is defined as the insurance agent.
-Mainstream OS
-.  A mainstream OS includes Windows, Linux, Unix and OS-X
-Client Information
-.  Client Information includes all personal details and metrics.
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+
+[[User]] User::
+An User is defined as the insurance agent
+
+[[mainstream-OS]] Mainstream OS::
+A mainstream OS includes Windows, Linux, Unix and OS-X
+
+[[client-information]] Clients's Information::
+Client's Information includes all personal details and metrics
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing

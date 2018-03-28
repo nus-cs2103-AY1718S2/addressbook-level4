@@ -4,6 +4,11 @@ package seedu.recipe.ui;
 import static seedu.recipe.ui.CssSyntax.CSS_PROPERTY_BACKGROUND_COLOR;
 import static seedu.recipe.ui.CssSyntax.CSS_PROPERTY_TEXT_COLOR;
 
+import static java.util.Objects.requireNonNull;
+
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.regex.Pattern;
 
 import javafx.scene.control.Label;
@@ -116,6 +121,16 @@ public class UiUtil {
      */
     public static String removeAllWhitespaceInString(String string) {
         return string.replaceAll("\\s", "");
+    }
+
+    /**
+     * Copies a given string to the clipboard
+     */
+    public static void copyToClipboard(String string) {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Clipboard clipboard = toolkit.getSystemClipboard();
+        StringSelection stringSelection = new StringSelection(string);
+        clipboard.setContents(stringSelection, null);
     }
 }
 //@@author

@@ -15,6 +15,7 @@ import javafx.scene.layout.Region;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
+import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
 
 /**
@@ -61,11 +62,28 @@ public class RecipeListPanel extends UiPart<Region> {
         });
     }
 
+    //@@author RyanAngJY
+    /**
+     * Scrolls to the {@code RecipeCard} at the {@code index} but does not select it.
+     */
+    private void scrollToWithoutSelection(int index) {
+        recipeListView.scrollTo(index);
+    }
+    //@@author
+
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author RyanAngJY
+    @Subscribe
+    private void handleShareRecipeEvent(ShareRecipeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollToWithoutSelection(event.targetIndex);
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code RecipeCard}.

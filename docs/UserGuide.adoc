@@ -283,47 +283,47 @@ _{explain how the user can enable/disable data encryption}_
 |Keyboard shortcut
 |Syntax
 
-|Add
+|add
 |`Alt` + `A`
 |`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
-|Clear
+|clear
 |`Alt` + `C`
 |`clear`
 
-|Delete
+|delete
 |`Alt` + `D`
 |`delete INDEX`
 
-|Edit
+|edit
 |`Alt` + `E`
 |`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
-|Find
+|find
 |`Ctrl` + `F`
 |`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
-|List
+|list
 |`F2`
 |`list`
 
-|Help
+|help
 |`F1`
 |`help`
 
-|Select
+|select
 |`Alt` + `S`
 |`select INDEX`
 
-|History
+|history
 |`Alt` + `H`
 |`history`
 
-|Undo
+|undo
 |`Ctrl` + `Z`
 |`undo`
 
-|Redo
+|redo
 |`Ctrl` + `Y`
 |`redo`
 |===

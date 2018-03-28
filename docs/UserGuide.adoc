@@ -291,6 +291,7 @@ Examples:
 
 * `ListGroupMembers CS3230 CS1010` +
 Returns any person having group tags `CS3230`, `CS1010`
+Refer to Figure 2 for example.
 
 image:lgmExample.png[width="500"] +
 Figure 2. Example of ListGroupMembers
@@ -309,7 +310,7 @@ Keyword cannot be an empty input.
 Examples:
 
 * `addGroups CS2101 Project` +
-New Group `CS2101 Oral Presentation` added, refer to Figure 2. +
+New Group `CS2101 Oral Presentation` added, refer to Figure 3. +
 image:addGroupExample.png[width ="500"] +
 Figure 3. Example of add Group
 // end:AddGroup[]

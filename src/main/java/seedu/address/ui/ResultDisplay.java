@@ -48,6 +48,11 @@ public class ResultDisplay extends UiPart<Region> {
         });
     }
 
+    /**
+     * Handles the event where a valid keyboard shortcut is pressed
+     * to populate the CommandBox with command prefixes,
+     * {@code PopulateRequestEvent}.
+     */
     @Subscribe
     private void handlePopulateRequestEvent(PopulateRequestEvent event) {
         setStyleToIndicateCommandSuccess();

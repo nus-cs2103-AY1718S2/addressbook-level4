@@ -30,6 +30,7 @@ public class Remark {
      * Returns true for all string values for remark.
      */
     public static boolean isValidRemark(String test) {
+        requireNonNull(test);
         return true;
     }
 

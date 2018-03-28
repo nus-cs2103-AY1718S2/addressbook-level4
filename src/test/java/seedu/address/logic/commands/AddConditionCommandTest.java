@@ -3,8 +3,9 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.ADESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.ADESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -14,89 +15,75 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.AddConditionCommand.EditPersonDescriptor;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.patient.Patient;
-import seedu.address.model.patient.Remark;
+import seedu.address.testutil.AEditPersonDescriptorBuilder;
 import seedu.address.testutil.PatientBuilder;
 
-public class RemarkCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+/**
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and
+ * unit tests for AddConditionCommand.
+ */
+public class AddConditionCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void constructor_nullIndexAndRemark_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new RemarkCommand(null, null);
-    }
+    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Patient editedPatient = new PatientBuilder().build();
+        EditPersonDescriptor descriptor = new AEditPersonDescriptorBuilder(editedPatient).build();
+        AddConditionCommand addConditionCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
-    @Test
-    public void execute_addRemarkUnfilteredList_success() throws Exception {
-        Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRemark("test").build();
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark("test"));
-
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_ADD_SUCCESS, editedPatient);
+        String expectedMessage = String.format(AddConditionCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPatient);
 
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
 
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(addConditionCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_deleteRemarkUnfilteredList_success() throws Exception {
-        Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRemark("").build();
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark(""));
+    public void execute_duplicatePersonUnfilteredList_failure() {
+        Patient firstPatient = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        EditPersonDescriptor descriptor = new AEditPersonDescriptorBuilder(firstPatient).build();
+        AddConditionCommand addConditionCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
 
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_REMOVE_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(addConditionCommand, model, AddConditionCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     @Test
-    public void execute_filteredList_success() throws Exception {
+    public void execute_duplicatePersonFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Patient patientInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(patientInFilteredList).withRemark("test").build();
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark("test"));
+        // edit patient in filtered list into a duplicate in address book
+        Patient patientInList = model.getImdb().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        AddConditionCommand addConditionCommand = prepareCommand(INDEX_FIRST_PERSON,
+                new AEditPersonDescriptorBuilder(patientInList).build());
 
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_ADD_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(addConditionCommand, model, AddConditionCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, new Remark("test"));
+        EditPersonDescriptor descriptor = new AEditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        AddConditionCommand addConditionCommand = prepareCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(addConditionCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
-     * Edit remarks of filtered list where index is larger than size of filtered list,
+     * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of address book
      */
     @Test
@@ -106,9 +93,10 @@ public class RemarkCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getImdb().getPersonList().size());
 
-        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, new Remark("test"));
+        AddConditionCommand addConditionCommand = prepareCommand(outOfBoundIndex,
+                new AEditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(addConditionCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -116,14 +104,15 @@ public class RemarkCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        Patient editedPatient = new PatientBuilder().build();
         Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark("test"));
+        EditPersonDescriptor descriptor = new AEditPersonDescriptorBuilder(editedPatient).build();
+        AddConditionCommand addConditionCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
 
         // edit -> first patient edited
-        remarkCommand.execute();
-        Patient editedPatient = remarkCommand.getEdited();
-        undoRedoStack.push(remarkCommand);
+        addConditionCommand.execute();
+        undoRedoStack.push(addConditionCommand);
 
         // undo -> reverts addressbook back to previous state and filtered patient list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
@@ -139,10 +128,11 @@ public class RemarkCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, new Remark("test"));
+        EditPersonDescriptor descriptor = new AEditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        AddConditionCommand addConditionCommand = prepareCommand(outOfBoundIndex, descriptor);
 
-        // execution failed -> remarkCommand not pushed into undoRedoStack
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        // execution failed -> addConditionCommand not pushed into undoRedoStack
+        assertCommandFailure(addConditionCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         // no commands in undoRedoStack -> undoCommand and redoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
@@ -161,16 +151,16 @@ public class RemarkCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark("test"));
+        Patient editedPatient = new PatientBuilder().build();
+        EditPersonDescriptor descriptor = new AEditPersonDescriptorBuilder(editedPatient).build();
+        AddConditionCommand addConditionCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // remark -> edits the remarks of the second patient in unfiltered patient list
-        // / first patient in filtered patient list
-        remarkCommand.execute();
-        Patient editedPatient = remarkCommand.getEdited();
-        undoRedoStack.push(remarkCommand);
+        // edit -> edits second patient in unfiltered patient list / first patient in filtered patient list
+        addConditionCommand.execute();
+        undoRedoStack.push(addConditionCommand);
 
         // undo -> reverts addressbook back to previous state and filtered patient list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
@@ -183,14 +173,19 @@ public class RemarkCommandTest {
 
     @Test
     public void equals() throws Exception {
-        final RemarkCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
+        final AddConditionCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, ADESC_AMY);
 
         // same values -> returns true
-        RemarkCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
+        EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(ADESC_AMY);
+        AddConditionCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
+
+        // one command preprocessed when previously equal -> returns false
+        commandWithSameValues.preprocessUndoableCommand();
+        assertFalse(standardCommand.equals(commandWithSameValues));
 
         // null -> returns false
         assertFalse(standardCommand.equals(null));
@@ -199,19 +194,18 @@ public class RemarkCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
+        assertFalse(standardCommand.equals(new AddConditionCommand(INDEX_SECOND_PERSON, ADESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
+        assertFalse(standardCommand.equals(new AddConditionCommand(INDEX_FIRST_PERSON, ADESC_BOB)));
     }
 
     /**
-     * Returns an {@code RemarkCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code AddConditionCommand} with parameters {@code index} and {@code descriptor}
      */
-    private RemarkCommand prepareCommand(Index index, Remark remark) {
-        RemarkCommand remarkCommand = new RemarkCommand(index, remark);
-        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return remarkCommand;
+    private AddConditionCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
+        AddConditionCommand addConditionCommand = new AddConditionCommand(index, descriptor);
+        addConditionCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addConditionCommand;
     }
-
 }

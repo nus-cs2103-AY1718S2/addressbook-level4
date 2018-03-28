@@ -64,7 +64,7 @@ public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
-    public void parse_allFieldsPresent_success() {
+    public void parse_allFieldsPresent_success() throws Exception {
         Patient expectedPatient = new PatientBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_BOB)
                 .withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
@@ -131,7 +131,7 @@ public class AddCommandParserTest {
     }
 
     @Test
-    public void parse_optionalFieldsMissing_success() {
+    public void parse_optionalFieldsMissing_success() throws Exception {
         // zero tags
         Patient expectedPatient = new PatientBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
                 .withPhone(VALID_PHONE_AMY)

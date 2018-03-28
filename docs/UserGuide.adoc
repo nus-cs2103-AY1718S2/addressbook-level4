@@ -45,9 +45,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Try out the commands below to get a feel of the app:
 
 * *`login bob password456`*: logs you into the IMDB as Bob. Note that some commands will not work unless you are logged in.
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the IMDB.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all patients
+* **`add`**`n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dob/11/11/1991 b/B+` : adds a patient named `John Doe` to the IMDB.
+* **`delete`**`3` : deletes the 3rd patient shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -242,18 +242,18 @@ Edits the remark for the first patient to Likes to drink coffee.
 `remark 1 r/` +
 Removes the remark for the first patient.
 
-==== Adding a condition to an existing patient: `addc` [coming in v1.3]
+==== Adding a condition to an existing patient: `addc` [since v1.3]
 
 Adds a medical condition to an existing patient.
 Format: `addc` or `ac`
 
 Examples:
 
-* `addc Betsy aspirin` +
-Aspirin will be added to the list of conditions that Betsy has.
+* `addc 1 aspirin` +
+`aspirin` will be added to the list of conditions that the patient at index `1` has.
 
-* `ac John asthma` +
-Asthma will be added to the list of conditions that John has.
+* `ac 2 asthma` +
+`asthma` will be added to the list of conditions that the patient at index `2` has.
 
 ==== Removing the condition of an existing patient: `removec` [coming in v1.4]
 
@@ -262,18 +262,18 @@ Format: `removec` or `rc`
 
 Examples:
 
-* `removec Betsy aspirin` +
-Aspirin will be removed from the list of conditions that Betsy has.
+* `removec 1 aspirin` +
+`aspirin` will be removed from the list of conditions that the patient at index `1` has.
 
-* `rc John asthma` +
-Asthma will be removed from the list of conditions that John has.
+* `rc 2 asthma` +
+`asthma` will be removed from the list of conditions that the patient at index `2` has.
 
 ==== Listing all patients : `list` or `ls`
 
 Shows a list of all patients in the IMDB. +
 Format: `list` or `ls`
 
-==== Viewing certain details only: `filter` [coming in v1.3]
+==== Viewing certain details only: `filter` [coming in v1.4]
 
 Switches between showing personal details only, medical information only.
 Format: `filter` or `fil`

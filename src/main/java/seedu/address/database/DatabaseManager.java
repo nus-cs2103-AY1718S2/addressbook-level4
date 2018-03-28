@@ -62,16 +62,19 @@ public class DatabaseManager {
     /**
      * Parses a string query into a list of module and schedules
      *
-     * @param query to be parsed
+     * @param link TimeTableLinkto be parsed
      */
-    public ArrayList<WeeklyEvent> parseEvents(String query) {
+    public String parseEvents(TimeTableLink link) { //todo return list of events when available
+        String query = getQuery(link);
+        StringBuilder result = new StringBuilder();
+
         ArrayList<WeeklyEvent> eventList = new ArrayList<>();
 
         StringTokenizer queryTokenizer = new StringTokenizer(query, "&");
         while (queryTokenizer.hasMoreTokens()) {
             StringTokenizer modTokenizer = new StringTokenizer(queryTokenizer.nextToken(), "=");
             Module module = moduleDatabase.get(modTokenizer.nextToken());
-            System.out.println(module.getModuleCode()); //TODO: remove after integrating with Events class
+            result.append(module.getModuleCode() + "\n"); //TODO: remove after integrating with Events class
 
             String[] lessons = modTokenizer.nextToken().split(",");
             List<Schedule> scheduleList = module.getScheduleList();
@@ -84,17 +87,17 @@ public class DatabaseManager {
                     if (queryAbbrev.equals(lessonAbbrev.get(schedule.getLessonType()))
                             && queryLessonNum.equals(schedule.getClassNo())) {
                         eventList.add(new WeeklyEvent(module, schedule));
-                        System.out.println(schedule.getLessonType() + " " + schedule.getClassNo()); //TODO: remove
-                        System.out.println("\t" + schedule.getDayText());
-                        System.out.println("\t" + schedule.getStartTime() + " to " + schedule.getEndTime());
-                        System.out.println("\t" + schedule.getVenue());
+                        result.append(schedule.getLessonType() + " " + schedule.getClassNo() + "\n"); //TODO: remove
+                        result.append("\t" + schedule.getDayText() + "\n" );
+                        result.append("\t" + schedule.getStartTime() + " to " + schedule.getEndTime() + "\n");
+                        result.append("\t" + schedule.getVenue() + "\n");
 
                     }
                 }
             }
-
         }
-        return  eventList;
+        return result.toString();
+        // todo return  eventList;
     }
 
     /**

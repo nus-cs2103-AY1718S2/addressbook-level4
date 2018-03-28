@@ -23,6 +23,6 @@ public class DatabaseManagerTest {
 
     @Test
     public void parseQuery() {
-        test.parseEvents("CS2101=SEC:3&CS2103T=TUT:T3&CS2105=LEC:1,TUT:7&CS3242=LEC:1,TUT:3&ST2334=LEC:SL1,TUT:T4");
+        test.parseEvents(new TimeTableLink("http://modsn.us/MYwiD"));
     }
 }

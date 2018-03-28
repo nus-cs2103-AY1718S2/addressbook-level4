@@ -17,15 +17,11 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Calendar;
-
 
 /**
- * Create a calendar for a person.
+ * Delete calendar of a person.
  */
-public class CreateNewCalendar {
-
-
+public class DeleteCalendar {
     /** Application name. */
     private static final String APPLICATION_NAME = "Employees Tracker";
 
@@ -100,33 +96,19 @@ public class CreateNewCalendar {
     }
 
     /**
-     * Create a new calendar for person with personName.
+     * Delete a calendar specified by calendarId.
      *
      */
-    public static String execute(String personName) throws IOException {
+    public static void execute(String calendarId) throws IOException {
         // Build a new authorized API client service.
         com.google.api.services.calendar.Calendar service =
                 null;
 
         service = getCalendarService();
 
-        // Create a new calendar
-        com.google.api.services.calendar.model.Calendar calendar = new Calendar();
-        calendar.setSummary(personName);
-        calendar.setTimeZone("Asia/Singapore");
+        // Delete the calendar.
+        service.calendars().delete(calendarId).execute();
 
-
-        // Insert the new calendar
-        String calendarId = "primary";
-
-        try {
-            Calendar createdCalendar = service.calendars().insert(calendar).execute();
-            calendarId = createdCalendar.getId();
-            System.out.println(calendarId);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return calendarId;
     }
 
 }

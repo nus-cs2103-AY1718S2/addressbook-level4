@@ -5,6 +5,7 @@
         <priority isPrivate="false">9</priority>
         <deadline isPrivate="false">2018-09-16</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Study for CS2103T Exam</description>
     </tasks>
     <tasks>
@@ -12,6 +13,7 @@
         <priority isPrivate="false">8</priority>
         <deadline isPrivate="false">2018-07-06</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">CS2103T Exam</description>
     </tasks>
     <tasks>
@@ -19,6 +21,7 @@
         <priority isPrivate="false">9</priority>
         <deadline isPrivate="false">2018-03-11</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Go NTUC</description>
     </tasks>
     <tasks>
@@ -26,6 +29,7 @@
         <priority isPrivate="false">8</priority>
         <deadline isPrivate="false">2018-10-11</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Wash the toilets</description>
     </tasks>
     <tasks>
@@ -33,6 +37,7 @@
         <priority isPrivate="false">9</priority>
         <deadline isPrivate="false">2018-09-12</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Create birthday card for Denise</description>
     </tasks>
     <tasks>
@@ -40,6 +45,7 @@
         <priority isPrivate="false">9</priority>
         <deadline isPrivate="false">2018-07-04</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Finish CS2103T v1.1</description>
     </tasks>
     <tasks>
@@ -47,6 +53,7 @@
         <priority isPrivate="false">9</priority>
         <deadline isPrivate="false">2018-04-02</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Revise for MA1101R midterms</description>
     </tasks>
     <tasks>
@@ -54,6 +61,7 @@
         <priority isPrivate="false">8</priority>
         <deadline isPrivate="false">2018-12-24</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Send email for job interview</description>
     </tasks>
     <tasks>
@@ -61,6 +69,7 @@
         <priority isPrivate="false">8</priority>
         <deadline isPrivate="false">2018-11-11</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Prepare technical questions</description>
     </tasks>
 </addressbook>

@@ -13,6 +13,7 @@ import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.subtask.UniqueSubtaskList;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.DateAdded;
+import seedu.organizer.model.task.DateCompleted;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
@@ -23,14 +24,14 @@ import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Inverse the value of task status
+ * Deletes a subtask of a task
  */
 public class DeleteSubtaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete-subtask";
     public static final String COMMAND_ALIAS = "ds";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": delete a subttask of a task. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": delete a subtask of a task. "
             + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)";
 
     public static final String MESSAGE_EDIT_SUBTASK_SUCCESS = "Subtask Deleted: %1$s";
@@ -81,7 +82,7 @@ public class DeleteSubtaskCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit} with status inversed
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
      */
     private static Task createEditedTask(Task taskToEdit, Index subtaskIndex) {
         assert taskToEdit != null;
@@ -90,6 +91,7 @@ public class DeleteSubtaskCommand extends UndoableCommand {
         Priority updatedPriority = taskToEdit.getPriority();
         Deadline updatedDeadline = taskToEdit.getDeadline();
         DateAdded oldDateAdded = taskToEdit.getDateAdded();
+        DateCompleted oldDateCompleted = taskToEdit.getDateCompleted();
         Description updatedDescription = taskToEdit.getDescription();
         Set<Tag> updatedTags = taskToEdit.getTags();
         List<Subtask> originalSubtasks = new ArrayList<>(taskToEdit.getSubtasks());
@@ -98,7 +100,7 @@ public class DeleteSubtaskCommand extends UndoableCommand {
         originalSubtasks.remove(subtaskIndex.getZeroBased());
         UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(originalSubtasks);
 
-        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded,
+        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded, oldDateCompleted,
                 updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList());
     }
 

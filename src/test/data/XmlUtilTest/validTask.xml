@@ -4,6 +4,7 @@
     <priority>9</priority>
     <deadline>2018-07-16</deadline>
     <dateadded>current_date</dateadded>
+    <datecompleted>not completed</datecompleted>
     <description>Refactor Address to Description</description>
     <tagged>friends</tagged>
     <subtasks>

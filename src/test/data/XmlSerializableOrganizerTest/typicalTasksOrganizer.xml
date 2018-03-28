@@ -7,6 +7,7 @@
         <priority>0</priority>
         <deadline>2019-03-11</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Go to NTUC</description>
         <status>false</status>
         <tagged>friends</tagged>
@@ -16,6 +17,7 @@
         <priority>1</priority>
         <deadline>2019-09-08</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description>Clean the entire house except the study room</description>
         <status>true</status>
         <tagged>owesMoney</tagged>
@@ -26,6 +28,7 @@
         <priority>2</priority>
         <deadline>2019-11-12</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description>French Toast with coffee</description>
         <status>false</status>
     </tasks>
@@ -34,6 +37,7 @@
         <priority>3</priority>
         <deadline>2019-03-21</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description>CS2103T, CS2101 and MA1101R</description>
         <status>true</status>
     </tasks>
@@ -42,6 +46,7 @@
         <priority>4</priority>
         <deadline>2019-09-14</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description>Finish writing script for OP1</description>
         <status>false</status>
     </tasks>
@@ -50,6 +55,7 @@
         <priority>5</priority>
         <deadline>2019-04-05</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description>Revise for CS2106 midterms</description>
         <status>true</status>
     </tasks>
@@ -58,6 +64,7 @@
         <priority>6</priority>
         <deadline>2019-05-23</deadline>
         <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
         <description>Mock exam for CS1101S - Revise!</description>
         <status>false</status>
     </tasks>

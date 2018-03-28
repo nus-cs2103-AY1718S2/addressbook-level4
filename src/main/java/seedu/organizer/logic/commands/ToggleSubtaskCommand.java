@@ -13,6 +13,7 @@ import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.subtask.UniqueSubtaskList;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.DateAdded;
+import seedu.organizer.model.task.DateCompleted;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
@@ -90,6 +91,7 @@ public class ToggleSubtaskCommand extends UndoableCommand {
         Priority updatedPriority = taskToEdit.getPriority();
         Deadline updatedDeadline = taskToEdit.getDeadline();
         DateAdded oldDateAdded = taskToEdit.getDateAdded();
+        DateCompleted updatedDateCompleted = taskToEdit.getDateCompleted();
         Description updatedDescription = taskToEdit.getDescription();
         Set<Tag> updatedTags = taskToEdit.getTags();
         List<Subtask> originalSubtasks = new ArrayList<>(taskToEdit.getSubtasks());
@@ -104,7 +106,7 @@ public class ToggleSubtaskCommand extends UndoableCommand {
 
         UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(originalSubtasks);
 
-        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded,
+        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded, updatedDateCompleted,
                 updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList());
     }
 

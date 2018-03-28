@@ -149,6 +149,7 @@ public class AddSubtaskCommandTest {
                 task.getPriority(),
                 task.getDeadline(),
                 task.getDateAdded(),
+                task.getDateCompleted(),
                 task.getDescription(),
                 task.getStatus(),
                 task.getTags(),

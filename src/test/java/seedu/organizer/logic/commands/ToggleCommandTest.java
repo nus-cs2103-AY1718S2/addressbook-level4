@@ -88,7 +88,7 @@ public class ToggleCommandTest {
     }
 
     /**
-     * Retrun an (@code Task) with status inversed
+     * Return an (@code Task) with status inversed
      */
     private Task toggleTask(Task task) {
         return new Task(
@@ -96,7 +96,7 @@ public class ToggleCommandTest {
                 task.getPriority(),
                 task.getDeadline(),
                 task.getDateAdded(),
-                task.getDescription(),
+                task.getDateCompleted(), task.getDescription(),
                 task.getStatus().getInverse(),
                 task.getTags(),
                 task.getSubtasks()

@@ -45,6 +45,8 @@ public class TaskCard extends UiPart<Region> {
     @FXML
     private Label dateadded;
     @FXML
+    private Label datecompleted;
+    @FXML
     private FlowPane tags;
     @FXML
     private ListView<Label> subtasks;
@@ -59,6 +61,7 @@ public class TaskCard extends UiPart<Region> {
         description.setText("Description : " + task.getDescription().value);
         deadline.setText("Deadline : " + task.getDeadline().toString());
         dateadded.setText("Date Added : " + task.getDateAdded().toString());
+        datecompleted.setText("Date Completed: " + task.getDateCompleted().toString());
         initSubtask(task);
         initTags(task);
     }

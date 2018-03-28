@@ -138,6 +138,7 @@ public class ToggleSubtaskCommandTest {
                 task.getPriority(),
                 task.getDeadline(),
                 task.getDateAdded(),
+                task.getDateCompleted(),
                 task.getDescription(),
                 task.getStatus(),
                 task.getTags(),

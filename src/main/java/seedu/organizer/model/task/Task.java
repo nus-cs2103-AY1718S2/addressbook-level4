@@ -23,6 +23,7 @@ public class Task {
     private final Priority priority;
     private final Deadline deadline;
     private final DateAdded dateAdded;
+    private final DateCompleted dateCompleted;
     private final Description description;
     private final Status status;
 
@@ -30,7 +31,7 @@ public class Task {
     private final UniqueSubtaskList subtasks;
 
     /**
-     * Every field must be present and not null except status
+     * Every field must be present and not null except status and dateCompleted
      */
     public Task(Name name, Priority priority, Deadline deadline, Description description, Set<Tag> tags) {
         requireAllNonNull(name, priority, deadline, description, tags);
@@ -38,6 +39,7 @@ public class Task {
         this.priority = priority;
         this.deadline = deadline;
         this.dateAdded = new DateAdded();
+        this.dateCompleted = new DateCompleted(false);
         this.description = description;
         this.status = null;
         // protect internal tags from changes in the arg list
@@ -49,12 +51,13 @@ public class Task {
      * Every field must be present and not null except status
      */
     public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded,
-                Description description, Set<Tag> tags) {
+                DateCompleted dateCompleted, Description description, Set<Tag> tags) {
         requireAllNonNull(name, priority, deadline, description, tags);
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
         this.dateAdded = dateAdded;
+        this.dateCompleted = dateCompleted;
         this.description = description;
         this.status = null;
         // protect internal tags from changes in the arg list
@@ -65,13 +68,14 @@ public class Task {
     /**
      * Another constructor with custom status and subtask
      */
-    public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded,
+    public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded, DateCompleted dateCompleted,
                 Description description, Status status, Set<Tag> tags, List<Subtask> subtasks) {
         requireAllNonNull(name, priority, deadline, description, tags);
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
         this.dateAdded = dateAdded;
+        this.dateCompleted = dateCompleted;
         this.description = description;
         this.status = status;
         // protect internal tags from changes in the arg list
@@ -93,6 +97,13 @@ public class Task {
 
     public DateAdded getDateAdded() {
         return dateAdded;
+    }
+
+    public DateCompleted getDateCompleted() {
+        if (dateCompleted == null) {
+            return new DateCompleted(false);
+        }
+        return dateCompleted;
     }
 
     public Description getDescription() {

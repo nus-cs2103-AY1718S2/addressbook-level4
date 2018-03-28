@@ -13,6 +13,7 @@ public class ConfigTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+
     public void toString_defaultObject_stringReturned() {
         String defaultConfigAsString = "App title : Address App\n"
                 + "Current log level : INFO\n"

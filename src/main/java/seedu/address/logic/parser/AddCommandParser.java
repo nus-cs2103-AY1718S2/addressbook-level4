@@ -47,6 +47,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             + "-(o)+(?<ownerNric>.*)");
     private static final Pattern ADD_COMMAND_FORMAT_NEW_APPT_EXISTING_OWNER_PET = Pattern.compile("-(a)+(?<apptInfo>.*)"
             + "-(o)(?<ownerNric>.*)" + "-(p)+(?<petName>.*)");
+
     /**
      * Parses the given {@code String} of arguments in the context of the Person class
      * and returns an Person object.
@@ -113,22 +114,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public PetPatient parsePetPatient(String petInfo) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(
-                        petInfo,
-                        PREFIX_NAME,
-                        PREFIX_SPECIES,
-                        PREFIX_BREED,
-                        PREFIX_COLOUR,
-                        PREFIX_BLOODTYPE,
-                        PREFIX_TAG);
+                ArgumentTokenizer.tokenize(petInfo, PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_COLOUR,
+                        PREFIX_BLOODTYPE, PREFIX_TAG);
 
         if (!arePrefixesPresent(
-                argMultimap,
-                PREFIX_NAME,
-                PREFIX_BREED,
-                PREFIX_SPECIES,
-                PREFIX_COLOUR,
-                PREFIX_BLOODTYPE)
+                argMultimap, PREFIX_NAME, PREFIX_BREED, PREFIX_SPECIES, PREFIX_COLOUR, PREFIX_BLOODTYPE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PETPATIENT));
         }
@@ -216,34 +206,34 @@ public class AddCommandParser implements Parser<AddCommand> {
         String trimmedArgs = args.trim();
 
         //to add a new person (owner), new pet patient, and a new appointment
-        Matcher matcher = ADD_COMMAND_FORMAT_ALL_NEW.matcher(trimmedArgs);
-        if (matcher.matches()) {
-            String ownerInfo = matcher.group("ownerInfo");
-            String petInfo = matcher.group("petInfo");
-            String apptInfo = matcher.group("apptInfo");
+        final Matcher matcherForAllNew = ADD_COMMAND_FORMAT_ALL_NEW.matcher(trimmedArgs);
+        if (matcherForAllNew.matches()) {
+            String ownerInfo = matcherForAllNew.group("ownerInfo");
+            String petInfo = matcherForAllNew.group("petInfo");
+            String apptInfo = matcherForAllNew.group("apptInfo");
             return createNewOwnerPetAppt(ownerInfo, petInfo, apptInfo);
         }
         //add a new appointment for existing person and pet patient
-        matcher = ADD_COMMAND_FORMAT_NEW_APPT_EXISTING_OWNER_PET.matcher(trimmedArgs);
-        if (matcher.matches()) {
-            String apptInfo = matcher.group("apptInfo");
-            String ownerNric = matcher.group("ownerNric");
-            String petName = matcher.group("petName");
+        final Matcher matcherForNewAppt = ADD_COMMAND_FORMAT_NEW_APPT_EXISTING_OWNER_PET.matcher(trimmedArgs);
+        if (matcherForNewAppt.matches()) {
+            String apptInfo = matcherForNewAppt.group("apptInfo");
+            String ownerNric = matcherForNewAppt.group("ownerNric");
+            String petName = matcherForNewAppt.group("petName");
             return createNewApptforExistingOwnerAndPet(apptInfo, ownerNric, petName);
         }
 
         //add a new patient to an existing owner
-        matcher = ADD_COMMAND_FORMAT_NEW_PET_EXISTING_OWNER.matcher(trimmedArgs);
-        if (matcher.matches()) {
-            String petInfo = matcher.group("petInfo");
-            String ownerNric = matcher.group("ownerNric");
+        final Matcher matcherForNewPet = ADD_COMMAND_FORMAT_NEW_PET_EXISTING_OWNER.matcher(trimmedArgs);
+        if (matcherForNewPet.matches()) {
+            String petInfo = matcherForNewPet.group("petInfo");
+            String ownerNric = matcherForNewPet.group("ownerNric");
             return createNewPetForExistingPerson(petInfo, ownerNric);
         }
 
         //add a new person
-        matcher = ADD_COMMAND_FORMAT_OWNER_ONLY.matcher(trimmedArgs);
-        if (matcher.matches()) {
-            String ownerInfo = matcher.group("ownerInfo");
+        final Matcher matcherForNewPerson = ADD_COMMAND_FORMAT_OWNER_ONLY.matcher(trimmedArgs);
+        if (matcherForNewPerson.matches()) {
+            String ownerInfo = matcherForNewPerson.group("ownerInfo");
             return parseNewOwnerOnly(ownerInfo);
         }
 

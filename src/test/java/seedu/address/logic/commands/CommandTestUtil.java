@@ -4,17 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BLOODTYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BREED;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_COLOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -47,6 +47,11 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_NRIC_AMY = "G1078999P";
     public static final String VALID_NRIC_BOB = "S7895666N";
+    public static final String VALID_NRIC_CHARLIE = "S1078899P";
+    public static final String VALID_NRIC_DION = "T1115666G";
+    public static final String VALID_NRIC_ELIAS = "G3338999P";
+    public static final String VALID_NRIC_FION = "S2225666N";
+
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_UNUSED = "unused";
@@ -69,6 +74,10 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String NRIC_DESC_AMY = " " + PREFIX_NRIC + VALID_NRIC_AMY;
     public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC + VALID_NRIC_BOB;
+    public static final String NRIC_DESC_CHARLIE = " " + PREFIX_NRIC + VALID_NRIC_CHARLIE;
+    public static final String NRIC_DESC_DION = " " + PREFIX_NRIC + VALID_NRIC_DION;
+    public static final String NRIC_DESC_ELIAS = " " + PREFIX_NRIC + VALID_NRIC_ELIAS;
+    public static final String NRIC_DESC_FION = " " + PREFIX_NRIC + VALID_NRIC_FION;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String TAG_DESC_CHECKUP = " " + PREFIX_TAG + VALID_TAG_CHECKUP;
@@ -87,10 +96,10 @@ public class CommandTestUtil {
     public static final String VALID_BLOODTYPE_JOKER = "O";
 
     public static final String NAME_DESC_JOKER = " " + PREFIX_NAME + VALID_NAME_JOKER;
-    public static final String SPECIES_DESC_JOKER = " " + PREFIX_PET_PATIENT_SPECIES + VALID_SPECIES_JOKER;
-    public static final String BREED_DESC_JOKER = " " + PREFIX_PET_PATIENT_BREED + VALID_BREED_JOKER;
-    public static final String COLOUR_DESC_JOKER = " " + PREFIX_PET_PATIENT_COLOUR + VALID_COLOUR_JOKER;
-    public static final String BLOODTYPE_DESC_JOKER = " " + PREFIX_PET_PATIENT_BLOODTYPE + VALID_BLOODTYPE_JOKER;
+    public static final String SPECIES_DESC_JOKER = " " + PREFIX_SPECIES + VALID_SPECIES_JOKER;
+    public static final String BREED_DESC_JOKER = " " + PREFIX_BREED + VALID_BREED_JOKER;
+    public static final String COLOUR_DESC_JOKER = " " + PREFIX_COLOUR + VALID_COLOUR_JOKER;
+    public static final String BLOODTYPE_DESC_JOKER = " " + PREFIX_BLOODTYPE + VALID_BLOODTYPE_JOKER;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

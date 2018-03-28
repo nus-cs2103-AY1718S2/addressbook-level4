@@ -16,6 +16,7 @@ import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.PetPatient;
@@ -61,7 +62,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setPersons(List<Person> persons) throws DuplicatePersonException {
+    public void setPersons(List<Person> persons) throws DuplicatePersonException, DuplicateNricException {
         this.persons.setPersons(persons);
     }
 
@@ -90,7 +91,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("AddressBooks should not have duplicate persons");
+            throw new AssertionError("Medeina should not have duplicate persons.");
+        } catch (DuplicateNricException e) {
+            throw new AssertionError("Medeina should not have two person sharing the same NRIC.");
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -124,7 +127,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addPerson(Person p) throws DuplicatePersonException {
+    public void addPerson(Person p) throws DuplicatePersonException, DuplicateNricException {
         Person person = syncWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person

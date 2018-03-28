@@ -176,7 +176,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand createNewApptforExistingOwnerAndPet(String apptInfo, String ownerNric, String petName)
             throws ParseException {
         Appointment appt = parseAppointment(apptInfo);
-        return new AddCommand(appt, new Nric(ownerNric), new PetPatientName(petName));
+        return new AddCommand(appt, new Nric(ownerNric.trim()), new PetPatientName(petName.trim()));
     }
 
     /**

@@ -66,18 +66,18 @@ public class UiUtilTest {
         assertTrue(HEX_COLOR_WHITE.equals(UiUtil.getMatchingColorFromGivenColor(DARK_COLOR_CODE)));
     }
 
-    @Test
-    public void copyToClipboard() {
-        String stringInClipboard = null;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Clipboard clipboard = toolkit.getSystemClipboard();
-        UiUtil.copyToClipboard(VALID_STRING);
-        try {
-            stringInClipboard = (String) clipboard.getData(DataFlavor.stringFlavor);
-        } catch (Exception exception) {
-            // problem with clipboard
-        }
-        assertTrue(VALID_STRING.equals(stringInClipboard));
-    }
+//    @Test
+//    public void copyToClipboard() {
+//        String stringInClipboard = null;
+//        Toolkit toolkit = Toolkit.getDefaultToolkit();
+//        Clipboard clipboard = toolkit.getSystemClipboard();
+//        UiUtil.copyToClipboard(VALID_STRING);
+//        try {
+//            stringInClipboard = (String) clipboard.getData(DataFlavor.stringFlavor);
+//        } catch (Exception exception) {
+//            // problem with clipboard
+//        }
+//        assertTrue(VALID_STRING.equals(stringInClipboard));
+//    }
 }
 //@@author

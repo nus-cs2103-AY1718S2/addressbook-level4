@@ -50,6 +50,8 @@ public class TagContainsKeyphrasesPredicateTest {
         // One keyphrase
         predicate = new TagContainsKeyphrasesPredicate(Collections.singletonList("Friends"));
         assertTrue(predicate.test(new PersonBuilder().withTags("Friends", "Family").build()));
+        predicate = new TagContainsKeyphrasesPredicate(Collections.singletonList("Friends Family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Friends", "Family").build()));
 
         // Multiple keyphrases
         predicate = new TagContainsKeyphrasesPredicate(Arrays.asList("Friends", "Colleagues"));
@@ -69,8 +71,14 @@ public class TagContainsKeyphrasesPredicateTest {
 
         // Keyphrase match name, phone, email, and address, but does not match tag
         predicate = new TagContainsKeyphrasesPredicate(
-                Arrays.asList("Alice 12345 alice@email.com Main Street"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Friends").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").withName("Alice").build()));
+                Arrays.asList("Alice 12345 alice@email.com Main Street 3"));
+        assertFalse(predicate.test(new PersonBuilder()
+                .withName("Alice")
+                .withPhone("12345")
+                .withEmail("alice@email.com")
+                .withAddress("Main Street")
+                .withTags("Friends")
+                .withRating("3")
+                .build()));
     }
 }

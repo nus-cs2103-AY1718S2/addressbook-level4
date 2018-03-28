@@ -3,9 +3,7 @@ package seedu.progresschecker.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 

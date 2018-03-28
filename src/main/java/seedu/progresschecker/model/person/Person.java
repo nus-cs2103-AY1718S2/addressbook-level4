@@ -15,7 +15,7 @@ import seedu.progresschecker.model.tag.UniqueTagList;
  */
 public class Person {
 
-    private static String DEFAULT_PHOTO_PATH = "/images/profile_photo.jpg";
+    private static String defaultPath = "/images/profile_photo.jpg";
 
     private final Name name;
     private final Phone phone;
@@ -41,7 +41,7 @@ public class Person {
         this.year = year;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.photoPath = DEFAULT_PHOTO_PATH;
+        this.photoPath = defaultPath;
     }
 
     public Name getName() {

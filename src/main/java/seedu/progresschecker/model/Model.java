@@ -1,7 +1,6 @@
 package seedu.progresschecker.model;
 
-import java.io.*;
-import java.nio.file.Path;
+import java.io.IOException;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;

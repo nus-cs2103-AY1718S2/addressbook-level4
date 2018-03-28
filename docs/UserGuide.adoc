@@ -311,7 +311,7 @@ Examples:
 * `addGroups CS2101 Project` +
 New Group `CS2101 Oral Presentation` added, refer to Figure 2. +
 image:addGroupExample.png[width ="500"] +
-Figure 2. Example of add Group
+Figure 3. Example of add Group
 // end:AddGroup[]
 
 

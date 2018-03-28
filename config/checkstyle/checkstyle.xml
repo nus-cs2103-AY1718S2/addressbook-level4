@@ -36,7 +36,7 @@
     <!-- Required for SuppressionCommentFilter to work -->
     <module name="FileContentsHolder"/>
 
-    <!-- Required to allow exceptions in code style -->
+    <!-- Required to allow exception in code style -->
     <module name="SuppressionCommentFilter">
       <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
       <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>

@@ -18,4 +18,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_TEAM = new Prefix("t/");
     public static final Prefix PREFIX_LOCATION = new Prefix("l/");
     public static final Prefix PREFIX_NUMBER_OF_POSITIONS = new Prefix("n/");
+    public static final Prefix PREFIX_USERNAME = new Prefix("u/");
+    public static final Prefix PREFIX_PASSWORD = new Prefix("pw/");
+
 }

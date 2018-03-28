@@ -53,7 +53,7 @@ public class LogicManagerTest {
     }
 
     /**
-     * Executes the command, confirms that no exceptions are thrown and that the result message is correct.
+     * Executes the command, confirms that no exception are thrown and that the result message is correct.
      * Also confirms that {@code expectedModel} is as specified.
      * @see #assertCommandBehavior(Class, String, String, Model)
      */

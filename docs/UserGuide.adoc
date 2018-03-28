@@ -309,7 +309,7 @@ Keyword cannot be an empty input.
 
 Examples:
 
-* `addGroups CS2101 Project` +
+* `addGroups CS2101 Oral Presentation` +
 New Group `CS2101 Oral Presentation` added, refer to Figure 3. +
 image:addGroupExample.png[width ="500"] +
 Figure 3. Example of add Group

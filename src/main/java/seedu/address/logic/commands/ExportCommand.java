@@ -2,12 +2,15 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.model.UserPrefs;
 import seedu.address.model.export.ExportType;
 
 /**
  * Export different types of data from the application to the user
  */
 public class ExportCommand extends UndoableCommand {
+
+    public final UserPrefs userPrefs = new UserPrefs();
 
     public static final String COMMAND_WORD = "export";
 
@@ -16,7 +19,7 @@ public class ExportCommand extends UndoableCommand {
             + "Parameters: ExportType (must be one of the following - CALENDAR, PORTFOLIO)\n"
             + "Example: " + COMMAND_WORD + " portfolio";
 
-    public static final String MESSAGE_SUCCESS = "Successfully exported: %1$s";
+    public static final String MESSAGE_SUCCESS = "Successfully exported %1$s to %2$s";
 
     private ExportType typeToExport;
 
@@ -28,6 +31,6 @@ public class ExportCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.export(typeToExport);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, typeToExport.toString()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, typeToExport.toString(), userPrefs.getExportPortfolioFilePath()));
     }
 }

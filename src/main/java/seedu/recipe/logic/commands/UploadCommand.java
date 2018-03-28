@@ -3,9 +3,6 @@ package seedu.recipe.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.ui.util.CloudStorageUtil.ACCESS_TOKEN;
-import static seedu.recipe.ui.util.CloudStorageUtil.APP_KEY;
-import static seedu.recipe.ui.util.CloudStorageUtil.APP_SECRET;
 import static seedu.recipe.ui.util.CloudStorageUtil.RECIPE_BOOK_FILE;
 import static seedu.recipe.ui.util.CloudStorageUtil.CLIENT_IDENTIFIER;
 
@@ -13,12 +10,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.dropbox.core.DbxAppInfo;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.DbxWebAuth;
 import com.dropbox.core.v2.DbxClientV2;
-import com.google.common.base.Strings;
 
 import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
@@ -53,7 +47,7 @@ public class UploadCommand extends Command {
 
     @Override
     public CommandResult execute() throws UploadCommandException {
-        EventsCenter.getInstance().post(new UploadRecipesEvent())
+        EventsCenter.getInstance().post(new UploadRecipesEvent());
         CommandResult result = upload();
         return result;
     }

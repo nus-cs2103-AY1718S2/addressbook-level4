@@ -20,7 +20,7 @@ import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.testutil.RecipeBuilder;
-//import seedu.recipe.ui.util.FacebookHandler;
+import seedu.recipe.ui.util.FacebookHandler;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private RecipePanelSelectionChangedEvent selectionChangedEventStub;
@@ -58,7 +58,6 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         //@@author RyanAngJY
         // login page to share recipe
-        /*
         postNow(shareRecipeEvent);
         expectedRecipeUrl = new URL(FacebookHandler.getPostDomain() + recipeStub.getUrl()
                 + FacebookHandler.getRedirectEmbedded());
@@ -68,7 +67,6 @@ public class BrowserPanelTest extends GuiUnitTest {
         postNow(shareRecipeEvent);
         expectedRecipeUrl = new URL(FacebookHandler.REDIRECT_DOMAIN);
         assertEquals(expectedRecipeUrl, browserPanelHandle.getLoadedUrl());
-        */
         //@@author
     }
 }

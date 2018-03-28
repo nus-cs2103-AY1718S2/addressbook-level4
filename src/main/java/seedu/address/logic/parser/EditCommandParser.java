@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -36,7 +38,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
-                        PREFIX_BIRTHDAY, PREFIX_APPOINTMENT);
+                        PREFIX_BIRTHDAY, PREFIX_APPOINTMENT, PREFIX_GROUP, PREFIX_INSURANCE);
 
         Index index;
 
@@ -58,6 +60,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                 ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT))
                         .ifPresent(editPersonDescriptor::setAppointment);
             }
+            ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP)).ifPresent(editPersonDescriptor::setGroup);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

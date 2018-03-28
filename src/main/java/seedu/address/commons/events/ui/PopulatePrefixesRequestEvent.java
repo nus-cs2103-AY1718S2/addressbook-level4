@@ -35,7 +35,7 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
                     + "  " + PREFIX_PHONE
                     + "  " + PREFIX_EMAIL
                     + "  " + PREFIX_ADDRESS
-                    + "  " + PREFIX_TAG;
+                    + "  " + PREFIX_TAG + " ";
             caretIndex = (AddCommand.COMMAND_WORD + " " + PREFIX_NAME + " ").length();
             break;
         case "delete":

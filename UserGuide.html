@@ -33,8 +33,9 @@
 <ul class="sectlevel3">
 <li><a href="#adding-a-person-code-add-code">4.1.1. Adding a person: <code>add</code></a></li>
 <li><a href="#editing-a-person-code-edit-code">4.1.2. Editing a person : <code>edit</code></a></li>
-<li><a href="#deleting-a-person-code-delete-code">4.1.3. Deleting a person : <code>delete</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">4.1.4. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#add-a-remark-code-remark-code-since-v1-1">4.1.3. Add a remark : <code>remark</code> [Since v1.1]</a></li>
+<li><a href="#deleting-a-person-code-delete-code">4.1.4. Deleting a person : <code>delete</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">4.1.5. Clearing all entries : <code>clear</code></a></li>
 </ul>
 </li>
 <li><a href="#navigating-infinity-book">4.2. Navigating Infinity Book</a>
@@ -61,14 +62,16 @@
 <li><a href="#match-job-command">4.4.2. Match Job Command</a></li>
 </ul>
 </li>
-<li><a href="#miscellaneous">4.5. Miscellaneous</a>
+<li><a href="#social-media-fb-linkedin-integration-coming-in-v2-0">4.5. Social Media (FB, Linkedin) Integration [Coming in v2.0]</a></li>
+<li><a href="#miscellaneous">4.6. Miscellaneous</a>
 <ul class="sectlevel3">
-<li><a href="#viewing-help-code-help-code">4.5.1. Viewing help : <code>help</code></a></li>
-<li><a href="#listing-entered-commands-code-history-code">4.5.2. Listing entered commands : <code>history</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code">4.5.3. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">4.5.4. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">4.5.5. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">4.5.6. Saving the data</a></li>
+<li><a href="#change-theme-code-theme-code-since-v1-3">4.6.1. Change theme : <code>theme</code> [Since v1.3]</a></li>
+<li><a href="#viewing-help-code-help-code">4.6.2. Viewing help : <code>help</code></a></li>
+<li><a href="#listing-entered-commands-code-history-code">4.6.3. Listing entered commands : <code>history</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">4.6.4. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">4.6.5. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">4.6.6. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">4.6.7. Saving the data</a></li>
 </ul>
 </li>
 </ul>
@@ -321,7 +324,38 @@ Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all 
 </div>
 </div>
 <div class="sect3">
-<h4 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">4.1.3. Deleting a person : <code>delete</code></a></h4>
+<h4 id="add-a-remark-code-remark-code-since-v1-1"><a class="link" href="#add-a-remark-code-remark-code-since-v1-1">4.1.3. Add a remark : <code>remark</code> [Since v1.1]</a></h4>
+<div class="paragraph">
+<p>Adds or edits remarks to the person identified by the INDEX</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: remark INDEX r/[REMARK]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Alias: rm INDEX r/[REMARK]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="big green">Examples</span>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>remark 1 r/Likes to go swimming</code><br>
+Edits the remark for the first person to Likes to drink coffee.</p>
+</li>
+<li>
+<p><code>remark 2 r/</code><br>
+Removes the remark for the second person.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">4.1.4. Deleting a person : <code>delete</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -368,7 +402,7 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">4.1.4. Clearing all entries : <code>clear</code></a></h4>
+<h4 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">4.1.5. Clearing all entries : <code>clear</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -704,9 +738,58 @@ number of candidates in each group.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="miscellaneous"><a class="link" href="#miscellaneous">4.5. Miscellaneous</a></h3>
+<h3 id="social-media-fb-linkedin-integration-coming-in-v2-0"><a class="link" href="#social-media-fb-linkedin-integration-coming-in-v2-0">4.5. Social Media (FB, Linkedin) Integration [Coming in v2.0]</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="miscellaneous"><a class="link" href="#miscellaneous">4.6. Miscellaneous</a></h3>
 <div class="sect3">
-<h4 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">4.5.1. Viewing help : <code>help</code></a></h4>
+<h4 id="change-theme-code-theme-code-since-v1-3"><a class="link" href="#change-theme-code-theme-code-since-v1-3">4.6.1. Change theme : <code>theme</code> [Since v1.3]</a></h4>
+<div class="paragraph">
+<p>To change the theme of InfinityBook, use the <code>theme</code> command.<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: theme [THEME_NAME]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Alias: t [THEME_NAME]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="big green">Examples</span>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>theme</code> light</p>
+</li>
+<li>
+<p><code>t</code> dark</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Current available themes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>light</p>
+</li>
+<li>
+<p>dark</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You should see the user interface change according the specified theme.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">4.6.2. Viewing help : <code>help</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -719,7 +802,7 @@ number of candidates in each group.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">4.5.2. Listing entered commands : <code>history</code></a></h4>
+<h4 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">4.6.3. Listing entered commands : <code>history</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -743,7 +826,7 @@ number of candidates in each group.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">4.5.3. Undoing previous command : <code>undo</code></a></h4>
+<h4 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">4.6.4. Undoing previous command : <code>undo</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -794,7 +877,7 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </div>
 </div>
 <div class="sect3">
-<h4 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">4.5.4. Redoing the previously undone command : <code>redo</code></a></h4>
+<h4 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">4.6.5. Redoing the previously undone command : <code>redo</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -832,7 +915,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect3">
-<h4 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.5.5. Exiting the program : <code>exit</code></a></h4>
+<h4 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.6.6. Exiting the program : <code>exit</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -845,7 +928,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect3">
-<h4 id="saving-the-data"><a class="link" href="#saving-the-data">4.5.6. Saving the data</a></h4>
+<h4 id="saving-the-data"><a class="link" href="#saving-the-data">4.6.7. Saving the data</a></h4>
 <div class="paragraph">
 <p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
@@ -1033,7 +1116,7 @@ There is no need to save manually.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-27 19:00:16 UTC
+Last updated 2018-03-28 01:14:54 UTC
 </div>
 </div>
 </body>

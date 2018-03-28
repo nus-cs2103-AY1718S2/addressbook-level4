@@ -230,10 +230,12 @@ public class XmlAdaptedPerson {
         final Rating rating = new Rating(Double.valueOf(technicalSkillsScore), Double.valueOf(communicationSkillsScore),
                 Double.valueOf(problemSolvingSkillsScore), Double.valueOf(experienceScore));
 
+        final Resume resume;
         if (!isNull(this.resume) && !Resume.isValidResume(this.resume)) {
-            throw new IllegalValueException(Resume.MESSAGE_RESUME_CONSTRAINTS);
+            resume = new Resume(null);
+        } else {
+            resume = new Resume(this.resume);
         }
-        final Resume resume = new Resume(this.resume);
 
         InterviewDate interviewDate = new InterviewDate();
         if (!isNull(this.interviewDate)) {

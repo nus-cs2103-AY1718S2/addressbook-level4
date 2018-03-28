@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Location;
 import seedu.address.model.activity.Name;
 import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
@@ -68,7 +69,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code DateTime}.
+     * Parses a {@code String datetime} into a {@code DateTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code datetime} is invalid.
@@ -90,6 +91,32 @@ public class ParserUtil {
     public static Optional<DateTime> parseDateTime(Optional<String> datetime) throws IllegalValueException {
         requireNonNull(datetime);
         return datetime.isPresent() ? Optional.of(parseDateTime(datetime.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code String location} into a {@code Location}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code location} is invalid.
+     */
+
+    public static Location parseLocation(String location) throws IllegalValueException {
+        requireNonNull(location);
+        String trimmedLocation = location.trim();
+        if (!Location.isValidLocation(trimmedLocation)) {
+            throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        }
+        return new Location(trimmedLocation);
+    }
+
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<Location>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Location> parseLocation(Optional<String> location) throws IllegalValueException {
+        requireNonNull(location);
+        return location.isPresent() ? Optional.of(parseLocation(location.get())) : Optional.empty();
     }
 
     /**

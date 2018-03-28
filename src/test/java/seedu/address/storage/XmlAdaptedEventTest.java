@@ -20,7 +20,7 @@ import seedu.address.testutil.Assert;
 //@@author karenfrilya97
 public class XmlAdaptedEventTest {
 
-    private static final Event CIP_EVENT = (Event) CIP;
+    private static final Event CIP_EVENT = CIP;
 
     private static final String INVALID_NAME = "Rachel's Bday";
     private static final String INVALID_DATE_TIME = "23 April 2018";

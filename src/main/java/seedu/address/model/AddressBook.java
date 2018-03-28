@@ -14,8 +14,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -48,7 +48,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups = new UniqueGroupList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -72,7 +74,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setGroups(List<Group> persons){ this.groups.setGroups(groups);}
+    public void setGroups(List<Group> persons) { this.groups.setGroups(groups);
+    }
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
@@ -147,7 +150,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences, person.getBirthday(), person.getAppointment(), person.getGroup(), person.getInsurance());
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences,
+                person.getBirthday(), person.getAppointment(), person.getGroup(), person.getInsurance());
     }
 
     /**

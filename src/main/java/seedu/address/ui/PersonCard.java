@@ -115,9 +115,9 @@ public class PersonCard extends UiPart<Region> {
         case "colleagues":
             return TAG_COLOR_STYLES[4];
 
+        default:
+            return "";
         }
-
-        return "";
     }
 
 

@@ -19,8 +19,8 @@ import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.group.Group;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -203,20 +203,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String appointment} into a {@code Appointment}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code appointment} is invalid.
-     */
-    public static Appointment parseAppointment(String appointment) throws IllegalValueException {
-        requireNonNull(appointment);
-        String trimmedAppointment = appointment.trim();
-        if (!Appointment.isValidAppointment(trimmedAppointment)) {
-            throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_CONSTRAINTS);
-        }
-        return new Appointment(trimmedAppointment);
-    }
-    /**
      * Parses a {@code String insurance} into a {@code Insurance}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -232,7 +218,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment} is present.
+     * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment}
+     * is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Insurance> parseInsurance(Optional<String> insurance) throws IllegalValueException {
@@ -241,13 +228,30 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment} is present.
+     * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment}
+     * is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Appointment> parseAppointment(Optional<String> appointment) throws IllegalValueException {
         requireNonNull(appointment);
         return appointment.isPresent() ? Optional.of(parseAppointment(appointment.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code String appointment} into a {@code Appointment}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code appointment} is invalid.
+     */
+    public static Appointment parseAppointment(String appointment) throws IllegalValueException {
+        requireNonNull(appointment);
+        String trimmedAppointment = appointment.trim();
+        if (!Appointment.isValidAppointment(trimmedAppointment)) {
+            throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_CONSTRAINTS);
+        }
+        return new Appointment(trimmedAppointment);
+    }
+
     /**
      * @param exportType
      * @return the corresponding ExportType

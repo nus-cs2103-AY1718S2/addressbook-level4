@@ -31,10 +31,12 @@ public class Group {
      * Returns true if a given string is a valid group.
      */
     public static boolean isValidGroup(String test) {
-        return test.matches(GROUP_VALIDATION_REGEX); }
+        return test.matches(GROUP_VALIDATION_REGEX);
+    }
 
     @Override
-    public String toString() { return groupName; }
+    public String toString() { return groupName;
+    }
 
     @Override
     public boolean equals(Object other) {

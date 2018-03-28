@@ -25,7 +25,9 @@ public class UniqueGroupList implements Iterable<Group> {
     /**
      * Constructs empty Group List.
      */
-    public UniqueGroupList() {}
+    public UniqueGroupList() {
+
+    }
 
     /**
      * Creates a UniqueGroupList using given tags.

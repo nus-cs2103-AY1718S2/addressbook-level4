@@ -10,8 +10,6 @@ import seedu.address.model.export.ExportType;
  */
 public class ExportCommand extends UndoableCommand {
 
-    public final UserPrefs userPrefs = new UserPrefs();
-
     public static final String COMMAND_WORD = "export";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -20,6 +18,8 @@ public class ExportCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " portfolio";
 
     public static final String MESSAGE_SUCCESS = "Successfully exported %1$s to %2$s";
+
+    public final UserPrefs userPrefs = new UserPrefs();
 
     private ExportType typeToExport;
 
@@ -31,6 +31,7 @@ public class ExportCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.export(typeToExport);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, typeToExport.toString(), userPrefs.getExportPortfolioFilePath()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, typeToExport.toString(),
+        userPrefs.getExportPortfolioFilePath()));
     }
 }

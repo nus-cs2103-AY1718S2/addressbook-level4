@@ -15,6 +15,7 @@ import seedu.address.model.student.Favourite;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -81,7 +82,8 @@ public class FavouriteCommand extends UndoableCommand {
         Set<Tag> tags = target.getTags();
         ProgrammingLanguage programmingLanguage = target.getProgrammingLanguage();
         Favourite fav = new Favourite(true);
+        Dashboard dashboard = target.getDashboard();
 
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav);
+        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
     }
 }

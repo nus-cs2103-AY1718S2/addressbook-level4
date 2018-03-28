@@ -3,6 +3,12 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.lesson.Day;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Time;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -50,8 +56,15 @@ public interface Model {
     /** Removes the given {@code tag} from all {@code Student}s. */
     void deleteTag(Tag tag);
 
-    /**
-     *
-     */
+    void addLesson(Student student, Day day, Time startTime, Time endTime)
+            throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException;
+
+    void deleteLesson(Lesson target) throws LessonNotFoundException;
+
+    Schedule getSchedule();
+
+    void printSchedule();
+
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
+
 }

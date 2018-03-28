@@ -6,7 +6,6 @@ import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -47,6 +46,8 @@ public class StudentListPanel extends UiPart<Region> {
                     if (newValue != null) {
                         logger.fine("Selection in student list panel changed to : '" + newValue + "'");
                         raise(new StudentPanelSelectionChangedEvent(newValue));
+                    } else {
+                        raise(new StudentPanelSelectionChangedEvent(oldValue));
                     }
                 });
     }
@@ -55,16 +56,22 @@ public class StudentListPanel extends UiPart<Region> {
      * Scrolls to the {@code StudentCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
-        Platform.runLater(() -> {
-            studentListView.scrollTo(index);
-            studentListView.getSelectionModel().clearAndSelect(index);
-        });
+        studentListView.scrollTo(index);
+        studentListView.getSelectionModel().clearAndSelect(index);
     }
 
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        int beforeSelectedIndex = studentListView.getSelectionModel().getSelectedIndex();
+
         scrollTo(event.targetIndex);
+
+        /* To handle to case where user selects the current student card after the show dashboard command */
+        if (event.targetIndex == beforeSelectedIndex) {
+            raise(new StudentPanelSelectionChangedEvent(studentListView.getSelectionModel().getSelectedItem()));
+        }
     }
 
     /**

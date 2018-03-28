@@ -21,6 +21,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.Schedule;
+import seedu.address.model.lesson.Day;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Time;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -141,6 +148,28 @@ public class AddCommandTest {
 
         @Override
         public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void addLesson(Student student, Day day, Time start, Time end)
+                throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void deleteLesson(Lesson lesson) throws LessonNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public Schedule getSchedule() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
+        public void printSchedule() {
             fail("This method should not be called");
         }
     }

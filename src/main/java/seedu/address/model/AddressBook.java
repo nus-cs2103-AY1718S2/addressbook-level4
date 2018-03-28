@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.UniqueStudentList;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -144,8 +145,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         studentTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Student(
-                student.getName(), student.getPhone(), student.getEmail(), student.getAddress(),
-                student.getProgrammingLanguage(), correctTagReferences, student.getFavourite());
+                student.getUniqueKey(), student.getName(), student.getPhone(), student.getEmail(),
+                student.getAddress(), student.getProgrammingLanguage(), correctTagReferences,
+                student.getFavourite(), student.getDashboard());
     }
 
     /**
@@ -214,8 +216,30 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// util methods
+    /**
+     * Find a student by the UniqueKey field
+     * @param key
+     * @return Student object matching
+     */
+    public Student findStudentByKey(UniqueKey key) {
+        Student student;
+        try {
+            student = students.findKey(key);
+        } catch (StudentNotFoundException snfe) {
+            throw new AssertionError("Student should be in the database");
+        }
+        return student;
+    }
 
+    /**
+     * TODO Delete later
+     */
+    public void printAll() {
+        for (Student s : students) {
+            System.out.println(s.toStrings());
+        }
+    }
+    //// util methods
     @Override
     public String toString() {
         return students.asObservableList().size() + " students, " + tags.asObservableList().size() +  " tags";

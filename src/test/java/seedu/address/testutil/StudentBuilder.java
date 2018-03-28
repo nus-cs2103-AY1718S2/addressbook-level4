@@ -10,6 +10,7 @@ import seedu.address.model.student.Favourite;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.UniqueKey;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -18,6 +19,7 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class StudentBuilder {
 
+    public static final String DEFAULT_KEY = "ffff00";
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
@@ -26,6 +28,7 @@ public class StudentBuilder {
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_FAVOURITE = "false";
 
+    private UniqueKey key;
     private Name name;
     private Phone phone;
     private Email email;
@@ -35,6 +38,7 @@ public class StudentBuilder {
     private Favourite favourite;
 
     public StudentBuilder() {
+        key = new UniqueKey(DEFAULT_KEY);
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
@@ -48,6 +52,7 @@ public class StudentBuilder {
      * Initializes the StudentBuilder with the data of {@code studentToCopy}.
      */
     public StudentBuilder(Student studentToCopy) {
+        key = studentToCopy.getUniqueKey();
         name = studentToCopy.getName();
         phone = studentToCopy.getPhone();
         email = studentToCopy.getEmail();
@@ -55,6 +60,14 @@ public class StudentBuilder {
         programmingLanguage = studentToCopy.getProgrammingLanguage();
         tags = new HashSet<>(studentToCopy.getTags());
         favourite = studentToCopy.getFavourite();
+    }
+
+    /**
+     * Sets the {@code UniqueKey} of the {@code Student} that we are building.
+     */
+    public StudentBuilder withKey(String key) {
+        this.key = new UniqueKey(key);
+        return this;
     }
 
     /**
@@ -114,7 +127,7 @@ public class StudentBuilder {
     }
 
     public Student build() {
-        return new Student(name, phone, email, address, programmingLanguage, tags, favourite);
+        return new Student(key, name, phone, email, address, programmingLanguage, tags, favourite);
     }
 
 }

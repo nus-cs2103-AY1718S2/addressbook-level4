@@ -199,6 +199,9 @@ image::DeleteStudentSdForLogic.png[width="800"]
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
+.Structure of the Dashboard Class. This diagram shows finer details about the Dashboard Class.
+image::ModelComponentDashboardClassDiagram.png[width="800]
+
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
@@ -365,6 +368,55 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::favourites[]
+=== Favourites feature
+==== Current Implementation
+
+To facilitate the favourite/unfavourite feature, an association with a new `Favourite` class is added to the `Student` class:
+
+image::StudentClassDiagram.png[width="800"]
+
+Since the implementation of the favourite and unfavourite command are similar, we will talk about the implementation of the favourite command only.
+
+The logic part of the favourite command will be executed by the `FavouriteCommand` class.
+To mark a `Student` object called "studentToFavourite" as favourite:
+
+* A Student object called "editedStudent" will be returned by `FavouriteCommand.createEditedStudent(Student)` to the `FavouriteCommand.preprocess()` method.
+`FavouriteCommand.createEditedStudent(Student)` is implemented as such:
+
+[source, java]
+----
+    private static Student createEditedStudent(Student target) {
+        assert target != null;
+
+        Name name = target.getName();
+        Phone phone = target.getPhone();
+        // ... get the rest of the target's attributes ...
+        Favourite fav = new Favourite(true);
+
+        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+    }
+----
+
+* editedStudent will have the attributes of studentToFavourite, except that its `Favourite` attribute will be set to "true"
+
+In the `FavouriteCommand.execute()` method, `Model.updateStudent(Student, Student)` is called to replace studentToFavourite with editedStudent in the Address Book in-memory.
+
+[NOTE]
+If you have a future implementation that requires the addition of a new attribute in the `Student` class, you must take note of updating the `FavouriteCommand.createEditedStudent(Student)` method to reflect the new attribute.
+
+==== Design Considerations
+
+===== Aspect: Implementation of 'FavouriteCommand'
+* *Alternative 1 (current choice)*: Add a `Favourite` attribute to `Student`
+** Pro: It is easy to mark a student as favourite since we can make use of the current `Model.updateStudent(Student, Student)` method by creating a copy of the target `Student` object, with the value of its `Favourite` attribute set to "true"
+** Con: Creating a copy of the `Student` object can be inefficient
+* *Alternative 2*: Create a new `UniqueFavouriteStudentsList` that contains the list of students in favourites and store this list in the Address Book
+** Pro: Students that are currently in favourites can be managed more easily since there is a direct overview of which student is in favourites
+** Con: Students in the `UniqueFavouriteStudentsList` have to be synced with the `UniqueStudentsList`. For example, we have to ensure that deleting a student in the `UniqueStudentList` deletes the student in the `UniqueFavouriteStudentsList` too
+
+// end::favourites[]
+
 // tag::location[]
 === Location feature
 ==== Current Implementation
@@ -474,6 +526,124 @@ The editedStudent will have the new programming language attribute and will henc
 ** Pros: User will be able to add or modify `ProgrammingLanguage` one or possibly even a few students at their own discretion.
 ** Cons: User will have to learn a new specific command and might also be slightly difficult to implement.
 // end::programmingLanguage[]
+
+// tag::schedule[]
+=== Schedule feature
+==== Current Implementation
+
+To get better control of one's weekly schedule, we will now attach a component called `Schedule` to `Model`.
+
+image::ScheduleClassDiagram.png[width="800"]
+
+A `Schedule` is a list of `Lessons`. A `Lesson` has a `Student` attribute, a `Day` attribute, a starting `TIME START_TIME` and an ending `TIME END_TIME` attribute
+
+* A `Lesson` object called `newLesson` will be created by `ModelManager.addLesson(Student, Day, Time START_TIME, Time END_TIME)`, which is implemented as such:
+[source, java]
+----
+    public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
+            throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
+        //Check for Duplicate Lesson, StudentNotFound, invalid input ime
+
+        schedule.addLesson(newLesson);
+    }
+----
+
+The student will be selected by the Index of the last seen list of students. A new `Lesson` will now be added for that student at the specific `Day`, `START_TIME` and `END_TIME`.
+
+[NOTE]
+If you have a future implementation that requires the addition of a new attribute in the `Schedule` class, you must take note of updating the `Model.addLesson(Student, Day, Time START_TIME, Time END_TIME)` method to reflect the new attribute.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `Schedule`
+* *Alternative 1 (current choice)*: `Schedule` contains `Lesson` classes that is made up of one layer, with attributes directly attached to `Lesson`
+** Pro: It is easier implement, just add `Lesson` to a `Schedule`, which is a list of `Lessons`
+** Con: Results in more coupling, attributes could have been furthur separated out. It is inefficient to search by `Day`. Searching for empty slot requires linear searching.
+* *Alternative 2*: `Lesson` contains two layers of classes, `Day` is attached to `Schedule` and `Lesson` is attached to `Day`
+** Pro: Less coupling and more cohesive design
+** Con: Much harder to implement and gets overly complicated
+
+// end::schedule[]
+
+// tag::dashboard[]
+=== Dashboard feature
+==== Current Implementation
+
+To have a dashboard for each student, an association with a new `Dashboard` class is added to the `Student` class. We have also created new classes associated with the `Dashboard` class to facilitate the different capabilities of the dashboard.
+The following diagram shows the structure of the classes that facilitate the dashboard feature:
+
+image::ModelComponentDashboardClassDiagram.png[width="800"]
+
+`Dashboard` and `Milestone` are exposed to `ObservableList<Milestone>` and `ObservableList<Task>` respectively that can be 'observed'.
+This means that the UI can be bound to both of the lists so that the UI automatically updates when the data in both lists change.
+
+A new `Dashboard` object is created every time a new `Student` is being created. The `Dashboard` object will contain an empty milestone list until the user adds new milestones to the dashboard.
+This enforces 1-to-1 association between `Student` and `Dashboard`, as well as between `Dashboard` and `UniqueMilestoneList`.
+
+For example, the constructor for `Student` is implemented this way:
+[source, java]
+----
+    public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        // ... initialise the rest of the attributes ...
+        this.dashboard = new Dashboard();
+    }
+----
+
+The constructor for `Dashboard` is implemented this way:
+[source, java]
+----
+    public Dashboard() {
+        milestoneList = new UniqueMilestoneList();
+    }
+----
+
+The `AddMilestoneCommand`, `AddTaskCommand`, `CheckTaskCommand` and `ShowDashboardCommand` commands facilitate operations to the dashboard.
+A common implementation for commands that modify the dashboard (e.g. `AddMilestoneCommand`) is that a new copy of `Dashboard` is created with the new modification.
+
+For example, in the `AddMilestoneCommand`, to add a new milestone object to the dashboard of a `Student` Object called "studentToEdit":
+
+* A `Student` object called "editedStudent" will be returned by the `AddMilestoneCommand.createEditedStudent(Student, Milestone)` method to the `AddMilestoneCommand.preprocess()` method.
+`AddMilestoneCommand.createEditedStudent(Student, Milestone)` is implemented as such:
+[source, java]
+----
+    private Student createEditedStudent(Student studentToEdit, Milestone newMilestone)
+            throws DuplicateMilestoneException {
+        requireAllNonNull(studentToEdit, newMilestone);
+
+        /* Get all the attributes of the student */
+        Name name = studentToEdit.getName();
+        Phone phone = studentToEdit.getPhone();
+        // ... get remaining attributes of the student ...
+        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
+
+        milestoneList.add(newMilestone);
+
+        Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
+
+        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+    }
+----
+* The new `Milestone` object is added to the `UniqueMilestoneList` object that belongs to the `Dashboard` of "studentToEdit"
+* A new `Dashboard` object is created with the updated `UniqueMilestoneList` object
+* "editedStudent" is created with the same attributes of "targetStudent", but with the new `Dashboard` object
+
+In the `AddMilestoneCommand.execute()` method, `Model.updateStudent(Student, Student)` is called to replace "targetStudent" with "editedStudent" in the Address Book in-memory
+
+[NOTE]
+If you have a future implementation that requires the addition of a new attribute in the `Student` class, you must take note of updating the `X.createEditedStudent(...)` method, where X is any command that modifies the dashboard, to reflect the new attribute.
+
+==== Design Considerations
+
+===== Aspect: Data structure to support the dashboard feature
+* *Alternative 1 (current choice)*: Add a `Dashboard` association to `Student`
+** Pro: Able to access the dashboard of a student easily.
+** Con: Since `Student` is immutable, a new `Student` object has to be created each time its `Dashboard` is modified.
+* *Alternative 2*: Add a new `UniqueDashboardList` association to `AddressBook`
+** Pro: Able to modify the dashboard easily if it is not made immutable.
+** Con: We will have to sync the `UniqueDashboardList` with the `UniqueStudentList` since `Dashboard` will be associated to a `Student`.
 
 === Logging
 

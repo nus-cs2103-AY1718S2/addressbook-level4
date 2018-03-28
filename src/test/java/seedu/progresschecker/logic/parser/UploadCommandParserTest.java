@@ -27,7 +27,7 @@ public class UploadCommandParserTest {
         assertParseFailure(parser, VALID_PATH_AMY, MESSAGE_INVALID_FORMAT);
 
         // no field specified
-        assertParseFailure(parser, "1", UploadCommand.MESSAGE_IMAGE_NOT_FOUND);
+        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
@@ -41,36 +41,7 @@ public class UploadCommandParserTest {
         // zero index
         assertParseFailure(parser, "0" + VALID_PATH_AMY, MESSAGE_INVALID_FORMAT);
 
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
         // invalid prefix being parsed as preamble
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidPath_failure() {
-        assertParseFailure(parser, "1" + INVALID_PATH_DESC,
-                "PATH must be started with /images/contact/"); // invalid PATH
-    }
-
-    @Test
-    public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + VALID_PATH_AMY;
-
-        UploadCommand expectedCommand = new UploadCommand(targetIndex, VALID_PATH_AMY);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + VALID_PATH_BOB;
-
-        UploadCommand expectedCommand = new UploadCommand(targetIndex, VALID_PATH_BOB);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
     }
 }

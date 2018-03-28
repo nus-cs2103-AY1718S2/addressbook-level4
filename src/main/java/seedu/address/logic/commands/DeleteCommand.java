@@ -2,11 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.DeleteCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -39,8 +41,13 @@ public class DeleteCommand extends UndoableCommand {
         requireNonNull(personToDelete);
         try {
             model.deletePerson(personToDelete);
+            if (personToDelete.getCalendarId().compareTo("testCalendarId") != 0) {
+                DeleteCalendar.execute(personToDelete.getCalendarId());
+            }
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));

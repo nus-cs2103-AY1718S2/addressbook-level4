@@ -16,7 +16,6 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.appointment.Remark;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-//import seedu.address.model.person.NRIC;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;

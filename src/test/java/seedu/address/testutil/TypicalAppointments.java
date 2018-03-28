@@ -1,0 +1,32 @@
+package seedu.address.testutil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.appointment.Appointment;
+
+/**
+ * A utility class containing a list of {@code Person} objects to be used in tests.
+ */
+public class TypicalAppointments {
+
+    public static final Appointment ALLY = new AppointmentBuilder()
+            .withOwnerNric("S9012345A")
+            .withPetPatientName("Hammy")
+            .withRemark("Requires Home Visit")
+            .withDateTime("2018-12-31 12:30")
+            .withAppointmentTags("checkup").build();
+    public static final Appointment BENNY = new AppointmentBuilder()
+            .withOwnerNric("S1239049B")
+            .withPetPatientName("Lissy")
+            .withRemark("May require isolation")
+            .withDateTime("2018-12-31 14:30")
+            .withAppointmentTags("surgery").build();
+
+    private TypicalAppointments() {} // prevents instantiation
+
+    public static List<Appointment> getTypicalAppointments() {
+        return new ArrayList<>(Arrays.asList(ALLY, BENNY));
+    }
+}

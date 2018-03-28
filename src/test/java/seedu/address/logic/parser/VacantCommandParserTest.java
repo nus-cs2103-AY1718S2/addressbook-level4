@@ -1,14 +1,16 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.VacantCommand;
-import seedu.address.model.building.Building;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUILDING_DESC_2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BUILDING_1;
+
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.VacantCommand;
+import seedu.address.model.building.Building;
 
 public class VacantCommandParserTest {
     private VacantCommandParser parser = new VacantCommandParser();

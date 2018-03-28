@@ -33,7 +33,7 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_CALORIES + "CALORIES] "
             + "[" + PREFIX_SERVINGS + "SERVINGS] "
             + "[" + PREFIX_URL + "URL]\n"
-            + "[" + PREFIX_IMG + "IMAGE PATH NAME]\n"
+            + "[" + PREFIX_IMG + "IMAGE_PATH_NAME]\n"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example:\n" + COMMAND_WORD + " "
             + PREFIX_NAME + "Chicken Rice\n"

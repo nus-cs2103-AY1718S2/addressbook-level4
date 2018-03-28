@@ -413,20 +413,20 @@ The following sequence diagram shows how the sortCommand operation works. In the
 
 Suppose that the user has a list of clients in the application as shown in the diagram below, after executing the command, the list of clients will be as follows.
 
-====Design Consideration
+==== Design Considerations
 
-=====Aspect: Implementation of SortCommand
+===== Aspect: Implementation of SortCommand
 
-* **Alternative 1 (Current): Implementation of SortCommand as a command that is not undoable
+* **Alternative 1 (Current):** Implementation of SortCommand as a command that is not undoable
 ** Pros: The SortCommand will be easier for developers to implement this way.
 ** Cons: Users that wish to revert the changes made might not be able to do so and this will decrease the usability of the program.
 * **Alternative 2 (Prospective):** Implementation of SortCommand as a undoable command
 ** Pros: Users that wish to revert the changes made will be able to do so, thus increasing the usability of the program.
 ** Cons: The SortCommand will be harder for developers to implement.
 
-=====Aspect: Parameters of the SortCommand
+===== Aspect: Parameters of the SortCommand
 
-* **Alternative 1 (Current): Implementation of SortCommand as a command that only allows users to sort clients according to their names in lexicographical order.
+* **Alternative 1 (Current):** Implementation of SortCommand as a command that only allows users to sort clients according to their names in lexicographical order.
 ** Pros: The SortCommand will be easier for developers to implement as it only needs to sort the names of the internalList.
 ** Cons: Usability is low as the client might wish to sort clients according to their commissions earned.
 * **Alternative 2 (Prospective):** Implementation of SortCommand as a command that allows users to sort clients according to multiple parameters such as commission
@@ -436,18 +436,18 @@ Suppose that the user has a list of clients in the application as shown in the d
 // end::sort[]
 
 // tag::group[]
-===Group feature
+=== Group feature
 
-====Current Implementation
+==== Current Implementation
 The Group feature will allow users to group their clients according to a specified group. Users will be required to add their clients to a group when adding a new user. Users can change the grouping of their clients later on if they wish to do so.
 
 The following sequence diagram shows how the group feature is being implemented.
 
-====Design Consideration
+==== Design Considerations
 
-=====Aspect: Implementation of Group
+===== Aspect: Implementation of Group
 
-* ** Alternative 1: Requires users to specify the group of the client when adding a new client
+* ** Alternative 1:** Requires users to specify the group of the client when adding a new client
 ** Pros: It will easier for developers to implement this way.
 ** Cons: Users of the application might not know which group to place the clients into when adding a new client.
 * ** Alternative 2:** Allow users to add the group of the client after they have added a new client

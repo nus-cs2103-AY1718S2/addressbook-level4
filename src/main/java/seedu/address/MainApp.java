@@ -32,8 +32,8 @@ import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
-import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.UserDatabaseStorage;
+import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.storage.XmlUserDatabaseStorage;
 import seedu.address.ui.Ui;
@@ -133,7 +133,7 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs, initialUsers);
+        return new ModelManager(initialData, userPrefs, initialUsers, this.storage);
     }
 
     private void initLogging(Config config) {

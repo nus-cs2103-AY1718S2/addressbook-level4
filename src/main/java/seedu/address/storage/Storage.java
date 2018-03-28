@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserDatabase;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.login.User;
 
 /**
  * API of the Storage component
@@ -52,4 +53,6 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserDatab
 
     @Override
     void saveUserDatabase(ReadOnlyUserDatabase userDatabase, String filePath) throws IOException;
+
+    void update(User user);
 }

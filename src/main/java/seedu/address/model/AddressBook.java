@@ -11,10 +11,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.login.Password;
-import seedu.address.model.login.User;
-import seedu.address.model.login.Username;
-import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;

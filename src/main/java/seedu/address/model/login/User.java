@@ -1,11 +1,10 @@
 package seedu.address.model.login;
 
-//@@author kaisertanqr
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
+//@@author kaisertanqr
 /**
  * Represents a User of the addressbook
  *
@@ -16,7 +15,7 @@ public class User {
     private Password password;
     private String addressBookFilePath;
 
-    public User(Username username, Password password, String addressBookFilePath){
+    public User(Username username, Password password, String addressBookFilePath) {
         requireAllNonNull(username, password, addressBookFilePath);
         this.username = username;
         this.password = password;

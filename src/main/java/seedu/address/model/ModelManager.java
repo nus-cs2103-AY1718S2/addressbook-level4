@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.IOException;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,12 +14,15 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.util.SampleDataUtil;
+import seedu.address.storage.Storage;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -26,6 +31,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private final Storage storage;
     private final AddressBook addressBook;
     private final UserDatabase userDatabase;
     private final FilteredList<Person> filteredPersons;
@@ -33,12 +39,14 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyUserDatabase userDatabase) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyUserDatabase userDatabase,
+                         Storage storage) {
         super();
         requireAllNonNull(addressBook, userPrefs, userDatabase);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
                 + "and user database " + userDatabase);
+        this.storage = storage;
         this.userDatabase = new UserDatabase(userDatabase);
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
@@ -48,19 +56,20 @@ public class ModelManager extends ComponentManager implements Model {
      * Initializes a ModelManager with the given addressBook and userPrefs and a login status
      */
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyUserDatabase userDatabase,
-                        boolean loggedIn) {
+                        Storage storage, boolean loggedIn) {
         super();
         requireAllNonNull(addressBook, userPrefs, userDatabase);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
                 + "and user database " + userDatabase);
+        this.storage = storage;
         this.userDatabase = new UserDatabase(userDatabase, true);
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs(), new UserDatabase());
+    public ModelManager(Storage storage) {
+        this(new AddressBook(), new UserPrefs(), new UserDatabase(), storage);
     }
 
     @Override
@@ -102,7 +111,37 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
-        return userDatabase.checkLoginCredentials(username, password);
+        boolean result = userDatabase.checkLoginCredentials(username, password);
+        if (result) {
+            reloadAddressBook(username);
+        }
+        return result;
+
+    }
+
+    /**
+     * Reloads and updates the addressBook and its storage path using the {@code username} provided.
+     * @param username
+     */
+    private void reloadAddressBook(Username username) {
+        Optional<ReadOnlyAddressBook> addressBookOptional;
+        ReadOnlyAddressBook newData;
+
+        storage.update(userDatabase.getUser(username));
+        try {
+            addressBookOptional = storage.readAddressBook();
+            if (!addressBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            }
+            newData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+        } catch (DataConversionException e) {
+            newData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+        } catch (IOException e) {
+            newData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+        }
+        addressBook.resetData(newData);
     }
 
     @Override

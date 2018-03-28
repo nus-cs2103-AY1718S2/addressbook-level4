@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserDatabase;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.login.User;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -26,7 +27,8 @@ public class StorageManager extends ComponentManager implements Storage {
     private UserDatabaseStorage userDatabaseStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage, UserDatabaseStorage userDatabaseStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          UserDatabaseStorage userDatabaseStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
@@ -64,7 +66,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath)
+            throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
@@ -107,7 +110,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyUserDatabase> readUserDatabase(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyUserDatabase> readUserDatabase(String filePath)
+            throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return userDatabaseStorage.readUserDatabase(filePath);
     }
@@ -123,7 +127,11 @@ public class StorageManager extends ComponentManager implements Storage {
         userDatabaseStorage.saveUserDatabase(userDatabase, filePath);
     }
 
+    // ============== Storage updater =====================
 
+    public void update(User user) {
+        this.addressBookStorage = new XmlAddressBookStorage(user.getAddressBookFilePath());
+    }
 
 
 }

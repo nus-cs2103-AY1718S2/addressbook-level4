@@ -1,16 +1,16 @@
 package seedu.address.model.login;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Iterator;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.login.exceptions.DuplicateUserException;
 import seedu.address.model.login.exceptions.UserNotFoundException;
-
-import java.util.Iterator;
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -20,7 +20,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
  * @see User#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniqueUserList implements Iterable<User>{
+public class UniqueUserList implements Iterable<User> {
     private final ObservableList<User> internalList = FXCollections.observableArrayList();
 
     /**
@@ -45,7 +45,7 @@ public class UniqueUserList implements Iterable<User>{
     }
 
     /**
-     * Replaces the user {@code target} in the list with {@code editedPerson}.
+     * Replaces the user {@code target} in the list with {@code editedUser}.
      *
      * @throws DuplicateUserException if the replacement is equivalent to another existing user in the list.
      * @throws UserNotFoundException if {@code target} could not be found in the list.
@@ -64,6 +64,15 @@ public class UniqueUserList implements Iterable<User>{
         }
 
         internalList.set(index, editedUser);
+    }
+
+    public User getUser(String username) {
+        for (User user :internalList) {
+            if (username.equals(user.getUsername().toString())) {
+                return user;
+            }
+        }
+        return null;
     }
 
     /**

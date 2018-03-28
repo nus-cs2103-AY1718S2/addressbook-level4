@@ -1,15 +1,16 @@
 package seedu.address.storage;
 
+import java.util.Objects;
+import javax.xml.bind.annotation.XmlElement;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
-import seedu.address.model.person.Person;
 
-import javax.xml.bind.annotation.XmlElement;
-import java.util.Objects;
-
-
+/**
+ * JAXB-friendly version of the User.
+ */
 public class XmlAdaptedUser {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "User's %s field is missing!";
 
@@ -53,7 +54,8 @@ public class XmlAdaptedUser {
      */
     public User toModelType() throws IllegalValueException {
         if (this.username == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Username.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Username.class.getSimpleName()));
         }
         if (!Username.isValidUsername(this.username)) {
             throw new IllegalValueException(Username.MESSAGE_USERNAME_CONSTRAINTS);
@@ -61,7 +63,8 @@ public class XmlAdaptedUser {
         final Username username = new Username(this.username);
 
         if (this.password == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Password.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Password.class.getSimpleName()));
         }
         if (!Password.isValidPassword(this.password)) {
             throw new IllegalValueException(Password.MESSAGE_PASSWORD_CONSTRAINTS);

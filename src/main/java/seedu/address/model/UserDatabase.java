@@ -1,5 +1,11 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.UniqueUserList;
@@ -10,18 +16,18 @@ import seedu.address.model.login.exceptions.DuplicateUserException;
 import seedu.address.model.login.exceptions.UserNotFoundException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import static java.util.Objects.requireNonNull;
-
+//@@author kaisertanqr
+/**
+ * Wraps all the data of Users.
+ */
 public class UserDatabase implements ReadOnlyUserDatabase {
 
-    private final String ADDRESSBOOK_FILE_PATH_POSTFIX = "addressbook.xml";
+    private static final String AB_FILEPATH_PREFIX = "data/addressbook-";
+    private static final String AB_FILEPATH_POSTFIX = ".xml";
     private final UniqueUserList users;
 
     private boolean hasLoggedIn;
+    private User userLoggedIn;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -57,7 +63,19 @@ public class UserDatabase implements ReadOnlyUserDatabase {
 
     //@@author kaisertanqr
 
+
+    public User getUser(Username username) {
+        return users.getUser(username.toString());
+    }
+
     /// login authentication operations
+
+    /**
+     * Returns the User who is logged in.
+     */
+    public User getUserLoggedIn() {
+        return userLoggedIn;
+    }
 
     /**
      * Returns the login status of the user.
@@ -83,7 +101,8 @@ public class UserDatabase implements ReadOnlyUserDatabase {
      * @throws AlreadyLoggedInException is the user is already logged in.
      */
     public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
-        User toCheck = new User(username, password, "hello");
+        User toCheck = new User(username, password,
+                AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
 
         if (hasLoggedIn) {
             throw new AlreadyLoggedInException();

@@ -136,7 +136,7 @@ public class Event extends Activity {
     }
 
     @Override
-    public Activity getCompletedCopy(){
+    public Activity getCompletedCopy() {
         return new Event(
                 getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), getTags(), true);
     }

@@ -42,6 +42,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
+    private Label insurance;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
@@ -57,6 +59,12 @@ public class PersonCard extends UiPart<Region> {
             appointment.setText("No Appointment Date");
         } else {
             appointment.setText(person.getAppointment().value);
+        }
+        if (person.getInsurance() == null) {
+            insurance.setText("Potential Client");
+        }
+        else {
+            insurance.setText(person.getInsurance().insuranceName);
         }
         startTag(person);
     }

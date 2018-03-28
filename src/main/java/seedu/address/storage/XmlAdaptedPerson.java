@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;
@@ -42,6 +43,8 @@ public class XmlAdaptedPerson {
     @XmlElement
     private String group;
     @XmlElement
+    private String insurance;
+    @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
@@ -53,8 +56,9 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged,
-            String birthday, String appointment, String group) {
+
+    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged, String birthday, String appointment, String group, String insurance) {
+
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -66,6 +70,9 @@ public class XmlAdaptedPerson {
         this.group = group;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+        if (insurance != null) {
+            this.insurance = insurance;
         }
     }
 
@@ -90,6 +97,12 @@ public class XmlAdaptedPerson {
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
+        }
+        if (source.getInsurance() == null) {
+            insurance = null;
+        }
+        else {
+            insurance = source.getInsurance().insuranceName;
         }
     }
 
@@ -156,9 +169,14 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Group.MESSAGE_GROUP_CONSTRAINTS);
         }
         final Group group = new Group(this.group);
+        if (!Insurance.isValidInsurance(this.insurance)) {
+            throw new IllegalValueException(Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
+        }
+        final Insurance insurance = new Insurance(this.insurance);
+
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags, birthday, appointment, group);
+        return new Person(name, phone, email, address, tags, birthday, appointment, group, insurance);
     }
 
     @Override
@@ -178,6 +196,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(address, otherPerson.address)
                 && Objects.equals(birthday, otherPerson.birthday)
                 && Objects.equals(appointment, otherPerson.appointment)
+                && Objects.equals(insurance, otherPerson.insurance)
                 && tagged.equals(otherPerson.tagged);
     }
 }

@@ -120,7 +120,7 @@ public class Recipe {
                 + "</div>"
                 + "</div>"
                 + "<div class='col-sm-6'>"
-                + "<img src='" + testURL + "' width=300px/>"
+                + "<img src='" + testURL + "' />"
                 + "</div>"
                 + "<div class='col-sm-12'>"
                 + "<div class='col-sm-12'>"

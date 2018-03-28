@@ -19,6 +19,7 @@ import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Url;
 import seedu.recipe.ui.util.FacebookHandler;
 
 /**
@@ -88,8 +89,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleRecipePanelSelectionChangedEvent(RecipePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Recipe recipe = event.getNewSelection().recipe;
-        System.out.println(recipe.getUrl());
-        if (recipe.getUrl().toString().equals("-")) {
+        if (recipe.getUrl().toString().equals(Url.NULL_URL_REFERENCE)) {
             loadLocalRecipe(recipe);
         } else {
             loadRecipePage(recipe);

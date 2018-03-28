@@ -28,6 +28,12 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
                     + "  " + PREFIX_TAG;
             caretIndex = (AddCommand.COMMAND_WORD + " " + PREFIX_NAME + " ").length();
             break;
+        case "delete":
+            commandPreamble = DeleteCommand.COMMAND_WORD;
+            commandUsageMessage = DeleteCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble + " ";
+            caretIndex = commandTemplate.length();
+            break;
         case "edit":
             commandPreamble = EditCommand.COMMAND_WORD;
             commandUsageMessage = EditCommand.MESSAGE_USAGE;
@@ -39,22 +45,16 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
                     + "  " + PREFIX_TAG;
             caretIndex = (EditCommand.COMMAND_WORD + " ").length();
             break;
-        case "delete":
-            commandPreamble = DeleteCommand.COMMAND_WORD;
-            commandUsageMessage = DeleteCommand.MESSAGE_USAGE;
-            commandTemplate = commandPreamble + " ";
+        case "find":
+            commandPreamble = FindCommand.COMMAND_WORD;
+            commandUsageMessage = FindCommand.MESSAGE_USAGE;
+            commandTemplate = commandPreamble + " -";
             caretIndex = commandTemplate.length();
             break;
         case "locate":
             commandPreamble = LocateCommand.COMMAND_WORD;
             commandUsageMessage = LocateCommand.MESSAGE_USAGE;
             commandTemplate = commandPreamble + " ";
-            caretIndex = commandTemplate.length();
-            break;
-        case "find":
-            commandPreamble = FindCommand.COMMAND_WORD;
-            commandUsageMessage = FindCommand.MESSAGE_USAGE;
-            commandTemplate = commandPreamble + " -";
             caretIndex = commandTemplate.length();
             break;
         default:

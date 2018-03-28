@@ -1,0 +1,72 @@
+package seedu.address.model.login;
+
+//@@author kaisertanqr
+
+import java.util.Objects;
+
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+/**
+ * Represents a User of the addressbook
+ *
+ */
+public class User {
+
+    private Username username;
+    private Password password;
+    private String addressBookFilePath;
+
+    public User(Username username, Password password, String addressBookFilePath){
+        requireAllNonNull(username, password, addressBookFilePath);
+        this.username = username;
+        this.password = password;
+        this.addressBookFilePath = addressBookFilePath;
+    }
+
+    public Username getUsername() {
+        return username;
+    }
+
+    public Password getPassword() {
+        return password;
+    }
+
+    public String getAddressBookFilePath() {
+        return addressBookFilePath;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof User)) {
+            return false;
+        }
+
+        User otherPerson = (User) other;
+        return otherPerson.getUsername().equals(this.getUsername())
+                && otherPerson.getPassword().equals(this.getPassword())
+                && otherPerson.getAddressBookFilePath().equals(this.getAddressBookFilePath());
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(username, password, addressBookFilePath);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getUsername())
+                .append(" Username: ")
+                .append(getPassword())
+                .append(" Password: ")
+                .append(getAddressBookFilePath())
+                .append(" File Path: ");
+        return builder.toString();
+    }
+
+}

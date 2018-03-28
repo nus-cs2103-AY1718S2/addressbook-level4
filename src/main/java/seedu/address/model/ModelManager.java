@@ -27,17 +27,19 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final UserDatabase userDatabase;
     private final FilteredList<Person> filteredPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyUserDatabase userDatabase) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, userPrefs, userDatabase);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
-
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
+                + "and user database " + userDatabase);
+        this.userDatabase = new UserDatabase(userDatabase);
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
@@ -45,18 +47,20 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs and a login status
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, boolean loggedIn) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyUserDatabase userDatabase,
+                        boolean loggedIn) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, userPrefs, userDatabase);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
-
-        this.addressBook = new AddressBook(addressBook, true);
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
+                + "and user database " + userDatabase);
+        this.userDatabase = new UserDatabase(userDatabase, true);
+        this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new UserDatabase());
     }
 
     @Override
@@ -98,17 +102,17 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
-        return addressBook.checkLoginCredentials(username, password);
+        return userDatabase.checkLoginCredentials(username, password);
     }
 
     @Override
     public boolean hasLoggedIn() {
-        return addressBook.hasLoggedIn();
+        return userDatabase.hasLoggedIn();
     }
 
     @Override
     public void setLoginStatus(boolean status) {
-        addressBook.setLoginStatus(status);
+        userDatabase.setLoginStatus(status);
     }
 
     //=========== Filtered Person List Accessors =============================================================

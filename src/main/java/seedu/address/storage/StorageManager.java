@@ -12,6 +12,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyUserDatabase;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -22,12 +23,14 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private UserDatabaseStorage userDatabaseStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage, UserDatabaseStorage userDatabaseStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.userDatabaseStorage = userDatabaseStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -88,5 +91,39 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
+    //@@author kaisertanqr
+
+    // ================ User database methods ==============================
+
+    @Override
+    public String getUserDatabaseFilePath() {
+        return userDatabaseStorage.getUserDatabaseFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyUserDatabase> readUserDatabase() throws DataConversionException, IOException {
+        return readUserDatabase(userDatabaseStorage.getUserDatabaseFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyUserDatabase> readUserDatabase(String filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return userDatabaseStorage.readUserDatabase(filePath);
+    }
+
+    @Override
+    public void saveUserDatabase(ReadOnlyUserDatabase userDatabase) throws IOException {
+        saveUserDatabase(userDatabase, userDatabaseStorage.getUserDatabaseFilePath());
+    }
+
+    @Override
+    public void saveUserDatabase(ReadOnlyUserDatabase userDatabase, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        userDatabaseStorage.saveUserDatabase(userDatabase, filePath);
+    }
+
+
+
 
 }

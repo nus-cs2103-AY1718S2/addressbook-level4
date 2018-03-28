@@ -38,7 +38,7 @@ public class UploadCommand extends Command {
     private final String xmlExtensionFilename;
 
     /**
-     * Creates an UploadCommand to upload addressbook.xml to Dropbox with the
+     * Creates an UploadCommand to upload recipebook.xml to Dropbox with the
      * specified {@code String XmlExtensionFilename}
      */
     public UploadCommand(String xmlExtensionFilename) {
@@ -62,7 +62,7 @@ public class UploadCommand extends Command {
         DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();
         DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
 
-        // Upload "addressbook.xml" to Dropbox
+        // Upload "recipebook.xml" to Dropbox
         try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
             client.files().uploadBuilder("/" + xmlExtensionFilename)
                     .withAutorename(true)

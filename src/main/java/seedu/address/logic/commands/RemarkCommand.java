@@ -1,10 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -30,25 +27,19 @@ import seedu.address.model.tag.Tag;
 /**
  * Edits the details of an existing person in the address book.
  */
-public class EditCommand extends UndoableCommand {
+public class RemarkCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "edit";
-    public static final String COMMAND_ALIAS = "e";
+    public static final String COMMAND_WORD = "remark";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": You can put anything, even nothing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_NRIC + "NRIC] "
-            + "[" + PREFIX_TAG + "TAG]..."
-            + "[" + PREFIX_SUBJECT + "SUBJECT]...\n"
+            + PREFIX_REMARK + "REMARKS...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NRIC + "S9123457A"
-            + "Example: " + COMMAND_ALIAS + " 1 "
-            + PREFIX_NRIC + "S9123457A";
+            + PREFIX_REMARK + "Need help\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_REMARK + "\n";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Remark added: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
@@ -62,7 +53,7 @@ public class EditCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public RemarkCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -80,7 +71,7 @@ public class EditCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editedPerson));
     }
 
     @Override
@@ -107,6 +98,7 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark);
     }
 
@@ -118,12 +110,12 @@ public class EditCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof RemarkCommand)) {
             return false;
         }
 
         // state check
-        EditCommand e = (EditCommand) other;
+        RemarkCommand e = (RemarkCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
@@ -202,6 +194,14 @@ public class EditCommand extends UndoableCommand {
             this.subjects = (subjects != null) ? new HashSet<>(subjects) : null;
         }
 
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
         /**
          * Returns an unmodifiable subject set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
@@ -209,14 +209,6 @@ public class EditCommand extends UndoableCommand {
          */
         public Optional<Set<Subject>> getSubjects() {
             return (subjects != null) ? Optional.of(Collections.unmodifiableSet(subjects)) : Optional.empty();
-        }
-
-        public void setRemark(Remark remark) {
-            this.remark = remark;
-        }
-
-        public Optional<Remark> getRemark() {
-            return Optional.ofNullable(remark);
         }
 
         @Override

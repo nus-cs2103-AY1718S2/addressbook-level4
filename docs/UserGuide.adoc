@@ -239,6 +239,7 @@ Examples:
 * `newtasklist`
 * `nl`
 
+// tag::undoredo[]
 === Redoing the previously undone command : `redo OR r`
 
 Reverses the most recent `undo` command. +
@@ -260,6 +261,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `r` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command)
+// end::undoredo[]
 
 === Refreshing the content : `refresh OR rf` `[coming in v2.0]`
 
@@ -310,6 +312,7 @@ Examples:
 * `theme`
 * `t`
 
+// tag::undoredo[]
 === Undoing previous command : `undo OR u`
 
 Restores the ProgressChecker to the state before the previous _undoable_ command was executed. +
@@ -335,6 +338,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command)
+// end::undoredo[]
 
 === Viewing a specific week : `view OR v`
 

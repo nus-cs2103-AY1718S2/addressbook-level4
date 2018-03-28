@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.export.ExportType;
 import seedu.address.model.export.exceptions.IncorrectExportTypeException;
 import seedu.address.model.person.Address;
@@ -216,6 +217,30 @@ public class ParserUtil {
             throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_CONSTRAINTS);
         }
         return new Appointment(trimmedAppointment);
+    }
+
+    /**
+     * Parses a {@code String insurance} into a {@code Insurance}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code insurance} is invalid.
+     */
+    public static Insurance parseInsurance(String insurance) throws IllegalValueException {
+        requireNonNull(insurance);
+        String trimmedInsurance = insurance.trim();
+        if (!Insurance.isValidInsurance(trimmedInsurance)) {
+            throw new IllegalValueException(Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
+        }
+        return new Insurance(trimmedInsurance);
+    }
+
+    /**
+     * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Insurance> parseInsurance(Optional<String> insurance) throws IllegalValueException {
+        requireNonNull(insurance);
+        return insurance.isPresent() ? Optional.of(parseInsurance(insurance.get())) : Optional.empty();
     }
 
     /**

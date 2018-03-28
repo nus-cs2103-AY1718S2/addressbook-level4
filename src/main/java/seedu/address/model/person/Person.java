@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.group.Group;
@@ -24,6 +25,7 @@ public class Person {
     private final Birthday birthday;
     private final Appointment appointment;
     private final Group group;
+    private final Insurance insurance;
 
     private final UniqueTagList tags;
     private final UniqueGroupList groups;
@@ -32,7 +34,7 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday,
-            Appointment appointment, Group group) {
+            Appointment appointment, Group group, Insurance insurance) {
         requireAllNonNull(name, phone, email, address, tags, birthday);
         this.name = name;
         this.phone = phone;
@@ -41,6 +43,7 @@ public class Person {
         this.birthday = birthday;
         this.appointment = appointment;
         this.group = group;
+        this.insurance = insurance;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.groups = new UniqueGroupList(group);
@@ -50,19 +53,24 @@ public class Person {
     /**
      * TODO: To be phased out
      */
-    /*
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+
+        public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday,
+            Appointment appointment, Group group) {
+        requireAllNonNull(name, phone, email, address, tags, birthday);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.birthday = new Birthday("00-00-0000");
-        this.appointment = new Appointment("00-00-0000");
+        this.birthday = birthday;
+        this.appointment = appointment;
+        this.group = group;
+        this.insurance = null;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.groups = new UniqueGroupList(group);
+
     }
-    */
+
 
     public Name getName() {
         return name;
@@ -88,7 +96,13 @@ public class Person {
         return appointment;
     }
 
-    public Group getGroup() { return group;}
+    public Group getGroup() {
+            return group;
+    }
+
+    public Insurance getInsurance() {
+        return insurance;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -114,14 +128,14 @@ public class Person {
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
                 && otherPerson.getBirthday().equals(this.getBirthday())
-                && otherPerson.getGroup().equals(this.getGroup());
-
+                && otherPerson.getGroup().equals(this.getGroup())
+                && otherPerson.getInsurance().equals((this.getInsurance()));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, birthday, appointment, group);
+        return Objects.hash(name, phone, email, address, tags, birthday, appointment, group, insurance);
     }
 
     @Override

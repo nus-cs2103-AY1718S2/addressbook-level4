@@ -56,7 +56,9 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
+
     public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged, String birthday, String appointment, String group, String insurance) {
+
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -86,7 +88,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         birthday = source.getBirthday().value;
         group = source.getGroup().groupName;
-        if (source.getAppointment() == null) {
+        if (source.getAppointment() == null || source.getAppointment().equals("")) {
             appointment = null;
         }
         else {

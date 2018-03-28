@@ -170,7 +170,6 @@ public class ParserUtil {
         }
         return tagSet;
     }
-
     /**
      * Parses a {@code Optional<String> group} into an {@code Optional<Group>} if {@code group} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -179,7 +178,6 @@ public class ParserUtil {
         requireNonNull(group);
         return group.isPresent() ? Optional.of(new Group (group.get())) : Optional.empty();
     }
-
     /**
      * Parses a {@code String birthday} into a {@code Birthday}.
      * Leading and trailing whitespaces will be trimmed.
@@ -218,7 +216,6 @@ public class ParserUtil {
         }
         return new Appointment(trimmedAppointment);
     }
-
     /**
      * Parses a {@code String insurance} into a {@code Insurance}.
      * Leading and trailing whitespaces will be trimmed.
@@ -251,7 +248,6 @@ public class ParserUtil {
         requireNonNull(appointment);
         return appointment.isPresent() ? Optional.of(parseAppointment(appointment.get())) : Optional.empty();
     }
-    
     /**
      * @param exportType
      * @return the corresponding ExportType

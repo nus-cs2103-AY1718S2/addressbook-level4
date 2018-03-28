@@ -30,10 +30,9 @@ public class RouteOptimization {
         String addressWithoutUnit;
         String startingPoint;
 
-        //need to figure out what the key should be to make sure we know what the hashmap is storing
-        for (int i = 0; i < lastShownList.size(); i++) {
-            Address address = lastShownList.get(i).getAddress();
-            String name = lastShownList.get(i).getName().toString();
+        if (lastShownList.size() == 1) {
+            Address address = lastShownList.get(0).getAddress();
+            String name = lastShownList.get(0).getName().toString();
             String addressValue = address.value.trim();
             if (addressValue.indexOf('#') > 2) {
                 stringCutIndex = addressValue.indexOf('#') - 2;
@@ -41,13 +40,26 @@ public class RouteOptimization {
             } else {
                 addressWithoutUnit = addressValue;
             }
+            optimizedRoute.add(addressWithoutUnit);
+        } else {
+            //need to figure out what the key should be to make sure we know what the hashmap is storing
+            for (int i = 0; i < lastShownList.size(); i++) {
+                Address address = lastShownList.get(i).getAddress();
+                String name = lastShownList.get(i).getName().toString();
+                String addressValue = address.value.trim();
+                if (addressValue.indexOf('#') > 2) {
+                    stringCutIndex = addressValue.indexOf('#') - 2;
+                    addressWithoutUnit = addressValue.substring(0, stringCutIndex);
+                } else {
+                    addressWithoutUnit = addressValue;
+                }
 
-            filteredAddresses.add(addressWithoutUnit);
+                filteredAddresses.add(addressWithoutUnit);
+            }
+            optimizedRoute = getStartingAddress(filteredAddresses, optimizedRoute);
+            filteredAddresses = removeAddress(optimizedRoute.get(0), filteredAddresses);
+            optimizedRoute = getDistances(filteredAddresses, optimizedRoute.get(0), optimizedRoute);
         }
-        optimizedRoute = getStartingAddress(filteredAddresses, optimizedRoute);
-        filteredAddresses = removeAddress(optimizedRoute.get(0), filteredAddresses);
-        optimizedRoute = getDistances(filteredAddresses, optimizedRoute.get(0), optimizedRoute);
-        System.out.println(optimizedRoute);
         return optimizedRoute;
     }
 
@@ -58,7 +70,7 @@ public class RouteOptimization {
         Map<String, Double> dummy = new LinkedHashMap<>();
         String first;
 
-        for (int i = 0; i < filteredAddresses.size(); i++ ) {
+        for (int i = 0; i < filteredAddresses.size(); i++) {
             String destination = filteredAddresses.get(i);
             String origin = HQ_ADDRESS;
             startingRoute.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));

@@ -1,9 +1,13 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationEvent;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -52,8 +56,8 @@ public class DistanceCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
         String origin;
         String destination;
-        String personName_origin = "";
-        String personName_destination = "";
+        String personNameOrigin = "";
+        String personNameDestination = "";
         if (targetIndexOrigin == null) {
             if (targetIndexDestination.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -75,17 +79,27 @@ public class DistanceCommand extends Command {
             Person personDestination = lastShownList.get(indexZeroBasedDestination);
             origin = personOrigin.getAddress().toString();
             destination = personDestination.getAddress().toString();
-            personName_origin = personOrigin.getName().toString();
-            personName_destination = personDestination.getName().toString();
+            personNameOrigin = personOrigin.getName().toString();
+            personNameDestination = personDestination.getName().toString();
+
         }
 
         try {
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(origin, destination);
-            return targetIndexOrigin == null ? new CommandResult(String.format
-                    (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance))
-                    : new CommandResult(String.format(
-                            MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personName_origin, personName_destination, distance));
+
+            if (targetIndexOrigin == null) {
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndexDestination));
+                return new CommandResult(String.format
+                        (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance));
+            } else {
+                List<String> addressesList = new ArrayList<>();
+                addressesList.add(origin);
+                addressesList.add(destination);
+                EventsCenter.getInstance().post(new ShowMultiLocationEvent(addressesList));
+                return new CommandResult(String.format(
+                        MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
+            }
         } catch (Exception e) {
             throw new CommandException(Messages.MESSAGE_PERSON_ADDRESS_CANNOT_FIND);
         }

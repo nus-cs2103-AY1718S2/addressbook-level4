@@ -113,8 +113,8 @@ public class BrowserPanel extends UiPart<Region> {
     public void handleShowMultiLocationEvent(ShowMultiLocationEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
-        for (String adress: event.sortedList) {
-            url.append(adress);
+        for (String address: event.sortedList) {
+            url.append(address);
             url.append("/");
         }
         loadPage(url.toString());

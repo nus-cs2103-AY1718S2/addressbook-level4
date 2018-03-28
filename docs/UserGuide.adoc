@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Media Socializer - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F12-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F12-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -283,6 +283,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Sort* : `sort`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`

@@ -4,8 +4,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author Nethergale
 public class SocialMediaPlatformBuilder {
-    private static final String MESSAGE_UNRECOGNISED_LINK_TYPE = "New social media platform cannot be constructed. "
-            + "Link type cannot be recognised.";
+    private static final String MESSAGE_BUILD_ERROR = "Social media platform cannot be constructed. "
+            + "Link type is unrecognised or mismatched with link.";
 
     /**
      * Constructs the specific social media platform object by using the {@code type} and setting the {@code link}
@@ -15,12 +15,12 @@ public class SocialMediaPlatformBuilder {
      * @throws IllegalValueException if type is not recognised
      */
     public static SocialMediaPlatform build(String type, Link link) throws IllegalValueException {
-        if (type.equals(Link.FACEBOOK_LINK_TYPE)) {
+        if (type.equals(Link.FACEBOOK_LINK_TYPE) && type.equals(Link.getLinkType(link.value))) {
             return new Facebook(link);
-        } else if (type.equals(Link.TWITTER_LINK_TYPE)) {
+        } else if (type.equals(Link.TWITTER_LINK_TYPE) && type.equals(Link.getLinkType(link.value))) {
             return new Twitter(link);
         } else {
-            throw new IllegalValueException(MESSAGE_UNRECOGNISED_LINK_TYPE);
+            throw new IllegalValueException(MESSAGE_BUILD_ERROR);
         }
     }
 }

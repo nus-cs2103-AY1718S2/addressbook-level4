@@ -3,6 +3,8 @@ package seedu.progresschecker.model;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +13,19 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GHIssue;
+import org.kohsuke.github.GHIssueBuilder;
+import org.kohsuke.github.GHMilestone;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHUser;
+import org.kohsuke.github.GitHub;
+
 import javafx.collections.ObservableList;
+import seedu.progresschecker.model.issues.Assignees;
+import seedu.progresschecker.model.issues.Issue;
+import seedu.progresschecker.model.issues.Labels;
+import seedu.progresschecker.model.issues.Milestone;
+import seedu.progresschecker.model.issues.MilestoneMap;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.UniquePersonList;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
@@ -24,6 +38,10 @@ import seedu.progresschecker.model.tag.UniqueTagList;
  * Duplicates are not allowed (by .equals comparison)
  */
 public class ProgressChecker implements ReadOnlyProgressChecker {
+
+    private final String repoName = new String("AdityaA1998/samplerepo-pr-practice");
+    private final String userLogin = new String("anminkang");
+    private final String userAuthentication = new String("aditya1998");
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
@@ -101,6 +119,41 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(person);
+    }
+
+    /**
+     * Creates issue on github
+     *
+     * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input
+     */
+    public void createIssueOnGitHub(Issue i) throws IOException {
+        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
+        GHRepository repository = github.getRepository(repoName);
+        GHIssueBuilder issueBuilder = repository.createIssue(i.getTitle().toString());
+        issueBuilder.body(i.getBody().toString());
+
+        List<Assignees> assigneesList = i.getAssignees();
+        List<Labels> labelsList = i.getLabelsList();
+
+        ArrayList<GHUser> listOfUsers = new ArrayList<>();
+        ArrayList<String> listOfLabels = new ArrayList<>();
+        MilestoneMap obj = new MilestoneMap();
+        HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
+
+        for (int ct = 0; ct < assigneesList.size(); ct++) {
+            listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
+        }
+
+        for (int ct = 0; ct < labelsList.size(); ct++) {
+            listOfLabels.add(labelsList.get(ct).toString());
+        }
+
+        //GHMilestone check = repository.getMilestone(1);
+        GHMilestone check = repository.getMilestone(getMilestone.get(i.getMilestone()));
+        GHIssue createdIssue = issueBuilder.create();
+        createdIssue.setAssignees(listOfUsers);
+        createdIssue.setLabels(listOfLabels.toArray(new String[0]));
+        createdIssue.setMilestone(check);
     }
 
     /**

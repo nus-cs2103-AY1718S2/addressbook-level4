@@ -25,7 +25,9 @@ public class UniqueGroupList implements Iterable<Group> {
     /**
      * Constructs empty Group List.
      */
-    public UniqueGroupList() {}
+    public UniqueGroupList() {
+
+    }
 
     /**
      * Creates a UniqueGroupList using given tags.
@@ -121,7 +123,8 @@ public class UniqueGroupList implements Iterable<Group> {
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
     public static class DuplicateGroupException extends DuplicateDataException {
-        protected DuplicateGroupException() { super("Operation would result in duplicate groups");
+        protected DuplicateGroupException() {
+        super("Operation would result in duplicate groups");
         }
     }
 }

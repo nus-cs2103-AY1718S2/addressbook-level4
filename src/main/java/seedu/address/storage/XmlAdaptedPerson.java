@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Insurance.Insurance;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;
@@ -18,7 +19,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.group.Group;
 
 /**
  * JAXB-friendly version of the Person.
@@ -51,13 +51,15 @@ public class XmlAdaptedPerson {
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPerson() {
+    }
 
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
 
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged, String birthday, String appointment, String group, String insurance) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged,
+                            String birthday, String appointment, String group, String insurance) {
 
         this.name = name;
         this.phone = phone;
@@ -150,7 +152,8 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         if (this.birthday == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Birthday.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                Birthday.class.getSimpleName()));
         }
         if (!Birthday.isValidBirthday(this.birthday)) {
             throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);

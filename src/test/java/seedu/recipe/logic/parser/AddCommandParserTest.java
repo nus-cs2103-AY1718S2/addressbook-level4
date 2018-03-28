@@ -342,8 +342,8 @@ public class AddCommandParserTest {
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser,
-                INVALID_NAME_DESC + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INVALID_INSTRUCTION_DESC
-                        + URL_DESC_BOB, Name.MESSAGE_NAME_CONSTRAINTS);
+                INVALID_NAME_DESC + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB
+                        + INVALID_INSTRUCTION_DESC + URL_DESC_BOB, Name.MESSAGE_NAME_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser,

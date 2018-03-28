@@ -1,3 +1,4 @@
+//@@author nicholasangcx
 package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -32,3 +33,4 @@ public class TagCommandParserTest {
         assertParseSuccess(parser, " \n friends \n \t owesMoney  \t", expectedTagCommand);
     }
 }
+//@@author

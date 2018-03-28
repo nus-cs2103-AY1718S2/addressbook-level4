@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
@@ -29,7 +28,7 @@ public class Appointment {
      * Returns true if a given string is a valid person appointment.
      */
     public static boolean isValidAppointment(String test) {
-        if (test == null) {
+        if (test == null || test.equals("")) {
             return true;
         }
         return test.matches(APPOINTMENT_VALIDATION_REGEX);

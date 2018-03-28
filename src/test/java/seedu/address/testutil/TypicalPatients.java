@@ -130,7 +130,9 @@ public class TypicalPatients {
                     .withEmail("lydia@example.com").withAddress("little tokyo")
                     .withNric("S1234512F")
                     .withBloodType("O+")
-                    .withDob("06/06/1986").build();
+                    .withDob("06/06/1986")
+                    .withAppointments("28/3/2018 1230")
+                    .build();
         } catch (ParseException pe) {
             try {
                 throw pe;

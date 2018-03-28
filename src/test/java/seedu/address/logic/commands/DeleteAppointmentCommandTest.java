@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
@@ -70,6 +71,13 @@ public class DeleteAppointmentCommandTest {
         thrown.expectMessage(DeleteAppointmentCommand.MESSAGE_PERSON_NOT_FOUND);
 
         command.execute();
+    }
+
+    @Test
+    public void execute_patientExist_deleteSuccessful() throws Exception {
+        DeleteAppointmentCommand command = prepareCommand("fiona 1");
+        CommandResult commandResult = command.execute();
+        assertEquals(DeleteAppointmentCommand.MESSAGE_DELETE_SUCCESS, commandResult.feedbackToUser);
     }
 
     private DeleteAppointmentCommand prepareCommand(String userInput) throws ParseException {

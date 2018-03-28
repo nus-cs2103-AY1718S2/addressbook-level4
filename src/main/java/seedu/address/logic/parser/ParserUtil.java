@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.event.Event;
 import seedu.address.model.group.Information;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Detail;
@@ -262,5 +263,67 @@ public class ParserUtil {
             throw new IllegalValueException(Information.MESSAGE_INFORMATION_CONSTRAINTS);
         }
         return new Information(trimmedInformation);
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static String parseEventName(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!Event.isValidName(trimmedName)) {
+            throw new IllegalValueException(Event.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return trimmedName;
+    }
+
+    /**
+     * Parses a {@code String venue} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code venue} is invalid.
+     */
+    public static String parseVenue(String venue) throws IllegalValueException {
+        requireNonNull(venue);
+        String trimmedVenue = venue.trim();
+        if (!Event.isValidName(trimmedVenue)) {
+            throw new IllegalValueException(Event.MESSAGE_VENUE_CONSTRAINTS);
+        }
+        return trimmedVenue;
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code String}.
+     * Date must follow DD/MM/YYYY format
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static String parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Event.isValidDate(trimmedDate)) {
+            throw new IllegalValueException(Event.MESSAGE_DATE_CONSTRAINTS);
+        }
+        return trimmedDate;
+    }
+
+    /**
+     * Parses a {@code String time} into a {@code String}.
+     * Time must follow HHmm format
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static String parseTime(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        if (!Event.isValidTime(trimmedTime)) {
+            throw new IllegalValueException(Event.MESSAGE_TIME_CONSTRAINTS);
+        }
+        return trimmedTime;
     }
 }

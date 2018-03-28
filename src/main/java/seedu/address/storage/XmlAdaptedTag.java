@@ -10,6 +10,8 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedTag {
 
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Tag's %s field is missing!";
+
     @XmlElement (required = true)
     private String name;
     @XmlElement
@@ -53,8 +55,14 @@ public class XmlAdaptedTag {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Tag toModelType() throws IllegalValueException {
+        if (this.name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Name"));
+        }
         if (!Tag.isValidTagName(name)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
+        }
+        if (this.color == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Color"));
         }
         if (!Tag.isValidTagColor(color)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_COLOR_CONSTRAINTS);

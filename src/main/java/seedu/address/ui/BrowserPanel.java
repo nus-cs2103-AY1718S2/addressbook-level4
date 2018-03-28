@@ -14,8 +14,8 @@ import javafx.scene.web.WebView;
 
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ShowMultiLocationEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationEvent;
 import seedu.address.logic.GetDistance;
 
 import seedu.address.model.person.Person;

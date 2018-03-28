@@ -9,4 +9,8 @@
     <dob>10/10/1991</dob>
     <bloodType>B+</bloodType>
     <tagged>friends</tagged>
+    <appointments>
+        <patientName></patientName>
+        <dateTime>26/3/2018 1030</dateTime>
+    </appointments>
 </patient>

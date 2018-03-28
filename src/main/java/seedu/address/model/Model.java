@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -61,4 +62,7 @@ public interface Model {
 
     /** Get Patient from the patient list */
     Patient getPatientFromList(Predicate<Patient> predicate);
+
+    /** Delete a patient's appointment*/
+    boolean deletePatientAppointment(Patient patient, Index index);
 }

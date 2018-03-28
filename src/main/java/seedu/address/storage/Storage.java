@@ -3,6 +3,7 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.util.Optional;
 
+import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -35,4 +36,11 @@ public interface Storage extends ImdbStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(ImdbChangedEvent abce);
+
+    /**
+     * Saves the current version of the IMDB to the hard disk.
+     *   Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleAppointmentChangedEvent(AppointmentChangedEvent ace);
 }

@@ -24,6 +24,7 @@ import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 
+//@@ aquarinte
 /**
  * Adds a Person, Petpatient and/or Appointment to the address book.
  */
@@ -227,7 +228,7 @@ public class AddCommand extends UndoableCommand {
      * Checks whether a Person object with ownerNric exists.
      * Return the Person object if it exists.
      */
-    public Person getPersonWithNric() {
+    private Person getPersonWithNric() {
         for (Person p : model.getAddressBook().getPersonList()) {
             if (p.getNric().equals(ownerNric)) {
                 return p;
@@ -240,7 +241,7 @@ public class AddCommand extends UndoableCommand {
      * Checks whether a PetPatient object with ownerNric and petPatientName exists.
      * Return the PetPatient object if it exists.
      */
-    public PetPatient getPetPatientWithNricAndName() {
+    private PetPatient getPetPatientWithNricAndName() {
         for (PetPatient p : model.getAddressBook().getPetPatientList()) {
             if (p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
                 return p;

@@ -2,16 +2,16 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.time.LocalDateTime;
@@ -36,7 +36,7 @@ import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AddCommand object.
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
@@ -51,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the Person class
      * and returns an Person object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public Person parsePerson(String ownerInfo) throws ParseException {
         ArgumentMultimap argMultimapOwner =
@@ -82,7 +82,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the Appointment class
      * and returns an Appointment object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public Appointment parseAppointment(String apptInfo) throws ParseException {
         ArgumentMultimap argMultimap =
@@ -110,7 +110,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the PetPatient class
      * and returns an PetPatient object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public PetPatient parsePetPatient(String petInfo) throws ParseException {
         ArgumentMultimap argMultimap =
@@ -140,11 +140,57 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 
     /**
+     * Parses the given {@code String} of arguments in the context of the Nric class
+     * and returns a Nric object.
+     * @throws ParseException if the user input does not conform the expected format.
+     */
+    public Nric parseNric(String nric) throws ParseException {
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(nric, PREFIX_NRIC);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NRIC) || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    "Missing prefix \"nr/\" for NRIC after -o option"));
+        }
+
+        try {
+            Nric validNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).get();
+
+            return validNric;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the PetPatientName class
+     * and returns a PetPatientName object.
+     * @throws ParseException if the user input does not conform the expected format.
+     */
+    public PetPatientName parsePetPatientName(String petName) throws ParseException {
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(petName, PREFIX_NAME);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME) || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    "Missing prefix \"n/\" for pet patient name after -p option"));
+        }
+
+        try {
+            PetPatientName petPatientName = ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME)).get();
+
+            return petPatientName;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddCommand createNewOwnerPetAppt(String ownerInfo, String petInfo, String apptInfo)
+    private AddCommand createNewOwnerPetAppt(String ownerInfo, String petInfo, String apptInfo)
             throws ParseException {
         Person owner = parsePerson(ownerInfo);
 
@@ -161,30 +207,33 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddCommand createNewApptforExistingOwnerAndPet(String apptInfo, String ownerNric, String petName)
+    private AddCommand createNewApptforExistingOwnerAndPet(String apptInfo, String ownerNric, String petName)
             throws ParseException {
         Appointment appt = parseAppointment(apptInfo);
-        return new AddCommand(appt, new Nric(ownerNric.trim()), new PetPatientName(petName.trim()));
+        Nric nric = parseNric(ownerNric);
+        PetPatientName petPatientName = parsePetPatientName(petName);
+        return new AddCommand(appt, nric, petPatientName);
     }
 
     /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddCommand createNewPetForExistingPerson(String petInfo, String ownerNric) throws ParseException {
+    private AddCommand createNewPetForExistingPerson(String petInfo, String ownerNric) throws ParseException {
         PetPatient petPatient = parsePetPatient(petInfo);
-        return new AddCommand(petPatient, new Nric(ownerNric.trim()));
+        Nric nric = parseNric(ownerNric);
+        return new AddCommand(petPatient, nric);
     }
 
     /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddCommand parseNewOwnerOnly(String ownerInfo) throws ParseException {
+    private AddCommand parseNewOwnerOnly(String ownerInfo) throws ParseException {
         Person owner = parsePerson(ownerInfo);
         return new AddCommand(owner);
     }
@@ -200,7 +249,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public AddCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();

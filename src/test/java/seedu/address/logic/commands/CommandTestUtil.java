@@ -51,8 +51,6 @@ public class CommandTestUtil {
     public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC + VALID_NRIC_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String SUBJECT_DESC_AMY = " " + PREFIX_SUBJECT + VALID_SUBJECT_MATHEMATICS;
-    public static final String SUBJECT_DESC_BOB = " " + PREFIX_SUBJECT + VALID_SUBJECT_MATHEMATICS;
     public static final String SUBJECT_DESC_AMY = " " + PREFIX_SUBJECT + VALID_SUBJECT_MATHEMATICS + " "
             + PREFIX_SUBJECT + VALID_SUBJECT_PHYSICS + " " + PREFIX_SUBJECT + VALID_SUBJECT_ENGLISH + " "
             + PREFIX_SUBJECT + VALID_SUBJECT_MALAY + " " + PREFIX_SUBJECT + VALID_SUBJECT_BIOLOGY + " "
@@ -74,12 +72,6 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withNric(VALID_NRIC_AMY).withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS)
-                .withRemark(REMARK_DESC_AMY).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withNric(VALID_NRIC_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withSubjects(VALID_SUBJECT_MATHEMATICS).withRemark(REMARK_DESC_BOB).build();
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
                 .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS, VALID_SUBJECT_PHYSICS,
                         VALID_SUBJECT_ENGLISH, VALID_SUBJECT_MALAY, VALID_SUBJECT_BIOLOGY, VALID_SUBJECT_HISTORY)

@@ -123,31 +123,31 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      *
      * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input
      */
-    public void createIssueOnGitHub(Issue issue) throws IOException {
+    public void createIssueOnGitHub(Issue i) throws IOException {
         GitHub github = GitHub.connect("", "");
         GHRepository repository = github.getRepository(repoName);
-        GHIssueBuilder issueBuilder = repository.createIssue(issue.getTitle().toString());
-        issueBuilder.body(issue.getBody().toString());
+        GHIssueBuilder issueBuilder = repository.createIssue(i.getTitle().toString());
+        issueBuilder.body(i.getBody().toString());
         //issueBuilder.label("shag");
 
-        List<Assignees> assigneesList = issue.getAssignees();
-        List<Labels> labelsList = issue.getLabelsList();
+        List<Assignees> assigneesList = i.getAssignees();
+        List<Labels> labelsList = i.getLabelsList();
 
         ArrayList<GHUser> listOfUsers = new ArrayList<>();
         ArrayList<String> listOfLabels = new ArrayList<>();
         MilestoneMap obj = new MilestoneMap();
         HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
 
-        for (int i = 0; i < assigneesList.size(); i++) {
-            listOfUsers.add(github.getUser(assigneesList.get(i).toString()));
+        for (int ct = 0; ct < assigneesList.size(); ct++) {
+            listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
         }
 
-        for (int i = 0; i < labelsList.size(); i++) {
-            listOfLabels.add(labelsList.get(i).toString());
+        for (int ct = 0; ct < labelsList.size(); ct++) {
+            listOfLabels.add(labelsList.get(ct).toString());
         }
 
         //GHMilestone check = repository.getMilestone(1);
-        GHMilestone check = repository.getMilestone(getMilestone.get(issue.getMilestone()));
+        GHMilestone check = repository.getMilestone(getMilestone.get(i.getMilestone()));
         GHIssue createdIssue = issueBuilder.create();
         createdIssue.setAssignees(listOfUsers);
         createdIssue.setLabels(listOfLabels.toArray(new String[0]));

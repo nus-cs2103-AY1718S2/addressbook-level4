@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -21,6 +22,7 @@ import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.Model;
 import seedu.progresschecker.model.ProgressChecker;
 import seedu.progresschecker.model.ReadOnlyProgressChecker;
+import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
 import seedu.progresschecker.model.person.exceptions.PersonNotFoundException;
@@ -96,6 +98,11 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+        @Override
+        public void createIssueOnGitHub(Issue issue) throws IOException {
+            fail("This method should not be called. ");
+        }
+
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");

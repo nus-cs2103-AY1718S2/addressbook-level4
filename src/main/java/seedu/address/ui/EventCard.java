@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.Event;
 
 /**
@@ -34,15 +35,16 @@ public class EventCard extends UiPart<Region>   {
     @FXML
     private FlowPane tags;
 
-    public EventCard(Event event, int displayedIndex)   {
+    public EventCard(Activity event, int displayedIndex)   {
         super(FXML);
-        this.event = event;
+        assert (event instanceof  Event) : "The activity passed in should be of type Event";
+        this.event = (Event) event;
         id.setText(displayedIndex + ". ");
-        name.setText(event.getName().fullName);
-        startDateTime.setText(event.getStartDateTime().toString());
-        endDateTime.setText(event.getEndDateTime().toString());
-        locationEvent.setText(event.getLocation().toString());
-        remark.setText(event.getRemark().value);
+        name.setText(this.event.getName().fullName);
+        startDateTime.setText(this.event.getStartDateTime().toString());
+        endDateTime.setText(this.event.getEndDateTime().toString());
+        locationEvent.setText(this.event.getLocation().toString());
+        remark.setText(this.event.getRemark().value);
         event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 

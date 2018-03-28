@@ -39,6 +39,15 @@ public class Event extends Activity {
         this.location = location;
     }
 
+    public Event(
+            Name name, DateTime startDateTime, DateTime endDateTime, Location location, Remark remark, Set<Tag> tags,
+            boolean isComplete) {
+        super(name, startDateTime, remark, tags, isComplete);
+        requireAllNonNull(endDateTime);
+        this.endDateTime = endDateTime;
+        this.location = location;
+    }
+
     @Override
     public Name getName() {
         return super.getName();
@@ -119,10 +128,17 @@ public class Event extends Activity {
     @Override
     public Activity copy(Set<Tag> tags) {
         if (tags == null) {
-            return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), getTags());
+            return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), getTags(),
+                    isCompleted());
         }
-        return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), tags);
+        return new Event(getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), tags,
+                isCompleted());
     }
 
+    @Override
+    public Activity getCompletedCopy() {
+        return new Event(
+                getName(), getStartDateTime(), getEndDateTime(), getLocation(), getRemark(), getTags(), true);
+    }
 }
 

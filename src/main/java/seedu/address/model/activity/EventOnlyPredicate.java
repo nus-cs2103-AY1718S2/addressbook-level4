@@ -2,6 +2,7 @@ package seedu.address.model.activity;
 
 import java.util.function.Predicate;
 
+//@@author YuanQQLer
 /**
  * This class gives a predicate that returns only the event in a list.
  */

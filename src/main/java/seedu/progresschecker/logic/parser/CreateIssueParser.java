@@ -38,7 +38,7 @@ public class CreateIssueParser implements Parser<CreateIssue> {
                 ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_ASSIGNEES,
                         PREFIX_MILESTONE, PREFIX_BODY, PREFIX_LABEL);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_ASSIGNEES, 
+        if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_ASSIGNEES,
                 PREFIX_MILESTONE, PREFIX_BODY, PREFIX_LABEL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateIssue.MESSAGE_USAGE));

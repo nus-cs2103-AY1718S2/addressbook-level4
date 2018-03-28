@@ -97,7 +97,7 @@ public class Person {
     }
 
     public Group getGroup() {
-            return group;
+        return group;
     }
 
     public Insurance getInsurance() {

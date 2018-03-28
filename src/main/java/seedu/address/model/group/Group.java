@@ -35,7 +35,8 @@ public class Group {
     }
 
     @Override
-    public String toString() { return groupName;
+    public String toString() {
+        return groupName;
     }
 
     @Override
@@ -46,6 +47,8 @@ public class Group {
     }
 
     @Override
-    public int hashCode() { return groupName.hashCode(); }
+    public int hashCode() {
+        return groupName.hashCode();
+    }
 
 }

@@ -47,7 +47,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         userPrefs = new UserPrefs();
         groups = new UniqueGroupList();
     }
-
+    /**
+     * empty constructor
+     */
     public AddressBook() {
 
     }
@@ -74,7 +76,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setGroups(List<Group> persons) { this.groups.setGroups(groups);
+    public void setGroups(List<Group> persons) {
+        this.groups.setGroups(groups);
     }
 
     /**
@@ -172,8 +175,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    //// export-level operations
-
+    /**
+     * export-level operations
+     */
     public void exportPortfolio() {
         try {
             PrintWriter pw = new PrintWriter(new File(userPrefs.getExportPortfolioFilePath()));

@@ -13,7 +13,7 @@ import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.issues.Issue;
 
 /**
- * Adds a person to the ProgressChecker.
+ * Create an issue on github
  */
 public class CreateIssue extends Command {
 
@@ -59,7 +59,6 @@ public class CreateIssue extends Command {
         } catch (IOException e) {
             throw new CommandException("There is some error in the parameter or authentication");
         }
-        //return new CommandResult(COMMAND_FORMAT);
     }
 
 }

@@ -148,7 +148,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Collection<String> labe;s} into a {@code Set<Labels>}.
+     * Parses {@code Collection<String> labels} into a {@code Set<Labels>}.
      */
     public static Set<Labels> parseLabels(Collection<String> labels) throws IllegalValueException {
         requireNonNull(labels);

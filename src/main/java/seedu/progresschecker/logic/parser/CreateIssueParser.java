@@ -29,8 +29,8 @@ import seedu.progresschecker.model.issues.Title;
 public class CreateIssueParser implements Parser<CreateIssue> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the CreateIssue
+     * and returns an createIssue object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public CreateIssue parse(String args) throws ParseException {

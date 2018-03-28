@@ -30,10 +30,6 @@ public class UploadCommand extends Command {
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD + " RecipeBook";
 
-    private static final String ACCESS_TOKEN = "nF-Ym1zvMnAAAAAAAAAAPYd-4nRthqNAuk343dpYSiQXXHLBJFNraaaUUgPwokxl";
-    private static final String RECIPE_DATA_FOLDER = FileUtil.getPath("data/");
-    private static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "recipebook.xml");
-    private static final String clientIdentifier = "dropbox/recirecipe";
 
     private final String xmlExtensionFilename;
 
@@ -47,6 +43,7 @@ public class UploadCommand extends Command {
 
     @Override
     public CommandResult execute() throws UploadCommandException {
+        if ()
         CommandResult result = upload();
         return result;
     }

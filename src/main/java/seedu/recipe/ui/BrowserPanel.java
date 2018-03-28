@@ -19,6 +19,7 @@ import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.ui.util.FacebookHandler;
 
 /**
@@ -108,4 +109,10 @@ public class BrowserPanel extends UiPart<Region> {
         });
     }
     //@@author
+
+    //@@author nicholasangcx
+    @Subscribe
+    private void handleDbAuthorizationEvent(DbAuthorizationEvent event) {
+        loadPage(CloudStorageUtil.getAuthorizationUrl())
+    }
 }

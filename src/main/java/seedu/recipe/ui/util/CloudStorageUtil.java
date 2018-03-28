@@ -1,17 +1,26 @@
 package seedu.recipe.ui.util;
 
+import java.io.File;
+
 import com.dropbox.core.DbxAppInfo;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWebAuth;
 
-public class DropboxUtil {
+import seedu.recipe.commons.util.FileUtil;
 
-    private static final String APP_KEY = "0kj3cb9w27d66n8";
-    private static final String APP_SECRET = "7stnncfsyvgim60";
+public class CloudStorageUtil {
 
-    private String authorizeUrl;
+    public static final String APP_KEY = "0kj3cb9w27d66n8";
+    public static final String APP_SECRET = "7stnncfsyvgim60";
+    public static final String ACCESS_TOKEN = "";
 
-    public void getDbAuthorization() {
+    public static final String RECIPE_DATA_FOLDER = FileUtil.getPath("data/");
+    public static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "recipebook.xml");
+    public static final String clientIdentifier = "dropbox/recirecipe";
+
+    private static String authorizationUrl;
+
+    public static void getDbAuthorization() {
         // Read app info file (contains app key and app secret)
         DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
 
@@ -24,11 +33,6 @@ public class DropboxUtil {
                 .withForceReapprove(Boolean.FALSE)
                 .build();
 
-        this.authorizeUrl = webAuth.authorize(webAuthRequest);
+        authorizationUrl = webAuth.authorize(webAuthRequest);
     }
-
-    public String getAuthorizeUrl() {
-        return this.authorizeUrl;
-    }
-
 }

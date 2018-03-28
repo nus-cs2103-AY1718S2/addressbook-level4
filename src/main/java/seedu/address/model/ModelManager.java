@@ -122,6 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
         requireAllNonNull(patient, index);
+        indicateAddressBookChanged();
         return false;
     }
 

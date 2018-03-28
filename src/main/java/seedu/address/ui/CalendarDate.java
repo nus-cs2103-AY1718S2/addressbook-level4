@@ -6,12 +6,10 @@ import java.time.YearMonth;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 
 /**

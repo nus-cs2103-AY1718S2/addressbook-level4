@@ -18,7 +18,8 @@ import seedu.progresschecker.model.UserPrefs;
 import seedu.progresschecker.model.person.Person;
 
 /**
- * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for UploadCommand.
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
+ * and unit tests for UploadCommand.
  */
 public class UploadCommandTest {
 

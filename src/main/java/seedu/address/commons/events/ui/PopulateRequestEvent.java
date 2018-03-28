@@ -18,10 +18,10 @@ import seedu.address.logic.commands.LocateCommand;
  */
 public class PopulateRequestEvent extends BaseEvent {
 
-    public final String commandPreamble;
     public final String commandUsageMessage;
     public final String commandTemplate;
     public final int caretIndex;
+    private final String commandPreamble;
 
     public PopulateRequestEvent(String command) {
         switch (command) {

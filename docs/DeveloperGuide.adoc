@@ -15,7 +15,7 @@ endif::[]
 By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 == Setting up
-The following steps will guide you on the set up of FASTIS
+The following steps will guide you on the set up of FASTIS.
 
 === Prerequisites
 
@@ -521,6 +521,7 @@ Fastis lists all persons in Fastis that have tags similar to input.
 Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 tag.
 
+image:listGroupMemberSequenceDiagram.png[width="800"]
 When user types in command line `ListGroupMembers` or `lgm` , Fastis will use the keyword provided to search for the
 group tag and list out all members under the same group tag.
 

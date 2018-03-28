@@ -301,7 +301,7 @@ _{explain how the user can enable/disable data encryption}_
 
 |Find
 |`Ctrl` + `F`
-|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]``
+|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
 |List
 |`F2`

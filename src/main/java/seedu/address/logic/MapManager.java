@@ -49,11 +49,7 @@ public class MapManager {
 
                     Marker marker = new Marker(markerOptions);
                     map.addMarker(marker);
-                } else {
-                    map.setZoom(10);
-                    map.setCenter(new LatLong(1.3521, 103.8198));
-                    map.clearMarkers();
-                }
+
             }
         }
 
@@ -64,17 +60,6 @@ public class MapManager {
             geocodingService.geocode(address, new MyGeocodingServiceCallback(map));
         }
     }
-//    @Override
-//    public void geocodedResultsReceived(GeocodingResult[] results, GeocoderStatus status) {
-//        if(status.equals(GeocoderStatus.OK)){
-//            for(GeocodingResult e : results){
-//                System.out.println(e.getVariableName());
-//                System.out.println("GEOCODE: " + e.getFormattedAddress() + "\n" + e.toString());
-//            }
-//
-//        }
-//
-//    }
 }
 
 

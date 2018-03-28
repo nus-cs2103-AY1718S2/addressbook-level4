@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import static seedu.address.commons.util.GeocodeUtil.getGeocode;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -13,8 +11,6 @@ import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -22,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.MapManager;
 import seedu.address.model.person.Person;
 
 //@@author jaronchan
@@ -61,16 +58,15 @@ public class PersonDetailsPanel extends UiPart<Region>
      */
 
     private void loadPersonMapAddress(Person person) {
-        LatLong addressAsGeocode = getGeocode(person.getAddress().toString());
 
-        mapView.setZoom(17);
-        mapView.setCenter(addressAsGeocode.getLatitude(), addressAsGeocode.getLongitude());
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(addressAsGeocode);
-
-        Marker marker = new Marker(markerOptions);
-        map.addMarker(marker);
+        MapManager.GeocodeUtil.setMapMarkerFromAddress(map, person.getAddress().toString());
+//        mapView.setZoom(17);
+//
+//        MarkerOptions markerOptions = new MarkerOptions();
+//        markerOptions.position(addressAsGeocode);
+//
+//        Marker marker = new Marker(markerOptions);
+//        map.addMarker(marker);
 
     }
 
@@ -95,6 +91,7 @@ public class PersonDetailsPanel extends UiPart<Region>
                 .zoom(10);
 
         map = mapView.createMap(mapOptions);
+
     }
 
     /**

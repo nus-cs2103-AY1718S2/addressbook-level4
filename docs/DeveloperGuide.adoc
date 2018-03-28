@@ -15,6 +15,7 @@ endif::[]
 By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 == Setting up
+The following steps will guide you on the set up of FASTIS
 
 === Prerequisites
 

@@ -56,8 +56,7 @@ public class ResultDisplay extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person selected = event.getNewSelection().person;
-        raise(new NewResultAvailableEvent(DatabaseManager.getInstance().parseEvents(selected.getTimeTableLink()),
-                true));
+        DatabaseManager.getInstance().parseEvents(selected.getTimeTableLink());
     }
 
     /**

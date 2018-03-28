@@ -128,7 +128,7 @@ public class Subject {
         //return subjectName.hashCode() && subjectGrade.hashCode();
         int hash = 17;
         hash = 37 * hash + subjectName.hashCode();
-        hash = 37* hash + subjectGrade.hashCode();
+        hash = 37 * hash + subjectGrade.hashCode();
         return hash;
     }
 

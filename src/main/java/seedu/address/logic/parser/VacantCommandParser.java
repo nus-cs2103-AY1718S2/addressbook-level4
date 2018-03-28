@@ -10,7 +10,7 @@ import seedu.address.model.building.Building;
 /**
  * Parses input arguments and creates a new VacantCommand object
  */
-public class VacantCommandParser {
+public class VacantCommandParser implements Parser<VacantCommand>{
 
     /**
      * Parses the given {@code String} of arguments in the context of the VacantCommand
@@ -18,14 +18,21 @@ public class VacantCommandParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public VacantCommand parse(String args) throws ParseException {
-        String buildingName = args.trim();
-        if (buildingName.isEmpty()) {
+        args = args.trim();
+        int length;
+        String[] buildingName = args.split("\\s+");
+        if (args.equals("\\s+") || args.equals("")) {
+            length = 0;
+        } else {
+            length = buildingName.length;
+        }
+        if (length != 1) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, VacantCommand.MESSAGE_USAGE));
         }
 
         try {
-            Building building = ParserUtil.parseBuilding(buildingName);
+            Building building = ParserUtil.parseBuilding(buildingName[0]);
             return new VacantCommand(building);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

@@ -51,6 +51,8 @@ public class DeleteAppointmentCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this
-                || (other instanceof DeleteAppointmentCommand);
+                || (other instanceof DeleteAppointmentCommand)
+                && predicate.equals(((DeleteAppointmentCommand) other).predicate)
+                && targetIndex.equals(((DeleteAppointmentCommand) other).targetIndex);
     }
 }

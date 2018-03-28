@@ -54,6 +54,11 @@ public class  DeleteBeforeCommand extends UndoableCommand {
         model.updateFilteredPersonList(predicate);
         totalPersonsDeleted = model.getFilteredPersonList().size();
 
+        if (totalPersonsDeleted <= 0) {
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+            throw new CommandException(Messages.MESSAGE_PERSONS_NOT_FOUND);
+        }
+
         try {
             model.deletePersons(model.getFilteredPersonList());
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);

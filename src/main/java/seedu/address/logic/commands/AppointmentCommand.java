@@ -64,7 +64,7 @@ public class AppointmentCommand extends UndoableCommand {
             String appointmentDetails = toAdd.getStartTime() + " to " + toAdd.getEndTime() + " on " + toAdd.getDate()
                     + " with " + selectedPerson.getName();
             return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentDetails));
-        } catch (DuplicateAppointmentException e){
+        } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
     }

@@ -47,6 +47,9 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     //@@author RyanAngJY
+    /**
+     * Loads the text recipe onto the browser
+     */
     private void loadLocalRecipe(Recipe recipe) {
         URL defaultPage2 = MainApp.class.getResource(FXML_FILE_FOLDER + "MusicPlayer.jpg");
         System.out.println(defaultPage2.toExternalForm());

@@ -1,6 +1,6 @@
 .background {
     -fx-background-color: derive(#e0e0e0, 20%);
-    background-color: #e8e8e8; /* Used in the default.html file */
+    background-color: #e0e0e0; /* Used in the default.html file */
 }
 
 .label {
@@ -133,7 +133,7 @@
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#c5c5c5, 20%);
+     -fx-background-color: derive(#d3d3d3, 20%);
 }
 
 .pane-with-border {
@@ -282,6 +282,8 @@
 
 .scroll-bar {
     -fx-background-color: #f3f3f3;
+    -fx-border-radius: 15 15 15 15;
+    -fx-background-radius: 15 15 15 15;
 }
 
 .scroll-bar .thumb {
@@ -322,6 +324,8 @@
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: black;
+    -fx-border-radius: 12 12 12 12;
+    -fx-background-radius: 12 12 12 12;
 }
 
 #commandTextArea .scroll-pane {

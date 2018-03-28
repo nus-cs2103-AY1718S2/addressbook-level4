@@ -8,7 +8,6 @@ import static seedu.recipe.ui.util.CloudStorageUtil.APP_SECRET;
 import static seedu.recipe.ui.util.CloudStorageUtil.RECIPE_BOOK_FILE;
 import static seedu.recipe.ui.util.CloudStorageUtil.CLIENT_IDENTIFIER;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,9 +19,7 @@ import com.dropbox.core.DbxWebAuth;
 import com.dropbox.core.v2.DbxClientV2;
 import com.google.common.base.Strings;
 
-import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.logic.commands.exceptions.UploadCommandException;
-import seedu.recipe.ui.util.CloudStorageUtil;
 
 /**
  * Uploads all recipes online, specifically to Dropbox.
@@ -97,6 +94,7 @@ public class UploadCommand extends Command {
                 .build();
 
         String authorizationUrl = webAuth.authorize(webAuthRequest);
+        //Use token flow as authorization URL
         System.out.println(authorizationUrl);
     }
 

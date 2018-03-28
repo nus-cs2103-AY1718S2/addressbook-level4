@@ -21,7 +21,6 @@ public class Appointment {
      * @param appointment A valid Appointment date.
      */
     public Appointment(String appointment) {
-        requireNonNull(appointment);
         checkArgument(isValidAppointment(appointment), MESSAGE_APPOINTMENT_CONSTRAINTS);
         this.value = appointment;
     }
@@ -30,6 +29,9 @@ public class Appointment {
      * Returns true if a given string is a valid person appointment.
      */
     public static boolean isValidAppointment(String test) {
+        if (test == null) {
+            return true;
+        }
         return test.matches(APPOINTMENT_VALIDATION_REGEX);
     }
 

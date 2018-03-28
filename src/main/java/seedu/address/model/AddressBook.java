@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.DuplicateEventException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
@@ -24,6 +27,7 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.UniqueToDoList;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
+import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -35,6 +39,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private final UniqueToDoList todos;
     private final UniqueGroupList groups;
+    private final UniqueEventList events;
 
     /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -48,6 +53,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         todos = new UniqueToDoList();
         groups = new UniqueGroupList();
+        events = new UniqueEventList();
     }
 
     public AddressBook() {
@@ -141,6 +147,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given ToDo {@code target} in the list with {@code editedToDo}.
+     *
+     * @throws DuplicateToDoException if updating the ToDo's details causes the ToDo to be equivalent to
+     *                                  another existing ToDo in the list.
+     * @throws ToDoNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireNonNull(editedToDo);
+
+        todos.setToDo(target, editedToDo);
+    }
+
+    /**
      * Updates the master tag list to include tags in {@code person} that are not in the list.
      *
      * @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
@@ -198,6 +218,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.add(group);
     }
 
+    ////Event operations
+    /**
+     * Adds an event to the address book.
+     * @throws DuplicateEventException if an equivalent event already exists.
+     */
+    public void addEvent(Event e) throws DuplicateEventException {
+        events.add(e);
+    }
+
     //// util methods
 
     @Override
@@ -224,6 +253,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Event> getEventList() {
+        return events.asObservableList();
     }
 
     @Override

@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.todo.Content;
+import seedu.address.model.todo.Status;
 import seedu.address.model.todo.ToDo;
 
 /**
@@ -18,6 +19,9 @@ public class XmlAdaptedToDo {
     @XmlElement(required = true)
     private String content;
 
+    @XmlElement(required = true)
+    private String status;
+
     /**
      * Constructs an XmlAdaptedToDo.
      * This is the no-arg constructor that is required by JAXB.
@@ -25,10 +29,20 @@ public class XmlAdaptedToDo {
     public XmlAdaptedToDo() {}
 
     /**
-     * Constructs an {@code XmlAdaptedToDo} with the given to-do details.
+     * Constructs an {@code XmlAdaptedToDo} with the given details.
+     */
+    public XmlAdaptedToDo(String content, String status) {
+        this.content = content;
+        this.status = status;
+    }
+
+    /**
+     * Constructs an {@code XmlAdaptedToDo} with the given details.
+     * Status is "undone" by default
      */
     public XmlAdaptedToDo(String content) {
         this.content = content;
+        this.status = "undone";
     }
 
     /**
@@ -37,7 +51,9 @@ public class XmlAdaptedToDo {
      * @param source future changes to this will not affect the created XmlAdaptedToDo
      */
     public XmlAdaptedToDo(ToDo source) {
+
         content = source.getContent().value;
+        status = source.getStatus().value;
     }
 
     /**
@@ -54,7 +70,15 @@ public class XmlAdaptedToDo {
         }
         final Content content = new Content(this.content);
 
-        return new ToDo(content);
+        if (this.status == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName()));
+        }
+        if (!Status.isValidStatus(this.status)) {
+            throw new IllegalValueException(Status.MESSAGE_STATUS_CONSTRAINTS);
+        }
+        final Status status = new Status(this.status);
+
+        return new ToDo(content, status);
     }
 
     @Override

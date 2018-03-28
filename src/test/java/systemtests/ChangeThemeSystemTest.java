@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import seedu.recipe.MainApp;
+import seedu.recipe.logic.commands.ChangeThemeCommand;
 
 public class ChangeThemeSystemTest extends RecipeBookSystemTest {
     private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
@@ -47,22 +48,12 @@ public class ChangeThemeSystemTest extends RecipeBookSystemTest {
         getMainMenu().changeThemeUsingMenu();
         assertLightTheme();
 
-//        // open help window and give it focus
-//        executeCommand(HelpCommand.COMMAND_WORD);
-//        getMainWindowHandle().focus();
-//
-//        // assert that while the help window is open the UI updates correctly for a command execution
-//        executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased());
-//        assertEquals("", getCommandBox().getInput());
-//        assertCommandBoxShowsDefaultStyle();
-//        assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-//        assertNotEquals(BrowserPanel.DEFAULT_PAGE_DARK, getBrowserPanel().getLoadedUrl());
-//        assertListMatching(getRecipeListPanel(), getModel().getFilteredRecipeList());
-//
-//        // assert that the status bar too is updated correctly while the help window is open
-//        // note: the select command tested above does not update the status bar
-//        executeCommand(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased());
-//        assertNotEquals(StatusBarFooter.SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+        // Change theme with command
+        executeCommand(ChangeThemeCommand.COMMAND_WORD);
+        assertDarkTheme();
+
+        executeCommand(ChangeThemeCommand.COMMAND_WORD);
+        assertLightTheme();
     }
 
     /**

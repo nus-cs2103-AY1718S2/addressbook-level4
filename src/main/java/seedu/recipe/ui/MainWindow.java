@@ -17,7 +17,9 @@ import seedu.recipe.MainApp;
 import seedu.recipe.commons.core.Config;
 import seedu.recipe.commons.core.GuiSettings;
 import seedu.recipe.commons.core.LogsCenter;
+import seedu.recipe.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.recipe.commons.events.ui.ExitAppRequestEvent;
+import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.ShowHelpRequestEvent;
 import seedu.recipe.logic.Logic;
 import seedu.recipe.model.UserPrefs;
@@ -171,6 +173,13 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@Author kokonguyen191
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleChangeTheme();
+    }
+
     /**
      * Toggle between dark and light theme
      */
@@ -181,6 +190,7 @@ public class MainWindow extends UiPart<Stage> {
         loadStyle(!isUsingDarkTheme);
         prefs.setIsUsingDarkTheme(!isUsingDarkTheme);
     }
+    //@@Author
 
     /**
      * Opens the help window.

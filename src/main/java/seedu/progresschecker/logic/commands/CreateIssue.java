@@ -59,7 +59,6 @@ public class CreateIssue extends Command {
         } catch (IOException e) {
             throw new CommandException("There is some error in the parameter or authentication");
         }
-        //return new CommandResult(COMMAND_FORMAT);
     }
 
 }

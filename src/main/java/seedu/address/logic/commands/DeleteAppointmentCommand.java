@@ -41,7 +41,7 @@ public class DeleteAppointmentCommand extends Command {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
 
-        if (patientFound.deletePatientAppointment(targetIndex)) {
+        if (model.deletePatientAppointment(patientFound, targetIndex)) {
             return new CommandResult(MESSAGE_DELETE_SUCCESS);
         }
 

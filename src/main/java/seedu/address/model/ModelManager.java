@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
@@ -62,6 +63,10 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new ImdbChangedEvent(imdb));
+    }
+
+    private void indicateAppointmentChanged(Patient patient) {
+        raise(new AppointmentChangedEvent(patient));
     }
 
     @Override
@@ -122,8 +127,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
         requireAllNonNull(patient, index);
-        indicateAddressBookChanged();
-        return false;
+        boolean isDeleteSuccess = patient.deletePatientAppointment(index);
+        indicateAppointmentChanged(patient);
+        return isDeleteSuccess;
     }
 
     public UniqueAppointmentList getPatientAppointments(Patient patient) {

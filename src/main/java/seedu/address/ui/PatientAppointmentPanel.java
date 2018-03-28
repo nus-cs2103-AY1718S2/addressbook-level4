@@ -4,12 +4,16 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AppointmentChangedEvent;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 
 /**
@@ -46,6 +50,15 @@ public class PatientAppointmentPanel extends UiPart<Region> {
                         pastAppointmentListSize + upcomingAppointmentList.indexOf(appointment) + 1)));
         upcomingAppointmentCardListView.setItems(upcomingMappedList);
         upcomingAppointmentCardListView.setCellFactory(listView-> new AppointmentListViewCell());
+    }
+
+    @Subscribe
+    public void handleAddressBookChangedEvent(AppointmentChangedEvent ace) throws ParseException {
+        try {
+            setConnections(ace.data.getPastAppointmentList(), ace.data.getUpcomingAppointmentList());
+        } catch (Exception e) {
+            throw new ParseException("List is not in observable list");
+        }
     }
 
     /**

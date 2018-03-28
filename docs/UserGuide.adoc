@@ -74,8 +74,8 @@ Format: `help` or `h`
 
 ==== Logging into the system: `login` or `lg` [since v1.2]
 
-Logs the user into the IMDB, given a matching username and password.
-Format: `login USERNAME PASSWORD` or `lg USERNAME PASSWORD`
+Logs the user into the IMDB with a matching username and password.
+Format: `login` or `lg`
 
 ==== Listing entered commands : `history` or `hi`
 
@@ -478,7 +478,7 @@ e.g. `edit` or `e 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find` or `f KEYWORD [MORE_KEYWORDS]` +
 e.g. `find` or `f James Jake`
 * *List* : `list` or `ls`
-* *Login* : `login` or `lg USERNAME PASSWORD`
+* *Login* : `login` or `lg`
 * *Help* : `help` or `h`
 * *Select* : `select` or `s INDEX` +
 e.g.`select` or `s 2`

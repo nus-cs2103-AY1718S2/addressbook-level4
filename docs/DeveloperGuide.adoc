@@ -772,30 +772,33 @@ Use case resumes from step 3
 
 *MSS*
 
-1.  User inputs login command word, username and password
-2.  IMDB shows a success message
+1.  User inputs login command word
+2.  IMDB displays login screen
+3.  User inputs username and password
+4.  IMDB shows a success message
 +
 Use case ends
 
 *Extensions*
 
 [none]
-* 1a. Username and password do not match
+* 1a. User is already logged in
 +
 [none]
 ** 1a1. IMDB shows an error message
-** 1a2. User inputs login command word, username and password
-** Steps 1a1-1a2 are repeated until username and password match
-+
-Use case resumes at step 2
-[none]
-* 1b. User is already logged in
-+
-[none]
-** 1b1. IMDB shows an error message
-** 1b2. User enters exit command and restarts IMDB
+** 1a2. User enters exit command and restarts IMDB
 +
 Use case resumes at step 1
+
+[none]
+* 3a. Username and password do not match
++
+[none]
+** 3a1. IMDB shows an error message
+** 3a2. User inputs username and password
+** Steps 3a1-3a2 are repeated until username and password match
++
+Use case resumes at step 4
 
 [discrete]
 === Use case: Update patient details

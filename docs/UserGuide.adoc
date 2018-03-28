@@ -292,10 +292,12 @@ _{explain how the user can enable/disable data encryption}_
 |Clear
 |`Alt` + `C`
 |`clear`
+|
 
 |Delete
 |`Alt` + `D`
 |`delete INDEX`
+|
 
 |Edit
 |`Alt` + `E`
@@ -310,10 +312,12 @@ _{explain how the user can enable/disable data encryption}_
 |List
 |`F2`
 |`list`
+|
 
 |Help
 |`F1`
 |`help`
+|
 
 |Select
 |`Alt` + `S`
@@ -323,12 +327,15 @@ _{explain how the user can enable/disable data encryption}_
 |History
 |`Alt` + `H`
 |`history`
+|
 
 |Undo
 |`Ctrl` + `Z`
 |`undo`
+|
 
 |Redo
 |`Ctrl` + `Y`
 |`redo`
+|
 |===

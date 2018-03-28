@@ -15,9 +15,10 @@ public class LoginCommandParserTest {
     private LoginCommandParser parser = new LoginCommandParser();
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(
-                MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
+    public void parse_emptyArg_returnsLoginCommand() {
+        LoginCommand expectedLoginCommand = new LoginCommand();
+        assertParseSuccess(parser, "", expectedLoginCommand);
+        assertParseSuccess(parser, "      ", expectedLoginCommand);
     }
 
     @Test
@@ -26,16 +27,5 @@ public class LoginCommandParserTest {
                 MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
         assertParseFailure(parser, TEST_USERNAME + " " + TEST_PASSWORD + " " + TEST_USERNAME,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_validArgs_returnsLoginCommand() {
-        // no leading and trailing whitespaces
-        LoginCommand expectedLoginCommand = new LoginCommand(TEST_USERNAME, TEST_PASSWORD);
-        assertParseSuccess(parser, TEST_USERNAME + " " + TEST_PASSWORD, expectedLoginCommand);
-
-        // multiple whitespaces between keywords
-        assertParseSuccess(parser,
-                " \n " + TEST_USERNAME + " \n \t " + TEST_PASSWORD + "  \t", expectedLoginCommand);
     }
 }

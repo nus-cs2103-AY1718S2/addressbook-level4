@@ -9,8 +9,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new LoginCommand object
  */
 public class LoginCommandParser implements Parser<LoginCommand> {
-    public static final int USERNAME_INDEX = 0;
-    public static final int PASSWORD_INDEX = 1;
     public static final String SPACE_REGEX = "\\s+";
 
     /**
@@ -19,15 +17,11 @@ public class LoginCommandParser implements Parser<LoginCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public LoginCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        String[] splitArgs = trimmedArgs.split(SPACE_REGEX);
-        if (splitArgs.length != 2) {
+        if (!args.trim().equals("")) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
         }
-        String username = splitArgs[USERNAME_INDEX];
-        String password = splitArgs[PASSWORD_INDEX];
 
-        return new LoginCommand(username, password);
+        return new LoginCommand();
     }
 }

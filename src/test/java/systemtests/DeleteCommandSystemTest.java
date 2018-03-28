@@ -14,10 +14,10 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.LoginManager;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.login.LoginManager;
 import seedu.address.model.Model;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;

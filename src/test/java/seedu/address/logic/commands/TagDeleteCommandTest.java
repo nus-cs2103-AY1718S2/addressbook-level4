@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
@@ -39,13 +40,13 @@ public class TagDeleteCommandTest {
     }
 
     @Test
-    public void execute_invalidTagToRemoveEntered_throwsCommandException() {
+    public void execute_invalidTagToRemoveEntered_throwsCommandException() throws IOException {
         TagDeleteCommand tagDeleteCommand = prepareCommand(tagToDelete);
         assertCommandFailure(tagDeleteCommand, model, Messages.MESSAGE_INVALID_TAG_ENTERED);
     }
 
     @Test
-    public void executeUndoRedo_invalidTagToRemoveEntered_failure() {
+    public void executeUndoRedo_invalidTagToRemoveEntered_failure() throws IOException {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);

@@ -24,8 +24,6 @@ public class FindCommand extends Command {
         this.predicate = predicate;
     }
 
-
-
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);

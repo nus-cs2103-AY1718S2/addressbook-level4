@@ -8,6 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.SUBJECT_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.SUBJECT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
@@ -54,9 +56,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
+
         Person toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + NRIC_DESC_AMY + " "
-                   + TAG_DESC_FRIEND + " " + SUBJECT_DESC_AMY + " ";
+                   + TAG_DESC_FRIEND + " " + SUBJECT_DESC_AMY + " " + REMARK_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -72,8 +75,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_AMY)
-                .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + NRIC_DESC_AMY + TAG_DESC_FRIEND + SUBJECT_DESC_BOB;
+                .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS).withRemark(REMARK_DESC_AMY).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + NRIC_DESC_AMY + TAG_DESC_FRIEND + SUBJECT_DESC_BOB
+                    + REMARK_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
@@ -176,7 +180,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
-
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
 

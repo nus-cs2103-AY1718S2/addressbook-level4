@@ -26,7 +26,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.FieldContainKeyphrasesPredicate;
-import seedu.address.model.person.NameContainsKeyphrasesPredicate;
 import seedu.address.model.person.Person;
 
 /**

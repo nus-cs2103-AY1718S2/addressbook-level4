@@ -168,7 +168,6 @@ public class ParserUtil {
         }
         return tagSet;
     }
-  
     /**
      * Parses a {@code String birthday} into a {@code Birthday}.
      * Leading and trailing whitespaces will be trimmed.
@@ -207,7 +206,6 @@ public class ParserUtil {
         }
         return new Appointment(trimmedAppointment);
     }
-
     /**
      * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -216,7 +214,6 @@ public class ParserUtil {
         requireNonNull(appointment);
         return appointment.isPresent() ? Optional.of(parseAppointment(appointment.get())) : Optional.empty();
     }
-    
     /**
      * @param exportType
      * @return the corresponding ExportType

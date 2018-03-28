@@ -53,10 +53,9 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         birthday.setText(person.getBirthday().value);
-        if (person.getAppointment() == null) {
+        if (person.getAppointment() == null || person.getAppointment().equals("")) {
             appointment.setText("No Appointment Date");
-        }
-        else {
+        } else {
             appointment.setText(person.getAppointment().value);
         }
         startTag(person);

@@ -17,9 +17,7 @@
             <Insets top="5" right="5" bottom="5" left="5" />
          </padding>
          <Text fx:id="day" text="\$day" styleClass="thisMonthDate"/>
-         <Text fx:id="event1" text="\$event1"/>
-         <Text fx:id="event2" text="\$event2"/>
-         <Text fx:id="event3" text="\$event3"/>
+         <Text fx:id="eventText" text="\$event1"/>
       </VBox>
    </GridPane>
 </AnchorPane>

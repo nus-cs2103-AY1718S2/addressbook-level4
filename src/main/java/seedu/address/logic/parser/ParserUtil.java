@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import com.google.api.client.util.DateTime;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -17,6 +19,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -31,6 +34,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -68,6 +72,43 @@ public class ParserUtil {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
+
+    //@@author ifalluphill
+    /**
+     * Parses a {@code String eventName} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code eventName} is invalid.
+     */
+    public static String parseEventName(String name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.trim();
+    }
+
+    /**
+     * Parses a {@code String dateTime} into a {@code DateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code eventName} is invalid.
+     */
+    public static DateTime parseDateTime(String dateTime) throws IllegalValueException {
+        requireNonNull(dateTime);
+        String trimmedDateTime = dateTime.trim();
+        return new DateTime(trimmedDateTime);
+    }
+
+    /**
+     * Parses a {@code String location} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code location} is invalid.
+     */
+    public static String parseLocation(String location) throws IllegalValueException {
+        requireNonNull(location);
+        return location.trim();
+    }
+
+    //@@author
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.

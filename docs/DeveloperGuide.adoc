@@ -412,20 +412,18 @@ Command line and graphical integration with Google Calendar from within SLAP. Th
 ===== Aspect: GUI
 The GUI portion of this feature will be a WebView of the Google Calendar web application. The user will have the option to either open their calendar as a new floating window by pressing the `F8` function key or by clicking `View > Open Calendar` or as a scene within the main SLAP GUI by invoking the `calendar` command. In either case, the WebView will be instantiated as a new JavaFX scene and take advantage of Java's build in WebView/WebEngine. This will allow the user to interact with the familiar Google Calendar web interface without any loss of functionality.
 
-TODO: INSERT FINALIZED DIAGRAM HERE
-
 ===== Aspect: CLI
 The CLI portion of this feature will rely on Google's Calendar API that uses the OAuth 2.0 protocol to allow an application (such as SLAP) to directly read/write to a user's calendar, provided that they have given them access to the calendar. Once a user has authorized the application to read/write to their calendar, they will gain access to the the following commands: `event-add`, `event-delete`, and `event-edit`. The Oauth authentication process will be entirely handled by Google with the only requirement being that the user must log in to their calendar using the GUI interface.
 
 A check will eventually be added to ensure that the user has already logged in before attempting to execute any of the afformentioned commands.
 
-TODO: INSERT FINALIZED DIAGRAM HERE
+image::OauthModelDiagram.png[width="800"]
 
 ==== Design Considerations
 ===== Aspect: GUI
 * **Alternative 1 (current choice):** Native Google Calendar WebView
 ** Pros: Minimal effort to implement as it is just a wrapper about the existing Google Calendar UI. Data is managed and secured by Google.
-** Cons: Cannot customize the interfact without injecting customize styles. Requires complicated OAuth 2.0 authentication to work. Assumes that the user already has a Google account.
+** Cons: Cannot customize the interface without injecting customize styles. Requires complicated OAuth 2.0 authentication to work. Assumes that the user already has a Google account.
 
 * **Alternative 2: ** https://github.com/dlemmermann/CalendarFX[CalendarFX]
 ** Pros: Can more easily create a custom UI and not rely on Google Calendar.
@@ -444,7 +442,7 @@ TODO: INSERT FINALIZED DIAGRAM HERE
 ** Pros: Does not require complex authentication and is thus easier to implement. Solution works offline.
 ** Cons: Requires additional local storage implementations and calendar events are no longer synced to the cloud.
 
-===== Aspect: Implementation of `AddEventCommand` -> `event-add`
+===== Aspect: Implementation of `AddEventCommand` -> `calendar-add`
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
 ** Cons: Requires the user to authenticate our application before this feature works correctly.
@@ -462,7 +460,7 @@ TODO: INSERT FINALIZED DIAGRAM HERE
 ** Pros: CLI-only friendly. Does not require a webview and thus makes the application less resource intensive.
 ** Cons: Higher development cost as it becomes necessary to format the response from Google's APIs (and write a new set of logic to parse and format the data.)
 
-===== Aspect: Implementaiton of `EditEventCommand` -> `event-edit`
+===== Aspect: Implementation of `EditEventCommand` -> `calendar-edit`
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
 ** Cons: Requires the user to authenticate our application before this feature works correctly.
@@ -471,7 +469,7 @@ TODO: INSERT FINALIZED DIAGRAM HERE
 ** Pros: No implementation required as everything happens through the spawned webview.
 ** Cons: No CLI-friendly output. More resource intensive on the end-user's system.
 
-===== Aspect: Implementation of `DeleteEventCommand` -> `event-delete`
+===== Aspect: Implementation of `DeleteEventCommand` -> `calendar-delete`
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
 ** Cons: Requires the user to authenticate our application before this feature works correctly.
@@ -980,6 +978,7 @@ optimal schedule for them.
 * Allows the user to view the application's error from within the application itself.
 * This is useful as it allows an advanced user to send the application developer a log of the events that occurred before an exception was encountered.
 * This feature is unobtrustive as the information contained within the log is essentially meaningless to everyone except for the developer. Additionally, the command is relatively hard to invoke accidentally, and thus has a low chance of being discovered. Additionally, this command only shows read-only information and thus cannot cause any harm to the system.
+* This feature is useful so that if the user encounters an issue and wishes to help provide more information, they can relatively easily retrieve this information without much effort provided they are instructed on how to do so. It is unlikely that a user will encounter this feature by accident.
 
 **Chan Jin Jia**
 
@@ -1170,7 +1169,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to view calendar events.
-2.  AddressBook retrieves calendar events and updates the main window to show the events.
+2.  AddressBook shows the user the relevant calendar events.
 +
 Use case ends.
 
@@ -1190,7 +1189,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to view calendar events.
-2.  AddressBook retrieves calendar events and updates the main window to show the events.
+2.  AddressBook shows the user a list of their relevant calendar events.
 3.  User selects calendar event to edit.
 4.  AddressBook returns calendar event info as editable string.
 5.  User edits information and confirms action.
@@ -1240,8 +1239,8 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User presses ‘View’ menu option and requests to see error log.
-2.  AddressBook retrieves error log and displays it in a new window.
+1.  User requests to see error log.
+2.  AddressBook retrieves error log and displays it to the user.
 
 *Extensions*
 

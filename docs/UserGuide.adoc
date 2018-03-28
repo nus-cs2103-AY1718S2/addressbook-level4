@@ -228,20 +228,30 @@ Format: `calendar`
 The user can also open the calendar by pressing the `F8` function key, or by pressing `View > Open Calendar`
 ====
 
-=== Adding and event to the calendar : `event-add`
+=== Adding and event to the calendar : `calendar-add`
 
 Allows a user to add an event directly to their calendar.
-Format: `event-add t/<title> l/<location> ds/<start date/time> de/<end date/time> n/<notes>`
+Format: `calendar-add en/<eventname> std/<startdatetime> etd/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
 
-=== Deleting an event from the calendar : `event-delete`
+=== List upcoming events in the command line: `calendar-list`
+
+Allows a user to view their upcoming calendar events
+Format: `calendar-list`
+
+=== Deleting an event from the calendar : `calendar-delete`
 
 Displays a list of upcoming events to the user and lets them select one to delete.
-Format: `event-delete`
+Format: `calendar-delete`
 
-=== Editing an event in the calendar : `event-edit`
+=== Editing an event in the calendar : `calendar-edit`
 
 Displays a list of upcoming events to the user and lets them select one to edit.
-Format: `event-edit`
+Format: `calendar-edit`
+
+=== Reauthenticate Google Oauth : `reauthenticate`
+
+Allows a user to manually reauthenticate their Google Oauth credentials/permissions for SLAP
+Format: `reauthenticate`
 
 === Opening the Error Log : `errorlog`
 

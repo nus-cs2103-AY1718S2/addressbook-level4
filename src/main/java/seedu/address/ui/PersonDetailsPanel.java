@@ -1,6 +1,5 @@
+//@@author jaronchan
 package seedu.address.ui;
-
-import static seedu.address.commons.util.GeocodeUtil.getGeocode;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,18 +12,18 @@ import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
+import seedu.address.logic.MapManager;
 import seedu.address.model.person.Person;
 
-//@@author jaronchan
 /**
  * The Person Details Panel of the App.
  * To be UPDATED
@@ -38,6 +37,9 @@ public class PersonDetailsPanel extends UiPart<Region>
 
     @FXML
     private GoogleMapView mapView;
+
+    @FXML
+    private Pane invalidAddressOverlay;
 
     private GoogleMap map;
 
@@ -58,20 +60,12 @@ public class PersonDetailsPanel extends UiPart<Region>
 
     /**
      * Update the map based on new selection event.
+     * Default view is shown if no address is invalid.
      */
 
     private void loadPersonMapAddress(Person person) {
-        LatLong addressAsGeocode = getGeocode(person.getAddress().toString());
 
-        mapView.setZoom(17);
-        mapView.setCenter(addressAsGeocode.getLatitude(), addressAsGeocode.getLongitude());
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(addressAsGeocode);
-
-        Marker marker = new Marker(markerOptions);
-        map.addMarker(marker);
-
+        MapManager.GeocodeUtil.setMapMarkerFromAddress(map, person.getAddress().toString());
     }
 
     /**
@@ -91,10 +85,11 @@ public class PersonDetailsPanel extends UiPart<Region>
                 .rotateControl(false)
                 .scaleControl(false)
                 .streetViewControl(false)
-                .zoomControl(false)
                 .zoom(10);
 
         map = mapView.createMap(mapOptions);
+        invalidAddressOverlay.setVisible(false);
+
     }
 
     /**
@@ -108,5 +103,11 @@ public class PersonDetailsPanel extends UiPart<Region>
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonMapAddress(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleShowInvalidAddressOverlayEvent(ShowInvalidAddressOverlayEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        invalidAddressOverlay.setVisible(event.getAddressValidity());
     }
 }

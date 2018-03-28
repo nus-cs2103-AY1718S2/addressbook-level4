@@ -20,7 +20,7 @@ import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.testutil.RecipeBuilder;
-import seedu.recipe.ui.util.FacebookHandler;
+//import seedu.recipe.ui.util.FacebookHandler;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private RecipePanelSelectionChangedEvent selectionChangedEventStub;

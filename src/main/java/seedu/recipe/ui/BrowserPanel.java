@@ -26,8 +26,8 @@ import seedu.recipe.ui.util.FacebookHandler;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE_LIGHT = "defaultdark.html";
-    public static final String DEFAULT_PAGE_DARK = "defaultlight.html";
+    public static final String DEFAULT_PAGE_DARK = "defaultdark.html";
+    public static final String DEFAULT_PAGE_LIGHT = "defaultlight.html";
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     private static final String FXML = "BrowserPanel.fxml";
@@ -39,13 +39,13 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel() {
+    public BrowserPanel(boolean isDarkTheme) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        loadDefaultPage();
+        loadDefaultPage(isDarkTheme);
         registerAsAnEventHandler(this);
 
         setUpBrowserUrlListener();
@@ -61,9 +61,15 @@ public class BrowserPanel extends UiPart<Region> {
 
     /**
      * Loads a default HTML file with a background that matches the general theme.
+     * @param isDarkTheme true if the app is using dark theme
      */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+    public void loadDefaultPage(boolean isDarkTheme) {
+        URL defaultPage;
+        if (isDarkTheme) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+        }
         loadPage(defaultPage.toExternalForm());
     }
 

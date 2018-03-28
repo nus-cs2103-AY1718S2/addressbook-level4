@@ -6,12 +6,14 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.recipe.MainApp;
 import seedu.recipe.commons.core.Config;
 import seedu.recipe.commons.core.GuiSettings;
 import seedu.recipe.commons.core.LogsCenter;
@@ -27,6 +29,9 @@ import seedu.recipe.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+
+    private static final String DARK_THEME_CSS = "DarkTheme.css";
+    private static final String LIGHT_THEME_CSS = "LightTheme.css";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -44,6 +49,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private MenuItem changeThemeItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -72,6 +80,8 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerators();
         registerAsAnEventHandler(this);
+
+        loadStyle(prefs.getIsUsingDarkTheme());
     }
 
     public Stage getPrimaryStage() {
@@ -80,6 +90,7 @@ public class MainWindow extends UiPart<Stage> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(changeThemeItem, KeyCombination.valueOf("F2"));
     }
 
     /**
@@ -116,7 +127,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel(prefs.getIsUsingDarkTheme());
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         recipeListPanel = new RecipeListPanel(logic.getFilteredRecipeList());
@@ -161,6 +172,17 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Toggle between dark and light theme
+     */
+    @FXML
+    public void handleChangeTheme() {
+        boolean isUsingDarkTheme = prefs.getIsUsingDarkTheme();
+        browserPanel.loadDefaultPage(!isUsingDarkTheme);
+        loadStyle(!isUsingDarkTheme);
+        prefs.setIsUsingDarkTheme(!isUsingDarkTheme);
+    }
+
+    /**
      * Opens the help window.
      */
     @FXML
@@ -170,6 +192,21 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void show() {
+        primaryStage.show();
+    }
+
+    /**
+     * Toggles the main window theme
+     */
+    private void loadStyle(boolean darkTheme) {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().clear();
+        if (darkTheme) {
+            scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + DARK_THEME_CSS).toExternalForm());
+        } else {
+            scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + LIGHT_THEME_CSS).toExternalForm());
+        }
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

@@ -144,7 +144,7 @@
 
 .status-bar {
     -fx-background-color: derive(#dfdfdf, 20%);
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .result-display {
@@ -160,7 +160,7 @@
 
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .status-bar-with-border {
@@ -170,7 +170,7 @@
 }
 
 .status-bar-with-border .label {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .grid-pane {

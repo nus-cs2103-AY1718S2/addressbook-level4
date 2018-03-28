@@ -12,7 +12,12 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.DeleteAppointmentCommandParser;
 import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -56,5 +61,20 @@ public class DeleteAppointmentCommandTest {
 
         //different pattern -> returns false
         assertFalse(deleteAppointmentFirstCommand.equals(deleteAppointmentSecondCommand));
+    }
+
+    @Test
+    public void execute_zeroKeywords_noPersonFound() throws Exception {
+        DeleteAppointmentCommand command = prepareCommand("  2");
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(DeleteAppointmentCommand.MESSAGE_PERSON_NOT_FOUND);
+
+        command.execute();
+    }
+
+    private DeleteAppointmentCommand prepareCommand(String userInput) throws ParseException {
+        DeleteAppointmentCommand command = new DeleteAppointmentCommandParser().parse(userInput);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
     }
 }

@@ -58,6 +58,11 @@ public interface Model {
     void showAllCards();
 
     /**
+     * Sets the filtered card list to contain cards that are due for review today.
+     */
+    void showDueCards();
+
+    /**
      * Sets the card list to contain only those with given tag.
      * @param tag
      */

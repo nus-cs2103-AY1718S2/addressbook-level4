@@ -1,5 +1,7 @@
 package seedu.address.commons.core;
 
+import seedu.address.model.person.Person;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -22,24 +24,11 @@ public class Mailer {
     //private static String defaultRecipient = "matthieu2301@hotmail.fr";
     private static String defaultRecipient = pigeonsMail;
 
-
-    /**
-     * Used for testing
-     * @param args
-     */
-    public static void main(String[] args) {
-
-        List<String> to = new ArrayList<>();
-        to.add(defaultRecipient);
-
-        email(to);
-    }
-
     /**
      * Send an email to the
      * @param recipients
      */
-    public static boolean email(List<String> recipients) {
+    public static boolean email(List<Person> recipients) {
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
@@ -50,27 +39,25 @@ public class Mailer {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
-        String subject = "Your delivery is expected around 2pm today";
-        String body = "Hi, please be at your place around 2pm today some pigeons may visit you :)";
-
         Session session = Session.getDefaultInstance(props);
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(pigeonsMail));
 
-            for (String destination: recipients) {
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
-            }
+            for (Person p: recipients) {
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(p.getEmail().toString()));
 
-            message.setSubject(subject);
-            message.setText(body);
+                String subject = "Your delivery is arriving today!";
+                String body = "Dear " + p.getName().toString() + ", please be at your place today some pigeons may visit you :)";
+                message.setSubject(subject);
+                message.setText(body);
+            }
             Transport transport = session.getTransport("smtp");
             transport.connect(host, pigeonsMail, password);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
 
         } catch (MessagingException ae) {
-            ae.printStackTrace();
             return false;
         }
         return true;

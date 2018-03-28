@@ -1,23 +1,8 @@
 //@@author nicholasangcx
 package seedu.recipe.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.ui.util.CloudStorageUtil.RECIPE_BOOK_FILE;
-import static seedu.recipe.ui.util.CloudStorageUtil.CLIENT_IDENTIFIER;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import com.dropbox.core.DbxException;
-import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.v2.DbxClientV2;
-
 import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
-import seedu.recipe.logic.commands.exceptions.UploadCommandException;
-import seedu.recipe.ui.util.CloudStorageUtil;
 
 /**
  * Uploads all recipes online, specifically to Dropbox.
@@ -35,7 +20,7 @@ public class UploadCommand extends Command {
             + "Example: " + COMMAND_WORD + " RecipeBook";
 
 
-    private final String xmlExtensionFilename;
+    public final String xmlExtensionFilename;
 
     /**
      * Creates an UploadCommand to upload recipebook.xml to Dropbox with the
@@ -46,38 +31,9 @@ public class UploadCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws UploadCommandException {
+    public CommandResult execute() {
         EventsCenter.getInstance().post(new UploadRecipesEvent());
-        //CommandResult result =
-        upload();
-        //return result;
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
 
-    /**
-     * Creates a Dropbox client with the user's {@code getAccessToken()}
-     * and uploads file specified by {@code RECIPE_BOOK_FILE} to their Dropbox account
-     * @return {@code CommandResult}
-     * @throws DbxException
-     */
-    private CommandResult upload() throws UploadCommandException {
-        // Ensures access token has been obtained
-        requireNonNull(CloudStorageUtil.getAccessToken());
-
-        // Create Dropbox client
-        DbxRequestConfig config = DbxRequestConfig.newBuilder(CLIENT_IDENTIFIER).build();
-        DbxClientV2 client = new DbxClientV2(config, CloudStorageUtil.getAccessToken());
-
-        // Upload "recipebook.xml" to Dropbox
-        try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
-            client.files().uploadBuilder("/" + xmlExtensionFilename)
-                    .withAutorename(true)
-                    .uploadAndFinish(in);
-        } catch (IOException e) {
-            return new CommandResult(MESSAGE_FAILURE);
-        } catch (DbxException dbe) {
-            throw new UploadCommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

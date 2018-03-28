@@ -71,13 +71,10 @@ public class SubjectTest {
     }
 
     @Test
-    public void equals_compareTwoDifferentConstructors_success() {
+    public void equals_compareTwoDifferentObjects_notEquals() {
         Subject subject1 = new Subject("English A1");
-        Subject subject2 = new Subject("English", "A1");
         Subject subject3  = new Subject("Mathematics A2");
 
-        //Test if the subject object created by two different constructors produces object with the same parameters
-        assertEquals(subject1, subject2);
         //Compare two different subjects
         assertNotEquals(subject1, subject3);
     }

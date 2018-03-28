@@ -63,12 +63,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Viewing help : `help`
 
 Format: `help` +
+Keyboard shortcut: `F1`
 
 === Adding a person: `add`
 
 Adds a person to the syndicate database. +
 Alias: `a` +
 Format: `add n: NAME p: PHONE_NUMBER e: EMAIL a: ADDRESS [t: TAG]...` +
+Keyboard shortcut (to populate prefixes): `Alt` + `A`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -83,12 +85,14 @@ Examples:
 Shows a list of all persons in the syndicate database. +
 Alias: `l` +
 Format: `list` +
+Keyboard shortcut: `F2`
 
 === Editing a person : `edit`
 
 Edits an existing person in the syndicate database. +
 Alias: `e` +
 Format: `edit INDEX [n: NAME] [p: PHONE] [e: EMAIL] [a: ADDRESS] [t: TAG]...` +
+Keyboard shortcut (to populate prefixes): `Alt` + `E`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -111,6 +115,7 @@ Finds persons whose names contain any of the given keywords. +
 Alias: `f` +
 Specifiers: `-all` `-n` `-p` `-e` `-a` `-t` +
 Format: `find [SPECIFIER] KEYWORD [MORE_KEYWORDS]` +
+Keyboard shortcut (to populate prefix): `Ctrl` + `F`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -136,6 +141,7 @@ Returns any person with the above phone number. Note that there should be no spa
 Deletes the specified person from the syndicate database. +
 Alias: `d` +
 Format: `delete INDEX` +
+Keyboard shortcut (to populate prefix): `Alt` + `D`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -157,6 +163,7 @@ Deletes the 1st person in the results of the `find` command.
 Selects the person identified by the index number used in the last person listing. +
 Alias: `s` +
 Format: `select INDEX` +
+Keyboard shortcut (to populate prefix): `Alt` + `S`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -178,6 +185,7 @@ Selects the 1st person in the results of the `find` command.
 Lists all the commands that you have entered in reverse chronological order. +
 Alias: `h` +
 Format: `history` +
+Keyboard shortcut: `Alt` + `H`
 
 [NOTE]
 ====
@@ -190,6 +198,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Alias: `u` +
 Format: `undo` +
+Keyboard shortcut: `Ctrl` + `Z`
 
 [NOTE]
 ====
@@ -217,6 +226,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 Reverses the most recent `undo` command. +
 Alias: `r` +
 Format: `redo` +
+Keyboard shortcut: `Ctrl` + `Y`
 
 Examples:
 

@@ -31,6 +31,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Test;
@@ -45,7 +46,6 @@ import seedu.address.testutil.McqCardBuilder;
 
 public class AddCardCommandParserTest {
     private AddCardCommandParser parser = new AddCardCommandParser();
-    private Set<Tag> emptyTagSet = new HashSet<>(Arrays.asList(new Tag[]{}));
 
     //@@author shawnclq
     @Test
@@ -58,11 +58,11 @@ public class AddCardCommandParserTest {
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + FRONT_DESC_CARD + BACK_DESC_CARD,
-                new AddCardCommand(expectedCard, emptyTagSet));
+                new AddCardCommand(expectedCard));
 
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + FRONT_DESC_MCQ_CARD + BACK_DESC_MCQ_CARD
                 + OPTION_1_DESC_MCQ_CARD + OPTION_2_DESC_MCQ_CARD + OPTION_3_DESC_MCQ_CARD,
-                new AddCardCommand(expectedMcqCard, emptyTagSet));
+                new AddCardCommand(expectedMcqCard));
     }
     //@@author
 
@@ -81,12 +81,12 @@ public class AddCardCommandParserTest {
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + FRONT_DESC_CARD_1 + BACK_DESC_CARD_1,
-                new AddCardCommand(expectedCard, new HashSet<>()));
+                new AddCardCommand(expectedCard));
 
         // with tags
         String tagString = " " + PREFIX_TAG + VALID_NAME_ENGLISH + " " + PREFIX_TAG + VALID_NAME_COMSCI;
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + FRONT_DESC_CARD_1 + BACK_DESC_CARD_1 + tagString,
-                new AddCardCommand(expectedCard, expectedTags));
+                new AddCardCommand(expectedCard, Optional.of(expectedTags)));
     }
     //@@author
 

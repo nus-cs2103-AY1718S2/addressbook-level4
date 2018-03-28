@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_OPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,12 +35,19 @@ public class AddCardCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_CARD = "This card already exists in the address book";
 
     private final Card cardToAdd;
-    private final Set<Tag> tagsToAdd;
+    private final Optional<Set<Tag>> tagsToAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code Card}
      */
-    public AddCardCommand(Card card, Set<Tag> tags) {
+    public AddCardCommand(Card card) {
+        this(card, Optional.empty());
+    }
+
+    /**
+     * Creates an AddCommand to add the specified {@code Card}
+     */
+    public AddCardCommand(Card card, Optional<Set<Tag>> tags) {
         requireNonNull(card);
         cardToAdd = card;
         tagsToAdd = tags;
@@ -48,9 +56,16 @@ public class AddCardCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+
         try {
             model.addCard(cardToAdd);
-            Collection<Tag> tags = tagsToAdd.stream()
+        } catch (DuplicateCardException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_CARD);
+        }
+
+        if (tagsToAdd.isPresent()) {
+            Collection<Tag> tags = tagsToAdd.get()
+                    .stream()
                     .map(model::addTag)
                     .map(r -> r.getTag())
                     .collect(Collectors.toList());
@@ -64,10 +79,9 @@ public class AddCardCommand extends UndoableCommand {
                             throw new IllegalStateException("Should not be able to reach here.");
                         }
                     });
-            return new CommandResult(String.format(MESSAGE_SUCCESS, cardToAdd));
-        } catch (DuplicateCardException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_CARD);
         }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, cardToAdd));
 
     }
 

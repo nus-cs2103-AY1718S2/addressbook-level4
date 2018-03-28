@@ -13,7 +13,7 @@ import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.issues.Issue;
 
 /**
- * Adds a person to the ProgressChecker.
+ * Create an issue on github
  */
 public class CreateIssue extends Command {
 

@@ -965,8 +965,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |remove my client | remove entries that I no longer need
 
-|`* * *` |user |add the appointment date I have with my client |keep track of the next meet up
-
 |`* * *` |user |sort the client based on different category |directly get the type of data I want
 
 |`* * *` |user |add my client’s personal detail  |know more about them
@@ -993,11 +991,27 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |view the total commission I am getting |view my total earning
 
-|`* * *` |user |view appointment on the calendar |have a more organized view of my schedule and at the same time plan for future appointment
-
 |`* * *` |user |view which are my top clients |to serve them better
 
 |`* * *` |user |group my clients|to manage the different groups differently
+
+|`* * *` |user |add the birthday date of my client |keep track of my client's birthday
+
+|`* * *` |user |edit the birthday date of my client |update it in case I got their birthday wrong at a earlier date
+
+|`* * *` |user |add the appointment date I have with my client |schedule a meeting date with a client
+
+|`* * *` |user |edit the appointment date I have with my client |make changes to the meeting date with a client
+
+|`* * *` |user |delete the appointment date I have with my client |cancel a meeting date with a client
+
+|`* * *` |user |view the appointment date I have with my client |keep track of the next meeting with a client
+
+|`* * *` |user |view appointment on the calendar |have a more organized view of my schedule and at the same time plan for future appointment
+
+|`* *` |user |export a calendar of my appointments and client birthdays |can use the data on a calendar outside of the application
+
+|`* *` |user |receive notification 3 day prior to my client's appointment date |ensure that I will not miss it
 
 |`* *` |user |check the history of my command |know what I have done
 
@@ -1009,15 +1023,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |export a portfolio of my clients |can use the data of the application elsewhere
 
-|`* *` |user |export a calendar of my appointments and client birthdays |can use the data on a calendar outside of the application
-
 |`* *` |user |hide some of my client's information |minimize the leak of my client's information
 
 |`* *` |user |sort persons by name (by default) |view the address book in an organized manner
 
 |`* *` |user |receive notification of my client's birthday |keep in touch with my clients
-
-|`* *` |user |receive notification 3 day prior to my client's appointment date |ensure that I will not miss it
 
 |`* *` |user |add in password access to my address book |be viewed/edited only by allowed users
 

@@ -100,6 +100,12 @@ public class CommandTestUtil {
     public static final String INVALID_ALIAS_DESC = "alias!";
     public static final String INVALID_COMMAND_DESC = "invalid";
 
+    public static final String VALID_BUILDING_1 = "COM1";
+    public static final String VALID_BUILDING_2 = "S1";
+    public static final String VALID_BUILDING_3 = "ERC";
+
+    public static final String INVALID_BUILDING_DESC_2 = "COM1 COM2";
+
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

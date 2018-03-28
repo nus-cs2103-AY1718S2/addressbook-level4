@@ -14,6 +14,11 @@ endif::[]
 
 By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
+== Preaface
+
+Fastis is a meet-up scheduler aimed at students in the National University of Singapore (NUS). It seeks to ease the process of scheduling meetings and discussions, especially between project teammates. Fastis provides functionality to quickly retrieve and process the schedules of different people/groups to help users plan for meet-ups. This guide documents important information for developers seeking to modify the application.
+
+
 == Setting up
 
 === Prerequisites

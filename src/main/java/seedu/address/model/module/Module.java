@@ -26,6 +26,12 @@ public class Module {
         this.timetable = timetable;
     }
 
+    public Module(String moduleCode, String moduleTitle) {
+        requireAllNonNull(moduleCode, moduleTitle);
+        this.moduleCode = moduleCode;
+        this.moduleTitle = moduleTitle;
+    }
+
     public String getModuleCode() {
         return moduleCode;
     }
@@ -50,8 +56,7 @@ public class Module {
 
         Module otherModule = (Module) other;
         return otherModule.getModuleCode().equals(this.getModuleCode())
-                && otherModule.getModuleTitle().equals(this.getModuleTitle())
-                && otherModule.getTimetable().equals(this.getTimetable());
+                && otherModule.getModuleTitle().equals(this.getModuleTitle());
     }
 
     @Override

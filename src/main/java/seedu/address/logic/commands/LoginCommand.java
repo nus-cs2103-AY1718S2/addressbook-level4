@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Logs into a social media platform using the user's name and password.
+ * Logs into a social media platform using the user's account information.
  */
 public class LoginCommand extends Command {
 

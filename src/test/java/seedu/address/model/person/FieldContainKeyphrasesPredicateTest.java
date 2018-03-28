@@ -15,22 +15,30 @@ public class FieldContainKeyphrasesPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeyphraseList = Collections.singletonList("first");
-        List<String> secondPredicateKeyphraseList = Arrays.asList("first", "second");
-        List<String> thirdPredicateKeyphraseList = Collections.emptyList();
-        List<String> fourthPredicateKeyphraseList = Collections.emptyList();
+        List<String> firstNamePredicateKeyphraseList = Collections.singletonList("first");
+        List<String> secondNamePredicateKeyphraseList = Arrays.asList("first", "second");
+        List<String> firstTagPredicateKeyphraseList = Collections.singletonList("first");
+        List<String> secondTagPredicateKeyphraseList = Arrays.asList("first", "second");
+        List<String> firstRatingPredicateKeyphraseList = Collections.singletonList("first");
+        List<String> secondRatingPredicateKeyphraseList = Collections.singletonList("second");
 
-        FieldContainKeyphrasesPredicate firstPredicate = new FieldContainKeyphrasesPredicate(
-                firstPredicateKeyphraseList, thirdPredicateKeyphraseList, fourthPredicateKeyphraseList);
-        FieldContainKeyphrasesPredicate secondPredicate = new FieldContainKeyphrasesPredicate(
-                secondPredicateKeyphraseList, thirdPredicateKeyphraseList, fourthPredicateKeyphraseList);
+        FieldContainKeyphrasesPredicate firstPredicate =
+                new FieldContainKeyphrasesPredicate(
+                        firstNamePredicateKeyphraseList,
+                        firstTagPredicateKeyphraseList,
+                        firstRatingPredicateKeyphraseList);
+        FieldContainKeyphrasesPredicate secondPredicate =
+                new FieldContainKeyphrasesPredicate(
+                        secondNamePredicateKeyphraseList,
+                        secondTagPredicateKeyphraseList,
+                        secondRatingPredicateKeyphraseList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
         FieldContainKeyphrasesPredicate firstPredicateCopy = new FieldContainKeyphrasesPredicate(
-                firstPredicateKeyphraseList, thirdPredicateKeyphraseList, fourthPredicateKeyphraseList);
+                firstNamePredicateKeyphraseList, firstTagPredicateKeyphraseList, firstRatingPredicateKeyphraseList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -45,35 +53,82 @@ public class FieldContainKeyphrasesPredicateTest {
 
     @Test
     public void test_containKeyphrases_returnsTrue() {
-        // Both zero keyphrase
+        // All zero keyphrase
         FieldContainKeyphrasesPredicate predicate = new FieldContainKeyphrasesPredicate(
-                Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
+                Collections.emptyList(),
+                Collections.emptyList(),
+                Collections.emptyList());
+        assertTrue(predicate.test(new PersonBuilder()
+                .withName("Alice Bob")
+                .withTags("Friends", "Family")
+                .withRating("3")
+                .build()));
 
-        // Both one keyphrase
+        // All one keyphrase
         predicate = new FieldContainKeyphrasesPredicate(
-                Collections.singletonList("Alice"), Collections.singletonList("Friends"), Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
+                Collections.singletonList("Alice"),
+                Collections.singletonList("Friends"),
+                Collections.singletonList("3"));
+        assertTrue(predicate.test(new PersonBuilder()
+                .withName("Alice Bob")
+                .withTags("Friends", "Family")
+                .withRating("3")
+                .build()));
 
         // Name one keyphrase
         predicate = new FieldContainKeyphrasesPredicate(
-                Collections.singletonList("Alice Bob"), Collections.emptyList(), Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
+                Collections.singletonList("Alice Bob"),
+                Collections.emptyList(),
+                Collections.emptyList());
+        assertTrue(predicate.test(new PersonBuilder()
+                .withName("Alice Bob")
+                .withTags("Friends", "Family")
+                .withRating("3")
+                .build()));
 
         // Tag one keyphrase
         predicate = new FieldContainKeyphrasesPredicate(
-                Collections.emptyList(), Collections.singletonList("Friends Family"), Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
+                Collections.emptyList(),
+                Collections.singletonList("Friends Family"),
+                Collections.emptyList());
+        assertTrue(predicate.test(new PersonBuilder()
+                .withName("Alice Bob")
+                .withTags("Friends", "Family")
+                .withRating("3")
+                .build()));
 
-        // Both multiple keyphrases, but only one matches
+        // Rating one keyphrase
         predicate = new FieldContainKeyphrasesPredicate(
-                Arrays.asList("Alice", "Carol"), Arrays.asList("Friends", "Enemy"), Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
+                Collections.emptyList(),
+                Collections.emptyList(),
+                Collections.singletonList("3"));
+        assertTrue(predicate.test(new PersonBuilder()
+                .withName("Alice Bob")
+                .withTags("Friends", "Family")
+                .withRating("3")
+                .build()));
 
-        // Both mixed-case keyphrase
+        // Both name and tag multiple keyphrases, but only one matches
         predicate = new FieldContainKeyphrasesPredicate(
-                Collections.singletonList("aLIce"), Collections.singletonList("fRIeNDs"), Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends", "Family").build()));
+                Arrays.asList("Alice", "Carol"),
+                Arrays.asList("Friends", "Enemy"),
+                Collections.emptyList());
+        assertTrue(predicate.test(new PersonBuilder()
+                .withName("Alice Bob")
+                .withTags("Friends", "Family")
+                .withRating("3")
+                .build()));
+
+        // Both name and tag mixed-case keyphrase
+        predicate = new FieldContainKeyphrasesPredicate(
+                Collections.singletonList("aLIce"),
+                Collections.singletonList("fRIeNDs"),
+                Collections.singletonList("3"));
+        assertTrue(predicate.test(new PersonBuilder()
+                .withName("Alice Bob")
+                .withTags("Friends", "Family")
+                .withRating("3")
+                .build()));
     }
 
     @Test
@@ -82,23 +137,53 @@ public class FieldContainKeyphrasesPredicateTest {
         FieldContainKeyphrasesPredicate predicate = new FieldContainKeyphrasesPredicate(
                 Collections.singletonList("Carol"),
                 Collections.singletonList("Enemy"),
-                Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Friends").build()));
+                Collections.singletonList("3"));
+        assertFalse(predicate.test(new PersonBuilder()
+                .withName("Alice Bob")
+                .withTags("Friends")
+                .withRating("3")
+                .build()));
 
         // Keyphrase match phone, email, address, and tags, but does not match name
         predicate = new FieldContainKeyphrasesPredicate(
-                Arrays.asList("12345 alice@email.com Main Street Friends"),
-                        Collections.emptyList(),
-                        Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withTags("Friends").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+                Arrays.asList("12345 alice@email.com Main Street"),
+                Collections.singletonList("Friends"),
+                Collections.singletonList("3"));
+        assertFalse(predicate.test(new PersonBuilder()
+                .withName("Alice")
+                .withPhone("12345")
+                .withEmail("alice@email.com")
+                .withAddress("Main Street")
+                .withTags("Friends")
+                .withRating("3")
+                .build()));
 
-        // Keyphrase match phone, email, address, and tags, but does not match tag
+        // Keyphrase match name, phone, email, and address, but does not match tags
         predicate = new FieldContainKeyphrasesPredicate(
-                Collections.emptyList(),
-                Arrays.asList("Alice 12345 alice@email.com Main Street"),
-                Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+                Collections.singletonList("Alice"),
+                Arrays.asList("12345 alice@email.com Main Street"),
+                Collections.singletonList("3"));
+        assertFalse(predicate.test(new PersonBuilder()
+                .withName("Alice")
+                .withPhone("12345")
+                .withEmail("alice@email.com")
+                .withAddress("Main Street")
+                .withTags("Friends")
+                .withRating("3")
+                .build()));
+
+        // Keyphrase match name, phone, email, address, and tags, but does not match rating
+        predicate = new FieldContainKeyphrasesPredicate(
+                Collections.singletonList("Alice"),
+                Collections.singletonList("Friends"),
+                Arrays.asList("12345 alice@email.com Main Street"));
+        assertFalse(predicate.test(new PersonBuilder()
+                .withName("Alice")
+                .withPhone("12345")
+                .withEmail("alice@email.com")
+                .withAddress("Main Street")
+                .withTags("Friends")
+                .withRating("3")
+                .build()));
     }
 }

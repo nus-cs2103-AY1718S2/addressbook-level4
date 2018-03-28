@@ -36,7 +36,7 @@ public class ReviewCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person reviewedPerson = new PersonBuilder().withEmail("alice@example.com").withRating("5").withReview("Lazy")
+        Person reviewedPerson = new PersonBuilder().withEmail("alice@example.com").withRating("1").withReview("Lazy")
                 .build();
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(reviewedPerson)
                 .withReview("Lazy").build();

@@ -307,6 +307,7 @@ public class EditCommand extends UndoableCommand {
                     && getIngredient().equals(e.getIngredient())
                     && getInstruction().equals(e.getInstruction())
                     && getUrl().equals(e.getUrl())
+                    && getImage().equals(e.getImage())
                     && getTags().equals(e.getTags());
         }
     }

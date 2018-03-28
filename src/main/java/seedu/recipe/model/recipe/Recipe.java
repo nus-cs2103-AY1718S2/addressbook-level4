@@ -97,6 +97,7 @@ public class Recipe {
         URL recipeCss = MainApp.class.getResource(FXML_FILE_FOLDER + "Recipe.css");
         URL bootstrapCss = MainApp.class.getResource(FXML_FILE_FOLDER + "bootstrap.css");
         String testURL = "file:/Users/administrator/Desktop/NotePad.jpg";
+        System.out.println(image);
 
         return "<html>"
                 + "<head>"
@@ -125,7 +126,7 @@ public class Recipe {
                 + "</div>"
                 + "</div>"
                 + "<div class='col-sm-6'>"
-                + "<img src='" + testURL + "' />"
+                + "<img src='" + image + "' />"
                 + "</div>"
                 + "<div class='col-sm-12'>"
                 + "<div class='col-sm-12'>"

@@ -23,7 +23,7 @@ public class Image {
     public Image(String imagePath) {
         requireNonNull(imagePath);
         checkArgument(isValidImage(imagePath), MESSAGE_IMAGE_CONSTRAINTS);
-        this.value = FILE_PREFIX + imagePath;
+        this.value = imagePath;
     }
 
     /**
@@ -36,7 +36,7 @@ public class Image {
 
     @Override
     public String toString() {
-        return value;
+        return FILE_PREFIX + value;
     }
 
     @Override

@@ -3,11 +3,13 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -98,7 +100,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Person> asObservableList() {
-        //sort();
+        sort();
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
@@ -119,16 +121,16 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-    //@@author shanmu9898
-    //* Sorts the unique person list.
-    //
-    //    public void sort() {
-    //        SortedList<Person> sortedInternalList =  internalList.sorted();
-    //        ObservableList<Person> sortedReturningInternalList = ;
-    //        for(Person p : sortedInternalList) {
-    //            sortedReturningInternalList.add(p);
-    //        }
-    //
-    //
-    //    }
+    public void sort() {
+        internalList.sort(new Comparator<Person>() {
+            @Override
+            public int compare(Person otherMember1, Person otherMember2) {
+                return otherMember1.getName().toString().compareTo(otherMember2.getName().toString());
+            }
+
+
+        });
+
+
+    }
 }

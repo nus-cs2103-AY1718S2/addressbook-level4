@@ -16,6 +16,8 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
+import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
 
 /**
@@ -28,13 +30,13 @@ public class TaskListPanel extends UiPart<Region> {
     @FXML
     private ListView<TaskCard> taskListView;
 
-    public TaskListPanel(ObservableList<Task> taskList) {
+    public TaskListPanel(ObservableList<Activity> taskList) {
         super(FXML);
         setConnections(taskList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Task> taskList) {
+    private void setConnections(ObservableList<Activity> taskList) {
         ObservableList<TaskCard> mappedList = EasyBind.map(
                 taskList, (activity) -> new TaskCard(activity, taskList.indexOf(activity) + 1));
         taskListView.setItems(mappedList);

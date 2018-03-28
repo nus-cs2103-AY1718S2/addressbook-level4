@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.Mailer;
 
+/**
+ * Send an email to the persons listed
+ */
 public class EmailCommand extends Command {
 
     public static final String COMMAND_WORD = "email";

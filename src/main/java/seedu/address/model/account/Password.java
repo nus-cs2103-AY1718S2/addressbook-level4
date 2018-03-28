@@ -18,7 +18,7 @@ public class Password {
      */
     public static final String PASSWORD_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String value;
+    private final String value;
 
     /**
      * Constructs an {@code Password}.
@@ -40,7 +40,7 @@ public class Password {
 
     @Override
     public String toString() {
-        return value;
+        return "temporarily hidden";
     }
 
     @Override

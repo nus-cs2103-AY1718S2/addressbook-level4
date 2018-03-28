@@ -4,8 +4,6 @@ package seedu.recipe.ui;
 import static seedu.recipe.ui.CssSyntax.CSS_PROPERTY_BACKGROUND_COLOR;
 import static seedu.recipe.ui.CssSyntax.CSS_PROPERTY_TEXT_COLOR;
 
-import static java.util.Objects.requireNonNull;
-
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;

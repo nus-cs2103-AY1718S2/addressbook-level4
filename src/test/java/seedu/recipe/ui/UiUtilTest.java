@@ -5,16 +5,12 @@ import static org.junit.Assert.assertTrue;
 import static seedu.recipe.ui.UiUtil.HEX_COLOR_BLACK;
 import static seedu.recipe.ui.UiUtil.HEX_COLOR_WHITE;
 
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
 import java.util.regex.Pattern;
 
 import org.junit.Test;
-
-import seedu.recipe.testutil.Assert;
 
 public class UiUtilTest {
 

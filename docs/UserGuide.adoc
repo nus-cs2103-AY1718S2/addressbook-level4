@@ -409,35 +409,22 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` OR `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Displaying Calendar in specified format : `calendar` `Coming in V1.5`
+=== Displaying Calendar : `calendar` `V1.3`
 
-Displays the Calendar at centre of window, in a specified viewing format, such as Week, Month or Year. +
-Format: `calendar [VIEW_FORMAT]` +
-Alias: `cal [VIEW_FORMAT]` +
+Displays the Calendar at centre of window in Month-View format. +
+Format: `calendar` +
+Alias: `cal` +
 
 ****
-* VIEW_FORMAT refers to a specific viewing format the Calendar will display in.
-* There are 3 viewing formats available, Week-View, Month-View and Year-View.
-* Calendar shows the current week, current month and current year depending on which viewing format it is using.
-* If no format is given, the Calendar will appear in Month-View by default.
-* VIEW_FORMAT *only accepts "week", "month" or "year".
-* The VIEW_FORMAT is case-insensitve. E.g. `cal WEEK` will display the Calendar in Week-View.
-* Calendar will display all incoming events within timeframe of the current View.
+* Calendar shows current month.
+* Calendar will display all incoming events within timeframe of the Month-View.
 ****
 
 Examples:
 
-* `calendar year` OR +
-`cal year` +
-Shows Calendar in Year-View.
-
-* `calendar` OR `calendar month` OR +
-`cal` OR `cal month` +
-Shows Calendar in Month-View
-
-* `calendar week` OR +
-`cal week` +
-Shows Calendar in Week-View
+* `calendar`` OR +
+`cal` +
+Shows Calendar in Month-View.
 
 === Listing all events : `eventlist` `Coming in V1.5`
 
@@ -445,29 +432,29 @@ Shows a list of all events in the address book. +
 Format: `eventlist` +
 Alias: `el`
 
-=== Adding events to Event list : `eventadd` `Coming in V1.5`
+=== Adding events to Event list : `eventadd` `Since V1.3`
 
 Adds an event to the Event list. +
-Format: `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
-Alias: `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+Format: `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
+Alias: `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
 
 ****
-* If input does not contain START_DATE but contains START_TIME, it is assumed that event starts and ends on END_DATE.
-* TITLE is alphanumeric and accepts white space. TITLE accepts maximum of 20 characters.
-* Person at the specified INDEX shown in the last person listing will be tagged to the event.
+* If input does not contain START_DATE, it is assumed that START DATE is the same as END_DATE.
+* If input does not contain START_TIME, it is assumed that START_TIME is 00:00.
+* TITLE is alphanumeric and accepts white space. TITLE accepts maximum of 40 characters.
 * START_DATE and END_DATE must follow the format: DD-MM-YYYY (E.g. 04-04-2020 represents 4 April 2020)
-* START_TIME and END_TIME must follow the 24-Hour format: HHMM (E.g. 2359)
+* START_TIME and END_TIME must follow the 24-Hour format: HH:MM (E.g. 23:59)
 ****
 
 Examples:
 
-* `eventadd t/meet with boss` OR +
-`ea t/meet with boss ed/05-05-2020 st/1000 et/1200` +
+* `eventadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00` OR +
+`ea t/meet with boss ed/05-05-2020 st/10:00 et/12:00` +
 Creates an event with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
 Event appears on specified date in the Calendar.
 
-* `eventadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800` OR +
-`ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800` +
+* `eventadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` OR +
+`ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` +
 Event starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
 
 === editing events in Event list : `eventedit` `Coming in V1.5`

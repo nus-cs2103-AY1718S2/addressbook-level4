@@ -664,11 +664,11 @@ A `CalendarEvent` is implemented in the following manner:
 public class CalendarEvent {
 
     private final String eventTitle;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final EventTime startTime;
-    private final EventTime endTime;
-    private final List<Person> taggedPersons;
+    private final StartDate startDate;
+    private final EndDate endDate;
+    private final StartTime startTime;
+    private final EndTime endTime;
+
 
     // ... Order attribute getters and setters ...
 
@@ -680,15 +680,14 @@ The following is a brief description of the attributes of `CalendarEvent`:
 * eventTitle: Represents title of event.
 * startDate: Represents starting date of the event in DD-MM-YYYY format.
 * endDate: Represents ending date of the event in DD-MM-YYYY format.
-* startTime: Represents starting time of the event in HHMM format (24-Hour format).
-* endTime: Represents ending time of the event in HHMM format (24-Hour format).
-* taggedPerson: Represents list of Persons in address book that are tagged to the event.
+* startTime: Represents starting time of the event in HH:MM format (24-Hour format).
+* endTime: Represents ending time of the event in HH:MM format (24-Hour format).
 
-Events management is facilitated by `UserEvents`, which resides inside `Model`.
+Events management is facilitated by `ModelManager`, which resides inside `Model`.
 It is supported by `UserEventsManager` residing inside `UserEvents`, which supports the adding, removing and editing of `CalendarEvent`(e.g. `addEvent`, `deleteEvent`).
 Orders of a person will also appear as `CalendarEvent` based on the `DeliveryDate` attribute of the `Order`.
 
-The following diagram shows class diagram of `Model` Component related to `UserEvents` and `CalendarEvent`.
+The following diagram shows class diagram of `Model` Component related to `CalendarEvent`.
 
 .`Model` Component showing classes related to events management
 image::UserEventClassDiagram.png[width="800" align="center"]

@@ -25,6 +25,8 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedPreference> preferences;
     @XmlElement
     private List<XmlAdaptedOrder> orders;
+    @XmlElement
+    private List<XmlAdaptedCalendarEvent> calendarEvents;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -35,6 +37,7 @@ public class XmlSerializableAddressBook {
         groups = new ArrayList<>();
         preferences = new ArrayList<>();
         orders = new ArrayList<>();
+        calendarEvents = new ArrayList<>();
     }
 
     /**
@@ -47,13 +50,16 @@ public class XmlSerializableAddressBook {
         preferences.addAll(src.getPreferenceList().stream().map(XmlAdaptedPreference::new)
                 .collect(Collectors.toList()));
         orders.addAll(src.getOrderList().stream().map(XmlAdaptedOrder::new).collect(Collectors.toList()));
+        calendarEvents.addAll(src.getEventList().stream().map(XmlAdaptedCalendarEvent::new)
+                .collect(Collectors.toList()));
     }
 
     /**
      * Converts this addressbook into the model's {@code AddressBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedGroup} or {@code XmlAdaptedPreference}.
+     * {@code XmlAdaptedPerson}, {@code XmlAdaptedGroup},
+     * {@code XmlAdaptedPreference} or {@code XmlAdaptedCalendarEvent}.
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
@@ -73,6 +79,10 @@ public class XmlSerializableAddressBook {
             addressBook.addOrderToOrderList(o.toModelType());
         }
 
+        for (XmlAdaptedCalendarEvent e: calendarEvents) {
+            addressBook.addCalendarEvent(e.toModelType());
+        }
+
         return addressBook;
     }
 
@@ -90,6 +100,7 @@ public class XmlSerializableAddressBook {
         return persons.equals(otherAb.persons)
                 && groups.equals(otherAb.groups)
                 && preferences.equals(otherAb.preferences)
-                && orders.equals(otherAb.orders);
+                && orders.equals(otherAb.orders)
+                && calendarEvents.equals(otherAb.calendarEvents);
     }
 }

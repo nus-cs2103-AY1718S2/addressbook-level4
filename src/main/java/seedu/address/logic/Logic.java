@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.CalendarEvent;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
@@ -24,6 +25,9 @@ public interface Logic {
     ObservableList<Person> getFilteredPersonList();
 
     ObservableList<Order> getFilteredOrderList();
+
+    /** Returns an unmodifiable view of the filtered list of calendar events */
+    ObservableList<CalendarEvent> getCalendarEventList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

@@ -33,70 +33,70 @@ import seedu.address.model.tag.Group;
 import seedu.address.model.tag.Preference;
 import seedu.address.model.tag.exceptions.GroupNotFoundException;
 import seedu.address.model.tag.exceptions.PreferenceNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.CalendarEventBuilder;
 
-public class AddCommandTest {
-
+public class AddEventCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddEventCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_calendarEventAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingCalendarEventAdded modelStub = new ModelStubAcceptingCalendarEventAdded();
+        CalendarEvent validEvent = new CalendarEventBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddEventCommandForCalendarEvent(validEvent, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddEventCommand.MESSAGE_ADD_EVENT_SUCCESS, validEvent),
+                commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validEvent), modelStub.calendarEventsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateEvent_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateCalendarEventException();
+        CalendarEvent validEvent = new CalendarEventBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddEventCommandForCalendarEvent(validEvent, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        CalendarEvent meetBoss = new CalendarEventBuilder().withEventTitle("Meeting with boss").build();
+        CalendarEvent getSupplies = new CalendarEventBuilder().withEventTitle("Get supplies").build();
+        AddEventCommand addMeetBossCommand = new AddEventCommand(meetBoss);
+        AddEventCommand addGetSuppliesCommand = new AddEventCommand(getSupplies);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addMeetBossCommand.equals(addMeetBossCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddEventCommand addMeetBossCommandCopy = new AddEventCommand(meetBoss);
+        assertTrue(addMeetBossCommand.equals(addMeetBossCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addMeetBossCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addMeetBossCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        assertFalse(addMeetBossCommand.equals(addGetSuppliesCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddEventCommand with the details of the given calendar event.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddEventCommand getAddEventCommandForCalendarEvent(CalendarEvent calEvent, Model model) {
+        AddEventCommand command = new AddEventCommand(calEvent);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -133,11 +133,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateOrder(Order target, Order editedOrder) throws UniqueOrderList.DuplicateOrderException {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -153,6 +148,12 @@ public class AddCommandTest {
         public ObservableList<CalendarEvent> getFilteredCalendarEventList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void updateOrder(Order target, Order editedOrder)
+                throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -198,12 +199,15 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throws a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throws a DuplicateCalendarEventException when trying to add a calendar event.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateCalendarEventException extends ModelStub {
+
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addCalendarEvent(CalendarEvent toAdd)
+                throws UniqueCalendarEventList.DuplicateCalendarEventException {
+
+            throw new UniqueCalendarEventList.DuplicateCalendarEventException();
         }
 
         @Override
@@ -212,16 +216,24 @@ public class AddCommandTest {
         }
     }
 
+
     /**
-     * A Model stub that always accepts the person being added.
+     * A Model stub that always accepts the calendarEvent being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingCalendarEventAdded extends ModelStub {
+        final ArrayList<CalendarEvent> calendarEventsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addCalendarEvent(CalendarEvent calendarEvent)
+                throws UniqueCalendarEventList.DuplicateCalendarEventException {
+            requireNonNull(calendarEvent);
+            calendarEventsAdded.add(calendarEvent);
+        }
+
+        /* To fix later on */
+        @Override
+        public ObservableList<CalendarEvent> getFilteredCalendarEventList() {
+            return null;
         }
 
         @Override

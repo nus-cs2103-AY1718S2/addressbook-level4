@@ -64,8 +64,11 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    /**
+     * Loads a page based on the newly selected Person.
+     */
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    public void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- Person -->
+    <persons>
+        <name>Alice Pauline</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <groups>friends</groups>
+        <preferences>shoes</preferences>
+        <preferences>necklaces</preferences>
+    </persons>
+    <!-- Meet Boss -->
+    <calendarEvents>
+        <eventTitle>Meeting with boss</eventTitle>
+        <startDate>06-06-2018</startDate>
+        <endDate>06-06-2018</endDate>
+        <startTime>10:00</startTime>
+        <endTime>12:00</endTime>
+    </calendarEvents>
+    <!-- Get Stocks -->
+    <calendarEvents>
+        <eventTitle>Get stocks from supplier</eventTitle>
+        <startDate>01-07-2018</startDate>
+        <endDate>01-07-2018</endDate>
+        <startTime>08:00</startTime>
+        <endTime>12:30</endTime>
+    </calendarEvents>
+    <!-- Road Show -->
+    <calendarEvents>
+        <eventTitle>Road Show at Orchard</eventTitle>
+        <startDate>02-05-2018</startDate>
+        <endDate>06-05-2018</endDate>
+        <startTime>09:00</startTime>
+        <endTime>19:00</endTime>
+    </calendarEvents>
+    <!-- Workshop -->
+    <calendarEvents>
+        <eventTitle>Workshop</eventTitle>
+        <startDate>28-05-2018</startDate>
+        <endDate>29-05-2018</endDate>
+        <startTime>10:00</startTime>
+        <endTime>15:00</endTime>
+    </calendarEvents>
+    <groups>friends</groups>
+    <preferences>shoes</preferences>
+    <preferences>necklaces</preferences>
+</addressbook>

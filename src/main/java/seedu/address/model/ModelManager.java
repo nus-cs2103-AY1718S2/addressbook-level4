@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.event.CalendarEvent;
+import seedu.address.model.event.UniqueCalendarEventList;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
@@ -33,6 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Order> filteredOrders;
+    private final FilteredList<CalendarEvent> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,6 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredOrders = new FilteredList<>(this.addressBook.getOrderList());
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
     }
 
     public ModelManager() {
@@ -115,6 +119,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void addCalendarEvent(CalendarEvent toAdd) throws UniqueCalendarEventList.DuplicateCalendarEventException {
+        addressBook.addCalendarEvent(toAdd);
+        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
+        indicateAddressBookChanged();
+    }
+    @Override
     public void updateOrder(Order target, Order editedOrder)
         throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
         requireAllNonNull(target, editedOrder);
@@ -152,9 +162,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ObservableList<CalendarEvent> getFilteredCalendarEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
     public void updateFilteredOrderList(Predicate<Order> predicate) {
+
         requireNonNull(predicate);
         filteredOrders.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
     }
 
     @Override

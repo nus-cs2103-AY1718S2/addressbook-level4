@@ -22,6 +22,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewCalendarCommand;
 
 /**
  * Returns the syntax list of existing commands.
@@ -58,6 +59,7 @@ public final class CommandSyntaxListUtil {
         commandSyntaxList.add(RedoCommand.COMMAND_WORD);
         commandSyntaxList.add(SelectCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(UndoCommand.COMMAND_WORD);
+        commandSyntaxList.add(ViewCalendarCommand.COMMAND_WORD);
 
         sortCommandList();
     }

@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.CalendarEvent;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Group;
@@ -34,4 +35,10 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate orders.
      */
     ObservableList<Order> getOrderList();
+
+    /**
+     * Returns an unmodifiable view of the calendar events list.
+     * This list will not contain any duplicate calendar events.
+     */
+    ObservableList<CalendarEvent> getEventList();
 }

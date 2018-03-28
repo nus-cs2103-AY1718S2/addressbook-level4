@@ -21,18 +21,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 public class LoginCommandTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void execute_success_displaysSuccessMessage() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Model expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
-        LoginManager.logout();
-
-        LoginCommand commandSuccess = new LoginCommand();
-        assertCommandSuccess(commandSuccess, model, "", expectedModel);
-    }
 
     @Test
     public void equals() {

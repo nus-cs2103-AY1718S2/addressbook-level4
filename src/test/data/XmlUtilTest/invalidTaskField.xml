@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Task with an invalid due date field -->
+<task>
+    <taskName>Task 200</taskName>
+    <taskPriority>High</taskPriority>
+    <taskDescription>(1) Business Proposal (2) Implementation details</taskDescription>
+    <taskDueDate>2018-02-31</taskDueDate>
+    <taskStatus>Undone</taskStatus>
+    <categorised>Work</categorised>
+</task>

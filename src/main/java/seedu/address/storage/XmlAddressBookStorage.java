@@ -10,7 +10,9 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.ExistingFileException;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.InvalidFileException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
 
@@ -62,7 +64,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException, InvalidFileException {
         saveAddressBook(addressBook, filePath);
     }
 
@@ -77,6 +79,34 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+    }
+
+    /**
+     * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
+     * @param filePath location of the data. Cannot be null
+     */
+    public void exportAddressBook(ReadOnlyAddressBook addressBook, String filePath)
+            throws IOException, InvalidFileException, ExistingFileException {
+        requireNonNull(addressBook);
+        requireNonNull(filePath);
+
+        if (!FileUtil.isValidXmlFile(filePath)) {
+            throw new InvalidFileException();
+        }
+
+        File file = new File(filePath);
+
+        if (FileUtil.isFileExists(file)) {
+            throw new ExistingFileException();
+        }
+
+        FileUtil.createIfMissing(file);
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException, InvalidFileException {
+        saveAddressBook(addressBook, filePath + "-backup");
     }
 
 }

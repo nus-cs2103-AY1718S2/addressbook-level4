@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= BizConnect Journal - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-T15-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018 T15-B4`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -205,7 +205,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Person>` and an unmodifiable `ObservableList<Task>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -358,6 +358,72 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::sort[]
+=== Sort feature
+==== Current Implementation
+
+The sort mechanism sorts the persons list alphabetically by name. It currently supports sorting in ascending order.
+
+The internal details of the sort mechanism is handled by the `sort` method in `UniquePersonList` class.
+The sort mechanism is implemented using a custom comparator in JavaFX ObservableList `sort` method.
+
+The following sequence diagram shows how the sort operation works.
+
+image::SortingSequenceDiagram.png[width="800"]
+
+. The user executes the `sort` command.
+. The `AddressBookParser` class parses the command and create a new `SortCommand` class.
+. The `sort` command is executed and handled by the `ModelManager` class.
+. The sorted list is returned and displayed to the user.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SortCommand`
+
+* **Alternative 1 (current choice):** Sort persons by name
+** Pros: Easy to implement and does not need to make changes for every newly added field
+** Cons: Lack flexibility in sorting by other fields
+* **Alternative 2:** Sort persons by other fields of a person's contact such as email
+** Pros: Allows flexibility in sorting
+** Cons: Might be more difficult to implement as changes need to be made for every newly added field
+// end::sort[]
+
+// tag::task-add[]
+=== Add Task feature
+==== Current Implementation
+
+The add task feature allows user to add a new task into the Address Book by specifying the required parameters.
+
+It allows the adding of the following fields: name, priority, description, due date, status and category.
+All of the fields are compulsory except category.
+
+The following sequence diagram shows how the add feature operation works.
+
+image::TaskAddSequenceDiagram.png[width="800"]
+
+. The user executes the `task-add` command.
+. The `AddressBookParser` class creates a new `TaskAddCommandParser` class to parse the command.
+. The `TaskAddCommandParser` class parses the command and create a new `TaskAddCommand` class.
+. The `task-add` command is executed and handled by the `ModelManager` class.
+. The task is added to the list of tasks in Address Book and displayed to the user.
+// end::task-add[]
+
+// tag::task-list[]
+=== List tasks feature
+==== Current Implementation
+
+The list task feature allows user to display all the tasks in the Address Book.
+
+The following sequence diagram shows how the add feature operation works.
+
+image::TaskListSequenceDiagram.png[width="800"]
+
+. The user executes the `task-list` command.
+. The `AddressBookParser` class parses the command creates a new `TaskListCommand` class.
+. The `task-list` command is executed and handled by the `ModelManager` class.
+. The list is returned and displayed to the user.
+// end::task-list[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
@@ -384,6 +450,70 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Import/Export feature (since v1.1)
+
+==== Current Implementation
+Right now, only Export functionality is implemented.
+It makes use of `ExportCommand` which extends `UndoableCommand`.
+When the Export functionality is called on the `AddressBookParser`, it parses the given input as a FILEPATH using `ExportCommandParser` which eventually creates the `ExportCommand` instance.
+The `ModelManager` then invokes methods involving `Storage` under the `Model` instance in order to store the data into a user-defined location. If such a location was not well-defined, then the XML file exported will be directly saved in your local repository's main folder.
+The 'StorageManager' will then call the `exportAddressBook` method under `XmlAddressBookStorage` to store the data as an XML file into a user-defined location.
+
+image::ExportingSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Usages of Exported Data
+
+* **Alternative 1:** Allows option of exporting data into either CSV or XML files.
+** Pros: Allows greater flexibility as CSV files can be catered to importing of contacts into Google Contacts.
+** Cons: Need to manually cater to popular file formats and this may require constant maintenance on the developers' end.
+* **Alternative 2 (current choice):** Only allows exporting of data as XML files.
+** Pros: Simplified export into a file that is readable and understandable by humans, is completely compatible with Java and 100% portable.
+** Cons: Users may not know the benefits or uses of an XML file.
+
+=== Calendar View feature (since v1.2)
+
+==== Current Implementation
+Right now, the Calendar can be viewed on the homepage of BizConnect Journal as a summarized list of events on different days of a specified month.
+
+==== To Be Updated
+Enables event-related functionalities in Calendar.
+
+=== Profile Picture feature (since v1.3)
+
+==== Current Implementation
+Right now, a contact's Profile Picture can be viewed at the right side of the contact's profile card.
+
+The following sequence diagram shows how the `addpicture` command works
+
+image::AddPictureSequenceDiagram.png[width="800"]
+
+. The user executes the `addpicture INDEX FILENAME` command, with parameters `INDEX` and `FILENAME`
+. The `AddressBookParser` class parses the command and create a new `AddPictureCommand` class.
+. The `AddPicture` command is executed and handled by the `ModelManager` class.
+. A new `Picture` object is created, containing the image referenced by `FILENAME`.
+. The new `Picture` is attached to the `Person` at `INDEX`
+. The new picture is displayed
+
+==== Design Considerations
+
+**Aspect:** Storage of images of profile pictures +
+
+**Chosen Implementation:** +
+Store the images in a local folder. For Windows, it will be in the AppData folder, for Mac/Linux, in the home folder. +
+**Pros:** +
+After a profile picture is set, it will continue showing even if the image source is deleted +
+**Cons:** +
+Extra space to store the pictures, some images may be too large and use a lot of memory. +
+
+**Alternative:** +
+Not store the images +
+**Pros:** +
+No space requirement to store the images locally +
+**Cons:** +
+Need to ensure that the image is not deleted, or it won't display. +
 
 == Documentation
 
@@ -782,13 +912,60 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+Our Address Book aims to target busy businessmen who have to travel frequently on business trips and meetings,
+but also loves to travel. The Address Book will allow the businessmen to manage their large number of contacts and
+note down the tasks to be done, as well as a calendar for them to record important events and check their schedule.
+
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* manage contacts faster than a typical mouse/GUI driven app
+* manage contacts, tasks and events from one place
+
+*Feature contribution*:
+
+* Chan Yin Xin
+
+Major: Implement task/to-do list feature to facilitate task management
+
+Every task will have a priority level and status, allowing the easy tracking of tasks.
+
+Minor: Sort contacts by name
+
+This enables easy viewing of multiple contacts that span across different alphabets that are in sequential order. For example, looking for contacts starting with NTU, then NUS.
+
+
+* Lee De Zhang
+
+Major: Profile picture feature
+
+As the businessman meet a lot of people, the profile picture allows them to recognise a contact more easily.
+
+Minor: Delete contacts by name
+
+It is more convenient to delete the contacts by name when there are a lot of contacts.
+
+
+* Tan Yong He
+
+Major: Calendar view feature to check summarised schedule for the month.
+
+Minor: Export and Import features for address book portability to google contacts.
+
+
+* Jillian Wee
+
+Major: Currency converter feature to convert from one currency to another easily.
+
+Minor: Search by name
+
+This is not limited to full word but also partial word, so that the businessman can easily find and retrieve
+a contact's details.
 
 [appendix]
 == User Stories
@@ -800,15 +977,70 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |traveler |add a new person |keep all my important contacts in case of an emergency
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |traveler |edit a person details| so that it is up-to-date
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |traveler |find a person by name | locate details of persons without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |traveler |find a person by tag |  locate details of tags without having to go through the entire list
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |businessman |find a person by company |locate details of companies without having to go through the entire list
+
+|`* * *` |businessman with constantly changing networks |delete a person |remove entries that I no longer need
+
+|`* * *` |businessman with many contacts |sort persons by name |easily view the details of people in sequential order
+
+|`* * *` |businessman with many contacts |sort persons by tag |easily view the details of persons with tag of interest
+
+|`* * *` |traveler |add event to my calender|receive a reminder on those dates (eg. Birthdays, Meetings)
+
+|`* * *` |traveler |edit event |so that it is up-to-date
+
+|`* * *` |traveler |receive email notification |get reminded before the event is about to occur
+
+|`* * *` |traveler |receive in-app notification |get reminder before the event is about to occur
+
+|`* * *` |traveler and businessman|can convert from one currency to another | calculate the amount needed to exchange
+
+|`* * *` |traveler |add a post |to record my journey and reference back to it in future
+
+|`* * *` |traveler |edit a post |makes changes or add more information
+
+|`* * *` |traveler |list all the post |to view all the post that are posted
+
+|`* * *` |traveler |find the post by title| locate details of tags without having to go through the entire list
+
+|`* * *` |traveler and businessman |suggest possible words to type in the input |aid with the search
+
+|`* * *` |traveler and businessman |have my own user profile |for easy contact-sharing purposes
+
+|`* * *` |traveler and businessman |edit my user profile |it is kept up-to-date
+
+|`* * *` |traveler and businessman |add a new task |to keep track what I need to do
+
+|`* * *` |traveler and businessman |list all tasks | to view my current tasks
+
+|`* * *` |traveler and businessman |delete a task | remove completed tasks
+
+|`* * *` |traveler and businessman |sort all tasks by priority  | easily view all the tasks by importance.
+
+|`* * *` |traveler and businessman |convert a sentence or word from one language to another |understand both language at the same time
+
+|`* *` |traveler and businessman |subscribe to event |get more information about the event
+
+|`* *` |traveler and businessman |subscribe to mailing list | receive the latest events of interest
+
+|`* *` |businessman |convert from one timezone to another |know the working hours of a person in a different time zone to facilitate business communication
+
+|`* *` |traveler |display a motivational code |keeps motivated and going
+
+|`* *` |traveler and businessman |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`* *` |careful businessman|export data |to keep as emergency backup
+
+|`* *` |impatient businessman |import data | to port over different devices easily
+
 |=======================================================================
 
 _{More to be added}_
@@ -843,6 +1075,103 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Export filepath\filename
+
+*MSS*
+
+1.  User requests to export Addressbook data to user-defined filepath and filename
+2.  AddressBook exports XML file to provided location
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given filename is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 1b. Only filename is given.
++
+[none]
+** 1b1. XML file is exported to Addressbook's main folder.
++
+Use case ends.
+
+* 1c. Filepaths are not created yet.
++
+[none]
+** 1c1. Creates necessary folders and files as indicated in the export filepath.
++
+Use case ends.
+
+* 1d. A file with the same name exists.
++
+[none]
+** 1d1. AddressBook warns the user with an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort all persons by name
+
+*MSS*
+
+1.  User requests to sort all persons in AddressBook
+2.  AddressBook sorts the list of persons alphabetically by name in ascending order
+3.  AddressBook shows a list of sorted persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add task
+
+*MSS*
+
+1.  User requests to add a new task
+2.  User enters command with required parameters
+3.  AddressBook adds the new task and updates the list of tasks
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The command is incorrectly entered
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: List all tasks
+
+*MSS*
+
+1.  User requests to list tasks
+2.  AddressBook shows a list of tasks
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
 
 _{More to be added}_
 

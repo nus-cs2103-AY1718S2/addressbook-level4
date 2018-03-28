@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>abc</name>
+        <phone>87390291</phone>
+        <email>abc@gmail.com</email>
+        <address>311, Clementi Ave 2, #02-43</address>
+        <picture>file:/C:\Users\Lee\AppData\Roaming\AddressBook\1996641270.jpg</picture>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <picture>file:/C:\Users\Lee\AppData\Roaming\AddressBook\495011192.jpg</picture>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <picture>images/default.png</picture>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <picture>images/default.png</picture>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <picture>images/default.png</picture>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <picture>images/default.png</picture>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <picture>images/default.png</picture>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Bacd</name>
+        <phone>98672345</phone>
+        <email>bacd@gmail.com</email>
+        <address>blk 457 ang mo kio #20-20</address>
+        <picture>images/default.png</picture>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tasks>
+        <taskName>Discuss project</taskName>
+        <taskPriority>Medium</taskPriority>
+        <taskDescription>Finalise on project features</taskDescription>
+        <taskDueDate>2018-03-30</taskDueDate>
+        <taskStatus>Undone</taskStatus>
+        <categorised>Work</categorised>
+    </tasks>
+    <tasks>
+        <taskName>Agenda for meeting</taskName>
+        <taskPriority>High</taskPriority>
+        <taskDescription>(1) Proposal (2) Implementation details</taskDescription>
+        <taskDueDate>2018-03-28</taskDueDate>
+        <taskStatus>Undone</taskStatus>
+        <categorised>Meeting</categorised>
+        <categorised>Work</categorised>
+    </tasks>
+    <tasks>
+        <taskName>Buy birthday gift</taskName>
+        <taskPriority>Low</taskPriority>
+        <taskDescription>Buy a gift for cousin's birthday in April</taskDescription>
+        <taskDueDate>2018-04-18</taskDueDate>
+        <taskStatus>Undone</taskStatus>
+        <categorised>Personal</categorised>
+    </tasks>
+    <taskCategories>Personal</taskCategories>
+    <taskCategories>Meeting</taskCategories>
+    <taskCategories>Work</taskCategories>
+</addressbook>

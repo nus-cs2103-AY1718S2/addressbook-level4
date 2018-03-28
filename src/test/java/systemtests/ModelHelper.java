@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.task.Task;
 
 /**
  * Contains helper methods to set up {@code Model} for testing.
@@ -31,9 +32,31 @@ public class ModelHelper {
     }
 
     /**
+     * Updates {@code model}'s task filtered list to display only {@code toDisplay}
+     */
+    public static void setTaskFilteredList(Model mode, List<Task> toDisplay) {
+        Optional<Predicate<Task>> predicate = toDisplay.stream().map(ModelHelper::getTaskPredicateMatching)
+                .reduce(Predicate::or);
+    }
+
+    /**
+     * @see ModelHelper@setTaskFilteredList(Model, List)
+     */
+    public static void setTaskFilteredList(Model model, Task... toDisplay) {
+        setTaskFilteredList(model, Arrays.asList(toDisplay));
+    }
+
+    /**
      * Returns a predicate that evaluates to true if this {@code Person} equals to {@code other}.
      */
     private static Predicate<Person> getPredicateMatching(Person other) {
         return person -> person.equals(other);
+    }
+
+    /**
+     * Returns a predicate that evaluates to true if this {@code Task} equals to {@code other}.
+     */
+    private static Predicate<Task> getTaskPredicateMatching(Task other) {
+        return task -> task.equals(other);
     }
 }

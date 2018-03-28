@@ -3,8 +3,13 @@ package seedu.address.model.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.category.TaskCategory;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEventBook;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -12,6 +17,13 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskDescription;
+import seedu.address.model.task.TaskDueDate;
+import seedu.address.model.task.TaskName;
+import seedu.address.model.task.TaskPriority;
+import seedu.address.model.task.TaskStatus;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
@@ -40,15 +52,49 @@ public class SampleDataUtil {
         };
     }
 
+    public static Task[] getSampleTasks() {
+        return new Task[] {
+            new Task(new TaskName("Task XYZ"), new TaskPriority("Medium"),
+                new TaskDescription("Task description XYZ"),
+                new TaskDueDate("2018-04-28"), new TaskStatus("Undone"),
+                getTaskCategorySet("Work")),
+            new Task(new TaskName("Essay research"), new TaskPriority("Low"),
+                new TaskDescription("Google for interesting points on essay topic"),
+                new TaskDueDate("2018-05-29"), new TaskStatus("Undone"),
+                getTaskCategorySet("Personal")),
+            new Task(new TaskName("Formulate meeting agenda"), new TaskPriority("High"),
+                new TaskDescription("(1) Analyse the project requirements (2) Record meeting agenda"),
+                new TaskDueDate("2018-04-20"), new TaskStatus("Undone"),
+                getTaskCategorySet("Meeting"))
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
             }
+            for (Task sampleTask : getSampleTasks()) {
+                sampleAb.addTask(sampleTask);
+            }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
+        } catch (DuplicateTaskException e) {
+            throw new AssertionError("sample data cannot contain duplicate tasks", e);
+        }
+    }
+
+    public static ReadOnlyEventBook getSampleEventBook() {
+        try {
+            EventBook sampleEb = new EventBook();
+            for (Event sampleEvent : getSampleEvents()) {
+                sampleEb.addEvent(sampleEvent);
+            }
+            return sampleEb;
+        } catch (CommandException e) {
+            throw new AssertionError("sample data cannot contain duplicate events", e);
         }
     }
 
@@ -64,4 +110,26 @@ public class SampleDataUtil {
         return tags;
     }
 
+    /**
+     * Returns a task category set containing the list of strings given.
+     */
+    public static Set<TaskCategory> getTaskCategorySet(String... strings) {
+        HashSet<TaskCategory> taskCategories = new HashSet<>();
+        for (String s : strings) {
+            taskCategories.add(new TaskCategory(s));
+        }
+
+        return taskCategories;
+    }
+
+    public static Event[] getSampleEvents() {
+        return new Event[]{
+            new Event(new String("Clique Gathering"), new String("Night out with friends"),
+                new String("Tampines Hub"), new String("13-10-2017 1700")),
+            new Event(new String("School Hall Concert"), new String("Friend performing"),
+                new String("UCC"), new String("26-10-2017 1800")),
+            new Event(new String("Halloween Party"), new String("Halloween Event"),
+                new String("Andy's House"), new String("31-10-2017 2000"))
+        };
+    }
 }

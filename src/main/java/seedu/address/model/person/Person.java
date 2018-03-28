@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
 
 /**
  * Represents a Person in the address book.
@@ -22,17 +24,35 @@ public class Person {
 
     private final UniqueTagList tags;
 
+    private Picture picture;
+
     /**
      * Every field must be present and not null.
      */
+    public Person(Name name, Phone phone, Email email, Address address, Picture pic, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.picture = pic;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+    }
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.picture = new Picture();
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+    }
+
+    public Person(Person source) {
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPicture(),
+                source.getTags());
     }
 
     public Name getName() {
@@ -50,6 +70,41 @@ public class Person {
     public Address getAddress() {
         return address;
     }
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public UniqueTagList getUniqueTagList() {
+        return tags;
+    }
+    /**
+     * Update contact picture to that located in path
+     * @param path
+     */
+    public void updatePicture(String path) {
+        int hash = this.hashCode();
+        String filename = String.valueOf(hash);
+        this.picture = new Picture(path, filename);
+    }
+
+    /**
+     * Set profile picture to that in path
+     */
+    public void setPicture(String path) throws IllegalValueException {
+
+        Picture oldPic = this.picture;
+        try {
+            int fileName = this.hashCode();
+            this.picture = new Picture(path, String.valueOf(fileName));
+        } catch (Exception e) {
+            this.picture = oldPic; //reset picture back to default
+            throw new IllegalValueException(Picture.MESSAGE_PICTURE_CONSTRAINTS);
+        }
+    }
+
+
+
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

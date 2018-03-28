@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- AddressBook save file which contains the same Task values as in
+{@code TypicalTasks#getTypicalTasks()}-->
+<addressbook>
+    <tasks>
+        <taskName>TASK 1</taskName>
+        <taskPriority>Medium</taskPriority>
+        <taskDescription>Tasks to be done for task 1</taskDescription>
+        <taskDueDate>2018-06-15</taskDueDate>
+        <taskStatus>Undone</taskStatus>
+        <categorised>Work</categorised>
+    </tasks>
+    <tasks>
+        <taskName>Task 2</taskName>
+        <taskPriority>High</taskPriority>
+        <taskDescription>Agenda for task 2</taskDescription>
+        <taskDueDate>2018-03-27</taskDueDate>
+        <taskStatus>Undone</taskStatus>
+        <categorised>Personal</categorised>
+    </tasks>
+    <tasks>
+        <taskName>Task 3</taskName>
+        <taskPriority>Low</taskPriority>
+        <taskDescription>Purchase office supplies</taskDescription>
+        <taskDueDate>2018-04-10</taskDueDate>
+        <taskStatus>Undone</taskStatus>
+        <categorised>Work</categorised>
+    </tasks>
+    <taskCategories>Work</taskCategories>
+    <taskCategories>Personal</taskCategories>
+</addressbook>

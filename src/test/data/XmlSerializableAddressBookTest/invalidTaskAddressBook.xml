@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- Task with invalid taskPriority field -->
+    <tasks>
+        <taskName>TASK 1</taskName>
+        <taskPriority>random</taskPriority>
+        <taskDescription>Tasks to be done for task 1</taskDescription>
+        <taskDueDate>2018-06-15</taskDueDate>
+        <taskStatus>Undone</taskStatus>
+    </tasks>
+</addressbook>

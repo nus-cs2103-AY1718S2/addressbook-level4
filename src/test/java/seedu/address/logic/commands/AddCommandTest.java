@@ -21,9 +21,14 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.event.CalendarEvent;
+import seedu.address.model.event.ReadOnlyEventBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -113,6 +118,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyEventBook getEventBook() {
+            return null;
+        }
+
+        @Override
         public void deletePerson(Person target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -132,6 +142,62 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersons() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addTask(Task task) throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTask(Task target) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateTask(Task target, Task editedTask) throws DuplicateTaskException, TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortTasks() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Task> getFilteredTaskList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<Task> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addEvent(CalendarEvent toAdd) throws CommandException {
+
+        }
+
+        @Override
+        public void deleteEvent(CalendarEvent eventToDelete) throws CommandException {
+
+        }
+
+        @Override
+        public ObservableList<CalendarEvent> getFilteredEventList() {
+            return null;
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<CalendarEvent> predicate) {
+
         }
     }
 

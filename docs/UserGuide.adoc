@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= BizConnect Journal - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,13 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T15-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018 T15-B4`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+BizConnect Journal is catered towards businessmen users and travelers who *prefer to use a desktop app for managing contacts*. More importantly, BCJ is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, BCJ can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -73,10 +73,30 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding a profile picture to a person: `addpicture`
+
+Adds a profile picture to a person +
+Format: `addpicture INDEX FILENAME`
+
+****
+* Adds a picture at location `FILENAME` to person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* `FILENAME` must point to a valid image file.
+****
+
+Examples:
+
+* `edit 1 C://pictures/janeDoe.jpg` +
+Edits the profile picture of the 1st person to be the picture at C://pictures/janeDoe.jpg
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
+
+=== Sorting all persons : `sort`
+
+Sorts all persons in the address book alphabetically by name in ascending order and list them. +
+Format: `sort`
 
 === Editing a person : `edit`
 
@@ -107,7 +127,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Partial words will be matched e.g. `Han` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -118,13 +138,34 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Exporting addressbook data: `export`
+
+Exports addressbook data into an XML file. +
+Format: `export FILEPATH [MORE_KEYWORDS]`
+
+****
+* Addressbook creates XML file if valid filepath and filename is given.
+* If filename already exists, a warning message is displayed.
+* If file extension is not .xml, a warning message is displayed.
+* If filepath not given, XML file is auto-created under main folder.
+* If filepath is invalid, Addressbook creates folders to support the filepath defined by the user.
+****
+
+Examples:
+
+* `export C:\Users\John Doe\Documents\addressbook.xml` +
+Creates XML file in the user-defined filepath
+* `exp addressbook.xml` +
+Creates XML file in the main folder of the Addressbook
+
+=== Deleting a person: `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
+
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -137,6 +178,25 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Deleting a person by name: `deletebyname`
+
+Deletes the specified person from the address book by name. +
+Format: `delete NAME`
+
+****
+* Deletes the person at the specified `NAME`.
+* The index refers to the name of the contact shown in the most recent listing.
+* NAME is not case sensitive.
+* However, it must exatly match the name of the contact to be deleted.
+* If there are more than one contacts with the same name, use delete command instead.
+****
+
+Examples:
+
+* `deletebyname` +
+`john doe` +
+Deletes the contact whose name matches john doe.
 
 === Selecting a person : `select`
 
@@ -239,6 +299,126 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+// tag::AddTask[]
+=== Adding a task: `task-add` `[since v1.3]`
+
+Adds a task to the address book. +
+Format: `task-add n/NAME p/PRIORITY d/DESCRIPTION dd/DUE_DATE s/STATUS [c/CATEGORY]...`
+
+[TIP]
+A task can have any number of categories (including 0)
+
+Examples:
+
+* `task-add n/Task 1 p/Medium d/Description for task 1 dd/2018-05-10 s/Undone`
+* `task-add n/Agenda for meeting p/High d/Discuss proposal details dd/2018-04-29 s/Undone c/Meeting`
+// end::AddTask[]
+
+// tag::ListTask[]
+=== Listing all tasks: `task-list` `[since v1.3]`
+
+Shows a list of all tasks in the address book. +
+Format: `task-list`
+// end::ListTask[]
+
+// tag::SortTask[]
+=== Sorting all tasks by priority: `task-sort` `[coming in v2.0]`
+
+Sorts all tasks in the address book by priority (i.e. High, Medium, Low) in decreasing order of importance
+and list them. +
+Format: `task-sort`
+// end::SortTask[]
+
+// tag::DeleteTask[]
+=== Deleting a task: `task-delete` `[coming in v2.0]`
+
+Deletes the specified task from the address book. +
+Format: `delete INDEX`
+
+****
+* Deletes the task at the specified `INDEX`.
+
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `task-list` +
+`delete 2` +
+Deletes the 2nd task in the address book.
+// end::DeleteTask[]
+
+// tag::ConvertCurrency[]
+=== Converting from one currency to another: `convert` `[coming in v2.0]`
+
+Convert any amount in terms of SGD to USD +
+Format: `convert [VALUE]`
+
+****
+* Comma is use as a thousand separtor and to 2 decimal places, eg 1,000.00
+****
+
+Examples:
+
+* `convert 1` +
+Returns `USD 0.76`
+* `convert 5000` +
+Returns `USD 3,800.00`
+// end::ConvertCurrency[]
+
+// tag::FindByTag[]
+=== Locating persons by tag: `find -t` `[coming in v2.0]`
+
+Finds persons whose names contain any of the given keywords. +
+Format: `find -t KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the tag is searched.
+* Partial words will be matched e.g. `Han` will match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find -t friends` +
+Returns `john` and `John Doe`
+* `find -t f` +
+Returns any person having tags `family` or `friends`
+// end::FindByTag[]
+
+// tag::FindByTag[]
+=== Locating persons by phone: `find -p` `[coming in v2.0]`
+
+Finds persons whose names contain any of the given value. +
+Format: `find -p VALUE`
+
+****
+* Only the phone is searched.
+* Partial numbers will be matched e.g. `984` will match `98450293`
+* Persons matching at least one phone will be returned (i.e. `OR` search).
+****
+
+Examples:
+
+* `find -p 982039` +
+Returns any person having phone `98203910` or `98203950`
+// end::FindByTag[]
+
+// tag::DisplayPicture[]
+=== Profile picture feature `[coming in v2.0]`
+
+_{explain how the user can make use of the display picture feature}_
+// end::DisplayPicture[]
+
+// tag::CalendarView[]
+=== Calendar view feature to check summarised schedule for the month `[coming in v2.0]`
+
+_{explain how the user can use the calendar}_
+// end::CalendarView[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -246,15 +426,21 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add a person* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete By Name* : `deletebyname NAME` +
+e.g. `delete John Appleseed`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Export* : `export FILEPATH` +
+e.g. `exports data into XML file in user-defined filepath`
+* *Convert* : `convert VALUE` +
+e.g. `convert 1`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -262,3 +448,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Sort all persons* : `sort`
+* *Add a task* : `task-add`
+* *List tasks* : `task-list`

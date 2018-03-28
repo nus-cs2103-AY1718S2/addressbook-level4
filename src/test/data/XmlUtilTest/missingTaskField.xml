@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Task with missing name field -->
+<task>
+    <taskPriority>High</taskPriority>
+    <taskDescription>(1) Business Proposal (2) Implementation details</taskDescription>
+    <taskDueDate>2018-05-25</taskDueDate>
+    <taskStatus>Undone</taskStatus>
+    <categorised>Work</categorised>
+</task>

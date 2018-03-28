@@ -81,6 +81,14 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    /**
+     * Sorts all persons in list alphabetically by name
+     */
+    public void sort() {
+        internalList.sort((person1, person2) -> person1.getName().toString()
+                .compareToIgnoreCase(person2.getName().toString()));
+    }
+
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

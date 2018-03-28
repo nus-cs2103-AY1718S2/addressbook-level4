@@ -394,3 +394,10 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *ChangeTagColor* : `changeTagColor` +
+e.g. `changeTagColor friends blue`
+* *Add To Do : `addToDo`
+* *List Group Members : `listGroupMembers` +
+e.g. `listGroupMembers CS1010`
+* *Add Group : `addGroup` +
+e.g. `addGroup CS3230`

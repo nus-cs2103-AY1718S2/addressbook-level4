@@ -21,6 +21,7 @@ import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemovePasswordCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -111,7 +112,10 @@ public class AddressBookParser {
             return new PasswordCommandParser().parse(arguments);
 
         case BirthdaysCommand.COMMAND_WORD:
-            return new BirthdaysCommand();
+            return new BirthdaysCommandParser().parse(arguments);
+
+        case RemovePasswordCommand.COMMAND_WORD:
+            return new RemovePasswordCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -91,13 +91,18 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             return Optional.empty();
         }
         File file = new File(filePath);
-        try {
-            SecurityUtil.decrypt(file, password.getPassword());
-        } catch (WrongPasswordException e) {
-            SecurityUtil.decrypt(file, password.getPrevPassword());
+        if (password.getPassword() != null) {
+            try {
+                SecurityUtil.decrypt(file, password.getPassword());
+            } catch (WrongPasswordException e) {
+                logger.info("Current Password don't work, trying previous password.");
+                SecurityUtil.decrypt(file, password.getPrevPassword());
+            }
         }
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(file);
-        SecurityUtil.encrypt(file, password.getPassword());
+        if (password.getPassword() != null) {
+            SecurityUtil.encrypt(file, password.getPassword());
+        }
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
@@ -150,14 +155,19 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        try {
-            SecurityUtil.decrypt(file, addressBook.getPassword().getPassword());
-        } catch (WrongPasswordException e) {
-            logger.info("Current Password don't work, trying previous password.");
-            SecurityUtil.decrypt(file, addressBook.getPassword().getPrevPassword());
+        Password password = addressBook.getPassword();
+        if (password.getPassword() != null) {
+            try {
+                SecurityUtil.decrypt(file, password.getPassword());
+            } catch (WrongPasswordException e) {
+                logger.info("Current Password don't work, trying previous password.");
+                SecurityUtil.decrypt(file, password.getPrevPassword());
+            }
         }
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
-        SecurityUtil.encrypt(file, addressBook.getPassword().getPassword());
+        if (password.getPassword() != null) {
+            SecurityUtil.encrypt(file, password.getPassword());
+        }
     }
 
     @Override

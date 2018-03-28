@@ -1,6 +1,7 @@
 package seedu.address;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
@@ -21,6 +23,7 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -224,6 +227,7 @@ public class MainApp extends Application {
             pw.start(primaryStage);
         } else {
             ui.start(primaryStage);
+            autoOpenBirthdayNotification();
         }
     }
 
@@ -248,5 +252,18 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    /**
+     * Helper method to open birthday notification
+     * Called after UI is called
+     */
+    private void autoOpenBirthdayNotification() {
+        LocalDate currentDate = LocalDate.now();
+
+        if (model != null) {
+            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
+                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
+        }
     }
 }

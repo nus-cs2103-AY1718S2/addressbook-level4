@@ -1,8 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND;
-import static seedu.address.logic.commands.AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_CLEAR;
@@ -17,7 +15,6 @@ import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_LIST;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_REDO;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_SELECT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_UNDO;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR;
@@ -33,7 +30,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_REDO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_SELECT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_UNDO;
 
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseAliasWord;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -169,20 +165,6 @@ public class AliasCommandParserTest {
                 .withAlias(VALID_ALIAS_UNDO).build();
 
         assertParseSuccess(parser, ALIAS_DESC_UNDO, new AliasCommand(expectedUndoAlias));
-    }
-
-    @Test
-    public void parse_aliasWordAlias_failure() {
-        //test alias word to be a command word failure
-        assertParseAliasWord(parser, parser.getCommands());
-    }
-
-    @Test
-    public void parse_commandWordAlias_failure() {
-        //test invalid command word with valid alias word failure
-        String command = INVALID_COMMAND_DESC + " " + VALID_ALIAS_ADD;
-        String message = String.format(MESSAGE_INVALID_COMMAND, MESSAGE_INVALID_COMMAND_DESCRIPTION);
-        assertParseFailure(parser, command, message);
     }
 
     @Test

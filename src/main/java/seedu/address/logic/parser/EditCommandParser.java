@@ -107,7 +107,8 @@ public class EditCommandParser implements Parser<EditCommand> {
      * If profile image is present and equals to empty string, it will be parsed into a
      * {@code ProfileImage} containing null value.
      */
-    private Optional<ProfileImage> parseProfileImageForEdit(Optional<String> profileImage) throws IllegalValueException {
+    private Optional<ProfileImage> parseProfileImageForEdit(Optional<String> profileImage)
+            throws IllegalValueException {
         assert profileImage != null;
         if (!profileImage.isPresent()) {
             return Optional.empty();

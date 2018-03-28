@@ -80,13 +80,13 @@ public class AddCommandParser implements Parser<AddCommand> {
 
             Optional<ProfileImage> profileImageOptional =
                     ParserUtil.parseProfileImage(argMultimap.getValue(PREFIX_IMAGE));
-            ProfileImage profileImage = profileImageOptional.isPresent() ?
-                    profileImageOptional.get() : new ProfileImage(null);
+            ProfileImage profileImage = profileImageOptional.isPresent()
+                    ? profileImageOptional.get() : new ProfileImage(null);
 
             Optional<Comment> commentOptional =
                     ParserUtil.parseComment(argMultimap.getValue(PREFIX_COMMENT));
-            Comment comment = commentOptional.isPresent() ?
-                    commentOptional.get() : new Comment(null);
+            Comment comment = commentOptional.isPresent()
+                    ? commentOptional.get() : new Comment(null);
 
             // Default-valued fields
             Rating rating = new Rating(Rating.DEFAULT_SCORE, Rating.DEFAULT_SCORE,

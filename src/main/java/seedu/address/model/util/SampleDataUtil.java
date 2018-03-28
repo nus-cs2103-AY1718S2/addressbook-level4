@@ -43,7 +43,8 @@ public class SampleDataUtil {
                 new JobApplied("Software Engineer"),
                 new Rating(4.3, 4.8,
                             4.0, 4.1),
-                    new Resume(formPathFromFileName("alex.pdf")), new ProfileImage(formImagePathFromFileName("elon.jpg")),
+                    new Resume(formPathFromFileName("alex.pdf")),
+                    new ProfileImage(formImagePathFromFileName("elon.jpg")),
                     new Comment("Alex is great"), new InterviewDate(1540814400L),
                     new Status(), getTagSet("friends")),
 
@@ -64,7 +65,8 @@ public class SampleDataUtil {
                 new JobApplied("Software Tester"),
                 new Rating(4.5, 3,
                         4.5, 2.5),
-                    new Resume(formPathFromFileName("char.pdf")), new ProfileImage(formImagePathFromFileName("jobs.jpg")),
+                    new Resume(formPathFromFileName("char.pdf")),
+                    new ProfileImage(formImagePathFromFileName("jobs.jpg")),
                     new Comment(null), new InterviewDate(),
                     new Status(5), getTagSet("neighbours")),
 

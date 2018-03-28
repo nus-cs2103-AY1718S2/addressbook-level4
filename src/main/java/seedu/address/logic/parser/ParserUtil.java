@@ -422,6 +422,15 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> resume} into an {@code Optional<Resume>} if {@code resume} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Resume> parseResume(Optional<String> resume) throws IllegalValueException {
+        requireNonNull(resume);
+        return resume.isPresent() ? Optional.of(parseResume(resume.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String profileImage} into a {@code ProfileImage}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -437,6 +446,16 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> profileImage} into an {@code Optional<ProfileImage>}
+     * if {@code profileImage} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ProfileImage> parseProfileImage(Optional<String> profileImage) throws IllegalValueException {
+        requireNonNull(profileImage);
+        return profileImage.isPresent() ? Optional.of(parseProfileImage(profileImage.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String comment} into a {@code Comment}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -449,25 +468,6 @@ public class ParserUtil {
             throw new IllegalValueException(Comment.MESSAGE_COMMENT_CONSTRAINTS);
         }
         return new Comment(trimmedComment);
-    }
-
-    /**
-     * Parses a {@code Optional<String> resume} into an {@code Optional<Resume>} if {@code resume} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Resume> parseResume(Optional<String> resume) throws IllegalValueException {
-        requireNonNull(resume);
-        return resume.isPresent() ? Optional.of(parseResume(resume.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code Optional<String> profileImage} into an {@code Optional<ProfileImage>}
-     * if {@code profileImage} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<ProfileImage> parseProfileImage(Optional<String> profileImage) throws IllegalValueException {
-        requireNonNull(profileImage);
-        return profileImage.isPresent() ? Optional.of(parseProfileImage(profileImage.get())) : Optional.empty();
     }
 
     /**

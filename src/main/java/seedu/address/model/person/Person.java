@@ -100,9 +100,13 @@ public class Person {
         return resume;
     }
 
-    public ProfileImage getProfileImage() { return profileImage; }
+    public ProfileImage getProfileImage() {
+        return profileImage;
+    }
 
-    public Comment getComment() { return comment; }
+    public Comment getComment() {
+        return comment;
+    }
 
     public InterviewDate getInterviewDate() {
         return interviewDate;

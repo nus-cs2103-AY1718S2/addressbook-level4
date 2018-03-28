@@ -282,9 +282,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(gradePointAverage);
         }
 
-        public void setJobApplied(JobApplied jobApplied) { this.jobApplied = jobApplied; }
+        public void setJobApplied(JobApplied jobApplied) {
+            this.jobApplied = jobApplied;
+        }
 
-        public Optional<JobApplied> getJobApplied() { return Optional.ofNullable(jobApplied); }
+        public Optional<JobApplied> getJobApplied() {
+            return Optional.ofNullable(jobApplied);
+        }
 
         public void setResume(Resume resume) {
             this.resume = resume;

@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -31,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueSubjectList subjects;
+    private final UniqueAppointmentList appointments;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -43,6 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         subjects = new UniqueSubjectList();
+        appointments = new UniqueAppointmentList();
     }
 
     public AddressBook() {}
@@ -123,6 +128,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
         removeUnusedTags();
+    }
+
+    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+        appointments.add(appointment);
     }
 
     /**
@@ -271,6 +280,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
                                         person.getRemark());
+
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {

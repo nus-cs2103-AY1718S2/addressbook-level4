@@ -88,7 +88,7 @@ public class DistanceCommand extends Command {
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(origin, destination);
 
-            if(targetIndexOrigin == null) {
+            if (targetIndexOrigin == null) {
                 EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndexDestination));
                 return new CommandResult(String.format
                         (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance));

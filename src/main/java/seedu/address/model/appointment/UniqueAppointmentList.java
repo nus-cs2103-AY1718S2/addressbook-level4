@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -157,11 +158,18 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         return FXCollections.unmodifiableObservableList(pastAppointments);
     }
 
-//    public boolean remove(Index index) {
-//        requireNonNull(index);
-//
-//        final boolean appointmentDeleted = internalList.remove(index.getZeroBased());
-//    }
+    /**
+     * Returns true if the element is deleted..
+     */
+    public boolean remove(Index index) {
+        requireNonNull(index);
+        Appointment appointmentToDelete = getAppointmentByIndex(index);
+        return internalList.remove(appointmentToDelete);
+    }
+
+    public Appointment getAppointmentByIndex(Index index) {
+        return (Appointment) internalList.get(index.getZeroBased());
+    }
 
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list

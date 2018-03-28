@@ -116,9 +116,9 @@ public class Patient {
         return appointments.getUpcomingAppointmentObservableList();
     }
 
-//    public void deletePatientAppointment(Index index) {
-//        appointments.delete(index);
-//    }
+    public boolean deletePatientAppointment(Index index) {
+        return appointments.remove(index);
+    }
 
     @Override
     public boolean equals(Object other) {

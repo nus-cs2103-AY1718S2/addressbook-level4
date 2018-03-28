@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
@@ -184,6 +186,15 @@ public class Imdb implements ReadOnlyImdb {
 
     public Patient removePatientFromQueue() throws PatientNotFoundException {
         return visitingQueue.removePatient();
+    }
+
+    /**
+     * Remove a patient's appointment
+     * @return true if the appointment is deleted successfully
+     */
+    public boolean deletePatientAppointment(Patient patient, Index index) {
+        requireAllNonNull(patient, index);
+        return patient.deletePatientAppointment(index);
     }
 
     /**

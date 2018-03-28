@@ -22,6 +22,8 @@ public class DeleteAppointmentCommand extends Command {
 
     public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database";
 
+    public static final String MESSAGE_APPOINTMENT_NOT_FOUND = "The appointment cannot be found";
+
     private final NameContainsKeywordsPredicate predicate;
 
     private final Index targetIndex;
@@ -39,9 +41,11 @@ public class DeleteAppointmentCommand extends Command {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
 
+        if (patientFound.deletePatientAppointment(targetIndex)) {
+            return new CommandResult(MESSAGE_DELETE_SUCCESS);
+        }
 
-
-        return null;
+        throw new CommandException(MESSAGE_APPOINTMENT_NOT_FOUND);
     }
 
     @Override

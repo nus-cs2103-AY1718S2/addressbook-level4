@@ -119,8 +119,10 @@ public class ModelManager extends ComponentManager implements Model {
         return null;
     }
 
-    public synchronized void deletePatientAppointment(Patient patient, Index index) {
-        
+    @Override
+    public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
+        requireAllNonNull(patient, index);
+        return false;
     }
 
     public UniqueAppointmentList getPatientAppointments(Patient patient) {

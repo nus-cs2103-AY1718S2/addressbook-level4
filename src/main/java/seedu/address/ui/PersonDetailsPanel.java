@@ -1,3 +1,4 @@
+//@@author jaronchan
 package seedu.address.ui;
 
 import java.net.URL;
@@ -15,13 +16,14 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 import seedu.address.logic.MapManager;
 import seedu.address.model.person.Person;
 
-//@@author jaronchan
 /**
  * The Person Details Panel of the App.
  * To be UPDATED
@@ -35,6 +37,9 @@ public class PersonDetailsPanel extends UiPart<Region>
 
     @FXML
     private GoogleMapView mapView;
+
+    @FXML
+    private Pane invalidAddressOverlay;
 
     private GoogleMap map;
 
@@ -55,19 +60,12 @@ public class PersonDetailsPanel extends UiPart<Region>
 
     /**
      * Update the map based on new selection event.
+     * Default view is shown if no address is invalid.
      */
 
     private void loadPersonMapAddress(Person person) {
 
         MapManager.GeocodeUtil.setMapMarkerFromAddress(map, person.getAddress().toString());
-//        mapView.setZoom(17);
-//
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(addressAsGeocode);
-//
-//        Marker marker = new Marker(markerOptions);
-//        map.addMarker(marker);
-
     }
 
     /**
@@ -87,10 +85,10 @@ public class PersonDetailsPanel extends UiPart<Region>
                 .rotateControl(false)
                 .scaleControl(false)
                 .streetViewControl(false)
-                .zoomControl(false)
                 .zoom(10);
 
         map = mapView.createMap(mapOptions);
+        invalidAddressOverlay.setVisible(false);
 
     }
 
@@ -105,5 +103,11 @@ public class PersonDetailsPanel extends UiPart<Region>
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonMapAddress(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleShowInvalidAddressOverlayEvent(ShowInvalidAddressOverlayEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        invalidAddressOverlay.setVisible(event.getAddressValidity());
     }
 }

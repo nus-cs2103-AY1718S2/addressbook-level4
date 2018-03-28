@@ -10,6 +10,9 @@ import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
+
 public class MapManager {
     /**
      * Helps with retrieving the geocode from given address.
@@ -20,7 +23,7 @@ public class MapManager {
         private static GeocodingService geocodingService = new GeocodingService();
 
         /**
-         *  Calls on geocodingService to update geocode.
+         *  Retrieves geocode of specified person address and updates map accordingly.
          */
         public static class MyGeocodingServiceCallback implements GeocodingServiceCallback {
             private GoogleMap map;
@@ -29,23 +32,24 @@ public class MapManager {
             }
             @Override
             public void geocodedResultsReceived(GeocodingResult[] results, GeocoderStatus status) {
-                LatLong coordination;
+                LatLong geocode;
                 if (status == GeocoderStatus.ZERO_RESULTS) {
-                    coordination = null;
+                    geocode = null;
+
                 } else if (results.length > 1) {
-                    coordination = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
+                    geocode = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
                             results[0].getGeometry().getLocation().getLongitude());
                 } else {
-                    coordination = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
+                    geocode = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
                             results[0].getGeometry().getLocation().getLongitude());
                 }
 
-                if (coordination != null) {
+                if (geocode != null) {
                     map.setZoom(17);
-                    map.setCenter(coordination);
+                    map.setCenter(geocode);
 
                     MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(coordination);
+                    markerOptions.position(geocode);
 
                     Marker marker = new Marker(markerOptions);
                     map.addMarker(marker);
@@ -58,7 +62,7 @@ public class MapManager {
         }
 
         /**
-         *  @return geocode
+         *  Calls on geocodingService to update geocode and set map maker of specified person.
          */
         public static void setMapMarkerFromAddress(GoogleMap map, String address) {
             geocodingService.geocode(address, new MyGeocodingServiceCallback(map));

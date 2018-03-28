@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 
@@ -19,6 +18,9 @@ public class LoginWindow extends Application {
         launch(args);
     }
 
+    /**
+     * Opens a new window and starts up the login form
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -51,6 +53,9 @@ public class LoginWindow extends Application {
         }
     }
 
+    /**
+     * Initializes the login form
+     */
     public void showLoginForm() {
         try {
             // Load root layout from fxml file.

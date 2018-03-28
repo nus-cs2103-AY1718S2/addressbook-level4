@@ -6,8 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.login.LoginManager;
-
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -26,6 +24,8 @@ import seedu.address.logic.commands.RemovePatientQueueCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAppointmentCommand;
+
+import seedu.address.logic.login.LoginManager;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 

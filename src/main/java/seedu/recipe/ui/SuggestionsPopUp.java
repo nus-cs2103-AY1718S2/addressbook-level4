@@ -11,6 +11,7 @@ import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import seedu.recipe.ui.util.AutoCompletionUtil;
 import seedu.recipe.ui.util.TextInputProcessorUtil;
 
 //@@author hoangduong1607
@@ -22,12 +23,14 @@ public class SuggestionsPopUp extends ContextMenu {
     private CommandBox commandBox;
     private TextArea commandTextArea;
     private TextInputProcessorUtil textInputProcessor;
+    private AutoCompletionUtil autoCompletionUtil;
 
     protected SuggestionsPopUp(CommandBox commandBox) {
         super();
         this.commandBox = commandBox;
         commandTextArea = commandBox.getCommandTextArea();
         textInputProcessor = new TextInputProcessorUtil();
+        autoCompletionUtil = new AutoCompletionUtil();
     }
 
     /**
@@ -96,7 +99,15 @@ public class SuggestionsPopUp extends ContextMenu {
     private void addSuggestion(String suggestion) {
         MenuItem item = new MenuItem(suggestion);
         textInputProcessor.setContent(commandTextArea.getText());
-        item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastWord(item.getText())));
+
+        String autoCompletionText;
+        if (autoCompletionUtil.isCommandKeyWord(item.getText())) {
+            autoCompletionText = autoCompletionUtil.getAutoCompletionText(item.getText());
+        } else {
+            autoCompletionText = textInputProcessor.replaceLastWord(item.getText());
+        }
+
+        item.setOnAction(event -> commandBox.replaceText(autoCompletionText));
         getItems().add(item);
     }
 }

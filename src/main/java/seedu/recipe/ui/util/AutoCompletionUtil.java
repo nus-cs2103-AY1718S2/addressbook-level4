@@ -8,22 +8,43 @@ import seedu.recipe.logic.parser.CliSyntax;
 
 //@@author hoangduong1607
 /**
- * Contains constants needed for auto-completion
+ * Contains constants and functions needed for auto-completion
  */
 public class AutoCompletionUtil {
     public static final String[] APPLICATION_KEYWORDS = {"add", "clear", "delete", "edit", "exit", "find",
         "help", "history", "list", "redo", "select", "tag", "undo"};
-    public static HashMap<String, ArrayList<String>> PREFIXES_FOR_COMMAND;
+    public static HashMap<String, ArrayList<String>> prefixesForCommand;
     public static final int MAX_SUGGESTIONS = 8;
+    public static final String LF = "\n";
+    public static final String WHITESPACE = " ";
 
-    public void initialize() {
+    public AutoCompletionUtil() {
+        prefixesForCommand = new HashMap<>();
+
         ArrayList<String> addPrefixes = new ArrayList<>(Arrays.asList(CliSyntax.PREFIX_NAME.toString(),
-                CliSyntax.PREFIX_INGREDIENT.toString(),
-                CliSyntax.PREFIX_INSTRUCTION.toString(),
-                CliSyntax.PREFIX_PREPARATION_TIME.toString(),
-                CliSyntax.PREFIX_TAG.toString(),
-                CliSyntax.PREFIX_URL.toString()
-                ));
-        PREFIXES_FOR_COMMAND.put("add", addPrefixes);
+                CliSyntax.PREFIX_INGREDIENT.toString(), CliSyntax.PREFIX_INSTRUCTION.toString(),
+                CliSyntax.PREFIX_PREPARATION_TIME.toString(), CliSyntax.PREFIX_TAG.toString(),
+                CliSyntax.PREFIX_URL.toString()));
+        prefixesForCommand.put("add", addPrefixes);
+    }
+
+    /**
+     * Checks whether {@code text} is a command keyword
+     */
+    public boolean isCommandKeyWord(String text) {
+        return prefixesForCommand.containsKey(text);
+    }
+
+    /**
+     * Generates auto-completed command
+     */
+    public String getAutoCompletionText(String command) {
+        String autoCompletionText = command;
+
+        for (String prefix : prefixesForCommand.get(command)) {
+            autoCompletionText = autoCompletionText + WHITESPACE + LF + prefix;
+        }
+
+        return autoCompletionText;
     }
 }

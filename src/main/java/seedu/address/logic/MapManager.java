@@ -49,7 +49,11 @@ public class MapManager {
 
                     Marker marker = new Marker(markerOptions);
                     map.addMarker(marker);
-
+                } else {
+                    map.setZoom(10);
+                    map.setCenter(new LatLong(1.3521, 103.8198));
+                    map.clearMarkers();
+                }
             }
         }
 

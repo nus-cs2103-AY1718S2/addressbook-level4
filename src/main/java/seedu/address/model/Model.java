@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -30,7 +32,11 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+
     void addPage(Person person) throws IOException;
+
+    /** Adds the given appointment */
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
 
     /** Sorts the person list by name in alphabetical order */
     void sortPersonList(String parameter);

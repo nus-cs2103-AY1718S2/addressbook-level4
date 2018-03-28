@@ -38,6 +38,8 @@ import seedu.progresschecker.model.tag.UniqueTagList;
  */
 public class ProgressChecker implements ReadOnlyProgressChecker {
 
+    private final String repoName = new String("AdityaA1998/samplerepo-pr-practice");
+
     private final UniquePersonList persons;
     private final UniqueTagList tags;
 
@@ -117,11 +119,13 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     }
 
     /**
-     * creates issue on github
+     * Creates issue on github
+     *
+     * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input
      */
     public void createIssueOnGitHub(Issue issue) throws IOException {
-        GitHub github = GitHub.connect("AdityaA1998", "");
-        GHRepository repository = github.getRepository("AdityaA1998/samplerepo-pr-practice");
+        GitHub github = GitHub.connect("", "");
+        GHRepository repository = github.getRepository(repoName);
         GHIssueBuilder issueBuilder = repository.createIssue(issue.getTitle().toString());
         issueBuilder.body(issue.getBody().toString());
         //issueBuilder.label("shag");

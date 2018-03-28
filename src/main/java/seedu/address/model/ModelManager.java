@@ -66,7 +66,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void indicateAppointmentChanged(Patient patient) {
-        raise(new AppointmentChangedEvent(patient));
+        raise(new AppointmentChangedEvent(patient, imdb));
     }
 
     @Override

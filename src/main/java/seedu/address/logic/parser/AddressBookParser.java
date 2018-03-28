@@ -89,7 +89,7 @@ public class AddressBookParser {
             return new ListCommand();
 
         case RemarkCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            return new RemarkCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);

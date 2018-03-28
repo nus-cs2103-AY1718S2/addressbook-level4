@@ -43,9 +43,11 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects) {
+    public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
+                            String remark) {
         this.name = name;
         this.nric = nric;
+        this.remark = remark;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }

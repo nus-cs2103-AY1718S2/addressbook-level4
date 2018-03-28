@@ -47,7 +47,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Remark remark;
             if (!(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
                 remark = ParserUtil.parseRemark(" ");
-            }else {
+            } else {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             }
             Person person = new Person(name, nric, tagList, subjectList, remark);

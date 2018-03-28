@@ -67,19 +67,19 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem listMenuItem;
 
     @FXML
-    private MenuItem populateFindMenuItem;
+    private MenuItem findMenuItem;
 
     @FXML
-    private MenuItem populateAddMenuItem;
+    private MenuItem addMenuItem;
 
     @FXML
-    private MenuItem populateDeleteMenuItem;
+    private MenuItem deleteMenuItem;
 
     @FXML
-    private MenuItem populateEditMenuItem;
+    private MenuItem editMenuItem;
 
     @FXML
-    private MenuItem populateLocateMenuItem;
+    private MenuItem locateMenuItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -123,12 +123,12 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerator(historyMenuItem, KeyCombination.valueOf("Alt + H"));
         setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
-        setAccelerator(populateFindMenuItem, KeyCombination.valueOf("Ctrl + F"));
+        setAccelerator(findMenuItem, KeyCombination.valueOf("Ctrl + F"));
 
-        setAccelerator(populateAddMenuItem, KeyCombination.valueOf("Alt + A"));
-        setAccelerator(populateDeleteMenuItem, KeyCombination.valueOf("Alt + D"));
-        setAccelerator(populateEditMenuItem, KeyCombination.valueOf("Alt + E"));
-        setAccelerator(populateLocateMenuItem, KeyCombination.valueOf("Alt + L"));
+        setAccelerator(addMenuItem, KeyCombination.valueOf("Alt + A"));
+        setAccelerator(deleteMenuItem, KeyCombination.valueOf("Alt + D"));
+        setAccelerator(editMenuItem, KeyCombination.valueOf("Alt + E"));
+        setAccelerator(locateMenuItem, KeyCombination.valueOf("Alt + L"));
 
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }

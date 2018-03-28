@@ -338,7 +338,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Viewing a specific week : `view OR v`
 
-Change the browser view to display contents identified by the week number.
+Change the browser view to display contents identified by the week number. +
 Format: `view INDEX`
 
 ****

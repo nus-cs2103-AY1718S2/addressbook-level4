@@ -137,6 +137,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given order {@code target} in the list with {@code editedOrder}.
+     */
+    public void updateOrder(Order target, Order editedOrder)
+        throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+        requireNonNull(editedOrder);
+
+        orders.setOrder(target, editedOrder);
+    }
+
+    /**
      *  Updates the master group list and master preference list to include groups and preferences
      *  in {@code person} that are not in the lists.
      *  @return a copy of this {@code person} such that every group and every preference in this person

@@ -114,6 +114,15 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void updateOrder(Order target, Order editedOrder)
+        throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+        requireAllNonNull(target, editedOrder);
+
+        addressBook.updateOrder(target, editedOrder);
+        indicateAddressBookChanged();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -125,6 +134,14 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    @Override
+    public void updateFilteredPersonList(Predicate<Person> predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Filtered Order List Accessors =============================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code Order} backed by the internal list of
      * {@code addressBook}
@@ -135,9 +152,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredOrderList(Predicate<Order> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredOrders.setPredicate(predicate);
     }
 
     @Override

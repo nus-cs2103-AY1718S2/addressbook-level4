@@ -22,7 +22,6 @@ public class OrderCard extends UiPart<Region> {
     @FXML
     private Label orderInformation;
 
-
     @FXML
     private Label id;
 

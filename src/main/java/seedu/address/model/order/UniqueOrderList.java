@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.order.exceptions.OrderNotFoundException;
 
 /**
  * A list of orders that enforces no nulls and uniqueness between its elements.
@@ -45,6 +46,28 @@ public class UniqueOrderList implements Iterable<Order> {
     public Set<Order> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new HashSet<>(internalList);
+    }
+
+    /**
+     * Replaces the order {@code target} in the list with {@code editedOrder}.
+     *
+     * @throws DuplicateOrderException if the replacement is equivalent to another existing order in the list.
+     * @throws OrderNotFoundException if {@code target} could not be found in the list.
+     */
+    public void setOrder(Order target, Order editedOrder)
+            throws DuplicateOrderException, OrderNotFoundException {
+        requireNonNull(editedOrder);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new OrderNotFoundException();
+        }
+
+        if (!target.equals(editedOrder) && internalList.contains(editedOrder)) {
+            throw new DuplicateOrderException();
+        }
+
+        internalList.set(index, editedOrder);
     }
 
     /**

@@ -20,6 +20,7 @@ import seedu.address.model.tag.exceptions.PreferenceNotFoundException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Order> PREDICATE_SHOW_ALL_ORDERS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -52,6 +53,12 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Updates the filter of the filtered order list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredOrderList(Predicate<Order> predicate);
+
     /** Returns an unmodifiable view of the filtered order list */
     ObservableList<Order> getFilteredOrderList();
 
@@ -76,4 +83,14 @@ public interface Model {
      * Adds order to list of orders.
      */
     void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException;
+
+    /**
+     * Replaces the given order {@code target} with {@code editedOrder}.
+     *
+     * @throws UniqueOrderList.DuplicateOrderException if updating the order's details causes the order to be
+     *  equivalent to another existing order in the list.
+     * @throws OrderNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateOrder(Order target, Order editedOrder)
+            throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException;
 }

@@ -7,6 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.model.theme.Theme.LIGHT_THEME_KEYWORD;
 import static seedu.address.testutil.TypicalGroups.FRIENDS;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPreferences.COMPUTERS;
 
@@ -24,6 +25,7 @@ import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
+import seedu.address.logic.commands.DeleteOrderCommand;
 import seedu.address.logic.commands.DeletePreferenceCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -152,6 +154,20 @@ public class AddressBookParserTest {
         DeletePreferenceCommand command = (DeletePreferenceCommand) parser.parseCommand(
                 DeletePreferenceCommand.COMMAND_ALIAS + " " + "computers");
         assertEquals(new DeletePreferenceCommand(COMPUTERS), command);
+    }
+
+    @Test
+    public void parseCommand_deleteOrder() throws Exception {
+        DeleteOrderCommand command = (DeleteOrderCommand) parser.parseCommand(
+                DeleteOrderCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased());
+        assertEquals(new DeleteOrderCommand(INDEX_FIRST_ORDER), command);
+    }
+
+    @Test
+    public void parseCommand_deleteOrderAlias() throws Exception {
+        DeleteOrderCommand command = (DeleteOrderCommand) parser.parseCommand(
+                DeleteOrderCommand.COMMAND_ALIAS + " " + INDEX_FIRST_ORDER.getOneBased());
+        assertEquals(new DeleteOrderCommand(INDEX_FIRST_ORDER), command);
     }
 
     @Test

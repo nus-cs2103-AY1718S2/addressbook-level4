@@ -5,9 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.OrderCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
 /**
@@ -39,6 +41,25 @@ public class GuiTestAssert {
                 actualCard.getGroups());
         assertEquals(expectedPerson.getPreferenceTags().stream().map(pref -> pref.tagName).collect(Collectors.toList()),
                 actualCard.getPreferences());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedOrder}.
+     */
+    public static void assertCardDisplaysOrder(Order expectedOrder, OrderCardHandle actualCard) {
+        assertEquals(expectedOrder.getOrderInformation().toString(), actualCard.getOrderInformation());
+
+        String expectedPriceAndQuantity = "S$" + expectedOrder.getPrice().toString() + " X "
+                + expectedOrder.getQuantity().toString();
+        assertEquals(expectedPriceAndQuantity, actualCard.getPriceAndQuantity());
+
+        String expectedTotalPrice = "Total: S$" + String.valueOf(
+                Double.parseDouble(expectedOrder.getPrice().toString())
+                        * Integer.parseInt(expectedOrder.getQuantity().toString()));
+
+        assertEquals(expectedTotalPrice, actualCard.getTotalPrice());
+
+        assertEquals("Deliver By: " + expectedOrder.getDeliveryDate().toString(), actualCard.getDeliveryDate());
     }
 
     /**

@@ -18,3 +18,26 @@
 .tooltip-text {
     -fx-text-fill: white;
 }
+
+.list-cell:filled:selected {
+    -fx-background-color: #424d5f;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+#invalidAddressOverlay {
+    -fx-background-color: #515658;
+    -fx-border-color: derive(#1d1d1d, 30%);
+    -fx-border-width: 1px;
+}
+
+#invalidAddresseeName {
+    -fx-text-fill: white;
+}
+
+#invalidAddressMsg {
+    -fx-text-fill: white;
+}

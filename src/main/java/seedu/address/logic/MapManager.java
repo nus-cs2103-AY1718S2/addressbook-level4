@@ -10,6 +10,9 @@ import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
+
 //import seedu.address.commons.core.EventsCenter;
 //import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 
@@ -37,12 +40,15 @@ public class MapManager {
             public void geocodedResultsReceived(GeocodingResult[] results, GeocoderStatus status) {
                 LatLong geocode;
                 if (status == GeocoderStatus.ZERO_RESULTS) {
+                    EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(true));
                     geocode = null;
 
                 } else if (results.length > 1) {
+                    EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(false));
                     geocode = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
                             results[0].getGeometry().getLocation().getLongitude());
                 } else {
+                    EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(false));
                     geocode = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
                             results[0].getGeometry().getLocation().getLongitude());
                 }

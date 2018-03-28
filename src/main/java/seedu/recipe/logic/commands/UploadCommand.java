@@ -20,6 +20,7 @@ import com.dropbox.core.v2.DbxClientV2;
 import com.google.common.base.Strings;
 
 import seedu.recipe.logic.commands.exceptions.UploadCommandException;
+import seedu.recipe.ui.util.CloudStorageUtil;
 
 /**
  * Uploads all recipes online, specifically to Dropbox.
@@ -49,9 +50,6 @@ public class UploadCommand extends Command {
 
     @Override
     public CommandResult execute() throws UploadCommandException {
-        if (Strings.isNullOrEmpty(ACCESS_TOKEN)) {
-            getDbAuthorization();
-        }
         CommandResult result = upload();
         return result;
     }
@@ -65,7 +63,7 @@ public class UploadCommand extends Command {
     private CommandResult upload() throws UploadCommandException {
         // Create Dropbox client
         DbxRequestConfig config = DbxRequestConfig.newBuilder(CLIENT_IDENTIFIER).build();
-        DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
+        DbxClientV2 client = new DbxClientV2(config, CloudStorageUtil.getAccessToken());
 
         // Upload "recipebook.xml" to Dropbox
         try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
@@ -79,7 +77,7 @@ public class UploadCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
+/*
     private void getDbAuthorization() {
         // Read app info file (contains app key and app secret)
         DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
@@ -97,7 +95,7 @@ public class UploadCommand extends Command {
         //Use token flow as authorization URL
         System.out.println(authorizationUrl);
     }
-
+*/
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

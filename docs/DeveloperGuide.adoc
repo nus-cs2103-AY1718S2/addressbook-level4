@@ -423,7 +423,7 @@ image::OauthModelDiagram.png[width="800"]
 ===== Aspect: GUI
 * **Alternative 1 (current choice):** Native Google Calendar WebView
 ** Pros: Minimal effort to implement as it is just a wrapper about the existing Google Calendar UI. Data is managed and secured by Google.
-** Cons: Cannot customize the interfact without injecting customize styles. Requires complicated OAuth 2.0 authentication to work. Assumes that the user already has a Google account.
+** Cons: Cannot customize the interface without injecting customize styles. Requires complicated OAuth 2.0 authentication to work. Assumes that the user already has a Google account.
 
 * **Alternative 2: ** https://github.com/dlemmermann/CalendarFX[CalendarFX]
 ** Pros: Can more easily create a custom UI and not rely on Google Calendar.
@@ -442,7 +442,7 @@ image::OauthModelDiagram.png[width="800"]
 ** Pros: Does not require complex authentication and is thus easier to implement. Solution works offline.
 ** Cons: Requires additional local storage implementations and calendar events are no longer synced to the cloud.
 
-===== Aspect: Implementation of `AddEventCommand` -> `event-add`
+===== Aspect: Implementation of `AddEventCommand` -> `calendar-add`
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
 ** Cons: Requires the user to authenticate our application before this feature works correctly.
@@ -460,7 +460,7 @@ image::OauthModelDiagram.png[width="800"]
 ** Pros: CLI-only friendly. Does not require a webview and thus makes the application less resource intensive.
 ** Cons: Higher development cost as it becomes necessary to format the response from Google's APIs (and write a new set of logic to parse and format the data.)
 
-===== Aspect: Implementaiton of `EditEventCommand` -> `event-edit`
+===== Aspect: Implementation of `EditEventCommand` -> `calendar-edit`
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
 ** Cons: Requires the user to authenticate our application before this feature works correctly.
@@ -469,7 +469,7 @@ image::OauthModelDiagram.png[width="800"]
 ** Pros: No implementation required as everything happens through the spawned webview.
 ** Cons: No CLI-friendly output. More resource intensive on the end-user's system.
 
-===== Aspect: Implementation of `DeleteEventCommand` -> `event-delete`
+===== Aspect: Implementation of `DeleteEventCommand` -> `calendar-delete`
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
 ** Cons: Requires the user to authenticate our application before this feature works correctly.

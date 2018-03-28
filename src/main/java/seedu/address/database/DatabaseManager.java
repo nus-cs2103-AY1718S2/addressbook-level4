@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.WeeklyEvent;
 import seedu.address.model.module.Module;
 import seedu.address.model.module.Schedule;
@@ -89,7 +88,7 @@ public class DatabaseManager {
                             && queryLessonNum.equals(schedule.getClassNo())) {
                         eventList.add(new WeeklyEvent(module, schedule));
                         result.append(schedule.getLessonType() + " " + schedule.getClassNo() + "\n"); //TODO: remove
-                        result.append("\t" + schedule.getDayText() + "\n" );
+                        result.append("\t" + schedule.getDayText() + "\n");
                         result.append("\t" + schedule.getStartTime() + " to " + schedule.getEndTime() + "\n");
                         result.append("\t" + schedule.getVenue() + "\n");
 

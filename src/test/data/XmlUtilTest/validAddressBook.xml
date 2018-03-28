@@ -3,37 +3,46 @@
     <persons>
         <name>Hans Muster</name>
         <nric isPrivate="false">S9482424Z</nric>
+        <remark>" "</remark>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <nric isPrivate="false">S8724924Z</nric>
+        <remark>" "</remark>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <nric isPrivate="false">S9535256Z</nric>
+        <remark>" "</remark>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <nric isPrivate="false">S8765253Z</nric>
+        <remark>" "</remark>
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <nric isPrivate="false">S9482224Z</nric>
+        <remark>" "</remark>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <nric isPrivate="false">S9482427Z</nric>
+        <remark>" "</remark>
     </persons>
     <persons>
         <name>Anna Best</name>
         <nric isPrivate="false">S9482442Z</nric>
+        <remark>" "</remark>
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <nric isPrivate="false">S8482424Z</nric>
+        <remark>" "</remark>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <nric isPrivate="false">S8482131Z</nric>
+        <remark>" "</remark>
     </persons>
 </addressbook>

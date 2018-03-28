@@ -995,6 +995,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |view appointment on the calendar |have a more organized view of my schedule and at the same time plan for future appointment
 
+|`* * *` |user |view which are my top clients |to serve them better
+
+|`* * *` |user |group my clients|to manage the different groups differently
+
 |`* *` |user |check the history of my command |know what I have done
 
 |`* *` |user |undo the previous command |retrieve lost information caused by accidents
@@ -1021,11 +1025,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |forget password |have a backup plan
 
-|`*` |user |encrypt the data |feel safer for my client's data
-
 |`*` |user |request access to other address book |seek potential customer from leaving colleague
 
-|`*` |user |upload my client's info on social network |protect myself against cyber bullying or defaming
+
 
 
 |=======================================================================

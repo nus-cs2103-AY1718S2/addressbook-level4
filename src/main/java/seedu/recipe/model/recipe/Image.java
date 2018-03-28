@@ -4,6 +4,11 @@ package seedu.recipe.model.recipe;
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
+import java.io.File;
+import java.net.URL;
+
+import seedu.recipe.MainApp;
+
 /**
  * Represents a Recipe's image in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidImage(String)}
@@ -13,6 +18,8 @@ public class Image {
     public static final String NULL_IMAGE_REFERENCE = "-";
     public static final String FILE_PREFIX = "file:";
     public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid";
+    public static final URL VALID_IMAGE = MainApp.class.getResource("/images/clock.png");
+    public static final String VALID_IMAGE_PATH = VALID_IMAGE.toExternalForm().substring(5);
     public final String value;
 
     /**
@@ -30,20 +37,30 @@ public class Image {
      *  Returns true if a given string is a valid file path, or no file path has been assigned
      */
     public static boolean isValidImage(String testImagePath) {
-        // TO BE COMPLETED
-        return true;
+        if (testImagePath.equals(NULL_IMAGE_REFERENCE)) {
+            return true;
+        }
+        File image = new File(testImagePath);
+        if (image.exists() && !image.isDirectory()) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getUsablePath() {
+        return FILE_PREFIX + value;
     }
 
     @Override
     public String toString() {
-        return FILE_PREFIX + value;
+        return value;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Url // instanceof handles nulls
-                && this.value.equals(((Url) other).value)); // state check
+                || (other instanceof Image // instanceof handles nulls
+                && this.value.equals(((Image) other).value)); // state check
     }
 
     @Override

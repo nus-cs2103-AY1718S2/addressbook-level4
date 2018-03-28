@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_IMG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
@@ -24,6 +25,7 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.RecipeBook;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
@@ -48,6 +50,8 @@ public class CommandTestUtil {
     public static final String VALID_CALORIES_BOB = "5000";
     public static final String VALID_SERVINGS_AMY = "3";
     public static final String VALID_SERVINGS_BOB = "4";
+    public static final String VALID_IMG_AMY = Image.VALID_IMAGE_PATH;
+    public static final String VALID_IMG_BOB = Image.VALID_IMAGE_PATH;
     public static final String VALID_URL_AMY = "https://www.bbcgoodfood.com/recipes/volcano-cake";
     public static final String VALID_URL_BOB = "https://www.bbcgoodfood.com/recipes/collection/chicken-salad";
     public static final String VALID_TAG_HUSBAND = "husband";
@@ -69,6 +73,8 @@ public class CommandTestUtil {
     public static final String SERVINGS_DESC_BOB = " " + PREFIX_SERVINGS + VALID_SERVINGS_BOB;
     public static final String URL_DESC_AMY = " " + PREFIX_URL + VALID_URL_AMY;
     public static final String URL_DESC_BOB = " " + PREFIX_URL + VALID_URL_BOB;
+    public static final String IMG_DESC_AMY = " " + PREFIX_IMG + VALID_IMG_AMY;
+    public static final String IMG_DESC_BOB = " " + PREFIX_IMG + VALID_IMG_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -102,6 +108,7 @@ public class CommandTestUtil {
                 .withCalories(VALID_CALORIES_AMY)
                 .withServings(VALID_SERVINGS_AMY)
                 .withUrl(VALID_URL_AMY)
+                .withImage(VALID_IMG_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditRecipeDescriptorBuilder()
                 .withName(VALID_NAME_BOB)
@@ -112,6 +119,7 @@ public class CommandTestUtil {
                 .withCalories(VALID_CALORIES_BOB)
                 .withServings(VALID_SERVINGS_BOB)
                 .withUrl(VALID_URL_BOB)
+                .withImage(VALID_IMG_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 

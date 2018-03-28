@@ -19,9 +19,9 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
-import seedu.address.model.person.Name;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 
 import seedu.address.model.person.Person;

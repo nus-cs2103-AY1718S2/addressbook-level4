@@ -494,11 +494,6 @@ To do this, a commission storage will be created to store existing commission, a
  ** Pros: TBC
  ** Cons: TBC
 
-
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
 // end::dataencryption[]
 
 === Exporting

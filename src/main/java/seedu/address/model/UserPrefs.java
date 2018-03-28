@@ -11,7 +11,8 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookName = "InsuranceBook";
+    private String exportPortfolioFilePath = "data/portfolio.csv";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -43,6 +44,14 @@ public class UserPrefs {
 
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+    public String getExportPortfolioFilePath() {
+        return exportPortfolioFilePath;
+    }
+
+    public void setExportPortfolioFilePath(String exportPortfolioFilePath) {
+        this.exportPortfolioFilePath = exportPortfolioFilePath;
     }
 
     @Override

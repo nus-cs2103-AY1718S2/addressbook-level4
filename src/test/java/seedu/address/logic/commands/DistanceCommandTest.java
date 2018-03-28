@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -17,6 +18,8 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.UndoRedoStack;
@@ -118,6 +121,9 @@ public class DistanceCommandTest {
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(headQuarterAddress, address);
 
+            JumpToListRequestEvent lastEvent =
+                    (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
             assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance),
                     commandResult.feedbackToUser);
         } catch (Exception ce) {
@@ -141,7 +147,13 @@ public class DistanceCommandTest {
             String nameDestination = personAtDestination.getName().fullName;
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(addressOrigin, addressDestination);
+            List<String> addressesList = new ArrayList<>();
+            addressesList.add(addressOrigin);
+            addressesList.add(addressDestination);
 
+            ShowMultiLocationEvent lastEvent =
+                    (ShowMultiLocationEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            assertEquals(addressesList,lastEvent.sortedList);
             assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_PERSON_SUCCESS,
                     nameOrigin, nameDestination, distance),
                     commandResult.feedbackToUser);

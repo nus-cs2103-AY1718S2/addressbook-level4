@@ -66,13 +66,13 @@ public class Calendar extends UiPart<Region> {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 CalendarDate apn = new CalendarDate();
-                calendar.add(apn.box, j, i);
+                calendar.add(apn.getBox(), j, i);
                 allCalendarDays.add(apn);
             }
         }
         // Days of the week
         Text[] dayNames = new Text[]{new Text("Mon"), new Text("Tue"), new Text("Wed"),
-                new Text("Thu"), new Text("Fri"), new Text("Sat"), new Text("Sun")};
+            new Text("Thu"), new Text("Fri"), new Text("Sat"), new Text("Sun")};
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         dayLabels.setGridLinesVisible(true);
@@ -137,7 +137,7 @@ public class Calendar extends UiPart<Region> {
             int year = Integer.parseInt(dayMonthYear[2]);
             LocalDate date = LocalDate.of(year, month, day);
             CalendarDate node = getDateNode(date);
-            node.event1.setText(e.getName());
+            node.getEventText().setText(e.getName());
         }
     }
 

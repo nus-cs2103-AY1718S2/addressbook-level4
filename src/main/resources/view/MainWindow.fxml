@@ -39,6 +39,11 @@
             <MenuItem fx:id="populateLocateMenuItem" mnemonicParsing="false" onAction="#handleLocate" text="Locate a Person... " />
             <MenuItem fx:id="populateFindMenuItem" mnemonicParsing="false" onAction="#handleFind" text="Find... " />
           </Menu>
+          <Menu mnemonicParsing="false" text="Execute">
+            <MenuItem fx:id="clearMenuItem" mnemonicParsing="false" onAction="#handleClear" text="Clear the Database" />
+            <MenuItem fx:id="historyMenuItem" mnemonicParsing="false" onAction="#handleHistory" text="Show command history" />
+            <MenuItem fx:id="listMenuItem" mnemonicParsing="false" onAction="#handleList" text="List all Persons" />
+          </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
           </Menu>

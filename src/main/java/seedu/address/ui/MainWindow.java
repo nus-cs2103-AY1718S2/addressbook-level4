@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ExecuteCommandRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -72,6 +73,15 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem populateFindMenuItem;
 
     @FXML
+    private MenuItem clearMenuItem;
+
+    @FXML
+    private MenuItem historyMenuItem;
+
+    @FXML
+    private MenuItem listMenuItem;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -114,6 +124,9 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerator(populateDeleteMenuItem, KeyCombination.valueOf("Alt + D"));
         setAccelerator(populateLocateMenuItem, KeyCombination.valueOf("Alt + L"));
         setAccelerator(populateFindMenuItem, KeyCombination.valueOf("Ctrl + F"));
+        setAccelerator(clearMenuItem, KeyCombination.valueOf("Alt + C"));
+        setAccelerator(historyMenuItem, KeyCombination.valueOf("Alt + H"));
+        setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
     }
 
     /**
@@ -204,19 +217,19 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Executes the undo operation
+     * Executes the {@code undo} operation
      */
     @FXML
     private void handleUndo() {
-        // raise(new UndoRequestEvent());
+        raise(new ExecuteCommandRequestEvent("undo"));
     }
 
     /**
-     * Executes the redo operation
+     * Executes the {@code redo} operation
      */
     @FXML
     private void handleRedo() {
-        // raise(new RedoRequestEvent());
+        raise(new ExecuteCommandRequestEvent("redo"));
     }
 
     /**
@@ -258,6 +271,29 @@ public class MainWindow extends UiPart<Stage> {
     private void handleFind() {
         raise(new PopulatePrefixesRequestEvent("find"));
     }
+
+    /**
+     * Executes the {@code clear} operation
+     */
+    @FXML
+    private void handleClear() {
+        raise(new ExecuteCommandRequestEvent("clear"));
+    }
+
+    /**
+     * Executes the {@code history} operation
+     */
+    @FXML
+    private void handleHistory() {
+        raise(new ExecuteCommandRequestEvent("history"));
+    }
+
+    /**
+     * Executes the {@code list} operation
+     */
+    @FXML
+    private void handleList() {
+        raise(new ExecuteCommandRequestEvent("list"));
     }
 
     void show() {

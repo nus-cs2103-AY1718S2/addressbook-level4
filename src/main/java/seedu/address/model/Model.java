@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.DuplicateEventException;
+import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Person;
@@ -84,4 +86,6 @@ public interface Model {
     /** Add group */
     void addGroup(Group group) throws DuplicateGroupException;
 
+    /** Adds the given Event */
+    void addEvent(Event event) throws DuplicateEventException;
 }

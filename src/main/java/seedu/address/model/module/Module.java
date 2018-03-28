@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 
-
 /**
  * Represents a Module from NUSmods
  */
@@ -37,6 +36,22 @@ public class Module {
 
     public ArrayList<Schedule> getScheduleList() {
         return timetable;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Module)) {
+            return false;
+        }
+
+        Module otherModule = (Module) other;
+        return otherModule.getModuleCode().equals(this.getModuleCode())
+                && otherModule.getModuleTitle().equals(this.getModuleTitle())
+                && otherModule.getTimetable().equals(this.getTimetable());
     }
 
     @Override

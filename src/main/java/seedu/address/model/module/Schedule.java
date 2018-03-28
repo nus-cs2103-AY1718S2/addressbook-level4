@@ -17,7 +17,7 @@ public class Schedule {
     private String endTime;
     private String venue;
 
-    Schedule() {
+    public Schedule() {
         this.classNo = "";
         this.lessonType = "";
         this.weekText = "";
@@ -27,8 +27,8 @@ public class Schedule {
         this.venue = "";
     }
 
-    Schedule(String classNo, String lessonType, String weekText, String dayText, String startTime, String endTime,
-             String venue) {
+    public Schedule(String classNo, String lessonType, String weekText, String dayText,
+             String startTime, String endTime, String venue) {
         this.classNo = classNo;
         this.lessonType = lessonType;
         this.weekText = weekText;
@@ -64,6 +64,26 @@ public class Schedule {
 
     public String getVenue() {
         return venue;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Schedule)) {
+            return false;
+        }
+
+        Schedule otherSchedule = (Schedule) other;
+        return otherSchedule.getClassNo().equals(this.getClassNo())
+                && otherSchedule.getLessonType().equals(this.getLessonType())
+                && otherSchedule.getWeekText().equals(this.getWeekText())
+                && otherSchedule.getDayText().equals(this.getDayText())
+                && otherSchedule.getStartTime().equals(this.getStartTime())
+                && otherSchedule.getEndTime().equals(this.getEndTime())
+                && otherSchedule.getVenue().equals(this.getVenue());
     }
 
     @Override

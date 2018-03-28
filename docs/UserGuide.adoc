@@ -17,7 +17,7 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 == Introduction
 
-This is a desktop Event Manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and generate a suitable meetup time.
+Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and generate a suitable meetup time.
 
 == Quick Start
 
@@ -252,7 +252,6 @@ Examples:
 
 * `addToDo Do homework before next Wednesday`
 * `aTD Swim like a fish`
-
 === Check a to-do as done: `check` `v1.3`
 
 Checks a to-do in the address book as done +
@@ -292,6 +291,30 @@ Examples:
 
 * `ListGroupMembers CS3230 CS1010` +
 Returns any person having group tags `CS3230`, `CS1010`
+Refer to Figure 2 for example.
+
+image:lgmExample.png[width="500"] +
+Figure 2. Example of ListGroupMembers
+
+=== Add Group: `AddGroup`
+
+Creates a group named `KEYWORD` +
+Alias: `aG` +
+Format: `aG KEYWORD[KEYWORDS]`
+
+[NOTE]
+====
+Keyword cannot be an empty input.
+====
+
+Examples:
+
+* `addGroups CS2101 Oral Presentation` +
+New Group `CS2101 Oral Presentation` added, refer to Figure 3. +
+image:addGroupExample.png[width ="500"] +
+Figure 3. Example of add Group
+// end:AddGroup[]
+
 
 === Display Calendar : `display` `[coming in v2.0]`
 

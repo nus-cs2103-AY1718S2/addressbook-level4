@@ -19,6 +19,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;
+import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 
@@ -268,7 +269,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!PetPatientName.isValidName(trimmedName)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(PetPatientName.MESSAGE_PET_NAME_CONSTRAINTS);
         }
         String[] wordsInName = trimmedName.split(" ");
         String formattedName = "";

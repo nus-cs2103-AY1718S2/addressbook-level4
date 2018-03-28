@@ -52,4 +52,14 @@ public interface Model {
 
     void filterFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Sorts the filtered person list based on overall rating in ascending order
+     */
+    void sortPersonListAscOrder();
+
+    /**
+     * Sorts the filtered person list based on overall rating in descending order
+     */
+    void sortPersonListDescOrder();
+
 }

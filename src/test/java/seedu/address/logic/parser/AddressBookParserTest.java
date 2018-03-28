@@ -8,6 +8,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMUNICATION_SKILLS_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROBLEM_SOLVING_SKILLS_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_ORDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TECHNICAL_SKILLS_SCORE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -35,6 +36,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.InterviewCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RateCommand;
+import seedu.address.logic.commands.RatingSortCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.StatusCommand;
@@ -134,6 +136,13 @@ public class AddressBookParserTest {
         DeleteRatingCommand command = (DeleteRatingCommand) parser.parseCommand(
                 DeleteRatingCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteRatingCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_ratingSort() throws Exception {
+        RatingSortCommand command = (RatingSortCommand) parser.parseCommand(
+                RatingSortCommand.COMMAND_WORD + " " + PREFIX_SORT_ORDER + RatingSortCommand.SORT_ORDER_ASC);
+        assertEquals(new RatingSortCommand(RatingSortCommand.SortOrder.ASC), command);
     }
 
     @Test

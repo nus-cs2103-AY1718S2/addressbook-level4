@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.BENSON_WITH_FRIENDS_TAG_REMOVED;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.CARL_WITHOUT_TAG;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 
 import java.util.Arrays;
 
@@ -91,6 +92,32 @@ public class ModelManagerTest {
 
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         modelManager.deleteTag(new Tag("friends"));
+        assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
+    }
+
+    @Test
+    public void sortPersonListAscOrder() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+                .withPerson(GEORGE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(GEORGE)
+                .withPerson(ALICE).withPerson(BENSON).build();
+
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.sortPersonListAscOrder();
+        assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
+    }
+
+    @Test
+    public void sortPersonListDescOrder() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+                .withPerson(GEORGE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BENSON)
+                .withPerson(ALICE).withPerson(GEORGE).build();
+
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.sortPersonListDescOrder();
         assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
     }
 }

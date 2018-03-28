@@ -207,7 +207,7 @@ public class RateCommandTest {
     }
 
     /**
-      * Returns an {@code RemarkCommand}.
+      * Returns a {@code RateCommand}.
       */
     private RateCommand prepareCommand(Index index, Rating rating) {
         RateCommand rateCommand = new RateCommand(index, rating);

@@ -48,8 +48,10 @@ public class UploadCommand extends Command {
     @Override
     public CommandResult execute() throws UploadCommandException {
         EventsCenter.getInstance().post(new UploadRecipesEvent());
-        CommandResult result = upload();
-        return result;
+        //CommandResult result =
+        upload();
+        //return result;
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     /**

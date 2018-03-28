@@ -23,22 +23,27 @@ public class CloudStorageUtil {
                                 + "response_type=token&client_id=" + APP_KEY + "&redirect_uri="
                                 + REDIRECT_DOMAIN;
 
-    private static String ACCESS_TOKEN = "";
+    private static String accessToken = "";
 
     public static String getAccessToken() {
-        return ACCESS_TOKEN;
+        return accessToken;
     }
 
-    public static void setAccessToken(String accessToken) {
-        ACCESS_TOKEN = accessToken;
+    public static void setAccessToken(String token) {
+        accessToken = token;
     }
 
     public static String getRedirectDomain() {
         return REDIRECT_DOMAIN;
     }
 
+    /**
+     * Checks is the access token has already been obtained by the app.
+     * @return Returns the appropriate URL depending on whether authorization
+     * has taken place yet.
+     */
     public static String getAppropriateUrl() {
-        if (Strings.isNullOrEmpty(ACCESS_TOKEN)) {
+        if (Strings.isNullOrEmpty(accessToken)) {
             return AUTHORIZATION_URL;
         }
         return REDIRECT_DOMAIN;

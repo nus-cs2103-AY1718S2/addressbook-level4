@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.WeeklyEvent;
 import seedu.address.model.module.Module;
 import seedu.address.model.module.Schedule;
@@ -64,7 +65,7 @@ public class DatabaseManager {
      *
      * @param link TimeTableLinkto be parsed
      */
-    public String parseEvents(TimeTableLink link) { //todo return list of events when available
+    public ArrayList<WeeklyEvent> parseEvents(TimeTableLink link) { //todo return list of events when available
         String query = getQuery(link);
         StringBuilder result = new StringBuilder();
 
@@ -96,8 +97,8 @@ public class DatabaseManager {
                 }
             }
         }
-        return result.toString();
-        // todo return  eventList;
+        logger.info(result.toString());
+        return  eventList;
     }
 
     /**

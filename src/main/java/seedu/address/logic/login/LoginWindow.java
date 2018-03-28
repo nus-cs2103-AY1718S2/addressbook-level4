@@ -9,6 +9,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 
+/**
+ * Class for initializing login popup GUI
+ */
 public class LoginWindow extends Application {
 
     private Stage primaryStage;

@@ -3,6 +3,8 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.Insurance.Insurance;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;
@@ -25,6 +27,8 @@ public class PersonBuilder {
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_BIRTHDAY = "09-12-1994";
     public static final String DEFAULT_APPOINTMENT = "12-05-2018";
+    public static final String DEFAULT_GROUP = "family";
+    public static final String DEFAULT_INSURANCE = "Health";
 
     private Name name;
     private Phone phone;
@@ -33,6 +37,8 @@ public class PersonBuilder {
     private Set<Tag> tags;
     private Birthday birthday;
     private Appointment appointment;
+    private Group group;
+    private Insurance insurance;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -42,6 +48,8 @@ public class PersonBuilder {
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         birthday = new Birthday(DEFAULT_BIRTHDAY);
         appointment = new Appointment(DEFAULT_APPOINTMENT);
+        group = new Group(DEFAULT_GROUP);
+        insurance = new Insurance(DEFAULT_INSURANCE);
     }
 
     /**
@@ -55,6 +63,8 @@ public class PersonBuilder {
         tags = new HashSet<>(personToCopy.getTags());
         birthday = personToCopy.getBirthday();
         appointment = personToCopy.getAppointment();
+        group = personToCopy.getGroup();
+        insurance = personToCopy.getInsurance();
     }
 
     /**
@@ -98,7 +108,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
     public PersonBuilder withBirthday(String birthday) {
         this.birthday = new Birthday(birthday);
@@ -106,14 +116,33 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Appointment} of the {@code Person} that we are building.
      */
     public PersonBuilder withAppointment(String appointment) {
         this.appointment = new Appointment(appointment);
         return this;
     }
+
+
+    /**
+     * Sets the {@code Insurance} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withInsurance(String insurance) {
+        this.insurance = new Insurance(insurance);
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Group} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withGroup(String group) {
+        this.group = new Group(group);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags, birthday, appointment);
+        return new Person(name, phone, email, address, tags, birthday, appointment, group, insurance);
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.export.ExportType;
 import seedu.address.model.export.exceptions.IncorrectExportTypeException;
 import seedu.address.model.person.Address;
@@ -19,6 +20,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.group.Group;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -168,7 +170,14 @@ public class ParserUtil {
         }
         return tagSet;
     }
-  
+    /**
+     * Parses a {@code Optional<String> group} into an {@code Optional<Group>} if {@code group} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Group> parseGroup (Optional<String> group) throws IllegalValueException {
+        requireNonNull(group);
+        return group.isPresent() ? Optional.of(new Group (group.get())) : Optional.empty();
+    }
     /**
      * Parses a {@code String birthday} into a {@code Birthday}.
      * Leading and trailing whitespaces will be trimmed.
@@ -207,6 +216,29 @@ public class ParserUtil {
         }
         return new Appointment(trimmedAppointment);
     }
+    /**
+     * Parses a {@code String insurance} into a {@code Insurance}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code insurance} is invalid.
+     */
+    public static Insurance parseInsurance(String insurance) throws IllegalValueException {
+        requireNonNull(insurance);
+        String trimmedInsurance = insurance.trim();
+        if (!Insurance.isValidInsurance(trimmedInsurance)) {
+            throw new IllegalValueException(Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
+        }
+        return new Insurance(trimmedInsurance);
+    }
+
+    /**
+     * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Insurance> parseInsurance(Optional<String> insurance) throws IllegalValueException {
+        requireNonNull(insurance);
+        return insurance.isPresent() ? Optional.of(parseInsurance(insurance.get())) : Optional.empty();
+    }
 
     /**
      * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment} is present.
@@ -216,7 +248,6 @@ public class ParserUtil {
         requireNonNull(appointment);
         return appointment.isPresent() ? Optional.of(parseAppointment(appointment.get())) : Optional.empty();
     }
-    
     /**
      * @param exportType
      * @return the corresponding ExportType

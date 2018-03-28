@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -27,6 +29,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
+    private final UniqueGroupList groups;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UserPrefs userPrefs;
@@ -42,6 +45,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         userPrefs = new UserPrefs();
+        groups = new UniqueGroupList();
     }
 
     public AddressBook() {}
@@ -67,6 +71,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
+
+    public void setGroups(List<Group> persons){ this.groups.setGroups(groups);}
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
@@ -141,7 +147,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences, person.getBirthday(), person.getAppointment());
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences, person.getBirthday(), person.getAppointment(), person.getGroup(), person.getInsurance());
     }
 
     /**
@@ -205,6 +211,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return groups.asObservableList();
     }
 
     @Override

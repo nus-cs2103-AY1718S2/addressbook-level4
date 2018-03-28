@@ -1,6 +1,7 @@
 //@@author nicholasangcx
 package seedu.recipe.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.recipe.ui.util.CloudStorageUtil.ACCESS_TOKEN;
 import static seedu.recipe.ui.util.CloudStorageUtil.APP_KEY;
@@ -19,6 +20,8 @@ import com.dropbox.core.DbxWebAuth;
 import com.dropbox.core.v2.DbxClientV2;
 import com.google.common.base.Strings;
 
+import seedu.recipe.commons.core.EventsCenter;
+import seedu.recipe.commons.events.ui.UploadRecipesEvent;
 import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 import seedu.recipe.ui.util.CloudStorageUtil;
 
@@ -50,6 +53,7 @@ public class UploadCommand extends Command {
 
     @Override
     public CommandResult execute() throws UploadCommandException {
+        EventsCenter.getInstance().post(new UploadRecipesEvent())
         CommandResult result = upload();
         return result;
     }
@@ -61,6 +65,9 @@ public class UploadCommand extends Command {
      * @throws DbxException
      */
     private CommandResult upload() throws UploadCommandException {
+        // Ensures access token has been obtained
+        requireNonNull(CloudStorageUtil.getAccessToken());
+
         // Create Dropbox client
         DbxRequestConfig config = DbxRequestConfig.newBuilder(CLIENT_IDENTIFIER).build();
         DbxClientV2 client = new DbxClientV2(config, CloudStorageUtil.getAccessToken());
@@ -77,25 +84,7 @@ public class UploadCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
-/*
-    private void getDbAuthorization() {
-        // Read app info file (contains app key and app secret)
-        DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
 
-        // Run through Dropbox API authorization process
-        DbxRequestConfig requestConfig = new DbxRequestConfig("ReciRecipe");
-        DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo);
-
-        DbxWebAuth.Request webAuthRequest = DbxWebAuth.newRequestBuilder()
-                .withNoRedirect()
-                .withForceReapprove(Boolean.FALSE)
-                .build();
-
-        String authorizationUrl = webAuth.authorize(webAuthRequest);
-        //Use token flow as authorization URL
-        System.out.println(authorizationUrl);
-    }
-*/
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

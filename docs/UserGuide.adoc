@@ -209,6 +209,10 @@ Format: `import_contacts [f/PATH]`
 
 For example `import_contacts f/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv`
 
+[NOTE]
+Please include the file extension (.csv), do include the full file path, and do not include quotations ("...") around the file path.
+
+
 // tag::scheduling[]
 === Add an appointment : `addappointment` or `aa`
 Adds an appointment with a person in the address book that will be shown in the calendar panel. +

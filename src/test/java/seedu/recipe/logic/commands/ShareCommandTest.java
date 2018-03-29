@@ -75,28 +75,28 @@ public class ShareCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_RECIPE);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_RECIPE);
+        ShareCommand shareFirstCommand = new ShareCommand(INDEX_FIRST_RECIPE);
+        ShareCommand shareSecondCommand = new ShareCommand(INDEX_SECOND_RECIPE);
 
         // same object -> returns true
-        assertTrue(selectFirstCommand.equals(selectFirstCommand));
+        assertTrue(shareFirstCommand.equals(shareFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_RECIPE);
-        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+        ShareCommand shareFirstCommandCopy = new ShareCommand(INDEX_FIRST_RECIPE);
+        assertTrue(shareFirstCommand.equals(shareFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(selectFirstCommand.equals(1));
+        assertFalse(shareFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(selectFirstCommand.equals(null));
+        assertFalse(shareFirstCommand.equals(null));
 
         // different recipe -> returns false
-        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+        assertFalse(shareFirstCommand.equals(shareSecondCommand));
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
+     * Executes a {@code ShareCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
      * is raised with the correct index.
      */
     private void assertExecutionSuccess(Index index) {

@@ -42,12 +42,12 @@ public class PetPatientCard extends UiPart<Region> {
         super(FXML);
         this.petPatient = petPatient;
         id.setText(displayedIndex + ". ");
-        name.setText(petPatient.getName().fullName);
+        name.setText(petPatient.getName().toString());
         species.setText(petPatient.getSpecies());
         breed.setText(petPatient.getBreed());
         colour.setText(petPatient.getColour());
         bloodType.setText(petPatient.getBloodType());
-        ownerNric.setText(petPatient.getOwner().value);
+        ownerNric.setText(petPatient.getOwner().toString());
         createTags(petPatient);
     }
 

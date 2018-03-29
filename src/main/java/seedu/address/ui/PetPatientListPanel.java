@@ -22,7 +22,7 @@ import seedu.address.model.petpatient.PetPatient;
  */
 public class PetPatientListPanel extends UiPart<Region> {
     private static final String FXML = "PetPatientListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+    private final Logger logger = LogsCenter.getLogger(PetPatientListPanel.class);
 
     @FXML
     private ListView<PetPatientCard> petPatientListView;
@@ -45,7 +45,7 @@ public class PetPatientListPanel extends UiPart<Region> {
         petPatientListView.getSelectionModel().selectedItemProperty()
             .addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
-                    logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                    logger.fine("Selection in petPatient list panel changed to : '" + newValue + "'");
                     raise(new PetPatientPanelSelectionChangedEvent(newValue));
                 }
             });

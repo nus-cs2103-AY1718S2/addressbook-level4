@@ -18,7 +18,7 @@ import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
 import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
 
 /**
- * Deletes a person from the address book.
+ * Deletes a person, pet patient or appointment from the address book.
  */
 public class DeleteCommand extends UndoableCommand {
 
@@ -86,22 +86,24 @@ public class DeleteCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             switch (type) {
-                case 1: return deletePerson();
-                case 2: return deletePetPatient();
-                case 3: return deleteAppointment();
-                case 4: return deleteForcePerson();
-                case 5: return deleteForcePetPatient();
-                default:
-                    throw new CommandException(MESSAGE_USAGE);
+            case 1: return deletePerson();
+            case 2: return deletePetPatient();
+            case 3: return deleteAppointment();
+            case 4: return deleteForcePerson();
+            case 5: return deleteForcePetPatient();
+            default:
+                throw new CommandException(MESSAGE_USAGE);
             }
         } catch (PetDependencyNotEmptyException e) {
             throw new CommandException(Messages.MESSAGE_DEPENDENCIES_EXIST);
-        } catch (AppointmentDependencyNotEmptyException e){
+        } catch (AppointmentDependencyNotEmptyException e) {
             throw new CommandException(Messages.MESSAGE_DEPENDENCIES_EXIST);
         }
     }
-
-    private CommandResult deletePerson() throws PetDependencyNotEmptyException{
+    /**
+     * Deletes {@code personToDelete} from the address book.
+     */
+    private CommandResult deletePerson() throws PetDependencyNotEmptyException {
         try {
             requireNonNull(personToDelete);
             model.deletePerson(personToDelete);
@@ -122,6 +124,9 @@ public class DeleteCommand extends UndoableCommand {
         personToDelete = lastShownList.get(targetIndex.getZeroBased());
     }
 
+    /**
+     * Deletes the pet patient {@code petPatientToDelete} from the address book.
+     */
     private CommandResult deletePetPatient() throws AppointmentDependencyNotEmptyException{
         try {
             requireNonNull(petPatientToDelete);
@@ -142,7 +147,9 @@ public class DeleteCommand extends UndoableCommand {
 
         petPatientToDelete = lastShownList.get(targetIndex.getZeroBased());
     }
-
+    /**
+     * Deletes the appointment {@code appointmentToDelete} from the address book.
+     */
     private CommandResult deleteAppointment() {
         try {
             requireNonNull(appointmentToDelete);
@@ -164,6 +171,10 @@ public class DeleteCommand extends UndoableCommand {
         appointmentToDelete = lastShownList.get(targetIndex.getZeroBased());
     }
 
+    /**
+     * Forcefully deletes {@code personToDelete} from the address book.
+     * All related dependencies (pet patients, appointments) will be deleted as well.
+     */
     private CommandResult deleteForcePerson() {
         try {
             requireNonNull(personToDelete);
@@ -179,6 +190,10 @@ public class DeleteCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 
+    /**
+     * Forcefully deletes {@code petPatientToDelete} from the address book.
+     * All related dependencies (appointments) will be deleted as well.
+     */
     private CommandResult deleteForcePetPatient() {
         try {
             requireNonNull(petPatientToDelete);
@@ -196,18 +211,18 @@ public class DeleteCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         try {
             switch (type) {
-                case 1: getPersonToDelete();
-                    break;
-                case 2: getPetPatientToDelete();
-                    break;
-                case 3: getAppointmentToDelete();
-                    break;
-                case 4: getPersonToDelete();
-                    break;
-                case 5: getPetPatientToDelete();
-                    break;
-                default:
-                    throw new CommandException(MESSAGE_USAGE);
+            case 1: getPersonToDelete();
+                break;
+            case 2: getPetPatientToDelete();
+                break;
+            case 3: getAppointmentToDelete();
+                break;
+            case 4: getPersonToDelete();
+                break;
+            case 5: getPetPatientToDelete();
+                break;
+            default:
+                throw new CommandException(MESSAGE_USAGE);
             }
         } catch (CommandException e) {
             throw new CommandException(MESSAGE_USAGE);

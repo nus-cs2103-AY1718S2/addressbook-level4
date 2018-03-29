@@ -36,7 +36,8 @@ public interface Model {
     void deletePerson(Person target) throws PersonNotFoundException, PetDependencyNotEmptyException;
 
     /** Forcefully deletes the given person. */
-    void deleteForcePerson(Person target) throws PersonNotFoundException, PetPatientNotFoundException, AppointmentNotFoundException;
+    void deleteForcePerson(Person target)
+            throws PersonNotFoundException, PetPatientNotFoundException, AppointmentNotFoundException;
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException, DuplicateNricException;

@@ -194,7 +194,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes all appointments of pet patient {@code key} from this {@code AddressBook}.
      */
-    private void removeAllAppointments(PetPatient key){
+    private void removeAllAppointments(PetPatient key) {
         Iterator<Appointment> appointmentIterator = appointments.iterator();
 
         while (appointmentIterator.hasNext()) {
@@ -319,8 +319,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PetDependencyNotEmptyException if the {@code key} still contains pet patients it is tied to.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException, PetDependencyNotEmptyException {
-        for (PetPatient petPatient : petPatients){
-            if (petPatient.getOwner().equals(key.getNric())){
+        for (PetPatient petPatient : petPatients) {
+            if (petPatient.getOwner().equals(key.getNric())) {
                 throw new PetDependencyNotEmptyException();
             }
         }
@@ -340,8 +340,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removeForcePerson(Person key) throws PersonNotFoundException {
         List<PetPatient> petPatientArrayList = new ArrayList<>();
-        for (PetPatient petPatient : petPatients){
-            if (petPatient.getOwner().equals(key.getNric())){
+        for (PetPatient petPatient : petPatients) {
+            if (petPatient.getOwner().equals(key.getNric())) {
                 petPatientArrayList.add(petPatient);
             }
         }
@@ -406,7 +406,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         while (petPatientIterator.hasNext()) {
             PetPatient petPatient = petPatientIterator.next();
 
-            if (petPatient.getOwner().equals(key.getNric())){
+            if (petPatient.getOwner().equals(key.getNric())) {
                 petPatientIterator.remove();
             }
         }

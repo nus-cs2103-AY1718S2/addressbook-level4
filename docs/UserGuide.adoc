@@ -99,7 +99,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 |locate (`lo`)
 |kbd:[Alt+L]
-|`locate INDEX` OR `locate name/email/phone/address/tags`
+|`locate INDEX` *OR* `locate name/email/phone/address/tags`
 
 |select (`s`)
 |kbd:[Alt+S]
@@ -229,7 +229,7 @@ _Returns all persons with the above phone number._
 ====
 * This command identifies a person by name, email, phone or tags and displays their address using Google Maps.
 * Alternatively, this command displays the given address and displays the person associated with that address in the PersonListPanel.
-===
+====
 
 *Usage examples:*
 

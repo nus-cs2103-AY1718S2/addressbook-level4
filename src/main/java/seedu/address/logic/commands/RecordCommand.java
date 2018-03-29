@@ -11,9 +11,12 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.stage.Stage;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.record.RecordManager;
+import seedu.address.logic.record.RecordWindow;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Record;
 import seedu.address.model.patient.RecordList;
@@ -87,8 +90,21 @@ public class RecordCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        //creating medical record window here and obtaining user input
+        RecordWindow recordWindow = new RecordWindow();
+        Stage stage = new Stage();
+        recordWindow.start(stage, record);
+
+        Record editedRecord = RecordManager.getRecord();
+
         patientToEdit = lastShownList.get(patientIndex.getZeroBased());
-        editedPatient = createEditedPerson(patientToEdit, recordIndex, record);
+
+        if (editedRecord == null) {
+            editedPatient = patientToEdit;
+        }
+        else {
+            editedPatient = createEditedPerson(patientToEdit, recordIndex, editedRecord);
+        }
     }
 
     /**

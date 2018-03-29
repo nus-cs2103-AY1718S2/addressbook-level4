@@ -265,6 +265,11 @@ Return the distance from the 2nd person to the 3rd person in the address book.
 `distance 1` +
 Return the distance from the headquarter to the 1st person name Betsy in the address book.
 
+=== Emailing the customers : `email`
+
+Sends an email to the current list of customers to remind them when their delivery is coming. +
+Format: `email`
+
 === Exiting the program : `exit`
 
 Exits the program. +

@@ -78,8 +78,8 @@ public class PersonBuilder {
 
         //TODO: change the instantiation of below variables according to instanceof
         moneyBorrowed = new MoneyBorrowed();
-        oweStartDate = new Date();
-        oweDueDate = new Date();
+        oweStartDate = new Date(0);
+        oweDueDate = new Date(0);
         standardInterest = new StandardInterest();
         lateInterest = new LateInterest();
         runner = new Runner();

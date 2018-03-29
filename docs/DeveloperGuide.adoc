@@ -422,12 +422,33 @@ Linking of pet patients to their respective owners and appointments will be impl
 
 // tag::commandsyntax[]
 
+=== Display List of PetPatients
+==== Current Implemaentation
+Since Veterinarians and their assistants have the need to view the PetPatients as a list and see how many PetPatients belong to the same Owner. It is necessary to implement the PetPatient List feature.
+
+==== Design Consideration
+* **Alternative 1:** Use tab function to switch between PetPatientList and PersonList
+
+** Pros: The UI will be neat to see, saves more space for calendar view
+** Cons: The user will not be able to see both PetPatient and Owners at the same time.
+
+* **ALternative 2:** Implement another Panel to display PetPatients.
+
+** Pros: User will be able to see both lists at the same time
+** Cons: Takes up more space, making it difficult to display appointments in the future.
+
+==== Current Limitations
+More command and features relating to PetPatient List are to be properly developed, the tags of PetPatients are not properly organised.
+
+==== Future Work
+Implement the corresponding Add, Delete, List commands for petPatients and decide on the tags to be used for petPatients.
+
 === Show Appointments on calendar
 ==== Current Implementation
 
-In the original AddressBook app, there's no appointment class to show. Since veterinarians and their assistants have the need to constantly check their schedule for upcoming appointments, a calender feature is required to show future appointments.
+Since veterinarians and their assistants have the need to constantly check their schedule for upcoming appointments, a calender feature is required to show future appointments.
 
-Third party API `CalendarF` is used as a Java calendar frame to show Appointments.
+Third party API `CalendarFX` is used as a Java calendar frame to show Appointments.
 
 ==== Design Consideration
 * **Alternative 1:** Use `iCalendar` from Jfxtra library

@@ -339,6 +339,26 @@ image::ClearCommand.png[width="750"]
 [TIP]
 If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
 
+//tag::change-theme[]
+=== Changing theme: *`theme`*
+
+Toggles between dark and light theme.
+
+Format: `theme`
+
+See <<fig-ChangeThemeCommand>> for more information. +
+{nbsp}
+
+[[fig-ChangeThemeCommand]]
+.Two themes provided for ReciRecipé
+image::ChangeThemeCommand.png[width="750"]
+
+{nbsp} +
+
+[TIP]
+You can change theme from the menu bar or by pressing F2 too!
+//end::change-theme[]
+
 === Exiting the program: *`exit`*
 
 Exits the program.
@@ -379,14 +399,19 @@ E.g. *`find Chicken Pizza`*
 E.g. *`tag chicken favourites`*
 * *Upload* : `upload FILENAME` +
 E.g. *`upload RecipeBook`*
-* *List* : *`list`*
-* *Help* : *`help`*
+* *List* : `list`
+* *Help* : `help`
 * *Select* : `select INDEX` +
 E.g.*`select 2`*
-* *History* : *`history`*
-* *Undo* : *`undo`*
-* *Redo* : *`redo`*
+* *History* : `history`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Change theme* : `theme`
 
 == Glossary
 
 include::./Glossary.adoc[]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

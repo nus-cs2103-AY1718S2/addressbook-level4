@@ -4,7 +4,7 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.recipe.testutil.EventsUtil.postNow;
 import static seedu.recipe.testutil.TypicalRecipes.ALICE;
-import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE_DARK;
 import static seedu.recipe.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
@@ -26,7 +26,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     public void setUp() {
         selectionChangedEventStub = new RecipePanelSelectionChangedEvent(new RecipeCard(ALICE, 0));
 
-        guiRobot.interact(() -> browserPanel = new BrowserPanel());
+        guiRobot.interact(() -> browserPanel = new BrowserPanel(true));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
@@ -35,7 +35,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
         assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 
         // associated web page of a recipe

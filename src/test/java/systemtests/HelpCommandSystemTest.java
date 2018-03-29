@@ -64,7 +64,7 @@ public class HelpCommandSystemTest extends RecipeBookSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-        assertNotEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        assertNotEquals(BrowserPanel.DEFAULT_PAGE_LIGHT, getBrowserPanel().getLoadedUrl());
         assertListMatching(getRecipeListPanel(), getModel().getFilteredRecipeList());
 
         // assert that the status bar too is updated correctly while the help window is open

@@ -56,7 +56,7 @@ public class RouteOptimization {
         Map<String, Double> dummy = new LinkedHashMap<>();
         String first;
 
-        for (int i = 0; i < filteredAddresses.size(); i++ ) {
+        for (int i = 0; i < filteredAddresses.size(); i++) {
             String destination = filteredAddresses.get(i);
             String origin = HQ_ADDRESS;
             startingRoute.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));

@@ -10,6 +10,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -87,9 +88,7 @@ public class Autocompleter {
 
                 possibilities = generatePossibleSuffixes(field, fieldsList);
             } else {
-                //the last word of the query doesn't correspond to a command
-                // and doesn't correspond to an option starting with 'x/'
-                //so we're trying to match the last word to a name of the address book
+                //trying to match the last word to a name of the address book
                 possibilities = generatePossibleSuffixes(words[words.length - 1], generateNames());
             }
         }
@@ -162,6 +161,7 @@ public class Autocompleter {
                 ClearCommand.COMMAND_WORD,
                 DeleteCommand.COMMAND_WORD,
                 EditCommand.COMMAND_WORD,
+                EmailCommand.COMMAND_WORD,
                 ExitCommand.COMMAND_WORD,
                 FindCommand.COMMAND_WORD,
                 FilterCommand.COMMAND_WORD,

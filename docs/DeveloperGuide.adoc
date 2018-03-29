@@ -213,7 +213,7 @@ The `Model`,
 === Storage component
 
 .Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
+image::StorageClassUpdated.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -244,6 +244,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
 === Filter Command
 To add to the many commands necessary for users, filtering by date will be essential when trying to optimize the route per day.
 The filter command was added similar to how the find command has been implemented.
@@ -430,10 +431,20 @@ The `Autocompleter` can complete:
 * an option, starting by "n/" for example
 * a name, if the current query doesn't match the first two cases: if we only have "John Doe" in the `AddressBook` we can complete the query by either "John" or "Doe" (this is useful to complete the `FindCommand`).
 
-This class is used in `CommandBox` which send the content of the command line and then append the result of the autocomplete operation.
+After having chosen between one this three cases, we generate a set of all possible suffixes that can be append to the current query. And from this set, we extract the longest common prefix which is the returned `String` of `Autocompleter.autocomplete()`. +
+For example : if we want to complete the query `find J` and we have two persons in the address book called `John` and `Jonathan`, the set of possible suffixes will be {`ohn`, `onathan`} and the longest common prefix is `o`.
+So the completed query will be `find Jo`.
 
-
+This class is used in `CommandBox` which sends the content of the command line and then append the result of the autocomplete operation.
 // end::autocompletion[]
+
+//tag::mailer[]
+=== Mailer feature
+
+We use an abstract `Mailer` class which provide a method that sends an email to a list of `Person`. +
+This class uses the JavaMail API to send emails from the address : pigeonscs2103@gmail.com. +
+We also created a new `EmailCommand` which simply uses the `Mailer` class in its redefinition of `super.execute()`.
+//end::mailer[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

@@ -48,8 +48,7 @@ public class PetPatientCard extends UiPart<Region> {
         colour.setText(petPatient.getColour());
         bloodType.setText(petPatient.getBloodType());
         ownerNric.setText(petPatient.getOwner().value);
-
-        createTags(PetPatient);
+        createTags(petPatient);
     }
 
     /**

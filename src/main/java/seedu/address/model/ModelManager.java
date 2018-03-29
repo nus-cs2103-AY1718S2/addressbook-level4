@@ -126,6 +126,18 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered PetPatient List Accessors =============================================================
+
+    @Override
+    public ObservableList<PetPatient> getFilteredPetPatientList() {
+        return FXCollections.unmodifiableObservableList(filteredPetPatients);
+    }
+
+    @Override
+    public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
+        requireNonNull(predicate);
+        filteredPetPatients.setPredicate(predicate);
+    }
     //=========== Filtered Appointment List Accessors =============================================================
 
     /**
@@ -143,11 +155,13 @@ public class ModelManager extends ComponentManager implements Model {
         filteredAppointments.setPredicate(predicate);
     }
 
+    /*
     @Override
     public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
-        requireNonNull(predicate);
-        filteredPetPatients.setPredicate(predicate);
+    requireNonNull(predicate);
+    filteredPetPatients.setPredicate(predicate);
     }
+    */
 
     @Override
     public boolean equals(Object obj) {

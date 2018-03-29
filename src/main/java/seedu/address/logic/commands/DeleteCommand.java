@@ -225,7 +225,7 @@ public class DeleteCommand extends UndoableCommand {
                 throw new CommandException(MESSAGE_USAGE);
             }
         } catch (CommandException e) {
-            throw new CommandException(MESSAGE_USAGE);
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }
 

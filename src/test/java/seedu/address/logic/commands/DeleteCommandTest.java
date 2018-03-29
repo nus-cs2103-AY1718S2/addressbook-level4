@@ -8,13 +8,13 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_USAGE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -49,7 +49,7 @@ public class DeleteCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, MESSAGE_USAGE);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class DeleteCommandTest {
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, MESSAGE_USAGE);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
         // execution failed -> deleteCommand not pushed into undoRedoStack
-        assertCommandFailure(deleteCommand, model, MESSAGE_USAGE);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         // no commands in undoRedoStack -> undoCommand and redoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);

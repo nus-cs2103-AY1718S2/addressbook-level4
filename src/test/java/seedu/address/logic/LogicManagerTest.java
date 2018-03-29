@@ -1,8 +1,8 @@
 package seedu.address.logic;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_USAGE;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,7 +35,7 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete -o 9";
-        assertCommandException(deleteCommand, MESSAGE_USAGE);
+        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
     }
 

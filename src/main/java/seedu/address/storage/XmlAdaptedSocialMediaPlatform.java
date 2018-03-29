@@ -1,11 +1,11 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.smplatform.Link;
 import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.model.smplatform.SocialMediaPlatformBuilder;
-
-import javax.xml.bind.annotation.XmlElement;
 
 //@@author Nethergale
 /**

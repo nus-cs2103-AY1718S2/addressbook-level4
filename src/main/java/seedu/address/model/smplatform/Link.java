@@ -65,7 +65,7 @@ public class Link {
         return other == this // short circuit if same object
                 || (other instanceof Link // instanceof handles nulls
                 && this.value.equals(((Link) other).value)); // state check
-        }
+    }
 
     @Override
     public int hashCode() {

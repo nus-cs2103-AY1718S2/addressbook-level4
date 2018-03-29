@@ -1,5 +1,8 @@
 package seedu.address.model.smplatform;
 
+/**
+ * Represents a twitter object.
+ */
 public class Twitter extends SocialMediaPlatform {
     //@@author Nethergale-reused
     //Reused from https://stackoverflow.com/questions/6024848/regex-to-validate-a-twitter-url with minor modifications

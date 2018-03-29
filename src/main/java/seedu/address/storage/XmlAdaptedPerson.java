@@ -78,7 +78,8 @@ public class XmlAdaptedPerson {
         //@@author Nethergale
         platforms = new ArrayList<>();
         for (String key : source.getSocialMediaPlatformMap().keySet()) {
-            platforms.add(new XmlAdaptedSocialMediaPlatform(key, source.getSocialMediaPlatformMap().get(key).getLink()));
+            platforms.add(
+                    new XmlAdaptedSocialMediaPlatform(key, source.getSocialMediaPlatformMap().get(key).getLink()));
         }
 
         //@@author

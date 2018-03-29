@@ -19,13 +19,41 @@
     -fx-text-fill: white;
 }
 
-.list-cell:filled:selected {
-    -fx-background-color: #424d5f;
+.tab-pane {
+    -fx-tab-min-height: 3em; /* 36 */
+    -fx-tab-max-height: 3em; /* 36 */
+    -fx-tab-min-width: 12em;
+    -fx-tab-max-width: 12em;
 }
 
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
+.tab-pane:left {
+     -fx-tab-min-width: 20em;
+     -fx-tab-max-width: 20em;
+ }
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0%;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 1.16666667em;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-radius: 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-background-color: #515658;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: #424d5f;
     -fx-border-width: 1;
+    -fx-border-color: #3e7b91;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: transparent;
 }
 
 #invalidAddressOverlay {

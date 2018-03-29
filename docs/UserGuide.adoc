@@ -46,7 +46,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+.  Refer to <<bookmark-feature>> for command details.
 
 == Command Summary
 
@@ -117,7 +117,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |`redo`
 |===
 
-== Feature details
+== [[bookmark-feature]]Feature details
 
 === Showing command history : `history`
 

@@ -3,6 +3,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.scene.control.Label;
 import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
@@ -28,10 +29,14 @@ public class TaskListPanel extends UiPart<Region> {
     @FXML
     private ListView<TaskCard> taskListView;
 
+    private Label emptyLabel = new Label("Task List is empty!");
+
     public TaskListPanel(ObservableList<Activity> taskList) {
         super(FXML);
         setConnections(taskList);
         registerAsAnEventHandler(this);
+        taskListView.setPlaceholder(emptyLabel);
+        emptyLabel.setStyle("-fx-font-family: \"Open Sans\"; -fx-font-size: 25px; ");
     }
 
     private void setConnections(ObservableList<Activity> taskList) {

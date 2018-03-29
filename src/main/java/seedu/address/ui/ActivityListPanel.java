@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.scene.control.Label;
 import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
@@ -27,10 +28,14 @@ public class ActivityListPanel extends UiPart<Region> {
     @FXML
     private ListView<ActivityCard> activityListView;
 
+    private Label emptyLabel = new Label("Event List is empty!");
+
     public ActivityListPanel(ObservableList<Activity> activityList) {
         super(FXML);
         setConnections(activityList);
         registerAsAnEventHandler(this);
+        activityListView.setPlaceholder(emptyLabel);
+        emptyLabel.setStyle("-fx-font-family: \"Open Sans\"; -fx-font-size: 25px; ");
     }
 
     private void setConnections(ObservableList<Activity> activityList) {

@@ -25,7 +25,7 @@
                     <items>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <GridPane gridLinesVisible="true">
+                              <GridPane gridLinesVisible="true" styleClass="grid-pane" stylesheets="@Extensions.css">
                                 <columnConstraints>
                                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -99,7 +99,7 @@
                               <Insets bottom="5.0" left="5.0" top="5.0" />
                            </padding>
                         </Label>
-                        <ListView prefHeight="200.0" prefWidth="200.0">
+                        <ListView prefHeight="-1.0" prefWidth="-1.0">
                            <VBox.margin>
                               <Insets bottom="5.0" right="5.0" />
                            </VBox.margin>

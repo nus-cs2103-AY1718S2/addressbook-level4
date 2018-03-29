@@ -123,7 +123,7 @@ The *.pptx* files used to create diagrams in this document can be found in the l
 
 Given below is a quick overview of each component:
 
-. <<Design-Main,*`Main`*>>: Contains the app in overall.
+. <<Design-Main,*`Main`*>>: Contains the app.
 . <<Design-Commons,*`Commons`*>>: Contains classes that are used by multiple components.
 . <<Design-Ui,*`UI`*>>: Contains the UI of the app.
 . <<Design-Logic,*`Logic`*>>: Contains the commands of the app.
@@ -426,8 +426,8 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::multiple-lines[]
 === Multiple lines input support
+// tag::multiple-lines[]
 ==== Current implementation
 
 Former implementation of the `_CommandBox_` used `_TextField_`, which only allows single-line inputs but supports automatic handler of kbd:[Enter]. To support commands with multiple lines, another class has to be used for `_CommandBox_`. The current implementation of `_CommandBox_`
@@ -488,8 +488,8 @@ private void createNewLine() {
 ** Cons: Too complex to implement, unintuitive inputs.
 // end::multiple-lines[]
 
-// tag::keyboard-shortcut[]
 === Keyboard shortcuts
+// tag::keyboard-shortcut[]
 ==== Current implementation
 
 Currently, only `_CommandBox_` accepts keyboard shortcuts. All shortcuts are stored in the `_KeyboardShortcutsMapping_` class inside the `UI` component. `_CommandBox_` listens for key combinations and executes actions mapped to these key presses, which are defined in the `handleKeyPress()` method as shown below:
@@ -527,6 +527,90 @@ As seen from above, all key combinations implemented consume the default effect 
 ** Pros: No needs for imports. Also, it is possible to declare new mappings on the run and use it directly in the `_CommandBox_`.
 ** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
 // end::keyboard-shortcut[]
+
+=== Changing theme
+// tag::change-theme[]
+==== Current implementation
+
+The command is implemented in `_ChangeThemeCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_ChangeThemeRequestEvent_` to the `_EventsCenter_`. Refer to <<fig-ChangeThemeSD>>.
+
+[[fig-ChangeThemeSD]]
+.Component interactions for *`theme`* command (part 1)
+image::SDforChangeTheme.png[width="600"]
+
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleChangeThemeRequestEvent()` to update the theme accordingly. Refer to <<fig-ChangeThemeEventSD>>.
+
+[[fig-ChangeThemeEventSD]]
+.Component interactions for *`theme`* command (part 2)
+image::SDforChangeThemeEventHandling.png[width="800"]
+
+`handleChangeThemeRequestEvent()` will then log the event trigger and call `handleChangeTheme()`.
+
+[NOTE]
+If the command is called directly from the menu bar, `handleChangeTheme()` will be called instead of `handleChangeThemeRequestEvent()`.
+
+`handleChangeTheme()` gets the current theme from `_UserPref_` then:
+
+. Changes the main page loaded on the `_BrowserPanel_`.
+. Changes the style using on the `_Stage_`.
+
+Refer to <<fig-ChangeThemeDetailsSD>>
+
+[[fig-ChangeThemeDetailsSD]]
+.Component interactions for `handleChangeTheme()`
+image::SDforChangeThemeDetails.png[width="400"]
+
+Below is the implementation for the two operations:
+
+[source,java]
+----
+public void loadDefaultPage(boolean isDarkTheme) {
+    URL defaultPage;
+    if (isDarkTheme) {
+        defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+    } else {
+        defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+    }
+    loadPage(defaultPage.toExternalForm());
+}
+
+private void loadStyle(boolean darkTheme) {
+    Scene scene = primaryStage.getScene();
+    scene.getStylesheets().clear();
+    if (darkTheme) {
+        scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + DARK_THEME_CSS).toExternalForm());
+    } else {
+        scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + LIGHT_THEME_CSS).toExternalForm());
+    }
+    scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + EXTENSIONS_CSS).toExternalForm());
+    primaryStage.setScene(scene);
+    primaryStage.show();
+}
+----
+
+[NOTE]
+Currently the implementation of `loadDefaultPage()` reloads the `_BrowserPanel_` so if any page is loaded on the `_BrowserPanel_`, it will be lost during changing theme.
+
+==== Design considerations
+
+===== Aspect: Handling of default page in `_BrowserPanel_`.
+
+* **Alternative 1 (current choice):** Reload the default page.
+** Pros: It is easy to implement.
+** Cons: Any page loaded on `_BrowserPanel_` will be lost during the operation.
+* **Alternative 2:** Reload the style for the default page.
+** Pros: It is possible to keep the status of the `_BrowserPanel_`, in other words, any page loaded may still retain.
+** Cons: It is not entirely sure if this implementation is possible.
+* **Alternative 3:** Reload the default page *and* reload any page currently loaded on `_BrowserPanel_`.
+** Pros: It is possible to keep the status of the `_BrowserPanel_`, in other words, any page loaded may still retain.
+** Cons: This approach is obviously harder to implement, also it will sends an additional request to the server of the website.
+* **Alternative 4:** Save any page currently loaded on `_BrowserPanel_`, reload the default page then load the saved page.
+** Pros: This is the ideal output.
+** Cons: This is the ideal output, thus very hard to implement.
+* **Alternative 5:** Stop using the default page.
+** Pros: It is somewhat easy to implement.
+** Cons: Obviously there is no default page to display so we have to find another approach to make `_BrowserPanel_` display something as a placeholder, *without* using a default page.
+// end::change-theme[]
 
 === Searching on the Internet
 // tag::internet-search[]
@@ -1462,3 +1546,7 @@ _{More to be added}_
 == Glossary
 
 include::./Glossary.adoc[]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

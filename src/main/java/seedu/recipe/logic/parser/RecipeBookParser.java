@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.recipe.logic.commands.AddCommand;
+import seedu.recipe.logic.commands.ChangeThemeCommand;
 import seedu.recipe.logic.commands.ClearCommand;
 import seedu.recipe.logic.commands.Command;
 import seedu.recipe.logic.commands.DeleteCommand;
@@ -96,6 +97,9 @@ public class RecipeBookParser {
 
         case UploadCommand.COMMAND_WORD:
             return new UploadCommandParser().parse(arguments);
+
+        case ChangeThemeCommand.COMMAND_WORD:
+            return new ChangeThemeCommand();
 
         case SearchCommand.COMMAND_WORD:
             return new SearchCommandParser().parse(arguments);

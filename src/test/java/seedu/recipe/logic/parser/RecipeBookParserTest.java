@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.recipe.logic.commands.AddCommand;
+import seedu.recipe.logic.commands.ChangeThemeCommand;
 import seedu.recipe.logic.commands.ClearCommand;
 import seedu.recipe.logic.commands.DeleteCommand;
 import seedu.recipe.logic.commands.EditCommand;
@@ -150,6 +151,12 @@ public class RecipeBookParserTest {
     //@@author
 
     //@@Author kokonguyen191
+    @Test
+    public void parseCommand_changeTheme() throws Exception {
+        assertTrue(parser.parseCommand(ChangeThemeCommand.COMMAND_WORD) instanceof ChangeThemeCommand);
+        assertTrue(parser.parseCommand(ChangeThemeCommand.COMMAND_WORD + " 3") instanceof ChangeThemeCommand);
+    }
+
     @Test
     public void parseCommand_search() throws Exception {
         assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD + " chicken rice") instanceof SearchCommand);

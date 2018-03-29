@@ -62,8 +62,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             if (argMultimap.getValue(PREFIX_TYPE).get().matches("[cC]")) {
-                Date oweStartDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWESTARTDATE)).orElse(new Date());
-                Date oweDueDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWEDUEDATE)).orElse(new Date());
+                Date oweStartDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWESTARTDATE)).orElse(new Date(0));
+                Date oweDueDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWEDUEDATE)).orElse(new Date(0));
                 //moneyOwed
                 //interest
                 Customer customer = new Customer(name, phone, email, address, tagList, new MoneyBorrowed(),

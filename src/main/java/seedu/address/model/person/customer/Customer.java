@@ -30,8 +30,8 @@ public class Customer extends Person {
     public Customer() {
         super();
         this.moneyBorrowed = new MoneyBorrowed();
-        this.oweStartDate = new Date();
-        this.oweDueDate = new Date();
+        this.oweStartDate = new Date(0);
+        this.oweDueDate = new Date(0);
         this.standardInterest = new StandardInterest();
         this.lateInterest = new LateInterest();
         this.runner = new Runner();

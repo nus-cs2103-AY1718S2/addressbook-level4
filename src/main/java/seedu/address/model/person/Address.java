@@ -13,8 +13,8 @@ public class Address {
             "Person addresses can take any values, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * empty string is a valid input
+     *
      */
     public static final String ADDRESS_VALIDATION_REGEX = "^$|[^\\s].*";
 

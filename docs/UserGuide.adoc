@@ -127,7 +127,7 @@ shortcut
 * This command will list all the commands that you have previously entered in *reverse chronological order*.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
-
+***
 === Adding a person: `add`
 
 [NOTE]
@@ -144,7 +144,7 @@ shortcut
 ====
  add n: Betsy Crowe t:friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
 ====
-
+***
 === Editing a person : `edit`
 
 [NOTE]
@@ -168,7 +168,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 ====
-
+***
 === Deleting a person : `delete`
 
 [NOTE]
@@ -193,7 +193,7 @@ Deletes the 2nd person in the database.
 
 Deletes the 1st person in the results of the `find` command.
 ====
-
+***
 === Searching for relevant persons: `find`
 
 [NOTE]
@@ -226,7 +226,7 @@ Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `J
 
 Returns all persons with the above phone number.
 ====
-
+***
 === Selecting a person : `select`
 
 [NOTE]
@@ -251,7 +251,7 @@ Selects the second person in the database.
 
 Selects the first person in the results of the `find` command.
 ====
-
+***
 === Undoing previous command : `undo`
 
 [NOTE]
@@ -281,7 +281,7 @@ The `undo` command fails as there are no undoable commands executed previously.
  undo (reverses the "clear" command)
  undo (reverses the "delete 1" command)
 ====
-
+***
 === Redoing the previously undone command : `redo`
 
 *Usage examples:*
@@ -296,7 +296,7 @@ The `undo` command fails as there are no undoable commands executed previously.
  delete 1
  redo
 
-    The `redo` command fails as there are no `undo` commands executed previously.
+The `redo` command fails as there are no `undo` commands executed previously.
 ====
 
 ====

@@ -180,7 +180,7 @@ Format: `list`
 Rating will be shown as `-` if the person is yet to be rated.
 ====
 
-image::employeesList.png[width="790"]
+image::employeesList.png[width="790"][height="200"]
 _Figure 3.3: List of persons_
 
 

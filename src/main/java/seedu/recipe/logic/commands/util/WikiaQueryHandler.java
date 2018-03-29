@@ -3,6 +3,7 @@ package seedu.recipe.logic.commands.util;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -18,7 +19,7 @@ import com.restfb.json.JsonObject;
  */
 public class WikiaQueryHandler implements WikiaQuery {
 
-    private static final String QUERY_URL = "http://recipes.wikia.com/wiki/Special:Search?query=";
+    public static final String QUERY_URL = "http://recipes.wikia.com/wiki/Special:Search?query=";
     private static final String API_QUERY_URL = "http://recipes.wikia.com/api/v1/Search/List?query=";
 
     private String recipeToSearch;
@@ -28,6 +29,7 @@ public class WikiaQueryHandler implements WikiaQuery {
     private JsonObject rawDataJson;
 
     public WikiaQueryHandler(String recipeToSearch) {
+        requireNonNull(recipeToSearch);
         this.recipeToSearch = recipeToSearch;
         loadUrl();
         startHttpConnection();
@@ -42,7 +44,7 @@ public class WikiaQueryHandler implements WikiaQuery {
 
     @Override
     public int getQueryNumberOfResults() {
-        return rawDataJson.get("total").asInt();
+        return rawDataString == null ? 0 : rawDataJson.get("total").asInt();
     }
 
     /**
@@ -92,18 +94,21 @@ public class WikiaQueryHandler implements WikiaQuery {
                 result.append(line);
             }
             br.close();
+            rawDataString = result.toString();
+        } catch (FileNotFoundException fnfe) {
+            rawDataString = null;
         } catch (IOException ie) {
             throw new AssertionError("Something wrong happened while the app"
                     + "was trying to read data from the url " + queryUrl.toExternalForm(), ie);
         }
-        rawDataString = result.toString();
     }
 
     /**
      * Gets a {@code JSONObject} from {@code rawDataString}
      */
     private void parseData() {
-        requireNonNull(rawDataString);
-        rawDataJson = (JsonObject) Json.parse(rawDataString);
+        if (rawDataString != null) {
+            rawDataJson = (JsonObject) Json.parse(rawDataString);
+        }
     }
 }

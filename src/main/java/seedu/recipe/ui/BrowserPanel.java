@@ -79,7 +79,9 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPage(event.wikiaQueryHandlerImplementation.getRecipeQueryUrl());
+        if (event.wikiaQueryHandler.getQueryNumberOfResults() != 0) {
+            loadPage(event.wikiaQueryHandler.getRecipeQueryUrl());
+        }
     }
 
     //@@author RyanAngJY

@@ -17,21 +17,28 @@ public class SearchCommand extends Command {
             + ": Search the recipe on recipes.wikia.com.\n"
             + "Parameters: NAME\n"
             + "Example: " + COMMAND_WORD + " chicken rice";
-    public static final String MESSAGE_SUCCESS = "Found %1$s recipe(s). Please wait...";
+    public static final String MESSAGE_FAILURE = "No recipes found. Please try another query.";
+    public static final String MESSAGE_SUCCESS = "Found %1$s recipe(s). Please wait while the page is loading...";
 
     private final String recipeToSearch;
-    private final WikiaQueryHandler wikiaQueryHandlerImplementation;
+    private final WikiaQueryHandler wikiaQueryHandler;
 
     public SearchCommand(String recipeToSearch) {
         this.recipeToSearch = recipeToSearch;
-        this.wikiaQueryHandlerImplementation = new WikiaQueryHandler(recipeToSearch);
+        this.wikiaQueryHandler = new WikiaQueryHandler(recipeToSearch);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        EventsCenter.getInstance().post(new InternetSearchRequestEvent(wikiaQueryHandlerImplementation));
-        return new CommandResult(
-                String.format(MESSAGE_SUCCESS, wikiaQueryHandlerImplementation.getQueryNumberOfResults()));
+        int noOfResult = wikiaQueryHandler.getQueryNumberOfResults();
+
+        EventsCenter.getInstance().post(new InternetSearchRequestEvent(wikiaQueryHandler));
+
+        if (noOfResult == 0) {
+            return new CommandResult(MESSAGE_FAILURE);
+        } else {
+            return new CommandResult(String.format(MESSAGE_SUCCESS, noOfResult));
+        }
     }
 
     @Override

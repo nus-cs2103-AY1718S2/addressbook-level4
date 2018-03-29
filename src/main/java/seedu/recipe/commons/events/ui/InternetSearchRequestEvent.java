@@ -9,10 +9,10 @@ import seedu.recipe.logic.commands.util.WikiaQueryHandler;
  */
 public class InternetSearchRequestEvent extends BaseEvent {
 
-    public final WikiaQueryHandler wikiaQueryHandlerImplementation;
+    public final WikiaQueryHandler wikiaQueryHandler;
 
-    public InternetSearchRequestEvent(WikiaQueryHandler wikiaQueryHandlerImplementation) {
-        this.wikiaQueryHandlerImplementation = wikiaQueryHandlerImplementation;
+    public InternetSearchRequestEvent(WikiaQueryHandler wikiaQueryHandler) {
+        this.wikiaQueryHandler = wikiaQueryHandler;
     }
 
     @Override

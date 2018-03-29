@@ -3,16 +3,23 @@ package seedu.recipe.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.recipe.logic.commands.SearchCommand.MESSAGE_FAILURE;
+import static seedu.recipe.logic.commands.SearchCommand.MESSAGE_SUCCESS;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.UserPrefs;
 
 public class SearchCommandTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
 
     @Test
@@ -43,8 +50,21 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void execute() {
-        SearchCommand searchCommand = new SearchCommand("chick");
-        assertCommandFailure(searchCommand, model, "DUH");
+    public void execute_nullInput_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        SearchCommand searchCommand = new SearchCommand(null);
+    }
+
+    @Test
+    public void execute_inputWithNoResults_noRecipesFound() {
+        SearchCommand searchCommandWithNoResult = new SearchCommand("blah");
+        assertCommandSuccess(searchCommandWithNoResult, model, MESSAGE_FAILURE, model);
+    }
+
+    // THIS TEST MIGHT FAIL IN THE FUTURE! PLEASE UPDATE IF IT FAILS!
+    @Test
+    public void execute_inputWithFourResults_fourRecipesFound() {
+        SearchCommand searchCommandWithFourResult = new SearchCommand("bot");
+        assertCommandSuccess(searchCommandWithFourResult, model, String.format(MESSAGE_SUCCESS, 4), model);
     }
 }

@@ -156,7 +156,7 @@ public class RecipeBookParserTest {
 
         String keywords = "chicken rice";
         SearchCommand command = (SearchCommand) parser.parseCommand(SearchCommand.COMMAND_WORD + " " + keywords);
-        assertEquals(new SearchCommand(keywords), command);
+        assertEquals(new SearchCommand(keywords.replaceAll("\\s+", "+")), command);
 
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));

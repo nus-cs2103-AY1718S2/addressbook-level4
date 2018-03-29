@@ -179,6 +179,22 @@ Lists all the commands that you have entered in reverse chronological order. +
 Alias: `h` +
 Format: `history`
 
+=== Locating a person on Google map : `locate`
+
+Locate on Google Map the person identified directly by name, email, phone, address and tags. +
+Alias: `lo` +
+Format: `locate name/email/phone/address/tags`
+
+****
+* Locates the person and loads the location of the person specified by his name/email/phone/address/tags on Google map.
+****
+
+Examples:
+
+* `locate David` +
+Locates the person whose name is "David" on Google map.
+* locate Blk 30` +
+Locates the address specified on Google Map and bring up the person whose address is "Blk 30" on the panel.
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.

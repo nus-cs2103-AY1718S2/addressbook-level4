@@ -1,22 +1,24 @@
 = Using Gradle
 :imagesDir: images
 :stylesDir: stylesheets
+:linkattrs:
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
+:repoURL: https://github.com/CS2103JAN2018-F14-B4/main
 
-https://gradle.org/[Gradle] is a build automation tool. It can automate build-related tasks such as
+https://gradle.org/[Gradle, window="_blank"] is a build automation tool. It can automate build-related tasks such as
 
 * Running tests
 * Managing library dependencies
 * Analyzing code for style compliance
 
-The gradle configuration for this project is defined in the _build script_ link:../build.gradle[`build.gradle`].
+The gradle configuration for this project is defined in the _build script_ link:{repoURL}/blob/master/build.gradle[`build.gradle`].
 
 [NOTE]
-To learn more about gradle build scripts, refer https://docs.gradle.org/current/userguide/tutorial_using_tasks.html[Build Scripts Basics].
+To learn more about gradle build scripts, refer https://docs.gradle.org/current/userguide/tutorial_using_tasks.html[Build Scripts Basics, window="_blank"].
 
 == Running Gradle Commands
 
@@ -41,7 +43,7 @@ When running a Gradle task, Gradle will try to figure out if the task needs runn
 == Creating the JAR file
 
 * *`shadowJar`* +
-Creates the `addressbook.jar` file in the `build/jar` folder, _if the current file is outdated_. +
+Creates the `bibliotek.jar` file in the `build/jar` folder, _if the current file is outdated_. +
 e.g. `./gradlew shadowJar`
 
 ****
@@ -50,7 +52,7 @@ e.g. `./gradlew clean shadowJar`
 ****
 
 [NOTE]
-*Why do we create a fat JAR?* If we package only our own class files into the JAR file, it will not work properly unless the user has all the other JAR files (i.e. third party libraries) our classes depend on, which is rather inconvenient. Therefore, we package all dependencies into a single JAR files, creating what is also known as a _fat_ JAR file. To create a fat JAR file, we use the Gradle plugin https://github.com/johnrengelman/shadow[shadow jar].
+*Why do we create a fat JAR?* If we package only our own class files into the JAR file, it will not work properly unless the user has all the other JAR files (i.e. third party libraries) our classes depend on, which is rather inconvenient. Therefore, we package all dependencies into a single JAR files, creating what is also known as a _fat_ JAR file. To create a fat JAR file, we use the Gradle plugin https://github.com/johnrengelman/shadow[shadow jar, window="_blank"].
 
 == Rendering AsciiDoc files
 
@@ -69,9 +71,9 @@ Builds the application as a fat JAR, and then runs it.
 == Running code style checks
 
 * **`checkstyleMain`** +
-Runs the code style check for the main code base
+Runs the code style check for the main code base.
 * **`checkstyleTest`** +
-Runs the code style check for the test code base
+Runs the code style check for the test code base.
 
 The set of code style rules implemented can be found in `config/checkstyle/checkstyle.xml`. To enable _exceptions_ to code styles, add in the comment `//CODESTYLE.OFF: RuleName` at the start of the section and `//CODESTYLE.ON: RuleName` at the end of the section.
 
@@ -80,9 +82,9 @@ The set of code style rules implemented can be found in `config/checkstyle/check
 * **`allTests`** +
 Runs all tests.
 * **`guiTests`** +
-Runs all tests in the `seedu.address.ui` and `systemtests` package
+Runs all tests in the `seedu.address.ui` and `systemtests` package.
 * **`nonGuiTests`** +
-Runs all non-GUI tests in the `seedu.address`
+Runs all non-GUI tests in the `seedu.address`.
 package
 * **`headless`** +
 Sets the test mode as _headless_. The mode is effective for that Gradle run only so it should be combined with other test tasks.

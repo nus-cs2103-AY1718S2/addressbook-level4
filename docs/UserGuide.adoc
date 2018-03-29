@@ -399,13 +399,14 @@ E.g. *`find Chicken Pizza`*
 E.g. *`tag chicken favourites`*
 * *Upload* : `upload FILENAME` +
 E.g. *`upload RecipeBook`*
-* *List* : *`list`*
-* *Help* : *`help`*
+* *List* : `list`
+* *Help* : `help`
 * *Select* : `select INDEX` +
 E.g.*`select 2`*
-* *History* : *`history`*
-* *Undo* : *`undo`*
-* *Redo* : *`redo`*
+* *History* : `history`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Change theme* : `theme`
 
 == Glossary
 

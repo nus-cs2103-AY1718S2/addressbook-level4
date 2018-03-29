@@ -1,9 +1,8 @@
 package seedu.address.storage;
 
-import static org.junit.Assert.*;
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 public class HtmlWriterTest {
@@ -15,7 +14,7 @@ public class HtmlWriterTest {
     }
 
     @Test
-    public void HtmlWriter_OpeningLine() {
+    public void checkOpeningLine() {
         String TEST_OPENING_LINE = "<!DOCTYPE html><html><head>\n"
                 + "<title>LoanSharkManager</title></head>\n"
                 + "<body style=\"background-color:#383838;\"\n>"

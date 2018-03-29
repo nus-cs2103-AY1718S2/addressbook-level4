@@ -206,7 +206,7 @@ public class AddPlatformCommandTest {
         Set<String> linkSet = new LinkedHashSet<>();
         linkSet.add(LINK_STUB);
         for (String key : firstPerson.getSocialMediaPlatformMap().keySet()) {
-            linkSet.add(firstPerson.getSocialMediaPlatformMap().get(key).getLink().value);
+            linkSet.add(firstPerson.getSocialMediaPlatformMap().get(key).getLink().toString());
         }
 
         UndoRedoStack undoRedoStack = new UndoRedoStack();

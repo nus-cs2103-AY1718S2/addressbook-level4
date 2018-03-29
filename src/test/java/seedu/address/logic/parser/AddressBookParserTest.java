@@ -8,7 +8,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -16,6 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPlatformCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -32,6 +35,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.smplatform.Link;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -115,6 +119,18 @@ public class AddressBookParserTest {
     public void parseCommand_sort() throws Exception {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " 3") instanceof SortCommand);
+    }
+
+    @Test
+    public void parseCommand_addPlatform() throws Exception {
+        String testLink = "www.facebook.com/example";
+        Map<String, Link> linkMap = new HashMap<>();
+        linkMap.put(Link.getLinkType(testLink), new Link(testLink));
+        AddPlatformCommand command = (AddPlatformCommand) parser.parseCommand(AddPlatformCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased()
+                + " " + CliSyntax.PREFIX_LINK + testLink);
+
+        assertEquals(new AddPlatformCommand(INDEX_FIRST_PERSON, linkMap), command);
     }
 
     //@@author

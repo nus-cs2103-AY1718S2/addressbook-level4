@@ -122,76 +122,88 @@ shortcut
 
 === Showing command history : `history`
 
-*Implementation notes*:
-
+[NOTE]
+====
 * This command will list all the commands that you have previously entered in *reverse chronological order*.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
 
 === Adding a person: `add`
 
-*Implementation notes*:
-
+[NOTE]
+====
 * A person can have any number of tags (including 0).
+====
 
 *Examples:*
 
- `add n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01`
+====
+ add n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
+====
 
- `add n: Betsy Crowe t:friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal`
-
+====
+ add n: Betsy Crowe t:friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
+====
 
 === Editing a person : `edit`
 
-*Implementation notes:*
-
+[NOTE]
+====
 * This command edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t:` without specifying any tags after it.
+====
 
 *Examples:*
 
 ====
-* `edit 1 p: 91234567 e: johndoe@example.com` +
+ edit 1 p: 91234567 e: johndoe@example.com
 
- > Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 ====
 
 ====
-* `edit 2 n: Betsy Crower t:` +
+ edit 2 n: Betsy Crower t:
 
- > Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 ====
 
 === Deleting a person : `delete`
 
-*Implementation notes:*
-
+[NOTE]
+====
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+====
 
 *Examples:*
 
 ====
-`list` +
-`delete 2`
 
- > Deletes the 2nd person in the address book.
+----
+list
+delete 2
+----
+Deletes the 2nd person in the database.
 ====
 
 ====
-`find Betsy` +
-`delete 1`
 
- > Deletes the 1st person in the results of the `find` command.
+----
+find Betsy
+delete 1
+----
+
+Deletes the 1st person in the results of the `find` command.
 ====
 
 === Searching for relevant persons: `find`
 
-*Implementation notes:*
-
+[NOTE]
+====
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Name, address and tags are searched by default (no specifier or -all specifier)
@@ -199,104 +211,113 @@ shortcut
 `-a` to search only addresses, `-t` to search only tags.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+====
 
 Examples:
 
 ====
-`find John` +
+ find John
 
- > Returns `john` and `John Doe`
+Returns all persons with name, address or tags matching `John`.
 ====
 
 ====
-`find Betsy Tim John` +
+ find Betsy Tim John
 
- > Returns any person having names `Betsy`, `Tim`, or `John`
+Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `John`.
 ====
 
 ====
-`find -p 91234567` +
+ find -p 91234567
 
- > Returns any person with the above phone number. Note that there should be no spaces in the entered number.
+Returns all persons with the above phone number. +
 ====
 
 === Selecting a person : `select`
 
-*Implementation notes:*
-
+[NOTE]
+====
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
-
-Examples:
-
 ====
-`list` +
-`select 2` +
-
- > Selects the 2nd person in the address book.
-====
-
-====
-`find Betsy` +
-`select 1` +
-
- > Selects the 1st person in the results of the `find` command.
-====
-
-=== Undoing previous command : `undo`
-
-*Implementation notes:*
-
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 
 *Examples:*
 
 ====
-`delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command)
+
+----
+list
+select 2
+----
+Selects the second person in the database.
+====
+
 ====
 
 ----
-`select 1` +
-`list` +
-`undo` +
+find Betsy
+select 1
+----
+Selects the first person in the results of the `find` command.
+====
 
- > The `undo` command fails as there are no undoable commands executed previously.
-----
+=== Undoing previous command : `undo`
+****
 
-----
-`delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command)
-----
+[NOTE]
+====
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+====
+
+*Examples:*
+
+====
+ delete 1
+ list
+ undo (reverses the "delete 1" command)
+====
+
+====
+ select 1
+ list
+ undo
+
+The `undo` command fails as there are no undoable commands executed previously.
+====
+
+====
+ delete 1
+ clear
+ undo (reverses the "clear" command)
+ undo (reverses the "delete 1" command)
+====
+****
 
 === Redoing the previously undone command : `redo`
 
 *Examples:*
 
 ====
-`delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+ delete 1
+ undo (reverses the "delete 1" command)
+ redo (reapplies the "delete 1" command)
 ====
 
 ====
-`delete 1` +
-`redo` +
+ delete 1
+ redo
 
- > The `redo` command fails as there are no `undo` commands executed previously.
+The `redo` command fails as there are no `undo` commands executed previously.
 ====
 
 ====
-`delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command)
+ delete 1
+ clear
+ undo (reverses the "clear" command)
+ undo (reverses the "delete 1" command)
+ redo (reapplies the "delete 1" command)
+ redo (reapplies the "clear" command)
 ====
 
 === Saving the data

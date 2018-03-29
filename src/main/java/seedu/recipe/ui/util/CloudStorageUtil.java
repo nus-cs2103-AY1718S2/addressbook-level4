@@ -1,3 +1,4 @@
+//@@author nicholasangcx
 package seedu.recipe.ui.util;
 
 import static java.util.Objects.requireNonNull;
@@ -13,6 +14,7 @@ import com.dropbox.core.v2.DbxClientV2;
 import com.google.common.base.Strings;
 
 import seedu.recipe.commons.util.FileUtil;
+import seedu.recipe.logic.commands.UploadCommand;
 
 /**
  * Contains data and methods needed for cloud storage
@@ -31,17 +33,45 @@ public class CloudStorageUtil {
                                 + "response_type=token&client_id=" + APP_KEY + "&redirect_uri="
                                 + REDIRECT_DOMAIN;
 
-    private static String accessToken = "";
+    private static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
+    private static final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&.*";
+    private static final String EXTRACT_PORTION = "$1";
+
+    private static String accessToken = null;
 
     /**
      * Returns true if CloudStorageUtil already has an access token.
      */
     public static boolean hasAccessToken() {
-
+        if (accessToken == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
+    /**
+     * Checks if an access token is embedded in the url.
+     * If access token is found, set the accessToken variable to be the found access token.
+     *
+     * @return Returns true when access token is found.
+     */
     public static boolean checkAndSetAccessToken(String url) {
+        if (url.contains(ACCESS_TOKEN_IDENTIFIER)) {
+            String token = extractAccessToken(url);
+            setAccessToken(token);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    /**
+     * Extracts access token from the given URL.
+     */
+    private static String extractAccessToken(String url) {
+        assert (url.contains(ACCESS_TOKEN_IDENTIFIER));
+        return url.replaceAll(ACCESS_TOKEN_REGEX, EXTRACT_PORTION);
     }
 
     /**
@@ -64,7 +94,7 @@ public class CloudStorageUtil {
                     .withAutorename(true)
                     .uploadAndFinish(in);
         } catch (IOException | DbxException e) {
-
+            throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Filename in wrong format.");
         }
     }
 
@@ -92,3 +122,4 @@ public class CloudStorageUtil {
         return REDIRECT_DOMAIN;
     }
 }
+//@@author

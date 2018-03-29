@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= LoanSharkTycoon - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-F12-B4`      Since: `Jan 2018`      Licence: `LoansharkTycoon.co`
 
 == Setting up
 
@@ -589,6 +589,18 @@ The rationale for adding tag colours stems from two facts: firstly, that in the 
 As a result, implementing tag colours utilises these two facts in tandom to make it significantly easier for the User to group different `Persons` and in combination with our newly implement `find` command, which enables wide sweeping, flexible search and filtering functionality, these tag colours add much value to the searching and filtering user experience.
 
 These tag colours will be significantly more useful with the further enhancement mentioned above and hence, this basic enhancement is the first step towards the finished product.
+
+=== BrowserPanel Enhancement
+In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows the customer's name, amount owed, due date, status, and runner assigned. These are important fields for a loanshark manager to get a quick grasp of a customer.
+
+==== Enhancement
+A HTML file with a customer's fields, as outlined above, in that order, is created each time a PersonCard is selected. The BrowserPanel then displays this HTML file. The background and font colors are matched to the LoanSharkTycoon application.
+
+image::BrowserPanelMockup.png[width="800"]
+
+==== Rationale
+A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise. Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
+
 
 == Documentation
 

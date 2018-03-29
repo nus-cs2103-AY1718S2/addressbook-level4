@@ -17,6 +17,7 @@ public class Person {
 
     private final Name name;
     private final Phone phone;
+    private final Order order;
     private final Email email;
     private final Address address;
     private final Halal halal;
@@ -27,11 +28,12 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address,
+    public Person(Name name, Phone phone, Order order, Email email, Address address,
                   Halal halal, Vegetarian vegetarian, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, halal, vegetarian, tags);
+        requireAllNonNull(name, phone, order, email, address, halal, vegetarian, tags);
         this.name = name;
         this.phone = phone;
+        this.order = order;
         this.email = email;
         this.address = address;
         this.halal = halal;
@@ -46,6 +48,10 @@ public class Person {
 
     public Phone getPhone() {
         return phone;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 
     public Email getEmail() {
@@ -92,7 +98,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, halal, vegetarian, tags);
+        return Objects.hash(name, phone, order, email, address, halal, vegetarian, tags);
     }
 
     @Override
@@ -101,13 +107,15 @@ public class Person {
         builder.append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
+                .append(" Order: ")
+                .append(getOrder())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Halal")
+                .append(" Halal: ")
                 .append(getHalal())
-                .append(" Vegetarian")
+                .append(" Vegetarian: ")
                 .append(getVegetarian())
                 .append(" Tags: ");
         getTags().forEach(builder::append);

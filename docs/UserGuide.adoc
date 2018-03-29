@@ -84,7 +84,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |kbd:[Alt+C]
 |`clear`
 
-|add (`a`)
+|<<add>>add (`a`)
 |kbd:[Alt+A]
 |`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
@@ -127,7 +127,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 ***
-=== Adding a person: `add`
+=== [[bk-add]] Adding a person: `add`
 
 [NOTE]
 ====
@@ -159,13 +159,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
  edit 1 p: 91234567 e: johndoe@example.com
 
-_Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively._
+_Edits the phone number and email address of the first person to be `91234567` and `johndoe@example.com` respectively._
 ====
 
 ====
  edit 2 n: Betsy Crower t:
 
-_Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags._
+_Edits the name of the second person to be `Betsy Crower` and clears all existing tags._
 ====
 ***
 === Deleting a person : `delete`
@@ -183,14 +183,14 @@ _Edits the name of the 2nd person to be `Betsy Crower` and clears all existing t
  list
  delete 2
 
-_Deletes the 2nd person in the database._
+_Deletes the second person in the database._
 ====
 
 ====
  find Betsy
  delete 1
 
-_Deletes the 1st person in the results of the `find` command._
+_Deletes the first person in the results of the `find` command._
 ====
 ***
 === Searching for relevant persons: `find`

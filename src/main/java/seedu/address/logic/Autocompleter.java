@@ -88,9 +88,7 @@ public class Autocompleter {
 
                 possibilities = generatePossibleSuffixes(field, fieldsList);
             } else {
-                //the last word of the query doesn't correspond to a command
-                // and doesn't correspond to an option starting with 'x/'
-                //so we're trying to match the last word to a name of the address book
+                //trying to match the last word to a name of the address book
                 possibilities = generatePossibleSuffixes(words[words.length - 1], generateNames());
             }
         }

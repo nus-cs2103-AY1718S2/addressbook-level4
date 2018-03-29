@@ -144,6 +144,17 @@ public class ModelManager extends ComponentManager implements Model {
         filteredAppointments.setPredicate(predicate);
     }
 
+    //=========== Filtered Pet Patient List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code PetPatient} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<PetPatient> getFilteredPetPatientList() {
+        return FXCollections.unmodifiableObservableList(filteredPetPatients);
+    }
+
     @Override
     public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
         requireNonNull(predicate);

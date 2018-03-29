@@ -1,6 +1,8 @@
 //@@author nicholasangcx
 package seedu.recipe.logic.commands;
 
+import static seedu.recipe.storage.model.Filename.MESSAGE_FILENAME_CONSTRAINTS;
+
 import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
 
@@ -13,8 +15,6 @@ public class UploadCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Upload success!";
     public static final String MESSAGE_FAILURE = "Failed to upload!";
     public static final String MESSAGE_UPLOAD = "Connecting to Dropbox......";
-    public static final String MESSAGE_FILENAME_CONSTRAINTS = "Filename cannot start with blackslash or "
-                                            + "frontslash or have two slashes consecutively.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
             + "specified filename, with no spaces. It will only take in the first parameter. "

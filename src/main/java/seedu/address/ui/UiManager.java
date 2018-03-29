@@ -49,6 +49,7 @@ public class UiManager extends ComponentManager implements Ui {
         this.login = login;
     }
 
+    //@@author ngshikang
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
@@ -102,6 +103,7 @@ public class UiManager extends ComponentManager implements Ui {
         loginWindow.hide();
     }
 
+    //@@author
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
         final String content = details + ":\n" + cause.toString();
         showAlertDialogAndWait(AlertType.ERROR, FILE_OPS_ERROR_DIALOG_STAGE_TITLE, description, content);

@@ -10,6 +10,7 @@ import seedu.address.commons.util.JsonUtil;
 import seedu.address.login.UserPass;
 import seedu.address.login.UserPassStorage;
 
+//@@author ngshikang
 /**
  * A class to access UserPass stored in the hard disk as a json file
  */

@@ -25,6 +25,7 @@ public class StorageManager extends ComponentManager implements Storage {
     private UserPrefsStorage userPrefsStorage;
     private UserPassStorage userPassStorage;
 
+    //@@author ngshikang
     public StorageManager(AddressBookStorage addressBookStorage,
                           UserPrefsStorage userPrefsStorage,
                           UserPassStorage userPassStorage) {
@@ -43,6 +44,7 @@ public class StorageManager extends ComponentManager implements Storage {
         this.userPassStorage = userPassStorage;
     }
 
+    //@@author
     // ================ UserPrefs methods ==============================
 
     @Override

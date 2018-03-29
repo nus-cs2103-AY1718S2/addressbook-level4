@@ -242,14 +242,14 @@ Returns all persons with the above phone number.
  list
  select 2
 
-Selects the second person in the database.
+_Selects the second person in the database._
 ====
 
 ====
  find Betsy
  select 1
 
-Selects the first person in the results of the `find` command.
+_Selects the first person from the results of the `find` command._
 ====
 ***
 === Undoing previous command : `undo`

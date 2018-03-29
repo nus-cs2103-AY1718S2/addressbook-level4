@@ -73,7 +73,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |history (`h`)
 |kbd:[Alt+H]
 |`history`
-
 |exit
 |kbd:[Alt+Q]
 |`exit`
@@ -100,7 +99,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 |locate (`lo`)
 |kbd:[Alt+L]
-|`locate INDEX` | `locate name/email/phone/address/tags`
+|`locate INDEX` OR `locate name/email/phone/address/tags`
 
 |select (`s`)
 |kbd:[Alt+S]

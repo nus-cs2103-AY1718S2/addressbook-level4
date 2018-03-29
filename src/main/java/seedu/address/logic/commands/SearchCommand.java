@@ -38,14 +38,24 @@ public class SearchCommand extends Command {
     public static final String MESSAGE_SEARCH_SUCCESS = "Found %s matching books.";
 
     private final SearchDescriptor searchDescriptor;
+    private final boolean useJavafxThread;
 
     /**
      * Creates a SearchCommand to search for matching books.
      * @param searchDescriptor parameters to search with.
      */
     public SearchCommand(SearchDescriptor searchDescriptor) {
+        this(searchDescriptor, true);
+    }
+
+    /**
+     * Creates a {@code SearchCommand} that can choose not use the JavaFX thread to update the model and UI.
+     * This constructor is provided for unit-testing purposes.
+     */
+    protected SearchCommand(SearchDescriptor searchDescriptor, boolean useJavafxThread) {
         requireNonNull(searchDescriptor);
         this.searchDescriptor = new SearchDescriptor(searchDescriptor);
+        this.useJavafxThread = useJavafxThread;
     }
 
     @Override
@@ -59,7 +69,7 @@ public class SearchCommand extends Command {
      */
     private void makeAsyncSearchRequest() {
         network.searchBooks(searchDescriptor.toSearchString())
-                .thenAccept(this::displaySearchResults)
+                .thenAccept(this::onSuccessfulRequest)
                 .exceptionally(e -> {
                     EventsCenter.getInstance().post(new NewResultAvailableEvent(SearchCommand.MESSAGE_SEARCH_FAIL));
                     return null;
@@ -67,17 +77,24 @@ public class SearchCommand extends Command {
     }
 
     /**
+     * Handles the result of a successful request to search for books.
+     */
+    private void onSuccessfulRequest(ReadOnlyBookShelf bookShelf) {
+        if (useJavafxThread) {
+            Platform.runLater(() -> displaySearchResults(bookShelf));
+        } else {
+            displaySearchResults(bookShelf);
+        }
+    }
+
+    /**
      * Updates the model with the given search results and posts events to update the UI.
      */
     private void displaySearchResults(ReadOnlyBookShelf bookShelf) {
-        // Updating the search results on the model will update its observable list (and hence the UI)
-        // so this must be done on the JavaFX thread.
-        Platform.runLater(() -> {
-            model.updateSearchResults(bookShelf);
-            EventsCenter.getInstance().post(new SwitchToSearchResultsRequestEvent());
-            EventsCenter.getInstance().post(new NewResultAvailableEvent(
-                    String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
-        });
+        model.updateSearchResults(bookShelf);
+        EventsCenter.getInstance().post(new SwitchToSearchResultsRequestEvent());
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
     }
 
     @Override

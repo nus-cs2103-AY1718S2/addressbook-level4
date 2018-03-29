@@ -36,10 +36,20 @@ public class AddCommand extends UndoableCommand {
     private final Index targetIndex;
 
     private Book toAdd;
+    private final boolean useJavafxThread;
 
     public AddCommand(Index targetIndex) {
+        this(targetIndex, true);
+    }
+
+    /**
+     * Creates a {@code AddCommand} that can choose not use the JavaFX thread to update the model and UI.
+     * This constructor is provided for unit-testing purposes.
+     */
+    protected AddCommand(Index targetIndex, boolean useJavafxThread) {
         requireNonNull(targetIndex);
         this.targetIndex = targetIndex;
+        this.useJavafxThread = useJavafxThread;
     }
 
     @Override
@@ -55,7 +65,7 @@ public class AddCommand extends UndoableCommand {
      */
     private void makeAsyncBookDetailsRequest() {
         network.getBookDetails(toAdd.getGid().gid)
-                .thenAccept(this::addBook)
+                .thenAccept(this::onSuccessfulRequest)
                 .exceptionally(e -> {
                     EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_ADD_FAIL));
                     return null;
@@ -63,18 +73,27 @@ public class AddCommand extends UndoableCommand {
     }
 
     /**
+     * Handles the result of a successful request for book details.
+     */
+    private void onSuccessfulRequest(Book book) {
+        if (useJavafxThread) {
+            Platform.runLater(() -> addBook(book));
+        } else {
+            addBook(book);
+        }
+    }
+
+    /**
      * Adds the given book to the book shelf and posts events to update the UI.
      */
-    private void addBook(Book book) {
-        Platform.runLater(() -> {
-            try {
-                model.addBook(book);
-                EventsCenter.getInstance().post(new NewResultAvailableEvent(
-                        String.format(AddCommand.MESSAGE_SUCCESS, book)));
-            } catch (DuplicateBookException e) {
-                EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
-            }
-        });
+    protected void addBook(Book book) {
+        try {
+            model.addBook(book);
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                    String.format(AddCommand.MESSAGE_SUCCESS, book)));
+        } catch (DuplicateBookException e) {
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
+        }
     }
 
     @Override

@@ -103,7 +103,7 @@ public class SearchCommandTest {
      * {@code network.searchBooks(params)} is being called with the correct search parameters.
      */
     private void assertExecutionSuccess(SearchDescriptor descriptor) {
-        SearchCommand searchCommand = new SearchCommand(descriptor);
+        SearchCommand searchCommand = new SearchCommand(descriptor, false);
 
         NetworkManager networkManagerMock = mock(NetworkManager.class);
         when(networkManagerMock.searchBooks(descriptor.toSearchString()))
@@ -117,7 +117,7 @@ public class SearchCommandTest {
     }
 
     private SearchCommand prepareCommand(SearchDescriptor descriptor) {
-        SearchCommand searchCommand = new SearchCommand(descriptor);
+        SearchCommand searchCommand = new SearchCommand(descriptor, false);
         searchCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return searchCommand;
     }

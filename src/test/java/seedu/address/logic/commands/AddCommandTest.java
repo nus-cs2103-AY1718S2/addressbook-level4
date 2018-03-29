@@ -69,9 +69,10 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_validIndexSearchResults_success() {
+    public void execute_validIndexSearchResults_success() throws Exception {
         ModelManager expectedModel = new ModelManager();
         prepareSearchResultListInModel(expectedModel);
+        expectedModel.addBook(model.getSearchResultsList().get(0));
 
         assertExecutionSuccess(INDEX_FIRST_BOOK, model.getSearchResultsList().get(0), expectedModel);
     }
@@ -84,12 +85,13 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_validIndexRecentBooks_success() {
+    public void execute_validIndexRecentBooks_success() throws Exception {
         prepareRecentBooksListInModel(model);
 
         ModelManager expectedModel = new ModelManager();
         prepareSearchResultListInModel(expectedModel);
         prepareRecentBooksListInModel(expectedModel);
+        expectedModel.addBook(model.getRecentBooksList().get(0));
 
         assertExecutionSuccess(INDEX_FIRST_BOOK, model.getRecentBooksList().get(0), expectedModel);
     }
@@ -114,7 +116,7 @@ public class AddCommandTest {
         when(networkManagerMock.getBookDetails(model.getSearchResultsList().get(0).getGid().gid))
                 .thenReturn(CompletableFuture.completedFuture(model.getSearchResultsList().get(0)));
 
-        AddCommand addCommand = new AddCommand(INDEX_FIRST_BOOK);
+        AddCommand addCommand = new AddCommand(INDEX_FIRST_BOOK, false);
         addCommand.setData(model, networkManagerMock, new CommandHistory(), new UndoStack());
 
         // add -> first book added
@@ -190,7 +192,7 @@ public class AddCommandTest {
      * {@code network.getBookDetails(bookId)} is being called with the correct book ID.
      */
     private void assertExecutionSuccess(Index index, Book expectedBook, Model expectedModel) {
-        AddCommand addCommand = new AddCommand(index);
+        AddCommand addCommand = new AddCommand(index, false);
 
         NetworkManager networkManagerMock = mock(NetworkManager.class);
         when(networkManagerMock.getBookDetails(expectedBook.getGid().gid))
@@ -206,7 +208,7 @@ public class AddCommandTest {
      * Returns an {@code AddCommand} with the parameter {@code index}.
      */
     private AddCommand prepareCommand(Index index) {
-        AddCommand addCommand = new AddCommand(index);
+        AddCommand addCommand = new AddCommand(index, false);
         addCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return addCommand;
     }

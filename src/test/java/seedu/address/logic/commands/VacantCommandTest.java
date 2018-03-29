@@ -62,17 +62,15 @@ public class VacantCommandTest {
 
         thrown.expect(CommandException.class);
 
-        CommandResult commandResult = getVacantCommand(validBuilding, modelStub).execute();
+        getVacantCommand(validBuilding, modelStub).execute();
     }
 
     @Test
     public void equals() throws Exception {
-        ModelStub model = new ModelStubAcceptingBuilding();
         Building validBuildingOne = new Building(VALID_BUILDING_1);
         Building validBuildingTwo = new Building(VALID_BUILDING_2);
 
         VacantCommand oneVacantCommand = new VacantCommand(validBuildingOne);
-        VacantCommand twoVacantCommand = new VacantCommand(validBuildingTwo);
 
         // same object -> returns true
 
@@ -86,7 +84,7 @@ public class VacantCommandTest {
         assertFalse(validBuildingOne.equals(1));
 
         // null -> returns false
-        assertFalse(validBuildingOne.equals(null));
+        assertFalse(validBuildingOne == null);
 
         // different vacant -> returns false
         assertFalse(validBuildingOne.equals(validBuildingTwo));

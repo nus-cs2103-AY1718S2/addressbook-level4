@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.HideBrowserPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
@@ -96,6 +97,19 @@ public class BrowserPanel extends UiPart<Region> {
         rating = null;
         review = null;
         tags = null;
+    }
+
+    @Subscribe
+    private void handleHideBrowserPanelEvent(HideBrowserPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        name.setText("");
+        phone.setText("");
+        address.setText("");
+        email.setText("");
+        rating.setText("");
+        review.setText("");
+        tags.getChildren().clear();
+        loadDefaultPage();
     }
 
     @Subscribe

@@ -4,8 +4,15 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.logic.ReviewInputEvent;
+import seedu.address.commons.events.ui.ShowReviewDialogEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ReviewCommand;
@@ -16,6 +23,10 @@ import seedu.address.model.person.Review;
  * Parses input arguments and creates a new Review object
  */
 public class ReviewCommandParser implements Parser<ReviewCommand> {
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private String reviewInput;
 
     /**
      * Parses the given {@code String} of arguments in the context of the ReviewCommand
@@ -35,15 +46,15 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
         }
 
-        if (!sc.hasNext()) {
+        EventsCenter.getInstance().registerHandler(this);
+        EventsCenter.getInstance().post(new ShowReviewDialogEvent());
+
+        if (reviewInput == null) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
+        } else if (reviewInput.isEmpty()) {
+            reviewInput = "-";
         }
-        StringBuilder sb = new StringBuilder();
-        sb.append(sc.next());
-        while (sc.hasNext()) {
-            sb.append(" " + sc.next());
-        }
-        String review = sb.toString();
+        String review = reviewInput;
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
         editPersonDescriptor.setReview(new Review(review));
@@ -54,4 +65,9 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
         return new ReviewCommand(index, editPersonDescriptor);
     }
 
+    @Subscribe
+    private void getReviewInput(ReviewInputEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        reviewInput = event.getReviewInput();
+    }
 }

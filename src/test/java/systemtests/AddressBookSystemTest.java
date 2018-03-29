@@ -78,7 +78,7 @@ public abstract class AddressBookSystemTest {
         errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
 
         waitUntilBrowserLoaded(getBrowserPanel());
-        //assertApplicationStartingStateIsCorrect();
+        assertApplicationStartingStateIsCorrect();
     }
 
     @After
@@ -153,10 +153,10 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
+     * Displays all persons with any parts of their names matching {@code keyphrase} (case-insensitive).
      */
-    protected void showPersonsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " n/" + keyword);
+    protected void showPersonsWithName(String keyphrase) {
+        executeCommand(FindCommand.COMMAND_WORD + " n/" + keyphrase);
         assertTrue(getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size());
     }
 

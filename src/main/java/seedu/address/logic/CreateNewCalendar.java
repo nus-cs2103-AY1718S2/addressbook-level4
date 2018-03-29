@@ -21,7 +21,7 @@ import com.google.api.services.calendar.model.Calendar;
 
 
 /**
- * Adds an event to a person.
+ * Create a calendar for a person.
  */
 public class CreateNewCalendar {
 
@@ -43,10 +43,7 @@ public class CreateNewCalendar {
     /** Global instance of the HTTP transport. */
     private static HttpTransport httpTransport;
 
-    /** Global instance of the scopes required by this quickstart.
-     *
-     * If modifying these scopes, delete your previously saved credentials
-     * at ~/.credentials/calendar-java-quickstart
+    /** set scope to both read and write.
      */
     private static final List<String> SCOPES =
             Arrays.asList(CalendarScopes.CALENDAR);
@@ -108,8 +105,6 @@ public class CreateNewCalendar {
      */
     public static String execute(String personName) throws IOException {
         // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
         com.google.api.services.calendar.Calendar service =
                 null;
 
@@ -131,8 +126,6 @@ public class CreateNewCalendar {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return calendarId;
     }
 

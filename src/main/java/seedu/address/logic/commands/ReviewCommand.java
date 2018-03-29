@@ -24,10 +24,9 @@ public class ReviewCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Review the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "REVIEW \n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + "This person is very hardworking";
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "A separate pop-up dialog will appear to request for the review.";
 
     public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "Both INDEX and REVIEW must be provided.";
@@ -86,11 +85,12 @@ public class ReviewCommand extends UndoableCommand {
 
         Review updatedReview = editPersonDescriptor.getReview().orElse(new Review());
 
-        Person person = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRating(), personToEdit.getTags());
-        person.setReview(updatedReview);
+        Person toReturn = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getCalendarId());
+        toReturn.setRating(personToEdit.getRating());
+        toReturn.setReview(updatedReview);
 
-        return person;
+        return toReturn;
     }
 
     @Override

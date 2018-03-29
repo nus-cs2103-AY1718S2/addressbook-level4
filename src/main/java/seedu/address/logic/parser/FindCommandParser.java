@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.FieldContainKeywordsPredicate;
+import seedu.address.model.person.FieldContainKeyphrasesPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -33,15 +33,15 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        List<String> nameKeywords = argMultimap.getAllValues(PREFIX_NAME);
-        List<String> tagKeywords = argMultimap.getAllValues(PREFIX_TAG);
-        List<String> ratingKeywords = argMultimap.getAllValues(PREFIX_RATING);
+        List<String> nameKeyphrases = argMultimap.getAllValues(PREFIX_NAME);
+        List<String> tagKeyphrases = argMultimap.getAllValues(PREFIX_TAG);
+        List<String> ratingKeyphrases = argMultimap.getAllValues(PREFIX_RATING);
 
-        if (nameKeywords.contains("") || tagKeywords.contains("") || ratingKeywords.contains("")) {
+        if (nameKeyphrases.contains("") || tagKeyphrases.contains("") || ratingKeyphrases.contains("")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        return new FindCommand(new FieldContainKeywordsPredicate(nameKeywords, tagKeywords, ratingKeywords));
+        return new FindCommand(new FieldContainKeyphrasesPredicate(nameKeyphrases, tagKeyphrases, ratingKeyphrases));
     }
 
     /**

@@ -7,13 +7,13 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 
 /**
- * Tests that a {@code Person}'s {@code UniqueTagList} matches any of the keywords given.
+ * Tests that a {@code Person}'s {@code UniqueTagList} matches any of the keyphrases given.
  */
-public class TagContainsKeywordsPredicate implements Predicate<Person> {
-    private final List<String> keywords;
+public class TagContainsKeyphrasesPredicate implements Predicate<Person> {
+    private final List<String> keyphrases;
 
-    public TagContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
+    public TagContainsKeyphrasesPredicate(List<String> keyphrases) {
+        this.keyphrases = keyphrases;
     }
 
     @Override
@@ -27,16 +27,16 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
         String tagStringList = sb.toString()
                 .replace("[", "")
                 .replace("]", "");
-        return keywords.isEmpty()
-                ||  keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordsIgnoreCase(tagStringList, keyword));
+        return keyphrases.isEmpty()
+                ||  keyphrases.stream()
+                .anyMatch(keyphrase -> StringUtil.containsWordsIgnoreCase(tagStringList, keyphrase));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof TagContainsKeyphrasesPredicate // instanceof handles nulls
+                && this.keyphrases.equals(((TagContainsKeyphrasesPredicate) other).keyphrases)); // state check
     }
 
 }

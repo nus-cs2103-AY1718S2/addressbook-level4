@@ -30,7 +30,7 @@ public class Person {
     private final String calendarId;
 
     /**
-     * All fields except Rating is not provided
+     * All fields except Rating and Review is not provided
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String calendarId) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -45,60 +45,6 @@ public class Person {
         this.rating = new Rating();
         this.review = new Review();
         this.id = UNINITIALISED_ID;
-    }
-
-    /**
-     * Only rating specified, calendarId not specified
-     * Note: To remove when test cases are integrated to Calendar feature
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
-        this.calendarId = "";
-        this.rating = rating;
-        this.review = new Review();
-        this.id = UNINITIALISED_ID;
-    }
-
-    /**
-     * All fields specified except id not specified
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags,
-                  String calendarId) {
-        requireAllNonNull(name, phone, email, address, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
-        this.calendarId = calendarId;
-        this.rating = rating;
-        this.review = new Review();
-        this.id = UNINITIALISED_ID;
-    }
-
-    /**
-    * All fields specified
-    */
-    public Person(Name name, Phone phone, Email email, Address address, Rating rating, Set<Tag> tags,
-                  String calendarId, Integer id) {
-        requireAllNonNull(name, phone, email, address, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
-        this.calendarId = calendarId;
-        this.rating = rating;
-        this.review = new Review();
-        this.id = id;
     }
 
     public Name getName() {
@@ -129,10 +75,6 @@ public class Person {
         return address;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -154,12 +96,16 @@ public class Person {
                 + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
     }
 
-    public void setRating(String newRating) {
-        rating = new Rating(newRating);
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
     public void setReview(Review review) {
         this.review = review;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -197,6 +143,8 @@ public class Person {
                 .append(getAddress())
                 .append(" Rating: ")
                 .append(getRatingDisplay())
+                .append(" Review: ")
+                .append(getReview())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

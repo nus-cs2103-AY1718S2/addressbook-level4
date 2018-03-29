@@ -9,6 +9,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
+import seedu.address.model.person.Review;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -24,12 +25,14 @@ public class PersonBuilder {
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_CALENDARID = "null";
     public static final String DEFAULT_RATING = "-1";
+    public static final String DEFAULT_REVIEW = "-";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Rating rating;
+    private Review review;
     private Set<Tag> tags;
     private String calendarId;
 
@@ -39,6 +42,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         rating = new Rating(DEFAULT_RATING);
+        review = new Review(DEFAULT_REVIEW);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         calendarId = this.DEFAULT_CALENDARID;
     }
@@ -52,8 +56,8 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         rating = personToCopy.getRating();
+        review = personToCopy.getReview();
         tags = new HashSet<>(personToCopy.getTags());
-
     }
 
     /**
@@ -112,8 +116,23 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Review} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withReview(String review) {
+        this.review = new Review(review);
+        return this;
+    }
+
+    /**
+     * Build a person with the determined details
+     * @return person to be built
+     */
     public Person build() {
-        return new Person(name, phone, email, address, rating, tags, calendarId);
+        Person toReturn = new Person(name, phone, email, address, tags, calendarId);
+        toReturn.setRating(rating);
+        toReturn.setReview(review);
+        return toReturn;
     }
 
 }

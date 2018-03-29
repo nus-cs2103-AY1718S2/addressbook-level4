@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.HideBrowserPanelEvent;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.person.HideAllPersonPredicate;
 
@@ -20,6 +22,7 @@ public class LockCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        EventsCenter.getInstance().post(new HideBrowserPanelEvent());
         LogicManager.lock();
 
         return new CommandResult(MESSAGE_SUCCESS);

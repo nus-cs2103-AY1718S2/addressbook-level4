@@ -29,57 +29,65 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
             .withTags("friends")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
-            .withRating("5")
+            .withCalendarId("testCalendarId")
+            .withRating("1")
+            .withReview("Lazy")
             .build();
     public static final Person ALICE_DEFAULT = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
-            .withTags("friends").withRating("-1")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
+            .withTags("friends")
+            .withRating("-1")
+            .withCalendarId("testCalendarId")
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
-            .withRating("-1")
+            .withCalendarId("testCalendarId")
+            .withRating("2")
+            .withReview("Lazy")
             .build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
-            .withRating("-1")
+            .withCalendarId("testCalendarId")
+            .withRating("3")
+            .withReview("Lazy")
             .build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
-            .withRating("-1")
+            .withCalendarId("testCalendarId")
+            .withRating("4")
+            .withReview("Lazy")
             .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
-            .withRating("-1")
+            .withCalendarId("testCalendarId")
+            .withRating("5")
+            .withReview("Lazy")
             .build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
-            .withRating("-1")
+            .withCalendarId("testCalendarId")
+            .withRating("4")
+            .withReview("Lazy")
             .build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
-            .withRating("-1")
+            .withCalendarId("testCalendarId")
+            .withRating("3")
+            .withReview("Lazy")
             .build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
             .withEmail("stefan@example.com").withAddress("little india")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
+            .withCalendarId("testCalendarId")
             .withRating("-1")
             .build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave")
-            .withCalendarId("8nfr293d26bcmd9oubia86re4k%40group.calendar.google.com")
+            .withCalendarId("testCalendarId")
             .withRating("-1")
             .build();
 
@@ -97,7 +105,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String KEYPHRASE_MATCHING_MEIER = "Meier"; // A keyphrase that matches MEIER
 
     private TypicalPersons() {} // prevents instantiation
 

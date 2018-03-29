@@ -69,7 +69,7 @@ _Figure 2_ shows the 6 major components of the user interface of Employees Track
 . Employees List Panel: where the list of all employees is shown
 . Employee's Profile Panel: where the details of the selected employee is shown
 . Notification cards: where Employees Tracker reminds you about ended events
-. Notification panel: where hidden notification cards are stored
+. Notification center: where hidden notification cards are stored
 
 .User Interface
 image::UiLabelled.jpg[width="790"]
@@ -86,6 +86,25 @@ The result display box shows 3 types of information:
 If the result display box shows text in red, it means that you have entered an non-existing command or a command that does not follow its pre-defined format.
 
 Different tags will perform different colours for clarification
+
+==== Understanding the notification system
+
+===== Timing of notifications
+
+There will be 2 notifications for each event, which are:
+
+* notification on the day of expiry
+* notification at the time of expiry.
+
+For example, suppose you have assigned a task to Alex which will due on 27th May 2018 4:00 pm. When you open ET for the first time at 8:00 am on 27th May 2018, you will be notified that Alex has a task that will due on *today* . Later at 4:00 pm of 27th May 2018, you will receive another notification, informing you that Alex should have finished the task by *now* .
+
+===== Notification cards and the Notification Center
+
+Notifications are shown in notification cards in ET. Each notification card contains 3 information about the expiring event: title, name of person in-charge, time of expiry. +
+
+Notification cards will pop into the User Interface of ET from the bottom right corner, and waits 5 seconds before exitting the screen. However, the notification cards aren't dismissed. You can still revisit them in the notification center. +
+
+In the notification center, you can either dismiss a notification, email to remind, and/or whatsapp to remind. 
 
 === Data storage
 
@@ -456,14 +475,6 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Hiding a notification : `hide 1`
-
-Hides the notification card identified by the index number used in notification cards. +
-Format: `hide INDEX`
-
-[NOTE]
-The hidden notification card will be stored in the notification panel.
-
 === Dismissing a notification : `dismiss`
 
 Dismisses thea notification identified by the index number used in notification cards. +
@@ -471,7 +482,7 @@ Format: `dismiss INDEX`
 
 === Toggling the notification panel : `noti`
 
-Shows the notification panel if it is hidden; hides the notification panel if it is shown. +
+Shows the notification panel if it is hidden; hides the notification center if it is shown. +
 Format: `noti`
 
 === Reminding an employee through email : `email`

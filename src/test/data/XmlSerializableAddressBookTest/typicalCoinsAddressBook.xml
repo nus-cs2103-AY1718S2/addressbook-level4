@@ -3,49 +3,28 @@
 {@code TypicalCoins#getTypicalAddressBook()}-->
 <addressbook>
     <coins>
-        <name>Alice Pauline</name>
-        <code>AAA</code>
-        <email>alice@example.com</email>
-        <address>123, Jurong West Ave 6, #08-111</address>
+        <code>Alice Pauline</code>
         <tagged>friends</tagged>
     </coins>
     <coins>
-        <name>Benson Meier</name>
-        <code>BBB</code>
-        <email>johnd@example.com</email>
-        <address>311, Clementi Ave 2, #02-25</address>
+        <code>Benson Meier</code>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </coins>
     <coins>
-        <name>Carl Kurz</name>
-        <code>CCC</code>
-        <email>heinz@example.com</email>
-        <address>wall street</address>
+        <code>Carl Kurz</code>
     </coins>
     <coins>
-        <name>Daniel Meier</name>
-        <code>DDD</code>
-        <email>cornelia@example.com</email>
-        <address>10th street</address>
+        <code>Daniel Meier</code>
     </coins>
     <coins>
-        <name>Elle Meyer</name>
-        <code>EEE</code>
-        <email>werner@example.com</email>
-        <address>michegan ave</address>
+        <code>Elle Meyer</code>
     </coins>
     <coins>
-        <name>Fiona Kunz</name>
-        <code>FFF</code>
-        <email>lydia@example.com</email>
-        <address>little tokyo</address>
+        <code>Fiona Kunz</code>
     </coins>
     <coins>
-        <name>George Best</name>
-        <code>GGG</code>
-        <email>anna@example.com</email>
-        <address>4th street</address>
+        <code>George Best</code>
     </coins>
     <tags>friends</tags>
     <tags>owesMoney</tags>

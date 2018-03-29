@@ -1,57 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <coins>
-        <name>Hans Muster</name>
-        <code isPrivate="false">AAA</code>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <code>Hans Muster</code>
     </coins>
     <coins>
-        <name>Ruth Mueller</name>
-        <code isPrivate="false">BBB</code>
-        <email isPrivate="false">ruth@example.com</email>
-        <address isPrivate="false">81th street</address>
+        <code>Ruth Mueller</code>
     </coins>
     <coins>
-        <name>Heinz Kurz</name>
-        <code isPrivate="false">CCC</code>
-        <email isPrivate="false">heinz@example.com</email>
-        <address isPrivate="false">wall street</address>
+        <code>Heinz Kurz</code>
     </coins>
     <coins>
-        <name>Cornelia Meier</name>
-        <code isPrivate="false">DDD</code>
-        <email isPrivate="false">cornelia@example.com</email>
-        <address isPrivate="false">10th street</address>
+        <code>Cornelia Meier</code>
     </coins>
     <coins>
-        <name>Werner Meyer</name>
-        <code isPrivate="false">EEE</code>
-        <email isPrivate="false">werner@example.com</email>
-        <address isPrivate="false">michegan ave</address>
+        <code>Werner Meyer</code>
     </coins>
     <coins>
-        <name>Lydia Kunz</name>
-        <code isPrivate="false">FFF</code>
-        <email isPrivate="false">lydia@example.com</email>
-        <address isPrivate="false">little tokyo</address>
+        <code>Lydia Kunz</code>
     </coins>
     <coins>
-        <name>Anna Best</name>
-        <code isPrivate="false">GGG</code>
-        <email isPrivate="false">anna@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <code>Anna Best</code>
     </coins>
     <coins>
-        <name>Stefan Meier</name>
-        <code isPrivate="false">HHH</code>
-        <email isPrivate="false">stefan@example.com</email>
-        <address isPrivate="false">little india</address>
+        <code>Stefan Meier</code>
     </coins>
     <coins>
-        <name>Martin Mueller</name>
-        <code isPrivate="false">III</code>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">chicago ave</address>
+        <code>Martin Mueller</code>
     </coins>
 </addressbook>

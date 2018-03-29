@@ -15,7 +15,6 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Coin {
 
-    private final Name name;
     private final Code code;
 
     private final Amount currentAmountHeld;
@@ -28,9 +27,8 @@ public class Coin {
     /**
      * Every field must be present and not null.
      */
-    public Coin(Name name, Code code, Set<Tag> tags) {
-        requireAllNonNull(name, code, tags);
-        this.name = name;
+    public Coin(Code code, Set<Tag> tags) {
+        requireAllNonNull(code, tags);
         this.code = code;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
@@ -38,10 +36,6 @@ public class Coin {
         this.price = new Price();
         this.totalAmountSold = new Amount();
         this.totalAmountBought = new Amount();
-    }
-
-    public Name getName() {
-        return name;
     }
 
     public Code getCode() {
@@ -75,8 +69,7 @@ public class Coin {
         }
 
         Coin otherCoin = (Coin) other;
-        return otherCoin.getName().equals(this.getName())
-                && otherCoin.getCode().equals(this.getCode())
+        return otherCoin.getCode().equals(this.getCode())
                 && otherCoin.getCurrentAmountHeld().equals(this.getCurrentAmountHeld())
                 && otherCoin.getPrice().equals(this.getPrice());
     }
@@ -84,15 +77,13 @@ public class Coin {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, code, tags, currentAmountHeld, price);
+        return Objects.hash(code, tags, currentAmountHeld, price);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Code: ")
-                .append(getCode())
+        builder.append(getCode())
                 .append(" Amount: ")
                 .append(getCurrentAmountHeld())
                 .append(" Price: ")

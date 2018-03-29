@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
-    <!-- Coin with invalid name field -->
+    <!-- Coin with invalid code field -->
     <coins>
-        <name>Ha!ns Mu@ster</name>
-        <code isPrivate="false">9482424</code>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <code>Ha!ns Mu@ster</code>
     </coins>
 </addressbook>

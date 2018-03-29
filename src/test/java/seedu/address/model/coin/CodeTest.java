@@ -15,26 +15,25 @@ public class CodeTest {
     }
 
     @Test
-    public void constructor_invalidPhone_throwsIllegalArgumentException() {
-        String invalidPhone = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Code(invalidPhone));
+    public void constructor_invalidName_throwsIllegalArgumentException() {
+        String invalidName = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Code(invalidName));
     }
 
     @Test
-    public void isValidPhone() {
-        // null phone number
-        Assert.assertThrows(NullPointerException.class, () -> Code.isValidCode(null));
+    public void isValidName() {
+        // null name
+        Assert.assertThrows(NullPointerException.class, () -> Code.isValidName(null));
 
-        // invalid phone numbers
-        assertFalse(Code.isValidCode("")); // empty string
-        assertFalse(Code.isValidCode(" ")); // spaces only
-        assertFalse(Code.isValidCode("TA")); // less than 3 letters
-        assertFalse(Code.isValidCode("9011p041")); // alphabets within digits
-        assertFalse(Code.isValidCode("9312 1534")); // spaces within digits
+        // invalid name
+        assertFalse(Code.isValidName("")); // empty string
+        assertFalse(Code.isValidName(" ")); // spaces only
+        assertFalse(Code.isValidName("^")); // only non-alphanumeric characters
+        assertFalse(Code.isValidName("peter*")); // contains non-alphanumeric characters
 
-        // valid phone numbers
-        assertTrue(Code.isValidCode("AAA")); // exactly 3 letters
-        assertTrue(Code.isValidCode("BTCBTC"));
-        assertTrue(Code.isValidCode("QWERTYASDFGHZXCVB")); // long phone numbers
+        // valid name
+        assertTrue(Code.isValidName("peter jack")); // alphabets only
+        assertTrue(Code.isValidName("Capital Tan")); // with capital letters
+        assertTrue(Code.isValidName("David Roger Jackson Ray Jr")); // long names
     }
 }

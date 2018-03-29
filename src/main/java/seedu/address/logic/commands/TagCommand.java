@@ -1,10 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 
@@ -21,7 +17,6 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.coin.Code;
 import seedu.address.model.coin.Coin;
-import seedu.address.model.coin.Name;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
 import seedu.address.model.tag.Tag;
@@ -29,26 +24,20 @@ import seedu.address.model.tag.Tag;
 /**
  * Edits the details of an existing coin in the address book.
  */
-public class EditCommand extends UndoableCommand {
+public class TagCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "edit";
-    public static final String COMMAND_ALIAS = "e";
+    public static final String COMMAND_WORD = "tag";
+    public static final String COMMAND_ALIAS = "t";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the coin identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add the specified tags to the coin identified "
             + "by the index number used in the last coin listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_TAG + "fav";
 
-    public static final String MESSAGE_EDIT_COIN_SUCCESS = "Edited Coin: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_EDIT_COIN_SUCCESS = "Tagged Coin: %1$s";
+    public static final String MESSAGE_NOT_EDITED = "At least one tag must be provided.";
     public static final String MESSAGE_DUPLICATE_COIN = "This coin already exists in the address book.";
 
     private final Index index;
@@ -61,7 +50,7 @@ public class EditCommand extends UndoableCommand {
      * @param index of the coin in the filtered coin list to edit
      * @param editCoinDescriptor details to edit the coin with
      */
-    public EditCommand(Index index, EditCoinDescriptor editCoinDescriptor) {
+    public TagCommand(Index index, EditCoinDescriptor editCoinDescriptor) {
         requireNonNull(index);
         requireNonNull(editCoinDescriptor);
 
@@ -101,11 +90,10 @@ public class EditCommand extends UndoableCommand {
     private static Coin createEditedCoin(Coin coinToEdit, EditCoinDescriptor editCoinDescriptor) {
         assert coinToEdit != null;
 
-        Name updatedName = editCoinDescriptor.getName().orElse(coinToEdit.getName());
-        Code updatedCode = editCoinDescriptor.getCode().orElse(coinToEdit.getCode());
+        Code updatedCode = coinToEdit.getCode();
         Set<Tag> updatedTags = editCoinDescriptor.getTags().orElse(coinToEdit.getTags());
 
-        return new Coin(updatedName, updatedCode, updatedTags);
+        return new Coin(updatedCode, updatedTags);
     }
 
     @Override
@@ -116,12 +104,12 @@ public class EditCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof TagCommand)) {
             return false;
         }
 
         // state check
-        EditCommand e = (EditCommand) other;
+        TagCommand e = (TagCommand) other;
         return index.equals(e.index)
                 && editCoinDescriptor.equals(e.editCoinDescriptor)
                 && Objects.equals(coinToEdit, e.coinToEdit);
@@ -132,7 +120,6 @@ public class EditCommand extends UndoableCommand {
      * corresponding field value of the coin.
      */
     public static class EditCoinDescriptor {
-        private Name name;
         private Code code;
         private Set<Tag> tags;
 
@@ -143,7 +130,6 @@ public class EditCommand extends UndoableCommand {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditCoinDescriptor(EditCoinDescriptor toCopy) {
-            setName(toCopy.name);
             setCode(toCopy.code);
             setTags(toCopy.tags);
         }
@@ -152,19 +138,11 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.code, this.tags);
-        }
-
-        public void setName(Name name) {
-            this.name = name;
-        }
-
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
+            return CollectionUtil.isAnyNonNull(this.code, this.tags);
         }
 
         public void setCode(Code code) {
-            this.code = code;
+            this.code = null;
         }
 
         public Optional<Code> getCode() {
@@ -203,8 +181,7 @@ public class EditCommand extends UndoableCommand {
             // state check
             EditCoinDescriptor e = (EditCoinDescriptor) other;
 
-            return getName().equals(e.getName())
-                    && getCode().equals(e.getCode())
+            return getCode().equals(e.getCode())
                     && getTags().equals(e.getTags());
         }
     }

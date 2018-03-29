@@ -40,7 +40,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a coin
         postNow(selectionChangedEventStub);
-        URL expectedCoinUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
+        URL expectedCoinUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getCode().fullName.replaceAll(" ", "%20"));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedCoinUrl, browserPanelHandle.getLoadedUrl());

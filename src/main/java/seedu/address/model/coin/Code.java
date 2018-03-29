@@ -5,49 +5,55 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Coin's currency code in the book.
- * Guarantees: immutable; is valid as declared in {@link #isValidCode(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Code {
 
+    public static final String MESSAGE_NAME_CONSTRAINTS =
+            "Coin names should only contain alphanumeric characters and spaces, and it should not be blank";
 
-    public static final String MESSAGE_CODE_CONSTRAINTS =
-            "Currency codes can only contain letters";
-    public static final String CODE_VALIDATION_REGEX = "[a-zA-Z]{3,}";
-    public final String value;
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String NAME_VALIDATION_REGEX = "[\\p{Alpha}][\\p{Alpha} ]*";
+
+    public final String fullName;
 
     /**
-     * Constructs a {@code Code}.
+     * Constructs a {@code Name}.
      *
-     * @param code A valid currency code.
+     * @param name A valid name.
      */
-    public Code(String code) {
-        requireNonNull(code);
-        checkArgument(isValidCode(code), MESSAGE_CODE_CONSTRAINTS);
-        this.value = code;
+    public Code(String name) {
+        requireNonNull(name);
+        checkArgument(isValidName(name), MESSAGE_NAME_CONSTRAINTS);
+        this.fullName = name;
     }
 
     /**
-     * Returns true if a given string is a valid coin phone number.
+     * Returns true if a given string is a valid coin name.
      */
-    public static boolean isValidCode(String test) {
-        return test.matches(CODE_VALIDATION_REGEX);
+    public static boolean isValidName(String test) {
+        return test.matches(NAME_VALIDATION_REGEX);
     }
+
 
     @Override
     public String toString() {
-        return value;
+        return fullName;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Code // instanceof handles nulls
-                && this.value.equals(((Code) other).value)); // state check
+                && this.fullName.equals(((Code) other).fullName)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return fullName.hashCode();
     }
 
 }

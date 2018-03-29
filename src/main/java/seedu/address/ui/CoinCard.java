@@ -31,7 +31,7 @@ public class CoinCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private Label code;
     @FXML
     private Label id;
     @FXML
@@ -51,7 +51,8 @@ public class CoinCard extends UiPart<Region> {
         super(FXML);
         this.coin = coin;
         id.setText(displayedIndex + ". ");
-        name.setText(coin.getName().fullName);
+
+        code.setText(coin.getCode().fullName);
         amount.setText(coin.getCurrentAmountHeld().getValue().toString());
         price.setText(coin.getPrice().toString());
         coin.getTags().forEach(tag -> newTag(tag));

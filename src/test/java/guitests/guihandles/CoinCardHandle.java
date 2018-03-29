@@ -12,16 +12,13 @@ import javafx.scene.layout.Region;
  */
 public class CoinCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
-    private static final String NAME_FIELD_ID = "#name";
-    private static final String ADDRESS_FIELD_ID = "#address";
-    private static final String PHONE_FIELD_ID = "#phone";
-    private static final String EMAIL_FIELD_ID = "#email";
+    private static final String CODE_FIELD_ID = "#code";
     private static final String AMOUNT_FIELD_ID = "#amount";
     private static final String PRICE_FIELD_ID = "#price";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
-    private final Label nameLabel;
+    private final Label codeLabel;
     private final Label amountLabel;
     private final Label priceLabel;
     private final List<Label> tagLabels;
@@ -30,7 +27,7 @@ public class CoinCardHandle extends NodeHandle<Node> {
         super(cardNode);
 
         this.idLabel = getChildNode(ID_FIELD_ID);
-        this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.codeLabel = getChildNode(CODE_FIELD_ID);
         this.amountLabel = getChildNode(AMOUNT_FIELD_ID);
         this.priceLabel = getChildNode(PRICE_FIELD_ID);
 
@@ -47,7 +44,7 @@ public class CoinCardHandle extends NodeHandle<Node> {
     }
 
     public String getName() {
-        return nameLabel.getText();
+        return codeLabel.getText();
     }
 
     public String getAmount() {

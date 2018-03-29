@@ -2,16 +2,10 @@
 <addressbook>
     <!-- Valid Coin -->
     <coins>
-        <name>Hans Muster</name>
-        <code isPrivate="false">9482424</code>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <code>Hans Muster</code>
     </coins>
     <!-- Coin with invalid code field -->
     <coins>
-        <name>Hans Muster</name>
-        <code isPrivate="false">948asdf2424</code>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <code>948asdf2424</code>
     </coins>
 </addressbook>

@@ -42,7 +42,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadCoinPage(Coin coin) {
-        loadPage(SEARCH_PAGE_URL + coin.getName().fullName);
+        loadPage(SEARCH_PAGE_URL + coin.getCode().fullName);
     }
 
     public void loadPage(String url) {

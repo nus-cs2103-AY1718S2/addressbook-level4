@@ -2,8 +2,6 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -21,25 +19,23 @@ import seedu.address.model.coin.exceptions.DuplicateCoinException;
 public class TypicalCoins {
 
     public static final Coin ALICE = new CoinBuilder().withName("Alice Pauline")
-            .withCode("AAA")
             .withTags("friends").build();
     public static final Coin BENSON = new CoinBuilder().withName("Benson Meier")
-            .withCode("BBB")
             .withTags("owesMoney", "friends").build();
-    public static final Coin CARL = new CoinBuilder().withName("Carl Kurz").withCode("CCC").build();
-    public static final Coin DANIEL = new CoinBuilder().withName("Daniel Meier").withCode("DDD").build();
-    public static final Coin ELLE = new CoinBuilder().withName("Elle Meyer").withCode("EEE").build();
-    public static final Coin FIONA = new CoinBuilder().withName("Fiona Kunz").withCode("FFF").build();
-    public static final Coin GEORGE = new CoinBuilder().withName("George Best").withCode("GGG").build();
+    public static final Coin CARL = new CoinBuilder().withName("Carl Kurz").build();
+    public static final Coin DANIEL = new CoinBuilder().withName("Daniel Meier").build();
+    public static final Coin ELLE = new CoinBuilder().withName("Elle Meyer").build();
+    public static final Coin FIONA = new CoinBuilder().withName("Fiona Kunz").build();
+    public static final Coin GEORGE = new CoinBuilder().withName("George Best").build();
 
     // Manually added
-    public static final Coin HOON = new CoinBuilder().withName("Hoon Meier").withCode("HHH").build();
-    public static final Coin IDA = new CoinBuilder().withName("Ida Mueller").withCode("III").build();
+    public static final Coin HOON = new CoinBuilder().withName("Hoon Meier").build();
+    public static final Coin IDA = new CoinBuilder().withName("Ida Mueller").build();
 
     // Manually added - Coin's details found in {@code CommandTestUtil}
-    public static final Coin AMY = new CoinBuilder().withName(VALID_NAME_AMY).withCode(VALID_PHONE_AMY)
+    public static final Coin AMY = new CoinBuilder().withName(VALID_NAME_AMY)
             .withTags(VALID_TAG_FRIEND).build();
-    public static final Coin BOB = new CoinBuilder().withName(VALID_NAME_BOB).withCode(VALID_PHONE_BOB)
+    public static final Coin BOB = new CoinBuilder().withName(VALID_NAME_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 

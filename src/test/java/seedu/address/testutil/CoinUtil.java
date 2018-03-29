@@ -1,7 +1,6 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.AddCommand;
@@ -31,11 +30,11 @@ public class CoinUtil {
      */
     public static String getCoinDetails(Coin coin) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + coin.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + coin.getCode().value + " ");
+        sb.append(PREFIX_NAME + coin.getCode().fullName + " ");
         coin.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
     }
+
 }

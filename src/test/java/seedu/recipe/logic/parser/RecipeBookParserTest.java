@@ -152,8 +152,15 @@ public class RecipeBookParserTest {
     //@@Author kokonguyen191
     @Test
     public void parseCommand_search() throws Exception {
-        assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD) instanceof SearchCommand);
-        assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD + " 3") instanceof SearchCommand);
+        assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD + " chicken rice") instanceof SearchCommand);
+
+        String keywords = "chicken rice";
+        SearchCommand command = (SearchCommand) parser.parseCommand(SearchCommand.COMMAND_WORD + " " + keywords);
+        assertEquals(new SearchCommand(keywords), command);
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+        parser.parseCommand(SearchCommand.COMMAND_WORD);
     }
     //@@Author
 

@@ -98,7 +98,7 @@ public class RecipeBookParser {
             return new UploadCommandParser().parse(arguments);
 
         case SearchCommand.COMMAND_WORD:
-            return new SearchCommand();
+            return new SearchCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

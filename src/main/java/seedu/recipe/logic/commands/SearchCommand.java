@@ -16,11 +16,11 @@ public class SearchCommand extends Command {
             + "Example: " + COMMAND_WORD + " chicken rice";
     public static final String MESSAGE_SUCCESS = "Successfully loaded: %1$s";
 
-//    private final String recipeToSearch;
+    private final String recipeToSearch;
 
-//    public SearchCommand(String recipeToSearch) {
-//        this.recipeToSearch = recipeToSearch;
-//    }
+    public SearchCommand(String recipeToSearch) {
+        this.recipeToSearch = recipeToSearch;
+    }
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -32,8 +32,8 @@ public class SearchCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SearchCommand); // instanceof handles nulls
-//                && this.recipeToSearch.equals(((SearchCommand) other).recipeToSearch)); // state check
+                || (other instanceof SearchCommand // instanceof handles nulls
+                && this.recipeToSearch.equals(((SearchCommand) other).recipeToSearch)); // state check
     }
 }
 

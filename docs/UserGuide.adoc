@@ -104,7 +104,7 @@ Notifications are shown in notification cards in ET. Each notification card cont
 
 Notification cards will pop into the User Interface of ET from the bottom right corner, and waits 5 seconds before exitting the screen. However, the notification cards aren't dismissed. You can still revisit them in the notification center. +
 
-In the notification center, you can either dismiss a notification, email to remind, and/or whatsapp to remind. 
+In the notification center, you can either dismiss a notification, email to remind, and/or whatsapp to remind.
 
 === Data storage
 

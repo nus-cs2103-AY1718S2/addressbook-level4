@@ -15,7 +15,7 @@ public class HtmlWriterTest {
 
     @Test
     public void checkOpeningLine() {
-        String TEST_OPENING_LINE = "<!DOCTYPE html><html><head>\n"
+        String testOpeningLine = "<!DOCTYPE html><html><head>\n"
                 + "<title>LoanSharkManager</title></head>\n"
                 + "<body style=\"background-color:#383838;\"\n>"
                 + "<font face=\"Segoe UI Semibold\" size=\"5\" color=\"white\">\n";

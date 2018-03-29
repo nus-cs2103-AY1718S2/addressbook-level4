@@ -24,7 +24,7 @@ import static java.util.Objects.requireNonNull;
 
 public class ExportContactsCommand extends UndoableCommand {
 
-    public static String WRITE_TO_PATH; // This path must include filename at end
+    public static Path WRITE_TO_PATH; // This path must include filename at end
 
     public static final String SUCCESS = "Contacts successfully exported.\n";
 
@@ -34,12 +34,16 @@ public class ExportContactsCommand extends UndoableCommand {
 
     public ExportContactsCommand() {
         WRITE_TO_PATH = getDefaultPath();
+        System.out.println(WRITE_TO_PATH);
     }
 
     public ExportContactsCommand(String filePath) {
         requireNonNull(filePath);
         //check path validity
-        WRITE_TO_PATH = filePath;
+        WRITE_TO_PATH = FileSystems.getDefault().getPath(filePath);
+
+        //create file if doesn't exist
+        
     }
 
     /*
@@ -74,8 +78,8 @@ public class ExportContactsCommand extends UndoableCommand {
             csvPrinter.flush();
 
         } catch (IOException ioe) {
-            throw new CommandException("Failed in exporting Persons. May be a problem with model\n"
-                    + ioe.getMessage());
+            throw new CommandException("Failed in exporting Persons.\n"
+                    + ioe.getStackTrace());
         }
 
         return new CommandResult(SUCCESS);
@@ -88,8 +92,7 @@ public class ExportContactsCommand extends UndoableCommand {
         CSVPrinter csvPrinter;
 
         try {
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(WRITE_TO_PATH));
-
+            BufferedWriter writer = Files.newBufferedWriter(WRITE_TO_PATH);
             csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
                     .withHeader("Name", "Email", "Phone", "Address"));
         } catch (IOException ioe) {
@@ -99,9 +102,8 @@ public class ExportContactsCommand extends UndoableCommand {
         return csvPrinter;
     }
 
-
-    public String getDefaultPath() {
-        Path defaultPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
-        return defaultPath.toString();
+    public Path getDefaultPath() {
+        Path defaultPath = FileSystems.getDefault().getPath("data/exportTo.csv");
+        return defaultPath;
     }
 }

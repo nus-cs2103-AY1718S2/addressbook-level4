@@ -215,6 +215,7 @@ public class ImportCommandTest {
     private ImportCommand prepareCommand(String filepath, Model model) {
         return prepareCommand(filepath, model, TEST_PASSWORD);
     }
+
     /**
      * Returns a {@code ImportCommand} with the parameter {@code filepath} and {@code password}.
      */

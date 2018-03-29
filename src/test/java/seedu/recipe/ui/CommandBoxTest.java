@@ -25,7 +25,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "add";
     private static final String SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "should not work for now";
     private static final String COMMAND_THAT_HAS_MULTIPLE_LINES = FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES + LF
-        + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
+            + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
     private static final String ADD_COMMAND = "add";
     private static final String SECOND_SUGGESTION = "clear";
     private static final String PREFIX_NAME = "name/";
@@ -37,11 +37,11 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String RECIPE_NAME = "Chicken rice";
     private static final String ADD_COMMAND_WITH_PREFIX_NAME = ADD_COMMAND + WHITESPACE + PREFIX_NAME;
     private static final String AUTO_COMPLETION_FOR_ADD_COMMAND = ADD_COMMAND + WHITESPACE + LF + PREFIX_NAME
-        + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION + WHITESPACE + LF
-        + PREFIX_PREPARATION_TIME + WHITESPACE + LF + PREFIX_TAG + WHITESPACE + LF + PREFIX_URL;
+            + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION + WHITESPACE + LF
+            + PREFIX_PREPARATION_TIME + WHITESPACE + LF + PREFIX_TAG + WHITESPACE + LF + PREFIX_URL;
     private static final String AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME = ADD_COMMAND + WHITESPACE + LF
-        + PREFIX_NAME + RECIPE_NAME + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION
-        + WHITESPACE + LF + PREFIX_PREPARATION_TIME + WHITESPACE + LF + PREFIX_TAG + WHITESPACE + LF + PREFIX_URL;
+            + PREFIX_NAME + RECIPE_NAME + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION
+            + WHITESPACE + LF + PREFIX_PREPARATION_TIME + WHITESPACE + LF + PREFIX_TAG + WHITESPACE + LF + PREFIX_URL;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -55,7 +55,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
-            CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
+                CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
 
         defaultStyleOfCommandBox = new ArrayList<>(commandBoxHandle.getStyleClass());

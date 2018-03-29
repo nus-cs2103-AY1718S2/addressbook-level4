@@ -81,6 +81,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     //@@author hoangduong1607
+
     /**
      * Moves caret to the next field in input text.
      * If no field is found after current position, continue from beginning of input text.
@@ -88,11 +89,12 @@ public class CommandBox extends UiPart<Region> {
     private void moveToNextField() {
         int currentCaretPosition = commandTextArea.getCaretPosition();
         int nextFieldPosition = autoCompletionUtil.getNextFieldPosition(commandTextArea.getText(),
-            currentCaretPosition);
+                currentCaretPosition);
         commandTextArea.positionCaret(nextFieldPosition);
     }
 
     //@@author
+
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}

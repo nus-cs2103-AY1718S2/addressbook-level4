@@ -119,6 +119,9 @@ public class Person {
         return builder.toString();
     }
 
+    /**
+     * enum to distinguish whether a given Person is a Customer or Runner
+     */
     public enum PersonType {
         PERSON, CUSTOMER, RUNNER;
     }

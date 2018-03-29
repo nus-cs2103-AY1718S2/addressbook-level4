@@ -31,8 +31,10 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.smplatform.Facebook;
 import seedu.address.model.smplatform.Link;
 import seedu.address.model.smplatform.SocialMediaPlatform;
+import seedu.address.model.smplatform.SocialMediaPlatformBuilder;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.PersonBuilder;
 
@@ -41,6 +43,17 @@ public class AddPlatformCommandTest {
     public static final String LINK_STUB = "www.facebook.com/carl.kz";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_invalidPlatformLink_failure() {
+        String invalidLink = "www.google.com";
+        Map<String, SocialMediaPlatform> smpMap = new HashMap<>();
+        smpMap.put("facebook", new Facebook(new Link(invalidLink)));
+
+        AddPlatformCommand addPlatformCommand = prepareCommand(INDEX_THIRD_PERSON, smpMap);
+
+        assertCommandFailure(addPlatformCommand, model, SocialMediaPlatformBuilder.MESSAGE_BUILD_ERROR);
+    }
 
     @Test
     public void execute_addPlatformUnfilteredList_success() throws Exception {

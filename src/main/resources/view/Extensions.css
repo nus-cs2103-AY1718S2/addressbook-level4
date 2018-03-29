@@ -26,9 +26,11 @@
     -fx-tab-max-width: 12em;
 }
 
-.tab-pane:left {
-     -fx-tab-min-width: 20em;
-     -fx-tab-max-width: 20em;
+.tab-pane:right {
+    -fx-tab-min-height: 3em; /* 36 */
+    -fx-tab-max-height: 3em; /* 36 */
+    -fx-tab-min-width: 3em;
+    -fx-tab-max-width: 3em;
  }
 
 .tab-pane .tab-header-area {

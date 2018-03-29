@@ -14,6 +14,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
+import seedu.address.storage.HtmlWriter;
 
 /**
  * The Browser Panel of the App.
@@ -23,8 +24,11 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+    public static final String PERSON_PAGE = "PersonPage.html";
 
     private static final String FXML = "BrowserPanel.fxml";
+
+    private static final HtmlWriter htmlWriter = new HtmlWriter();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -41,8 +45,13 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loads a HTML file with person details
+     * @param person
+     */
     private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+        String personfilepath = htmlWriter.writePerson();
+        loadPage("file:///" + personfilepath);
     }
 
     public void loadPage(String url) {

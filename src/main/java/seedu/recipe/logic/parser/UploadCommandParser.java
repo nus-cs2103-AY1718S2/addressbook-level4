@@ -3,6 +3,7 @@ package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 
@@ -23,11 +24,22 @@ public class UploadCommandParser implements Parser<UploadCommand> {
         if (filename.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
-
         }
-        String xmlExtensionFilename = ParserUtil.parseFilename(filename);
+        try {
+            String xmlExtensionFilename = ParserUtil.parseFilename(filename);
+            return new UploadCommand(xmlExtensionFilename);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+    }
 
-        return new UploadCommand(xmlExtensionFilename);
+    /**
+     * Checks if the
+     * @param filename is in a format accepted by Dropbox
+     * @throws ParseException if it does not conform to the expected format
+     */
+    private void checkFilenameFormat(String filename) throws ParseException {
+
     }
 }
 //@author

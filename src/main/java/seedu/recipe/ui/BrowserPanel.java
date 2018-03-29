@@ -15,7 +15,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seedu.recipe.MainApp;
+import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.core.LogsCenter;
+import seedu.recipe.commons.core.index.Index;
+import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
@@ -32,6 +35,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     private static final String FXML = "BrowserPanel.fxml";
+    private static final Index FIRST_INDEX = Index.fromOneBased(1);
 
     private Recipe recipeToShare;
     private String uploadFilename;
@@ -104,12 +108,9 @@ public class BrowserPanel extends UiPart<Region> {
                     String url = browserEngine.getLocation();
 
                     if (url.contains(CloudStorageUtil.getRedirectDomain())) {
-                        System.out.println("A");
                         if (CloudStorageUtil.checkAndSetAccessToken(url)) {
-                            System.out.println("B");
                             CloudStorageUtil.upload(uploadFilename);
-                            loadPage(CloudStorageUtil.getRedirectDomain() + "h");
-                            System.out.println(browserEngine.getLocation());
+                            EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
                         }
                     }
 
@@ -127,9 +128,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author nicholasangcx
     @Subscribe
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {
-        System.out.println("event");
-        loadPage("https://www.dropbox.com");
-        //loadPage(CloudStorageUtil.getAppropriateUrl());
+        loadPage(CloudStorageUtil.getAppropriateUrl());
         uploadFilename = event.getUploadFilename();
         if (CloudStorageUtil.hasAccessToken()) {
             CloudStorageUtil.upload(uploadFilename);

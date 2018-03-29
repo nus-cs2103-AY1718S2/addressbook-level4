@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.StringUtil;
+import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
 import seedu.recipe.model.recipe.Ingredient;
@@ -408,7 +409,11 @@ public class ParserUtil {
      * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
      * A .xml extension will be added to the original filename.
      */
-    public static String parseFilename(String filename) {
+    public static String parseFilename(String filename) throws IllegalValueException {
+        requireNonNull(filename);
+        if () {
+            throw new IllegalValueException(UploadCommand.MESSAGE_FILENAME_CONSTRAINTS);
+        }
         String xmlExtensionFilename = filename + ".xml";
         return xmlExtensionFilename;
     }

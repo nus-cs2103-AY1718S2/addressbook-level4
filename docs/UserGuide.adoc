@@ -48,6 +48,59 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to <<Features>> for details of each command.
 
+== Command Summary
+
+[%header,cols=3*]
+|===
+|Command
+|Keyboard shortcut
+|Syntax
+
+|add
+|kbd:[Alt+A]
+|`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+
+|clear
+|kbd:[Alt+C]
+|`clear`
+
+|delete
+|kbd:[Alt+D]
+|`delete INDEX`
+
+|edit
+|kbd:[Alt+E]
+|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+
+|find
+|kbd:[Ctrl+F]
+|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
+
+|list
+|kbd:[F2]
+|`list`
+
+|help
+|kbd:[F1]
+|`help`
+
+|select
+|kbd:[Alt+S]
+|`select INDEX`
+
+|history
+|kbd:[Alt+H]
+|`history`
+
+|undo
+|kbd:[Ctrl+Z]
+|`undo`
+
+|redo
+|kbd:[Ctrl+Y]
+|`redo`
+|===
+
 [[Features]]
 == Features
 
@@ -274,56 +327,3 @@ _{explain how the user can enable/disable data encryption}_
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
-== Command Summary
-
-[%header,cols=3*]
-|===
-|Command
-|Keyboard shortcut
-|Syntax
-
-|add
-|kbd:[Alt+A]
-|`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
-
-|clear
-|kbd:[Alt+C]
-|`clear`
-
-|delete
-|kbd:[Alt+D]
-|`delete INDEX`
-
-|edit
-|kbd:[Alt+E]
-|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
-
-|find
-|kbd:[Ctrl+F]
-|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
-
-|list
-|kbd:[F2]
-|`list`
-
-|help
-|kbd:[F1]
-|`help`
-
-|select
-|kbd:[Alt+S]
-|`select INDEX`
-
-|history
-|kbd:[Alt+H]
-|`history`
-
-|undo
-|kbd:[Ctrl+Z]
-|`undo`
-
-|redo
-|kbd:[Ctrl+Y]
-|`redo`
-|===

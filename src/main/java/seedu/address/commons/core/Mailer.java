@@ -45,12 +45,16 @@ public class Mailer {
             for (Person p: recipients) {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(p.getEmail().toString()));
 
-                String subject = "Your delivery is arriving today!";
+                String subject = "Your delivery with Pigeons";
+
                 String body = "Dear "
-                        + p.getName().toString()
-                        + ", please be at your place today some pigeons may visit you :)";
+                        + p.getName().toString() + ", your delivery is arriving on "
+                        + p.getDate().toString()
+                        + " please be at your place some pigeons may visit you :)"
+                        + "<img src=\"https://i.imgur.com/Eg6CDss.jpg\" alt=\"Pigeons Logo\" style=\"display: block\"><br>";
+
                 message.setSubject(subject);
-                message.setText(body);
+                message.setContent(body, "text/html");
             }
             Transport transport = session.getTransport("smtp");
             transport.connect(host, pigeonsMail, password);

@@ -104,7 +104,10 @@ public class CommandTestUtil {
     public static final String VALID_BUILDING_2 = "S1";
     public static final String VALID_BUILDING_3 = "ERC";
 
-    public static final String INVALID_BUILDING_DESC_2 = "COM1 COM2";
+    public static final String INVALID_BUILDING_1 = "ERC*";
+    public static final String INVALID_BUILDING_2 = "COM1 COM2";
+    public static final String INVALID_BUILDING_3 = "Building";
+
 
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;

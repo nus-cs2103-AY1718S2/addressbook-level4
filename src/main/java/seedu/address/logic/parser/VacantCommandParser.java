@@ -10,7 +10,7 @@ import seedu.address.model.building.Building;
 /**
  * Parses input arguments and creates a new VacantCommand object
  */
-public class VacantCommandParser implements Parser<VacantCommand>{
+public class VacantCommandParser implements Parser<VacantCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the VacantCommand

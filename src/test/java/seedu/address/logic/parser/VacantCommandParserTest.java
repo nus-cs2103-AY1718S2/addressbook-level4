@@ -1,7 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUILDING_DESC_2;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUILDING_1;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUILDING_2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BUILDING_1;
 
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -21,11 +22,16 @@ public class VacantCommandParserTest {
     }
 
     @Test
+    public void parse_invalidValue_failure() {
+        assertParseFailure(parser, INVALID_BUILDING_1, Building.MESSAGE_BUILDING_CONSTRAINTS);
+    }
+
+    @Test
     public void parse_invalidNumberOfArguments_failure() {
         String message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, VacantCommand.MESSAGE_USAGE);
 
         //more than one building name arguement
-        String tooManyArgumentsCommand = INVALID_BUILDING_DESC_2;
+        String tooManyArgumentsCommand = INVALID_BUILDING_2;
         assertParseFailure(parser, tooManyArgumentsCommand, message);
 
         //missing both arguments

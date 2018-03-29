@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-T15-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -156,11 +156,11 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagramUpdated.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `CalendarPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -197,7 +197,7 @@ image::DeletePersonSdForLogic.png[width="800"]
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagramUpdated.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -206,13 +206,20 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an Calendar that the Calendar GUI response to any changes made to the Calendar
 * does not depend on any of the other three components.
+
+*Method* : GradientDescent.java
+
+* Extract targeted fields from user list in addressbook.
+* Do some predictive calculation based on gradient descent method.
+* Output the "ExpectedSpending" back to the view
 
 [[Design-Storage]]
 === Storage component
 
 .Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
+image::StorageClassDiagramUpdated.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -358,6 +365,95 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::add_appointment[]
+=== Add Appointment feature
+==== Current Implementation
+The Add appointment feature is facilitated by all the components of the application. It supports adding of entry to the calendar through the command lines.
+
+After the `commandBox` in UI passed the text field input with add_appointment command word to the `LogicManger`, `AddressBookParser` will identify the command word and
+call `AddAppointmentCommandParser` which will parse the input text to create a new `AppointmentEntry` object and return a new `AddAppointmentCommand` object. The `LogicManger` will
+then execute this command.
+
+The `AddAppointmentCommand` calls `ModelManager` to add an appointment to calendar, `ModelManager` then call `AddressBook' to add appointment and raise a `AddressBookChangedEvent`, finally `AddressBook` calls its `InsuranceCalendar` object to
+add an appointment and raise a .
+
+Within `InsuranceCalendar`, the code is as follows:
+[source,java]
+----
+ public void addAppointment(AppointmentEntry entry)throws DuplicateAppointmentException {
+        if (contains(entry)) {
+            throw new DuplicateAppointmentException();
+        }
+        calendar.addEntry(entry.getAppointmentEntry());
+        appointmentEntries.add(entry);
+    }
+----
+
+Both the `Calendar` class from the CalendarFx Lib and the `AppointmentEntry` list that the `InsuranceCalendar` class maintains are
+updated with the addition of the new appointment. Addition od entry to the `Calendar` object automatically reflects the change on the
+`CalendarView` GUI
+
+On the other hand, as a `AddressBookChangedEvent` is raised, the `EventCenter` calls the `Storage Manager` to handle this event and the
+added appointment is saved to persistent data
+==== Design Considerations
+
+===== Aspect: Implementation of `Add_Appointment command`
+
+* **Alternative 1 (current choice):** create a InsuranceCalendar class in Model that maintain a list of appointment entries`
+** Pros: Preserve existing Architecture with little alternation to architecture design
+** Cons: Duplicate set of appointment entries maintained
+* **Alternative 2:** Use only the `Calendar` in CalendarFX Lib
+** Pros: Simple and clean, only one set of appointment entries kept.
+** Cons: Drastic alteration to existing Structure, original Storage functions will not work.
+===== Aspect: How to add_appointment
+
+* **Alternative 1 (current choice):** Ask the user to specify title, start date and end date.
+** Pros: Easy to implement.
+** Cons: user may find it tedious to type in the date and time also cannot be specified
+* **Alternative 2:** user click on the calendar UI to specify date, specify time in command box.
+** Pros: more flexible and user friendly interface
+** Cons: more elaborate parser and calendar UI event listener need to be in place to support
+
+
+===== Aspect: Type of appointment supported
+
+* **Alternative 1 (current choice):** the user has to specify the title himself.
+** Pros: easy to implement
+** Cons: require user to specify the appointment himself
+* **Alternative 2:** link appointment to person list
+** Pros: Might be more intuitive for the user.
+** Cons: require elaborate event listener for Person list panel
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 1 (current choice):Array list to maintain the list of the appointments;
+** Pros: Easy to understand and implement.
+** Cons: entires duplicated twice.
+* **Alternative 2:** use Calendar Library
+** Pros: Clean and simple
+** Cons: breaks the layering of the current architecture
+// end::add_appointment[]
+
+// tag::add_appointment[]
+=== Age Field feature (V1.2)
+==== Current implementation
+
+One of the features that was added is the age field. When adding a new person to the addressbook now, the user must
+specify the age of the new person. This will allow the user to have a more accurate description of the client, and
+come up with a better insurance policy.
+
+image::NewPersonListCard.png[width="800"]
+
+To add a person with an age field, one must specify the age prefixed with the indicator `/age`:
+
+```
+ADD n/NAME p/PHONE e/EMAIL a/ADDRESS i/INCOME as/ACTUALSPENDING es/EXPECTEDINCOME age/AGE [t/TAG]...
+```
+
+==== Future Improvements
+* Include the age field when performing predictions
+* Filter clients by their age
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
@@ -384,6 +480,29 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Prediction Function
+
+A command by the keyword of "predict" is added. It takes no argument.
+
+* `Function` : Customers in the list may or may not have
+"actual spending" entered. Because at the point in time,
+the customer has not purchased any policy at all.
+Hence it would be convenient to have a way to predict the
+likely amount of purchase they would make so that the
+insurance agent can prioritize those customers with higher
+likelihood to spend more.
+
+* `Implementation` : Each customer's data would be extracted as a row.
+The column represents. Each Targeted fields such as income, age and so on.
+The model used here is linear regression. That means we assume the purchase made
+by the customer is a linear combination of all the targeted fields.
+This model is not perfect. However for the first version of this
+function, we will just use this model. These data would form a matrix.
+Imaging a form of Ax=b where A is a matrix and x is a vector of weights
+and b is the expected outcome. The name of the game is to find the
+weights that minimises the loss of the objective function A.
+The numerical solver used here is Stochastic Gradient Descent.
 
 == Documentation
 
@@ -798,11 +917,13 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * Major feature: calendar with appointment support that allow user to add, remove, modify appointments and reflect these changes on a calendar GUI
 * Minor feature: task pad GUI plus task assignment related functions, allow user to add,remove,modify tasks and reflect these changes on a task pad GUI
 
-*Valerian Rey*:
-* Minor feature: Policy field to the persons in the AddressBook to specify the insurance contract of a client. It contains multiple classes and enumerations to precisely describe a user's policy (Policy, Price, Date, Month, Issue, Coverage).
-* Major feature: Commands to enter the policy of a client, edit them or even delete them. GUI display of the policies.
+*jstarw*:
 
-
+* Minor feature: added an age field to the Person class, so that now insurance companies can now use age as a factor for
+determining insurance policies
+* Major feature: adding enhanced Search functionality. This will allow things like a drop down list, quick filtering,
+and various other features. This will help improve the experience of the client as well as increase the efficiency of
+their workflow.
 
 [appendix]
 == User Stories
@@ -841,10 +962,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |Insurance agent that needs to meet clients |Record client’s job |Prioritize purchasing power
 
 |`* * *` |Insurance agent |Assign different policies to each contact |Know the policy my client is under
-
-|`* * *` |Insurance agent |Edit the policies of a contact |Keep my contact data updated
-
-|`* * *` |Insurance agent |Delete the policies of a contact |Keep my contact data updated
 
 |`* *` |Insurance agent that work for someone |Mark important tasks on my calendar |Don’s miss important meeting or tasks
 
@@ -933,28 +1050,6 @@ Use case resumes at step 2.
 
 [none]
 * 2a. The person should not already exist.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Add policies of a person
-
-*MSS*
-
-1. User requests to list persons.
-2. User requests add policy to a specified person in the list
-3. App takes in a command the price, dates and issues covered by the policy
-4. AddressBook add the specified policy to the person
-5. Use case ends
-
-*Extensions*
-
-[none]
-* 2a. The index specified does not exist or no index is specified
-+
-Use case ends.
-
-*3a. Incorrect parameters are specified
 +
 Use case ends.
 

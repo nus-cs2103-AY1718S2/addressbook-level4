@@ -1,15 +1,16 @@
 package seedu.address.model;
 
-import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
 
-import seedu.address.model.insuranceCalendar.AppointmentEntry;
+import seedu.address.model.calendar.AppointmentEntry;
+import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
+import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditApointmentFailException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -35,6 +36,12 @@ public interface Model {
     /** Adds the given appointment entry */
     void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException;
 
+    /** remove appointments associated with the given searchText */
+    void removeAppointment(String searchText) throws AppointmentNotFoundException;
+
+    /** edit appointment associated with the given searchText */
+    void editAppointment(String searchText, AppointmentEntry reference) throws EditApointmentFailException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -58,8 +65,5 @@ public interface Model {
     CalendarSource getCalendar();
 
 
-    /**
-     * Gets the matrix of list of persons with selected fields for calculation
-     */
-    ArrayList<ArrayList<Double>> getPersonAttrMatrix();
+
 }

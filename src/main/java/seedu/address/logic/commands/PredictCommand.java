@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.GradientDescent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.GradientDescent;
+
 
 /**
  * predicts the amount of money a customer would spend on insurance
@@ -20,8 +21,7 @@ public class PredictCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        GradientDescent gd = new GradientDescent(model);
-        gd.solve();
-        return new CommandResult(SUCCESS_MESSAGE);
+        GradientDescent gd = GradientDescent.getInstance(model);
+        return gd.solve();
     }
 }

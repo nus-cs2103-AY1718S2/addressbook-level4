@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTEDSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
@@ -34,6 +35,7 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
+    public static final String VALID_TITLE_JOHN = "meet john";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
@@ -42,15 +44,18 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_HUSBAND = "husband";
-    public static final Double VALID_INCOME_AMY = 12345.6;
-    public static final Double VALID_INCOME_BOB = 12345.6;
-    public static final Double VALID_ACTUALSPENDING_AMY = 12345.6;
-    public static final Double VALID_ACTUALSPENDING_BOB = 12345.6;
-    public static final Double VALID_EXPECTEDSPENDING_AMY = 12345.6;
-    public static final Double VALID_EXPECTEDSPENDING_BOB = 12345.6;
+    public static final Double VALID_INCOME_AMY = 1234.56;
+    public static final Double VALID_INCOME_BOB = 1234.56;
+    public static final Double VALID_ACTUALSPENDING_AMY = 1234.56;
+    public static final Double VALID_ACTUALSPENDING_BOB = 1234.56;
+    public static final Double VALID_EXPECTEDSPENDING_AMY = 1234.56;
+    public static final Double VALID_EXPECTEDSPENDING_BOB = 1234.56;
+    public static final Integer VALID_AGE_AMY = 20;
+    public static final Integer VALID_AGE_BOB = 20;
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
+    public static final String TITLE_DESC_MEET_John = " " + PREFIX_NAME + VALID_TITLE_JOHN;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
     public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
@@ -63,6 +68,8 @@ public class CommandTestUtil {
     public static final String EXPECTEDSPENDING_DESC_BOB = " " + PREFIX_EXPECTEDSPENDING + VALID_EXPECTEDSPENDING_BOB;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String INCOME_DESC_BOB = " " + PREFIX_INCOME + VALID_INCOME_BOB;
+    public static final String AGE_DESC_AMY = " " + PREFIX_AGE + VALID_AGE_AMY;
+    public static final String AGE_DESC_BOB = " " + PREFIX_AGE + VALID_AGE_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -72,6 +79,7 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_INCOME_DESC = " " + PREFIX_INCOME + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_AGE_DESC = " " + PREFIX_AGE + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

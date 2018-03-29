@@ -14,11 +14,13 @@ import java.util.stream.Collectors;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.insuranceCalendar.AppointmentEntry;
-import seedu.address.model.insuranceCalendar.InsuranceCalendar;
+import seedu.address.model.calendar.AppointmentEntry;
+import seedu.address.model.calendar.InsuranceCalendar;
+import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
+import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditApointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -32,9 +34,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private InsuranceCalendar calendar;
+    private final InsuranceCalendar calendar;
 
-    /*
+    /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
@@ -69,7 +71,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void setCalendar(InsuranceCalendar calendar) {
-        this.calendar = calendar;
+        this.calendar.clearAppointments();
+        this.calendar.copyAppointments(calendar);
     }
 
     /**
@@ -98,6 +101,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
         calendar.addAppointment(entry);
     }
+
+    /**
+     * remove appointment entries related to the searchText in the calendar.
+     *
+     * @throws AppointmentNotFoundException if an equivalent appointment already exists.
+     */
+    public void removeAppointment(String searchText) throws AppointmentNotFoundException {
+        calendar.removeAppointment(searchText);
+    }
+
+    /**
+     * edit an existing appointment entry in the calendar.
+     *
+     * @throws EditApointmentFailException if an equivalent appointment already exists.
+     */
+    public void editAppointment(String searchText, AppointmentEntry referenceEntry) throws EditApointmentFailException {
+        calendar.editAppointmentEntry(searchText, referenceEntry);
+    }
+
     //// person-level operations
 
     /**
@@ -137,22 +159,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
 
     /**
-     * Gets the matrix of list of persons with selected fields for calculation
-     */
-    public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
-        ArrayList<ArrayList<Double>> matrix = new ArrayList<>();
-        ObservableList<Person> list = this.persons.asObservableList();
-
-
-        list.forEach(person -> {
-
-        });
-
-        return matrix;
-
-    }
-
-    /**
      * Updates the master tag list to include tags in {@code person} that are not in the list.
      *
      * @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
@@ -173,7 +179,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
                 correctTagReferences, person.getIncome(), person.getActualSpending(),
-                person.getExpectedSpending());
+                person.getExpectedSpending(), person.getAge());
     }
 
     /**

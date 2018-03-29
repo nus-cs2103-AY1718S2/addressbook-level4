@@ -161,14 +161,58 @@ Selects the 1st person in the results of the `find` command.
 === Adding an appointment: `add_appointment`
 
 Adds an appointment to the address book calendar +
-Format: `add_appointment n/NAME S/START DATE E/END DATE`
+Format: `add_appointment n/NAME S/START DATE TIME E/END DATE TIME`
 
 [TIP]
-The date must be entered in the d/MM/yyyy format
+The date time must be entered in the d/MM/yyyy HH:mm format+
+The name given to the appointment as its title must be unique
 
 Examples:
 
-* `add_appointment n/meet John S/11/09/2018  E/11/09/2018`
+* `add_appointment n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
+
+=== remove existing appointment : `remove_appointment`
+
+Removes appointment whose title match the given search text +
+Format: `remove_appointment ST/SEARCH TEXT`
+
+[TIP]
+only the title is searched, appointment with the title that match the given search text will be removed
+This works as we enforces unique titles for appointments.
+
+Examples:
+
+* `remove_appointment ST/Title of the appointment`
+
+=== Editing an appointment: `edit_appointment`
+
+edit an existing appointment in the address book calendar +
+Format: `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE TIME E/NEW END DATE TIME`
+
+[TIP]
+Make sure the search text matches the title of an existing appointment and the new title do not duplicates
+with other existing appointments
+
+Examples:
+
+* `edit_appointment ST/meet James n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
+
+=== Look At a Date: `look`
+
+look at a specific date, the Calendar GUI will focus on the date +
+Format: `look DF/18/03/2018`
+
+[TIP]
+Note that the date format must be in d/MM/yyyy
+
+Examples:
+
+* `look DF/11/09/2018`
+
+=== Back to calendar Month View: `back`
+
+set the Calendar View to Month View +
+Format: `back`
 
 === Listing entered commands : `history`
 
@@ -230,6 +274,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Predict: `predict`
+Predict the potential spending of the of a new customer.
+
+Examples:
+
+* `Initially` +
+two customers one with `actualSpending` > 0 while the other with
+`actualSpending` == 0.
+
+* `After` +
+The customer with `actualSpending` == 0 now has `expectedSpending` shown.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -257,17 +313,38 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+=== add task to task pad`[coming in v2.0]`
+the user is allowed to use command line to add a task to the task pad GUI  specifying the task title , task details
+
+=== remove task on task pad`[coming in v2.0]`
+the user is allowed to use command line to remove a task to the task pad GUI  specifying the task index
+
+=== Predict Purchasing Power
+
+- User is able to type "Predict" get potential customer's expected spending based on the existing data
+- After new data has been entered, users are able to re-predict and retrain the model
+
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+
 
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Add Appointment* `add_appointment n/NAME S/START DATE E/End Date` +
-e.g. `add_appointment n/Meet James S/14/08/2018 S/14/08/2018`
+e.g. `add_appointment n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
+* *Remove Appointment* `remove_appointment ST/SEARCH TEXT` +
+e.g. `remove_appointment ST/Title of the appointment`
+* *Edit Appointment* `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE E/NEW End Date` +
+e.g. `edit_appointment ST/meet John n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
+* *Look At a Date* `look DF/DATE TO LOOK` +
+e.g. `look DF/18/03/2018`
+* *Back to Month View* `back`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

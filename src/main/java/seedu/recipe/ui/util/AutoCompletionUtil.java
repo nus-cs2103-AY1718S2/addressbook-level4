@@ -7,6 +7,7 @@ import java.util.HashMap;
 import seedu.recipe.logic.parser.CliSyntax;
 
 //@@author hoangduong1607
+
 /**
  * Contains constants and functions needed for auto-completion
  */
@@ -19,8 +20,9 @@ public class AutoCompletionUtil {
         CliSyntax.PREFIX_TAG.toString(), CliSyntax.PREFIX_URL.toString()));
     public static HashMap<String, ArrayList<String>> prefixesForCommand;
     public static final int MAX_SUGGESTIONS = 8;
-    public static final String LF = "\n";
-    public static final String WHITESPACE = " ";
+    public static final char LF = '\n';
+    public static final char WHITESPACE = ' ';
+    public static final char END_FIELD = '/';
 
     public AutoCompletionUtil() {
         prefixesForCommand = new HashMap<>();
@@ -62,5 +64,24 @@ public class AutoCompletionUtil {
         }
 
         return autoCompletionText;
+    }
+
+    /**
+     * Finds position of next field.
+     * Returns current position of caret if no field is found
+     */
+    public int getNextFieldPosition(String inputText, int currentCaretPosition) {
+        int nextFieldCaretPosition = currentCaretPosition;
+
+        for (int i = 0; i < inputText.length(); i++) {
+            int wrapAroundPosition = (i + currentCaretPosition) % inputText.length();
+
+            if (inputText.charAt(wrapAroundPosition) == END_FIELD) {
+                nextFieldCaretPosition = wrapAroundPosition + 1;
+                break;
+            }
+        }
+
+        return nextFieldCaretPosition;
     }
 }

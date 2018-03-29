@@ -17,4 +17,6 @@ public class KeyboardShortcutsMapping {
         (KeyCodeCombination) KeyCodeCombination.valueOf("Shift+Enter");
     public static final KeyCodeCombination SHOW_SUGGESTIONS_COMMAND =
         (KeyCodeCombination) KeyCodeCombination.valueOf("Shift+Space");
+    public static final KeyCodeCombination NEXXT_FIELD =
+        (KeyCodeCombination) KeyCodeCombination.valueOf("Tab");
 }

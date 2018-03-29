@@ -56,41 +56,49 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |Keyboard shortcut
 |Syntax
 
-|add
-|kbd:[Alt+A]
-|`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
-
-|clear
-|kbd:[Alt+C]
-|`clear`
-
-|delete
-|kbd:[Alt+D]
-|`delete INDEX`
-
-|edit
-|kbd:[Alt+E]
-|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
-
-|find
-|kbd:[Ctrl+F]
-|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
+|help
+|kbd:[F1]
+|`help`
 
 |list
 |kbd:[F2]
 |`list`
 
-|help
-|kbd:[F1]
-|`help`
+|history
+|kbd:[Alt+H]
+|`history`
+
+|exit
+|kbd:[Alt+Q]
+|`exit`
+
+|clear
+|kbd:[Alt+C]
+|`clear`
+
+|add
+|kbd:[Alt+A]
+|`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+
+|edit
+|kbd:[Alt+E]
+|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+
+|delete
+|kbd:[Alt+D]
+|`delete INDEX`
+
+|find
+|kbd:[Ctrl+F]
+|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
 |select
 |kbd:[Alt+S]
 |`select INDEX`
 
-|history
-|kbd:[Alt+H]
-|`history`
+|locate
+|kbd:[Alt+L]
+|`locate INDEX`
 
 |undo
 |kbd:[Ctrl+Z]
@@ -118,6 +126,38 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 Format: `help` +
 Keyboard shortcut: `F1`
 
+=== Listing all persons : `list`
+
+Shows a list of all persons in the syndicate database. +
+Alias: `l` +
+Format: `list` +
+Keyboard shortcut: `F2`
+
+=== Listing entered commands : `history`
+
+Lists all the commands that you have entered in reverse chronological order. +
+Alias: `h` +
+Format: `history` +
+Keyboard shortcut: `Alt` + `H`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit` +
+Keyboard shortcut: `Alt` + `Q`
+
+=== Clearing all entries : `clear`
+
+Clears all entries from the address book. +
+Alias: `c` +
+Format: `clear` +
+Keyboard shortcut: `Alt` + `C`
+
 === Adding a person: `add`
 
 Adds a person to the syndicate database. +
@@ -132,13 +172,6 @@ Examples:
 
 * `add n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01`
 * `add n: Betsy Crowe t:friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal`
-
-=== Listing all persons : `list`
-
-Shows a list of all persons in the syndicate database. +
-Alias: `l` +
-Format: `list` +
-Keyboard shortcut: `F2`
 
 === Editing a person : `edit`
 
@@ -161,6 +194,28 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n: Betsy Crower t:` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Deleting a person : `delete`
+
+Deletes the specified person from the syndicate database. +
+Alias: `d` +
+Format: `delete INDEX` +
+Keyboard shortcut (to populate prefix): `Alt` + `D`
+
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd person in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
 
 === Searching for relevant persons: `find`
 
@@ -189,28 +244,6 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `find -p 91234567` +
 Returns any person with the above phone number. Note that there should be no spaces in the entered number.
 
-=== Deleting a person : `delete`
-
-Deletes the specified person from the syndicate database. +
-Alias: `d` +
-Format: `delete INDEX` +
-Keyboard shortcut (to populate prefix): `Alt` + `D`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -232,18 +265,6 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Alias: `h` +
-Format: `history` +
-Keyboard shortcut: `Alt` + `H`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -299,18 +320,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Alias: `c` +
-Format: `clear` +
-Keyboard shortcut: `Alt` + `C`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit` +
-Keyboard shortcut: `Alt` + `Q`
 
 === Saving the data
 

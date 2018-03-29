@@ -593,6 +593,64 @@ These tag colours will be significantly more useful with the further enhancement
 === BrowserPanel Enhancement
 In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows the customer's name, amount owed, due date, status, and runner assigned. These are important fields for a loanshark manager to get a quick grasp of a customer.
 
+=== Keyboard shortcuts
+
+In the original AddressBook, the only keyboard shortcut that was implemented was kbd:[F1], which brought out the Help Window.
+The current implementation allows the user to use many different keyboard shortcuts to speed up common tasks.
+The new keyboard shortcuts either run their associated command immediately, or populate the `CommandBox` with the command's prefixes.
+This way, the user just needs to fill in the appropriate arguments, saving them time on typing the prefixes.
+
+==== Basic Enhancement
+
+For each of the keyboard-enabled commands, an associated menu item is created for them.
+The accelerator for each menu item is then set to its respective keyboard shortcut.
+
+The `MainWindow.fxml` file is also updated to enable the functionality and appearance of the new menu items.
+
+An event handler method is associated with each menu item, being called upon the input of the respective keyboard shortcut or upon the selection of the menu item.
+
+Each event handler will raise a new event, which will then be handled by the CommandBox and ResultDisplay UI elements.
+
+Code for `handleUndo()`:
+----
+@FXML
+    private void handleUndo() {
+        raise(new ExecuteCommandRequestEvent("undo"));
+    }
+----
+
+Upon the input of a valid keyboard shortcut, both the CommandBox and ResultDisplay UI elements handle the raised event in their own way.
+
+Both UI elements are registered as event handlers and have distinct methods to handle the two types of raised events.
+
+For `PopulatePrefixesRequestEvents`, the CommandBox replaces its current text with the given command and its prefixes.
+For `ExecuteCommandRequestEvents`, the CommandBox replaces its current text with the given command and then calls `handleCommandInputChanged()` to immediately execute the command.
+
+For `PopulatePrefixesRequestEvents`, the ResultDisplay displays the given help information for the input command.
+For `ExecuteCommandRequestEvents`, the ResultDisplay does not directly handle the event; instead the result of the keyboard shortcut input is determined by the `CommandBox` and its associated `LogicManager`.
+
+==== Further Enhancement
+
+This enhancement can be taken steps further in the coming weeks by allowing kdb:[Tab] to move between generated prefixes in the `CommandBox`.
+Ideally, the user would be able to press one keyboard shortcut to populate the CommandBox, fill in the appropriate argument for the first prefix, press kbd:[Tab] to move past the next prefix to the correct input position.
+This way, the user would be able to focus on just on the input of the salient parameters instead of worrying about the syntax of the command.
+
+Also, it would be possible to implement a confirmation dialog that could come up should the user want to make many changes at once;
+for instance, clearing the database, or tagging multiple people at once, or deleting multiple people at once.
+It is important for the application to ensure that the user does indeed want to carry out the task at hand should it result in widespread and lasting changes to the database.
+
+==== Rationale
+The rationale for implementing these keyboard shortcuts using menu items and accelerators is twofold.
+Firstly, adding the menu items to the already present menu UI element makes the application look more professional.
+Secondly, making use of accelerators allows the keyboard shortcuts to be functional even when the CommandBox is not focused.
+This is expected behaviour by the user.
+On the other hand, if the keyboard shortcuts were instead implemented at the CommandBox level, they would only be functional when the focus is on the CommandBox (eg. when the user _clicks_ on the CommandBox, not ideal).
+It would be difficult for the CommandBox to raise events and have them be handled by the ResultDisplay UI element as well, as in the current implementation, there is no interaction between the `CommandBox` and `ResultDisplay` unless a command is input.
+This would have posed problems when implementing the keyboard shortcuts that populate the CommandBox but do not run the command.
+
+Limitation: when the focus is on the BrowserPanel UI element, the implemented keyboard shortcuts do not work as a user would expect them to.
+This is a limitation of the BrowserPanel UI element.
+
 ==== Enhancement
 A HTML file with a customer's fields, as outlined above, in that order, is created each time a PersonCard is selected. The BrowserPanel then displays this HTML file. The background and font colors are matched to the LoanSharkTycoon application.
 

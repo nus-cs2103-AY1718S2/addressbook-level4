@@ -52,7 +52,8 @@ public class ParserUtil {
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
-     *
+     * First character of each word will be set to upper case.
+     * All other characters will be set to lower case.
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
     public static Name parseName(String name) throws IllegalValueException {
@@ -61,7 +62,12 @@ public class ParserUtil {
         if (!Name.isValidName(trimmedName)) {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
-        return new Name(trimmedName);
+        String[] wordsInName = trimmedName.split(" ");
+        String formattedName = "";
+        for (String n : wordsInName) {
+            formattedName += n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase() + " ";
+        }
+        return new Name(formattedName.trim());
     }
 
     /**
@@ -254,16 +260,22 @@ public class ParserUtil {
     /**
      * Parses a {@code String name} into a {@code PetPatientName}.
      * Leading and trailing whitespaces will be trimmed.
-     *
+     * First character of each word will be set to upper case.
+     * All other characters will be set to lower case.
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
     public static PetPatientName parsePetPatientName(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!PetPatientName.isValidName(trimmedName)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(PetPatientName.MESSAGE_PET_NAME_CONSTRAINTS);
         }
-        return new PetPatientName(trimmedName);
+        String[] wordsInName = trimmedName.split(" ");
+        String formattedName = "";
+        for (String n : wordsInName) {
+            formattedName += n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase() + " ";
+        }
+        return new PetPatientName(formattedName.trim());
     }
 
     /**

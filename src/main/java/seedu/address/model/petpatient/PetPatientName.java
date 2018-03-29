@@ -3,6 +3,7 @@ package seedu.address.model.petpatient;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author chialejing
 /**
  * Represents a PetPatient's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
@@ -10,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class PetPatientName {
 
     public static final String MESSAGE_PET_NAME_CONSTRAINTS =
-            "PetPatient names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Pet Patient names should only contain alphanumeric characters and spaces, and it should not be blank.";
 
     /*
      * The first character of the address must not be a whitespace,

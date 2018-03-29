@@ -1,9 +1,10 @@
-package seedu.recipe.logic.commands.Util;
+//@@author kokonguyen191
+package seedu.recipe.logic.commands.util;
 
 /**
  *  The API set of WikiaQueryHandler
  */
-public interface IWikiaQueryHandler {
+public interface WikiaQuery {
 
     /**
      * Returns the string value of the URL of the query.

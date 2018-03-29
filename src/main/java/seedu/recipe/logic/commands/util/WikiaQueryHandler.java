@@ -1,5 +1,5 @@
-package seedu.recipe.logic.commands.Util;
-
+//@@author kokonguyen191
+package seedu.recipe.logic.commands.util;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ import com.restfb.json.JsonObject;
 /**
  * Handle a query to recipes.wikia.com
  */
-public class WikiaQueryHandler implements IWikiaQueryHandler {
+public class WikiaQueryHandler implements WikiaQuery {
 
     private static final String QUERY_URL = "http://recipes.wikia.com/wiki/Special:Search?query=";
     private static final String API_QUERY_URL = "http://recipes.wikia.com/api/v1/Search/List?query=";

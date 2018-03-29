@@ -1,7 +1,9 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
@@ -42,6 +44,9 @@ public class PersonBuilder {
     private LateInterest lateInterest;
     private Runner runner;
 
+    //Runner fields:
+    private List<Customer> customers;
+
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
@@ -56,6 +61,9 @@ public class PersonBuilder {
         standardInterest = new StandardInterest();
         lateInterest = new LateInterest();
         runner = new Runner();
+
+        //Runner fields:
+        customers = new ArrayList<>();
     }
 
     /**
@@ -68,12 +76,15 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
 
+        //TODO: change the instantiation of below variables according to instanceof
         moneyBorrowed = new MoneyBorrowed();
         oweStartDate = new Date();
         oweDueDate = new Date();
         standardInterest = new StandardInterest();
         lateInterest = new LateInterest();
         runner = new Runner();
+
+        customers = new ArrayList<>();
     }
 
     /**

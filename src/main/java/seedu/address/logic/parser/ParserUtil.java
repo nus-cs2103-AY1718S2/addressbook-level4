@@ -15,6 +15,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
+import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
@@ -165,6 +166,26 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String remark} into a {@code Remark}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Remark parseRemark(String remark) {
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        return new Remark(trimmedRemark);
+    }
+
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
+    }
+    /**
      * Parses a {@code String date} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -232,6 +253,5 @@ public class ParserUtil {
         requireNonNull(endTime);
         return endTime.isPresent() ? Optional.of(parseEndTime(endTime.get())) : Optional.empty();
     }
-
 
 }

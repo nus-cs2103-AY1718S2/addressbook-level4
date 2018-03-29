@@ -1,6 +1,5 @@
 package seedu.recipe.storage.model;
 
-
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
@@ -11,7 +10,8 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
 public class Filename {
 
     public static final String MESSAGE_FILENAME_CONSTRAINTS = "Filenames should not contain any incompatible characters";
-    public static final String FILENAME_VALIDATION_REGEX = "[^\\Q<>:/|.?\"\\*\\E]";
+    public static final String FILENAME_VALIDATION_REGEX = "[a-zA-Z0-9]+";
+            //"[^\\Q<>:/|.?\"\\*\\E]";
 
     public final String filename;
 
@@ -43,9 +43,5 @@ public class Filename {
     @Override
     public int hashCode() {
         return filename.hashCode();
-    }
-
-    public String getFilename() {
-        return filename;
     }
 }

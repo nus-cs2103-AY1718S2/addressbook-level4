@@ -405,6 +405,7 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
     //@@author nicholasangcx
     /**
      * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
@@ -412,13 +413,15 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the give {@code filename} is invalid.
      */
-    public static Filename parseFilename(String filename) throws IllegalValueException {
+    public static String parseFilename(String filename) throws IllegalValueException {
         requireNonNull(filename);
+        System.out.println(filename);
         if (!Filename.isValidFilename(filename)) {
+            System.out.println("Filename wrong format");
             throw new IllegalValueException(Filename.MESSAGE_FILENAME_CONSTRAINTS);
         }
         String xmlExtensionFilename = filename + ".xml";
-        return new Filename(xmlExtensionFilename);
+        return xmlExtensionFilename;
     }
     //@@author
 }

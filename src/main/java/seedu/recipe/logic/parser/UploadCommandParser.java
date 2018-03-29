@@ -6,7 +6,6 @@ import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
-import seedu.recipe.storage.model.Filename;
 
 /**
  * Parses input arguments and creates a new UploadCommand object
@@ -28,8 +27,7 @@ public class UploadCommandParser implements Parser<UploadCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
         }
         try {
-            Filename xmlFilename = ParserUtil.parseFilename(filename);
-            String xmlExtensionFilename = xmlFilename.getFilename();
+            String xmlExtensionFilename = ParserUtil.parseFilename(filename);
             return new UploadCommand(xmlExtensionFilename);
         } catch (IllegalValueException ive) {
             throw new ParseException(

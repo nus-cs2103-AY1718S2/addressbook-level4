@@ -11,7 +11,7 @@ import seedu.address.ui.PetPatientCard;
 /**
  * Provides a handle for {@code PetPatientListPanel} containing the list of {@code PetPatientCard}.
  */
-public class PetPatientListPanelHandle extends NodeHandle<ListView<PetPatientCard>>{
+public class PetPatientListPanelHandle extends NodeHandle<ListView<PetPatientCard>> {
     public static final String PETPATIENT_LIST_VIEW_ID = "#petPatientListView";
 
     private Optional<PetPatientCard> lastRememberedSelectedPetPatientCard;
@@ -60,7 +60,8 @@ public class PetPatientListPanelHandle extends NodeHandle<ListView<PetPatientCar
      */
     public void navigateToCard(PetPatient petPatient) {
         List<PetPatientCard> cards = getRootNode().getItems();
-        Optional<PetPatientCard> matchingCard = cards.stream().filter(card -> card.petPatient.equals(petPatient)).findFirst();
+        Optional<PetPatientCard> matchingCard = cards.stream().filter(
+            card -> card.petPatient.equals(petPatient)).findFirst();
 
         if (!matchingCard.isPresent()) {
             throw new IllegalArgumentException("PetPatient does not exist.");

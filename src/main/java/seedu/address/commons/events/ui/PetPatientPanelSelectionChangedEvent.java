@@ -6,7 +6,7 @@ import seedu.address.ui.PetPatientCard;
 /**
  * Represents a selection change in the PetPatient list Panel
  */
-public class PetPatientPanelSelectionChangedEvent extends BaseEvent{
+public class PetPatientPanelSelectionChangedEvent extends BaseEvent {
     private final PetPatientCard newSelection;
 
     public PetPatientPanelSelectionChangedEvent(PetPatientCard newSelection) {

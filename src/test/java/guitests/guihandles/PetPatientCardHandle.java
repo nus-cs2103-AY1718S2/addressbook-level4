@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
  * Provides a handle to a petPatient card in the petPatient list panel
  */
 
-public class PetPatientCardHandle extends NodeHandle<Node>{
+public class PetPatientCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String SPECIES_FIELD_ID = "#species";

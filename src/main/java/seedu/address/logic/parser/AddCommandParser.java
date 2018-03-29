@@ -23,7 +23,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.customer.Customer;
 import seedu.address.model.person.customer.LateInterest;
@@ -69,14 +68,14 @@ public class AddCommandParser implements Parser<AddCommand> {
                 //interest
                 Customer customer = new Customer(name, phone, email, address, tagList, new MoneyBorrowed(),
                         oweStartDate, oweDueDate, new StandardInterest(), new LateInterest(), new Runner());
-
                 return new AddCommand(customer);
+
             } else if (argMultimap.getValue(PREFIX_TYPE).get().matches("[rR]")) {
                 Runner runner = new Runner(name, phone, email, address, tagList, new ArrayList<>());
                 return new AddCommand(runner);
+
             } else {
-                Person person = new Person(name, phone, email, address, tagList);
-                return new AddCommand(person);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
 
         } catch (IllegalValueException ive) {

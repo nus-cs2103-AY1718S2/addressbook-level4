@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +15,11 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.customer.Customer;
+import seedu.address.model.person.customer.LateInterest;
+import seedu.address.model.person.customer.MoneyBorrowed;
+import seedu.address.model.person.customer.StandardInterest;
+import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,6 +40,26 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+    //Customer fields
+    @XmlElement(required = true)
+    private MoneyBorrowed moneyBorrowed;
+    @XmlElement(required = true)
+    private StandardInterest standardInterest;
+    @XmlElement(required = true)
+    private LateInterest lateInterest;
+    @XmlElement(required = true)
+    private Date oweStartDate;
+    @XmlElement(required = true)
+    private Date oweDueDate;
+    @XmlElement(required = true)
+    private Runner runner;
+
+    //Runner fields
+    @XmlElement(required = true)
+    private List<Customer> customers;
+
+
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -68,6 +94,20 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+
+        if (source instanceof Customer) {
+            moneyBorrowed = ((Customer) source).getMoneyBorrowed();
+            standardInterest = ((Customer) source).getStandardInterest();
+            lateInterest = ((Customer) source).getLateInterest();
+            oweStartDate = ((Customer) source).getOweStartDate();
+            oweDueDate = ((Customer) source).getOweDueDate();
+            runner = ((Customer) source).getRunner();
+        }
+
+        if (source instanceof Runner) {
+            customers = ((Runner) source).getCustomers();
+        }
+
     }
 
     /**
@@ -115,6 +155,8 @@ public class XmlAdaptedPerson {
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, tags);
+
+        //TODO: conditional construction of Customer or Runner
     }
 
     @Override

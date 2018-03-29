@@ -46,7 +46,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         commandTextField.textProperty().addListener(((observable, oldValue, newValue) ->
-                triggerAutocomplete()));
+                triggerAutocomplete(newValue)));
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -166,17 +166,21 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Retrieve a list of autocomplete suggestions and set the pop-up ContextMenu.
      */
-    private void triggerAutocomplete() {
+    private void triggerAutocomplete(String newValue) {
         suggestionBox.getItems().clear();
-        suggestions = autocompleteLogic.getSuggestion(logic, commandTextField);
 
-        for (String s : suggestions) {
-            MenuItem m = new MenuItem(s);
-            m.setOnAction(event -> handleAutocompleteSelection(m.getText()));
-            suggestionBox.getItems().add(m);
+        if (!newValue.equals("")) {
+
+            suggestions = autocompleteLogic.getSuggestions(logic, commandTextField);
+
+            for (String s : suggestions) {
+                MenuItem m = new MenuItem(s);
+                m.setOnAction(event -> handleAutocompleteSelection(m.getText()));
+                suggestionBox.getItems().add(m);
+            }
+
+            suggestionBox.show(commandTextField, Side.BOTTOM, 0, 0);
         }
-
-        suggestionBox.show(commandTextField, Side.BOTTOM, 0, 0);
     }
 
     /**
@@ -184,7 +188,7 @@ public class CommandBox extends UiPart<Region> {
      * user input: 'a', selected autocomplete 'add' --> commandTextField will show 'add' and not 'aadd'.
      */
     private void handleAutocompleteSelection(String toAdd) {
-        String[] words = commandTextField.getText().split(" ");
+        String[] words = commandTextField.getText().trim().split(" ");
         toAdd = toAdd.replaceFirst(words[words.length - 1], "");
         int cursorPos = commandTextField.getCaretPosition();
         commandTextField.insertText(cursorPos, toAdd);

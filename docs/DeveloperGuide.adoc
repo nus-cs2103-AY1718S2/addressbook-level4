@@ -415,7 +415,13 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 === Import Contacts from CSV file
 
 ==== Current Implementation
-The Import Contacts mechanism allows users to import contacts from a .csv file. The file should contain the headers _Name_, _Email_, _Phone_, and _Address_ with a separate contact in each row. This functionality is implemented in with classes `ImportContactsCommand` and `ImportContactsCommandParser`. Functionality is tested in `ImportContactsCommandTest`, which is in the `seedu.address/logic/parser` (not `commands` folder). The core functionality of the mechanism is in the `executeUndoableCommand` function of the `ImportContactsCommand` class. The mechanism borrows code from _https://github.com/callicoder/java-read-write-csv-file_ for reading the CSV file
+The Import Contacts mechanism allows users to import contacts from a .csv file. The file should contain the headers _Name_, _Email_, _Phone_, and _Address_ with a separate contact in each row. This functionality is implemented in with classes `ImportContactsCommand` and `ImportContactsCommandParser`. Functionality is tested in `ImportContactsCommandTest`.
+
+The core functionality of the mechanism is in the `executeUndoableCommand()` function of the `ImportContactsCommand` class.
+
+The `ImportContactsCommand` borrows code from _https://github.com/callicoder/java-read-write-csv-file_ for reading the CSV file
+
+The architecture of the mechanism is specified in the below diagram:
 
 image::ImportContactDiagram.png[width="900"]
 
@@ -425,12 +431,14 @@ image::ImportContactDiagram.png[width="900"]
 ===== Aspect: Implementation of `ImportContactsCommand`
 * **Alternative 1 (current choice):** `ImportContactsCommand`   extends `UndoableCommand` class and calls `model.addPerson`.
 
-* **Alternative 2:** Instead of extending `UndoableCommand` it would be possible to extend `AddCommand` class, and overwrite it to add a while loop to loop over the contacts imported frmo CSV and add them to the model
+* **Alternative 2:** Instead of extending `UndoableCommand` it would be possible to extend `AddCommand` class, and overwrite it to add a while loop to loop over the contacts imported from the CSV and add them to the model
+
+* **Alternative 3:** Instead of extending `UndoableCommand` it would be possible to extend the base class `Command`. Although this solution may be simpler at face value, it would limit the scope of `ImportContactsCommand` and may in fact not be much simpler to impliment.
 
 ===== Aspect: Implementation of `ImportContactsCommandParser`
 * **Alternative 1 (current choice):** Parses the argument and creates a new `ImportContactsCommand` passing it a file path if there is any
 
-* **Alternative 2:** Because we know there can only be 1 valid argument, we could check for validity and correctness in the `ImportContactsCommand` class and not impliment a parser
+* **Alternative 2:** Because we know there can only be 1 valid argument, we could check for validity and correctness in the `ImportContactsCommand` class and not implement a parser. This could simplify the overall architecture, but it would increase coupling and decrease cohesion, which is against modern software design principles.
 
 
 ==== Design Considerations

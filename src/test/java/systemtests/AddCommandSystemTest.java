@@ -21,8 +21,6 @@ import static seedu.address.testutil.TypicalCoins.AMY;
 import static seedu.address.testutil.TypicalCoins.BOB;
 import static seedu.address.testutil.TypicalCoins.CARL;
 import static seedu.address.testutil.TypicalCoins.HOON;
-import static seedu.address.testutil.TypicalCoins.IDA;
-import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -93,12 +91,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a coin, missing tags -> added */
         assertCommandSuccess(HOON);
-
-        /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
-
-        /* Case: filters the coin list before adding -> added */
-        showCoinsWithName(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(IDA);
 
         /* ------------------------ Perform add operation while a coin card is selected --------------------------- */
 

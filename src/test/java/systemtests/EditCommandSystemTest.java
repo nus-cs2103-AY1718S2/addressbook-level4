@@ -14,7 +14,6 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -22,7 +21,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 import static seedu.address.testutil.TypicalCoins.AMY;
 import static seedu.address.testutil.TypicalCoins.BOB;
-import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
 import org.junit.Test;
@@ -90,25 +88,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedCoin = new CoinBuilder(coinToEdit).withTags().build();
         assertCommandSuccess(command, index, editedCoin);
 
-        /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
-
-        /* Case: filtered coin list, edit index within bounds of address book and coin list -> edited */
-        showCoinsWithName(KEYWORD_MATCHING_MEIER);
-        index = INDEX_FIRST_COIN;
-        assertTrue(index.getZeroBased() < getModel().getFilteredCoinList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB + " " + PHONE_DESC_AMY;
-        coinToEdit = getModel().getFilteredCoinList().get(index.getZeroBased());
-        editedCoin = new CoinBuilder(coinToEdit).withName(VALID_NAME_BOB).withCode(VALID_PHONE_AMY).build();
-        assertCommandSuccess(command, index, editedCoin);
-
-        /* Case: filtered coin list, edit index within bounds of address book but out of bounds of coin list
-         * -> rejected
-         */
-        showCoinsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getCoinBook().getCoinList().size();
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
-                Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
-
         /* --------------------- Performing edit operation while a coin card is selected -------------------------- */
 
         /* Case: selects first card in the coin list, edit a coin -> edited, card selection remains unchanged but
@@ -134,7 +113,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredCoinList().size() + 1;
+
+        int invalidIndex = getModel().getFilteredCoinList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
 

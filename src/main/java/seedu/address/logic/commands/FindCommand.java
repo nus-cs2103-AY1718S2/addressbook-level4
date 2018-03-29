@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.coin.NameContainsKeywordsPredicate;
-
 /**
  * Finds and lists all coins in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -11,27 +9,22 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all coins whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all coins specified by the conditions.\n"
+            + "Conditions: e.g. n/name, p/price, t/tags...\n"
+            + "Example: " + COMMAND_WORD + " n/BTC AND p/>50";
 
-    private final NameContainsKeywordsPredicate predicate;
-
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
+    //@@author Eldon-Chung
+    public FindCommand() {
+        ;
     }
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredCoinList(predicate);
-        return new CommandResult(getMessageForCoinListShownSummary(model.getFilteredCoinList().size()));
+        return new CommandResult("Command acknowledged! Results are still a WIP");
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FindCommand // instanceof handles nulls
-                && this.predicate.equals(((FindCommand) other).predicate)); // state check
+        return other instanceof FindCommand; // short circuit if same class
     }
 }

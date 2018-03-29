@@ -5,7 +5,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COIN_DISPLAYED
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_COIN_SUCCESS;
-import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoins;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
@@ -53,13 +52,6 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
 
-        /* Case: filtered coin list, select index within bounds of address book but out of bounds of coin list
-         * -> rejected
-         */
-        showCoinsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getCoinBook().getCoinList().size();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
-
         /* Case: filtered coin list, select index within bounds of address book and coin list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredCoinList().size());
@@ -77,7 +69,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredCoinList().size() + 1;
+        int invalidIndex = getModel().getFilteredCoinList().size() + 1;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */

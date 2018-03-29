@@ -45,14 +45,13 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loads a HTML file with person details
+     * @param person
+     */
     private void loadPersonPage(Person person) {
-        // method to write to html
         String personfilepath = htmlWriter.writePerson();
-        // URL personPage = MainApp.class.getResource(FXML_FILE_FOLDER + PERSON_PAGE);
-        // loadPage(personPage.toExternalForm());
         loadPage("file:///" + personfilepath);
-        // loadPage("file:///C:/Users/wisuc/Documents/NUS/Y2S2/CS2103/main/PersonPage.html");
-        // loadPage(SEARCH_PAGE_URL + person.getName().fullName);
     }
 
     public void loadPage(String url) {

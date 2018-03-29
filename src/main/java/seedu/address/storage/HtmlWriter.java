@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+/**
+ * Writes Person Data to a .html file
+ */
 public class HtmlWriter {
     public HtmlWriter() {}
 
@@ -13,7 +16,8 @@ public class HtmlWriter {
         File file = new File(filepath);
         try {
             PrintWriter printWriter = new PrintWriter(file);
-            printWriter.println("<!DOCTYPE html><html><head><title>LoanSharkManager</title></head><body style=\"background-color:#383838;\">");
+            printWriter.println("<!DOCTYPE html><html><head><title>LoanSharkManager</title></head>");
+            printWriter.println("<body style=\"background-color:#383838;\">");
             printWriter.println("<font face=\"Segoe UI Semibold\" size=\"20\" color=\"white\">");
             printWriter.println("<p>Name:</p>");
             printWriter.println("<p>Amount Owed:</p>");
@@ -21,7 +25,7 @@ public class HtmlWriter {
             printWriter.println("</body></html>");
             printWriter.close();
         } catch (FileNotFoundException e) {
-
+            return "";
         }
         absoluteFilepath = file.getAbsolutePath();
         absoluteFilepath = absoluteFilepath.replaceAll("\"", "/");

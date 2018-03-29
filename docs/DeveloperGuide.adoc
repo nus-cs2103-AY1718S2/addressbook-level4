@@ -590,7 +590,8 @@ The weekly component of the `Calendar` is dependent on the `NUSMods` component f
 
 // tag::addGroup[]
 === Add Group feature
-Adds a group to Fastis
+
+Fastis adds a group named by the user from input.
 
 ==== Current Implementation
 

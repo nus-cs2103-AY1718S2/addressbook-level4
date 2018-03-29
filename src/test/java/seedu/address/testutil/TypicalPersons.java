@@ -34,22 +34,28 @@ public class TypicalPersons {
             .withGroup("PRIORITY").withInsurance("General").withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432").withBirthday("02-01-1991").withAppointment("10-12-2018")
+            .withEmail("johnd@example.com").withPhone("98765432").withBirthday("02-01-1991")
+        .withAppointment("10-12-2018")
             .withGroup("PRIORITY").withInsurance("General").withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").withBirthday("03-02-1993").withAppointment("11-12-2018")
+            .withEmail("heinz@example.com").withAddress("wall street").withBirthday("03-02-1993")
+        .withAppointment("11-12-2018")
             .withGroup("PRIORITY").withInsurance("General").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withBirthday("04-03-1994").withAppointment("09-10-2018")
+            .withEmail("cornelia@example.com").withAddress("10th street").withBirthday("04-03-1994")
+        .withAppointment("09-10-2018")
             .withGroup("PRIORITY").withInsurance("General").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").withBirthday("05-06-1995").withAppointment("09-09-2018")
+            .withEmail("werner@example.com").withAddress("michegan ave").withBirthday("05-06-1995")
+        .withAppointment("09-09-2018")
             .withGroup("PRIORITY").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withBirthday("11-12-1994").withAppointment("09-08-2018")
+            .withEmail("lydia@example.com").withAddress("little tokyo").withBirthday("11-12-1994")
+        .withAppointment("09-08-2018")
             .withGroup("PRIORITY").withInsurance("General").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withBirthday("10-11-1990").withAppointment("09-07-2018")
+            .withEmail("anna@example.com").withAddress("4th street").withBirthday("10-11-1990")
+        .withAppointment("09-07-2018")
             .withGroup("PRIORITY").withInsurance("General").build();
 
     // Manually added

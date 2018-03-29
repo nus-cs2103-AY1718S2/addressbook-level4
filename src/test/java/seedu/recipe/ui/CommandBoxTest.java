@@ -128,7 +128,7 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.ENTER);
         assertInput(AUTO_COMPLETION_FOR_ADD_COMMAND);
 
-        guiRobot.push(KeyboardShortcutsMapping.NEXXT_FIELD);
+        guiRobot.push(KeyboardShortcutsMapping.NEXT_FIELD);
         commandBoxHandle.insertText(RECIPE_NAME);
         assertInput(AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME);
     }

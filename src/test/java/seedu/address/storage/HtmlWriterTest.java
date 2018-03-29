@@ -19,6 +19,6 @@ public class HtmlWriterTest {
                 + "<title>LoanSharkManager</title></head>\n"
                 + "<body style=\"background-color:#383838;\"\n>"
                 + "<font face=\"Segoe UI Semibold\" size=\"5\" color=\"white\">\n";
-        assertEquals(TEST_OPENING_LINE, htmlWriter.OPENING_LINE);
+        assertEquals(testOpeningLine, htmlWriter.OPENING_LINE);
     }
 }

@@ -15,17 +15,16 @@ public class ExportContactsCommandParser implements Parser<ExportContactsCommand
             "Failed to parse import_contacts command";
 
     /**
-     * Parses the given {@code String} of arguments in the context of the ImportContactsCommand
-     * and returns an ImportContactsCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Parses the given {@code String} of arguments in the context of the ExportContactsCommand
+     * and returns an ExportContactsCommand object for execution
+     * Can recieve 1 or 0 arguments
      */
+    @Override
     public ExportContactsCommand parse(String args) throws ParseException {
-        try {
-            requireNonNull(args);
-            //only 1 argument supported now
             return new ExportContactsCommand(args);
-        } catch (Exception e) {
-            throw new ParseException(FAILED_TO_PARSE, e);
-        }
+    }
+
+    public ExportContactsCommand parse() throws ParseException {
+        return new ExportContactsCommand();
     }
 }

@@ -75,7 +75,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Shorthand equivalent alias is available for all commands to simplify execution of commands.
 ====
 ====
-*Command autocomplete in Medeina :*
+*Command autocomplete in Medeina :* `[Since v1.3]`
 
 image::autocomplete.png[width="500"]
 

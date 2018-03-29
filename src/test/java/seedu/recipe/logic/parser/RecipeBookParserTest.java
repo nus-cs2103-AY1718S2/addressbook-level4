@@ -150,7 +150,7 @@ public class RecipeBookParserTest {
     }
     //@@author
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     @Test
     public void parseCommand_changeTheme() throws Exception {
         assertTrue(parser.parseCommand(ChangeThemeCommand.COMMAND_WORD) instanceof ChangeThemeCommand);
@@ -169,7 +169,7 @@ public class RecipeBookParserTest {
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         parser.parseCommand(SearchCommand.COMMAND_WORD);
     }
-    //@@Author
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

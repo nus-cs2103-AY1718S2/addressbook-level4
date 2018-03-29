@@ -1,4 +1,4 @@
-//@@Author kokonguyen191
+//@@author kokonguyen191
 package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;

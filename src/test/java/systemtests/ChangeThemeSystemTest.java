@@ -1,4 +1,4 @@
-//@@Author kokonguyen191
+//@@author kokonguyen191
 package systemtests;
 
 import static org.junit.Assert.assertTrue;

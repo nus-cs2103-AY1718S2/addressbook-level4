@@ -1,4 +1,4 @@
-//@@Author kokonguyen191
+//@@author kokonguyen191
 package seedu.recipe.model.recipe;
 
 import static org.junit.Assert.assertFalse;

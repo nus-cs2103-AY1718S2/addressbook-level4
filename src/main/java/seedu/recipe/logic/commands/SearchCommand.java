@@ -1,7 +1,10 @@
-//@@Author kokonguyen191
+//@@author kokonguyen191
 package seedu.recipe.logic.commands;
 
+import seedu.recipe.commons.core.EventsCenter;
+import seedu.recipe.commons.events.ui.InternetSearchRequestEvent;
 import seedu.recipe.logic.commands.exceptions.CommandException;
+import seedu.recipe.logic.commands.Util.WikiaQueryHandler;
 
 /**
  * Selects a recipe identified using it's last displayed index from the recipe book.
@@ -14,19 +17,20 @@ public class SearchCommand extends Command {
             + ": Search the recipe on recipes.wikia.com.\n"
             + "Parameters: NAME\n"
             + "Example: " + COMMAND_WORD + " chicken rice";
-    public static final String MESSAGE_SUCCESS = "Successfully loaded: %1$s";
+    public static final String MESSAGE_SUCCESS = "Found %1$s recipe(s). Please wait...";
 
     private final String recipeToSearch;
+    private final WikiaQueryHandler wikiaQueryHandler;
 
     public SearchCommand(String recipeToSearch) {
         this.recipeToSearch = recipeToSearch;
+        this.wikiaQueryHandler = new WikiaQueryHandler(recipeToSearch);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-
-        throw new CommandException("DUH");
-
+        EventsCenter.getInstance().post(new InternetSearchRequestEvent(wikiaQueryHandler));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, wikiaQueryHandler.getQueryNumberOfResults()));
     }
 
     @Override

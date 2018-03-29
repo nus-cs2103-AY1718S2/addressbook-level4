@@ -28,7 +28,7 @@ public class SearchCommandParser implements Parser<SearchCommand> {
 
         String[] keywords = trimmedArgs.split("\\s+");
 
-        return new SearchCommand(String.join(" ", keywords));
+        return new SearchCommand(String.join("+", keywords));
     }
 
 }

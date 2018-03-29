@@ -21,7 +21,7 @@ public class SearchCommandParserTest {
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
-        SearchCommand expectedSearchCommand = new SearchCommand("chicken rice");
+        SearchCommand expectedSearchCommand = new SearchCommand("chicken+rice");
         assertParseSuccess(parser, "chicken rice", expectedSearchCommand);
 
         // multiple whitespaces between keywords

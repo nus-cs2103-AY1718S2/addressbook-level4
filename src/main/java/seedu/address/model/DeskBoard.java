@@ -157,18 +157,20 @@ public class DeskBoard implements ReadOnlyDeskBoard {
 
     @Override
     public String toString() {
-        return activities.asObservableList().size() + " activities, " + tags.asObservableList().size() +  " tags";
+        return activities.internalListAsObservable().size() + " activities, "
+                + tags.internalListAsObservable().size() +  " tags";
         // TODO: refine later
     }
 
     @Override
     public ObservableList<Activity> getActivityList() {
-        return activities.asObservableList();
+        return activities.internalListAsObservable();
     }
+
 
     @Override
     public ObservableList<Tag> getTagList() {
-        return tags.asObservableList();
+        return tags.internalListAsObservable();
     }
 
     @Override

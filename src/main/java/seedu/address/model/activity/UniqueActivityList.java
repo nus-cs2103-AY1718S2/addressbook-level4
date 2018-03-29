@@ -14,7 +14,8 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
 
 /**
- * A list of activities that enforces uniqueness between its elements and does not allow nulls.
+ * A list of activities, tasks and/or events that enforces uniqueness between its elements and
+ * does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
@@ -35,6 +36,7 @@ public class UniqueActivityList implements Iterable<Activity> {
 
     /**
      * Adds a activity to the list.
+     * If activity is a task or an event, is added to its respective list.
      *
      * @throws DuplicateActivityException if the activity to add is a duplicate of an existing activity in the list.
      */
@@ -48,6 +50,7 @@ public class UniqueActivityList implements Iterable<Activity> {
 
     /**
      * Replaces the activity {@code target} in the list with {@code editedActivity}.
+     * If activity is a task or an event, edited in its respective list.
      *
      * @throws DuplicateActivityException if the replacement is equivalent to another existing activity in the list.
      * @throws ActivityNotFoundException if {@code target} could not be found in the list.
@@ -57,6 +60,9 @@ public class UniqueActivityList implements Iterable<Activity> {
         requireNonNull(editedActivity);
 
         int index = internalList.indexOf(target);
+        int taskIndex;
+        int eventIndex;
+
         if (index == -1) {
             throw new ActivityNotFoundException();
         }
@@ -66,6 +72,7 @@ public class UniqueActivityList implements Iterable<Activity> {
         }
 
         internalList.set(index, editedActivity);
+
     }
 
     public void setActivity(UniqueActivityList replacement) {
@@ -82,7 +89,7 @@ public class UniqueActivityList implements Iterable<Activity> {
     }
 
     /**
-     * Removes the equivalent activity from the list.
+     * Removes the equivalent activity from the list and its respective task or event list.
      *
      * @throws ActivityNotFoundException if no such activity could be found in the list.
      */
@@ -91,6 +98,9 @@ public class UniqueActivityList implements Iterable<Activity> {
         final boolean activityFoundAndDeleted = internalList.remove(toRemove);
         if (!activityFoundAndDeleted) {
             throw new ActivityNotFoundException();
+            //@@author jasmoon
+        } else  {
+            internalList.remove(toRemove);
         }
         return activityFoundAndDeleted;
     }
@@ -98,9 +108,11 @@ public class UniqueActivityList implements Iterable<Activity> {
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Activity> asObservableList() {
+    public ObservableList<Activity> internalListAsObservable() {
         return FXCollections.unmodifiableObservableList(internalList);
     }
+
+
 
     @Override
     public Iterator<Activity> iterator() {

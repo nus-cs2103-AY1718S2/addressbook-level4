@@ -17,11 +17,12 @@ import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
-
+    public static final String ALIAS = "rm";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the activity identified by the index number used in the last activity listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD + " 1" + "\nOR\n"
+            + ALIAS + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Activity: %1$s";
 

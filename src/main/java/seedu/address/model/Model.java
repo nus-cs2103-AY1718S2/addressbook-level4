@@ -40,6 +40,13 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered activity list */
     ObservableList<Activity> getFilteredActivityList();
 
+    //@@author jasmoon
+    /** Returns an unmodifiable view of the filtered task list */
+    ObservableList<Activity> getFilteredTaskList();
+
+    /** Returns an unmodifiable view of the filtered event list */
+    ObservableList<Activity> getFilteredEventList();
+
     /**
      * Updates the filter of the filtered activity list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

@@ -63,7 +63,7 @@ public class TaskBuilder implements ActivityBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Activity} that we are building.
      */
-    public TaskBuilder withTags(String ... tags) {
+    public TaskBuilder withTags(String... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
@@ -84,8 +84,8 @@ public class TaskBuilder implements ActivityBuilder {
         return this;
     }
 
-
-    public Activity build() {
+    //@@author Kyomian
+    public Task build() {
         return new Task(name, dateTime, remark, tags);
     }
 }

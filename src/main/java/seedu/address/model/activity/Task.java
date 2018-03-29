@@ -28,6 +28,11 @@ public class Task extends Activity {
 
     }
 
+    public Task(Name name, DateTime dueDateTime, Remark remark, Set<Tag> tags, boolean isComplete) {
+        super(name, dueDateTime, remark, tags, isComplete);
+
+
+    }
     @Override
     public Name getName() {
         return super.getName();
@@ -95,8 +100,13 @@ public class Task extends Activity {
     @Override
     public Activity copy(Set<Tag> tags) {
         if (tags == null) {
-            return new Task(getName(), getDueDateTime(), getRemark(), getTags());
+            return new Task(getName(), getDueDateTime(), getRemark(), getTags(), isCompleted());
         }
-        return new Task(getName(), getDueDateTime(), getRemark(), tags);
+        return new Task(getName(), getDueDateTime(), getRemark(), tags, isCompleted());
+    }
+
+    @Override
+    public Activity getCompletedCopy() {
+        return new Task(getName(), getDueDateTime(), getRemark(), getTags(), true);
     }
 }

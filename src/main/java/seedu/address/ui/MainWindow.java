@@ -34,8 +34,9 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private ActivityListPanel activityListPanel;
+    private TaskListPanel taskListPanel;
     private Config config;
+    private EventListPanel eventListPanel;
     private UserPrefs prefs;
 
     @FXML
@@ -48,7 +49,10 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane activityListPanelPlaceholder;
+    private StackPane taskListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -115,8 +119,12 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        activityListPanel = new ActivityListPanel(logic.getFilteredPersonList());
-        activityListPanelPlaceholder.getChildren().add(activityListPanel.getRoot());
+        //@@author jasmoon
+        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
+        taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -175,10 +183,6 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
-    }
-
-    public ActivityListPanel getActivityListPanel() {
-        return this.activityListPanel;
     }
 
     @Subscribe

@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.login.Password;
+import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.person.Person;
@@ -72,4 +73,8 @@ public interface Model {
      */
     void setLoginStatus(boolean status);
 
+    /**
+     * Returns the user who is logged in.
+     */
+    User getLoggedInUser();
 }

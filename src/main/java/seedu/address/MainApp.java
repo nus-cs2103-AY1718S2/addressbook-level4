@@ -27,6 +27,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserDatabase;
 import seedu.address.model.UserDatabase;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.login.User;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.model.util.SampleUsersUtil;
 import seedu.address.storage.AddressBookStorage;
@@ -87,6 +88,7 @@ public class MainApp extends Application {
 
     /** Initialise for tests */
     public void initTest() {
+        User user = new User();
         model.setLoginStatus(true);
         ui.getMainWindow().showAfterLogin();
     }

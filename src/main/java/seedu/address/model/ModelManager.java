@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.login.Password;
+import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.person.Person;
@@ -117,6 +118,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return result;
 
+    }
+
+    @Override
+    public User getLoggedInUser(){
+        return userDatabase.getLoggedInUser();
     }
 
     /**

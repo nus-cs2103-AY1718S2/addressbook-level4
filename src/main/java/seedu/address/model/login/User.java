@@ -15,6 +15,12 @@ public class User {
     private Password password;
     private String addressBookFilePath;
 
+    public User(){
+        this.username = new Username("default");
+        this.password = new Password("password");
+        this.addressBookFilePath = "data/addressbook-default.xml";
+    }
+
     public User(Username username, Password password, String addressBookFilePath) {
         requireAllNonNull(username, password, addressBookFilePath);
         this.username = username;

@@ -73,7 +73,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     /**
      * Returns the User who is logged in.
      */
-    public User getUserLoggedIn() {
+    public User getLoggedInUser() {
         return userLoggedIn;
     }
 

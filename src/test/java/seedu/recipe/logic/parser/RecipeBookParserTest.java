@@ -26,6 +26,7 @@ import seedu.recipe.logic.commands.HelpCommand;
 import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
 import seedu.recipe.logic.commands.RedoCommand;
+import seedu.recipe.logic.commands.SearchCommand;
 import seedu.recipe.logic.commands.SelectCommand;
 import seedu.recipe.logic.commands.ShareCommand;
 import seedu.recipe.logic.commands.TagCommand;
@@ -147,6 +148,14 @@ public class RecipeBookParserTest {
         assertEquals(new UploadCommand(filename + ".xml"), command);
     }
     //@@author
+
+    //@@Author kokonguyen191
+    @Test
+    public void parseCommand_search() throws Exception {
+        assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD) instanceof SearchCommand);
+        assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD + " 3") instanceof SearchCommand);
+    }
+    //@@Author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

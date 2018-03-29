@@ -97,7 +97,7 @@ public class CommandTestUtil {
     public static final String ALIAS_DESC_SELECT = SelectCommand.COMMAND_WORD + " " + VALID_ALIAS_SELECT;
     public static final String ALIAS_DESC_UNDO = UndoCommand.COMMAND_WORD + " " + VALID_ALIAS_UNDO;
 
-    public static final String INVALID_ALIAS_DESC = "alias!";
+    public static final String INVALID_ALIAS_DESC = "alias!" + " " + VALID_ALIAS_ALIAS;
     public static final String INVALID_COMMAND_DESC = "invalid";
 
     public static final String VALID_BUILDING_1 = "COM1";
@@ -107,6 +107,10 @@ public class CommandTestUtil {
     public static final String INVALID_BUILDING_1 = "ERC*";
     public static final String INVALID_BUILDING_2 = "COM1 COM2";
     public static final String INVALID_BUILDING_3 = "Building";
+
+    public static final String VALID_UNALIAS = VALID_ALIAS_ADD;
+
+    public static final String INVALID_UNALIAS_DESC = "alias!";
 
 
 

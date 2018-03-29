@@ -18,7 +18,6 @@ public class FacebookHandlerTest {
             + ACCESS_TOKEN_IDENTIFIER + ACCESS_TOKEN_STUB + "&";
     public static final String INVALID_EMBEDDED_ACCESS_TOKEN = REDIRECT_DOMAIN
             + ACCESS_TOKEN_STUB; // without token identifier
-    
     @Test
     public void hasAccessToken() {
         FacebookHandler.setAccessToken(null);

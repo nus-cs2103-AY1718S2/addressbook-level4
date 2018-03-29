@@ -51,7 +51,8 @@ public class Mailer {
                         + p.getName().toString() + ", your delivery is arriving on "
                         + p.getDate().toString()
                         + " please be at your place some pigeons may visit you :)"
-                        + "<img src=\"https://i.imgur.com/Eg6CDss.jpg\" alt=\"Pigeons Logo\" style=\"display: block\"><br>";
+                        + "<img src=\"https://i.imgur.com/Eg6CDss.jpg\" " +
+                        "alt=\"Pigeons Logo\" style=\"display: block\"><br>";
 
                 message.setSubject(subject);
                 message.setContent(body, "text/html");

@@ -82,7 +82,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deleteForcePerson(Person target)
-            throws PersonNotFoundException, PetPatientNotFoundException, AppointmentNotFoundException {
+            throws PersonNotFoundException {
         addressBook.removeForcePerson(target);
         indicateAddressBookChanged();
     }
@@ -103,7 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deleteForcePetPatient(PetPatient target)
-            throws PetPatientNotFoundException, AppointmentNotFoundException {
+            throws PetPatientNotFoundException {
         addressBook.removeForcePetPatient(target);
         indicateAddressBookChanged();
     }

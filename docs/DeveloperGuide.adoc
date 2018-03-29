@@ -1006,7 +1006,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list out appointments for next day |prepare for the required procedures/diagnosis/consultation
 
-|`* * *` |user |classify types of appointment |better organize a long list of appointment
+|`* * *` |user |classify appointments by types |better organize a long list of appointments
 
 |`* * *` |user |cancel an appointment |make space in schedule for other things
 
@@ -1030,7 +1030,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a pet patient after certain period |remove entries that I no longer need
 
-|`* * *` |user |have an application with a simple and intuitive user interface |maximize workflow efficiency
+|`* * *` |user |have a simple and intuitive command line interface |maximize workflow efficiency
 
 |`* *` |user |change the theme of the application |better suit my preference
 

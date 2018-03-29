@@ -1018,9 +1018,9 @@ Minor: Enhancement to `Find` command to improve searching
 
 ~Jonathan Lee~
 
-Major: Natural language processing for commands
+Major: Speed up User workflow using keyboard shortcuts and other input enhancements.
 
-Minor: UI update - colours and layout
+Minor: UI update - colours, styles and menu elements
 
 ~Choi Wi Su~
 

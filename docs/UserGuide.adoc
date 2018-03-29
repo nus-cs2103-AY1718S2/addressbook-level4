@@ -58,11 +58,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n: NAME p: PHONE_NUMBER`, `p: PHONE_NUMBER n: NAME` is also acceptable.
 ====
 
-[%header,cols="1,1,8"]
+[%header,cols="1,2,8"]
 |===
 |Command
-|Keyboard +
-shortcut
+|Keyboard shortcut
 |Syntax
 
 |help

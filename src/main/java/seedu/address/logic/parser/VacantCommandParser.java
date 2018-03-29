@@ -21,7 +21,7 @@ public class VacantCommandParser implements Parser<VacantCommand> {
         args = args.trim();
         int length;
         String[] buildingName = args.split("\\s+");
-        if (args.equals("") || args.equals("\\s+")) {
+        if ("".equals(args) || "\\s+".equals(args)) {
             length = 0;
         } else {
             length = buildingName.length;

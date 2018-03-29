@@ -69,9 +69,7 @@ public class BookListPanelHandle extends NodeHandle<ListView<Book>> {
             throw new IllegalArgumentException("Book does not exist.");
         }
 
-        guiRobot.interact(() -> {
-            getRootNode().scrollTo(book);
-        });
+        guiRobot.interact(() -> getRootNode().scrollTo(book));
         guiRobot.pauseForHuman();
     }
 
@@ -83,9 +81,7 @@ public class BookListPanelHandle extends NodeHandle<ListView<Book>> {
             throw new IllegalArgumentException("Index is out of bounds.");
         }
 
-        guiRobot.interact(() -> {
-            getRootNode().scrollTo(index);
-        });
+        guiRobot.interact(() -> getRootNode().scrollTo(index));
         guiRobot.pauseForHuman();
     }
 
@@ -98,14 +94,12 @@ public class BookListPanelHandle extends NodeHandle<ListView<Book>> {
 
     /**
      * Returns the book card handle of a book associated with the {@code index} in the list.
-     * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public BookCardHandle getBookCardHandle(int index) {
+    public Optional<BookCardHandle> getBookCardHandle(int index) {
         return getAllCardNodes().stream()
                 .map(BookCardHandle::new)
                 .filter(handle -> handle.equals(getBook(index)))
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
+                .findFirst();
     }
 
     private Book getBook(int index) {

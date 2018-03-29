@@ -37,16 +37,16 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
 
         // Note: these tests require network connection.
 
-        /* Case: search for non-existant book -> return 0 results */
-        assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
-                + ISBN_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS);
+        /* Case: search for books given search term -> success */
+        assertSearchSuccess(SearchCommand.COMMAND_WORD + " hello");
 
         /* Case: search for books given search parameters -> success */
         assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
                 + AUTHOR_DESC_ARTEMIS);
 
-        /* Case: search for books given search term -> success */
-        assertSearchSuccess(SearchCommand.COMMAND_WORD + " hello");
+        /* Case: search for non-existant book -> return 0 results */
+        assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
+                + ISBN_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS);
 
         /* ----------------------------------- Perform commands on search results ----------------------------------- */
 

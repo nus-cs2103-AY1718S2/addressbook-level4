@@ -61,6 +61,37 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         command = AddCommand.COMMAND_WORD + " 2";
         assertCommandSuccess(command, searchResultsList.get(1));
 
+        /* --------------------- Perform add operations on the recent books list -------------------------- */
+
+        /* Case: invalid index -> rejected */
+        model = getModel();
+        executeCommand("recent");
+        assertCommandFailure(AddCommand.COMMAND_WORD + " " + (model.getRecentBooksList().size() + 1),
+                MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        /* Case: add a duplicate book -> rejected */
+        executeCommand("list");
+        selectBook(INDEX_FIRST_BOOK);
+        executeCommand("recent");
+        model = getModel();
+
+        command = AddCommand.COMMAND_WORD + " 1";
+        executeCommand(command);
+        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
+        assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
+
+        /* Case: add a valid book -> added */
+        executeCommand(SearchCommand.COMMAND_WORD + " mary");
+        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
+        selectSearchResult(INDEX_FIRST_BOOK);
+        executeCommand("recent");
+        model = getModel();
+
+        command = AddCommand.COMMAND_WORD + " 1";
+        firstBook = model.getRecentBooksList().get(0);
+
+        assertCommandSuccess(command, firstBook);
+
         /* ------------------------------- Perform invalid add operations ----------------------------------- */
 
         /* Case: add a duplicate book -> rejected */
@@ -106,36 +137,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         model.updateSearchResults(new BookShelf());
         assertCommandFailure(AddCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased(),
                 MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-
-        /* --------------------- Perform add operations on the recent books list -------------------------- */
-
-        /* Case: invalid index -> rejected */
-        executeCommand("recent");
-        assertCommandFailure(AddCommand.COMMAND_WORD + " " + (model.getRecentBooksList().size() + 1),
-                MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-
-        /* Case: add a duplicate book -> rejected */
-        executeCommand("list");
-        selectBook(INDEX_FIRST_BOOK);
-        executeCommand("recent");
-        model = getModel();
-
-        command = AddCommand.COMMAND_WORD + " 1";
-        executeCommand(command);
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
-        assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
-
-        /* Case: add a valid book -> added */
-        executeCommand(SearchCommand.COMMAND_WORD + " mary");
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
-        selectSearchResult(INDEX_FIRST_BOOK);
-        executeCommand("recent");
-        model = getModel();
-
-        command = AddCommand.COMMAND_WORD + " 1";
-        firstBook = model.getRecentBooksList().get(0);
-
-        assertCommandSuccess(command, firstBook);
     }
 
     /**

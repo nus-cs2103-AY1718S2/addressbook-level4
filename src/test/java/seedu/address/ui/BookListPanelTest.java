@@ -40,7 +40,7 @@ public class BookListPanelTest extends GuiUnitTest {
         for (int i = 0; i < TYPICAL_BOOKS.size(); i++) {
             bookListPanelHandle.navigateToCard(TYPICAL_BOOKS.get(i));
             Book expectedBook = TYPICAL_BOOKS.get(i);
-            BookCardHandle actualCard = bookListPanelHandle.getBookCardHandle(i);
+            BookCardHandle actualCard = bookListPanelHandle.getBookCardHandle(i).get();
 
             assertCardDisplaysBook(expectedBook, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
@@ -52,7 +52,7 @@ public class BookListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        BookCardHandle expectedCard = bookListPanelHandle.getBookCardHandle(INDEX_SECOND_BOOK.getZeroBased());
+        BookCardHandle expectedCard = bookListPanelHandle.getBookCardHandle(INDEX_SECOND_BOOK.getZeroBased()).get();
         BookCardHandle selectedCard = bookListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }

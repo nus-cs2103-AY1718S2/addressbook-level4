@@ -13,12 +13,12 @@ public class HtmlWriter {
         File file = new File(filepath);
         try {
             PrintWriter printWriter = new PrintWriter(file);
-            printWriter.print("<!DOCTYPE html><html><head><title>LoanSharkManager</title></head><body style=\"background-color:#383838;\">");
-            printWriter.print("<font face=\"Segoe UI Semibold\" size=\"20\" color=\"white\">");
-            printWriter.print("<p>Name:</p>");
-            printWriter.print("<p>Amount Owed:</p>");
-            printWriter.print("<p>Due Date:</p>");
-            printWriter.print("</body></html>");
+            printWriter.println("<!DOCTYPE html><html><head><title>LoanSharkManager</title></head><body style=\"background-color:#383838;\">");
+            printWriter.println("<font face=\"Segoe UI Semibold\" size=\"20\" color=\"white\">");
+            printWriter.println("<p>Name:</p>");
+            printWriter.println("<p>Amount Owed:</p>");
+            printWriter.println("<p>Due Date:</p>");
+            printWriter.println("</body></html>");
             printWriter.close();
         } catch (FileNotFoundException e) {
 

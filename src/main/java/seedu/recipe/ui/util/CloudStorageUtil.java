@@ -77,7 +77,7 @@ public class CloudStorageUtil {
     /**
      * Creates a Dropbox client with the user's {@code getAccessToken()}
      * and uploads file specified by {@code RECIPE_BOOK_FILE} to their Dropbox account
-     * 
+     *
      * @throws DbxException
      */
     public static void upload(String uploadFilename) {

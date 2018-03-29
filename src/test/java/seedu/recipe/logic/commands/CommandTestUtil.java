@@ -128,8 +128,6 @@ public class CommandTestUtil {
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
-        } catch (UploadCommandException uce) {
-            throw new AssertionError("Execution of command should not fail.", uce);
         }
     }
 
@@ -153,10 +151,6 @@ public class CommandTestUtil {
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedRecipeBook, actualModel.getRecipeBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredRecipeList());
-        } catch (UploadCommandException uce) {
-            assertEquals(expectedMessage, uce.getMessage());
             assertEquals(expectedRecipeBook, actualModel.getRecipeBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredRecipeList());
         }

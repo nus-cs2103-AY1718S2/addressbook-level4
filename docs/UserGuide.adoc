@@ -46,8 +46,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<bookmark-feature>> for command details.
-
 == Command Summary
 
 [NOTE]
@@ -84,7 +82,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |kbd:[Alt+C]
 |`clear`
 
-|<<add>>add (`a`)
+|add (`a`)
 |kbd:[Alt+A]
 |`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
@@ -117,7 +115,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |`redo`
 |===
 
-== [[bookmark-feature]]Feature details
+== Feature details
 
 === Showing command history : `history`
 
@@ -127,7 +125,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 ***
-=== [[bk-add]] Adding a person: `add`
+=== Adding a person: `add`
 
 [NOTE]
 ====

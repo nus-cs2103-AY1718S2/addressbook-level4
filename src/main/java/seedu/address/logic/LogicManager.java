@@ -53,6 +53,7 @@ public class LogicManager extends ComponentManager implements Logic {
         password = model.getPassword();
         timetableEntriesStatus = new HashMap<>();
         scheduledTimerTasks = new HashMap<>();
+        timerTaskToTimetableEntryMap = new HashMap<>();
     }
 
     public LogicManager(Model model, boolean initialLock) {

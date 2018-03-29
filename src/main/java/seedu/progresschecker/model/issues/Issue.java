@@ -41,9 +41,13 @@ public class Issue {
         return milestone;
     }
 
-    public Body getBody() { return body; }
+    public Body getBody() {
+        return body;
+    }
 
-    public List<Labels> getLabelsList() { return labelsList; }
+    public List<Labels> getLabelsList() {
+        return labelsList;
+    }
 
     @Override
     public boolean equals(Object other) {

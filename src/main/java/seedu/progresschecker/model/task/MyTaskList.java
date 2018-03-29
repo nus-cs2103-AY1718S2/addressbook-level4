@@ -1,8 +1,9 @@
 package seedu.progresschecker.model.task;
 
 import java.io.IOException;
+import java.util.List;
 
-import com.google.api.services.tasks.Tasks;
+import com.google.api.services.tasks.model.Task;
 import com.google.api.services.tasks.model.TaskList;
 import com.google.api.services.tasks.model.TaskLists;
 
@@ -16,7 +17,7 @@ public class MyTaskList {
 
     public static final String AUTHORIZE_FAILURE = "Failed to authorize tasks api client credentials";
     public static final String ADD_FAILURE = "Failed to add new task list to account";
-    public static final String LOAD_FAILURE = "Failed to load existing task lists";
+    public static final String LOAD_FAILURE = "Failed to load this task list (might be wrong title)";
 
     /**
      * Creates a new task list with title {@code String} and adds to the current list of task lists
@@ -32,7 +33,7 @@ public class MyTaskList {
             throw new CommandException(AUTHORIZE_FAILURE);
         }
 
-        Tasks service = connection.getTasksService();
+        com.google.api.services.tasks.Tasks service = connection.getTasksService();
 
         try {
             service.tasklists().insert(
@@ -47,10 +48,10 @@ public class MyTaskList {
      * Finds the task list with title {@code String} from the current list of task lists
      *
      * @param listTitle title of the task list we look for
-     * @return the task list instance
+     * @return the List instances containing all tasks in the specified task list
      */
-    public static TaskList searchTaskList(String listTitle) throws CommandException {
-        TaskList taskList = null;
+    public static List<Task> searchTaskList(String listTitle) throws CommandException {
+        List<Task> list = null;
 
         ConnectTasksApi connection = new ConnectTasksApi();
 
@@ -60,18 +61,21 @@ public class MyTaskList {
             throw new CommandException(AUTHORIZE_FAILURE);
         }
 
-        Tasks service = connection.getTasksService();
+        com.google.api.services.tasks.Tasks service = connection.getTasksService();
 
         try {
             TaskLists taskLists = service.tasklists().list().execute();
-            taskList = taskLists.getItems().stream()
+            TaskList taskList = taskLists.getItems().stream()
                     .filter(t -> t.getTitle().equals(listTitle))
                     .findFirst()
                     .orElse(null);
+            String id = taskList.getId();
+            com.google.api.services.tasks.model.Tasks tasks = service.tasks().list(id).execute();
+            list = tasks.getItems();
         } catch (IOException ioe) {
             throw new CommandException(LOAD_FAILURE);
         }
 
-        return taskList;
+        return list;
     }
 }

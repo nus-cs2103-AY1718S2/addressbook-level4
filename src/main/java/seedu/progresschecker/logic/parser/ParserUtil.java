@@ -1,6 +1,8 @@
 package seedu.progresschecker.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.progresschecker.logic.commands.ViewTaskListCommand.MAX_TITLE_LENGTH;
+import static seedu.progresschecker.logic.commands.ViewTaskListCommand.MESSAGE_TITLE_CONSTRAINTS;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -62,6 +64,21 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses a {@code String Title} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code Title} is invalid.
+     */
+    public static String parseTaskTitle(String title) throws IllegalValueException {
+        requireNonNull(title);
+        String trimmedTitle = title.trim();
+        if (title.length() > MAX_TITLE_LENGTH) {
+            throw new IllegalValueException(MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return trimmedTitle;
     }
 
     /**

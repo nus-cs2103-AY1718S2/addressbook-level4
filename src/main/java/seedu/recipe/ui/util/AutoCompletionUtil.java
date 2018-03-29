@@ -13,7 +13,7 @@ import seedu.recipe.logic.parser.CliSyntax;
  */
 public class AutoCompletionUtil {
     public static final ArrayList<String> APPLICATION_COMMANDS = new ArrayList<>(Arrays.asList("add", "clear", "delete",
-        "edit", "exit", "find", "help", "history", "list", "redo", "select", "tag", "undo"));
+        "edit", "exit", "find", "help", "history", "list", "redo", "select", "share", "tag", "undo", "upload"));
     public static final ArrayList<String> APPLICATION_KEYWORDS = new ArrayList<>(Arrays.asList(
         CliSyntax.PREFIX_NAME.toString(), CliSyntax.PREFIX_INGREDIENT.toString(),
         CliSyntax.PREFIX_INSTRUCTION.toString(), CliSyntax.PREFIX_PREPARATION_TIME.toString(),

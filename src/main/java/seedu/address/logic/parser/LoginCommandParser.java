@@ -6,8 +6,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.stream.Stream;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.Username;
 
 /**
  * Parses input arguments and creates a new LoginCommand object
@@ -27,10 +31,16 @@ public class LoginCommandParser implements Parser<LoginCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
         }
 
-        String username = argMultimap.getValue(PREFIX_USERNAME).get();
-        String password = argMultimap.getValue(PREFIX_PASSWORD).get();
+        try {
+            Username username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
+            Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
 
-        return new LoginCommand(username, password);
+            Account account = new Account(username, password);
+
+            return new LoginCommand(account);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
     }
 
     /**

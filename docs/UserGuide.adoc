@@ -13,18 +13,32 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F14-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F14-B2`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-Medeina is for Veterinarians and their assistants who *prefer to use a desktop app for managing contacts and appointments*. More importantly, Medeina is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Medeina can get your contact management tasks done faster than traditional GUI apps.
-This User Guide is made to help you get familiar with Medeina's set-up and its various features. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Are you a veterinarian or a veterinary assistant in need of help to manage growing number of contacts, never-ending list of pet patients and floods of appointments? Are you having nightmares over the sheer amount of data to catalogue? Are you struggling to find the right pet patient's details and owner's contact amongst a plethora of paper records for each of your appointment?
+
+Medeina is finally here to solve your problems.
+
+=== What is Medeina
+
+Medeina is a specialized desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. It serves as both an address book and a task manager.
+
+If you are comfortable working with a Command Line Interface (CLI), then Medeina is perfect for you. Nevertheless, Medeina keeps to simple and intuitive commands that even those who are unfamiliar with CLI can pick it up easily. Medeina also comes with a clean and organized Graphical User Interface (GUI) to present information in the most optimal way for your perusal.
+
+Medeina, your all-in-one solution to curb the data nightmare.
+
+=== Using this Guide
+
+This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina.
+
 
 == Quick Start
 
 To successsfully install and run Medeina, you need to:
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure that you have Java version `1.8.0_60` or later installed on your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -41,19 +55,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to Medeina's address book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 nr/S1234567G` : adds a contact named `John Doe` to Medeina's address book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+.  Refer to section 3: <<Features>> for details of each command.
 
 [[Features]]
 == Features
 
 ====
-*The following is the command format :*
+*Command format used in Medeina :*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add **-o** n/NAME`, `NAME` is a parameter which can be used as `add **-o** n/John Doe`.
+* Characters in **bold** are options to be specified by the user to execute variants of a command e.g. in `add **-p** n/NAME`, **-p** denotes to add a pet patient.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -62,61 +77,79 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help` or `h`
 
-The command format to bring up help page is: `help` or `h`
+If you are feeling lost, enter `help` or `h` in Medeina's command box, or press kbd:[F1] to bring up this user guide document in a pop-up window.
 
-=== Adding new owner + pet patient + appointment : `add` or `a`
+=== Adding a contact, pet patient or appointment : `add` or `a`
 
-To add a new owner, new pet patient and new appointment to Mediena: +
-The command format should be: `add **-o** n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...
-**-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE [t/TAG]...
-**-a** d/DATE r/REMARK [t/TYPE OF APPOINTMENT]...`
+You can use the `add` or `a` to do the following :
+
+To add a new contact:: `add **-o** n/CONTACT_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...`
+
+To add a new pet patient under an existing contact (owner):: `add **-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]... **-o** nr/OWNER_NRIC`
+
+To add a new appointment for an existing pet patient:: `add **-a** d/YYYY-MM-DD HH:MM r/REMARK [t/TAG]... **-o** nr/OWNER_NRIC **-p** n/PET_PATIENT_NAME`
+
+To add a new appointment for a new pet patient under a new owner:: `add **-o** n/CONTACT_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]... **-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]... **-a** d/YYYY-MM-DD HH:MM r/REMARK [t/TAG]...`
 
 [TIP]
-Owner, pet patient and appointment can have any number of tags (including 0)
+Contact, pet patient and appointment can have any number of tags (including 0)
+
+[NOTE]
+Do not leave REMARK empty. You can specify '-' or 'nil' if there is no remark for the appointment.
 
 Examples:
 
-* `add -o n/Fuji p/65123456 e/fuji@gmail.com a/Seishun Gakuen 2B nr/S1234567G -p n/jewel s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/checkup t/vaccination`
-* `a -o n/Tezuka p/65123478 e/tezuka@gmail.com a/Seishun Gakuen 2A nr/S1234599G -p n/silver s/cat b/persian c/grey bt/O -a d/2018-12-31 14:30 r/nil t/surgery`
+* `add **-o** n/Viktor Nikiforov p/91237890 e/v_nikiforov@gmail.com a/27 Skating Place nr/F0012345Z`
+* `add **-p** n/Makkachin s/dog b/poodle c/brown bt/O **-o** nr/F0012345Z`
+* `add **-a** d/2018-05-27 14:30 r/had poor appetite the last 3 days t/vaccination t/checkup **-o** nr/F0012345Z **-p** n/Makkachin`
+* `add **-o** n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/S1234567G **-p** n/jewel s/cat b/persian c/calico bt/AB **-a** d/2018-12-31 12:30 r/nil t/surgery t/sterilization`
 
-=== Listing all persons : `list` or `ls`
+=== Listing all contacts : `list` or `ls`
 
-To show a list of all persons in Medeina's address book. +
-The command format should be: `list` or `ls`
+Medeina will show a list of all stored contacts if you enter `list` or `ls` in the command box.
 
-=== Editing a person : `edit` or `ed`
+=== Editing a contact : `edit` or `ed`
 
-To edit an existing person in Medeina's address book. +
-The command format should be: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...` +
-or `ed INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
+Use the following command format to:
+
+Edit an existing contact:: `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
+
+Edit an existing pet patient:: `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
+
+Edit an existing appointment:: `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [nr/OWNER_NRIC] [n/PET_PATIENT_NAME] [t/TAG]...`
 
 ****
-* The command edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* The command edits the contact / pet patient at the specified `INDEX`. The index refers to the index number shown in the latest contact / pet patient listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the contact / pet patient will be removed i.e adding of tags is not cumulative.
+* You can remove all of the contact's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
-* Type in `edit 1 p/91234567 e/johndoe@example.com` +
-Medeina will edit the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit **-o** 1 p/91234567 e/johndoe@example.com` +
+Medeina will edit the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
 
-* Type in `edit 2 n/Betsy Crower t/` or `e 2 n/Betsy Crower t/` +
-Medeina will edit the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit **-o** 2 n/Betsy Crower t/` or `e **-o** 2 n/Betsy Crower t/` +
+Medeina will edit the name of the 2nd contact to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find` or `f`
+* `edit **-p** 2 n/jewel baby t/` or `e **-p** 2 n/jewel baby t/` +
+Medeina will edit the name of the 2nd pet patient to be `jewel baby` and clears all existing tags.
 
-To find persons whose names contain any of the given keywords. +
-The command format should be: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
+* `edit **-a** 3 d/2018-06-04` +
+Medeina will edit the date and time of the 3rd appointment to be `2018-06-04`.
+
+=== Finding contacts by name: `find` or `f`
+
+To retrieve contacts with names that contain any of the specified keywords, enter `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` in the command box.
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Contacts matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
@@ -127,47 +160,58 @@ Medeina will return `john` and `John Doe`
 * Type in `find Betsy Tim John` +
 Medeina will return any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete` or `d`
+=== Deleting a contact, pet patient or appointment : `delete` or `d`
 
-To delete the specified person from Medeina's address book. +
-The command format should be: `delete INDEX` or `d INDEX`
+Use the following command format to:
+
+Delete an existing contact:: `delete **-o** INDEX`
+Delete an existing pet patient:: `delete **-p** INDEX`
+Delete an existing appointment:: `delete **-a** INDEX`
 
 ****
-* The command deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The command deletes the contact, pet patient or appointment at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, provided by the `list` command.
 ****
+
+[IMPORTANT]
+====
+The index *must be a positive integer* `1, 2, 3, ...`
+====
 
 Examples:
 
-* Type in `list` +
+* Type in `list -o` +
 `delete 2` +
-Medeina will deletes the 2nd person in Medeina's address book.
+Medeina will deletes the 2nd contact in Medeina's address book.
 
-* Type in `find Betsy` +
+* Type in `find -o Betsy` +
 `d 1` +
-Medeina will delete the 1st person in the results of the `find` command.
+Medeina will delete the 1st contact in the results of the `find` command.
 
-=== Selecting a person : `select` or `s`
+=== Selecting a contact : `select` or `s`
 
-To select the person identified by the index number used in the last person listing. +
+To select the contact identified by the index number used in the last person listing. +
 The command format should be: `select INDEX` or `s INDEX`
 
 ****
-* The command selects the person and loads the Google search page the person at the specified `INDEX`.
+* The command selects the contact and lists the appointments that she / he has made with the vet at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
 ****
+
+[IMPORTANT]
+====
+The index *must be a positive integer* `1, 2, 3, ...`
+====
 
 Examples:
 
 * Type in `list` +
 `select 2` +
-Medeina will select the 2nd person in Medeina's address book.
+Medeina will select the 2nd contact in Medeina's address book.
 
 * Type in `find Betsy` +
 `s 1` +
-Medeina will select the 1st person in the results of the `find` command.
+Medeina will select the 1st contact in the results of the `find` command.
 
 === Listing entered commands : `history` or `his`
 
@@ -233,14 +277,17 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 To clear all entries from Medeina's address book. +
 The command format should be: `clear` or `cls`
-
+[WARNING]
+====
+This command **cannot** be undone. Please be certain that you have backed up your data (which is located in the `data` folder) before executing this command!
+====
 === Changing theme : `theme` or `t`
 
 To change Medeina's current theme to another pre-loaded theme. +
 The command format should be: `theme THEME_NAME` or `t THEME_NAME`
 
 ****
-* THEME_NAME is case insensitive. e.g `DARK` will match `dark`
+* `THEME_NAME` is case insensitive. e.g `DARK` will match `dark`
 * Available themes: `dark` and `light`
 ****
 
@@ -254,39 +301,56 @@ Medeina will change to light theme.
 
 === Exiting the program : `exit` or `q`
 
-To exit the program. +
+You can easily exit Medeina on the command line without having to move your mouse. +
 The command format should be: `exit` or `q`
 
 
-=== Saving the data
+=== Data saving
 
-Data in Medeina are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+The data in Medeina is automatically saved to the hard disk after any command that may result in a change in the storage. +
+Commands that may result in a change in the storage are:
+
+* `add` or `a` +
+This command will add new information into the storage.
+* `edit` or `ed` +
+This command will update information in the storage.
+* `delete` or `d` +
+This command will remove information in the storage.
+
+You do not need to manually save the data.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+Coming v2.0, the data you have will be automatically encrypted after commands that may change the storage, so that you do not have to worry about it being stolen. +
+You do not need to manually encrypt your data files.
 // end::dataencryption[]
 
-=== Creating user accounts to manage usage `[coming in v2.0]`
+=== Creating other user profiles `[coming in v2.0]`
 
-Create user accounts and log in to the application using assigned credentials. Usernames will be reflected for changes made in the application.
+Coming v2.0, Medeina will have user accounts, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves. +
+This command will be added when it is released.
 
-=== Set user permissions `[coming in v2.0]`
+=== Setting user permissions `[coming in v2.0]`
 
-The assigned administrator of the application (e.g. Veterinarian) can set user permissions for clinic staffs. +
+Coming v2.0, Medeina will have user permissions, to ensure that protected information is not easily changed by other staff. There will be an administrator role to gain total access in the application. +
 
-Examples:
+Information that vet assistants should not change:
 
-* Vet assistants can add new pet patients and their owners to the application, but cannot delete any pet patient or owner from the application.
+* You can add new information (contacts, pet patients, appointments) to the application, but you should not be able to delete it.
 
-* Vet assistants can view medical histories of pet patients but not modify them.
+* You can see the medical histories of pet patients but should not modify it.
 
-=== Support multi-users `[coming in v2.0]`
+Information that vets should not change:
 
-The application can be used concurrently on different systems and the data will be synced over an internet connection. This allow Veterinarians
-and their assistants to access Medeina simultaneously in different rooms.
+* You should not change information belonging to other vets in the application without permission.
+
+The command will be added when it is released.
+
+=== Supporting multiple users `[coming in v2.0]`
+
+Coming v2.0, Medeina can be used concurrently on different systems. The data will be synced over an internet connection. This allow Veterinarians and their assistants to access Medeina simultaneously in different rooms, making it easier to collaborate with others. +
+The command will be added when it is released.
 
 == FAQ
 
@@ -297,25 +361,15 @@ and their assistants to access Medeina simultaneously in different rooms.
 
 The following is a summary of all commands available in Medeina:
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
-`a n/Jessie Ho p/33335555 e/jessieho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add` or `a` with options **-o**, **-p** and **-a**
 * *Clear* : `clear` or `cls`
-* *Delete* : `delete INDEX` or `d INDEX` +
-e.g. `delete 3` or `d 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-or `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com` +
-`ed 3 n/Jessie Lee e/jessielee@example.com`
+* *Delete* : `delete INDEX` or `d INDEX`
+* *Edit* : `edit INDEX [PREFIX/ INFO]` or `e INDEX [PREFIX/ INFO]` with options **-o**, **-p** and **-a**
 * *Exit* : `exit` or `q`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 * *List* : `list` or `ls`
 * *Help* : `help` or `h`
-* *Select* : `select INDEX` or `s INDEX` +
-e.g.`select 2` +
-`s 2`
+* *Select* : `select INDEX` or `s INDEX`
 * *History* : `history` or `his`
 * *Undo* : `undo` or `ud`
 * *Redo* : `redo` or `rd`

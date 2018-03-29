@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
-// import static seedu.address.testutil.TypicalAppointments.ALLY;
+import static seedu.address.testutil.TypicalAppointments.ALLY;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -61,9 +61,9 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        //List<Appointment> newAppointments = Arrays.asList(ALLY);
-        //AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAppointments);
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Appointment> newAppointments = Arrays.asList(ALLY);
+        List<Tag> newAppointmentTags = new ArrayList<>(ALLY.getAppointmentTags());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAppointments, newAppointmentTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -114,12 +114,16 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        private final ObservableList<Tag> appointmentTags = FXCollections.observableArrayList();
         private final ObservableList<PetPatient> petPatients = FXCollections.observableArrayList();
         private final ObservableList<Tag> petPatientTags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
+                        Collection<Appointment> appointments, Collection<? extends Tag> appointmentTags) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.appointments.setAll(appointments);
+            this.appointmentTags.setAll(appointmentTags);
         }
 
         @Override
@@ -140,11 +144,6 @@ public class AddressBookTest {
         @Override
         public ObservableList<PetPatient> getPetPatientList() {
             return petPatients;
-        }
-
-        @Override
-        public ObservableList<Tag> getPetPatientTagList() {
-            return petPatientTags;
         }
     }
 

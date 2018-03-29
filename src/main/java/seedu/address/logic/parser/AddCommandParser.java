@@ -2,16 +2,16 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BLOODTYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_BREED;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_COLOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PET_PATIENT_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.time.LocalDateTime;
@@ -36,7 +36,7 @@ import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AddCommand object.
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
@@ -47,10 +47,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             + "-(o)+(?<ownerNric>.*)");
     private static final Pattern ADD_COMMAND_FORMAT_NEW_APPT_EXISTING_OWNER_PET = Pattern.compile("-(a)+(?<apptInfo>.*)"
             + "-(o)(?<ownerNric>.*)" + "-(p)+(?<petName>.*)");
+
     /**
      * Parses the given {@code String} of arguments in the context of the Person class
      * and returns an Person object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public Person parsePerson(String ownerInfo) throws ParseException {
         ArgumentMultimap argMultimapOwner =
@@ -59,7 +60,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimapOwner, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_NRIC)
                 || !argMultimapOwner.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
         }
 
         try {
@@ -81,7 +82,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the Appointment class
      * and returns an Appointment object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public Appointment parseAppointment(String apptInfo) throws ParseException {
         ArgumentMultimap argMultimap =
@@ -109,36 +110,25 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the PetPatient class
      * and returns an PetPatient object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public PetPatient parsePetPatient(String petInfo) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(
-                        petInfo,
-                        PREFIX_NAME,
-                        PREFIX_PET_PATIENT_SPECIES,
-                        PREFIX_PET_PATIENT_BREED,
-                        PREFIX_PET_PATIENT_COLOUR,
-                        PREFIX_PET_PATIENT_BLOODTYPE,
-                        PREFIX_TAG);
+                ArgumentTokenizer.tokenize(petInfo, PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_COLOUR,
+                        PREFIX_BLOODTYPE, PREFIX_TAG);
 
         if (!arePrefixesPresent(
-                argMultimap,
-                PREFIX_NAME,
-                PREFIX_PET_PATIENT_BREED,
-                PREFIX_PET_PATIENT_SPECIES,
-                PREFIX_PET_PATIENT_COLOUR,
-                PREFIX_PET_PATIENT_BLOODTYPE)
+                argMultimap, PREFIX_NAME, PREFIX_BREED, PREFIX_SPECIES, PREFIX_COLOUR, PREFIX_BLOODTYPE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PETPATIENT));
         }
 
         try {
             PetPatientName name = ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME)).get();
-            String species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_PET_PATIENT_SPECIES)).get();
-            String breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_PET_PATIENT_BREED)).get();
-            String color = ParserUtil.parseColour(argMultimap.getValue(PREFIX_PET_PATIENT_COLOUR)).get();
-            String bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_PET_PATIENT_BLOODTYPE)).get();
+            String species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_SPECIES)).get();
+            String breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_BREED)).get();
+            String color = ParserUtil.parseColour(argMultimap.getValue(PREFIX_COLOUR)).get();
+            String bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             PetPatient petPatient = new PetPatient(name, species, breed, color, bloodType, tagList);
@@ -150,11 +140,57 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 
     /**
+     * Parses the given {@code String} of arguments in the context of the Nric class
+     * and returns a Nric object.
+     * @throws ParseException if the user input does not conform the expected format.
+     */
+    public Nric parseNric(String nric) throws ParseException {
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(nric, PREFIX_NRIC);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NRIC) || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    "Missing prefix \"nr/\" for NRIC after -o option"));
+        }
+
+        try {
+            Nric validNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).get();
+
+            return validNric;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the PetPatientName class
+     * and returns a PetPatientName object.
+     * @throws ParseException if the user input does not conform the expected format.
+     */
+    public PetPatientName parsePetPatientName(String petName) throws ParseException {
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(petName, PREFIX_NAME);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME) || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    "Missing prefix \"n/\" for pet patient name after -p option"));
+        }
+
+        try {
+            PetPatientName petPatientName = ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME)).get();
+
+            return petPatientName;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddCommand createNewOwnerPetAppt(String ownerInfo, String petInfo, String apptInfo)
+    private AddCommand createNewOwnerPetAppt(String ownerInfo, String petInfo, String apptInfo)
             throws ParseException {
         Person owner = parsePerson(ownerInfo);
 
@@ -171,30 +207,33 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddCommand createNewApptforExistingOwnerAndPet(String apptInfo, String ownerNric, String petName)
+    private AddCommand createNewApptforExistingOwnerAndPet(String apptInfo, String ownerNric, String petName)
             throws ParseException {
         Appointment appt = parseAppointment(apptInfo);
-        return new AddCommand(appt, new Nric(ownerNric), new PetPatientName(petName));
+        Nric nric = parseNric(ownerNric);
+        PetPatientName petPatientName = parsePetPatientName(petName);
+        return new AddCommand(appt, nric, petPatientName);
     }
 
     /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddCommand createNewPetForExistingPerson(String petInfo, String ownerNric) throws ParseException {
+    private AddCommand createNewPetForExistingPerson(String petInfo, String ownerNric) throws ParseException {
         PetPatient petPatient = parsePetPatient(petInfo);
-        return new AddCommand(petPatient, new Nric(ownerNric.trim()));
+        Nric nric = parseNric(ownerNric);
+        return new AddCommand(petPatient, nric);
     }
 
     /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddCommand parseNewOwnerOnly(String ownerInfo) throws ParseException {
+    private AddCommand parseNewOwnerOnly(String ownerInfo) throws ParseException {
         Person owner = parsePerson(ownerInfo);
         return new AddCommand(owner);
     }
@@ -210,40 +249,40 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of AddCommand
      * and returns an AddCommand object.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public AddCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
 
         //to add a new person (owner), new pet patient, and a new appointment
-        Matcher matcher = ADD_COMMAND_FORMAT_ALL_NEW.matcher(trimmedArgs);
-        if (matcher.matches()) {
-            String ownerInfo = matcher.group("ownerInfo");
-            String petInfo = matcher.group("petInfo");
-            String apptInfo = matcher.group("apptInfo");
+        final Matcher matcherForAllNew = ADD_COMMAND_FORMAT_ALL_NEW.matcher(trimmedArgs);
+        if (matcherForAllNew.matches()) {
+            String ownerInfo = matcherForAllNew.group("ownerInfo");
+            String petInfo = matcherForAllNew.group("petInfo");
+            String apptInfo = matcherForAllNew.group("apptInfo");
             return createNewOwnerPetAppt(ownerInfo, petInfo, apptInfo);
         }
         //add a new appointment for existing person and pet patient
-        matcher = ADD_COMMAND_FORMAT_NEW_APPT_EXISTING_OWNER_PET.matcher(trimmedArgs);
-        if (matcher.matches()) {
-            String apptInfo = matcher.group("apptInfo");
-            String ownerNric = matcher.group("ownerNric");
-            String petName = matcher.group("petName");
+        final Matcher matcherForNewAppt = ADD_COMMAND_FORMAT_NEW_APPT_EXISTING_OWNER_PET.matcher(trimmedArgs);
+        if (matcherForNewAppt.matches()) {
+            String apptInfo = matcherForNewAppt.group("apptInfo");
+            String ownerNric = matcherForNewAppt.group("ownerNric");
+            String petName = matcherForNewAppt.group("petName");
             return createNewApptforExistingOwnerAndPet(apptInfo, ownerNric, petName);
         }
 
         //add a new patient to an existing owner
-        matcher = ADD_COMMAND_FORMAT_NEW_PET_EXISTING_OWNER.matcher(trimmedArgs);
-        if (matcher.matches()) {
-            String petInfo = matcher.group("petInfo");
-            String ownerNric = matcher.group("ownerNric");
+        final Matcher matcherForNewPet = ADD_COMMAND_FORMAT_NEW_PET_EXISTING_OWNER.matcher(trimmedArgs);
+        if (matcherForNewPet.matches()) {
+            String petInfo = matcherForNewPet.group("petInfo");
+            String ownerNric = matcherForNewPet.group("ownerNric");
             return createNewPetForExistingPerson(petInfo, ownerNric);
         }
 
         //add a new person
-        matcher = ADD_COMMAND_FORMAT_OWNER_ONLY.matcher(trimmedArgs);
-        if (matcher.matches()) {
-            String ownerInfo = matcher.group("ownerInfo");
+        final Matcher matcherForNewPerson = ADD_COMMAND_FORMAT_OWNER_ONLY.matcher(trimmedArgs);
+        if (matcherForNewPerson.matches()) {
+            String ownerInfo = matcherForNewPerson.group("ownerInfo");
             return parseNewOwnerOnly(ownerInfo);
         }
 

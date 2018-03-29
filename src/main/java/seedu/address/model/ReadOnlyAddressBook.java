@@ -36,11 +36,4 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate pet patients.
      */
     ObservableList<PetPatient> getPetPatientList();
-
-    /**
-
-     * Returns an unmodifiable view of the pet patient tags list.
-     * This list will not contain any duplicate pet patient tags.
-     */
-    ObservableList<Tag> getPetPatientTagList();
 }

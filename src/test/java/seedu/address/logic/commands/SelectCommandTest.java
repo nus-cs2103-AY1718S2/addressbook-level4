@@ -98,7 +98,7 @@ public class SelectCommandTest {
 
         Index outOfBoundsIndex = INDEX_SECOND_BOOK;
         // ensures that outOfBoundIndex is still in bounds of book shelf list
-        assertTrue(outOfBoundsIndex.getZeroBased() < model.getBookShelf().getBookList().size());
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getBookShelf().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }

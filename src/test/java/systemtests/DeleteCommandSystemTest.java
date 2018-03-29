@@ -75,7 +75,7 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
-                getModel().getBookShelf().getBookList().size() + 1);
+                getModel().getDisplayBookList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 

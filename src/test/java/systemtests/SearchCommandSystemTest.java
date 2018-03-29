@@ -81,7 +81,7 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
         expectedModel.updateSearchResults(searchResults);
 
         assertApplicationDisplaysExpected("",
-                String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, searchResults.getBookList().size()), expectedModel);
+                String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, searchResults.size()), expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
     }

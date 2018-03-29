@@ -89,7 +89,7 @@ public class JsonDeserializerTest {
         String json = FileUtil.readFromFile(VALID_SEARCH_RESPONSE_FILE);
         ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json);
         Book book1 = bookShelf.getBookList().get(0);
-        assertEquals(3, bookShelf.getBookList().size());
+        assertEquals(3, bookShelf.size());
         assertEquals("The Book Without a Title", book1.getTitle().title);
         assertEquals("This is a valid description.", book1.getDescription().description);
     }
@@ -99,7 +99,7 @@ public class JsonDeserializerTest {
         String json = FileUtil.readFromFile(VALID_SEARCH_RESPONSE_DUPLICATE_BOOKS);
         ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json);
         Book book1 = bookShelf.getBookList().get(0);
-        assertEquals(1, bookShelf.getBookList().size());
+        assertEquals(1, bookShelf.size());
         assertEquals("The Book Without a Title", book1.getTitle().title);
         assertEquals("This is a valid description.", book1.getDescription().description);
     }

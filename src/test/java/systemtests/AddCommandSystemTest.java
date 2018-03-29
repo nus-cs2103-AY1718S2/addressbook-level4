@@ -109,7 +109,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        int invalidIndex = searchResultsList.size() + 1;
+        int invalidIndex = getModel().getRecentBooksList().size() + 1;
         assertCommandFailure(AddCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */

@@ -97,13 +97,19 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
         assertSearchResultsSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
         assertSearchResultsSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " 39", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        invalidIndex = getModel().getSearchResultsList().size() + 1;
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
+                MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         /* -------------------- Perform select operations on the shown recent books list ------------------------- */
         executeCommand(RecentCommand.COMMAND_WORD);
         assertRecentBooksSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
         assertRecentBooksSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " 39", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        invalidIndex = getModel().getRecentBooksList().size() + 1;
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
+                MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     /**

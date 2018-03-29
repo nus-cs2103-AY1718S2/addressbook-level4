@@ -108,7 +108,7 @@ public class DeleteCommandTest {
 
         Index outOfBoundIndex = INDEX_SECOND_BOOK;
         // ensures that outOfBoundIndex is still in bounds of book shelf list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getBookShelf().getBookList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getBookShelf().size());
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 

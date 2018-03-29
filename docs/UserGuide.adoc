@@ -202,6 +202,13 @@ Format: `history` or `hist`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Importing contacts from CSV : `import_contacts` or `ic`
+
+Imports contacts from a csv file that contains the header (Name, Email, Phone, Address) +
+Format: `import_contacts [f/PATH]`
+
+For example `import_contacts f/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv`
+
 // tag::scheduling[]
 === Add an appointment : `addappointment` or `aa`
 Adds an appointment with a person in the address book that will be shown in the calendar panel. +

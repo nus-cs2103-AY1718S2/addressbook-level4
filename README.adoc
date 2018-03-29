@@ -29,10 +29,19 @@ endif::[]
 
 == Site Map
 
+ifdef::env-github[]
+* link:https://cs2103jan2018-f09-b3.github.io/main/UserGuide.html[User Guide]
+* link:https://cs2103jan2018-f09-b3.github.io/main/DeveloperGuide.html[Developer Guide]
+* link:https://cs2103jan2018-f09-b3.github.io/main/AboutUs.html[About Us]
+* link:https://cs2103jan2018-f09-b3.github.io/main/ContactUs.html[Contact Us]
+endif::[]
+
+ifndef::env-github[]
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
+endif::[]
 
 == Acknowledgements
 

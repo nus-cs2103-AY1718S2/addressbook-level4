@@ -7,25 +7,25 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.DeleteRatingCommand;
+import seedu.address.logic.commands.RatingDeleteCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the DeleteRatingCommand code. For example, inputs "1" and "1 abc" take the
- * same path through the DeleteRatingCommand, and therefore we test only one of them.
+ * outside of the RatingDeleteCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the RatingDeleteCommand, and therefore we test only one of them.
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
  */
-public class DeleteRatingCommandParserTest {
+public class RatingDeleteCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRatingCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RatingDeleteCommand.MESSAGE_USAGE);
 
-    private DeleteRatingCommandParser parser = new DeleteRatingCommandParser();
+    private RatingDeleteCommandParser parser = new RatingDeleteCommandParser();
 
     @Test
     public void parse_validArgs_returnsDeleteRatingCommand() {
-        assertParseSuccess(parser, "1", new DeleteRatingCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "1", new RatingDeleteCommand(INDEX_FIRST_PERSON));
     }
 
     @Test

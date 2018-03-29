@@ -32,9 +32,9 @@ import seedu.address.model.tag.Tag;
 /**
  * Deletes the rating of a person identified using it's last displayed index from HR+.
  */
-public class DeleteRatingCommand extends UndoableCommand {
+public class RatingDeleteCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "deleteRating";
+    public static final String COMMAND_WORD = "rating-delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the rating of the person identified by the index number used in the last person listing.\n"
@@ -49,7 +49,7 @@ public class DeleteRatingCommand extends UndoableCommand {
     private Person targetPerson;
     private Person editedPerson;
 
-    public DeleteRatingCommand(Index targetIndex) {
+    public RatingDeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -119,8 +119,8 @@ public class DeleteRatingCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteRatingCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteRatingCommand) other).targetIndex) // state check
-                && Objects.equals(this.targetPerson, ((DeleteRatingCommand) other).targetPerson));
+                || (other instanceof RatingDeleteCommand // instanceof handles nulls
+                && this.targetIndex.equals(((RatingDeleteCommand) other).targetIndex) // state check
+                && Objects.equals(this.targetPerson, ((RatingDeleteCommand) other).targetPerson));
     }
 }

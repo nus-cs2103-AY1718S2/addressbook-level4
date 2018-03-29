@@ -66,14 +66,10 @@ public class WikiaQueryHandler implements WikiaQuery {
         requireNonNull(queryUrl);
         try {
             httpUrlConnection = (HttpURLConnection) queryUrl.openConnection();
+            httpUrlConnection.setRequestMethod("GET");
         } catch (IOException ioe) {
             throw new AssertionError("Something went wrong while the app was "
                     + "trying to create a connection to " + queryUrl.toExternalForm(), ioe);
-        }
-        try {
-            httpUrlConnection.setRequestMethod("GET");
-        } catch (ProtocolException pe) {
-            throw new AssertionError("There was something wrong with the protocol. This should not happen.", pe);
         }
     }
 

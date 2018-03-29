@@ -339,6 +339,28 @@ image::ClearCommand.png[width="750"]
 [TIP]
 If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
 
+//tag::internet-search[]
+=== Searching on the Internet: *`search`*
+
+Searchs for your recipe on the Internet.
+
+Format: `search RECIPE_NAME`
+
+See <<fig-InternetSearchCommand>> for more information. +
+{nbsp}
+
+[[fig-InternetSearchCommand]]
+.Searching for your recipe on the Internet directly from ReciRecipé
+image::InternetSearchCommand.png[width="750"]
+
+{nbsp} +
+
+Examples:
+
+* *`search chicken rice`* +
+You will be brought to the result page and from there, you can select any recipes that you want.
+//end::internet-search[]
+
 === Exiting the program: *`exit`*
 
 Exits the program.
@@ -386,6 +408,8 @@ E.g.*`select 2`*
 * *History* : *`history`*
 * *Undo* : *`undo`*
 * *Redo* : *`redo`*
+* *Internet search* : `search RECIPE_NAME` +
+E.g. *`search chicken rice`*
 
 == Glossary
 

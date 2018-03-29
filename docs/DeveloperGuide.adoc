@@ -528,6 +528,74 @@ As seen from above, all key combinations implemented consume the default effect 
 ** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
 // end::keyboard-shortcut[]
 
+=== Searching on the Internet
+// tag::internet-search[]
+==== Current implementation
+
+The command is implemented in `_SearchCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which creates a `_WikiaQueryHandler_` and posts a `_InternetSearchRequestEvent_` to the `_EventsCenter_`. Refer to <<fig-InternetSearchSD>>.
+
+[[fig-InternetSearchSD]]
+.Component interactions for *`search chicken rice`* command (part 1)
+image::SDforInternetSearch.png[width="600"]
+
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleInternetSearchRequestEvent()` to update the theme accordingly. Refer to <<fig-InternetSearchEventSD>>.
+
+[[fig-InternetSearchEventSD]]
+.Component interactions for *`search chicken rice`* command (part 2)
+image::SDforInternetSearchEventHandling.png[width="800"]
+
+This command deals with a class called `_WikiaQueryHandler_`. `_WikiaQueryHandler_` is a class that resolves a query to http://recipes.wikia.com[the recipe repo] we are using for ReciRecipé.
+
+`_WikiaQueryHandler_` takes in the argument of `_SearchCommand_`, makes a query (after going through many steps) to the server. Refer to <<fig-InternetSearchDetailsSD>> for the details.
+
+[[fig-InternetSearchDetailsSD]]
+.Component interactions for `_WikiaQueryHandler_`
+image::SDforInternetSearchDetails.png[width="500"]
+
+After `_WikiaQueryHandler_` is created, we can call `getRecipeQueryUrl()` and `getQueryNumberOfResults()` to get the URL for the `_BrowserPanel_` and the number of results returned by the query.
+
+Refer to <<fig-InternetSearchCD>> for the interaction between relevant classes.
+
+[[fig-InternetSearchCD]]
+.Classes interactions for `_SearchCommand_`
+image::InternetSearchClassDiagram.png[width="700"]
+
+When `execute()` is called, `_SearchCommand_` passes its `_WikiaQueryHandler_` as an argument to `_InternetSearchRequestEvent_`. `_BrowserPanel_` will then call `getQueryNumberOfResults()` to see if the query returns any results. If there is no result, then `_BrowserPanel_` won't load the page to reduce needless requests to the server, else `_BrowserPanel_` will load the URL given by `getRecipeQueryUrl()`. Refer to the code snippet below to see the implementation for `execute()` and the handler.
+
+[source,java]
+----
+public CommandResult execute() throws CommandException {
+    int noOfResult = wikiaQueryHandler.getQueryNumberOfResults();
+
+    EventsCenter.getInstance().post(new InternetSearchRequestEvent(wikiaQueryHandler));
+
+    if (noOfResult == 0) {
+        return new CommandResult(MESSAGE_FAILURE);
+    } else {
+        return new CommandResult(String.format(MESSAGE_SUCCESS, noOfResult));
+    }
+}
+
+private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    if (event.wikiaQueryHandler.getQueryNumberOfResults() != 0) {
+        loadPage(event.wikiaQueryHandler.getRecipeQueryUrl());
+    }
+}
+----
+
+==== Design considerations
+
+===== Aspect: Usage of `_WikiaQueryHandler_`.
+
+* **Alternative 1 (current choice):** Use `_WikiaQueryHandler_`.
+** Pros: This approach allows more data to be processed separately from the page handling by `_BrowserPanel_`.
+** Cons: In return, using a separate class makes the implementation a lot harder to manage.
+* **Alternative 2:** Do not use `_WikiaQueryHandler_` and let `_BrowserPanel_` directly load the query URL.
+** Pros: This approach is significantly easier to implement, requiring only 3-4 lines in `_BrowserPanel_`.
+** Cons: However, we don't get any extra information for pre-processing and this could lead to redundant requests.
+// end::internet-search[]
+
 // tag::auto-compeltion[]
 === Auto-completion
 ==== Current implementation

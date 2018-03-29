@@ -34,6 +34,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_TYPE = "This is not of either -o, -a or -p!";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -49,6 +50,13 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    public static String parseType(String arg) throws IllegalValueException {
+        String type = arg.substring(1);
+        if (!(type.equalsIgnoreCase("o") || type.equalsIgnoreCase("a") || type.equalsIgnoreCase("p"))){
+            throw new IllegalValueException(MESSAGE_INVALID_TYPE);
+        }
+        return type.toLowerCase();
+    }
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.

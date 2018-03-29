@@ -5,7 +5,7 @@ import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.events.ui.ChangeThemeRequestEvent;
 
 /**
- * Format full help instructions for every command for display.
+ * Toggle between dark/light theme.
  */
 public class ChangeThemeCommand extends Command {
 

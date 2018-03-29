@@ -2,6 +2,7 @@ package seedu.recipe.testutil;
 
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_IMG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
@@ -38,6 +39,7 @@ public class RecipeUtil {
         sb.append(PREFIX_CALORIES + recipe.getCalories().value + " ");
         sb.append(PREFIX_SERVINGS + recipe.getServings().value + " ");
         sb.append(PREFIX_URL + recipe.getUrl().value + " ");
+        sb.append(PREFIX_IMG + recipe.getImage().value + " ");
         recipe.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

@@ -89,6 +89,7 @@ public class CommandTestUtil {
     public static final String INVALID_SERVINGS_DESC = " " + PREFIX_SERVINGS + "can't do";
     // missing "https://" or "http://"
     public static final String INVALID_URL_DESC = " " + PREFIX_URL + "www.google.com";
+    public static final String INVALID_IMG_DESC = " " + PREFIX_IMG + "NOT@VALID";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

@@ -13,6 +13,7 @@ import org.junit.Test;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
@@ -208,7 +209,7 @@ public class XmlAdaptedRecipeTest {
                 new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_COOKING_TIME,
                         VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL,
                         INVALID_IMAGE, VALID_TAGS);
-        String expectedMessage = Url.MESSAGE_URL_CONSTRAINTS;
+        String expectedMessage = Image.MESSAGE_IMAGE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
@@ -218,7 +219,7 @@ public class XmlAdaptedRecipeTest {
                 new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_COOKING_TIME,
                         VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL,
                         null, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Url.class.getSimpleName());
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Image.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
     //@@author RyanAngJY

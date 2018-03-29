@@ -30,6 +30,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -199,6 +200,8 @@ public class CommandTestUtil {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        } catch (PetDependencyNotEmptyException e) {
+            throw new AssertionError("Dependency still exists!");
         }
     }
 

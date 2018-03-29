@@ -22,12 +22,15 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
+import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -112,7 +115,22 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deletePetPatient(PetPatient target) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteForcePetPatient(PetPatient target) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteAppointment(Appointment target) {
             fail("This method should not be called.");
         }
 
@@ -128,7 +146,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
+        public void deletePerson(Person target) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteForcePerson(Person target) {
             fail("This method should not be called.");
         }
 
@@ -163,6 +186,12 @@ public class AddCommandTest {
         @Override
         public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<PetPatient> getFilteredPetPatientList() {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override

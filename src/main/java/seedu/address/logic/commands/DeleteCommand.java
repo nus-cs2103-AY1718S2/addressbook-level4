@@ -29,25 +29,25 @@ public class DeleteCommand extends UndoableCommand {
             + " -[f]o/-[f]p/-a"
             + ": Deletes the person/pet/appointment identified by the index number used in the last listing.\n"
             + "Additional -[f] options indicates forcefully deleting object and all related dependencies.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -o 1";
 
     public static final String MESSAGE_USAGE_OWNER = COMMAND_WORD
             + " -o"
             + ": Deletes the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -o 1";
 
     public static final String MESSAGE_USAGE_PET_PATIENT = COMMAND_WORD
             + " -p"
             + ": Deletes the pet patient identified by the index number used in the last pet patient listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -p 1";
 
     public static final String MESSAGE_USAGE_APPOINTMENT = COMMAND_WORD
             + " -a"
             + ": Deletes the appointment identified by the index number used in the last appointment listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -a 1";
 
     public static final String MESSAGE_USAGE_FORCE_OWNER = COMMAND_WORD
@@ -61,7 +61,7 @@ public class DeleteCommand extends UndoableCommand {
             + " -fp"
             + ": Forcefully deletes the pet and all related dependencies "
             + "identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -fp 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";

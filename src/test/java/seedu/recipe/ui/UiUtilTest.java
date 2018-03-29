@@ -13,6 +13,7 @@ public class UiUtilTest {
 
     private static final String LIGHT_COLOR_CODE = "#FFFFFF";
     private static final String DARK_COLOR_CODE = "#000000";
+    private static final String VALID_STRING = "This is a valid string";
 
     @Test
     public void convertStringToValidColorCode() {

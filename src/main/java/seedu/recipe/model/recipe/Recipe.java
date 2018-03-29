@@ -15,6 +15,11 @@ import seedu.recipe.model.tag.UniqueTagList;
  */
 public class Recipe {
 
+    public static final String LINE_BREAK = "\n\n";
+    public static final String NAME_HEADER = "Name:\n";
+    public static final String INGREDIENTS_HEADER = "Ingredients:\n";
+    public static final String INSTRUCTIONS_HEADER = "Instructions:\n";
+
     private final Name name;
     private final Ingredient ingredient;
     private final Instruction instruction;
@@ -84,6 +89,14 @@ public class Recipe {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    //@@author RyanAngJY
+    public String getTextFormattedRecipe() {
+        return NAME_HEADER + getName() + LINE_BREAK
+                + INGREDIENTS_HEADER + getIngredient() + LINE_BREAK
+                + INSTRUCTIONS_HEADER + getInstruction() + LINE_BREAK;
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -102,7 +115,8 @@ public class Recipe {
                 && otherRecipe.getPreparationTime().equals(this.getPreparationTime())
                 && otherRecipe.getCalories().equals(this.getCalories())
                 && otherRecipe.getServings().equals(this.getServings())
-                && otherRecipe.getUrl().equals(this.getUrl());
+                && otherRecipe.getUrl().equals(this.getUrl())
+                && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe());
     }
 
     @Override

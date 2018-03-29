@@ -160,13 +160,13 @@ shortcut
 ====
  edit 1 p: 91234567 e: johndoe@example.com
 
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+_Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively._
 ====
 
 ====
  edit 2 n: Betsy Crower t:
 
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+_Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags._
 ====
 ***
 === Deleting a person : `delete`
@@ -184,14 +184,14 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
  list
  delete 2
 
-Deletes the 2nd person in the database.
+_Deletes the 2nd person in the database._
 ====
 
 ====
  find Betsy
  delete 1
 
-Deletes the 1st person in the results of the `find` command.
+_Deletes the 1st person in the results of the `find` command._
 ====
 ***
 === Searching for relevant persons: `find`
@@ -212,19 +212,19 @@ Deletes the 1st person in the results of the `find` command.
 ====
  find John
 
-Returns all persons with name, address or tags matching `John`.
+_Returns all persons with name, address or tags matching `John`._
 ====
 
 ====
  find Betsy Tim John
 
-Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `John`.
+_Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `John`._
 ====
 
 ====
  find -p 91234567
 
-Returns all persons with the above phone number.
+_Returns all persons with the above phone number._
 ====
 ***
 === Selecting a person : `select`
@@ -272,7 +272,7 @@ Undoable commands: those commands that modify the address book's content (`add`,
  list
  undo
 
-The `undo` command fails as there are no undoable commands executed previously.
+_The `undo` command fails as there are no undoable commands executed previously._
 ====
 
 ====
@@ -296,7 +296,7 @@ The `undo` command fails as there are no undoable commands executed previously.
  delete 1
  redo
 
-The `redo` command fails as there are no `undo` commands executed previously.
+_The `redo` command fails as there are no `undo` commands executed previously._
 ====
 
 ====

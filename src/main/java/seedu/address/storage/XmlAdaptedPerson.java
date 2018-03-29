@@ -30,6 +30,9 @@ public class XmlAdaptedPerson {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     @XmlElement(required = true)
+    private Person.PersonType personType;
+
+    @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
     private String phone;
@@ -59,8 +62,6 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private List<Customer> customers;
 
-
-
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
@@ -78,6 +79,7 @@ public class XmlAdaptedPerson {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.personType = Person.PersonType.PERSON;
     }
 
     /**
@@ -91,6 +93,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         tagged = new ArrayList<>();
+        personType = source.getType();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
@@ -154,9 +157,60 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
 
-        //TODO: conditional construction of Customer or Runner
+        //TODO: implement runner and customers field
+        if (this.personType == Person.PersonType.CUSTOMER) {
+            //moneyBorrowed
+            if (this.moneyBorrowed == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MoneyBorrowed.class
+                        .getSimpleName()));
+            }
+            //TODO: write valid regex check
+            final MoneyBorrowed moneyBorrowed = new MoneyBorrowed(this.moneyBorrowed.value);
+
+            //oweStartDate
+            if (this.oweStartDate == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName
+                        ()));
+            }
+            //TODO: write valid regex check
+            final Date oweStartDate = this.oweStartDate;
+
+            //oweDueDate
+            if (this.oweDueDate == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName
+                        ()));
+            }
+            //TODO: write valid regex check
+            final Date oweDueDate = this.oweDueDate;
+
+            //standardInterest
+            if (this.standardInterest == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StandardInterest.class
+                        .getSimpleName()));
+            }
+            //TODO: write valid regex check
+            final StandardInterest standardInterest = this.standardInterest;
+
+            //lateInterest
+            if (this.lateInterest == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LateInterest.class
+                        .getSimpleName()));
+            }
+            //TODO: write valid regex check
+            final LateInterest lateInterest = this.lateInterest;
+
+            return new Customer(name, phone, email, address, tags, moneyBorrowed, oweStartDate, oweDueDate,
+                    standardInterest, lateInterest, new Runner());
+
+        } else if (this.personType == Person.PersonType.RUNNER) {
+            return new Runner(name, phone, email, address, tags, new ArrayList<>());
+
+        } else {
+            return new Person(name, phone, email, address, tags);
+
+        }
+
     }
 
     @Override

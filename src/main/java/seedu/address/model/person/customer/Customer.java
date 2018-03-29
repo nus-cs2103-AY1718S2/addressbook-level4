@@ -29,6 +29,7 @@ public class Customer extends Person {
      */
     public Customer() {
         super();
+        this.setType(PersonType.CUSTOMER);
         this.moneyBorrowed = new MoneyBorrowed();
         this.oweStartDate = new Date(0);
         this.oweDueDate = new Date(0);
@@ -41,6 +42,7 @@ public class Customer extends Person {
                     MoneyBorrowed moneyBorrowed, Date oweStartDate, Date oweDueDate, StandardInterest
                             standardInterest, LateInterest lateInterest, Runner runner) {
         super(name, phone, email, address, tags);
+        this.setType(PersonType.CUSTOMER);
         this.moneyBorrowed = moneyBorrowed;
         this.standardInterest = standardInterest;
         this.lateInterest = lateInterest;

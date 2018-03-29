@@ -22,10 +22,12 @@ public class Runner extends Person {
     public Runner() {
         super();
         this.customers = new ArrayList<>();
+        this.setType(PersonType.RUNNER);
     }
 
     public Runner(Name name, Phone phone, Email email, Address address, Set<Tag> tags, List<Customer> customers) {
         super(name, phone, email, address, tags);
+        this.setType(PersonType.RUNNER);
         this.customers = customers;
     }
 

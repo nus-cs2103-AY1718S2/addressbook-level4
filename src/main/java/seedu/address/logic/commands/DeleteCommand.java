@@ -82,7 +82,7 @@ public class DeleteCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException{
+    public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
             switch (type) {
@@ -127,7 +127,7 @@ public class DeleteCommand extends UndoableCommand {
     /**
      * Deletes the pet patient {@code petPatientToDelete} from the address book.
      */
-    private CommandResult deletePetPatient() throws AppointmentDependencyNotEmptyException{
+    private CommandResult deletePetPatient() throws AppointmentDependencyNotEmptyException {
         try {
             requireNonNull(petPatientToDelete);
             model.deletePetPatient(petPatientToDelete);

@@ -19,14 +19,29 @@ import seedu.recipe.ui.util.KeyboardShortcutsMapping;
 public class CommandBoxTest extends GuiUnitTest {
 
     private static final String LF = "\n";
+    private static final String WHITESPACE = " ";
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
     private static final String FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "add";
     private static final String SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "should not work for now";
     private static final String COMMAND_THAT_HAS_MULTIPLE_LINES = FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES + LF
-            + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
+        + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
+    private static final String FIRST_SUGGESTION = "add";
     private static final String SECOND_SUGGESTION = "clear";
     private static final String THIRD_SUGGESTION = "delete";
+    private static final String PREFIX_NAME = "name/";
+    private static final String PREFIX_INGREDIENT = "ingredient/";
+    private static final String PREFIX_INSTRUCTION = "instruction/";
+    private static final String PREFIX_PREPARATION_TIME = "preparation_time/";
+    private static final String PREFIX_TAG = "tag/";
+    private static final String PREFIX_URL = "url/";
+    private static final String RECIPE_NAME = "Chicken rice";
+    private static final String AUTO_COMPLETION_FOR_ADD_COMMAND = FIRST_SUGGESTION + WHITESPACE + LF + PREFIX_NAME
+        + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION + WHITESPACE + LF
+        + PREFIX_PREPARATION_TIME + WHITESPACE + LF + PREFIX_TAG + WHITESPACE + LF + PREFIX_URL;
+    private static final String AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME = FIRST_SUGGESTION + WHITESPACE + LF
+        + PREFIX_NAME + RECIPE_NAME + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION
+        + WHITESPACE + LF + PREFIX_PREPARATION_TIME + WHITESPACE + LF + PREFIX_TAG + WHITESPACE + LF + PREFIX_URL;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -40,7 +55,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
-                CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
+            CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
 
         defaultStyleOfCommandBox = new ArrayList<>(commandBoxHandle.getStyleClass());
@@ -105,6 +120,18 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInput(THIRD_SUGGESTION);
     }
 
+    @Test
+    public void commandBox_handleAutoCompletion() {
+        guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.ENTER);
+        assertInput(AUTO_COMPLETION_FOR_ADD_COMMAND);
+
+        guiRobot.push(KeyboardShortcutsMapping.NEXXT_FIELD);
+        commandBoxHandle.insertText(RECIPE_NAME);
+        assertInput(AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME);
+    }
+
     //@@author
     @Test
     public void handleKeyPress_startingWithUp() {
@@ -164,8 +191,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
     /**
      * Runs a command that fails, then verifies that <br>
-     *      - the text remains <br>
-     *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
+     * - the text remains <br>
+     * - the command box's style is the same as {@code errorStyleOfCommandBox}.
      */
     private void assertBehaviorForFailedCommand() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
@@ -175,8 +202,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
     /**
      * Runs a command that succeeds, then verifies that <br>
-     *      - the text is cleared <br>
-     *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
+     * - the text is cleared <br>
+     * - the command box's style is the same as {@code defaultStyleOfCommandBox}.
      */
     private void assertBehaviorForSuccessfulCommand() {
         commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
@@ -193,6 +220,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     //@@Author kokonguyen191
+
     /**
      * Checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
      */

@@ -28,6 +28,13 @@ Responsibilities: UI
 
 '''
 
+=== Valerian Johan Marie Rey
+image::valerian.jpg[width="150", align="left"]
+{empty}[https://github.com/ValerianRey[github]] [<<valerian#, portfolio>>]
+
+Role: Developer
+Responsibilities: Model
+
 === Johnny Doe
 image::yijinl.jpg[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]

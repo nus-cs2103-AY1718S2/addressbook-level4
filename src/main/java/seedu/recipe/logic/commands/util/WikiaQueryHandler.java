@@ -55,7 +55,7 @@ public class WikiaQueryHandler implements WikiaQuery {
         try {
             queryUrl = new URL(API_QUERY_URL + recipeToSearch);
         } catch (MalformedURLException mue) {
-            throw new AssertionError("Invalid URL. This should not happen.", mue);
+            throw new AssertionError("Invalid query URL. This should not happen.", mue);
         }
     }
 
@@ -67,7 +67,7 @@ public class WikiaQueryHandler implements WikiaQuery {
         try {
             httpUrlConnection = (HttpURLConnection) queryUrl.openConnection();
         } catch (IOException ioe) {
-            throw new AssertionError("Something went wrong while the app is "
+            throw new AssertionError("Something went wrong while the app was "
                     + "trying to create a connection to " + queryUrl.toExternalForm(), ioe);
         }
         try {
@@ -98,7 +98,7 @@ public class WikiaQueryHandler implements WikiaQuery {
         } catch (FileNotFoundException fnfe) {
             rawDataString = null;
         } catch (IOException ie) {
-            throw new AssertionError("Something wrong happened while the app"
+            throw new AssertionError("Something wrong happened while the app "
                     + "was trying to read data from the url " + queryUrl.toExternalForm(), ie);
         }
     }

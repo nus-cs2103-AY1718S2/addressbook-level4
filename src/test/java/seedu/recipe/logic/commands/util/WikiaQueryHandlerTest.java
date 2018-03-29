@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.recipe.logic.commands.util.WikiaQueryHandler.QUERY_URL;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,9 +17,15 @@ public class WikiaQueryHandlerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullString_throwsNullPointerException() {
+    public void constructor_nullQuery_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new WikiaQueryHandler(null);
+    }
+
+    @Test
+    public void constructor_invalidQuery_throwsAssertionError() {
+        thrown.expect(AssertionError.class);
+        new WikiaQueryHandler("");
     }
 
     @Test

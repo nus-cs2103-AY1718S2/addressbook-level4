@@ -46,7 +46,7 @@ public class ImportContactsCommandTest {
 
     static {
         try {
-            importValidPath = new ImportContactsCommand("/Users/lucasgaylord/Desktop/Test_contacts.csv");
+            importValidPath = new ImportContactsCommand("data/Test_contacts.csv");
             importIllegalPath = new ImportContactsCommand("...");
 
             imparse = new ImportContactsCommandParser();
@@ -70,7 +70,7 @@ public class ImportContactsCommandTest {
 
     @Test
     public void execute_validPathToTestFile_printCsvContents() throws IOException {
-        Reader reader = Files.newBufferedReader(Paths.get("/Users/lucasgaylord/Desktop/Test_contacts.csv"));
+        Reader reader = Files.newBufferedReader(Paths.get("data/Test_contacts.csv"));
 
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                 .withFirstRecordAsHeader()
@@ -127,13 +127,13 @@ public class ImportContactsCommandTest {
 
     @Test
     public void parse_inputCorrectPath_returnsImportContactsCommandWithCorrectFilePath() throws Exception {
-        ImportContactsCommand icc = imparse.parse("/Users/lucasgaylord/Desktop/Test_contacts.csv");
-        assertEquals(icc.getFileAddress(), "/Users/lucasgaylord/Desktop/Test_contacts.csv");
+        ImportContactsCommand icc = imparse.parse("data/Test_contacts.csv");
+        assertEquals(icc.getFileAddress(), "data/Test_contacts.csv");
     }
 
     @Test
     public void openFile_inputCorrectPath_returnsCommandResult() throws Exception {
-        ImportContactsCommand icc = new ImportContactsCommand("/Users/lucasgaylord/Desktop/Test_contacts.csv");
+        ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts.csv");
         CommandResult cr = icc.openFile();
         requireNonNull(cr);
         System.out.println(cr.equals(importValidPath.openFile()));

@@ -10,6 +10,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -28,10 +29,14 @@ public class TaskListPanel extends UiPart<Region> {
     @FXML
     private ListView<TaskCard> taskListView;
 
+    private Label emptyLabel = new Label("Task List is empty!");
+
     public TaskListPanel(ObservableList<Activity> taskList) {
         super(FXML);
         setConnections(taskList);
         registerAsAnEventHandler(this);
+        taskListView.setPlaceholder(emptyLabel);
+        emptyLabel.setStyle("-fx-font-family: \"Open Sans\"; -fx-font-size: 25px; ");
     }
 
     private void setConnections(ObservableList<Activity> taskList) {

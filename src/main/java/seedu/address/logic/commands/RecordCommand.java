@@ -1,11 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
@@ -35,25 +31,18 @@ public class RecordCommand extends UndoableCommand {
             + ": Edits the medical record of a patient in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_INDEX + "INDEX] "
-            + "[" + PREFIX_DATE + "DATE] "
-            + "[" + PREFIX_SYMPTOM + "SYMPTOM] "
-            + "[" + PREFIX_ILLNESS + "ILLNESS] "
-            + "[" + PREFIX_TREATMENT + "TREATMENT] "
             + "\n"
             + "Example: " + COMMAND_WORD + " "
             + "1 "
-            + PREFIX_INDEX + "1 "
-            + PREFIX_DATE + "1st March 2018 "
-            + PREFIX_SYMPTOM + "Headache, runny nose "
-            + PREFIX_ILLNESS + "Flu "
-            + PREFIX_TREATMENT + "Zyrtec";
+            + PREFIX_INDEX + "1 ";
 
     public static final String MESSAGE_EDIT_RECORD_SUCCESS = "Medical record updated: %1$s";
+    public static final String MESSAGE_ADD_RECORD_SUCCESS = "New medical record added: %1$s";
+    public static final String MESSAGE_CLOSE_RECORD_SUCCESS = "Medical record has been closed.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already exists in the address book.";
 
     private final Index patientIndex;
     private final int recordIndex;
-    private final Record record;
 
     private Patient patientToEdit;
     private Patient editedPatient;
@@ -61,12 +50,10 @@ public class RecordCommand extends UndoableCommand {
     /**
      * Creates a RecordCommand to edit the records of the specified {@code Patient}
      */
-    public RecordCommand(Index patientIndex, int recordIndex, Record record) {
+    public RecordCommand(Index patientIndex, int recordIndex) {
         requireNonNull(patientIndex);
-        requireNonNull(record);
         this.patientIndex = patientIndex;
         this.recordIndex = recordIndex;
-        this.record = record;
     }
 
     @Override
@@ -90,20 +77,20 @@ public class RecordCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        patientToEdit = lastShownList.get(patientIndex.getZeroBased());
+
         //creating medical record window here and obtaining user input
         RecordWindow recordWindow = new RecordWindow();
         Stage stage = new Stage();
-        recordWindow.start(stage, record);
+        recordWindow.start(stage, patientToEdit.getRecord(recordIndex));
 
         Record editedRecord = RecordManager.getRecord();
-
-        patientToEdit = lastShownList.get(patientIndex.getZeroBased());
 
         if (editedRecord == null) {
             editedPatient = patientToEdit;
         }
         else {
-            editedPatient = createEditedPerson(patientToEdit, recordIndex, editedRecord);
+            editedPatient = createEditedPatient(patientToEdit, recordIndex, editedRecord);
         }
     }
 
@@ -111,9 +98,8 @@ public class RecordCommand extends UndoableCommand {
      * Creates and returns a {@code Patient} with the details of {@code patientToEdit}
      * edited with {@code record}.
      */
-    private static Patient createEditedPerson(Patient patientToEdit, int recordIndex, Record record) {
+    private static Patient createEditedPatient(Patient patientToEdit, int recordIndex, Record record) {
         assert patientToEdit != null;
-
 
         ArrayList<Record> temp = new ArrayList<Record>();
         for (int i = 0; i < patientToEdit.getRecordList().getNumberOfRecords(); i++) {
@@ -147,8 +133,7 @@ public class RecordCommand extends UndoableCommand {
         // state check
         RecordCommand e = (RecordCommand) other;
 
-        return getPatientIndex().equals(e.getPatientIndex())
-                && getRecord().equals(e.getRecord());
+        return getPatientIndex().equals(e.getPatientIndex());
     }
 
     public Index getPatientIndex() {
@@ -157,9 +142,7 @@ public class RecordCommand extends UndoableCommand {
     public int getRecordIndex() {
         return recordIndex;
     }
-    public Record getRecord() {
-        return record;
-    }
+
     public Patient getToEdit() {
         return patientToEdit;
     }

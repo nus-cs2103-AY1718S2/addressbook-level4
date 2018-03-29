@@ -7,6 +7,10 @@
         <phone>85355255</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
+        <platforms>
+            <type>facebook</type>
+            <link>www.facebook.com/alice.pauline</link>
+        </platforms>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -14,6 +18,10 @@
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
+        <platforms>
+            <type>twitter</type>
+            <link>www.twitter.com/bend</link>
+        </platforms>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>

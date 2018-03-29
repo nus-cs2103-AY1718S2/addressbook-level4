@@ -13,7 +13,10 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.smplatform.Facebook;
+import seedu.address.model.smplatform.Link;
 import seedu.address.model.smplatform.SocialMediaPlatform;
+import seedu.address.model.smplatform.Twitter;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -57,6 +60,27 @@ public class SampleDataUtil {
         }
     }
 
+    //@@author Nethergale
+    /**
+     * Returns a social media platform map mapping to the various platforms,
+     * using the list of strings given as the links. Unknown link types and invalid links will be ignored.
+     * Only the first link will be added if there are multiple links of the same type.
+     */
+    public static Map<String, SocialMediaPlatform> getSocialMediaPlatformMap(String... strings) {
+        HashMap<String, SocialMediaPlatform> smpMap = new HashMap<>();
+        for (String s : strings) {
+            String type = Link.getLinkType(s);
+            if (type.equals(Link.FACEBOOK_LINK_TYPE) && Link.isValidLink(s)) {
+                smpMap.putIfAbsent(type, new Facebook(new Link(s)));
+            } else if (type.equals(Link.TWITTER_LINK_TYPE) && Link.isValidLink(s)) {
+                smpMap.putIfAbsent(type, new Twitter(new Link(s)));
+            }
+        }
+
+        return smpMap;
+    }
+
+    //@@author
     /**
      * Returns a tag set containing the list of strings given.
      */

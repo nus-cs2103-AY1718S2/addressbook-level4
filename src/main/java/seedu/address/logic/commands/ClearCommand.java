@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ClearBookDetailsRequestEvent;
+import seedu.address.commons.events.ui.ClearMainContentRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.BookShelf;
@@ -26,7 +26,7 @@ public class ClearCommand extends UndoableCommand {
         }
 
         model.resetData(new BookShelf());
-        EventsCenter.getInstance().post(new ClearBookDetailsRequestEvent());
+        EventsCenter.getInstance().post(new ClearMainContentRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

@@ -16,6 +16,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -60,6 +61,11 @@ public class BookShelfParserTest {
         } catch (ParseException pe) {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
         }
+    }
+
+    @Test
+    public void parseCommand_reviewsCommandWord_returnsReviewsCommand() throws Exception {
+        assertTrue(parser.parseCommand(ReviewsCommand.COMMAND_WORD + " 3") instanceof ReviewsCommand);
     }
 
     @Test

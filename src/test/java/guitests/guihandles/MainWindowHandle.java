@@ -19,6 +19,7 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final BookDetailsPanelHandle bookDetailsPanel;
+    private final BookReviewsPanelHandle bookReviewsPanel;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -33,6 +34,7 @@ public class MainWindowHandle extends StageHandle {
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         bookDetailsPanel = new BookDetailsPanelHandle(getChildNode(BookDetailsPanelHandle.BOOK_DETAILS_PANE_ID));
+        bookReviewsPanel = new BookReviewsPanelHandle(getChildNode(BookReviewsPanelHandle.BOOK_REVIEWS_PANE_ID));
     }
 
     public BookListPanelHandle getBookListPanel() {
@@ -65,6 +67,10 @@ public class MainWindowHandle extends StageHandle {
 
     public BookDetailsPanelHandle getBookDetailsPanel() {
         return bookDetailsPanel;
+    }
+
+    public BookReviewsPanelHandle getBookReviewsPanel() {
+        return bookReviewsPanel;
     }
 
     public String getActiveStylesheet() {

@@ -18,6 +18,7 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
+import guitests.guihandles.BookReviewsPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -113,6 +114,10 @@ public abstract class BibliotekSystemTest {
 
     public BookDetailsPanelHandle getBookDetailsPanel() {
         return mainWindowHandle.getBookDetailsPanel();
+    }
+
+    public BookReviewsPanelHandle getBookReviewsPanel() {
+        return mainWindowHandle.getBookReviewsPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {

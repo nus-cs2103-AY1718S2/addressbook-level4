@@ -87,7 +87,7 @@ public class BookDetailsPanel extends UiPart<Region> {
         });
     }
 
-    protected void clear() {
+    protected void hide() {
         getRoot().setVisible(false);
     }
 

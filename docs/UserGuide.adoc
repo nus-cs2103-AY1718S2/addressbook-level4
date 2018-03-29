@@ -298,7 +298,7 @@ Other examples:
 `delete 1` +
 Deletes the 1st book in the results of the `list` command.
 
-=== Viewing book reviews: `reviews` `[coming in v1.3]`
+=== Viewing book reviews: `reviews` `[since v1.3]`
 
 If a book catches your eyes but you are not sure whether it's worth the read, use
 `reviews` to find out what other readers think. +
@@ -312,7 +312,27 @@ Format: `reviews INDEX`
 
 WARNING: You can only perform `reviews` with Internet connection.
 
-Examples:
+Suppose you have the following search results.
+
+image::ReviewsCommandList.png[width="700"]
+
+If you want to view book reviews for `Catching Fire`, enter `reviews 4`.
+
+image::ReviewsCommandLoading.png[width="700"]
+
+Bibliotek shows `Loading reviews of book: TITLE - Authors: AUTHORS` to indicate that your `reviews` is being processed.
+Bibliotek is loading the reviews page of the book on https://goodreads.com[goodreads].
+
+NOTE: The web page may take some time to load and will only be shown when ready.
+
+image::ReviewsCommandLoaded.png[width="700"]
+
+Once the web page is ready, Bibliotek shows `Reviews loaded successfully!` and displays the web page
+at the right panel. Scroll down the web page to see the reviews for the book.
+
+image::ReviewsCommandScrollDown.png[width="700"]
+
+Other examples:
 
 * `search t/Babylon's Ashes c/Science Fiction` +
 `reviews 1` +

@@ -29,9 +29,10 @@ public class Customer extends Person {
      */
     public Customer() {
         super();
+        this.setType(PersonType.CUSTOMER);
         this.moneyBorrowed = new MoneyBorrowed();
-        this.oweStartDate = new Date();
-        this.oweDueDate = new Date();
+        this.oweStartDate = new Date(0);
+        this.oweDueDate = new Date(0);
         this.standardInterest = new StandardInterest();
         this.lateInterest = new LateInterest();
         this.runner = new Runner();
@@ -41,6 +42,7 @@ public class Customer extends Person {
                     MoneyBorrowed moneyBorrowed, Date oweStartDate, Date oweDueDate, StandardInterest
                             standardInterest, LateInterest lateInterest, Runner runner) {
         super(name, phone, email, address, tags);
+        this.setType(PersonType.CUSTOMER);
         this.moneyBorrowed = moneyBorrowed;
         this.standardInterest = standardInterest;
         this.lateInterest = lateInterest;
@@ -84,6 +86,23 @@ public class Customer extends Person {
         long elapsedTime = currentDate.getTime() - oweStartDate.getTime();
         long elapsedWeeks = elapsedTime / numOfMsPerWeek;
         return moneyBorrowed.value * Math.pow(1 + standardInterest.value / 100, (double) elapsedWeeks);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Customer)) {
+            return false;
+        }
+
+        Customer otherPerson = (Customer) other;
+        return otherPerson.getName().equals(this.getName())
+                && otherPerson.getPhone().equals(this.getPhone())
+                && otherPerson.getEmail().equals(this.getEmail())
+                && otherPerson.getAddress().equals(this.getAddress());
     }
 
     @Override

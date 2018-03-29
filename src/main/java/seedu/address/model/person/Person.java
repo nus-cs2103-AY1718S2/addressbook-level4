@@ -22,6 +22,8 @@ public class Person {
 
     private final UniqueTagList tags;
 
+    private PersonType type;
+
     /**
      * Every field must be present and not null.
      */
@@ -32,6 +34,7 @@ public class Person {
         this.email = new Email();
         this.address = new Address();
         this.tags = new UniqueTagList();
+        type = PersonType.PERSON;
 
     }
 
@@ -43,6 +46,7 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        type = PersonType.PERSON;
     }
 
     public Name getName() {
@@ -59,6 +63,14 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public PersonType getType() {
+        return type;
+    }
+
+    public void setType(PersonType type) {
+        this.type = type;
     }
 
     /**
@@ -107,4 +119,13 @@ public class Person {
         return builder.toString();
     }
 
+    /**
+     * enum to distinguish whether a given Person is a Customer or Runner
+     */
+    public enum PersonType {
+        PERSON, CUSTOMER, RUNNER;
+    }
+
 }
+
+

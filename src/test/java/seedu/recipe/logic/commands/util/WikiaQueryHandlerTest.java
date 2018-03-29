@@ -4,9 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.recipe.logic.commands.util.WikiaQueryHandler.QUERY_URL;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

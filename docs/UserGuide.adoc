@@ -50,21 +50,30 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Command Summary
 
-[%header,cols=3*]
+[NOTE]
+====
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n: NAME`, `NAME` is a parameter which can be used as `add n: John Doe`.
+* Items in square brackets are optional e.g `n: NAME [t: TAG]` can be used as `n: John Doe t: friend` or as `n: John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t: TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t: friend`, `t: friend t: family` etc.
+* Parameters can be in any order e.g. if the command specifies `n: NAME p: PHONE_NUMBER`, `p: PHONE_NUMBER n: NAME` is also acceptable.
+====
+
+[%header,cols="1,1,7"]
 |===
 |Command
-|Keyboard shortcut
+|Keyboard +
+shortcut
 |Syntax
 
 |help
 |kbd:[F1]
 |`help`
 
-|list
+|list (`l`)
 |kbd:[F2]
 |`list`
 
-|history
+|history (`h`)
 |kbd:[Alt+H]
 |`history`
 
@@ -72,160 +81,117 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |kbd:[Alt+Q]
 |`exit`
 
-|clear
+|clear (`c`)
 |kbd:[Alt+C]
 |`clear`
 
-|add
+|add (`a`)
 |kbd:[Alt+A]
 |`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
-|edit
+|edit (`e`)
 |kbd:[Alt+E]
 |`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
-|delete
+|delete (`d`)
 |kbd:[Alt+D]
 |`delete INDEX`
 
-|find
+|find (`f`)
 |kbd:[Ctrl+F]
 |`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
-|select
-|kbd:[Alt+S]
-|`select INDEX`
-
-|locate
+|locate (`l`)
 |kbd:[Alt+L]
 |`locate INDEX`
 
-|undo
+|select (`s`)
+|kbd:[Alt+S]
+|`select INDEX`
+
+|undo (`u`)
 |kbd:[Ctrl+Z]
 |`undo`
 
-|redo
+|redo (`r`)
 |kbd:[Ctrl+Y]
 |`redo`
 |===
 
-[[Features]]
-== Features
+== Feature details
 
-====
-*Command Format*
+=== Showing command history : `history`
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+*Implementation notes*:
 
-=== Viewing help : `help`
-
-Format: `help` +
-Keyboard shortcut: `F1`
-
-=== Listing all persons : `list`
-
-Shows a list of all persons in the syndicate database. +
-Alias: `l` +
-Format: `list` +
-Keyboard shortcut: `F2`
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Alias: `h` +
-Format: `history` +
-Keyboard shortcut: `Alt` + `H`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit` +
-Keyboard shortcut: `Alt` + `Q`
-
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Alias: `c` +
-Format: `clear` +
-Keyboard shortcut: `Alt` + `C`
+* This command will list all the commands that you have previously entered in *reverse chronological order*.
+* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 
 === Adding a person: `add`
 
-Adds a person to the syndicate database. +
-Alias: `a` +
-Format: `add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG]...` +
-Keyboard shortcut (to populate prefixes): `Alt` + `A`
+*Implementation notes*:
 
-[TIP]
-A person can have any number of tags (including 0)
+* A person can have any number of tags (including 0).
 
-Examples:
+*Examples:*
 
-* `add n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01`
-* `add n: Betsy Crowe t:friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal`
+ `add n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01`
+
+ `add n: Betsy Crowe t:friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal`
+
 
 === Editing a person : `edit`
 
-Edits an existing person in the syndicate database. +
-Alias: `e` +
-Format: `edit INDEX [n: NAME] [p: PHONE] [e: EMAIL] [a: ADDRESS] [t: TAG]...` +
-Keyboard shortcut (to populate prefixes): `Alt` + `E`
+*Implementation notes:*
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* This command edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t:` without specifying any tags after it.
-****
 
-Examples:
+*Examples:*
 
+====
 * `edit 1 p: 91234567 e: johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+
+ > Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+====
+
+====
 * `edit 2 n: Betsy Crower t:` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+ > Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+====
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the syndicate database. +
-Alias: `d` +
-Format: `delete INDEX` +
-Keyboard shortcut (to populate prefix): `Alt` + `D`
+*Implementation notes:*
 
-****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-****
 
-Examples:
+*Examples:*
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+====
+`list` +
+`delete 2`
+
+ > Deletes the 2nd person in the address book.
+====
+
+====
+`find Betsy` +
+`delete 1`
+
+ > Deletes the 1st person in the results of the `find` command.
+====
 
 === Searching for relevant persons: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Alias: `f` +
-Specifiers: `-all` `-n` `-p` `-e` `-a` `-t` +
-Format: `find [SPECIFIER] KEYWORD [MORE_KEYWORDS]` +
-Keyboard shortcut (to populate prefix): `Ctrl` + `F`
+*Implementation notes:*
 
-****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Name, address and tags are searched by default (no specifier or -all specifier)
@@ -233,93 +199,105 @@ Keyboard shortcut (to populate prefix): `Ctrl` + `F`
 `-a` to search only addresses, `-t` to search only tags.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `find -p 91234567` +
-Returns any person with the above phone number. Note that there should be no spaces in the entered number.
+====
+`find John` +
+
+ > Returns `john` and `John Doe`
+====
+
+====
+`find Betsy Tim John` +
+
+ > Returns any person having names `Betsy`, `Tim`, or `John`
+====
+
+====
+`find -p 91234567` +
+
+ > Returns any person with the above phone number. Note that there should be no spaces in the entered number.
+====
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Alias: `s` +
-Format: `select INDEX` +
-Keyboard shortcut (to populate prefix): `Alt` + `S`
+*Implementation notes:*
 
-****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
-****
 
 Examples:
 
-* `list` +
+====
+`list` +
 `select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
 
-// tag::undoredo[]
+ > Selects the 2nd person in the address book.
+====
+
+====
+`find Betsy` +
+`select 1` +
+
+ > Selects the 1st person in the results of the `find` command.
+====
+
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Alias: `u` +
-Format: `undo` +
-Keyboard shortcut: `Ctrl` + `Z`
+*Implementation notes:*
 
-[NOTE]
-====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+
+*Examples:*
+
+====
+`delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command)
 ====
 
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
+----
+`select 1` +
 `list` +
 `undo` +
-The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
+ > The `undo` command fails as there are no undoable commands executed previously.
+----
+
+----
+`delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `delete 1` command)
+----
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Alias: `r` +
-Format: `redo` +
-Keyboard shortcut: `Ctrl` + `Y`
+*Examples:*
 
-Examples:
-
-* `delete 1` +
+====
+`delete 1` +
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
+====
 
-* `delete 1` +
+====
+`delete 1` +
 `redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+ > The `redo` command fails as there are no `undo` commands executed previously.
+====
+
+====
+`delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
+`redo` (reapplies the `clear` command)
+====
 
 === Saving the data
 

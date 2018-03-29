@@ -10,6 +10,10 @@ import java.io.PrintWriter;
 public class HtmlWriter {
     public HtmlWriter() {}
 
+    /**
+     * Writes person's data to a HTML file and returns the file location
+     * @return
+     */
     public String writePerson() {
         String filepath = System.getProperty("user.dir") + File.separator + "PersonPage.html";
         String absoluteFilepath;

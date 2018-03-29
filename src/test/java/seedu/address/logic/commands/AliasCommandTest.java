@@ -5,6 +5,7 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 

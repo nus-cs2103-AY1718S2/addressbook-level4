@@ -115,7 +115,8 @@ public class Recipe {
                 && otherRecipe.getPreparationTime().equals(this.getPreparationTime())
                 && otherRecipe.getCalories().equals(this.getCalories())
                 && otherRecipe.getServings().equals(this.getServings())
-                && otherRecipe.getUrl().equals(this.getUrl());
+                && otherRecipe.getUrl().equals(this.getUrl())
+                && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe());
     }
 
     @Override

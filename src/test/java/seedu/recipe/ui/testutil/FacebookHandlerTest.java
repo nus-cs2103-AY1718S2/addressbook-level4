@@ -1,5 +1,6 @@
 package seedu.recipe.ui.testutil;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -17,7 +18,7 @@ public class FacebookHandlerTest {
             + ACCESS_TOKEN_IDENTIFIER + ACCESS_TOKEN_STUB + "&";
     public static final String INVALID_EMBEDDED_ACCESS_TOKEN = REDIRECT_DOMAIN
             + ACCESS_TOKEN_STUB; // without token identifier
-
+    
     @Test
     public void hasAccessToken() {
         FacebookHandler.setAccessToken(null);
@@ -37,6 +38,16 @@ public class FacebookHandlerTest {
     public void checkAndSetAccessToken() {
         assertTrue(FacebookHandler.checkAndSetAccessToken(VALID_EMBEDDED_ACCESS_TOKEN));
         assertFalse(FacebookHandler.checkAndSetAccessToken(INVALID_EMBEDDED_ACCESS_TOKEN));
+    }
+
+    @Test
+    public void getPostDomain() {
+        assertEquals(FacebookHandler.getPostDomain(), FacebookHandler.POST_DOMAIN);
+    }
+
+    @Test
+    public void getRedirectEmbedded() {
+        assertEquals(FacebookHandler.getRedirectEmbedded(), FacebookHandler.REDIRECT_EMBEDDED);
     }
 }
 //@@author

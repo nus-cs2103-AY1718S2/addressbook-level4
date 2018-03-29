@@ -62,15 +62,6 @@ public class RecipeListPanel extends UiPart<Region> {
         });
     }
 
-    //@@author RyanAngJY
-    /**
-     * Scrolls to the {@code RecipeCard} at the {@code index} but does not select it.
-     */
-    private void scrollToWithoutSelection(int index) {
-        recipeListView.scrollTo(index);
-    }
-    //@@author
-
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -81,7 +72,6 @@ public class RecipeListPanel extends UiPart<Region> {
     @Subscribe
     private void handleShareRecipeEvent(ShareRecipeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollToWithoutSelection(event.targetIndex);
     }
     //@@author
 

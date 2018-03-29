@@ -8,9 +8,9 @@ public class FacebookHandler {
 
     public static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
     public static final String REDIRECT_DOMAIN = "https://www.facebook.com/";
+    public static final String REDIRECT_EMBEDDED = "&redirect_uri=" + REDIRECT_DOMAIN;
     private static final String APP_ID = "177615459696708";
-    private static final String REDIRECT_EMBEDDED = "&redirect_uri=" + REDIRECT_DOMAIN;
-    private static final String POST_DOMAIN = "https://www.facebook.com/dialog/feed?%20app_id="
+    public static final String POST_DOMAIN = "https://www.facebook.com/dialog/feed?%20app_id="
             + APP_ID + "&display=popup&amp;&link=";
 
     private static final String ACCESS_RIGHTS = "user_about_me";

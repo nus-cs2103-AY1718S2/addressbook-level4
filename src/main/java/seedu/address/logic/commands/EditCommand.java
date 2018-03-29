@@ -88,6 +88,10 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_APPOINTMENT_SUCCESS = "Edited Appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
+    /**
+     * Enum to support the type of edit command that the user wishes to execute.
+     */
     public enum Type { EDIT_PERSON, EDIT_PET_PATIENT, EDIT_APPOINTMENT };
 
     private Index index;
@@ -146,16 +150,18 @@ public class EditCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             switch (type) {
-                case EDIT_PERSON:
-                    model.updatePerson(personToEdit, editedPerson);
-                    // TODO: complete function to check for pets and appointments under Person
-                    break;
-                case EDIT_PET_PATIENT:
-                    // TODO: complete updatePetPatient() and relevant checks + edits
-                    break;
-                case EDIT_APPOINTMENT:
-                    // TODO: complete updateAppointment() and relevant checks + edits
-                    break;
+            case EDIT_PERSON:
+                model.updatePerson(personToEdit, editedPerson);
+                // TODO: complete function to check for pets and appointments under Person
+                break;
+            case EDIT_PET_PATIENT:
+                // TODO: complete updatePetPatient() and relevant checks + edits
+                break;
+            case EDIT_APPOINTMENT:
+                // TODO: complete updateAppointment() and relevant checks + edits
+                break;
+            default:
+                break;
             }
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -169,21 +175,23 @@ public class EditCommand extends UndoableCommand {
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
         switch (type) {
-            case EDIT_PERSON:
-                preprocessUndoableCommandForPerson();
-                break;
-            case EDIT_PET_PATIENT:
-                preprocessUndoableCommandForPetPatient();
-                break;
-            case EDIT_APPOINTMENT:
-                preprocessUndoableCommandForAppointment();
-                break;
+        case EDIT_PERSON:
+            preprocessUndoableCommandForPerson();
+            break;
+        case EDIT_PET_PATIENT:
+            preprocessUndoableCommandForPetPatient();
+            break;
+        case EDIT_APPOINTMENT:
+            preprocessUndoableCommandForAppointment();
+            break;
+        default:
+            break;
         }
     }
     /**
      * Obtains the last shown person list.
      */
-    protected void preprocessUndoableCommandForPerson() throws CommandException{
+    protected void preprocessUndoableCommandForPerson() throws CommandException {
         List<Person> lastShownPersonList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownPersonList.size()) {
@@ -197,7 +205,7 @@ public class EditCommand extends UndoableCommand {
     /**
      * Obtains the last shown pet patient list.
      */
-    protected void preprocessUndoableCommandForPetPatient() throws CommandException{
+    protected void preprocessUndoableCommandForPetPatient() throws CommandException {
         List<PetPatient> lastShownPetPatientList = model.getFilteredPetPatientList();
 
         if (index.getZeroBased() >= lastShownPetPatientList.size()) {
@@ -211,7 +219,7 @@ public class EditCommand extends UndoableCommand {
     /**
      * Obtains the last shown appointment list.
      */
-    protected void preprocessUndoableCommandForAppointment() throws CommandException{
+    protected void preprocessUndoableCommandForAppointment() throws CommandException {
         List<Appointment> lastShownAppointmentList = model.getFilteredAppointmentList();
 
         if (index.getZeroBased() >= lastShownAppointmentList.size()) {
@@ -244,7 +252,7 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editPetPatientDescriptor}.
      */
     private static PetPatient createEditedPetPatient(PetPatient petPatientToEdit,
-                                                 EditPetPatientDescriptor editPetPatientDescriptor) {
+                                                     EditPetPatientDescriptor editPetPatientDescriptor) {
         assert petPatientToEdit != null;
 
         PetPatientName updatedName = editPetPatientDescriptor.getName().orElse(petPatientToEdit.getName());
@@ -271,7 +279,7 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editAppointmentDescriptor}.
      */
     private static Appointment createEditedAppointment(Appointment appointmentToEdit,
-                                                     EditAppointmentDescriptor editAppointmentDescriptor) {
+                                                       EditAppointmentDescriptor editAppointmentDescriptor) {
         assert appointmentToEdit != null;
 
         Nric updatedOwnerNric = editAppointmentDescriptor.getOwnerNric()
@@ -345,7 +353,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email,
-                this.address, this.nric, this.tags);
+                    this.address, this.nric, this.tags);
         }
 
         public void setName(Name name) {

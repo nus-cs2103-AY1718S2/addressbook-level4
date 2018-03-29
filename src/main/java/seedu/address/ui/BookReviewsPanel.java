@@ -32,6 +32,14 @@ public class BookReviewsPanel extends UiPart<Region> {
     private WebView browser;
 
     public BookReviewsPanel() {
+        this(true);
+    }
+
+    /**
+     * Creates a {@code BookReviewsPanel}.
+     * @param postEvents whether {@code NewResultAvailableEvent} events should be posted when the webpage loads.
+     */
+    protected BookReviewsPanel(boolean postEvents) {
         super(FXML);
         registerAsAnEventHandler(this);
         getRoot().setVisible(false);
@@ -43,20 +51,24 @@ public class BookReviewsPanel extends UiPart<Region> {
         WebEngine engine = browser.getEngine();
         engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
-                raise(new NewResultAvailableEvent(ReviewsCommand.MESSAGE_SUCCESS));
                 getRoot().setVisible(true);
+                if (postEvents) {
+                    raise(new NewResultAvailableEvent(ReviewsCommand.MESSAGE_SUCCESS));
+                }
             } else if (newState == Worker.State.FAILED) {
-                raise(new NewResultAvailableEvent(ReviewsCommand.MESSAGE_FAIL));
+                if (postEvents) {
+                    raise(new NewResultAvailableEvent(ReviewsCommand.MESSAGE_FAIL));
+                }
             }
         });
     }
 
-    private void loadPageForBook(Book book) {
+    protected void loadPageForBook(Book book) {
         loadPage(SEARCH_PAGE_URL.replace("%isbn", book.getIsbn().isbn));
     }
 
     private void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        browser.getEngine().load(url);
     }
 
     protected void hide() {
@@ -66,6 +78,6 @@ public class BookReviewsPanel extends UiPart<Region> {
     @Subscribe
     private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPageForBook(event.getBook());
+        Platform.runLater(() -> loadPageForBook(event.getBook()));
     }
 }

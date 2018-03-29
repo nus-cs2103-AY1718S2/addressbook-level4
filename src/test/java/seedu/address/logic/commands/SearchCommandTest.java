@@ -1,16 +1,20 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
+
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import seedu.address.commons.events.network.ApiSearchRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.SearchCommand.SearchDescriptor;
@@ -18,21 +22,28 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.network.NetworkManager;
 import seedu.address.testutil.SearchDescriptorBuilder;
-import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for SearchCommand.
  */
 public class SearchCommandTest {
+
     @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+    public ExpectedException thrown = ExpectedException.none();
 
     private Model model;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
+    }
+
+    @Test
+    public void constructor_nullDescriptor_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new SearchCommand(null);
     }
 
     @Test
@@ -89,20 +100,25 @@ public class SearchCommandTest {
 
     /**
      * Executes a {@code SearchCommand} with the given {@code descriptor}, and checks that
-     * {@code ApiSearchRequestEvent} is raised with the correct search parameters.
+     * {@code network.searchBooks(params)} is being called with the correct search parameters.
      */
     private void assertExecutionSuccess(SearchDescriptor descriptor) {
-        SearchCommand command = prepareCommand(descriptor);
-        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
-        assertCommandSuccess(command, model, SearchCommand.MESSAGE_SEARCHING, expectedModel);
+        SearchCommand searchCommand = new SearchCommand(descriptor);
 
-        ApiSearchRequestEvent lastEvent = (ApiSearchRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(descriptor.toSearchString(), lastEvent.searchParameters);
+        NetworkManager networkManagerMock = mock(NetworkManager.class);
+        when(networkManagerMock.searchBooks(descriptor.toSearchString()))
+                .thenReturn(CompletableFuture.completedFuture(new BookShelf()));
+
+        searchCommand.setData(model, networkManagerMock, new CommandHistory(), new UndoStack());
+        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
+        assertCommandSuccess(searchCommand, model, SearchCommand.MESSAGE_SEARCHING, expectedModel);
+
+        verify(networkManagerMock).searchBooks(descriptor.toSearchString());
     }
 
     private SearchCommand prepareCommand(SearchDescriptor descriptor) {
         SearchCommand searchCommand = new SearchCommand(descriptor);
-        searchCommand.setData(model, new CommandHistory(), new UndoStack());
+        searchCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return searchCommand;
     }
 }

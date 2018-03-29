@@ -5,6 +5,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
+:linkattrs:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -186,7 +187,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `BookShelfParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a book) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a book), make web API calls using the `Network`, and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Figure 8 below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
@@ -247,6 +248,10 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::search[]
 === Search feature
+
+The search feature allows the user to search for books on https://books.google.com/[Google Books, window="_blank"] that matches some user-specified parameters.
+This allows the user to easily search for particular books, and to add them without having to enter all the information manually (using the `add` command).
+
 ==== Current Implementation
 
 [[Search-Network]]
@@ -255,18 +260,18 @@ This section describes some noteworthy details on how certain features are imple
 As part of the implementation of the search feature, the network component was added to allow for communicating with online services.
 An overview of the network component can be found in <<Design-Network>>.
 
-The network component makes heavy use of events in the way it interacts with other components.
-The `Network` API exposes a single method `stop` that allows for graceful shutdown of the internal asynchronous HTTP client.
-All requests for web API calls should be made by raising the relevant `Api*RequestEvent`.
-To retrieve the results of the web API calls, interested classes should subscribe to the respective `Api*ResultEvent`.
+The `Network` object is passed by `LogicManager` into each `Command`, and is available for use by default, without the need for the `Command` to override `setData`.
 
-For example, to retrieve search results from Google Books API, an `ApiSearchRequestEvent` can be raised.
-The following sequence diagram shows how an `ApiSearchRequestEvent` will be handled:
+The `Network` API exposes various methods for making web API calls to various endpoints.
+Apart from those, it also provides a `stop` method that allows for graceful shutdown of the internal asynchronous HTTP client.
 
-image::SearchRequestSequenceDiagram.png[width="800"]
+As an example, if a command needs to retrieve search results from https://developers.google.com/books/[Google Books API, window="_blank"], it can make a call to the `searchBooks` method of the `Network` API.
+The following sequence diagram shows what happens when `searchBooks` is called:
+
+image::SearchBooksSequenceDiagram.png[width="750"]
 
 The methods shown above are asynchronous - they will not wait for the completion of the HTTP request.
-In particular, note that when `handleApiSearchRequestEvent` finishes execution, the HTTP request might not have completed yet.
+In particular, note that when `Network#searchBooks` finishes execution, the HTTP request might not have completed yet.
 This is accomplished through the use of a chain of `CompletableFuture` objects, which holds the operations that the above methods wish to apply to the data.
 This is most evident in the `executeGetAndApply` method, as shown below:
 [source,java]
@@ -283,40 +288,39 @@ This is most evident in the `executeGetAndApply` method, as shown below:
 
 Once the HTTP request completes, the operations in the `CompletableFuture` objects will be executed. These operations are summarized by the following activity diagram:
 
-image::SearchRequestActivityDiagram.png[width="650"]
+image::SearchBooksActivityDiagram.png[width="650"]
 
-If the HTTP request fails, the response is unexpected, or the conversion to `BookShelf` fails, then the proceeding operations added by the calls to `thenApply` will be skipped,
-and the resulting `ApiSearchResultEvent` that is raised will have a `ResultOutcome` of `FAILURE`.
-[source,java]
-----
-    @Subscribe
-    protected void handleGoogleApiSearchRequestEvent(ApiSearchRequestEvent event) {
-        googleBooksApi.searchBooks(event.searchParameters)
-                .thenApply(bookShelf -> {
-                    raise(new ApiSearchResultEvent(ResultOutcome.SUCCESS, bookShelf));
-                    return bookShelf;
-                })
-                .exceptionally(e -> {
-                    raise(new ApiSearchResultEvent(ResultOutcome.FAILURE, null));
-                    return null;
-                });
-    }
-----
+If the HTTP request fails, the response is unexpected, or the conversion to `BookShelf` fails, then the proceeding operations
+added by the calls to `thenApply` will be skipped, and the `CompletableFuture` is considered to have completed exceptionally.
+If necessary, the caller can handle the failure by chaining an `exceptionally` call onto the `CompletableFuture` it receives.
 
+[[Search-Command]]
 ===== Search command
 
 With the network component in place, the `search` command can now be implemented.
-The `search` command allows the user to search for books on Google Books that matches some user-specified parameters.
 
-When a `search` command is entered, a `SearchCommand` will be created if the parsing of the command was successful, which will raise an `ApiSearchRequestEvent`, as shown in the sequence diagram below:
+When a `search` command is entered, a `SearchCommand` object will be created if the parsing of the command was successful,
+which will make a call to `searchBooks` on the `Network` API, as shown in the sequence diagram below:
 
 image::SearchCommandSequenceDiagram.png[width="800"]
 
-As described in <<Search-Network>>, when the event is handled by `NetworkManager`, this will result in an asynchronous HTTP request being made to Google Books API.
-Once the request and the parsing of the response completes successfully, an `ApiSearchResultEvent` will be raised, which will be handled in `LogicManager`.
-The below sequence diagram shows how the `ApiSearchResultEvent` will be handled:
+As described in <<Search-Network>>, when the event is handled by `NetworkManager`, this will result in an asynchronous HTTP request being made to https://developers.google.com/books/[Google Books API, window="_blank"].
+Once the request and the parsing of the response completes successfully, the operation added by the `thenAccept` call in `SearchCommand` will be executed.
+This results in the execution of the following method in `SearchCommand`:
 
-image::SearchCommandResultSequenceDiagram.png[width="650"]
+[source,java]
+----
+    private void displaySearchResults(ReadOnlyBookShelf bookShelf) {
+        Platform.runLater(() -> {
+            model.updateSearchResults(bookShelf);
+            EventsCenter.getInstance().post(new SwitchToSearchResultsRequestEvent());
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(...));
+        });
+    }
+----
+
+Note that the update to the model must be done on the JavaFX thread (using `Platform#runLater`),
+since updating the search results will update its observable list, which will cause the UI to be updated.
 
 ==== Design Considerations
 
@@ -324,19 +328,19 @@ image::SearchCommandResultSequenceDiagram.png[width="650"]
 
 * **Alternative 1 (current choice):** HTTP requests are made asynchronously.
 ** Pros: The application will be more responsive, as potentially long-running HTTP requests will not block the application thread.
-** Cons: Not straightforward to implement, especially considering that changes to the UI has to be made on the JavaFX application thread.
+** Cons: Not straightforward to implement, especially considering that changes to the UI have to be made on the JavaFX application thread.
 * **Alternative 2:** HTTP requests are made synchronously (on the JavaFX application thread).
 ** Pros: More straightforward to implement, as well as to understand the implementation.
 ** Cons: The UI will be unresponsive for the duration of the HTTP requests, and this can degrade the user experience.
 
 ===== Aspect: Design of network API
 
-* **Alternative 1 (current choice):** Use events to request for web API calls and retrieve the results.
-** Pros: Less coupling - no component will be directly depending on the network component.
-** Cons: The flow of data can become less explicit and clear, and it becomes more complicated to use a single web API call for multiple purposes.
-* **Alternative 2:** Call methods on the `Network` API directly, which return `Future` objects.
+* **Alternative 1 (current choice):** Call methods on the `Network` API directly, which return `CompletableFuture` objects.
 ** Pros: More explicit flow of data, making it easier to understand and debug.
 ** Cons: Since web API calls are made by certain commands, the `NetworkManager` will have to be passed from `MainApp` all the way into each `Command`.
+* **Alternative 2:** Use events to request for web API calls and retrieve the results.
+** Pros: Less coupling - no component will be directly depending on the network component.
+** Cons: The flow of data can become less explicit and clear, and it becomes more complicated to use a single web API call for multiple purposes.
 
 ===== Aspect: Converting JSON responses to model types
 

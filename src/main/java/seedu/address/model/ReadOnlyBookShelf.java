@@ -22,4 +22,9 @@ public interface ReadOnlyBookShelf {
      * This list will not contain any duplicate books.
      */
     ObservableList<Book> getBookList();
+
+    /**
+     * Returns the number of books contained in this book shelf.
+     */
+    int size();
 }

@@ -113,6 +113,11 @@ public class BookShelf implements ReadOnlyBookShelf {
     }
 
     @Override
+    public int size() {
+        return getBookList().size();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
             || (other instanceof BookShelf // instanceof handles nulls

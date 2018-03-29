@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.mockito.Mockito.mock;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
@@ -12,6 +13,7 @@ import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.network.NetworkManager;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -31,7 +33,7 @@ public class RecentCommandTest {
         expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
 
         recentCommand = new RecentCommand();
-        recentCommand.setData(model, new CommandHistory(), new UndoStack());
+        recentCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
     }
 
     @Test

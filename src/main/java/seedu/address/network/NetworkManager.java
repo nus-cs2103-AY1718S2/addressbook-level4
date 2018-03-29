@@ -2,26 +2,22 @@ package seedu.address.network;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.network.ApiBookDetailsRequestEvent;
-import seedu.address.commons.events.network.ApiBookDetailsResultEvent;
-import seedu.address.commons.events.network.ApiSearchRequestEvent;
-import seedu.address.commons.events.network.ApiSearchResultEvent;
-import seedu.address.commons.events.network.ResultOutcome;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.ReadOnlyBookShelf;
+import seedu.address.model.book.Book;
 import seedu.address.network.api.google.GoogleBooksApi;
 
 /**
  * Provides networking functionality (making web API calls).
  *
- * No web API methods are directly exposed on this class. To make a web API call,
- * raise the corresponding *RequestEvent. To receive the results of the call,
- * handle the corresponding *ResultEvent.
+ * The methods on this class (except {@code stop()}) are asynchronous, and returns a
+ * {@code CompletableFuture} that will resolve to the desired object or data.
  */
 public class NetworkManager extends ComponentManager implements Network {
 
@@ -44,37 +40,34 @@ public class NetworkManager extends ComponentManager implements Network {
     }
 
     @Override
+    public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+        return googleBooksApi.searchBooks(parameters)
+                .thenApply(bookShelf -> {
+                    logger.info("Search books succeeded: " + parameters);
+                    return bookShelf;
+                })
+                .exceptionally(e -> {
+                    logger.warning("Search books failed: " + StringUtil.getDetails(e));
+                    throw new CompletionException(e);
+                });
+    }
+
+    @Override
+    public CompletableFuture<Book> getBookDetails(String bookId) {
+        return googleBooksApi.getBookDetails(bookId)
+                .thenApply(book -> {
+                    logger.info("Get book details succeeded: " + bookId);
+                    return book;
+                })
+                .exceptionally(e -> {
+                    logger.warning("Get book details failed: " + StringUtil.getDetails(e));
+                    throw new CompletionException(e);
+                });
+    }
+
+    @Override
     public void stop() {
         httpClient.close();
     }
 
-    @Subscribe
-    protected void handleGoogleApiSearchRequestEvent(ApiSearchRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        googleBooksApi.searchBooks(event.searchParameters)
-                .thenApply(bookShelf -> {
-                    raise(new ApiSearchResultEvent(ResultOutcome.SUCCESS, bookShelf));
-                    return bookShelf;
-                })
-                .exceptionally(e -> {
-                    logger.warning("Search request failed: " + StringUtil.getDetails(e));
-                    raise(new ApiSearchResultEvent(ResultOutcome.FAILURE, null));
-                    return null;
-                });
-    }
-
-    @Subscribe
-    protected void handleGoogleApiBookDetailsRequestEvent(ApiBookDetailsRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        googleBooksApi.getBookDetails(event.bookId)
-                .thenApply(book -> {
-                    raise(new ApiBookDetailsResultEvent(ResultOutcome.SUCCESS, book));
-                    return book;
-                })
-                .exceptionally(e -> {
-                    logger.warning("Book detail request failed: " + StringUtil.getDetails(e));
-                    raise(new ApiBookDetailsResultEvent(ResultOutcome.FAILURE, null));
-                    return null;
-                });
-    }
 }

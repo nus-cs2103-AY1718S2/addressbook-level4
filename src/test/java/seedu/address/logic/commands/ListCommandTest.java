@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
 import static seedu.address.testutil.TypicalBooks.ARTEMIS;
 import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
@@ -28,6 +29,7 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
+import seedu.address.network.NetworkManager;
 import seedu.address.testutil.FilterDescriptorBuilder;
 
 /**
@@ -149,7 +151,7 @@ public class ListCommandTest {
 
     private ListCommand prepareCommand(FilterDescriptor descriptor, Comparator<Book> comparator) {
         ListCommand listCommand = new ListCommand(descriptor, comparator);
-        listCommand.setData(model, new CommandHistory(), new UndoStack());
+        listCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return listCommand;
     }
 }

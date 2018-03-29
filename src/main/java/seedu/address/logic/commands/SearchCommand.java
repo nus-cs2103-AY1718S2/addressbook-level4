@@ -8,9 +8,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.Optional;
 
+import javafx.application.Platform;
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.network.ApiSearchRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.ReadOnlyBookShelf;
 
 /**
  * Searches for books on Google Books that matches a set of parameters.
@@ -47,8 +50,34 @@ public class SearchCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new ApiSearchRequestEvent(searchDescriptor.toSearchString()));
+        makeAsyncSearchRequest();
         return new CommandResult(MESSAGE_SEARCHING);
+    }
+
+    /**
+     * Makes an asynchronous request to search for books.
+     */
+    private void makeAsyncSearchRequest() {
+        network.searchBooks(searchDescriptor.toSearchString())
+                .thenAccept(this::displaySearchResults)
+                .exceptionally(e -> {
+                    EventsCenter.getInstance().post(new NewResultAvailableEvent(SearchCommand.MESSAGE_SEARCH_FAIL));
+                    return null;
+                });
+    }
+
+    /**
+     * Updates the model with the given search results and posts events to update the UI.
+     */
+    private void displaySearchResults(ReadOnlyBookShelf bookShelf) {
+        // Updating the search results on the model will update its observable list (and hence the UI)
+        // so this must be done on the JavaFX thread.
+        Platform.runLater(() -> {
+            model.updateSearchResults(bookShelf);
+            EventsCenter.getInstance().post(new SwitchToSearchResultsRequestEvent());
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                    String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
+        });
     }
 
     @Override

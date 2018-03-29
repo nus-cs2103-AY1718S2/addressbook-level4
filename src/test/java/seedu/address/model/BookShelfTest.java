@@ -131,6 +131,11 @@ public class BookShelfTest {
         public ObservableList<Book> getBookList() {
             return books;
         }
+
+        @Override
+        public int size() {
+            return books.size();
+        }
     }
 
 }

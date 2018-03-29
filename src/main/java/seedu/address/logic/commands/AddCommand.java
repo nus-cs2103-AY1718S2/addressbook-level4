@@ -5,12 +5,14 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.application.Platform;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.network.ApiBookDetailsRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
  * Adds a book to the book shelf.
@@ -41,11 +43,38 @@ public class AddCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() {
         requireNonNull(toAdd);
 
-        EventsCenter.getInstance().post(new ApiBookDetailsRequestEvent(toAdd.getGid().gid));
+        makeAsyncBookDetailsRequest();
         return new CommandResult(MESSAGE_ADDING);
+    }
+
+    /**
+     * Makes an asynchronous request to retrieve book details.
+     */
+    private void makeAsyncBookDetailsRequest() {
+        network.getBookDetails(toAdd.getGid().gid)
+                .thenAccept(this::addBook)
+                .exceptionally(e -> {
+                    EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_ADD_FAIL));
+                    return null;
+                });
+    }
+
+    /**
+     * Adds the given book to the book shelf and posts events to update the UI.
+     */
+    private void addBook(Book book) {
+        Platform.runLater(() -> {
+            try {
+                model.addBook(book);
+                EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                        String.format(AddCommand.MESSAGE_SUCCESS, book)));
+            } catch (DuplicateBookException e) {
+                EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
+            }
+        });
     }
 
     @Override

@@ -8,20 +8,18 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutionException;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import seedu.address.commons.events.network.ApiBookDetailsRequestEvent;
-import seedu.address.commons.events.network.ApiBookDetailsResultEvent;
-import seedu.address.commons.events.network.ApiSearchRequestEvent;
-import seedu.address.commons.events.network.ApiSearchResultEvent;
-import seedu.address.commons.events.network.ResultOutcome;
 import seedu.address.model.BookShelf;
+import seedu.address.model.ReadOnlyBookShelf;
+import seedu.address.model.book.Book;
 import seedu.address.network.api.google.GoogleBooksApi;
 import seedu.address.testutil.TypicalBooks;
-import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class NetworkManagerTest {
     private static final String PARAM_EMPTY_RESULT = "1";
@@ -29,7 +27,7 @@ public class NetworkManagerTest {
     private static final String PARAM_FAILURE = "failure";
 
     @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+    public ExpectedException thrown = ExpectedException.none();
 
     private NetworkManager networkManager;
     private GoogleBooksApi mockGoogleBooksApi;
@@ -38,82 +36,63 @@ public class NetworkManagerTest {
     public void setUp() {
         mockGoogleBooksApi = mock(GoogleBooksApi.class);
         networkManager = new NetworkManager(mock(HttpClient.class), mockGoogleBooksApi);
-        eventsCollectorRule.eventsCollector.reset();
     }
 
     @Test
-    public void handleGoogleApiSearchRequestEvent_emptyResult() {
-        /*
-         * The stubbed methods return a CompletableFuture that is already completed, so the chained
-         * calls within NetworkManager will be executed synchronously. We are therefore guaranteed
-         * that the *ResultEvent will have already been raised when the methods we are testing returns.
-         */
+    public void handleGoogleApiSearchRequestEvent_emptyResult() throws Exception {
         when(mockGoogleBooksApi.searchBooks(PARAM_EMPTY_RESULT))
                 .thenReturn(CompletableFuture.completedFuture(new BookShelf()));
 
-        networkManager.handleGoogleApiSearchRequestEvent(new ApiSearchRequestEvent(PARAM_EMPTY_RESULT));
-        ApiSearchResultEvent event =
-                (ApiSearchResultEvent) eventsCollectorRule.eventsCollector.getMostRecent(ApiSearchResultEvent.class);
+        ReadOnlyBookShelf bookShelf = networkManager.searchBooks(PARAM_EMPTY_RESULT).get();
 
         verify(mockGoogleBooksApi).searchBooks(PARAM_EMPTY_RESULT);
-        assertEquals(ResultOutcome.SUCCESS, event.outcome);
-        assertEquals(0, event.bookShelf.getBookList().size());
+        assertEquals(0, bookShelf.size());
     }
 
     @Test
-    public void handleGoogleApiSearchRequestEvent_success() {
+    public void handleGoogleApiSearchRequestEvent_success() throws Exception {
         when(mockGoogleBooksApi.searchBooks(PARAM_SUCCESS))
                 .thenReturn(CompletableFuture.completedFuture(TypicalBooks.getTypicalBookShelf()));
 
-        networkManager.handleGoogleApiSearchRequestEvent(new ApiSearchRequestEvent(PARAM_SUCCESS));
-        ApiSearchResultEvent event =
-                (ApiSearchResultEvent) eventsCollectorRule.eventsCollector.getMostRecent(ApiSearchResultEvent.class);
+        ReadOnlyBookShelf bookShelf = networkManager.searchBooks(PARAM_SUCCESS).get();
 
         verify(mockGoogleBooksApi).searchBooks(PARAM_SUCCESS);
-        assertEquals(ResultOutcome.SUCCESS, event.outcome);
-        assertEquals(5, event.bookShelf.getBookList().size());
+        assertEquals(5, bookShelf.size());
     }
 
     @Test
-    public void handleGoogleApiSearchRequestEvent_failure() {
+    public void handleGoogleApiSearchRequestEvent_failure() throws Exception {
         when(mockGoogleBooksApi.searchBooks(PARAM_FAILURE))
                 .thenReturn(getFailedFuture());
 
-        networkManager.handleGoogleApiSearchRequestEvent(new ApiSearchRequestEvent(PARAM_FAILURE));
-        ApiSearchResultEvent event =
-                (ApiSearchResultEvent) eventsCollectorRule.eventsCollector.getMostRecent(ApiSearchResultEvent.class);
-
+        CompletableFuture<ReadOnlyBookShelf> bookShelf = networkManager.searchBooks(PARAM_FAILURE);
         verify(mockGoogleBooksApi).searchBooks(PARAM_FAILURE);
-        assertEquals(ResultOutcome.FAILURE, event.outcome);
-        assertEquals(null, event.bookShelf);
+
+        thrown.expect(ExecutionException.class);
+        bookShelf.get();
     }
 
     @Test
-    public void handleGoogleApiBookDetailsRequestEvent_success() {
+    public void handleGoogleApiBookDetailsRequestEvent_success() throws Exception {
         when(mockGoogleBooksApi.getBookDetails(PARAM_SUCCESS))
                 .thenReturn(CompletableFuture.completedFuture(TypicalBooks.ARTEMIS));
 
-        networkManager.handleGoogleApiBookDetailsRequestEvent(new ApiBookDetailsRequestEvent(PARAM_SUCCESS));
-        ApiBookDetailsResultEvent event = (ApiBookDetailsResultEvent)
-                eventsCollectorRule.eventsCollector.getMostRecent(ApiBookDetailsResultEvent.class);
+        Book book = networkManager.getBookDetails(PARAM_SUCCESS).get();
 
         verify(mockGoogleBooksApi).getBookDetails(PARAM_SUCCESS);
-        assertEquals(ResultOutcome.SUCCESS, event.outcome);
-        assertEquals(TypicalBooks.ARTEMIS, event.book);
+        assertEquals(TypicalBooks.ARTEMIS, book);
     }
 
     @Test
-    public void handleGoogleApiBookDetailsRequestEvent_failure() {
+    public void handleGoogleApiBookDetailsRequestEvent_failure() throws Exception {
         when(mockGoogleBooksApi.getBookDetails(PARAM_FAILURE))
                 .thenReturn(getFailedFuture());
 
-        networkManager.handleGoogleApiBookDetailsRequestEvent(new ApiBookDetailsRequestEvent(PARAM_FAILURE));
-        ApiBookDetailsResultEvent event = (ApiBookDetailsResultEvent)
-                eventsCollectorRule.eventsCollector.getMostRecent(ApiBookDetailsResultEvent.class);
-
+        CompletableFuture<Book> book = networkManager.getBookDetails(PARAM_FAILURE);
         verify(mockGoogleBooksApi).getBookDetails(PARAM_FAILURE);
-        assertEquals(ResultOutcome.FAILURE, event.outcome);
-        assertEquals(null, event.book);
+
+        thrown.expect(ExecutionException.class);
+        book.get();
     }
 
     /**

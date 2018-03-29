@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.mockito.Mockito.mock;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
@@ -12,6 +13,7 @@ import seedu.address.model.ActiveListType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.network.NetworkManager;
 
 public class ClearCommandTest {
 
@@ -44,7 +46,7 @@ public class ClearCommandTest {
      */
     private ClearCommand prepareCommand(Model model) {
         ClearCommand command = new ClearCommand();
-        command.setData(model, new CommandHistory(), new UndoStack());
+        command.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return command;
     }
 }

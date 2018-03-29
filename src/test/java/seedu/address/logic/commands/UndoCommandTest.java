@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.mockito.Mockito.mock;
 import static seedu.address.logic.UndoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -17,8 +18,10 @@ import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.network.NetworkManager;
 
 public class UndoCommandTest {
+    private static final NetworkManager MOCK_NETWORK_MANAGER = mock(NetworkManager.class);
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoStack EMPTY_STACK = new UndoStack();
 
@@ -28,8 +31,8 @@ public class UndoCommandTest {
 
     @Before
     public void setUp() {
-        deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-        deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandOne.setData(model, MOCK_NETWORK_MANAGER, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandTwo.setData(model, MOCK_NETWORK_MANAGER, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
 
     @Test
@@ -37,7 +40,7 @@ public class UndoCommandTest {
         UndoStack undoStack = prepareStack(
                 Arrays.asList(deleteCommandOne, deleteCommandTwo));
         UndoCommand undoCommand = new UndoCommand();
-        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoStack);
+        undoCommand.setData(model, MOCK_NETWORK_MANAGER, EMPTY_COMMAND_HISTORY, undoStack);
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
 

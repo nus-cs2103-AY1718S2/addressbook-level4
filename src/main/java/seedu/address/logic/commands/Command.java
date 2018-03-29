@@ -5,12 +5,14 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.network.Network;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
  */
 public abstract class Command {
     protected Model model;
+    protected Network network;
     protected CommandHistory history;
     protected UndoStack undoStack;
 
@@ -37,7 +39,8 @@ public abstract class Command {
      * Commands making use of any of these should override this method to gain
      * access to the dependencies.
      */
-    public void setData(Model model, CommandHistory history, UndoStack undoStack) {
+    public void setData(Model model, Network network, CommandHistory history, UndoStack undoStack) {
         this.model = model;
+        this.network = network;
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
+import seedu.address.network.Network;
 
 /**
  * Lists all the commands entered by user from the start of app launch.
@@ -31,7 +32,7 @@ public class HistoryCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory history, UndoStack undoStack) {
+    public void setData(Model model, Network network, CommandHistory history, UndoStack undoStack) {
         requireNonNull(history);
         this.history = history;
     }

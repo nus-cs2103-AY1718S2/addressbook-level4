@@ -76,7 +76,7 @@ public class MainApp extends Application {
 
         network = new NetworkManager();
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, network);
 
         ui = new UiManager(logic, config, userPrefs);
 

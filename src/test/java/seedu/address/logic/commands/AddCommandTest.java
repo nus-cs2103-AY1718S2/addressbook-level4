@@ -2,12 +2,17 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
+
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,6 +28,8 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.book.Book;
+import seedu.address.network.NetworkManager;
 
 /**
  * Contains integration tests (interaction with the Model and UndoCommand) and unit tests for
@@ -62,12 +69,11 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_validIndexSearchResults_success() throws Exception {
-        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
+    public void execute_validIndexSearchResults_success() {
         ModelManager expectedModel = new ModelManager();
         prepareSearchResultListInModel(expectedModel);
 
-        assertCommandSuccess(addCommand, model, AddCommand.MESSAGE_ADDING, expectedModel);
+        assertExecutionSuccess(INDEX_FIRST_BOOK, model.getSearchResultsList().get(0), expectedModel);
     }
 
     @Test
@@ -78,15 +84,14 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_validIndexRecentBooks_success() throws Exception {
+    public void execute_validIndexRecentBooks_success() {
         prepareRecentBooksListInModel(model);
 
-        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
         ModelManager expectedModel = new ModelManager();
         prepareSearchResultListInModel(expectedModel);
         prepareRecentBooksListInModel(expectedModel);
 
-        assertCommandSuccess(addCommand, model, AddCommand.MESSAGE_ADDING, expectedModel);
+        assertExecutionSuccess(INDEX_FIRST_BOOK, model.getRecentBooksList().get(0), expectedModel);
     }
 
     @Test
@@ -100,11 +105,17 @@ public class AddCommandTest {
 
     @Test
     public void executeUndo_validIndex_success() throws Exception {
-        UndoStack undoStack = new UndoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
-        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
         ModelManager expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
         prepareSearchResultListInModel(expectedModel);
+        UndoStack undoStack = new UndoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
+
+        NetworkManager networkManagerMock = mock(NetworkManager.class);
+        when(networkManagerMock.getBookDetails(model.getSearchResultsList().get(0).getGid().gid))
+                .thenReturn(CompletableFuture.completedFuture(model.getSearchResultsList().get(0)));
+
+        AddCommand addCommand = new AddCommand(INDEX_FIRST_BOOK);
+        addCommand.setData(model, networkManagerMock, new CommandHistory(), new UndoStack());
 
         // add -> first book added
         addCommand.execute();
@@ -175,11 +186,28 @@ public class AddCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Executes an {@code AddCommand} with the given {@code index}, and checks that
+     * {@code network.getBookDetails(bookId)} is being called with the correct book ID.
+     */
+    private void assertExecutionSuccess(Index index, Book expectedBook, Model expectedModel) {
+        AddCommand addCommand = new AddCommand(index);
+
+        NetworkManager networkManagerMock = mock(NetworkManager.class);
+        when(networkManagerMock.getBookDetails(expectedBook.getGid().gid))
+                .thenReturn(CompletableFuture.completedFuture(expectedBook));
+
+        addCommand.setData(model, networkManagerMock, new CommandHistory(), new UndoStack());
+
+        assertCommandSuccess(addCommand, model, AddCommand.MESSAGE_ADDING, expectedModel);
+        verify(networkManagerMock).getBookDetails(expectedBook.getGid().gid);
+    }
+
+    /**
+     * Returns an {@code AddCommand} with the parameter {@code index}.
      */
     private AddCommand prepareCommand(Index index) {
         AddCommand addCommand = new AddCommand(index);
-        addCommand.setData(model, new CommandHistory(), new UndoStack());
+        addCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return addCommand;
     }
 

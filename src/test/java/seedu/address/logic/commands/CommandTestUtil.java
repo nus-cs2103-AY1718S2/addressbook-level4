@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
@@ -21,6 +22,7 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.network.NetworkManager;
 
 /**
  * Contains helper methods for testing commands.
@@ -124,7 +126,7 @@ public class CommandTestUtil {
      */
     public static UndoCommand prepareUndoCommand(Model model, UndoStack undoStack) {
         UndoCommand undoCommand = new UndoCommand();
-        undoCommand.setData(model, new CommandHistory(), undoStack);
+        undoCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), undoStack);
         return undoCommand;
     }
 }

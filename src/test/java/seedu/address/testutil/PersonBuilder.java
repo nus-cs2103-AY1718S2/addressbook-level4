@@ -10,8 +10,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.smplatform.Facebook;
-import seedu.address.model.smplatform.Link;
 import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;

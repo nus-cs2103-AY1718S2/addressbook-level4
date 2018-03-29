@@ -9,17 +9,23 @@ import java.io.IOException;
 import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import org.apache.commons.csv.CSVPrinter;
 
 import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ExportContactsCommandParser;
+import seedu.address.model.ModelManager;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.testutil.PersonBuilder;
 
 public class ExportContactsCommandTest {
 
-    public static final String VALID_NEW_FILE_PATH = "./writeToThisFile.csv";
-    public static final String VALID_EXISTING_FILE_PATH = "~/Desktop/testContacts.csv";
+    public static final String VALID_NEW_FILE_PATH = "data/exportToNew.csv";
+    public static final String VALID_EXISTING_FILE_PATH = "data/exportTo.csv";
 
     //featureUnderTest_testScenario_expectedBehavior()
 
@@ -31,37 +37,80 @@ public class ExportContactsCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+    public void exportCommandParse_giveValidArguments_returnExportContactCommand() throws Exception {
+        ExportContactsCommandParser eccp = new ExportContactsCommandParser();
+        ExportContactsCommand a = eccp.parse();
+        ExportContactsCommand b = eccp.parse("data/exportTo");
+
+        assertNotNull(a);
+        assertNotNull(b);
+    }
+
+    @Test
+    public void getDefaultPath_callWithoutArgs_returnsCorrectString() throws Exception {
+        Path x = exportDefaultPath.getDefaultPath();
+        assertEquals(x.toString(), "data/exportTo.csv");
+    }
+
+    @Test
     public void getCSVToWriteTo_workingDirectoryNewFile_noExceptionThrown() throws IOException {
-        CSVPrinter csvp = null;
+        CSVPrinter csvpDefault = null;
+        CSVPrinter csvpNew = null;
+        CSVPrinter csvpExisting = null;
 
         try {
-            csvp = exportNewPath.getCSVToWriteTo();
+            csvpNew = exportNewPath.getCSVToWriteTo();
+            csvpDefault = exportNewPath.getCSVToWriteTo();
+            csvpExisting = exportNewPath.getCSVToWriteTo();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        assertNotNull(csvp);
+        assertNotNull(csvpDefault);
+        assertNotNull(csvpNew);
+        assertNotNull(csvpExisting);
     }
 
     @Test
     public void getDefaultPath_noPathGiven_throwsNoExceptionsAndReturnsPath() {
-        String path = null;
+        Path path = null;
         path = exportDefaultPath.getDefaultPath();
         assertNotNull(path);
     }
 
     @Test
-    public void executeUndoableCommand_validNewFilePath_createsNewFileAndWritesToIt() throws CommandException {
+    public void executeUndoableCommand_validNewFilePath_createsNewFileAndWritesToIt() throws
+            CommandException, DuplicatePersonException {
         CommandResult cr = null;
+        exportExistingPath.model = new ModelManager();
+        PersonBuilder pb = new PersonBuilder();
+        exportExistingPath.model.addPerson(pb.build());
+
         try {
             cr = exportNewPath.executeUndoableCommand();
         } catch (CommandException e) {
             e.printStackTrace();
         }
 
-        assertEquals(cr.toString(), "Contacts successfully exported.\n");
+        assertEquals(cr.feedbackToUser, "Contacts successfully exported.\n");
     }
 
+    @Test
+    public void executeUndoableCommand_validExistingFilePath_writesToExistingFile() throws
+            CommandException, DuplicatePersonException {
+        CommandResult cr = null;
+        exportExistingPath.model = new ModelManager();
+        PersonBuilder pb = new PersonBuilder();
+        exportExistingPath.model.addPerson(pb.build());
+
+        try {
+            cr = exportExistingPath.executeUndoableCommand();
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals("Contacts successfully exported.\n", cr.feedbackToUser);
+    }
 
     @Test
     public void writingToValidPath_newFileNameAtCurrentPath_createsNewFileAndWritesContacts() throws Exception {

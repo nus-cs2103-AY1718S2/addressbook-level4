@@ -122,7 +122,7 @@ public class EditCommand extends UndoableCommand {
         Vegetarian updatedVegetarian = editPersonDescriptor.getVegetarian().orElse(personToEdit.getVegetarian());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedOrder,updatedEmail, updatedAddress,
+        return new Person(updatedName, updatedPhone, updatedOrder, updatedEmail, updatedAddress,
                 updatedHalal, updatedVegetarian, updatedTags);
     }
 
@@ -180,7 +180,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.order,this.email, this.address,
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.order, this.email, this.address,
                     this.halal, this.vegetarian, this.tags);
         }
 

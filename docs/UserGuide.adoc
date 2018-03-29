@@ -339,6 +339,26 @@ image::ClearCommand.png[width="750"]
 [TIP]
 If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
 
+//tag::change-theme[]
+=== Changing theme: *`theme`*
+
+Toggles between dark and light theme.
+
+Format: `theme`
+
+See <<fig-ChangeThemeCommand>> for more information. +
+{nbsp}
+
+[[fig-ChangeThemeCommand]]
+.Two themes provided for ReciRecipé
+image::ChangeThemeCommand.png[width="750"]
+
+{nbsp} +
+
+[TIP]
+You can change theme from the menu bar or by pressing F2 too!
+//end::change-theme[]
+
 === Exiting the program: *`exit`*
 
 Exits the program.

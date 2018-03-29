@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_USAGE;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getPerson;
@@ -19,10 +18,9 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
+import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -30,6 +28,14 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT_OWNER =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE_OWNER);
+    private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT_PET_PATIENT =
+            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE_PET_PATIENT);
+    private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_OWNER =
+            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE_FORCE_OWNER);
+    private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_PET_PATIENT =
+            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE_FORCE_PET_PATIENT);
+    private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT_APPOINTMENT =
+            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE_APPOINTMENT);
 
     @Test
     public void delete() {
@@ -92,7 +98,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
-        /* --------------------------------- Performing invalid delete operation ------------------------------------ */
+        /* ----------------------- Performing invalid delete operation for owner ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
         command = DeleteCommand.COMMAND_WORD + " -o 0";
@@ -118,6 +124,138 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("DelETE -o 1", MESSAGE_UNKNOWN_COMMAND);
+
+        /* ------------------ Performing invalid delete operation for appointment ----------------------------------- */
+
+        /* Case: invalid index (0) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -a 0";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_APPOINTMENT);
+
+        /* Case: invalid index (-1) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -a -1";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_APPOINTMENT);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getAppointmentList().size() + 1);
+        command = DeleteCommand.COMMAND_WORD + " -a " + outOfBoundsIndex.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -a abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT_APPOINTMENT);
+
+        /* Case: invalid arguments (extra argument) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -a 1 abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT_APPOINTMENT);
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure("DelETE -a 1", MESSAGE_UNKNOWN_COMMAND);
+
+        /* ------------------ Performing invalid delete operation for pet patient ----------------------------------- */
+
+        /* Case: invalid index (0) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -p 0";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_PET_PATIENT);
+
+        /* Case: invalid index (-1) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -p -1";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_PET_PATIENT);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getPetPatientList().size() + 1);
+        command = DeleteCommand.COMMAND_WORD + " -p " + outOfBoundsIndex.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -p abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT_PET_PATIENT);
+
+        /* Case: invalid arguments (extra argument) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -p 1 abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT_PET_PATIENT);
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure("DelETE -p 1", MESSAGE_UNKNOWN_COMMAND);
+
+        /* ----------------------- Performing invalid delete operation for force owner ------------------------------ */
+
+        /* Case: invalid index (0) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -fo 0";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_OWNER);
+
+        /* Case: invalid index (-1) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -fo -1";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_OWNER);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getPersonList().size() + 1);
+        command = DeleteCommand.COMMAND_WORD + " -fo " + outOfBoundsIndex.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -fo abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_OWNER);
+
+        /* Case: invalid arguments (extra argument) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -fo 1 abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_OWNER);
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure("DelETE -fo 1", MESSAGE_UNKNOWN_COMMAND);
+
+        /* ----------------------- Performing invalid delete operation for force pet patient ------------------------ */
+
+        /* Case: invalid index (0) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -fp 0";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_PET_PATIENT);
+
+        /* Case: invalid index (-1) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -fp -1";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_PET_PATIENT);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getPersonList().size() + 1);
+        command = DeleteCommand.COMMAND_WORD + " -fp " + outOfBoundsIndex.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -fp abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_PET_PATIENT);
+
+        /* Case: invalid arguments (extra argument) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -fp 1 abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT_FORCE_PET_PATIENT);
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure("DelETE -fp 1", MESSAGE_UNKNOWN_COMMAND);
+
+        /* ------------------------- Performing invalid delete operation with wrong type ---------------------------- */
+
+        /* Case: invalid index (0) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -sha 0";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: invalid index (-1) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -fza -1";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getPersonList().size() + 1);
+        command = DeleteCommand.COMMAND_WORD + " -fup " + outOfBoundsIndex.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -fsp abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: invalid arguments (extra argument) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -nafp 1 abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
     }
 
     /**
@@ -127,12 +265,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private Person removePerson(Model model, Index index) {
         Person targetPerson = getPerson(model, index);
         try {
-            model.deleteForcePerson(targetPerson);
+            model.deletePerson(targetPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
-        } catch (PetPatientNotFoundException e) {
-            throw new AssertionError("targetPerson is retrieved from model.");
-        } catch (AppointmentNotFoundException e) {
+        } catch (PetDependencyNotEmptyException e) {
             throw new AssertionError("targetPerson is retrieved from model.");
         }
         return targetPerson;

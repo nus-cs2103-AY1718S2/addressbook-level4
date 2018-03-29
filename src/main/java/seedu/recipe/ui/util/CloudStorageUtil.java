@@ -28,13 +28,13 @@ public class CloudStorageUtil {
 
     private static final String APP_KEY = "0kj3cb9w27d66n8";
     private static final String APP_SECRET = "7stnncfsyvgim60";
-    private static final String REDIRECT_DOMAIN = "https://www.dropbox.com/h";
-    private static final String AUTHORIZATION_URL = "https://www.dropbox.com/1/oauth2/authorize?"
-                                + "response_type=token&client_id=" + APP_KEY + "&redirect_uri="
-                                + REDIRECT_DOMAIN;
+    private static final String REDIRECT_DOMAIN = "https://www.dropbox.com/";
+    private static final String AUTHORIZATION_DOMAIN = "https://www.dropbox.com/1/oauth2/authorize?";
+    private static final String AUTHORIZATION_URL = AUTHORIZATION_DOMAIN + "response_type=token&client_id="
+                                                    + APP_KEY + "&redirect_uri=" + REDIRECT_DOMAIN;
 
     private static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
-    private static final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&.*";
+    private static final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&token(.*)";
     private static final String EXTRACT_PORTION = "$1";
 
     private static String accessToken = null;
@@ -60,8 +60,11 @@ public class CloudStorageUtil {
         if (url.contains(ACCESS_TOKEN_IDENTIFIER)) {
             String token = extractAccessToken(url);
             setAccessToken(token);
+            System.out.println("true");
+            System.out.println(accessToken);
             return true;
         } else {
+            System.out.println("false");
             return false;
         }
     }
@@ -116,6 +119,10 @@ public class CloudStorageUtil {
 
     public static String getAccessToken() {
         return accessToken;
+    }
+
+    public static String getAuthorizationDomain() {
+        return AUTHORIZATION_DOMAIN;
     }
 
     public static String getRedirectDomain() {

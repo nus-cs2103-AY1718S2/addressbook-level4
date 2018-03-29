@@ -21,7 +21,6 @@ import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.logic.CommandHistory;
 import seedu.recipe.logic.UndoRedoStack;
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.RecipeBook;
 import seedu.recipe.model.recipe.NameContainsKeywordsPredicate;

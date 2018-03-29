@@ -12,6 +12,7 @@ public class UploadCommand extends Command {
     public static final String COMMAND_WORD = "upload";
     public static final String MESSAGE_SUCCESS = "Upload success!";
     public static final String MESSAGE_FAILURE = "Failed to upload!";
+    public static final String MESSAGE_UPLOAD = "Connecting to Dropbox......";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
             + "specified filename, with no spaces. It will only take in the first parameter. Filename cannot start "
@@ -34,7 +35,7 @@ public class UploadCommand extends Command {
     public CommandResult execute() {
         EventsCenter.getInstance().post(new UploadRecipesEvent(xmlExtensionFilename));
 
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(MESSAGE_UPLOAD);
     }
 
     @Override

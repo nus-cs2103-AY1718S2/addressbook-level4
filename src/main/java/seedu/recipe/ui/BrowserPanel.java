@@ -104,13 +104,19 @@ public class BrowserPanel extends UiPart<Region> {
                     String url = browserEngine.getLocation();
 
                     if (url.contains(CloudStorageUtil.getRedirectDomain())) {
+                        System.out.println("A");
                         if (CloudStorageUtil.checkAndSetAccessToken(url)) {
+                            System.out.println("B");
                             CloudStorageUtil.upload(uploadFilename);
+                            loadPage(CloudStorageUtil.getRedirectDomain() + "h");
+                            System.out.println(browserEngine.getLocation());
                         }
                     }
 
-                    if (FacebookHandler.checkAndSetAccessToken(url)) {
-                        FacebookHandler.postRecipeOnFacebook(recipeToShare);
+                    else {
+                        if (FacebookHandler.checkAndSetAccessToken(url)) {
+                            FacebookHandler.postRecipeOnFacebook(recipeToShare);
+                        }
                     }
                 }
             }
@@ -121,6 +127,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author nicholasangcx
     @Subscribe
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {
+        System.out.println("event");
         loadPage(CloudStorageUtil.getAppropriateUrl());
         uploadFilename = event.getUploadFilename();
         if (CloudStorageUtil.hasAccessToken()) {

@@ -358,6 +358,105 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::findtag[]
+=== Findtag feature
+==== Current Implementation
+
+The 'findtag' feature is implemented with the same mechanism as the 'find' feature. It is used for finding stored persons with their tags instead of names. The key components of the feature are 'FindWithTagCommand', 'FindWithTagCommandParser', and 'TagContainsKeywordsPredicate'.
+
+The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. The following diagram shows the inheritance diagram for 'FindWithTagCommand':
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+The user execute the FindWithTagCommand with the keyword ‘findtag’ following by the tag keywords, separated by whitespace. When the command is executed, the current list of persons shown in the GUI will only contain the persons with the tags same as the tag keywords. The following image shows the result of a 'findtag' execution:
+
+image::FindTagResultDiagram.png[width="800"]
+
+Note that the tag keywords are not case sensitive; however, the command keyword is. For example, both 'findtag friends' and 'findtag FrIeNdS' can be executed and return a list of persons with the tag 'friends'. However 'FiNdTaG friends' cannot be executed and will result in a 'Unknown Command' feedback, as shown in the following:
+
+image::InvalidCommandKeywordDiagram.png[width="800"]
+
+Note that the list of persons displayed will not change for in this case.
+
+The 'findtag' command can handle multiple input tag keywords and, similar to 'find', 'findtag' is an ‘or’ search. For example, 'findtag friends owesMoney' will find any person with the tag ‘friends’ or ‘owesMoney’ or both.
+
+The following sequence diagram shows how the findtag operation works:
+
+image::UndoRedoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `FindWithTagCommand`
+
+* **Alternative 1 (current choice):** Follow the mechanism of `FindCommand`
+** Pros: 'findtag' works in the same mechanism as 'find', thus will not deviate from the overall architecture of the address book (i.e. Event Driven design).
+** Cons: May generate classes/ methods that are implemented with very similar style (i.e. a general pattern can be abstract out). Thus, additional work may be needed to handle the abstraction.
+* **Alternative 2:** Implement new mechanism specifically for `FindWithTagCommand`
+** Pros: Does not generate similar classes/ methods.
+** Cons: Hard to implement, risk deviating away from the overall architecture of the address book.
+// end::findtag[]
+
+// tag::sort[]
+=== Sort feature
+==== Current Implementation
+
+The sort mechanism is facilitated by the `SortCommand` and is used for sorting all persons found in the address book by name alphabetically.
+It inherits from `UndoableCommand` and thus supports the undo/redo mechanism, enabling the ability to reverse the command and return the address book to its previous unsorted state.
+
+When the user executes the `SortCommand` using the command word `sort`, the current list of persons shown in the GUI will be retained.
+As illustrated, a filtered list of persons will be displayed in a sorted manner once the command is executed:
+
+image::SortFilteredListDiagram.png[width="850"]
+
+{empty}
+
+The command can also handle multiple persons with similar names (i.e. different letter-casings) as shown below:
+
+image::SortSimilarNamesDiagram.png[width="650"]
+
+{empty}
+
+During sorting, names of two different persons are compared using the static method, `nameComparator`, found in the person class:
+[source, java]
+----
+public static Comparator<Person> nameComparator() {
+    return Comparator.comparing((Person p) -> p.getName().toString(), (
+        s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2));
+}
+----
+As seen, casing is ignored when names are first compared with each other. The usual lexicographical order will instead be used when encountering identical names.
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SortCommand`
+* **Alternative 1 (current choice):** Create a custom sorting method for person names
+** Pros: Allows list to be displayed in a uniform manner, such that similar names are also sorted.
+** Cons: Requires extra work to write custom method.
+* **Alternative 2:** Utilise `String.CASE_INSENSITIVE_ORDER` for sorting
+** Pros: Does not require additional work to write or override compare methods.
+** Cons: List may be inconsistent when sorting multiple persons with similar names.
+
+===== Aspect: Implementation of Custom Sorting Method
+* **Alternative 1 (current choice):** Use comparators and create one for person names called `nameComparator`
+** Pros: Potentially enabling the ability to sort different fields other than names.
+** Cons: May be more difficult to write.
+* **Alternative 2:** Implement comparable and override the `compareTo` method in person class
+** Pros: Simpler to understand.
+** Cons: Can only define a single sorting sequence when comparing two different persons.
+
+===== Aspect: Display of person list in GUI
+* **Alternative 1 (current choice):** Retain the current list of persons as shown in GUI but shown in a sorted manner
+** Pros: User would not have to key in the command to filter the list after sorting.
+** Cons: User may think that only the current list is sorted.
+* **Alternative 2:** Displays the list of all persons found in the address book sorted alphabetically
+** Pros: More properly describes what `sort` actually does by showing the full list of persons sorted.
+** Cons: Current list is replaced by showing all persons.
+// end::sort[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

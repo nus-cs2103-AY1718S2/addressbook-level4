@@ -2,9 +2,9 @@
 ifndef::env-github[]
 [.nav-headbar#navbar]
 - https://recirecipe.netlify.com/[Home]
-- https://recirecipe.netlify.com/UserGuide.html[User Guide]
-- https://recirecipe.netlify.com/DeveloperGuide.html[Developer Guide]
-- https://recirecipe.netlify.com/AboutUs.html[About]
-- https://recirecipe.netlify.com/ContactUs.html[Contact]
+- <<UserGuide#, User Guide>>
+- <<DeveloperGuide#, Developer Guide>>
+- <<AboutUs#, About>>
+- <<ContactUs#, Contact>>
 - https://github.com/CS2103JAN2018-F09-B2/main[Github]
 endif::[]

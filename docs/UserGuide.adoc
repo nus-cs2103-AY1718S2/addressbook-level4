@@ -284,8 +284,9 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-.Usage examples:
-****
+*Usage examples:*
+
+====
  delete 1
  undo (reverses the "delete 1" command)
  redo (reapplies the "delete 1" command)
@@ -295,7 +296,7 @@ The `undo` command fails as there are no undoable commands executed previously.
  delete 1
  redo
 
-The `redo` command fails as there are no `undo` commands executed previously.
+ > The `redo` command fails as there are no `undo` commands executed previously.
 ====
 
 ====
@@ -306,7 +307,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
  redo (reapplies the "delete 1" command)
  redo (reapplies the "clear" command)
 ====
-****
 
 === Saving the data
 

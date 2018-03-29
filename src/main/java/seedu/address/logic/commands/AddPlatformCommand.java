@@ -131,7 +131,7 @@ public class AddPlatformCommand extends UndoableCommand {
      * Adds back the social media platforms not found in the edited person into the map only if it is not empty.
      */
     private void addCurrentSocialMediaPlatforms() {
-        if(!socialMediaPlatformMap.isEmpty()) {
+        if (!socialMediaPlatformMap.isEmpty()) {
             for (String key : personToEdit.getSocialMediaPlatformMap().keySet()) {
                 socialMediaPlatformMap.putIfAbsent(key, personToEdit.getSocialMediaPlatformMap().get(key));
             }

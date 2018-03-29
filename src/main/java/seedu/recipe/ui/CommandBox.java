@@ -4,7 +4,7 @@ import static seedu.recipe.ui.util.KeyboardShortcutsMapping.COMMAND_SUBMISSION;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.LAST_COMMAND;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
-import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEXXT_FIELD;
+import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEXT_FIELD;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND;
 
 import java.util.logging.Logger;
@@ -74,7 +74,7 @@ public class CommandBox extends UiPart<Region> {
         } else if (SHOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             suggestionsPopUp.showSuggestions();
-        } else if (NEXXT_FIELD.match(keyEvent)) {
+        } else if (NEXT_FIELD.match(keyEvent)) {
             keyEvent.consume();
             moveToNextField();
         }

@@ -591,6 +591,7 @@ The weekly component of the `Calendar` is dependent on the `NUSMods` component f
 // tag::addGroup[]
 === Add Group feature
 Adds a group to Fastis
+
 ==== Current Implementation
 
 The add groups mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding Group objects to the address book. AddGroupCommand inherits from `UndoableCommand`.

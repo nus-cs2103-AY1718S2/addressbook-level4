@@ -73,7 +73,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |history (`h`)
 |kbd:[Alt+H]
 |`history`
-
 |exit
 |kbd:[Alt+Q]
 |`exit`
@@ -98,9 +97,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |kbd:[Ctrl+F]
 |`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
-|locate (`l`)
+|locate (`lo`)
 |kbd:[Alt+L]
-|`locate INDEX`
+|`locate INDEX` *OR* `locate name/email/phone/address/tags`
 
 |select (`s`)
 |kbd:[Alt+S]
@@ -222,6 +221,28 @@ _Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `
  find -p 91234567
 
 _Returns all persons with the above phone number._
+====
+***
+=== Displaying a person's address using Google Maps : `locate`
+
+[NOTE]
+====
+* This command identifies a person by name, email, phone or tags and displays their address using Google Maps.
+* Alternatively, this command displays the given address and displays the person associated with that address in the PersonListPanel.
+====
+
+*Usage examples:*
+
+====
+ locate David
+
+_Locates the person with name "David" and displays his address on Google Maps._
+====
+
+====
+ locate Blk 30
+
+_Locates the address "Blk 30" on Google Maps and displays the person with that address in the PersonListPanel._
 ====
 ***
 === Selecting a person : `select`

@@ -2,15 +2,11 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.*;
 
-import org.apache.commons.csv.CSVFormat;
 import org.junit.*;
 
 import java.io.IOException;
-import java.io.BufferedWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.nio.file.Path;
-import java.util.Arrays;
 
 import org.apache.commons.csv.CSVPrinter;
 
@@ -18,19 +14,18 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ExportContactsCommandParser;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
 
 public class ExportContactsCommandTest {
 
     public static final String VALID_NEW_FILE_PATH = "data/exportToNew.csv";
-    public static final String VALID_EXISTING_FILE_PATH = "data/exportTo.csv";
+    public static final String VALID_EXISTING_FILE_PATH = "data/exportToExisting.csv";
 
     //featureUnderTest_testScenario_expectedBehavior()
 
-    ExportContactsCommand exportDefaultPath = new ExportContactsCommand(); //test later
-    ExportContactsCommand exportExistingPath = new ExportContactsCommand(VALID_EXISTING_FILE_PATH); //test later
+    ExportContactsCommand exportDefaultPath = new ExportContactsCommand();
+    ExportContactsCommand exportExistingPath = new ExportContactsCommand(VALID_EXISTING_FILE_PATH);
     ExportContactsCommand exportNewPath = new ExportContactsCommand(VALID_NEW_FILE_PATH);
 
     @Rule
@@ -40,16 +35,16 @@ public class ExportContactsCommandTest {
     public void exportCommandParse_giveValidArguments_returnExportContactCommand() throws Exception {
         ExportContactsCommandParser eccp = new ExportContactsCommandParser();
         ExportContactsCommand a = eccp.parse();
-        ExportContactsCommand b = eccp.parse("data/exportTo");
+        ExportContactsCommand b = eccp.parse("exampleFile.csv");
 
-        assertNotNull(a);
-        assertNotNull(b);
+        assertEquals(a.getWRITE_TO_PATH().toString(), "data/exportToExisting.csv");
+        assertEquals(b.getWRITE_TO_PATH().toString(), "exampleFile.csv");
     }
 
     @Test
     public void getDefaultPath_callWithoutArgs_returnsCorrectString() throws Exception {
         Path x = exportDefaultPath.getDefaultPath();
-        assertEquals(x.toString(), "data/exportTo.csv");
+        assertEquals(x.toString(), "data/exportToExisting.csv");
     }
 
     @Test
@@ -59,9 +54,9 @@ public class ExportContactsCommandTest {
         CSVPrinter csvpExisting = null;
 
         try {
-            csvpNew = exportNewPath.getCSVToWriteTo();
-            csvpDefault = exportNewPath.getCSVToWriteTo();
-            csvpExisting = exportNewPath.getCSVToWriteTo();
+            csvpDefault = exportDefaultPath.getCsvToWriteTo();
+            csvpNew = exportNewPath.getCsvToWriteTo();
+            csvpExisting = exportExistingPath.getCsvToWriteTo();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,16 +70,16 @@ public class ExportContactsCommandTest {
     public void getDefaultPath_noPathGiven_throwsNoExceptionsAndReturnsPath() {
         Path path = null;
         path = exportDefaultPath.getDefaultPath();
-        assertNotNull(path);
+        assertEquals(path.toString(), "data/exportToExisting.csv");
     }
 
     @Test
     public void executeUndoableCommand_validNewFilePath_createsNewFileAndWritesToIt() throws
-            CommandException, DuplicatePersonException {
+            CommandException, DuplicatePersonException, IOException {
         CommandResult cr = null;
-        exportExistingPath.model = new ModelManager();
+        exportNewPath.model = new ModelManager();
         PersonBuilder pb = new PersonBuilder();
-        exportExistingPath.model.addPerson(pb.build());
+        exportNewPath.model.addPerson(pb.build());
 
         try {
             cr = exportNewPath.executeUndoableCommand();
@@ -97,7 +92,7 @@ public class ExportContactsCommandTest {
 
     @Test
     public void executeUndoableCommand_validExistingFilePath_writesToExistingFile() throws
-            CommandException, DuplicatePersonException {
+            CommandException, DuplicatePersonException, IOException {
         CommandResult cr = null;
         exportExistingPath.model = new ModelManager();
         PersonBuilder pb = new PersonBuilder();
@@ -106,6 +101,7 @@ public class ExportContactsCommandTest {
         try {
             cr = exportExistingPath.executeUndoableCommand();
         } catch (CommandException e) {
+            System.out.print("Error in executeUndoableTest");
             e.printStackTrace();
         }
 
@@ -113,24 +109,19 @@ public class ExportContactsCommandTest {
     }
 
     @Test
-    public void writingToValidPath_newFileNameAtCurrentPath_createsNewFileAndWritesContacts() throws Exception {
-        String SAMPLE_CSV_FILE = "./sample.csv";
+    public void executeUndoableCommand_validDefaultFilePath_writesToDefaultFile() throws
+            CommandException, DuplicatePersonException, IOException {
+        CommandResult cr = null;
+        exportDefaultPath.model = new ModelManager();
+        PersonBuilder pb = new PersonBuilder();
+        exportDefaultPath.model.addPerson(pb.build());
 
-        try (
-                BufferedWriter writer = Files.newBufferedWriter(Paths.get(SAMPLE_CSV_FILE));
-
-                CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
-                        .withHeader("ID", "Name", "Designation", "Company"));
-        ) {
-            csvPrinter.printRecord("1", "Sundar Pichai ♥", "CEO", "Google");
-            csvPrinter.printRecord("2", "Satya Nadella", "CEO", "Microsoft");
-            csvPrinter.printRecord("3", "Tim cook", "CEO", "Apple");
-
-            csvPrinter.printRecord(Arrays.asList("4", "Mark Zuckerberg", "CEO", "Facebook"));
-
-            csvPrinter.flush();
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        try {
+            cr = exportDefaultPath.executeUndoableCommand();
+        } catch (CommandException e) {
+            e.printStackTrace();
         }
+
+        assertEquals("Contacts successfully exported.\n", cr.feedbackToUser);
     }
 }

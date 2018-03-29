@@ -33,7 +33,7 @@ IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Instructions for setting up the project in your computer
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -47,7 +47,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verification of the setup
 
 . Run the `seedu.address.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
@@ -365,7 +365,7 @@ If a `Person` is instantiated without specifying `Rating` value, he will be assi
 
 The `Rating` field can be manipulated by user through `edit` or `rate` command. However, the valid inputs for rating are `1, 2, 3, 4, or 5`. That said, the current implementation does not allow a user to assign `null rating` to an existing person.
 
-=== Editing and rating a person
+=== Edit and rate a person
 
 `edit` command and `rate` command are implemented in a similar manner. They both involve modifying the field(s) of a person. The only difference is that `rate` can only change the `Rating` field, but `edit` can be used to change any field.
 
@@ -391,7 +391,7 @@ A person by default upon creation will have a null `Review` field, indicated to 
 
 A person can be assigned a `Review` through the command of `Review`. `Review` does not have any restriction on the content (alphanumeric and symbols without any length restriction).
 
-=== Reviewing a person
+=== Review a person
 
 Currently `review` command and `rate` command are implemented in a similar manner, and hence `review` command and `edit` command are also implemented in a similar manner.
 
@@ -442,7 +442,7 @@ The details of implementation of `unlock` command are similar to `lock` command 
 if they are the same, unlock the application, otherwise, inform incorrect password.
 . `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
 
-=== Every employee has own timetable
+=== Assign a timetable to every employee
 
 To implement the timetables for employees, we use a third party source which is Google Calendar API. With this API, we
 can integrate the application with Google Calendar, and achieve things liking creating events as what we usually do on
@@ -470,12 +470,70 @@ The details of implementation of `addEvent` command are as follow:
 . `TestAddEventCommandParser` is used to extracts information of the event to be added from user input.
 . `TestAddEventCommand` is used to perform the addition of the event to one's timetable with Google Calendar API.
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== Show notifications about expired events
+This section discusses about the implementation of the notification feature of Employee Tracker.
 
-_{Explain here how the data encryption feature will be implemented}_
+[NOTE]
+All usages of the word `Event` in this section refers to the class `com.google.api.services.calendar.model.Event`,
+not to be confused with Event classes in commons package which will be referred in their full name,
+e.g. BaseEvent, AddressBookChangedEvent.
 
-// end::dataencryption[]
+==== Current Implementation
+In the current implementation, the `AddressBook` class saves a list of `Notification`.
+
+When adding a new `Notification`:
+
+.  An `Event` is created.
+. `ModelManager` to add the `Notification` into the `Notifications` list in `AddressBook`.
+. `Model Manager` raises a `AddressBookChangedEvent` and `NotificationAddedEvent` after adding the Notification.
+. `AddressBookChangedEvent` and `NotificationAddedEvent` are handled:
+* `Storage Manager` handles the `AddressBookChangedEvent` and saves the new list of Notifications.
+* `Logic Manager` handles the  `TimetableEntryAddedEvent` by adding a new `TimerTask` into its HashMap of `scheduledTimerTasks`.
+
+When showing a `Notification Card` in UI:
+
+.  The `TimerTask` associated with the `Notification` expires.
+. `LogicManager` raises a `ShowNotificationEvent` and `RequestToDeleteTimeTableEvent`.
+.  UiManager handles the `ShowNotificationEvent` by showing the notification to user.
+. `ModelManager` handles the `RequestToDeleteTimeTableEvent` by removing the corresponding `Notification` from the list of Notifications in `AddressBook`.
+. `Model Manager` raises a `AddressBookChangedEvent` and `NotificationAddedEvent` after adding the Notification.
+. `Storage Manager` handles the `AddressBookChanged` event and saves the new list of Notifications.
+
+[NOTE]
+Each `Event` is assigned (and thus) to an employee. In the following discussions, we will use the phrase `owner` to refer to the employee who is assigned to the `Event`.
+
+In order to support `email` and `whatsapp` command, as well as displaying the `owner` 's name on the `Notification Card`, we need access some information of its `owner`. This is done through the `searchEmployeeById` mechanism:
+
+. `addressBook` object has a `nextId` integer field.
+. Whenever an employee is added, `addressBook` assigns the `nextId` to him and increment the `nextId` field.
+. The `Person` class has an `id` field to store the id.
+. When a `Notification` is created, it has a `ownerId` field that stores the `id` of its `owner`.
+. When the `TimerTask` associated with the `TimetableEntry` expires, it will extract the name (and other fields) of the owner using the `getNameById()` method in `ModelManager`.
+
+==== Design Considerations
+There are a couple of aspects with regards to `Notification` that can be implemented in alternative designs.
+
+===== Aspect: extracting a Person's information
+* **Alternative1 (current choice)**: `searchEmployeeById` mechanism
+** Pros: provides the latest information even if the `Person` is edited after the `Notification` is created.
+** Cons: requires `id` field to be implemented in `Person` and `AddressBook` class, provides wrong information if `id` is not implemented correctly (e.g. repeated id)
+* ** Alternative2**: storing the Person's Information in `Notification` class
+** Pros: has a simpler implementation
+** Cons: provides wrong information if `Person` 's information is edited after `Notification` is created, requires to update `Notification` when `Person` is edited, increases coupling
+
+===== Aspect: storing `Event` locally
+* **Alternative1 (current choice)**: stores a list of `Notifications` in `AddressBook`
+** Pros: ensures that notification feature remains working when there's no internet access, saves storage space as only essential information is saved
+** Cons: has a complicated implementation (creation of `Notification` class and edit of `Person` and `AddressBook` class for `searchEmployeeById` mechanism)
+* **Alternative2** : stores a list of `Event` in `AddressBook`
+** Pros: has a simpler implementation (doesn't need to implement `Notification` class)
+** Cons: requires another mechanism for extracting `ownerName` because `Event` class does not store `ownerName`, waste of storage space because `Event` class contains a lot of information unnecessary for notification feature
+* **Alternative3** : stores a list of `Notifications` in `Person`
+** Pros: has a simpler implementation (doesn't need to implement `searchEmployeeById` mechanism)
+** Cons: compromises performance, especially when there are a lot of employees and only a few `Notification`
+* **Alternative4** : does not store `Event` locally (relies on Google calendar service)
+** Pros: has the simplest implementation (only need to pull data from Google, does not need to create local class), saves storage space as nothing is stored locally
+** Cons: compromises notification feature if there's no internet access, requires another mechanism for extracting `ownerName` because `Event` class does not store `ownerName`, compromises performance if internet speed is slow)
 
 === Sort existing employees
 The implementation of `sort` command involves following objects: +

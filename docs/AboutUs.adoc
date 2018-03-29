@@ -43,3 +43,7 @@ Role: Scheduling and Tracking +
 Responsibilities: Storage
 
 '''
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

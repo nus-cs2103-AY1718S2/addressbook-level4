@@ -1478,3 +1478,7 @@ _{More to be added}_
 == Glossary
 
 include::./Glossary.adoc[]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

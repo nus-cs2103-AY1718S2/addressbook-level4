@@ -410,3 +410,7 @@ E.g.*`select 2`*
 == Glossary
 
 include::./Glossary.adoc[]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

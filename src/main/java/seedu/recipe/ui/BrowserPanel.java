@@ -128,7 +128,8 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {
         System.out.println("event");
-        loadPage(CloudStorageUtil.getAppropriateUrl());
+        loadPage("https://www.dropbox.com");
+        //loadPage(CloudStorageUtil.getAppropriateUrl());
         uploadFilename = event.getUploadFilename();
         if (CloudStorageUtil.hasAccessToken()) {
             CloudStorageUtil.upload(uploadFilename);

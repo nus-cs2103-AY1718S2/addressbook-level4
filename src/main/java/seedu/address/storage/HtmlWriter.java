@@ -5,9 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 /**
- * Writes Person Data to a .html file
+ * Writes Person Data to a HTML file
  */
 public class HtmlWriter {
+    public static final String OPENING_LINE = "<!DOCTYPE html><html><head>\n"
+            + "<title>LoanSharkManager</title></head>\n"
+            + "<body style=\"background-color:#383838;\"\n>"
+            + "<font face=\"Segoe UI Semibold\" size=\"5\" color=\"white\">\n";
+
     public HtmlWriter() {}
 
     /**
@@ -20,12 +25,12 @@ public class HtmlWriter {
         File file = new File(filepath);
         try {
             PrintWriter printWriter = new PrintWriter(file);
-            printWriter.println("<!DOCTYPE html><html><head><title>LoanSharkManager</title></head>");
-            printWriter.println("<body style=\"background-color:#383838;\">");
-            printWriter.println("<font face=\"Segoe UI Semibold\" size=\"20\" color=\"white\">");
-            printWriter.println("<p>Name:</p>");
-            printWriter.println("<p>Amount Owed:</p>");
-            printWriter.println("<p>Due Date:</p>");
+            printWriter.print(OPENING_LINE);
+            printWriter.println("<p>Name: Malaku Kozinov</p>");
+            printWriter.println("<p>Amount Owed: $845000</p>");
+            printWriter.println("<p>Due Date: 12/10/2020</p>");
+            printWriter.println("<p>Status: VIP</p>");
+            printWriter.println("<p>Runner Assigned: Johnnius Johnsohn</p>");
             printWriter.println("</body></html>");
             printWriter.close();
         } catch (FileNotFoundException e) {

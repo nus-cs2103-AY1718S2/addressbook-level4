@@ -12,6 +12,7 @@ import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.testutil.Assert;
 
+//@@author ngshikang
 public class LoginManagerTest {
 
     @Rule

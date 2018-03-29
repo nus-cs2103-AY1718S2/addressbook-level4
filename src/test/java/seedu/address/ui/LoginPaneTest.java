@@ -15,6 +15,7 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 
+//@@author ngshikang
 public class LoginPaneTest extends GuiUnitTest {
 
     @Rule

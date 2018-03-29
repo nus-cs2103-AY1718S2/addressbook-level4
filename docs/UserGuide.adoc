@@ -58,7 +58,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n: NAME p: PHONE_NUMBER`, `p: PHONE_NUMBER n: NAME` is also acceptable.
 ====
 
-[%header,cols="1,1,7"]
+[%header,cols="1,1,8"]
 |===
 |Command
 |Keyboard +
@@ -135,7 +135,7 @@ shortcut
 * A person can have any number of tags (including 0).
 ====
 
-*Examples:*
+*Usage examples:*
 
 ====
  add n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
@@ -156,8 +156,7 @@ shortcut
 * You can remove all the person's tags by typing `t:` without specifying any tags after it.
 ====
 
-*Examples:*
-
+*Usage examples:*
 ====
  edit 1 p: 91234567 e: johndoe@example.com
 
@@ -179,23 +178,18 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * The index *must be a positive integer* 1, 2, 3, ...
 ====
 
-*Examples:*
+*Usage examples:*
 
 ====
+ list
+ delete 2
 
-----
-list
-delete 2
-----
 Deletes the 2nd person in the database.
 ====
 
 ====
-
-----
-find Betsy
-delete 1
-----
+ find Betsy
+ delete 1
 
 Deletes the 1st person in the results of the `find` command.
 ====
@@ -213,7 +207,7 @@ Deletes the 1st person in the results of the `find` command.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ====
 
-Examples:
+*Usage examples:*
 
 ====
  find John
@@ -230,7 +224,7 @@ Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `J
 ====
  find -p 91234567
 
-Returns all persons with the above phone number. +
+Returns all persons with the above phone number.
 ====
 
 === Selecting a person : `select`
@@ -242,35 +236,30 @@ Returns all persons with the above phone number. +
 * The index *must be a positive integer* `1, 2, 3, ...`
 ====
 
-*Examples:*
+*Usage examples:*
 
 ====
+ list
+ select 2
 
-----
-list
-select 2
-----
 Selects the second person in the database.
 ====
 
 ====
+ find Betsy
+ select 1
 
-----
-find Betsy
-select 1
-----
 Selects the first person in the results of the `find` command.
 ====
 
 === Undoing previous command : `undo`
-****
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
-*Examples:*
+*Usage examples:*
 
 ====
  delete 1
@@ -292,11 +281,10 @@ The `undo` command fails as there are no undoable commands executed previously.
  undo (reverses the "clear" command)
  undo (reverses the "delete 1" command)
 ====
-****
 
 === Redoing the previously undone command : `redo`
 
-*Examples:*
+*Usage examples:*
 
 ====
  delete 1
@@ -322,7 +310,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+The state of the database is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]

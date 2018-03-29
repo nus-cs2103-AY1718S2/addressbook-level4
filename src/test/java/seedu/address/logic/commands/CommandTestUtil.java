@@ -77,6 +77,7 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_HELP = "help1";
     public static final String VALID_ALIAS_HISTORY = "history1";
     public static final String VALID_ALIAS_IMPORT = "import1";
+    public static final String VALID_ALIAS_LIST_COMMAND = ListCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_LIST = "list1";
     public static final String VALID_ALIAS_REDO = "redo1";
     public static final String VALID_ALIAS_SELECT = "select1";
@@ -111,8 +112,6 @@ public class CommandTestUtil {
     public static final String VALID_UNALIAS = VALID_ALIAS_ADD;
 
     public static final String INVALID_UNALIAS_DESC = "alias!";
-
-
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

@@ -5,7 +5,6 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 
@@ -118,7 +117,7 @@ public class AliasCommandTest {
         // null -> returns false
         assertFalse(editAliasCommand == null);
 
-        // different person -> returns false
+        // different alias -> returns false
         assertFalse(editAliasCommand.equals(exitAliasCommand));
     }
 
@@ -225,7 +224,7 @@ public class AliasCommandTest {
 
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the alias being added.
      */
     private class ModelStubAcceptingAliasAdded extends ModelStub {
         private final ArrayList<Alias> aliasesAdded = new ArrayList<>();

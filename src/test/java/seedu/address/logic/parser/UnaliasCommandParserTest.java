@@ -1,19 +1,18 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AliasCommand;
-import seedu.address.logic.commands.UnaliasCommand;
-import seedu.address.model.alias.Alias;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_UNALIAS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_UNALIAS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import org.junit.Test;
+
+import seedu.address.logic.commands.UnaliasCommand;
+import seedu.address.model.alias.Alias;
+
 public class UnaliasCommandParserTest {
-    private UnaliasCommandParser parser= new UnaliasCommandParser();
+    private UnaliasCommandParser parser = new UnaliasCommandParser();
 
     @Test
     public void parse_compulsoryArgumentMissing_failure() {

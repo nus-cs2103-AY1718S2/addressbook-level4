@@ -26,9 +26,8 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES = "should not work for now";
     private static final String COMMAND_THAT_HAS_MULTIPLE_LINES = FIRST_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES + LF
         + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
-    private static final String FIRST_SUGGESTION = "add";
+    private static final String ADD_COMMAND = "add";
     private static final String SECOND_SUGGESTION = "clear";
-    private static final String THIRD_SUGGESTION = "delete";
     private static final String PREFIX_NAME = "name/";
     private static final String PREFIX_INGREDIENT = "ingredient/";
     private static final String PREFIX_INSTRUCTION = "instruction/";
@@ -36,10 +35,11 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String PREFIX_TAG = "tag/";
     private static final String PREFIX_URL = "url/";
     private static final String RECIPE_NAME = "Chicken rice";
-    private static final String AUTO_COMPLETION_FOR_ADD_COMMAND = FIRST_SUGGESTION + WHITESPACE + LF + PREFIX_NAME
+    private static final String ADD_COMMAND_WITH_PREFIX_NAME = ADD_COMMAND + WHITESPACE + PREFIX_NAME;
+    private static final String AUTO_COMPLETION_FOR_ADD_COMMAND = ADD_COMMAND + WHITESPACE + LF + PREFIX_NAME
         + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION + WHITESPACE + LF
         + PREFIX_PREPARATION_TIME + WHITESPACE + LF + PREFIX_TAG + WHITESPACE + LF + PREFIX_URL;
-    private static final String AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME = FIRST_SUGGESTION + WHITESPACE + LF
+    private static final String AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME = ADD_COMMAND + WHITESPACE + LF
         + PREFIX_NAME + RECIPE_NAME + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION
         + WHITESPACE + LF + PREFIX_PREPARATION_TIME + WHITESPACE + LF + PREFIX_TAG + WHITESPACE + LF + PREFIX_URL;
 
@@ -105,19 +105,20 @@ public class CommandBoxTest extends GuiUnitTest {
     //@@author hoangduong1607
     @Test
     public void commandBox_handleShowingSuggestions() {
+        commandBoxHandle.insertText(ADD_COMMAND);
+        commandBoxHandle.insertText(WHITESPACE);
+        commandBoxHandle.insertText(String.valueOf(PREFIX_NAME.charAt(0)));
+        guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.ENTER);
+        assertInput(ADD_COMMAND_WITH_PREFIX_NAME);
+
+        commandBoxHandle.insertText(WHITESPACE);
         guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
         guiRobot.push(KeyCode.DOWN);
         guiRobot.push(KeyCode.DOWN);
         guiRobot.push(KeyCode.ENTER);
         assertInput(SECOND_SUGGESTION);
-
-        guiRobot.push(KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND);
-        guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
-        guiRobot.push(KeyCode.DOWN);
-        guiRobot.push(KeyCode.DOWN);
-        guiRobot.push(KeyCode.DOWN);
-        guiRobot.push(KeyCode.ENTER);
-        assertInput(THIRD_SUGGESTION);
     }
 
     @Test

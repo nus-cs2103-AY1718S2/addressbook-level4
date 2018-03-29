@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -77,29 +76,17 @@ public final class ImportContactsCommand extends UndoableCommand {
             e.printStackTrace();
             throw new CommandException("Reader failed in openFile()\n");
         }
-
-        try {
-            csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+        csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
                     .withIgnoreHeaderCase()
                     .withTrim());
-            return new CommandResult(MESSAGE_FILE_SUCCESS_OPEN
-                    + "from : " + fileAddress);
-        } catch (NullPointerException npe) { //file won't open, null ptr
-            throw new CommandException(MESSAGE_FILE_FAILED_OPEN);
-        } catch (FileNotFoundException fnf) {
-            throw new CommandException(MESSAGE_FILE_NOT_FOUND);
-        } catch (IOException ioe) {
-            throw new CommandException("IOException thrown in "
-                    + "ImportContactsCommand, openFile.\n" + MESSAGE_FILE_FAILED_OPEN);
-        }
+        return new CommandResult(MESSAGE_FILE_SUCCESS_OPEN + "from : " + fileAddress);
     }
 
     /**
      * Used for printing to console when contacts are added
      */
-    public void printResult(final String n, final String e,
-                            final String p, final String a) {
+    public void printResult(final String n, final String e, final String p, final String a) {
         System.out.println("---------------");
         System.out.println("Name : " + n);
         System.out.println("Email : " + e);
@@ -144,16 +131,11 @@ public final class ImportContactsCommand extends UndoableCommand {
 
             for (CSVRecord csvRecord : csvRecords) { //iterate through the
                 // Accessing values by Header names
-                try {
-                    name = csvRecord.get("Name");
-                    email = csvRecord.get("Email");
-                    phone = csvRecord.get("Phone");
-                    address = csvRecord.get("Address");
-                    addDate = new DateAdded(formatter.format(date));
-                } catch (Exception e) {
-                    throw new CommandException("csvRecord failed. Check csv file to make sure"
-                            + "fields are separated correctly along with headers\n" + e);
-                }
+                name = csvRecord.get("Name");
+                email = csvRecord.get("Email");
+                phone = csvRecord.get("Phone");
+                address = csvRecord.get("Address");
+                addDate = new DateAdded(formatter.format(date));
 
                 printResult(name, email, phone, address); //mainly for debugging
 
@@ -172,7 +154,6 @@ public final class ImportContactsCommand extends UndoableCommand {
                 }
 
                 try {
-                    //upl.add(personToAdd);
                     model.addPerson(personToAdd);
                     model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
                 } catch (Exception e) {
@@ -184,10 +165,7 @@ public final class ImportContactsCommand extends UndoableCommand {
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException ioe) {
             throw new CommandException(
-                    "IOException caught in executeUndoableCommand"
-                            + " in ImportContactsCommand"); //Obviously need to change this
-        } catch (NullPointerException npe) { //file won't open, null ptr
-            throw new CommandException(MESSAGE_FILE_FAILED_OPEN);
+                    "IOException caught in executeUndoableCommand in ImportContactsCommand");
         }
     }
 

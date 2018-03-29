@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -23,8 +24,10 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.ImportContactsCommandParser;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Person;
@@ -39,7 +42,6 @@ public class ImportContactsCommandTest {
     private static ImportContactsCommand importValidPath;
     private static ImportContactsCommand importIllegalPath;
 
-    //featureUnderTest_testScenario_expectedBehavior()
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
     private FindCommandParser parser = new FindCommandParser();
@@ -66,6 +68,39 @@ public class ImportContactsCommandTest {
         System.out.println("Phone : " + p);
         System.out.println("Address : " + a);
         System.out.println("---------------\n\n");
+    }
+
+    //featureUnderTest_testScenario_expectedBehavior()
+
+    @Test(expected = Exception.class)
+    public void constructor_passingNullFileAddress_throwException() throws Exception {
+        final String x = null;
+        ImportContactsCommand a = new ImportContactsCommand(x);
+    }
+
+    @Test(expected = Exception.class)
+    public void executeUndoableCommand_giveIllegalPath_throwException() throws Exception {
+        ImportContactsCommand a = new ImportContactsCommand("error");
+        a.openFile();
+    }
+
+    @Test(expected = Exception.class)
+    public void executeUndoableCommand_giveNullModel_throwException() throws Exception {
+        importValidPath.model = null;
+        importValidPath.executeUndoableCommand();
+    }
+
+    @Test(expected = Exception.class)
+    public void importContactsCommandParserparse_giveNullArgument_throwException() throws ParseException {
+        ImportContactsCommandParser cp = new ImportContactsCommandParser();
+        cp.parse(null);
+    }
+
+    @Test
+    public void addressBookParser_giveCorrectImport_returnImportContactCommand() throws Exception {
+        AddressBookParser abp = new AddressBookParser();
+        assertNotNull(abp.parseCommand("import_contacts ..."));
+        assertNotNull(abp.parseCommand("ic ..."));
     }
 
     @Test

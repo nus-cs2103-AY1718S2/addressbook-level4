@@ -29,9 +29,9 @@ import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
 import static seedu.organizer.testutil.TypicalTasks.REVISION;
+import static seedu.organizer.testutil.TypicalTasks.STUDY;
 
 import org.junit.Test;
 
@@ -54,7 +54,7 @@ import seedu.organizer.testutil.TaskUtil;
 public class EditCommandSystemTest extends OrganizerSystemTest {
 
     @Test
-    public void edit() throws Exception {
+    public void edit_unfilteredList() throws Exception {
         Model model = getModel();
 
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
@@ -101,6 +101,14 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
         editedTask = new TaskBuilder(taskToEdit).withTags().build();
         assertCommandSuccess(command, index, editedTask);
+    }
+
+    @Test
+    public void edit_filteredList() {
+        Index index;
+        String command;
+        Task taskToEdit;
+        Task editedTask;
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
@@ -120,6 +128,12 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         int invalidIndex = getModel().getOrganizer().getTaskList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_EXAM,
                 Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void edit_taskCardSelected() {
+        Index index;
+        String command;
 
         /* --------------------- Performing edit operation while a task card is selected -------------------------- */
 
@@ -130,11 +144,18 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         index = INDEX_FIRST_TASK;
         selectTask(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_REVISION + PRIORITY_DESC_REVISION + DEADLINE_DESC_REVISION
-                + DESCRIPTION_DESC_REVISION + TAG_DESC_FRIENDS;
+                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
+                + DESCRIPTION_DESC_STUDY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new task's name
-        assertCommandSuccess(command, index, REVISION, index);
+        assertCommandSuccess(command, index, STUDY, index);
+    }
+
+    @Test
+    public void edit_invalidOperation() {
+        Index index;
+        String command;
+        int invalidIndex;
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
@@ -176,9 +197,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a task with new values same as another task's values -> rejected */
-        executeCommand(TaskUtil.getAddCommand(REVISION));
-        assertTrue(getModel().getOrganizer().getTaskList().contains(REVISION));
-        index = INDEX_SECOND_TASK;
+        index = INDEX_FIRST_TASK;
         assertFalse(getModel().getFilteredTaskList()
                 .get(index.getZeroBased()).equals(REVISION));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
@@ -187,6 +206,8 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: edit a task with new values same as another task's values but with different tags -> rejected */
+        executeCommand(TaskUtil.getAddCommand(STUDY));
+        assertTrue(getModel().getOrganizer().getTaskList().contains(STUDY));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
                 + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
                 + DESCRIPTION_DESC_STUDY + TAG_DESC_HUSBAND;

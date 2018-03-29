@@ -26,7 +26,7 @@ import seedu.organizer.model.tag.Tag;
 public class FindNameCommandSystemTest extends OrganizerSystemTest {
 
     @Test
-    public void find() {
+    public void find_successful() {
         /* Case: find multiple tasks in organizer, command with leading spaces and trailing spaces
          * -> 2 tasks found
          */
@@ -72,16 +72,6 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: undo previous find command -> rejected */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
-
-        /* Case: redo previous find command -> rejected */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
-
         /* Case: find same tasks in organizer after deleting 1 of them -> 1 task found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertFalse(getModel().getOrganizer().getTaskList().contains(PREPAREBREAKFAST));
@@ -95,6 +85,32 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         command = FindNameCommand.COMMAND_WORD + " Spring";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
+    }
+
+    @Test
+    public void find_undoRedoRejected() {
+        /* Case: find multiple tasks in organizer -> 2 tasks found */
+        String command = FindNameCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_DO;
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, HOMEWORK, PROJECT); // first names of HOMEWORK and PROJECT are "Do"
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: undo previous find command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous find command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+    }
+
+    @Test
+    public void find_noTasksFound() {
+        String command;
+        Model expectedModel = getModel();
 
         /* Case: find task in organizer, keyword is substring of name -> 0 tasks found */
         command = FindNameCommand.COMMAND_WORD + " Mei";
@@ -134,6 +150,20 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: find task in empty organizer -> 0 tasks found */
+        deleteAllTasks();
+        command = FindNameCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_SPRING;
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, HOMEWORK);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+    }
+
+    @Test
+    public void find_taskCardSelected() {
+        String command;
+        Model expectedModel = getModel();
+
         /* Case: find while a task is selected -> selected card deselected */
         showAllTasks();
         selectTask(Index.fromOneBased(1));
@@ -142,17 +172,12 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         ModelHelper.setFilteredList(expectedModel, HOMEWORK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
+    }
 
-        /* Case: find task in empty organizer -> 0 tasks found */
-        deleteAllTasks();
-        command = FindNameCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_SPRING;
-        expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, HOMEWORK);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
+    @Test
+    public void find_rejected() {
         /* Case: mixed case command word -> rejected */
-        command = "FiNd Meier";
+        String command = "FiNd Meier";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 

@@ -459,7 +459,7 @@ Add a subtask to an existing task. +
 [example-title]#Example:#
 
 * [example]#`adds 1 n/Submit report`# +
-Add a subtask with name `Submit report` to the 1st task.
+Adds a subtask with name `Submit report` to the 1st task.
 ====
 
 ==== Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
@@ -482,10 +482,10 @@ between `Done` and `Not Done`. +
 
 * [example]#`list`# +
 [example]#`toggle-subtask 1 1`# +
-Toggle the first subtask of the first task in the PrioriTask.
+Toggles the first subtask of the first task in the PrioriTask.
 * [example]#`find homework`# +
 [example]#`toggle-subtask 2 4`# +
-Toggle the fourth subtask of the second task in th result of `find homework` command.
+Toggles the fourth subtask of the second task in th result of `find homework` command.
 ====
 
 ==== Deleting a subtask from a task: `delete-subtask` or `ds` `[since v1.3]`
@@ -507,10 +507,10 @@ Deletes the specified subtask from the PrioriTask. +
 
 * [example]#`list`# +
 [example]#`delete-subtask 1 1`# +
-Delete the first subtask of the first task in the PrioriTask.
+Deletes the first subtask of the first task in the PrioriTask.
 * [example]#`find cleaning`# +
 [example]#`delete-subtask 2 4`# +
-Delete the fourth subtask of the second task in th result of `find cleaning` command.
+Deletes the fourth subtask of the second task in th result of `find cleaning` command.
 ====
 
 ==== Editing a subtask `[coming in v2.0]`
@@ -523,11 +523,28 @@ _{ coming in v2.0 }_
 
 === Calendar Features
 
-_{ To explain what a calendar feature is. }_
+The `Calendar` allows you to have a chronic overview of the deadlines of all your tasks. Tasks on the calendar changes according to the last task listing. By default, you will view the current month when you first open PrioriTask.
 
-==== Calendar `[coming in v2.0]`
+* _[coming in v2.0]_ To show only completed tasks on the calendar.
+* _[coming in v2.0]_ To support the viewing of the calendar by days, weeks and years.
 
-_{ coming in v2.0 }_
+==== Go to previous month: `pmonth` or `pm` `[since v1.4]`
+
+Changes the view of the calendar to that of the previous month. +
+
+[.format]
+====
+[format-title]#Format:# `pmonth`
+====
+
+[.example]
+====
+[example-title]#Example:#
+
+* Views `March 2018` +
+[example]#`pmonth`# +
+Goes to `February 2018`
+====
 
 == FAQ
 
@@ -569,3 +586,6 @@ e.g. [example-no-box]#`adds 1 n/Submit Report`#
 e.g.[example-no-box]#`toggle-subtask 3 2`#
 * *Delete Subtask* : [format]#`delete-subtask TASK_INDEX SUBTASK_INDEX`# +
 e.g. [example-no-box]#`delete-subtask 2 3`#
+
+=== Calendar Feature
+* *Go To Previous Month* : [format-no-box]#`pmonth`#

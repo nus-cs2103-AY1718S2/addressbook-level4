@@ -30,7 +30,6 @@ import static seedu.organizer.testutil.TypicalTasks.GROCERY;
 import static seedu.organizer.testutil.TypicalTasks.INTERVIEWPREP;
 import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
 import static seedu.organizer.testutil.TypicalTasks.MAKEPRESENT;
-import static seedu.organizer.testutil.TypicalTasks.PREPAREBREAKFAST;
 import static seedu.organizer.testutil.TypicalTasks.STUDY;
 
 import org.junit.Test;
@@ -53,7 +52,7 @@ import seedu.organizer.testutil.TaskUtil;
 public class AddCommandSystemTest extends OrganizerSystemTest {
 
     @Test
-    public void add() throws Exception {
+    public void add_undoRedo() throws Exception {
         Model model = getModel();
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
@@ -66,16 +65,26 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
                 + DEADLINE_DESC_EXAM + "   " + DESCRIPTION_DESC_EXAM + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
-        /* Case: undo adding Amy to the list -> Amy deleted */
+        /* Case: undo adding Exam to the list -> Exam deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding Amy to the list -> Amy added again */
+        /* Case: redo adding Exam to the list -> Exam added again */
         command = RedoCommand.COMMAND_WORD;
         model.addTask(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
+    }
+
+    @Test
+    public void add_sameTasks() {
+        Model model = getModel();
+
+        Task toAdd;
+        String command;
+
+        /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
         /* Case: add a task with all fields same as another task in the organizer book except name -> added */
         toAdd = new TaskBuilder().withName(VALID_NAME_STUDY)
@@ -112,6 +121,14 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
                 + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_STUDY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
+    }
+
+    @Test
+    public void add_withMissingNonCompulsoryParameters() {
+        Task toAdd;
+        String command;
+
+        /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
         /* Case: add to empty organizer book -> added */
         deleteAllTasks();
@@ -136,6 +153,10 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
         //@@author
+    }
+
+    @Test
+    public void add_performAddInDifferentSituations() {
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
@@ -147,7 +168,15 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
         /* Case: selects first card in the task list, add a task -> added, card selection remains unchanged */
         selectTask(Index.fromOneBased(1));
-        assertCommandSuccess(PREPAREBREAKFAST);
+        assertCommandSuccess(STUDY);
+    }
+
+    @Test
+    public void add_invalidOperations() {
+        Task toAdd;
+        String command;
+
+        assertCommandSuccess(MAKEPRESENT);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
@@ -172,6 +201,9 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
+        toAdd = new TaskBuilder().withName(VALID_NAME_EXAM).withPriority
+                (VALID_PRIORITY_EXAM).withDeadline(VALID_DEADLINE_EXAM).withDescription("")
+                .withTags(VALID_TAG_FRIEND).build();
         command = "addss " + TaskUtil.getPersonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 

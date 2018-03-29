@@ -1,6 +1,7 @@
 package seedu.organizer.ui.calendar;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -15,11 +16,13 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import seedu.organizer.logic.commands.PreviousMonthCommand;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.ui.UiPart;
 
@@ -38,8 +41,12 @@ public class MonthView extends UiPart<Region> {
     private static final int MAX_ROW = 4;
 
     private int dateCount;
+    private YearMonth currentYearMonth;
+    private YearMonth viewYearMonth;
     private String[] datesToBePrinted;
     private ObservableList<Task> taskList;
+
+    private ObservableList<String> executedCommandsList;
 
     @FXML
     private Text calendarTitle;
@@ -47,10 +54,28 @@ public class MonthView extends UiPart<Region> {
     @FXML
     private GridPane taskCalendar;
 
-    public MonthView(ObservableList<Task> taskList) {
+    public MonthView(ObservableList<Task> taskList, ObservableList<String> executedCommandsList) {
         super(FXML);
 
+        currentYearMonth = YearMonth.now();
+        viewYearMonth = currentYearMonth;
+
         this.taskList = taskList;
+        this.executedCommandsList = executedCommandsList;
+        addListenerToExecutedCommandsList();
+    }
+
+    /**
+     * Displays the month view.
+     *
+     * @param yearMonth Year and month in the YearMonth format.
+     */
+    public void getMonthView(YearMonth yearMonth) {
+
+        int currentYear = yearMonth.getYear();
+
+        setMonthCalendarTitle(currentYear, yearMonth.getMonth().toString());
+        setMonthCalendarDatesAndEntries(currentYear, yearMonth.getMonthValue());
     }
 
     /**
@@ -59,7 +84,7 @@ public class MonthView extends UiPart<Region> {
      * @param month Full month name.
      * @param year Year represented as a 4-digit integer.
      */
-    protected void setMonthCalendarTitle(int year, String month) {
+    private void setMonthCalendarTitle(int year, String month) {
         calendarTitle.setText(month + " " + year);
     }
 
@@ -69,7 +94,7 @@ public class MonthView extends UiPart<Region> {
      * @param year Year represented as a 4-digit integer.
      * @param month Month represented by numbers from 1 to 12.
      */
-    protected void setMonthCalendarDatesAndEntries(int year, int month) {
+    private void setMonthCalendarDatesAndEntries(int year, int month) {
         LocalDate startDate = LocalDate.of(year, month, 1);
         int lengthOfMonth = startDate.lengthOfMonth();
         int startDay = getMonthStartDay(startDate);
@@ -99,7 +124,49 @@ public class MonthView extends UiPart<Region> {
         ObservableList<EntryCard> entryCardsList = getEntryCardsList(year, month);
         setMonthEntries(startDay, entryCardsList);
 
-        addListenerToTaskList(year, month, startDay);
+        addListenerToTaskList(year, month);
+    }
+
+    /**
+     * Clears the calendar of all dates and entries, while retaining the {@code gridLines}.
+     */
+    private void clearCalendar() {
+        Node gridLines = taskCalendar.getChildren().get(0);
+        taskCalendar.getChildren().retainAll(gridLines);
+    }
+
+    //====================================== Interacting with Command ==============================================
+
+    /**
+     * Shows the view of the month before the currently viewed month.
+     */
+    private void goToPreviousMonth() {
+        viewYearMonth = viewYearMonth.minusMonths(1);
+
+        clearCalendar();
+        getMonthView(viewYearMonth);
+    }
+
+    /**
+     * Tracks the commands executed by the user in the {@code executedCommandsList}. Calendar view may change depending
+     * on the commands executed by the user.
+     */
+    private void addListenerToExecutedCommandsList() {
+        executedCommandsList.addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change change) {
+
+                while (change.next()) {
+                    int size = executedCommandsList.size();
+                    String executedCommand = executedCommandsList.get(size - 1);
+
+                    if ((executedCommand.equals(PreviousMonthCommand.COMMAND_WORD)) || (
+                        executedCommand.equals(PreviousMonthCommand.COMMAND_ALIAS))) {
+                        goToPreviousMonth();
+                    }
+                }
+            }
+        });
     }
 
     //============================= Populating the Month Calendar Dates ===========================================
@@ -350,17 +417,15 @@ public class MonthView extends UiPart<Region> {
      *
      * @param year Year represented as a 4-digit integer.
      * @param month Month represented by numbers from 1 to 12.
-     * @param startDay Integer value of the day of week of the start day of the month. Values ranges from 1 - 7,
-     *                 representing the different days of the week.
      */
-    private void addListenerToTaskList(int year, int month, int startDay) {
+    private void addListenerToTaskList(int year, int month) {
         taskList.addListener(new ListChangeListener<Task>() {
             @Override
             public void onChanged(Change change) {
 
                 while (change.next()) {
-                    ObservableList<EntryCard> updatedEntryCardsList = getEntryCardsList(year, month);
-                    setMonthEntries(startDay, updatedEntryCardsList);
+                    clearCalendar();
+                    setMonthCalendarDatesAndEntries(year, month);
                 }
             }
         });

@@ -73,14 +73,14 @@ public class AddressBookParserTest {
     public void parseCommand_deleteAlias_forcePerson() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " -fo " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(4,INDEX_FIRST_PERSON), command);
+        assertEquals(new DeleteCommand(4, INDEX_FIRST_PERSON), command);
     }
 
     @Test
     public void parseCommand_delete_forcePerson() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " -fo " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(4,INDEX_FIRST_PERSON), command);
+        assertEquals(new DeleteCommand(4, INDEX_FIRST_PERSON), command);
     }
 
     @Test

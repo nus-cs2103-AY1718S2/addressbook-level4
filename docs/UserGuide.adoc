@@ -18,11 +18,15 @@ By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-Employees Tracker (E.T.) is a *Human Resource Manager* application for managers who *prefer to use a desktop app for managing his/her subordinates*. More importantly, E.T. is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, E.T. can get your employees management tasks done faster than traditional GUI apps.
+This user guide serves to guide you so that you are able to use utilize Employees Tracker to its fullest extent.
 
-Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Employees Tracker (E.T.) is a *Human Resource Manager* application for managers who *prefer to use a desktop app for managing his/her subordinates*.
+E.T. is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, E.T. can get your employees management tasks done faster than traditional GUI apps.
+
+Jump to the <<Quick Start>> to get started.
 
 == Quick Start
+This section is to help you to start using Employees Tracker quickly.
 
 === Setting up
 
@@ -33,7 +37,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `et-employeestracker.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your Employees Tracker.
 .  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in _Figure 1_.
 +
 .Graphical User Interface (GUI)
@@ -58,8 +62,10 @@ Refer to <<Features>> for details of each command.
 ****
 
 == Features
+This section outlines all of Employees Tracker's features in detail.
 
 === The User Interface
+
 ==== Knowing the components
 
 _Figure 2_ shows the 6 major components of the user interface of Employees Tracker:
@@ -100,7 +106,7 @@ For example, suppose you have assigned a task to Alex which will due on 27th May
 
 ===== Notification cards and the Notification Center
 
-Notifications are shown in notification cards in ET. Each notification card contains 3 information about the expiring event: title, name of person in-charge, time of expiry. +
+Notifications are shown in notification cards in ET. Each notification card contains 3 information about the expiring event: title, name of employee in-charge, time of expiry. +
 
 Notification cards will pop into the User Interface of ET from the bottom right corner, and waits 5 seconds before exitting the screen. However, the notification cards aren't dismissed. You can still revisit them in the notification center. +
 
@@ -108,12 +114,13 @@ In the notification center, you can either dismiss a notification, email to remi
 
 === Data storage
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Employees Tracker data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 
 [[Commands]]
 == Commands
+This section lists all Employees Tracker's command.
 
 ====
 *Command Format*
@@ -144,7 +151,7 @@ Format: `unlock PASSWORD`
 Examples:
 
 * `unlock 123` +
-Unlock the address book with password: 123 (which is also the application's unlock password)
+Unlock the Employees Tracker with password: 123 (which is also the application's unlock password)
 
 === Viewing help : `help`
 
@@ -153,64 +160,64 @@ Format: `help`
 
 === Adding an employee: `add`
 
-Adds a person to the address book +
+Adds an employee to the Employees Tracker +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+An employee can have any number of tags (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all employees : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all employees in the Employees Tracker. +
 Format: `list`
 
 ****
-* List command will shows you a list of persons, as shown in Figure 3.3.
-* Each entry of the list contains information of a person.
-* In each entry, from top to down, is the name, tags, phone number, address, email address and rating of that person.
+* List command will shows you a list of employees, as shown in Figure 3.3.
+* Each entry of the list contains information of an employee.
+* In each entry, from top to down, is the name, tags, phone number, address, email address and rating of that employee.
 ****
 
 [NOTE]
 ====
-Rating will be shown as `-` if the person is yet to be rated.
+Rating will be shown as `-` if the employee is yet to be rated.
 ====
 
 image::employeesList.png[width="790"][height="200"]
-_Figure 3.3: List of persons_
+_Figure 3.3: List of employees_
 
 
-=== Editing a person : `edit`
+=== Editing an employee : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing employee in the Employees Tracker. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/RATING] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the employee at the specified `INDEX`. The index refers to the index number shown in the last employees listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the employee will be removed i.e adding of tags is not cumulative.
+* You can remove all the employee's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd employee to be `Betsy Crower` and clears all existing tags.
 
-=== Rating a person : `rate`
+=== Rating an employee : `rate`
 
-Updates the rating of an existing person in the address book. +
+Updates the rating of an existing employee in the Employees Tracker. +
 Format: `rate INDEX RATING`
 
 ****
-* Rates the person at the specified `INDEX`. The index refers to the index number shown in the last persons listing. The index *must be a positive integer* 1, 2, 3, ...
+* Rates the employee at the specified `INDEX`. The index refers to the index number shown in the last employees listing. The index *must be a positive integer* 1, 2, 3, ...
 * Both INDEX and RATING must be provided.
 * Existing rating will be updated to the input RATING.
 * RATING must be a positive integer between 1 and 5, i.e. 1, 2, 3, 4 or 5.
@@ -218,28 +225,28 @@ Format: `rate INDEX RATING`
 
 [NOTE]
 ====
-* A person will have a null rating by default upon added. This implies that the person is yet to be rated.
+* An employee will have a null rating by default upon added. This implies that the employee is yet to be rated.
 * Null rating is shown as `-`.
-* You cannot assign null rating to a person. If you want to revert a person back to null rating, please refer to <<Undoing previous command : `undo`>>
+* You cannot assign null rating to an employee. If you want to revert an employee back to null rating, please refer to <<Undoing previous command : `undo`>>
 ====
 
 Examples:
 
 * `list` +
 `rate 1 5` +
-Gives the 1st person in the last persons listing a 5-stars rating.
+Gives the 1st employee in the last employees listing a 5-stars rating.
 * `find Alex` +
 `rate 2 2` +
-Gives the 2nd person in the list of Alex(s) a 2-star rating.
+Gives the 2nd employee in the list of Alex(s) a 2-star rating.
 
 === Reviewing an employee : `review`
 
-Assigns a review to an existing employee in the address book. +
+Assigns a review to an existing employee in the Employees Tracker. +
 Format: `review INDEX`
 
 ****
 * Rate the employee at the specified `INDEX`. +
-The index refers to the index number shown in the last persons listing. +
+The index refers to the index number shown in the last employees listing. +
 The index *must be a positive integer*, i.e. 1, 2, 3, ...
 * A pop-up dialog box will appear after user executes the command. +
 The dialog box will prompt the user to enter the review.
@@ -257,7 +264,7 @@ Examples:
 
 * `list` +
 `review 1` +
-Gives the 1st employee in the last persons listing a review. +
+Gives the 1st employee in the last employees listing a review. +
 The review will be based on the input in the pop-up dialog box.
 * `find n/Alex` +
 `rate 2` +
@@ -297,13 +304,13 @@ e.g. `John | Friends, Colleagues | 3`
 Returns all employees having both names `John` and either tags `Friends` or `Colleagues` +
 e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`, and `John Dare | Friends, Colleagues, OweMoneys`
 
-=== Deleting a person : `delete`
+=== Deleting an employee : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified employee from the Employees Tracker. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the employee at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -312,18 +319,18 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd employee in the Employees Tracker.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st employee in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting an employee : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the employee identified by the index number used in the last employees listing. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the employee and loads the Google search page the employee at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -332,10 +339,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd employee in the Employees Tracker.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st employee in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -350,12 +357,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the Employees Tracker to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the Employees Tracker's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -410,7 +417,7 @@ Format: `lock`
 Examples:
 
 * `lock` +
-Lock the address book.
+Lock the Employees Tracker.
 
 === Setting the application unlock password: `setPassword`
 
@@ -450,7 +457,7 @@ Sort the employees by rating in descending order.
 
 === Adding an event on one employee's timetable: `addEvent`
 
-Add an event to the employee identified by the index number used in the last person listing. +
+Add an event to the employee identified by the index number used in the last employees listing. +
 Format: `addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION`
 
 ****
@@ -467,7 +474,7 @@ Adds the event to 2nd employee's timetable in the list.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the Employees Tracker. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -507,29 +514,27 @@ Format: `whatsapp INDEX`
 * You may be required to scan a QR code from your phone to login to WhatsApp webpage.
 =====
 
-=== editing a event `[coming in v2.0]`
+=== Upcoming features
 
-=== deleting a event `[coming in v2.0]`
+Features yet to be implemented. Coming in `v2.0`.
 
-=== Adding an event in mass to many employees' timetable at once `[coming in v2.0]`
-
-=== Having my own timetable `[coming in v2.0]`
-
-=== Jumping to email composing with a command `[coming in v2.0]`
-
-=== Viewing my to-do-list `[coming in v2.0]`
-
-=== Changing the window scheme/theme/skin `[coming in v2.0]`
-
+* Editing a event.
+* Deleting a event.
+* Adding an event in mass to many employees' timetable at once.
+* Having my own timetable.
+* Jumping to email composing with a command.
+* Viewing my to-do-list.
+* Changing the window scheme/theme/skin.
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+* Encrypting data files.
 
-== FAQ
+== Frequently Asked Questions (FAQ)
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Employees Tracker folder.
 
 == Command Summary
+This section summarizes the usage of all Employees Tracker's commands.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`

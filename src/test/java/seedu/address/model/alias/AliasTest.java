@@ -1,10 +1,19 @@
 package seedu.address.model.alias;
 
-import org.junit.Test;
-import seedu.address.testutil.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_NUMBER;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
 
 public class AliasTest {
 

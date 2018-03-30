@@ -71,10 +71,12 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_ALIAS = "alias1";
     public static final String VALID_ALIAS_CLEAR_COMMAND = ClearCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_CLEAR = "clear1";
+    public static final String VALID_ALIAS_DELETE_COMMAND = DeleteCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_DELETE = "delete1";
     public static final String VALID_ALIAS_EDIT = "edit1";
     public static final String VALID_ALIAS_EXIT = "exit1";
     public static final String VALID_ALIAS_FIND = "find1";
+    public static final String VALID_ALIAS_HELP_COMMAND = HelpCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_HELP = "help1";
     public static final String VALID_ALIAS_HISTORY = "history1";
     public static final String VALID_ALIAS_IMPORT = "import1";

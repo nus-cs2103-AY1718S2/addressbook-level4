@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8"
-    xmlns:fx="http://javafx.com/fxml/1">
-  <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display"/>
+<StackPane fx:id="placeHolder" minHeight="100.0" minWidth="150.0" styleClass="pane-with-border" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <TextArea fx:id="resultDisplay" editable="false" prefHeight="150.0" prefWidth="600.0" styleClass="result-display" StackPane.alignment="BOTTOM_CENTER">
+      <padding>
+         <Insets top="30.0" />
+      </padding></TextArea>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dfdada" height="25.0" stroke="#ffffff00" strokeType="INSIDE" width="130.0" StackPane.alignment="TOP_LEFT">
+      <StackPane.margin>
+         <Insets left="10.0" top="5.0" />
+      </StackPane.margin>
+   </Rectangle>
+   <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="COMMAND RESULTS" wrappingWidth="120.0" StackPane.alignment="TOP_LEFT">
+      <StackPane.margin>
+         <Insets left="17.0" top="12.5" />
+      </StackPane.margin>
+      <font>
+         <Font name="ADAM.CGPRO" size="12.0" />
+      </font>
+   </Text>
 </StackPane>

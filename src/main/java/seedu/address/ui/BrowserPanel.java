@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 
 import seedu.address.MainApp;
@@ -32,6 +33,9 @@ public class BrowserPanel extends UiPart<Region> {
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private Text additionalInfo;
 
     @FXML
     private WebView browser;
@@ -88,6 +92,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        additionalInfo.setText("+ Additional information will be displayed here.");
     }
 
     /**

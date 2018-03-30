@@ -998,9 +998,9 @@ The restaurant can modify the menu and customers can only order what are on the 
 - Minor enhancement: Add back up method in storage +
 Users are able to back up the address book in a different location.
 - Minor enhancement: Add find location feature +
-When clicking one particular person in the addressbook, the browser on the left will automatically show that person's
+When clicking one particular person in the addressbook, the browser on the right will automatically show that person's
 address using google map.
-- Major enhancement: Add a new feature
+- Major enhancement: Implement a priority queue structure to process orders from add method + Create new GUI for add command
 
 [appendix]
 == User Stories

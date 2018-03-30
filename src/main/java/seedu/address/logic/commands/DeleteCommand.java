@@ -118,7 +118,7 @@ public class DeleteCommand extends UndoableCommand {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         personToDelete = lastShownList.get(targetIndex.getZeroBased());
@@ -142,7 +142,7 @@ public class DeleteCommand extends UndoableCommand {
         List<PetPatient> lastShownList = model.getFilteredPetPatientList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         petPatientToDelete = lastShownList.get(targetIndex.getZeroBased());
@@ -165,7 +165,7 @@ public class DeleteCommand extends UndoableCommand {
         List<Appointment> lastShownList = model.getFilteredAppointmentList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         appointmentToDelete = lastShownList.get(targetIndex.getZeroBased());
@@ -225,7 +225,7 @@ public class DeleteCommand extends UndoableCommand {
                 throw new CommandException(MESSAGE_USAGE);
             }
         } catch (CommandException e) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
     }
 

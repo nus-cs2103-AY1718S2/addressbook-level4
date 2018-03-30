@@ -15,6 +15,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.PetPatient;
@@ -75,7 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addPerson(Person person) throws DuplicatePersonException {
+    public synchronized void addPerson(Person person) throws DuplicatePersonException, DuplicateNricException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
@@ -155,13 +156,22 @@ public class ModelManager extends ComponentManager implements Model {
         filteredAppointments.setPredicate(predicate);
     }
 
-    /*
+    //=========== Filtered Pet Patient List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code PetPatient} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<PetPatient> getFilteredPetPatientList() {
+        return FXCollections.unmodifiableObservableList(filteredPetPatients);
+    }
+
     @Override
     public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
     requireNonNull(predicate);
     filteredPetPatients.setPredicate(predicate);
     }
-    */
 
     @Override
     public boolean equals(Object obj) {

@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.PetPatient;
@@ -31,7 +32,7 @@ public interface Model {
     void deletePerson(Person target) throws PersonNotFoundException;
 
     /** Adds the given person */
-    void addPerson(Person person) throws DuplicatePersonException;
+    void addPerson(Person person) throws DuplicatePersonException, DuplicateNricException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -63,6 +64,10 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered appointment list */
     ObservableList<Appointment> getFilteredAppointmentList();
+
+    /** Returns an unmodifiable view of the filtered appointment list */
+    ObservableList<PetPatient> getFilteredPetPatientList();
+
     /**
      * Updates the filter of the filtered appointment list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

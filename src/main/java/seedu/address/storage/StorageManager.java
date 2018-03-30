@@ -9,9 +9,11 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CustomerStatsChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCustomerStats;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -25,10 +27,13 @@ public class StorageManager extends ComponentManager implements Storage {
     private CustomerStatsStorage customerStatsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage,
+                          UserPrefsStorage userPrefsStorage,
+                          CustomerStatsStorage customerStatsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.customerStatsStorage = customerStatsStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -94,4 +99,32 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    // ================ CustomerStats methods ==============================
+
+    @Override
+    public String getCustomerStatsFilePath() {
+        return addressBookStorage.getAddressBookFilePath();
+    }
+
+    @Override
+    public void saveCustomerStats(ReadOnlyCustomerStats customerStats) throws IOException {
+        saveCustomerStats(customerStats, customerStatsStorage.getCustomerStatsFilePath());
+    }
+
+    @Override
+    public void saveCustomerStats(ReadOnlyCustomerStats customerStats, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        customerStatsStorage.saveCustomerStats(customerStats, filePath);
+    }
+
+    @Override
+    @Subscribe
+    public void handleCustomerStatsChangedEvent(CustomerStatsChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveCustomerStats(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
 }

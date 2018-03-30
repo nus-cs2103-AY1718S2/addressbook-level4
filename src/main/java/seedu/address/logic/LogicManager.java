@@ -58,6 +58,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public ObservableList<PetPatient> getFilteredPetPatientList() {
+        return model.getFilteredPetPatientList();
+    }
+
+    @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }

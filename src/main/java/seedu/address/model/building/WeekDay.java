@@ -97,7 +97,7 @@ public class WeekDay {
                 logger.warning("Weekday Schedule contains some null data, venueinformation.json file is corrupted.");
                 throw new InvalidWeekDayScheduleException();
             }
-            if (!roomStatus.equals("vacant") && !roomStatus.equals("occupied")) {
+            if (!"vacant".equals(roomStatus) && !"occupied".equals(roomStatus)) {
                 logger.warning("Weekday Schedule contains some incorrect data, "
                         + "venueinformation.json file is corrupted.");
                 throw new InvalidWeekDayScheduleException();

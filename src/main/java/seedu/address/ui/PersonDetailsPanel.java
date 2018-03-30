@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
@@ -28,20 +29,15 @@ import seedu.address.model.person.Person;
  * The Person Details Panel of the App.
  * To be UPDATED
  */
-public class PersonDetailsPanel extends UiPart<Region>
-        implements Initializable, MapComponentInitializedListener {
+public class PersonDetailsPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonDetailsPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-
+    private final MapPanel mapPanel;
     @FXML
-    private GoogleMapView mapView;
+    private StackPane mapPanelPlaceHolder;
 
-    @FXML
-    private Pane invalidAddressOverlay;
-
-    private GoogleMap map;
 
     public PersonDetailsPanel() {
         super(FXML);
@@ -50,64 +46,34 @@ public class PersonDetailsPanel extends UiPart<Region>
 
         getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
+        mapPanel = new MapPanel("MapPanel.fxml");
+        mapPanelPlaceHolder.getChildren().add(mapPanel.getRoot());
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        mapView.addMapInializedListener(this);
+    public void removeMapPanel() {
 
-    }
-
-    /**
-     * Update the map based on new selection event.
-     * Default view is shown if no address is invalid.
-     */
-
-    private void loadPersonMapAddress(Person person) {
-
-        MapManager.GeocodeUtil.setMapMarkerFromAddress(map, person.getAddress().toString());
-    }
-
-    /**
-     * Set the initial properties of the map.
-     */
-
-    @Override
-    public void mapInitialized() {
-
-        MapOptions mapOptions = new MapOptions();
-
-        mapOptions.center(new LatLong(1.3521, 103.8198))
-                .mapType(MapTypeIdEnum.ROADMAP)
-                .mapTypeControl(false)
-                .overviewMapControl(false)
-                .panControl(false)
-                .rotateControl(false)
-                .scaleControl(false)
-                .streetViewControl(false)
-                .zoom(10);
-
-        map = mapView.createMap(mapOptions);
-        invalidAddressOverlay.setVisible(false);
-
+        if (mapPanel != null && mapPanelPlaceHolder.getChildren().contains(mapPanel.getRoot())) {
+            mapPanel.resetMap();
+            mapPanelPlaceHolder.getChildren().remove(mapPanel.getRoot());
+        }
     }
 
     /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
-        map = null;
+        mapPanel.freeResources();
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonMapAddress(event.getNewSelection().person);
+        mapPanel.loadAddress(event.getNewSelection().person.getAddress().toString());
     }
 
     @Subscribe
     private void handleShowInvalidAddressOverlayEvent(ShowInvalidAddressOverlayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        invalidAddressOverlay.setVisible(event.getAddressValidity());
+        mapPanel.showInvalidAddressOverlay(event.getAddressValidity());
     }
 }

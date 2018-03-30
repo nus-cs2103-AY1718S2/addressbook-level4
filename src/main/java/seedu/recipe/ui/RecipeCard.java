@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Recipe;
 
 /**
@@ -40,6 +41,8 @@ public class RecipeCard extends UiPart<Region> {
     private Label url;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Image image;
 
     public RecipeCard(Recipe recipe, int displayedIndex) {
         super(FXML);

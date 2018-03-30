@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.recipe.MainApp;
 import seedu.recipe.commons.core.LogsCenter;
+import seedu.recipe.commons.events.ui.InternetSearchRequestEvent;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
@@ -23,7 +24,8 @@ import seedu.recipe.ui.util.FacebookHandler;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_PAGE_DARK = "defaultdark.html";
+    public static final String DEFAULT_PAGE_LIGHT = "defaultlight.html";
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     private static final String FXML = "BrowserPanel.fxml";
@@ -35,13 +37,13 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel() {
+    public BrowserPanel(boolean isDarkTheme) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        loadDefaultPage();
+        loadDefaultPage(isDarkTheme);
         registerAsAnEventHandler(this);
     }
 
@@ -55,9 +57,15 @@ public class BrowserPanel extends UiPart<Region> {
 
     /**
      * Loads a default HTML file with a background that matches the general theme.
+     * @param isDarkTheme true if the app is using dark theme
      */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+    public void loadDefaultPage(boolean isDarkTheme) {
+        URL defaultPage;
+        if (isDarkTheme) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+        }
         loadPage(defaultPage.toExternalForm());
     }
 
@@ -72,6 +80,15 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleRecipePanelSelectionChangedEvent(RecipePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadRecipePage(event.getNewSelection().recipe);
+    }
+
+    //@@author kokonguyen191
+    @Subscribe
+    private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.wikiaQueryHandler.getQueryNumberOfResults() != 0) {
+            loadPage(event.wikiaQueryHandler.getRecipeQueryUrl());
+        }
     }
 
     //@@author RyanAngJY

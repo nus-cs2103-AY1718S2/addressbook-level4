@@ -6,7 +6,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import seedu.address.model.patient.Record;
 
@@ -15,16 +18,16 @@ import seedu.address.model.patient.Record;
  */
 public class RecordController {
     @FXML
-    private TextField dateField;
+    private TextArea dateField;
 
     @FXML
-    private TextField symptomField;
+    private TextArea symptomField;
 
     @FXML
-    private TextField illnessField;
+    private TextArea illnessField;
 
     @FXML
-    private TextField treatmentField;
+    private TextArea treatmentField;
 
     @FXML
     private Text messageText;
@@ -50,7 +53,34 @@ public class RecordController {
         }
     }
 
+    /**
+     * Takes in input to the various record fields when enter button is clicked in any field.
+     */
+    @FXML
+    protected void handleKeyAction(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            String date = this.dateField.getText();
+            String symptom = this.symptomField.getText();
+            String illness = this.illnessField.getText();
+            String treatment = this.treatmentField.getText();
+            if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
+                messageText.setText("Please fill in all fields.");
+            } else {
+                if (RecordManager.authenticate(date, symptom, illness, treatment)) {
+                    messageText.setText("Success! Please close this window.");
+                } else {
+                    messageText.setText("Username and password do not match!");
+                }
+            }
+            event.consume();
+        }
+    }
+
     public void initData(Record record) {
+        dateField.setWrapText(true);
+        symptomField.setWrapText(true);
+        illnessField.setWrapText(true);
+        treatmentField.setWrapText(true);
         dateField.setText(record.getDate());
         symptomField.setText(record.getSymptom());
         illnessField.setText(record.getIllness());

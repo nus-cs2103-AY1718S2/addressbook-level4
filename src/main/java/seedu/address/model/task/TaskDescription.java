@@ -18,6 +18,8 @@ public class TaskDescription {
 
     public final String value;
 
+    public final String shortDesc;
+
     /**
      * Constructs an {@code TaskDescription}.
      *
@@ -27,6 +29,11 @@ public class TaskDescription {
         assert description != null : MESSAGE_DESCRIPTION_CONSTRAINTS;
         checkArgument(isValidDescription(description));
         this.value = description;
+        if (value.length() <= 7) {
+            shortDesc = value;
+        } else {
+            shortDesc = value.substring(0, 7) + "...";
+        }
     }
 
     /**

@@ -22,8 +22,6 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Filters the list based on the specifed field and given value.";
 
-    public static final String MESSAGE_FILTER_PERSON_SUCCESS = "Filtered Person(s): %1$s";
-
     private final DatePredicate predicate;
 
     private String stringDuration;

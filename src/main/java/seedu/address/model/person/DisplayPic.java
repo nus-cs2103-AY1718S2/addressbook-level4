@@ -66,6 +66,10 @@ public class DisplayPic {
         this.value = DEFAULT_DISPLAY_PIC;
     }
 
+    /**
+     * Updates the path the DisplayPic object points to
+     * @param personDetails are the details to hash to ensure a unique value
+     */
     public void updateDisplay(String personDetails) {
         if (!this.value.equals(DEFAULT_DISPLAY_PIC)) {
             String uniqueFileName = NamingUtil.generateUniqueName(personDetails);

@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-import static seedu.address.commons.util.AppUtil.checkArgument;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +10,6 @@ import javax.imageio.ImageIO;
 import javafx.scene.image.Image;
 
 import seedu.address.MainApp;
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.AppUtil;
 import seedu.address.commons.util.FileUtil;

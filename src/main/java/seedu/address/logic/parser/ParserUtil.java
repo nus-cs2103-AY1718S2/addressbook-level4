@@ -196,17 +196,6 @@ public class ParserUtil {
      * if {@code displayPic} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<DisplayPic> parseEditDisplayPic(Optional<String> displayPic,
-                                                       String toHash) throws IllegalValueException {
-        requireNonNull(displayPic);
-        return displayPic.isPresent() ? Optional.of(parseDisplayPic(displayPic.get(), toHash)) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
-     * if {@code displayPic} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
     public static Optional<DisplayPic> parseDisplayPic(Optional<String> displayPic,
                                                        String toHash) throws IllegalValueException {
         if (displayPic.isPresent()) {
@@ -214,6 +203,17 @@ public class ParserUtil {
         } else {
             return Optional.of(parseDisplayPic((String) null, toHash));
         }
+    }
+
+    /**
+     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
+     * if {@code displayPic} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPic> parseEditDisplayPic(Optional<String> displayPic,
+                                                       String toHash) throws IllegalValueException {
+        requireNonNull(displayPic);
+        return displayPic.isPresent() ? Optional.of(parseDisplayPic(displayPic.get(), toHash)) : Optional.empty();
     }
 
     /**

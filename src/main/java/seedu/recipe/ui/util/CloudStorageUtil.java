@@ -60,11 +60,9 @@ public class CloudStorageUtil {
         if (url.contains(ACCESS_TOKEN_IDENTIFIER)) {
             String token = extractAccessToken(url);
             setAccessToken(token);
-            System.out.println("true");
             System.out.println(accessToken);
             return true;
         } else {
-            System.out.println("false");
             return false;
         }
     }
@@ -96,7 +94,6 @@ public class CloudStorageUtil {
             client.files().uploadBuilder("/" + uploadFilename)
                     .withAutorename(true)
                     .uploadAndFinish(in);
-            UploadCommand.uploadSuccess = true;
         } catch (IOException | DbxException e) {
             throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Filename in wrong format.");
         }

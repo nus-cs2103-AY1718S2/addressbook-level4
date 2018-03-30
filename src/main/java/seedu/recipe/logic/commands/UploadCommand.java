@@ -23,7 +23,6 @@ public class UploadCommand extends Command {
             + "Example: " + COMMAND_WORD + " RecipeBook";
 
     public final String xmlExtensionFilename;
-    public static boolean uploadSuccess;
 
     /**
      * Creates an UploadCommand to upload recipebook.xml to Dropbox with the
@@ -31,14 +30,12 @@ public class UploadCommand extends Command {
      */
     public UploadCommand(String xmlExtensionFilename) {
         this.xmlExtensionFilename = xmlExtensionFilename;
-        this.uploadSuccess = false;
     }
 
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new UploadRecipesEvent(xmlExtensionFilename));
-        while (!uploadSuccess);
-        uploadSuccess = false;
+
         return new CommandResult(MESSAGE_UPLOAD);
     }
 

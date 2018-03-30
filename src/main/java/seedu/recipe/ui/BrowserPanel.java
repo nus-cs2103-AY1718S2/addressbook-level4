@@ -19,9 +19,11 @@ import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
+import seedu.recipe.commons.events.ui.NewResultAvailableEvent;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
+import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.ui.util.FacebookHandler;
@@ -110,6 +112,7 @@ public class BrowserPanel extends UiPart<Region> {
                     if (url.contains(CloudStorageUtil.getRedirectDomain())) {
                         if (CloudStorageUtil.checkAndSetAccessToken(url)) {
                             CloudStorageUtil.upload(uploadFilename);
+                            EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
                             EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
                         }
                     }
@@ -132,6 +135,8 @@ public class BrowserPanel extends UiPart<Region> {
         uploadFilename = event.getUploadFilename();
         if (CloudStorageUtil.hasAccessToken()) {
             CloudStorageUtil.upload(uploadFilename);
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
         }
     }
     //@@author

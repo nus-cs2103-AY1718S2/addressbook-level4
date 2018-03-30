@@ -39,14 +39,24 @@ public class CommandBoxHandle extends NodeHandle<TextArea> {
 
     //@@author kokonguyen191
     /**
-     * Append the given string to text already existing in the Command box
+     * Appends the given string to text already existing in the Command box
      */
     public void appendText(String text) {
         guiRobot.interact(() -> getRootNode().appendText(text));
         guiRobot.pauseForHuman();
     }
-    //@@author
 
+    //@@author hoangduong1607
+    /**
+     * Inserts the given string to text at current caret position
+     */
+    public void insertText(String text) {
+        int caretPosition = getRootNode().getCaretPosition();
+        guiRobot.interact(() -> getRootNode().insertText(caretPosition, text));
+        guiRobot.pauseForHuman();
+    }
+
+    //@@author
     /**
      * Returns the list of style classes present in the command box.
      */

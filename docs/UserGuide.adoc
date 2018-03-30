@@ -52,15 +52,15 @@ E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 [[CommandFormat]]
 *Command Format*
 
-* Words in upper case are the parameters to be supplied by the user e.g. in `add Recipe Name:NAME`, `NAME` is a parameter which can be used as *`add Recipe Name:Chicken rice`*.
+* Words in upper case are the parameters to be supplied by the user e.g. in `add name/NAME`, `NAME` is a parameter which can be used as *`add name/Chicken rice`*.
 ** `INGREDIENT` is a list of ingredients, delimited by commas. E.g. `chicken,fish,rice` and `chicken, fish, rice` are valid.
 ** `INSTRUCTION` can receive multiple lines as its value.
 ** `TIME` fields accept a number of formats: `1h20m`, `1h20min`, `1 hour 20 minutes`, `80m`, `80min`, `80 mins`, etc. However, sticking to the most simple format `80m` is recommended.
 ** `CALORIES` and `SERVINGS` are positive numbers. E.g. `120`, `5000`, etc.
 ** `LINK` takes a valid website address as its value. E.g. `http://google.com`.
-* Items in square brackets are optional e.g `Recipe Name:NAME [#TAG]` can be used as *`Recipe Name:Chicken rice #chicken`* or as *`Recipe Name:Chicken rice`*.
-* Items with `...` after them can be used multiple times including zero times e.g. `[#TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`#rice`*, *`#rice #chicken`*, etc.
-* Parameters can be in any order. E.g. if the command specifies `Recipe Name:RECIPE_NAME Instruction:INSTRUCTION`, `Instruction:INSTRUCTION Recipe Name:RECIPE_NAME` has the same effect.
+* Items in square brackets are optional e.g `name/NAME [tag/TAG]` can be used as *`name/Chicken rice tag/chicken`* or as *`name/Chicken rice`*.
+* Items with `...` after them can be used multiple times including zero times e.g. `[tag/TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`tag/rice`*, *`tag/rice tag/chicken`*, etc.
+* Parameters can be in any order. E.g. if the command specifies `name/RECIPE_NAME instruction/INSTRUCTION`, `instruction/INSTRUCTION name/RECIPE_NAME` has the same effect.
 // end::command-format[]
 
 // tag::app-navigation[]
@@ -76,13 +76,13 @@ E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 
 Shows the user guide.
 
-Format: *`help`*
+Format: `help`
 
 === Adding a recipe: *`add`*
 
 Adds a recipe to the recipe book.
 
-Format: `add Recipe Name:RECIPE_NAME [Ingredient:INGREDIENT] [Instruction:INSTRUCTION] [Cooking Time:COOKING_TIME] [Preparation Time:PREPARATION_TIME] [Calories:CALORIES] [Servings:SERVINGS] [Link:LINK] [#TAG]...`
+Format: `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [link/LINK] [tag/TAG]...`
 
 [TIP]
 ====
@@ -93,7 +93,7 @@ You can add any number of tags (including 0) for a recipe.
 Details
 
 * See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
-* White spaces after a colon are automatically trimmed. For example, `add Recipe Name: Chicken rice` and `add Recipe Name:Chicken rice` are the same. However, the former is more visually pleasing.
+* White spaces after a colon are automatically trimmed. For example, `add name/ Chicken rice` and `add name/Chicken rice` are the same. However, the former is more visually pleasing.
 * Press kbd:[Enter] while holding down kbd:[Shift] to add a new line to your input.
 * `INSTRUCTION` can receive multiple lines as a valid input.
 * You can split a command into multiple lines for ease of input.
@@ -101,7 +101,7 @@ Details
 
 Examples:
 
-* *`add Recipe Name:Chicken Rice Ingredient:chicken, rice Cooking Time:10m #good #fast`*
+* *`add name/Chicken Rice ingredient/chicken, rice cooking_time/10m tag/good tag/fast`*
 [TIP]
 You can split the command into multiple lines as shown in the figure below. In case you forgot how to add a new line, it's kbd:[Shift]+kbd:[Enter].
 
@@ -120,13 +120,13 @@ image::AddCommandResultEg.png[width="750"]
 
 Shows a list of all recipes in the recipe book.
 
-Format: *`list`*
+Format: `list`
 
 === Editing a recipe: *`edit`*
 
 Edits an existing recipe in the recipe book.
 
-Format: `edit INDEX [n/RECIPE_NAME] [ing/INGREDIENT] [inst/INSTRUCTION] [ct/COOKING_TIME] [pt/PREPARATION_TIME] [cal/CALORIES] [s/SERVINGS] [url/LINK] [t/TAG]`
+Format: `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]`
 
 ****
 Details
@@ -141,9 +141,9 @@ Details
 
 Examples:
 
-* *`edit 1 ing/fish, bread ctime/5m`* +
+* *`edit 1 ingredient/fish, bread cooking_time/5m`* +
 Edits the ingredient and cooking time of the 1st recipe to be `_fish, bread_` and `_5m_` respectively.
-* *`edit 2 n/Pizza t/`* +
+* *`edit 2 name/Pizza tag/`* +
 Edits the name of the 2nd recipe to be `_Pizza_` and clears all of its existing tags.
 
 === Locating recipes by name: *`find`*
@@ -218,7 +218,7 @@ Deletes the 1st recipe in the results of the *`find`* command.
 
 Selects the recipe identified by the index number used in the last recipe listing.
 
-Format: *`select INDEX`*
+Format: `select INDEX`
 
 ****
 Details
@@ -241,7 +241,7 @@ Selects the 1st recipe in the results of the *`find`* command.
 
 Lists all the commands that you have entered in reverse chronological order.
 
-Format: *`history`*
+Format: `history`
 
 [TIP]
 ====
@@ -251,8 +251,9 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] 
 // tag::undoredo[]
 === Undoing previous command: *`undo`*
 
-Restores the recipe book to the state before the previous _undoable_ command was executed. +
-Format: *`undo`*
+Restores the recipe book to the state before the previous _undoable_ command was executed.
+
+Format: `undo`
 
 [NOTE]
 ====
@@ -279,7 +280,7 @@ The *`undo`* command fails as there are no undoable commands executed previously
 
 Reverses the most recent *`undo`* command.
 
-Format: *`redo`*
+Format: `redo`
 
 Examples:
 
@@ -302,7 +303,8 @@ The *`redo`* command fails as there are no *`undo`* commands executed previously
 === Uploading all recipes : *`upload`*
 
 Uploads the xml file containing data of all recipes to Dropbox, giving it the specified filename.
-Format: *`upload FILENAME`*
+
+Format: `upload FILENAME`
 
 ****
 * *_FILENAME_* must not start with / or \ or have consecutie slashes.
@@ -324,7 +326,7 @@ Updated data file will be uploaded to Dropbox with the name RecipeBook(1).xml.
 
 Clears all entries from the recipe book.
 
-Format: *`clear`*
+Format: `clear`
 
 See figures below for the expected behavior of this command. +
 {nbsp}
@@ -337,11 +339,31 @@ image::ClearCommand.png[width="750"]
 [TIP]
 If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
 
+//tag::change-theme[]
+=== Changing theme: *`theme`*
+
+Toggles between dark and light theme.
+
+Format: `theme`
+
+See <<fig-ChangeThemeCommand>> for more information. +
+{nbsp}
+
+[[fig-ChangeThemeCommand]]
+.Two themes provided for ReciRecipé
+image::ChangeThemeCommand.png[width="750"]
+
+{nbsp} +
+
+[TIP]
+You can change theme from the menu bar or by pressing F2 too!
+//end::change-theme[]
+
 === Exiting the program: *`exit`*
 
 Exits the program.
 
-Format: *`exit`*
+Format: `exit`
 
 === Saving the data
 
@@ -364,27 +386,32 @@ image::FAQ1.png[width="450"]
 
 == Cheatsheet
 
-* *Add*: `add Recipe Name:RECIPE_NAME [Ingredient:INGREDIENT] [Instruction:INSTRUCTION] [Cooking Time:COOKING_TIME] [Preparation Time:PREPARATION_TIME] [Calories:CALORIES] [Servings:SERVINGS] [Link:LINK] [#TAG]...` +
-E.g. *`add Recipe Name:Chicken Rice Ingredient:chicken, rice Cooking Time:10m #good #fast`*
+* *Add*: `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]...` +
+E.g. *`add name/Chicken Rice ingredient/chicken, rice cooking_time/10m tag/good tag/fast`*
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 E.g. *`delete 3`*
-* *Edit* : `edit INDEX [n/RECIPE_NAME] [ing/INGREDIENT] [inst/INSTRUCTION] [ct/COOKING_TIME] [pt/PREPARATION_TIME] [cal/CALORIES] [s/SERVINGS] [url/LINK] [t/TAG]` +
-E.g. *`edit 2 n/Chicken pizza ing/flour,chicken,pepper`*
+* *Edit* : `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]` +
+E.g. *`edit 2 name/Chicken pizza ingredient/INGREDIENT/flour,chicken,pepper`*
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 E.g. *`find Chicken Pizza`*
 * *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
 E.g. *`tag chicken favourites`*
 * *Upload* : `upload FILENAME` +
 E.g. *`upload RecipeBook`*
-* *List* : *`list`*
-* *Help* : *`help`*
+* *List* : `list`
+* *Help* : `help`
 * *Select* : `select INDEX` +
 E.g.*`select 2`*
-* *History* : *`history`*
-* *Undo* : *`undo`*
-* *Redo* : *`redo`*
+* *History* : `history`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Change theme* : `theme`
 
 == Glossary
 
 include::./Glossary.adoc[]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

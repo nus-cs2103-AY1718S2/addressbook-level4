@@ -274,7 +274,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 + INSTRUCTION_DESC_AMY + INVALID_URL_DESC;
         assertCommandFailure(command, Url.MESSAGE_URL_CONSTRAINTS);
 
-        /* Case: invalid url -> rejected */
+        /* Case: invalid image -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
                 + INSTRUCTION_DESC_AMY + INVALID_IMG_DESC;
         assertCommandFailure(command, Image.MESSAGE_IMAGE_CONSTRAINTS);

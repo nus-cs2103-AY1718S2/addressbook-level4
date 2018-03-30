@@ -63,4 +63,8 @@ public class FilterCommand extends Command {
         String stringDuration = totalDuration.toString() + " mins";
         return stringDuration;
     }
+
+    public String getStringDuration() {
+        return stringDuration;
+    }
 }

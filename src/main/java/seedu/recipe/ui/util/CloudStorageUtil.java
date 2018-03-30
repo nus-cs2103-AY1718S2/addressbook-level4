@@ -96,6 +96,7 @@ public class CloudStorageUtil {
             client.files().uploadBuilder("/" + uploadFilename)
                     .withAutorename(true)
                     .uploadAndFinish(in);
+            UploadCommand.uploadSuccess = true;
         } catch (IOException | DbxException e) {
             throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Filename in wrong format.");
         }

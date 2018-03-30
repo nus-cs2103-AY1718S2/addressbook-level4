@@ -24,14 +24,12 @@ public class SuggestionsPopUp extends ContextMenu {
     private CommandBox commandBox;
     private TextArea commandTextArea;
     private TextInputProcessorUtil textInputProcessor;
-    private AutoCompletionUtil autoCompletionUtil;
 
-    protected SuggestionsPopUp(CommandBox commandBox, AutoCompletionUtil autoCompletionUtil) {
+    protected SuggestionsPopUp(CommandBox commandBox) {
         super();
         this.commandBox = commandBox;
         commandTextArea = commandBox.getCommandTextArea();
         textInputProcessor = new TextInputProcessorUtil();
-        this.autoCompletionUtil = autoCompletionUtil;
     }
 
     /**
@@ -102,22 +100,7 @@ public class SuggestionsPopUp extends ContextMenu {
      */
     private void addSuggestion(String suggestion) {
         MenuItem item = new MenuItem(suggestion);
-        textInputProcessor.setContent(commandTextArea.getText());
-
-        String autoCompletionText;
-        int caretPosition;
-        if (autoCompletionUtil.isCommandKeyWord(item.getText())) {
-            autoCompletionText = autoCompletionUtil.getAutoCompletionText(item.getText());
-            caretPosition = item.getText().length() + 1;
-        } else {
-            autoCompletionText = textInputProcessor.replaceLastWord(item.getText());
-            caretPosition = autoCompletionText.length();
-        }
-
-        item.setOnAction(event -> {
-            commandBox.replaceText(autoCompletionText);
-            commandTextArea.positionCaret(caretPosition);
-        });
+        item.setOnAction(event -> commandBox.autoComplete(item.getText()));
         getItems().add(item);
     }
 }

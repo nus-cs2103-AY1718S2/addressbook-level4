@@ -1,8 +1,10 @@
 package seedu.address.model.policy;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ public class Coverage {
     private final List<Issue> coverage;
 
     public Coverage(List<Issue> coverage) {
-        requireNonNull(coverage);
+        requireAllNonNull(coverage);
         this.coverage = new ArrayList<Issue>();
         for (Issue issue : coverage) {
             this.coverage.add(issue);
@@ -30,6 +32,10 @@ public class Coverage {
             builder.append(", ").append(coverage.get(i).name());
         }
         return builder.toString();
+    }
+
+    public List<Issue> getCoverage() {
+        return Collections.unmodifiableList(coverage);
     }
 
 }

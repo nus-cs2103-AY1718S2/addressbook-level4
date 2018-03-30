@@ -32,9 +32,9 @@ public class ExportContactsCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void exportCommandParse_giveValidArguments_returnExportContactCommand() throws Exception {
+    public void exportCommandParse_giveValidArguments_returnCorrectExportContactCommandPath() throws Exception {
         ExportContactsCommandParser eccp = new ExportContactsCommandParser();
-        ExportContactsCommand a = eccp.parse();
+        ExportContactsCommand a = eccp.parse("");
         ExportContactsCommand b = eccp.parse("exampleFile.csv");
 
         assertEquals(a.getWRITE_TO_PATH().toString(), "data/exportToExisting.csv");

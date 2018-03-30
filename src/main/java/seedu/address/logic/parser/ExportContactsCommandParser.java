@@ -1,8 +1,5 @@
 package seedu.address.logic.parser;
 
-import java.io.IOException;
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.logic.commands.ExportContactsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -21,10 +18,13 @@ public class ExportContactsCommandParser implements Parser<ExportContactsCommand
      */
     @Override
     public ExportContactsCommand parse(String args) throws ParseException {
-            return new ExportContactsCommand(args);
-    }
+        System.out.println("args is:" + args);
+        args = args.trim();
 
-    public ExportContactsCommand parse() throws ParseException {
-        return new ExportContactsCommand();
+      //  if (args.length() < 1) args = null;
+
+     //   System.out.println(args.length());
+
+        return (args.length() > 1) ? new ExportContactsCommand(args) : new ExportContactsCommand();
     }
 }

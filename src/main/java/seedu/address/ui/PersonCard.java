@@ -107,7 +107,7 @@ public class PersonCard extends UiPart<Region> {
         if (!url.isEmpty()) {
             tabIcon.setFitWidth(20);
             tabIcon.setFitHeight(20);
-            tabIcon.setImage(new Image(imageUrl(type)));
+            tabIcon.setImage(new Image(url));
             socialMediaIconTab.getChildren().addAll(tabBackground, tabIcon);
         }
         return socialMediaIconTab;

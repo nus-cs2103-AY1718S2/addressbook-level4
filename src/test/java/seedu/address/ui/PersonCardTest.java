@@ -5,10 +5,23 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.smplatform.Facebook;
+import seedu.address.model.smplatform.Link;
+import seedu.address.model.smplatform.SocialMediaPlatform;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonCardTest extends GuiUnitTest {
@@ -26,6 +39,29 @@ public class PersonCardTest extends GuiUnitTest {
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
+
+        //@@author Nethergale
+        // with platforms
+        String[] links = {"www.facebook.com/examplepage", "www.twitter.com/examplepage"};
+        Person personWithPlatforms = new PersonBuilder().withPlatforms(links).build();
+        personCard = new PersonCard(personWithPlatforms,3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithPlatforms, 3);
+
+        // with platforms purposely put into wrong key, should not display any icons
+        Map<String, SocialMediaPlatform> customSmpMap = new HashMap<String, SocialMediaPlatform>();
+        customSmpMap.put("unknown", new Facebook(new Link("www.facebook.com/testlink")));
+        Set<Tag> defaultTags = new HashSet<>();
+        defaultTags.add(new Tag(PersonBuilder.DEFAULT_TAGS));
+
+        Person personWithIncorrectSmpMap = new Person(
+                new Name(PersonBuilder.DEFAULT_NAME), new Phone(PersonBuilder.DEFAULT_PHONE),
+                new Email(PersonBuilder.DEFAULT_EMAIL), new Address(PersonBuilder.DEFAULT_ADDRESS),
+                customSmpMap, defaultTags);
+        personCard = new PersonCard(personWithIncorrectSmpMap,4);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithIncorrectSmpMap, 4);
+        //@@author
     }
 
     @Test
